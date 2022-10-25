@@ -1,0 +1,10 @@
+{
+    "name": "@kandy-io/callme-sdk",
+    "version": "5.3.0",
+    "license": "SEE LICENSE IN LICENSE.md",
+    "main":"./dist/kandy.js",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/RibbonCommunications/webrtc-anonymous-js-sdk"
+    }
+}
