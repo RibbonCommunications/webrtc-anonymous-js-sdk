@@ -1,7 +1,7 @@
 /**
  * Kandy.js
  * kandy.newCallMe.js
- * Version: 5.3.0-beta.957
+ * Version: 5.3.0-beta.958
  */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
@@ -6415,7 +6415,7 @@ exports.getVersion = getVersion;
  * for the @@ tag below with actual version value.
  */
 function getVersion() {
-  return '5.3.0-beta.957';
+  return '5.3.0-beta.958';
 }
 
 /***/ }),
@@ -11727,9 +11727,11 @@ function* getAffectedRemoteTracks(operation, mediaDiff, session) {
   let sectionIds;
   switch (operation) {
     case _constants.OPERATIONS.ADD_MEDIA:
+    case _constants.OPERATIONS.START_MOH:
       sectionIds = getAddedSectionIds(mediaDiff);
       break;
     case _constants.OPERATIONS.REMOVE_MEDIA:
+    case _constants.OPERATIONS.STOP_MOH:
       sectionIds = getRemovedSectionIds(mediaDiff);
       break;
     case _constants.OPERATIONS.HOLD:
@@ -51082,7 +51084,7 @@ function* handleSlowUpdateResponse(deps, targetCall, params) {
     let affectedLocalTracks = [];
     // If we're not in dual-hold (ie. we will be Connected after this), then
     //    local tracks will become available.
-    if (!targetCall.localHold) {
+    if (remoteOp === _constants2.OPERATIONS.UNHOLD && !targetCall.localHold) {
       // For local tracks, just need to get the local tracks the Session has.
       const sessionState = yield (0, _effects.select)(_selectors2.getSessionById, targetCall.webrtcSessionId);
       affectedLocalTracks = sessionState.localTracks;
