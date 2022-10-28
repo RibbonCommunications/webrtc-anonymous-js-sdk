@@ -1,7 +1,7 @@
 /**
  * Kandy.js
  * kandy.newCallMe.js
- * Version: 5.3.0-beta.954
+ * Version: 5.3.0-beta.955
  */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
@@ -1497,7 +1497,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _promise = __webpack_require__(17);
+var _promise = __webpack_require__(15);
 
 var _promise2 = _interopRequireDefault(_promise);
 
@@ -2015,7 +2015,7 @@ var _fp = __webpack_require__(4);
 
 var _constants = __webpack_require__(83);
 
-var _constants2 = __webpack_require__(16);
+var _constants2 = __webpack_require__(17);
 
 /*
  * Redux-saga selector functions.
@@ -2262,6 +2262,12 @@ if (typeof __g == 'number') __g = global; // eslint-disable-line no-undef
 /* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
+module.exports = { "default": __webpack_require__(211), __esModule: true };
+
+/***/ }),
+/* 16 */
+/***/ (function(module, exports, __webpack_require__) {
+
 var store = __webpack_require__(96)('wks');
 var uid = __webpack_require__(72);
 var Symbol = __webpack_require__(14).Symbol;
@@ -2276,7 +2282,7 @@ $exports.store = store;
 
 
 /***/ }),
-/* 16 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2305,12 +2311,6 @@ const connCheckMethods = exports.connCheckMethods = {
   KEEP_ALIVE: 'keepAlive',
   PING_PONG: 'pingPong'
 };
-
-/***/ }),
-/* 17 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = { "default": __webpack_require__(211), __esModule: true };
 
 /***/ }),
 /* 18 */
@@ -6415,7 +6415,7 @@ exports.getVersion = getVersion;
  * for the @@ tag below with actual version value.
  */
 function getVersion() {
-  return '5.3.0-beta.954';
+  return '5.3.0-beta.955';
 }
 
 /***/ }),
@@ -7348,7 +7348,7 @@ module.exports = {};
 
 var def = __webpack_require__(25).f;
 var has = __webpack_require__(35);
-var TAG = __webpack_require__(15)('toStringTag');
+var TAG = __webpack_require__(16)('toStringTag');
 
 module.exports = function (it, tag, stat) {
   if (it && !has(it = stat ? it : it.prototype, TAG)) def(it, TAG, { configurable: true, value: tag });
@@ -9062,7 +9062,7 @@ __webpack_require__(214);
 var global = __webpack_require__(14);
 var hide = __webpack_require__(34);
 var Iterators = __webpack_require__(62);
-var TO_STRING_TAG = __webpack_require__(15)('toStringTag');
+var TO_STRING_TAG = __webpack_require__(16)('toStringTag');
 
 var DOMIterables = ('CSSRuleList,CSSStyleDeclaration,CSSValueList,ClientRectList,DOMRectList,DOMStringList,' +
   'DOMTokenList,DataTransferItemList,FileList,HTMLAllCollection,HTMLCollection,HTMLFormElement,HTMLSelectElement,' +
@@ -9440,7 +9440,7 @@ var _actionTypes = __webpack_require__(37);
 
 var actionTypes = _interopRequireWildcard(_actionTypes);
 
-var _constants = __webpack_require__(16);
+var _constants = __webpack_require__(17);
 
 var _errors = __webpack_require__(11);
 
@@ -10066,7 +10066,7 @@ var Iterators = __webpack_require__(62);
 var $iterCreate = __webpack_require__(213);
 var setToStringTag = __webpack_require__(63);
 var getPrototypeOf = __webpack_require__(132);
-var ITERATOR = __webpack_require__(15)('iterator');
+var ITERATOR = __webpack_require__(16)('iterator');
 var BUGGY = !([].keys && 'next' in [].keys()); // Safari has buggy iterators w/o `next`
 var FF_ITERATOR = '@@iterator';
 var KEYS = 'keys';
@@ -10134,7 +10134,7 @@ module.exports = function (Base, NAME, Constructor, next, DEFAULT, IS_SET, FORCE
 
 // getting tag from 19.1.3.6 Object.prototype.toString()
 var cof = __webpack_require__(58);
-var TAG = __webpack_require__(15)('toStringTag');
+var TAG = __webpack_require__(16)('toStringTag');
 // ES3 wrong here
 var ARG = cof(function () { return arguments; }()) == 'Arguments';
 
@@ -10210,7 +10210,7 @@ module.exports = function (target, src, safe) {
 /* 106 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports.f = __webpack_require__(15);
+exports.f = __webpack_require__(16);
 
 
 /***/ }),
@@ -10860,7 +10860,7 @@ var _version = __webpack_require__(50);
 
 var _utils = __webpack_require__(7);
 
-var _constants = __webpack_require__(16);
+var _constants = __webpack_require__(17);
 
 var _effects = __webpack_require__(1);
 
@@ -11960,7 +11960,7 @@ var _actionTypes = __webpack_require__(44);
 
 var actionTypes = _interopRequireWildcard(_actionTypes);
 
-var _constants = __webpack_require__(16);
+var _constants = __webpack_require__(17);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -12353,7 +12353,7 @@ module.exports = function (iterator, fn, value, entries) {
 
 // check on default Array iterator
 var Iterators = __webpack_require__(62);
-var ITERATOR = __webpack_require__(15)('iterator');
+var ITERATOR = __webpack_require__(16)('iterator');
 var ArrayProto = Array.prototype;
 
 module.exports = function (it) {
@@ -12366,7 +12366,7 @@ module.exports = function (it) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var classof = __webpack_require__(102);
-var ITERATOR = __webpack_require__(15)('iterator');
+var ITERATOR = __webpack_require__(16)('iterator');
 var Iterators = __webpack_require__(62);
 module.exports = __webpack_require__(8).getIteratorMethod = function (it) {
   if (it != undefined) return it[ITERATOR]
@@ -12382,7 +12382,7 @@ module.exports = __webpack_require__(8).getIteratorMethod = function (it) {
 // 7.3.20 SpeciesConstructor(O, defaultConstructor)
 var anObject = __webpack_require__(31);
 var aFunction = __webpack_require__(57);
-var SPECIES = __webpack_require__(15)('species');
+var SPECIES = __webpack_require__(16)('species');
 module.exports = function (O, D) {
   var C = anObject(O).constructor;
   var S;
@@ -12521,7 +12521,7 @@ var global = __webpack_require__(14);
 var core = __webpack_require__(8);
 var dP = __webpack_require__(25);
 var DESCRIPTORS = __webpack_require__(20);
-var SPECIES = __webpack_require__(15)('species');
+var SPECIES = __webpack_require__(16)('species');
 
 module.exports = function (KEY) {
   var C = typeof core[KEY] == 'function' ? core[KEY] : global[KEY];
@@ -12536,7 +12536,7 @@ module.exports = function (KEY) {
 /* 142 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var ITERATOR = __webpack_require__(15)('iterator');
+var ITERATOR = __webpack_require__(16)('iterator');
 var SAFE_CLOSING = false;
 
 try {
@@ -15569,7 +15569,7 @@ var _constants = __webpack_require__(83);
 
 var _selectors = __webpack_require__(13);
 
-var _constants2 = __webpack_require__(16);
+var _constants2 = __webpack_require__(17);
 
 var _errors = __webpack_require__(11);
 
@@ -19069,7 +19069,7 @@ var _actions = __webpack_require__(116);
 
 var actions = _interopRequireWildcard(_actions);
 
-var _makeRequest = __webpack_require__(448);
+var _makeRequest = __webpack_require__(449);
 
 var _makeRequest2 = _interopRequireDefault(_makeRequest);
 
@@ -20324,9 +20324,9 @@ var _link3 = __webpack_require__(437);
 
 var _link4 = _interopRequireDefault(_link3);
 
-var _request = __webpack_require__(446);
+var _request = __webpack_require__(447);
 
-__webpack_require__(454);
+__webpack_require__(455);
 
 var _sdpHandlers = __webpack_require__(187);
 
@@ -23120,7 +23120,7 @@ var setToStringTag = __webpack_require__(63);
 var IteratorPrototype = {};
 
 // 25.1.2.1.1 %IteratorPrototype%[@@iterator]()
-__webpack_require__(34)(IteratorPrototype, __webpack_require__(15)('iterator'), function () { return this; });
+__webpack_require__(34)(IteratorPrototype, __webpack_require__(16)('iterator'), function () { return this; });
 
 module.exports = function (Constructor, NAME, next) {
   Constructor.prototype = create(IteratorPrototype, { next: descriptor(1, next) });
@@ -23213,7 +23213,7 @@ var USE_NATIVE = !!function () {
   try {
     // correct subclassing with @@species support
     var promise = $Promise.resolve(1);
-    var FakePromise = (promise.constructor = {})[__webpack_require__(15)('species')] = function (exec) {
+    var FakePromise = (promise.constructor = {})[__webpack_require__(16)('species')] = function (exec) {
       exec(empty, empty);
     };
     // unhandled rejections tracking support, NodeJS Promise without it fails @@species test
@@ -24602,7 +24602,7 @@ var $fails = __webpack_require__(38);
 var shared = __webpack_require__(96);
 var setToStringTag = __webpack_require__(63);
 var uid = __webpack_require__(72);
-var wks = __webpack_require__(15);
+var wks = __webpack_require__(16);
 var wksExt = __webpack_require__(106);
 var wksDefine = __webpack_require__(107);
 var enumKeys = __webpack_require__(234);
@@ -26700,7 +26700,7 @@ module.exports = function (original, length) {
 
 var isObject = __webpack_require__(19);
 var isArray = __webpack_require__(146);
-var SPECIES = __webpack_require__(15)('species');
+var SPECIES = __webpack_require__(16)('species');
 
 module.exports = function (original) {
   var C;
@@ -28146,7 +28146,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _promise = __webpack_require__(17);
+var _promise = __webpack_require__(15);
 
 var _promise2 = _interopRequireDefault(_promise);
 
@@ -35314,7 +35314,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _promise = __webpack_require__(17);
+var _promise = __webpack_require__(15);
 
 var _promise2 = _interopRequireDefault(_promise);
 
@@ -35414,7 +35414,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _promise = __webpack_require__(17);
+var _promise = __webpack_require__(15);
 
 var _promise2 = _interopRequireDefault(_promise);
 
@@ -35520,7 +35520,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _promise = __webpack_require__(17);
+var _promise = __webpack_require__(15);
 
 var _promise2 = _interopRequireDefault(_promise);
 
@@ -35659,7 +35659,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _promise = __webpack_require__(17);
+var _promise = __webpack_require__(15);
 
 var _promise2 = _interopRequireDefault(_promise);
 
@@ -35744,7 +35744,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _promise = __webpack_require__(17);
+var _promise = __webpack_require__(15);
 
 var _promise2 = _interopRequireDefault(_promise);
 
@@ -35900,7 +35900,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _promise = __webpack_require__(17);
+var _promise = __webpack_require__(15);
 
 var _promise2 = _interopRequireDefault(_promise);
 
@@ -36011,7 +36011,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _promise = __webpack_require__(17);
+var _promise = __webpack_require__(15);
 
 var _promise2 = _interopRequireDefault(_promise);
 
@@ -36554,7 +36554,7 @@ var _from = __webpack_require__(53);
 
 var _from2 = _interopRequireDefault(_from);
 
-var _promise = __webpack_require__(17);
+var _promise = __webpack_require__(15);
 
 var _promise2 = _interopRequireDefault(_promise);
 
@@ -37123,7 +37123,7 @@ var _extends2 = __webpack_require__(5);
 
 var _extends3 = _interopRequireDefault(_extends2);
 
-var _promise = __webpack_require__(17);
+var _promise = __webpack_require__(15);
 
 var _promise2 = _interopRequireDefault(_promise);
 
@@ -38205,7 +38205,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.WEBRTC_DEVICE_KINDS = undefined;
 
-var _promise = __webpack_require__(17);
+var _promise = __webpack_require__(15);
 
 var _promise2 = _interopRequireDefault(_promise);
 
@@ -39614,7 +39614,7 @@ var _logs = __webpack_require__(2);
 
 var _effects2 = __webpack_require__(1);
 
-var _constants = __webpack_require__(16);
+var _constants = __webpack_require__(17);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -44972,7 +44972,7 @@ var _errors = __webpack_require__(11);
 
 var _errors2 = _interopRequireDefault(_errors);
 
-var _constants = __webpack_require__(16);
+var _constants = __webpack_require__(17);
 
 var _utils = __webpack_require__(396);
 
@@ -47834,7 +47834,7 @@ var _fp = __webpack_require__(4);
 
 var _version = __webpack_require__(50);
 
-var _constants2 = __webpack_require__(16);
+var _constants2 = __webpack_require__(17);
 
 var _sdkId = __webpack_require__(413);
 
@@ -53417,7 +53417,7 @@ var _base = __webpack_require__(429);
 
 var _base2 = _interopRequireDefault(_base);
 
-var _constants = __webpack_require__(16);
+var _constants = __webpack_require__(17);
 
 var _fp = __webpack_require__(4);
 
@@ -53511,7 +53511,7 @@ var _actions2 = __webpack_require__(41);
 
 var _effects = __webpack_require__(1);
 
-var _constants = __webpack_require__(16);
+var _constants = __webpack_require__(17);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -53592,7 +53592,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = api;
 
-var _constants = __webpack_require__(16);
+var _constants = __webpack_require__(17);
 
 var _actions = __webpack_require__(85);
 
@@ -53973,7 +53973,7 @@ var _logs = __webpack_require__(2);
 
 var _effects = __webpack_require__(1);
 
-var _constants = __webpack_require__(16);
+var _constants = __webpack_require__(17);
 
 var _errors = __webpack_require__(11);
 
@@ -54442,7 +54442,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _promise = __webpack_require__(17);
+var _promise = __webpack_require__(15);
 
 var _promise2 = _interopRequireDefault(_promise);
 
@@ -54605,6 +54605,10 @@ var pushRegistrationSagas = _interopRequireWildcard(_pushRegistration);
 
 var _notification = __webpack_require__(444);
 
+var _middleware = __webpack_require__(446);
+
+var _middleware2 = _interopRequireDefault(_middleware);
+
 var _actions = __webpack_require__(41);
 
 var _actions2 = __webpack_require__(36);
@@ -54635,6 +54639,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @param {string} [notifications.pushRegistration.version] - Version for the push registration server.
  */
 
+// Notification plugin.
 const defaultOptions = {
   idCacheLength: 100,
   incomingCallNotificationMode: 'any-channel'
@@ -54649,7 +54654,6 @@ const defaultOptions = {
 
 
 // Other plugins.
-// Notification plugin.
 const v8nValidation = _validation.validation.schema({
   idCacheLength: _validation.validation.positive(),
   incomingCallNotificationMode: (0, _validation.enums)(['any-channel', 'push-channel-only']),
@@ -54668,7 +54672,7 @@ const parseOptions = (0, _validation.parse)('notifications', v8nValidation);
  * @param {configs.notifications} options - Configuration options for authentication.
  * @return {Object} plugin - A notifications plugin.
  */
-function notifications(options = {}) {
+function notifications(options = {}, bottle) {
   const pluginOptions = (0, _fp.defaultsDeep)(defaultOptions, options);
   parseOptions(pluginOptions);
 
@@ -54685,7 +54689,8 @@ function notifications(options = {}) {
     init,
     api: _interface.api,
     reducer: _interface.reducer,
-    sagas: [_notification.enableWebsocketChannelEntry, _notification.processNotification, ...(0, _fp.values)(pushRegistrationSagas)]
+    sagas: [_notification.enableWebsocketChannelEntry, _notification.processNotification, ...(0, _fp.values)(pushRegistrationSagas)],
+    middleware: (0, _middleware2.default)(bottle)
   };
 }
 
@@ -54830,7 +54835,7 @@ var _actions = __webpack_require__(122);
 
 var actions = _interopRequireWildcard(_actions);
 
-var _constants = __webpack_require__(16);
+var _constants = __webpack_require__(17);
 
 var _utils = __webpack_require__(7);
 
@@ -55282,7 +55287,7 @@ var _effects = __webpack_require__(1);
 
 var _selectors = __webpack_require__(13);
 
-var _constants = __webpack_require__(16);
+var _constants = __webpack_require__(17);
 
 var _logs = __webpack_require__(2);
 
@@ -62224,23 +62229,120 @@ var pako = {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+
+var _promise = __webpack_require__(15);
+
+var _promise2 = _interopRequireDefault(_promise);
+
+exports.default = createMiddleware;
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+ * Middleware factory for the Notifications plugin.
+ */
+function createMiddleware(bottle) {
+  // List of all listeners that are waiting for actions.
+  const actionListeners = [];
+
+  /*
+   * The middleware that will be given to the Factory.
+   */
+  const middleware = context => next => action => {
+    // Act after the action has gone through the reducers.
+    const returnVal = next(action);
+
+    let i = actionListeners.length;
+    // Start from the end of the list so we can remove items from the list
+    //    without making it complicated to iterate over everything.
+    while (i--) {
+      const listener = actionListeners[i];
+      /*
+       * If the action matches a listener, remove that listener from the list
+       *    then resolve its promise to unpause the operation that called it.
+       */
+      if (listener.pattern(action)) {
+        actionListeners.splice(i, 1);
+        if (listener.timeoutId) {
+          clearTimeout(listener.timeoutId);
+        }
+        listener.resolve(action);
+      }
+    }
+    return returnVal;
+  };
+
+  /**
+   * Utility function for operations to pause until an action is dispatched.
+   *
+   * Using this function should be avoided if possible. This was created as a stop-gap
+   *    so pre-redesign sagas and post-redesign operations could still work together.
+   *    ie. so a saga that is triggered by an action, then responds by dispatching
+   *    another action, can be used by an operation.
+   *
+   * @method waitForAction
+   * @param {Function} pattern Function that decides whether the action should trigger the listener.
+   * @param {number} [timeout] Delay, in milleseconds, to wait for the action before rejecting the promise.
+   * @return {Promise} Promise that resolves when the action has been dispatched.
+   * @example
+   * const takeAction = container.Notifications.takeAction
+   * const action = await takeAction((action) => ...)
+   */
+  function takeAction(pattern, timeout) {
+    if (typeof pattern === 'string') {
+      // If a single action type was passed in, convert it to a function for consistency.
+      const actionType = pattern;
+      pattern = action => action.type === actionType;
+    }
+
+    return new _promise2.default((resolve, reject) => {
+      let timeoutId;
+      // If a timeout was provided, reject the promise after that long.
+      if (typeof timeout === 'number') {
+        timeoutId = setTimeout(reject, timeout);
+      }
+
+      actionListeners.push({
+        pattern,
+        resolve,
+        timeoutId
+      });
+    });
+  }
+
+  // Add the utility to the bottle container.
+  bottle.value('Notifications.takeAction', takeAction);
+
+  return middleware;
+}
+
+/***/ }),
+/* 447 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 exports.cpaasRequest = exports.ucRequest = exports.linkRequest = undefined;
 
-var _configs = __webpack_require__(447);
+var _configs = __webpack_require__(448);
 
 var _sagas = __webpack_require__(183);
 
 var _sagas2 = _interopRequireDefault(_sagas);
 
-var _events = __webpack_require__(449);
+var _events = __webpack_require__(450);
 
 var _events2 = _interopRequireDefault(_events);
 
-var _requestModule = __webpack_require__(450);
+var _requestModule = __webpack_require__(451);
 
 var _requestModule2 = _interopRequireDefault(_requestModule);
 
-var _interface = __webpack_require__(451);
+var _interface = __webpack_require__(452);
 
 var _actions = __webpack_require__(36);
 
@@ -62310,7 +62412,7 @@ function pluginFactory(platform) {
 }
 
 /***/ }),
-/* 447 */
+/* 448 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -62345,7 +62447,7 @@ const v8nValidation = _validation.validation.schema({
 const parseOptions = exports.parseOptions = (0, _validation.parse)('request', v8nValidation);
 
 /***/ }),
-/* 448 */
+/* 449 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -62652,7 +62754,7 @@ function makeResponse(apiResponse = {}, httpResponse = {}) {
 }
 
 /***/ }),
-/* 449 */
+/* 450 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -62686,7 +62788,7 @@ eventsMap[actionTypes.AUTHORIZATION_ERROR] = function (action) {
 exports.default = eventsMap;
 
 /***/ }),
-/* 450 */
+/* 451 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -62846,7 +62948,7 @@ function getTime() {
 }
 
 /***/ }),
-/* 451 */
+/* 452 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -62857,11 +62959,11 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.api = exports.name = undefined;
 
-var _name = __webpack_require__(452);
+var _name = __webpack_require__(453);
 
 var _name2 = _interopRequireDefault(_name);
 
-var _api = __webpack_require__(453);
+var _api = __webpack_require__(454);
 
 var _api2 = _interopRequireDefault(_api);
 
@@ -62871,7 +62973,7 @@ exports.name = _name2.default;
 exports.api = _api2.default;
 
 /***/ }),
-/* 452 */
+/* 453 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -62888,7 +62990,7 @@ const name = 'requests';
 exports.default = name;
 
 /***/ }),
-/* 453 */
+/* 454 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -62972,7 +63074,7 @@ function api({ dispatch, getState }) {
 }
 
 /***/ }),
-/* 454 */
+/* 455 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
