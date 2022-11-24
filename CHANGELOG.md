@@ -7,7 +7,13 @@ Kandy.js change log.
 
 ## 5.4.0 - beta
 
+### Fixed
+
+- Fixed a Call issue where unrendering a track after the call ends could fail, leaving the track in the DOM. `KJS-1148`
+
 ## 5.3.0 - 2022-10-28
+
+### Fixed
 
 - Fixed a Call issue where where the music on hold would not be received during slow-start negotiations. `KJS-1162`
 
