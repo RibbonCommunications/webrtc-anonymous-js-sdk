@@ -1,4 +1,4 @@
-# Kandy CallMe JavaScript SDK
+# Ribbon's WebRTC Anonymous JavaScript SDK
 
 ## Install
 
@@ -14,8 +14,8 @@ To install a particular build branch or beta branch with the Github URL, run:
 
 ### In the browser :
 ```html
-<script src="https://unpkg.com/@kandy-io/callme-sdk@5.4.0/dist/kandy.js"
-  integrity="sha384-FJ2JHab8zCQ6doopJEBphv2F0D2TCbNsqAEJB+J5kgdgjurUKjSx7GVCXU3yvN4i"
+<script src="https://unpkg.com/@kandy-io/callme-sdk@5.5.0/dist/kandy.js"
+  integrity="sha384-DcnrLl5eJ7rFyxgAgWvpMAYvXQh5F76Upbuiko8sdEmSAUIJ6HWBlUNhGtvlcR/n"
   crossorigin="anonymous">
 </script>
 ```

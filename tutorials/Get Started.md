@@ -10,7 +10,7 @@ categories:
 
 # Get Started
 
-In this quickstart, we will help you dip your toes in before you dive in. This guide will help you get started with making Anonymous Calls using the $KANDY$ CallMe Javascript SDK (referred to as Anonymous Call SDK throughout the tutorial).
+In this quickstart, we will help you dip your toes in before you dive in. This guide will help you get started with making Anonymous Calls using the Anonymous Call SDK.
 
 ## Getting the SDK
 
@@ -71,7 +71,7 @@ client.on( ... )
 
 After you've created your instance of the SDK, you can begin playing around with it to learn its functionality and see how it fits in your application. The API reference documentation will help to explain the details of the available features.
 
-The examples that follow will assume that you are using bundling and that the Kandy library is accessible from the <i>/node_modules/<i> folder and therefore required to be accessed by the name `@kandy-io/callme-sdk` only.
+The examples that follow will assume that you are using bundling and that the WebRTC Anonymous JS SDK library is accessible from the <i>/node_modules/<i> folder and therefore required to be accessed by the name `@kandy-io/callme-sdk` only.
 
 ## Configurations
 
@@ -120,7 +120,7 @@ The key is a string entity used to obfuscate the true identity of caller (as wel
 
 In addition to pre-sharing a key value, the administrator will also share a _schema_ (also known as _token realm_). Similar to key, the token realm is a string entity whose value is used in requesting a subscription to 'call' services. – see the [Anonymous Calls Quickstart](Anonymous%20Calls).
 
-In addition to pre-sharing _key_ & _token realm_, the user needs to send a request to administrator to configure anonymous mode on Kandy Link server. This involves setting up certain destination accounts that can be called anonymously.
+In addition to pre-sharing _key_ & _token realm_, the user needs to send a request to administrator to configure anonymous mode on the WebRTC Gateway. This involves setting up certain destination accounts that can be called anonymously.
 
 More on how to generate those tokens & the steps needed for server side configuration, can be found at [Generating Tokens Quickstart](Generating%20Tokens)
 
@@ -160,11 +160,11 @@ This diagram shows the initial message interaction between the three entities in
 
 - Client Application (which developer needs to write by making use of our 4.x CallMe SDK)
 - This application sends an initial request to an application server to obtain the tokens.
-- It then sends a REST request to Kandy Link server to make an anonymous call.
+- It then sends a REST request to the WebRTC Gateway to make an anonymous call.
 
 - Application/Web server
 - Responsible for generating the tokens upon Client's request
 
-- Kandy Link server
+- WebRTC Gateway
 - Accepts anonymous calls from Client, forwards request to callee and replies back to Client with an SDP offer.
 

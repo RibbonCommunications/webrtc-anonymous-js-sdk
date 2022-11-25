@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <title>Kandy Tutorials</title>
+    <title>Ribbon Communications Tutorials</title>
     <link rel="stylesheet" href="https://unpkg.com/docute@4/dist/docute.css" />
   </head>
   <body>
@@ -103,45 +103,45 @@
             }
           },
           {
-            name: 'Convert KANDYFQDN',
+            name: 'Convert RIBBONFQDN',
             extend(api) {
-              const kandyFQDN = useDefault ? '$KANDYFQDN$' : configs[configIdx].data.KANDYFQDN
-              api.processMarkdown(md => md.replace(/\$KANDYFQDN\$/gm, kandyFQDN))
+              const ribbonFQDN = useDefault ? '$RIBBONFQDN$' : configs[configIdx].data.RIBBONFQDN
+              api.processMarkdown(md => md.replace(/\$RIBBONFQDN\$/gm, ribbonFQDN))
             }
           },
           {
-            name: 'Convert KANDYTURN1',
+            name: 'Convert RIBBONTURN1',
             extend(api) {
-              const kandyTURN1 = useDefault ? '$KANDYTURN1$' : configs[configIdx].data.KANDYTURN1
-              api.processMarkdown(md => md.replace(/\$KANDYTURN1\$/gm, kandyTURN1))
+              const ribbonTURN1 = useDefault ? '$RIBBONTURN1$' : configs[configIdx].data.RIBBONTURN1
+              api.processMarkdown(md => md.replace(/\$RIBBONTURN1\$/gm, ribbonTURN1))
             }
           },
           {
-            name: 'Convert KANDYTURN2',
+            name: 'Convert RIBBONTURN2',
             extend(api) {
-              const kandyTURN2 = useDefault ? '$KANDYTURN2$' : configs[configIdx].data.KANDYTURN2
-              api.processMarkdown(md => md.replace(/\$KANDYTURN2\$/gm, kandyTURN2))
+              const ribbonTURN2 = useDefault ? '$RIBBONTURN2$' : configs[configIdx].data.RIBBONTURN2
+              api.processMarkdown(md => md.replace(/\$RIBBONTURN2\$/gm, ribbonTURN2))
             }
           },
           {
-            name: 'Convert KANDYSTUN1',
+            name: 'Convert RIBBONSTUN1',
             extend(api) {
-              const kandySTUN1 = useDefault ? '$KANDYSTUN1$' : configs[configIdx].data.KANDYSTUN1
-              api.processMarkdown(md => md.replace(/\$KANDYSTUN1\$/gm, kandySTUN1))
+              const ribbonSTUN1 = useDefault ? '$RIBBONSTUN1$' : configs[configIdx].data.RIBBONSTUN1
+              api.processMarkdown(md => md.replace(/\$RIBBONSTUN1\$/gm, ribbonSTUN1))
             }
           },
           {
-            name: 'Convert KANDYSTUN2',
+            name: 'Convert RIBBONSTUN2',
             extend(api) {
-              const kandySTUN2 = useDefault ? '$KANDYSTUN2$' : configs[configIdx].data.KANDYSTUN2
-              api.processMarkdown(md => md.replace(/\$KANDYSTUN2\$/gm, kandySTUN2))
+              const ribbonSTUN2 = useDefault ? '$RIBBONSTUN2$' : configs[configIdx].data.RIBBONSTUN2
+              api.processMarkdown(md => md.replace(/\$RIBBONSTUN2\$/gm, ribbonSTUN2))
             }
           },
           {
-            name: 'Convert KANDY',
+            name: 'Convert RIBBON',
             extend(api) {
-              const kandy = useDefault ? '$KANDY$' : configs[configIdx].data.KANDY
-              api.processMarkdown(md => md.replace(/\$KANDY\$/gm, kandy))
+              const ribbon = useDefault ? '$RIBBON$' : configs[configIdx].data.RIBBON
+              api.processMarkdown(md => md.replace(/\$RIBBON\$/gm, ribbon))
             }
           },
           {

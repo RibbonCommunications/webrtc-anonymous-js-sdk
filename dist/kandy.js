@@ -1,7 +1,7 @@
 /**
  * Kandy.js
  * kandy.newCallMe.js
- * Version: 5.4.0-beta.969
+ * Version: 5.5.0-beta.970
  */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
@@ -6415,7 +6415,7 @@ exports.getVersion = getVersion;
  * for the @@ tag below with actual version value.
  */
 function getVersion() {
-  return '5.4.0-beta.969';
+  return '5.5.0-beta.970';
 }
 
 /***/ }),
@@ -40814,7 +40814,7 @@ const log = _logs.logManager.getLogger('CALL');
  * @param {Array<call.SdpHandlerFunction>} [call.sdpHandlers] List of SDP handler functions to modify SDP. Advanced usage.
  * @param {boolean} [call.removeH264Codecs=true] Whether to remove "H264" codec lines from incoming and outgoing SDP messages.
  * @param {boolean} [call.earlyMedia=false] Whether early media should be supported for calls. Not supported on Firefox.
- * @param {boolean} [call.resyncOnConnect=false] Whether the SDK should re-sync all call states after connecting (requires Kandy Link 4.7.1+).
+ * @param {boolean} [call.resyncOnConnect=false] Whether the SDK should re-sync all call states after connecting (requires WebRTC Gateway 4.7.1+).
  * @param {boolean} [call.mediaBrokerOnly=false] Whether all Calls will be anchored on the MediaBroker instead of being peer-to-peer. Set to true if the backend is configured for broker only mode.
  * @param {boolean} [call.removeBundling=false] Whether to remove a=group attributes to stop media bundling from incoming and outgoing SDP messages.
  * @param {string} [call.ringingFeedbackMode='auto'] The mode for sending ringing feedback to the Caller ('auto', 'manual').
@@ -43288,7 +43288,7 @@ callReducers[actionTypes.GET_STATS_FINISH] = noop;
 /*
  * When answering, rejecting, or forwarding a call, update state to say that we
  *    are handling it.
- * This is needed for Link because KandyLink will send a "call cancel" notification
+ * This is needed for the WebRTC JS SDK because WebRTC Gateway will send a "call cancel" notification
  *    to _ALL_ of the user's subscriptions. The intention is to stop the call from
  *    ringing on other subscribed devices, and for the handling device to ignore
  *    the notification. This flag is used to know when to ignore the call cancel.
@@ -45633,7 +45633,7 @@ function* updateSession(callInfo) {
  *
  * Assumptions:
  *    1. The current user is authenticated.
- *    2. Signalling server has Kandy Link 4.7.1+
+ *    2. Signalling server has WebRTC Gateway 4.7.1+
  * Responsibilities:
  *    1. Format parameters as needed for signalling.
  *    2. Perform the REST request.
@@ -52189,7 +52189,7 @@ function* getSessions(deps, action) {
  *    There are no local webRTC operations involved.
  *
  * Assumptions:
- *    1. The server uses Kandy Link 4.7.1+
+ *    1. The server uses WebRTC Gateway 4.7.1+
  * Responsibilities:
  *    2. Update the call state if the call is out of sync (call's status does not match response from server)
  * @method updateCallState
