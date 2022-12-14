@@ -3795,6 +3795,8 @@ see
              : Either an array of URLs for reaching out several ICE servers or a single URL for reaching one ICE server. See 
 <a href="https://developer.mozilla.org/en-US/docs/Web/API/RTCIceServer/urls">RTCIceServers.urls documentation</a>
  to learn more about the actual url format.
+Starting with Chromium 110, TURN(S) urls must only contain a transport
+parameter in the query section and STUN urls must not specify any query section.
 
           
           

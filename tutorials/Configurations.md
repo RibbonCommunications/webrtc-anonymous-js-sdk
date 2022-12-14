@@ -24,6 +24,8 @@ call: {
     // See https://developer.mozilla.org/en-US/docs/Web/API/RTCPeerConnection/RTCPeerConnection#parameters RTCPeerConnection's
     // configuration parameters} for more information.
     // Specify the TURN/STUN servers that should be used.
+    // Note that starting with Chromium 110, TURN(S) urls must only contain a transport
+    // parameter in the query section and STUN urls must not specify any query section.
     iceServers: [
       { urls: '$RIBBONTURN1$' },
       { urls: '$RIBBONSTUN1$' },

@@ -5132,11 +5132,11 @@
     "context": {
       "loc": {
         "start": {
-          "line": 485,
+          "line": 487,
           "column": 0
         },
         "end": {
-          "line": 489,
+          "line": 491,
           "column": 1
         }
       },
@@ -10277,11 +10277,11 @@
           "context": {
             "loc": {
               "start": {
-                "line": 485,
+                "line": 487,
                 "column": 0
               },
               "end": {
-                "line": 489,
+                "line": 491,
                 "column": 1
               }
             },
@@ -10991,11 +10991,11 @@
           "context": {
             "loc": {
               "start": {
-                "line": 485,
+                "line": 487,
                 "column": 0
               },
               "end": {
-                "line": 489,
+                "line": 491,
                 "column": 1
               }
             },
@@ -11172,11 +11172,11 @@
           "context": {
             "loc": {
               "start": {
-                "line": 485,
+                "line": 487,
                 "column": 0
               },
               "end": {
-                "line": 489,
+                "line": 491,
                 "column": 1
               }
             },
@@ -11367,11 +11367,11 @@
           "context": {
             "loc": {
               "start": {
-                "line": 485,
+                "line": 487,
                 "column": 0
               },
               "end": {
-                "line": 489,
+                "line": 491,
                 "column": 1
               }
             },
@@ -11605,11 +11605,11 @@
           "context": {
             "loc": {
               "start": {
-                "line": 485,
+                "line": 487,
                 "column": 0
               },
               "end": {
-                "line": 489,
+                "line": 491,
                 "column": 1
               }
             },
@@ -11927,11 +11927,11 @@
           "context": {
             "loc": {
               "start": {
-                "line": 485,
+                "line": 487,
                 "column": 0
               },
               "end": {
-                "line": 489,
+                "line": 491,
                 "column": 1
               }
             },
@@ -12192,7 +12192,7 @@
             },
             {
               "title": "property",
-              "description": "Either an array of URLs for reaching out several ICE servers or a single URL for reaching one ICE server. See {@link https://developer.mozilla.org/en-US/docs/Web/API/RTCIceServer/urls RTCIceServers.urls documentation} to learn more about the actual url format.",
+              "description": "Either an array of URLs for reaching out several ICE servers or a single URL for reaching one ICE server. See {@link https://developer.mozilla.org/en-US/docs/Web/API/RTCIceServer/urls RTCIceServers.urls documentation} to learn more about the actual url format.\nStarting with Chromium 110, TURN(S) urls must only contain a transport\nparameter in the query section and STUN urls must not specify any query section.",
               "lineNumber": 5,
               "type": {
                 "type": "UnionType",
@@ -12221,7 +12221,7 @@
             {
               "title": "property",
               "description": "The credential needed by the ICE server.",
-              "lineNumber": 6,
+              "lineNumber": 8,
               "type": {
                 "type": "OptionalType",
                 "expression": {
@@ -12234,7 +12234,7 @@
             {
               "title": "property",
               "description": "The credential needed by the ICE server.",
-              "lineNumber": 7,
+              "lineNumber": 9,
               "type": {
                 "type": "OptionalType",
                 "expression": {
@@ -12251,18 +12251,18 @@
               "column": 0
             },
             "end": {
-              "line": 205,
+              "line": 207,
               "column": 3
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 485,
+                "line": 487,
                 "column": 0
               },
               "end": {
-                "line": 489,
+                "line": 491,
                 "column": 1
               }
             },
@@ -12301,7 +12301,7 @@
                       },
                       {
                         "type": "text",
-                        "value": " to learn more about the actual url format."
+                        "value": " to learn more about the actual url format.\nStarting with Chromium 110, TURN(S) urls must only contain a transport\nparameter in the query section and STUN urls must not specify any query section."
                       }
                     ]
                   }
@@ -12333,7 +12333,7 @@
             {
               "title": "property",
               "name": "credential",
-              "lineNumber": 6,
+              "lineNumber": 8,
               "description": {
                 "type": "root",
                 "children": [
@@ -12359,7 +12359,7 @@
             {
               "title": "property",
               "name": "username",
-              "lineNumber": 7,
+              "lineNumber": 9,
               "description": {
                 "type": "root",
                 "children": [
@@ -12566,22 +12566,22 @@
           ],
           "loc": {
             "start": {
-              "line": 207,
+              "line": 209,
               "column": 0
             },
             "end": {
-              "line": 228,
+              "line": 230,
               "column": 3
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 485,
+                "line": 487,
                 "column": 0
               },
               "end": {
-                "line": 489,
+                "line": 491,
                 "column": 1
               }
             },
@@ -13298,22 +13298,22 @@
           ],
           "loc": {
             "start": {
-              "line": 230,
+              "line": 232,
               "column": 0
             },
             "end": {
-              "line": 288,
+              "line": 290,
               "column": 3
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 485,
+                "line": 487,
                 "column": 0
               },
               "end": {
-                "line": 489,
+                "line": 491,
                 "column": 1
               }
             },
@@ -13572,22 +13572,22 @@
           ],
           "loc": {
             "start": {
-              "line": 290,
+              "line": 292,
               "column": 0
             },
             "end": {
-              "line": 304,
+              "line": 306,
               "column": 3
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 485,
+                "line": 487,
                 "column": 0
               },
               "end": {
-                "line": 489,
+                "line": 491,
                 "column": 1
               }
             },
@@ -13817,22 +13817,22 @@
           ],
           "loc": {
             "start": {
-              "line": 306,
+              "line": 308,
               "column": 0
             },
             "end": {
-              "line": 317,
+              "line": 319,
               "column": 3
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 485,
+                "line": 487,
                 "column": 0
               },
               "end": {
-                "line": 489,
+                "line": 491,
                 "column": 1
               }
             },
@@ -14053,22 +14053,22 @@
           ],
           "loc": {
             "start": {
-              "line": 319,
+              "line": 321,
               "column": 0
             },
             "end": {
-              "line": 329,
+              "line": 331,
               "column": 3
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 485,
+                "line": 487,
                 "column": 0
               },
               "end": {
-                "line": 489,
+                "line": 491,
                 "column": 1
               }
             },
@@ -14288,22 +14288,22 @@
           ],
           "loc": {
             "start": {
-              "line": 331,
+              "line": 333,
               "column": 0
             },
             "end": {
-              "line": 342,
+              "line": 344,
               "column": 3
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 485,
+                "line": 487,
                 "column": 0
               },
               "end": {
-                "line": 489,
+                "line": 491,
                 "column": 1
               }
             },
@@ -14588,22 +14588,22 @@
           ],
           "loc": {
             "start": {
-              "line": 344,
+              "line": 346,
               "column": 0
             },
             "end": {
-              "line": 365,
+              "line": 367,
               "column": 3
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 485,
+                "line": 487,
                 "column": 0
               },
               "end": {
-                "line": 489,
+                "line": 491,
                 "column": 1
               }
             },
@@ -14989,22 +14989,22 @@
           ],
           "loc": {
             "start": {
-              "line": 367,
+              "line": 369,
               "column": 0
             },
             "end": {
-              "line": 377,
+              "line": 379,
               "column": 3
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 485,
+                "line": 487,
                 "column": 0
               },
               "end": {
-                "line": 489,
+                "line": 491,
                 "column": 1
               }
             },
@@ -15230,22 +15230,22 @@
           ],
           "loc": {
             "start": {
-              "line": 379,
+              "line": 381,
               "column": 0
             },
             "end": {
-              "line": 390,
+              "line": 392,
               "column": 3
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 485,
+                "line": 487,
                 "column": 0
               },
               "end": {
-                "line": 489,
+                "line": 491,
                 "column": 1
               }
             },
@@ -15659,22 +15659,22 @@
           ],
           "loc": {
             "start": {
-              "line": 392,
+              "line": 394,
               "column": 0
             },
             "end": {
-              "line": 432,
+              "line": 434,
               "column": 3
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 485,
+                "line": 487,
                 "column": 0
               },
               "end": {
-                "line": 489,
+                "line": 491,
                 "column": 1
               }
             },
@@ -25976,11 +25976,11 @@
     "context": {
       "loc": {
         "start": {
-          "line": 485,
+          "line": 487,
           "column": 0
         },
         "end": {
-          "line": 489,
+          "line": 491,
           "column": 1
         }
       },

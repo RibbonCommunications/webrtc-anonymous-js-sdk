@@ -1,7 +1,7 @@
 /**
  * Kandy.js
  * kandy.newCallMe.js
- * Version: 5.5.0-beta.978
+ * Version: 5.5.0-beta.979
  */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
@@ -6415,7 +6415,7 @@ exports.getVersion = getVersion;
  * for the @@ tag below with actual version value.
  */
 function getVersion() {
-  return '5.5.0-beta.978';
+  return '5.5.0-beta.979';
 }
 
 /***/ }),
@@ -41162,6 +41162,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @typedef {Object} IceServer
  * @memberof call
  * @property {Array<string>|string} urls Either an array of URLs for reaching out several ICE servers or a single URL for reaching one ICE server. See {@link https://developer.mozilla.org/en-US/docs/Web/API/RTCIceServer/urls RTCIceServers.urls documentation} to learn more about the actual url format.
+ * Starting with Chromium 110, TURN(S) urls must only contain a transport
+ * parameter in the query section and STUN urls must not specify any query section.
  * @property {string} [credential] The credential needed by the ICE server.
  * @property {string} [username] The credential needed by the ICE server.
  */

@@ -601,6 +601,8 @@ Type: [Object][7]
 #### Properties
 
 *   `urls` **([Array][13]<[string][8]> | [string][8])** Either an array of URLs for reaching out several ICE servers or a single URL for reaching one ICE server. See [RTCIceServers.urls documentation][38] to learn more about the actual url format.
+    Starting with Chromium 110, TURN(S) urls must only contain a transport
+    parameter in the query section and STUN urls must not specify any query section.
 *   `credential` **[string][8]?** The credential needed by the ICE server.
 *   `username` **[string][8]?** The credential needed by the ICE server.
 
