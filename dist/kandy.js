@@ -1,7 +1,7 @@
 /**
  * Kandy.js
  * kandy.newCallMe.js
- * Version: 5.5.0-beta.981
+ * Version: 5.5.0-beta.982
  */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
@@ -6421,7 +6421,7 @@ exports.getVersion = getVersion;
  * for the @@ tag below with actual version value.
  */
 function getVersion() {
-  return '5.5.0-beta.981';
+  return '5.5.0-beta.982';
 }
 
 /***/ }),
@@ -55457,7 +55457,6 @@ function* enableWebsocketChannel(action) {
 
   // TODO: Handle possible error case when connecting websockets.
   //      Otherwise, plain dispatch to update state.
-  log.info('Enabling WEBSOCKET notification channel ...');
   yield (0, _effects.put)(actions.enableNotificationChannelFinish(action.meta.channel, {
     params: action.payload
   }));
@@ -55523,7 +55522,6 @@ function* processNotification() {
         }
 
         const { platform, channel } = action.meta;
-        log.debug('Added notification ID to the ID cache. Informing listeners ...');
         // Inform all other plugins by sending a NOTIFICATION_RECEIVED action
         yield (0, _effects.put)(actions.notificationReceived(formattedPayload, platform, channel));
       }
