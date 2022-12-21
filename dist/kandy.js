@@ -1,7 +1,7 @@
 /**
  * Kandy.js
  * kandy.newCallMe.js
- * Version: 5.5.0-beta.983
+ * Version: 5.5.0-beta.984
  */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
@@ -6421,7 +6421,7 @@ exports.getVersion = getVersion;
  * for the @@ tag below with actual version value.
  */
 function getVersion() {
-  return '5.5.0-beta.983';
+  return '5.5.0-beta.984';
 }
 
 /***/ }),
@@ -11943,7 +11943,7 @@ function getAddedSectionIds(mediaDiff) {
   mediaDiff.changed.forEach(changedMedia => {
     const { media, changes } = changedMedia;
     // This ChangedMedia object represents a "track added".
-    if (changes.sending === 'START' && changes.receiving === 'SAME') {
+    if (changes.sending === 'START' && (changes.receiving === 'SAME' || changes.receiving === 'START')) {
       const id = typeof media.sectionId === 'undefined' ? media.sectionIndex : media.sectionId;
       addedMediaSections.push(id);
     }
@@ -17999,7 +17999,11 @@ function wasAddMedia(mediaDiff) {
    * 3b) Any media that changed was to start sending.
    */
   const changedSending = changed.every(({ media, changes }) => {
-    return changes.sending === _compareMedia.MEDIA_TRANSITIONS.START && changes.receiving === _compareMedia.MEDIA_TRANSITIONS.SAME;
+    // Should handle:
+    //    reconly  --> sendrecv
+    //    inactive --> sendonly
+    //    inactive --> sendrecv
+    return changes.sending === _compareMedia.MEDIA_TRANSITIONS.START && (changes.receiving === _compareMedia.MEDIA_TRANSITIONS.SAME || changes.receiving === _compareMedia.MEDIA_TRANSITIONS.START);
   });
 
   /*

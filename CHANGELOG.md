@@ -7,6 +7,10 @@ Kandy.js change log.
 
 ## 5.5.0 - beta
 
+### Fixed
+
+- Fixed a Call issue where the application would not be notified of a remote track added to a Call in certain scenarios. `KJS-1139`
+
 ### Changed
 
 - Starting from Chromium 110, Chromium will perform stricter validation of STUN and TURN server urls as according to RFC spec. Please update any ice server URL configs as appropriate. `KJS-1349`
