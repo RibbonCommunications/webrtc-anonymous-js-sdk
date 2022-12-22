@@ -5,12 +5,11 @@ Kandy.js change log.
 - This project adheres to [Semantic Versioning](http://semver.org/).
 - This change log follows [keepachangelog.com](http://keepachangelog.com/) recommendations.
 
-## 5.5.0 - beta
+## 5.5.0 - 2022-12-22
 
 ### Fixed
 
 - Fixed a Call issue where the application would not be notified of a remote track added to a Call in certain scenarios. `KJS-1139`
-- Fixed an issue which prevented the replacement of a local track, in Proxy mode. `KJS-1374`
 
 ### Changed
 
