@@ -10,6 +10,7 @@ Kandy.js change log.
 ### Fixed
 
 - Fixed a Call issue where the application would not be notified of a remote track added to a Call in certain scenarios. `KJS-1139`
+- Fixed an issue which prevented the replacement of a local track, in Proxy mode. `KJS-1374`
 
 ### Changed
 
