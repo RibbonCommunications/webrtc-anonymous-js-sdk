@@ -15,7 +15,7 @@ This tutorial will explain how the SDK's logging system works, how an applicatio
 
 When the SDK generates a log, it creates a JSON object we call a "Log Entry". This object contains the log message itself, as well as meta-info about when and who logged it. This meta-info helps to provide context about the log message to more easily understand the source/reason of the log. For example, all logs generated for a specific call will be tagged as a call log and include that call's unique ID.
 
-Each Log Entry also includes the "log level" that it was generated at. The different log levels refer to different types of information that will be included in the log messages. For example, the INFO level provides general information about the SDK's internal operations and the DEBUG level provides specific details about those operations. The possible log levels in a Log Entry match the log levels that the SDK can be configured to use (see [`api.logger.levels`](https://kandy-io.github.io/kandy-callMe-js-sdk/docs/#loggerlevels) in the API documentation).
+Each Log Entry also includes the "log level" that it was generated at. The different log levels refer to different types of information that will be included in the log messages. For example, the INFO level provides general information about the SDK's internal operations and the DEBUG level provides specific details about those operations. The possible log levels in a Log Entry match the log levels that the SDK can be configured to use (see [`api.logger.levels`](https://ribboncommunications.github.io/webrtc-anonymous-js-sdk/docs/#loggerlevels) in the API documentation).
 
 After the SDK generates a Log Entry, it will pass the log to the "Log Handler" for processing. This Log Handler is the function that decides how the log is handled, and is fully customizable by an application. The SDK's default Log Handler acts as a thin wrapper around the browser's console API (ie. [`window.console`](https://developer.mozilla.org/en-US/docs/Web/API/Window/console)). It parses the meta-info in the Log Entry and prepends it to the already human-readable log message, then uses the console to log it at the appropriate level. The code for the SDK's default Log Handler is shown below.
 
@@ -76,7 +76,7 @@ const client = Kandy.create(configs)
 
 ### Writing a custom Log Handler
 
-A custom Log Handler function can include any functionality that the application desires. The SDK has no restrictions on the Log Handler (other than it is in fact a function). Writing a custom Log Handler is mostly about knowing how to handle a Log Entry object. Below is a list of the important properties on a [Log Entry](https://kandy-io.github.io/kandy-callMe-js-sdk/docs/#loggerlogentry) object.
+A custom Log Handler function can include any functionality that the application desires. The SDK has no restrictions on the Log Handler (other than it is in fact a function). Writing a custom Log Handler is mostly about knowing how to handle a Log Entry object. Below is a list of the important properties on a [Log Entry](https://ribboncommunications.github.io/webrtc-anonymous-js-sdk/docs/#loggerlogentry) object.
 
 - `timestamp`: When the log was created, based on the UNIX epoch.
 - `method`: The log method that the SDK used to create the log. This will match up with the browser's console methods (eg. `info`, `debug`, `warn`).

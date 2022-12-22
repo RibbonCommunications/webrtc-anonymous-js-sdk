@@ -19,7 +19,7 @@ The key & realm token values are not specific for a user/caller, but rather for 
 
 The administrator should go through the following steps to generate them:
 
-- Login to Kandy Link Admin Portal site with administrator privileges. A typical front end UI looks like this.
+- Login to the WebRTC Gateway's Admin Portal site with administrator privileges. A typical front end UI looks like this.
 
 ![Admin Portal](admin_portal.png)
 

@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset='utf-8' />
-  <title>webrtc-anonymous-js-sdk 5.4.0 | Documentation</title>
+  <title>webrtc-anonymous-js-sdk 5.5.0 | Documentation</title>
   <meta name='viewport' content='width=device-width,initial-scale=1'>
   <link href='assets/bass.css' type='text/css' rel='stylesheet' />
   <link href='assets/style.css' type='text/css' rel='stylesheet' />
@@ -14,7 +14,7 @@
       <div id='split-left' class='overflow-auto fs0 height-viewport-100'>
         <div class='py1 px2'>
           <h3 class='mb0 no-anchor'>webrtc-anonymous-js-sdk</h3>
-          <div class='mb1'><code>5.4.0</code></div>
+          <div class='mb1'><code>5.5.0</code></div>
           <input
             placeholder='Filter'
             id='filter-input'
@@ -1459,7 +1459,7 @@ more information on the form of the function, as well as information about the d
   
     (default <code>false</code>)
   </td>
-  <td class='break-word'><span>Whether the SDK should re-sync all call states after connecting (requires Kandy Link 4.7.1+).
+  <td class='break-word'><span>Whether the SDK should re-sync all call states after connecting (requires WebRTC Gateway 4.7.1+).
 </span></td>
 </tr>
 
@@ -3795,6 +3795,8 @@ see
              : Either an array of URLs for reaching out several ICE servers or a single URL for reaching one ICE server. See 
 <a href="https://developer.mozilla.org/en-US/docs/Web/API/RTCIceServer/urls">RTCIceServers.urls documentation</a>
  to learn more about the actual url format.
+Starting with Chromium 110, TURN(S) urls must only contain a transport
+parameter in the query section and STUN urls must not specify any query section.
 
           
           

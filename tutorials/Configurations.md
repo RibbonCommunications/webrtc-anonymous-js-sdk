@@ -24,11 +24,13 @@ call: {
     // See https://developer.mozilla.org/en-US/docs/Web/API/RTCPeerConnection/RTCPeerConnection#parameters RTCPeerConnection's
     // configuration parameters} for more information.
     // Specify the TURN/STUN servers that should be used.
+    // Note that starting with Chromium 110, TURN(S) urls must only contain a transport
+    // parameter in the query section and STUN urls must not specify any query section.
     iceServers: [
-      { urls: '$KANDYTURN1$' },
-      { urls: '$KANDYSTUN1$' },
-      { urls: '$KANDYTURN2$' },
-      { urls: '$KANDYSTUN2$' }
+      { urls: '$RIBBONTURN1$' },
+      { urls: '$RIBBONSTUN1$' },
+      { urls: '$RIBBONTURN2$' },
+      { urls: '$RIBBONSTUN2$' }
     ]
   },
   // Other feature configs.
@@ -44,8 +46,8 @@ This quickstart will showcase a few samples of why you may want to use certain c
 
 ### Authentication
 
-The Authentication configs are used to specify the backend service that Kandy.js should connect to. The value(s) provided are the host for the Kandy Link server that the application is targeting.
-Also if the Kandy Link is deployed on the premises, it will be up to the user to define the host.
+The Authentication configs are used to specify the backend service that the SDK should connect to. The value(s) provided are the host for the WebRTC Gateway that the application is targeting.
+Also if the WebRTC Gateway is deployed on the premises, it will be up to the user to define the host.
 Note: It is important to always include these configurations.
 
 ```javascript
@@ -59,7 +61,7 @@ authentication: {
 }
 ```
 
-Examples of the Kandy Link Systems include:
+Examples of the WebRTC Gateway Systems include:
 
 NA:
 
