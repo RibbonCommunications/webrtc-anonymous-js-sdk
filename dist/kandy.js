@@ -1,7 +1,7 @@
 /**
  * Kandy.js
  * kandy.newCallMe.js
- * Version: 5.5.0-beta.987
+ * Version: 5.6.0-beta.988
  */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
@@ -1688,6 +1688,9 @@ const SESSION_TRACK_ENDED = exports.SESSION_TRACK_ENDED = sessionPrefix + 'TRACK
 const SESSION_CHANGE = exports.SESSION_CHANGE = sessionPrefix + 'CHANGE';
 const SESSION_TRACK_REPLACED = exports.SESSION_TRACK_REPLACED = sessionPrefix + 'TRACK_REPLACED';
 
+// Audio file from the `insertAudio` API has ended.
+const SESSION_AUDIO_ENDED = exports.SESSION_AUDIO_ENDED = sessionPrefix + 'AUDIO_ENDED';
+
 // Peer events
 const SESSION_ICE_CONNECTION_STATE_CHANGE = exports.SESSION_ICE_CONNECTION_STATE_CHANGE = sessionPrefix + 'ICE_CONNECTION_STATE_CHANGE';
 const SESSION_ICE_GATHERING_STATE_CHANGE = exports.SESSION_ICE_GATHERING_STATE_CHANGE = sessionPrefix + 'ICE_GATHERING_STATE_CHANGE';
@@ -1729,7 +1732,7 @@ exports.getCallByWebrtcSessionId = getCallByWebrtcSessionId;
 exports.getOptions = getOptions;
 exports.getTurnInfo = getTurnInfo;
 
-var _constants = __webpack_require__(22);
+var _constants = __webpack_require__(18);
 
 /**
  * Call selectors.
@@ -2322,184 +2325,6 @@ const connCheckMethods = exports.connCheckMethods = {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.logManager = undefined;
-
-var _kandyLogger = __webpack_require__(77);
-
-var _kandyLogger2 = _interopRequireDefault(_kandyLogger);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-const manager = (0, _kandyLogger2.default)({ level: 'DEBUG' });
-const logManager = exports.logManager = manager;
-
-/***/ }),
-/* 19 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-const callPrefix = '@@KANDY/CALL/';
-
-/**
- * Basic call operation actions.
- */
-const MAKE_CALL = exports.MAKE_CALL = callPrefix + 'MAKE';
-const PENDING_MAKE_CALL = exports.PENDING_MAKE_CALL = callPrefix + 'PENDING_MAKE';
-const SESSION_CREATED = exports.SESSION_CREATED = callPrefix + 'SESSION_CREATED';
-const MAKE_CALL_FINISH = exports.MAKE_CALL_FINISH = callPrefix + 'MAKE_FINISH';
-
-const MAKE_ANONYMOUS_CALL = exports.MAKE_ANONYMOUS_CALL = callPrefix + 'MAKE_ANONYMOUS_CALL';
-const MAKE_ANONYMOUS_CALL_FINISH = exports.MAKE_ANONYMOUS_CALL_FINISH = callPrefix + 'MAKE_ANONYMOUS_CALL_FINISH';
-
-const CALL_INCOMING = exports.CALL_INCOMING = callPrefix + 'INCOMING';
-
-const SEND_RINGING_FEEDBACK = exports.SEND_RINGING_FEEDBACK = callPrefix + 'SEND_RINGING_FEEDBACK';
-const SEND_RINGING_FEEDBACK_FINISH = exports.SEND_RINGING_FEEDBACK_FINISH = callPrefix + 'SEND_RINGING_FEEDBACK_FINISH';
-
-const CALL_RINGING = exports.CALL_RINGING = callPrefix + 'RINGING';
-const SESSION_PROGRESS = exports.SESSION_PROGRESS = callPrefix + 'SESSION_PROGRESS';
-const CALL_CANCELLED = exports.CALL_CANCELLED = callPrefix + 'CANCELLED';
-
-const ANSWER_CALL = exports.ANSWER_CALL = callPrefix + 'ANSWER';
-const ANSWER_CALL_FINISH = exports.ANSWER_CALL_FINISH = callPrefix + 'ANSWER_FINISH';
-
-const REJECT_CALL = exports.REJECT_CALL = callPrefix + 'REJECT';
-const REJECT_CALL_FINISH = exports.REJECT_CALL_FINISH = callPrefix + 'REJECT_FINISH';
-
-const IGNORE_CALL = exports.IGNORE_CALL = callPrefix + 'IGNORE';
-const IGNORE_CALL_FINISH = exports.IGNORE_CALL_FINISH = callPrefix + 'IGNORE_FINISH';
-
-const CALL_ACCEPTED = exports.CALL_ACCEPTED = callPrefix + 'ACCEPTED';
-
-const END_CALL = exports.END_CALL = callPrefix + 'END';
-const END_CALL_FINISH = exports.END_CALL_FINISH = callPrefix + 'END_FINISH';
-
-const FORWARD_CALL = exports.FORWARD_CALL = callPrefix + 'FORWARD_CALL';
-const FORWARD_CALL_FINISH = exports.FORWARD_CALL_FINISH = callPrefix + 'FORWARD_CALL_FINISH';
-
-const PENDING_OPERATION = exports.PENDING_OPERATION = callPrefix + 'PENDING_OPERATION';
-
-/**
- * Mid-call operation actions.
- */
-
-const UPDATE_CALL = exports.UPDATE_CALL = callPrefix + 'UPDATE_CALL';
-
-const CALL_HOLD = exports.CALL_HOLD = callPrefix + 'HOLD';
-const CALL_HOLD_FINISH = exports.CALL_HOLD_FINISH = callPrefix + 'HOLD_FINISH';
-
-const CALL_UNHOLD = exports.CALL_UNHOLD = callPrefix + 'UNHOLD';
-const CALL_UNHOLD_FINISH = exports.CALL_UNHOLD_FINISH = callPrefix + 'UNHOLD_FINISH';
-
-const SET_CUSTOM_PARAMETERS = exports.SET_CUSTOM_PARAMETERS = callPrefix + 'SET_CUSTOM_PARAMETERS';
-
-const SEND_CUSTOM_PARAMETERS = exports.SEND_CUSTOM_PARAMETERS = callPrefix + 'SEND_CUSTOM_PARAMETERS';
-const SEND_CUSTOM_PARAMETERS_FINISH = exports.SEND_CUSTOM_PARAMETERS_FINISH = callPrefix + 'SEND_CUSTOM_PARAMETERS_FINISH';
-
-const ADD_MEDIA = exports.ADD_MEDIA = callPrefix + 'ADD_MEDIA';
-const ADD_MEDIA_FINISH = exports.ADD_MEDIA_FINISH = callPrefix + 'ADD_MEDIA_FINISH';
-const ADD_BASIC_MEDIA = exports.ADD_BASIC_MEDIA = callPrefix + 'ADD_BASIC_MEDIA';
-
-const REMOVE_MEDIA = exports.REMOVE_MEDIA = callPrefix + 'REMOVE_MEDIA';
-const REMOVE_MEDIA_FINISH = exports.REMOVE_MEDIA_FINISH = callPrefix + 'REMOVE_MEDIA_FINISH';
-const REMOVE_BASIC_MEDIA = exports.REMOVE_BASIC_MEDIA = callPrefix + 'REMOVE_BASIC_MEDIA';
-
-const MUSIC_ON_HOLD = exports.MUSIC_ON_HOLD = callPrefix + 'MUSIC_ON_HOLD';
-
-const SEND_DTMF = exports.SEND_DTMF = callPrefix + 'SEND_DTMF';
-const SEND_DTMF_FINISH = exports.SEND_DTMF_FINISH = callPrefix + 'SEND_DTMF_FINISH';
-
-const GET_STATS = exports.GET_STATS = callPrefix + 'GET_STATS';
-const GET_STATS_FINISH = exports.GET_STATS_FINISH = callPrefix + 'GET_STATS_FINISH';
-
-const CONSULTATIVE_TRANSFER = exports.CONSULTATIVE_TRANSFER = callPrefix + 'CONSULTATIVE_TRANSFER';
-const PENDING_CONSULTATIVE_TRANSFER = exports.PENDING_CONSULTATIVE_TRANSFER = callPrefix + 'PENDING_CONSULTATIVE_TRANSFER';
-const CONSULTATIVE_TRANSFER_FINISH = exports.CONSULTATIVE_TRANSFER_FINISH = callPrefix + 'CONSULTATIVE_TRANSFER_FINISH';
-
-const DIRECT_TRANSFER = exports.DIRECT_TRANSFER = callPrefix + 'DIRECT_TRANSFER';
-const DIRECT_TRANSFER_FINISH = exports.DIRECT_TRANSFER_FINISH = callPrefix + 'DIRECT_TRANSFER_FINISH';
-
-const JOIN = exports.JOIN = callPrefix + 'JOIN';
-const JOIN_START = exports.JOIN_START = callPrefix + 'JOIN_START';
-const PENDING_JOIN = exports.PENDING_JOIN = callPrefix + 'PENDING_JOIN';
-const JOIN_FINISH = exports.JOIN_FINISH = callPrefix + 'JOIN_FINISH';
-
-const REPLACE_TRACK = exports.REPLACE_TRACK = callPrefix + 'REPLACE_TRACK';
-const REPLACE_TRACK_FINISH = exports.REPLACE_TRACK_FINISH = callPrefix + 'REPLACE_TRACK_FINISH';
-
-const MEDIA_RESTART = exports.MEDIA_RESTART = callPrefix + 'MEDIA_RESTART';
-const MEDIA_RESTART_FINISH = exports.MEDIA_RESTART_FINISH = callPrefix + 'MEDIA_RESTART_FINISH';
-
-const RESYNC = exports.RESYNC = callPrefix + 'RESYNC';
-const RESYNC_FINISH = exports.RESYNC_FINISH = callPrefix + 'RESYNC_FINISH';
-
-/**
- * Miscellaneous call actions
- */
-const CUSTOM_PARAMETERS_RECEIVED = exports.CUSTOM_PARAMETERS_RECEIVED = callPrefix + 'CUSTOM_PARAMETERS_RECEIVED';
-const GET_AVAILABLE_CODECS = exports.GET_AVAILABLE_CODECS = callPrefix + 'GET_AVAILABLE_CODECS';
-const AVAILABLE_CODECS_RETRIEVED = exports.AVAILABLE_CODECS_RETRIEVED = callPrefix + 'AVAILABLE_CODECS_RETRIEVED';
-
-/**
- * Remote operation actions.
- */
-const CALL_REMOTE_HOLD_FINISH = exports.CALL_REMOTE_HOLD_FINISH = callPrefix + 'REMOTE_HOLD_FINISH';
-const CALL_REMOTE_UNHOLD_FINISH = exports.CALL_REMOTE_UNHOLD_FINISH = callPrefix + 'REMOTE_UNHOLD_FINISH';
-const REMOTE_ADD_MEDIA_FINISH = exports.REMOTE_ADD_MEDIA_FINISH = callPrefix + 'REMOTE_ADD_MEDIA_FINISH';
-const REMOTE_REMOVE_MEDIA_FINISH = exports.REMOTE_REMOVE_MEDIA_FINISH = callPrefix + 'REMOTE_REMOVE_MEDIA_FINISH';
-const REMOTE_START_MOH_FINISH = exports.REMOTE_START_MOH_FINISH = callPrefix + 'REMOTE_START_MOH_FINISH';
-const REMOTE_STOP_MOH_FINISH = exports.REMOTE_STOP_MOH_FINISH = callPrefix + 'REMOTE_STOP_MOH_FINISH';
-const REMOTE_SLOW_START = exports.REMOTE_SLOW_START = callPrefix + 'REMOTE_SLOW_START';
-
-/**
- * Turn action types.
- */
-const turnPrefix = callPrefix + 'TURN/';
-
-const TURN_CHANGED = exports.TURN_CHANGED = turnPrefix + 'CHANGED';
-
-/**
- * Track action types.
- */
-const trackPrefix = callPrefix + 'TRACK/';
-
-const TRACK_ADDED = exports.TRACK_ADDED = trackPrefix + 'ADDED';
-const TRACK_REMOVED = exports.TRACK_REMOVED = trackPrefix + 'REMOVED';
-
-/***/ }),
-/* 20 */
-/***/ (function(module, exports) {
-
-module.exports = function (it) {
-  return typeof it === 'object' ? it !== null : typeof it === 'function';
-};
-
-
-/***/ }),
-/* 21 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// Thank's IE8 for his funny defineProperty
-module.exports = !__webpack_require__(38)(function () {
-  return Object.defineProperty({}, 'a', { get: function () { return 7; } }).a != 7;
-});
-
-
-/***/ }),
-/* 22 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
 /**
  * Call states
  * Call states used in the cpaas and link call plugins
@@ -2639,7 +2464,217 @@ const CALL_STATES = exports.CALL_STATES = {
 };
 
 /***/ }),
+/* 19 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.logManager = undefined;
+
+var _kandyLogger = __webpack_require__(77);
+
+var _kandyLogger2 = _interopRequireDefault(_kandyLogger);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+const manager = (0, _kandyLogger2.default)({ level: 'DEBUG' });
+const logManager = exports.logManager = manager;
+
+/***/ }),
+/* 20 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+const callPrefix = '@@KANDY/CALL/';
+
+/**
+ * Basic call operation actions.
+ */
+const MAKE_CALL = exports.MAKE_CALL = callPrefix + 'MAKE';
+const PENDING_MAKE_CALL = exports.PENDING_MAKE_CALL = callPrefix + 'PENDING_MAKE';
+const SESSION_CREATED = exports.SESSION_CREATED = callPrefix + 'SESSION_CREATED';
+const MAKE_CALL_FINISH = exports.MAKE_CALL_FINISH = callPrefix + 'MAKE_FINISH';
+
+const MAKE_ANONYMOUS_CALL = exports.MAKE_ANONYMOUS_CALL = callPrefix + 'MAKE_ANONYMOUS_CALL';
+const MAKE_ANONYMOUS_CALL_FINISH = exports.MAKE_ANONYMOUS_CALL_FINISH = callPrefix + 'MAKE_ANONYMOUS_CALL_FINISH';
+
+const CALL_INCOMING = exports.CALL_INCOMING = callPrefix + 'INCOMING';
+
+const SEND_RINGING_FEEDBACK = exports.SEND_RINGING_FEEDBACK = callPrefix + 'SEND_RINGING_FEEDBACK';
+const SEND_RINGING_FEEDBACK_FINISH = exports.SEND_RINGING_FEEDBACK_FINISH = callPrefix + 'SEND_RINGING_FEEDBACK_FINISH';
+
+const CALL_RINGING = exports.CALL_RINGING = callPrefix + 'RINGING';
+const SESSION_PROGRESS = exports.SESSION_PROGRESS = callPrefix + 'SESSION_PROGRESS';
+const CALL_CANCELLED = exports.CALL_CANCELLED = callPrefix + 'CANCELLED';
+
+const ANSWER_CALL = exports.ANSWER_CALL = callPrefix + 'ANSWER';
+const ANSWER_CALL_FINISH = exports.ANSWER_CALL_FINISH = callPrefix + 'ANSWER_FINISH';
+
+const REJECT_CALL = exports.REJECT_CALL = callPrefix + 'REJECT';
+const REJECT_CALL_FINISH = exports.REJECT_CALL_FINISH = callPrefix + 'REJECT_FINISH';
+
+const IGNORE_CALL = exports.IGNORE_CALL = callPrefix + 'IGNORE';
+const IGNORE_CALL_FINISH = exports.IGNORE_CALL_FINISH = callPrefix + 'IGNORE_FINISH';
+
+const CALL_ACCEPTED = exports.CALL_ACCEPTED = callPrefix + 'ACCEPTED';
+
+const END_CALL = exports.END_CALL = callPrefix + 'END';
+const END_CALL_FINISH = exports.END_CALL_FINISH = callPrefix + 'END_FINISH';
+
+const FORWARD_CALL = exports.FORWARD_CALL = callPrefix + 'FORWARD_CALL';
+const FORWARD_CALL_FINISH = exports.FORWARD_CALL_FINISH = callPrefix + 'FORWARD_CALL_FINISH';
+
+const PENDING_OPERATION = exports.PENDING_OPERATION = callPrefix + 'PENDING_OPERATION';
+
+/**
+ * Mid-call operation actions.
+ */
+
+const UPDATE_CALL = exports.UPDATE_CALL = callPrefix + 'UPDATE_CALL';
+
+const CALL_HOLD = exports.CALL_HOLD = callPrefix + 'HOLD';
+const CALL_HOLD_FINISH = exports.CALL_HOLD_FINISH = callPrefix + 'HOLD_FINISH';
+
+const CALL_UNHOLD = exports.CALL_UNHOLD = callPrefix + 'UNHOLD';
+const CALL_UNHOLD_FINISH = exports.CALL_UNHOLD_FINISH = callPrefix + 'UNHOLD_FINISH';
+
+const SET_CUSTOM_PARAMETERS = exports.SET_CUSTOM_PARAMETERS = callPrefix + 'SET_CUSTOM_PARAMETERS';
+
+const SEND_CUSTOM_PARAMETERS = exports.SEND_CUSTOM_PARAMETERS = callPrefix + 'SEND_CUSTOM_PARAMETERS';
+const SEND_CUSTOM_PARAMETERS_FINISH = exports.SEND_CUSTOM_PARAMETERS_FINISH = callPrefix + 'SEND_CUSTOM_PARAMETERS_FINISH';
+
+const ADD_MEDIA = exports.ADD_MEDIA = callPrefix + 'ADD_MEDIA';
+const ADD_MEDIA_FINISH = exports.ADD_MEDIA_FINISH = callPrefix + 'ADD_MEDIA_FINISH';
+const ADD_BASIC_MEDIA = exports.ADD_BASIC_MEDIA = callPrefix + 'ADD_BASIC_MEDIA';
+
+const REMOVE_MEDIA = exports.REMOVE_MEDIA = callPrefix + 'REMOVE_MEDIA';
+const REMOVE_MEDIA_FINISH = exports.REMOVE_MEDIA_FINISH = callPrefix + 'REMOVE_MEDIA_FINISH';
+const REMOVE_BASIC_MEDIA = exports.REMOVE_BASIC_MEDIA = callPrefix + 'REMOVE_BASIC_MEDIA';
+
+const MUSIC_ON_HOLD = exports.MUSIC_ON_HOLD = callPrefix + 'MUSIC_ON_HOLD';
+
+const SEND_DTMF = exports.SEND_DTMF = callPrefix + 'SEND_DTMF';
+const SEND_DTMF_FINISH = exports.SEND_DTMF_FINISH = callPrefix + 'SEND_DTMF_FINISH';
+
+const GET_STATS = exports.GET_STATS = callPrefix + 'GET_STATS';
+const GET_STATS_FINISH = exports.GET_STATS_FINISH = callPrefix + 'GET_STATS_FINISH';
+
+const CONSULTATIVE_TRANSFER = exports.CONSULTATIVE_TRANSFER = callPrefix + 'CONSULTATIVE_TRANSFER';
+const PENDING_CONSULTATIVE_TRANSFER = exports.PENDING_CONSULTATIVE_TRANSFER = callPrefix + 'PENDING_CONSULTATIVE_TRANSFER';
+const CONSULTATIVE_TRANSFER_FINISH = exports.CONSULTATIVE_TRANSFER_FINISH = callPrefix + 'CONSULTATIVE_TRANSFER_FINISH';
+
+const DIRECT_TRANSFER = exports.DIRECT_TRANSFER = callPrefix + 'DIRECT_TRANSFER';
+const DIRECT_TRANSFER_FINISH = exports.DIRECT_TRANSFER_FINISH = callPrefix + 'DIRECT_TRANSFER_FINISH';
+
+const JOIN = exports.JOIN = callPrefix + 'JOIN';
+const JOIN_START = exports.JOIN_START = callPrefix + 'JOIN_START';
+const PENDING_JOIN = exports.PENDING_JOIN = callPrefix + 'PENDING_JOIN';
+const JOIN_FINISH = exports.JOIN_FINISH = callPrefix + 'JOIN_FINISH';
+
+const REPLACE_TRACK = exports.REPLACE_TRACK = callPrefix + 'REPLACE_TRACK';
+const REPLACE_TRACK_FINISH = exports.REPLACE_TRACK_FINISH = callPrefix + 'REPLACE_TRACK_FINISH';
+
+const MEDIA_RESTART = exports.MEDIA_RESTART = callPrefix + 'MEDIA_RESTART';
+const MEDIA_RESTART_FINISH = exports.MEDIA_RESTART_FINISH = callPrefix + 'MEDIA_RESTART_FINISH';
+
+const RESYNC = exports.RESYNC = callPrefix + 'RESYNC';
+const RESYNC_FINISH = exports.RESYNC_FINISH = callPrefix + 'RESYNC_FINISH';
+
+const PLAY_AUDIO = exports.PLAY_AUDIO = callPrefix + 'PLAY_AUDIO';
+const PENDING_PLAY_AUDIO = exports.PENDING_PLAY_AUDIO = callPrefix + 'PENDING_PLAY_AUDIO';
+const PLAY_AUDIO_FINISH = exports.PLAY_AUDIO_FINISH = callPrefix + 'PLAY_AUDIO_FINISH';
+
+/**
+ * Miscellaneous call actions
+ */
+const CUSTOM_PARAMETERS_RECEIVED = exports.CUSTOM_PARAMETERS_RECEIVED = callPrefix + 'CUSTOM_PARAMETERS_RECEIVED';
+const GET_AVAILABLE_CODECS = exports.GET_AVAILABLE_CODECS = callPrefix + 'GET_AVAILABLE_CODECS';
+const AVAILABLE_CODECS_RETRIEVED = exports.AVAILABLE_CODECS_RETRIEVED = callPrefix + 'AVAILABLE_CODECS_RETRIEVED';
+
+/**
+ * Remote operation actions.
+ */
+const CALL_REMOTE_HOLD_FINISH = exports.CALL_REMOTE_HOLD_FINISH = callPrefix + 'REMOTE_HOLD_FINISH';
+const CALL_REMOTE_UNHOLD_FINISH = exports.CALL_REMOTE_UNHOLD_FINISH = callPrefix + 'REMOTE_UNHOLD_FINISH';
+const REMOTE_ADD_MEDIA_FINISH = exports.REMOTE_ADD_MEDIA_FINISH = callPrefix + 'REMOTE_ADD_MEDIA_FINISH';
+const REMOTE_REMOVE_MEDIA_FINISH = exports.REMOTE_REMOVE_MEDIA_FINISH = callPrefix + 'REMOTE_REMOVE_MEDIA_FINISH';
+const REMOTE_START_MOH_FINISH = exports.REMOTE_START_MOH_FINISH = callPrefix + 'REMOTE_START_MOH_FINISH';
+const REMOTE_STOP_MOH_FINISH = exports.REMOTE_STOP_MOH_FINISH = callPrefix + 'REMOTE_STOP_MOH_FINISH';
+const REMOTE_SLOW_START = exports.REMOTE_SLOW_START = callPrefix + 'REMOTE_SLOW_START';
+
+/**
+ * Turn action types.
+ */
+const turnPrefix = callPrefix + 'TURN/';
+
+const TURN_CHANGED = exports.TURN_CHANGED = turnPrefix + 'CHANGED';
+
+/**
+ * Track action types.
+ */
+const trackPrefix = callPrefix + 'TRACK/';
+
+const TRACK_ADDED = exports.TRACK_ADDED = trackPrefix + 'ADDED';
+const TRACK_REMOVED = exports.TRACK_REMOVED = trackPrefix + 'REMOVED';
+
+/***/ }),
+/* 21 */
+/***/ (function(module, exports) {
+
+module.exports = function (it) {
+  return typeof it === 'object' ? it !== null : typeof it === 'function';
+};
+
+
+/***/ }),
+/* 22 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// Thank's IE8 for his funny defineProperty
+module.exports = !__webpack_require__(38)(function () {
+  return Object.defineProperty({}, 'a', { get: function () { return 7; } }).a != 7;
+});
+
+
+/***/ }),
 /* 23 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.turnActions = exports.callActions = undefined;
+
+var _call = __webpack_require__(173);
+
+var callActionsImport = _interopRequireWildcard(_call);
+
+var _turn = __webpack_require__(384);
+
+var turnActionsImport = _interopRequireWildcard(_turn);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+// Apparently the following doesn't work:
+//      export * as newName from './place';
+// So import everything from each file, then re-export.
+const callActions = exports.callActions = callActionsImport;
+const turnActions = exports.turnActions = turnActionsImport;
+
+/***/ }),
+/* 24 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2655,7 +2690,7 @@ __webpack_require__.d(__webpack_exports__, "handleAction", function() { return /
 __webpack_require__.d(__webpack_exports__, "handleActions", function() { return /* reexport */ handleActions; });
 
 // EXTERNAL MODULE: /var/jenkins_home/workspace/Kandy.js_beta/node_modules/invariant/browser.js
-var browser = __webpack_require__(24);
+var browser = __webpack_require__(25);
 var browser_default = /*#__PURE__*/__webpack_require__.n(browser);
 
 // CONCATENATED MODULE: /var/jenkins_home/workspace/Kandy.js_beta/node_modules/redux-actions/es/utils/isFunction.js
@@ -3158,7 +3193,7 @@ function handleActions(handlers, defaultState, options) {
 
 
 /***/ }),
-/* 24 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3210,7 +3245,7 @@ module.exports = invariant;
 
 
 /***/ }),
-/* 25 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var anObject = __webpack_require__(31);
@@ -3218,7 +3253,7 @@ var IE8_DOM_DEFINE = __webpack_require__(125);
 var toPrimitive = __webpack_require__(91);
 var dP = Object.defineProperty;
 
-exports.f = __webpack_require__(21) ? Object.defineProperty : function defineProperty(O, P, Attributes) {
+exports.f = __webpack_require__(22) ? Object.defineProperty : function defineProperty(O, P, Attributes) {
   anObject(O);
   P = toPrimitive(P, true);
   anObject(Attributes);
@@ -3232,7 +3267,7 @@ exports.f = __webpack_require__(21) ? Object.defineProperty : function definePro
 
 
 /***/ }),
-/* 26 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3273,34 +3308,6 @@ const trackActions = exports.trackActions = trackActionsImport;
 const sessionActions = exports.sessionActions = sessionActionsImport;
 const mediaActions = exports.mediaActions = mediaActionsImport;
 const miscActions = exports.miscActions = miscActionsImport;
-
-/***/ }),
-/* 27 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.turnActions = exports.callActions = undefined;
-
-var _call = __webpack_require__(173);
-
-var callActionsImport = _interopRequireWildcard(_call);
-
-var _turn = __webpack_require__(384);
-
-var turnActionsImport = _interopRequireWildcard(_turn);
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-
-// Apparently the following doesn't work:
-//      export * as newName from './place';
-// So import everything from each file, then re-export.
-const callActions = exports.callActions = callActionsImport;
-const turnActions = exports.turnActions = turnActionsImport;
 
 /***/ }),
 /* 28 */
@@ -3408,6 +3415,7 @@ const OPERATIONS = exports.OPERATIONS = {
   REPLACE_TRACK: 'REPLACE_TRACK',
   MEDIA_RESTART: 'MEDIA_RESTART',
   RESYNC: 'RESYNC',
+  PLAY_AUDIO: 'PLAY_AUDIO',
   // Remote-only.
   START_MOH: 'START_MOH',
   STOP_MOH: 'STOP_MOH',
@@ -5570,7 +5578,7 @@ function sagaMiddlewareFactory(_temp) {
 /* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var isObject = __webpack_require__(20);
+var isObject = __webpack_require__(21);
 module.exports = function (it) {
   if (!isObject(it)) throw TypeError(it + ' is not an object!');
   return it;
@@ -5950,9 +5958,9 @@ module.exports = function (fn, that, length) {
 /* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var dP = __webpack_require__(25);
+var dP = __webpack_require__(26);
 var createDesc = __webpack_require__(46);
-module.exports = __webpack_require__(21) ? function (object, key, value) {
+module.exports = __webpack_require__(22) ? function (object, key, value) {
   return dP.f(object, key, createDesc(1, value));
 } : function (object, key, value) {
   object[key] = value;
@@ -6421,7 +6429,7 @@ exports.getVersion = getVersion;
  * for the @@ tag below with actual version value.
  */
 function getVersion() {
-  return '5.5.0-beta.987';
+  return '5.6.0-beta.988';
 }
 
 /***/ }),
@@ -7346,7 +7354,7 @@ module.exports = {};
 /* 63 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var def = __webpack_require__(25).f;
+var def = __webpack_require__(26).f;
 var has = __webpack_require__(35);
 var TAG = __webpack_require__(16)('toStringTag');
 
@@ -9189,9 +9197,9 @@ module.exports = { "default": __webpack_require__(230), __esModule: true };
 /***/ (function(module, exports, __webpack_require__) {
 
 var META = __webpack_require__(72)('meta');
-var isObject = __webpack_require__(20);
+var isObject = __webpack_require__(21);
 var has = __webpack_require__(35);
-var setDesc = __webpack_require__(25).f;
+var setDesc = __webpack_require__(26).f;
 var id = 0;
 var isExtensible = Object.isExtensible || function () {
   return true;
@@ -9284,7 +9292,7 @@ var _sdpTransform2 = _interopRequireDefault(_sdpTransform);
 
 var _fp = __webpack_require__(4);
 
-var _logs = __webpack_require__(18);
+var _logs = __webpack_require__(19);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -9967,7 +9975,7 @@ module.exports = { "default": __webpack_require__(193), __esModule: true };
 /* 90 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var isObject = __webpack_require__(20);
+var isObject = __webpack_require__(21);
 var document = __webpack_require__(14).document;
 // typeof document.createElement is 'object' in old IE
 var is = isObject(document) && isObject(document.createElement);
@@ -9981,7 +9989,7 @@ module.exports = function (it) {
 /***/ (function(module, exports, __webpack_require__) {
 
 // 7.1.1 ToPrimitive(input [, PreferredType])
-var isObject = __webpack_require__(20);
+var isObject = __webpack_require__(21);
 // instead of the ES6 spec version, we didn't implement @@toPrimitive case
 // and the second argument - flag - preferred type is a string
 module.exports = function (it, S) {
@@ -10282,7 +10290,7 @@ var global = __webpack_require__(14);
 var core = __webpack_require__(8);
 var LIBRARY = __webpack_require__(59);
 var wksExt = __webpack_require__(106);
-var defineProperty = __webpack_require__(25).f;
+var defineProperty = __webpack_require__(26).f;
 module.exports = function (name) {
   var $Symbol = core.Symbol || (core.Symbol = LIBRARY ? {} : global.Symbol || {});
   if (name.charAt(0) != '_' && !(name in $Symbol)) defineProperty($Symbol, name, { value: wksExt.f(name) });
@@ -10417,7 +10425,7 @@ function handlersChanged(handlerMap) {
 /* 110 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var isObject = __webpack_require__(20);
+var isObject = __webpack_require__(21);
 module.exports = function (it, TYPE) {
   if (!isObject(it) || it._t !== TYPE) throw TypeError('Incompatible receiver, ' + TYPE + ' required!');
   return it;
@@ -10618,7 +10626,7 @@ exports.removeBundling = removeBundling;
 exports.changeMediaDirection = changeMediaDirection;
 exports.preventDtlsRoleChange = preventDtlsRoleChange;
 
-var _logs = __webpack_require__(18);
+var _logs = __webpack_require__(19);
 
 var _constants = __webpack_require__(28);
 
@@ -11369,7 +11377,7 @@ exports.setupCall = setupCall;
 exports.setupIncomingCall = setupIncomingCall;
 exports.answerWebrtcSession = answerWebrtcSession;
 
-var _actions = __webpack_require__(27);
+var _actions = __webpack_require__(23);
 
 var _selectors = __webpack_require__(10);
 
@@ -12296,7 +12304,7 @@ function toCamelCase(string) {
 /* 125 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = !__webpack_require__(21) && !__webpack_require__(38)(function () {
+module.exports = !__webpack_require__(22) && !__webpack_require__(38)(function () {
   return Object.defineProperty(__webpack_require__(90)('div'), 'a', { get: function () { return 7; } }).a != 7;
 });
 
@@ -12351,11 +12359,11 @@ module.exports = __webpack_require__(34);
 /* 130 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var dP = __webpack_require__(25);
+var dP = __webpack_require__(26);
 var anObject = __webpack_require__(31);
 var getKeys = __webpack_require__(47);
 
-module.exports = __webpack_require__(21) ? Object.defineProperties : function defineProperties(O, Properties) {
+module.exports = __webpack_require__(22) ? Object.defineProperties : function defineProperties(O, Properties) {
   anObject(O);
   var keys = getKeys(Properties);
   var length = keys.length;
@@ -12571,7 +12579,7 @@ module.exports = function (exec) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var anObject = __webpack_require__(31);
-var isObject = __webpack_require__(20);
+var isObject = __webpack_require__(21);
 var newPromiseCapability = __webpack_require__(104);
 
 module.exports = function (C, x) {
@@ -12592,8 +12600,8 @@ module.exports = function (C, x) {
 
 var global = __webpack_require__(14);
 var core = __webpack_require__(8);
-var dP = __webpack_require__(25);
-var DESCRIPTORS = __webpack_require__(21);
+var dP = __webpack_require__(26);
+var DESCRIPTORS = __webpack_require__(22);
 var SPECIES = __webpack_require__(16)('species');
 
 module.exports = function (KEY) {
@@ -12653,7 +12661,7 @@ module.exports = function (KEY, exec) {
 /* 144 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var DESCRIPTORS = __webpack_require__(21);
+var DESCRIPTORS = __webpack_require__(22);
 var getKeys = __webpack_require__(47);
 var toIObject = __webpack_require__(39);
 var isEnum = __webpack_require__(60).f;
@@ -12718,7 +12726,7 @@ var has = __webpack_require__(35);
 var IE8_DOM_DEFINE = __webpack_require__(125);
 var gOPD = Object.getOwnPropertyDescriptor;
 
-exports.f = __webpack_require__(21) ? gOPD : function getOwnPropertyDescriptor(O, P) {
+exports.f = __webpack_require__(22) ? gOPD : function getOwnPropertyDescriptor(O, P) {
   O = toIObject(O);
   P = toPrimitive(P, true);
   if (IE8_DOM_DEFINE) try {
@@ -12917,7 +12925,7 @@ function getTypes(state) {
 
 "use strict";
 
-var dP = __webpack_require__(25).f;
+var dP = __webpack_require__(26).f;
 var create = __webpack_require__(75);
 var redefineAll = __webpack_require__(105);
 var ctx = __webpack_require__(33);
@@ -12926,7 +12934,7 @@ var forOf = __webpack_require__(64);
 var $iterDefine = __webpack_require__(101);
 var step = __webpack_require__(133);
 var setSpecies = __webpack_require__(141);
-var DESCRIPTORS = __webpack_require__(21);
+var DESCRIPTORS = __webpack_require__(22);
 var fastKey = __webpack_require__(79).fastKey;
 var validate = __webpack_require__(110);
 var SIZE = DESCRIPTORS ? '_s' : 'size';
@@ -13076,11 +13084,11 @@ var hide = __webpack_require__(34);
 var redefineAll = __webpack_require__(105);
 var forOf = __webpack_require__(64);
 var anInstance = __webpack_require__(103);
-var isObject = __webpack_require__(20);
+var isObject = __webpack_require__(21);
 var setToStringTag = __webpack_require__(63);
-var dP = __webpack_require__(25).f;
+var dP = __webpack_require__(26).f;
 var each = __webpack_require__(254)(0);
-var DESCRIPTORS = __webpack_require__(21);
+var DESCRIPTORS = __webpack_require__(22);
 
 module.exports = function (NAME, wrapper, methods, common, IS_MAP, IS_WEAK) {
   var Base = global[NAME];
@@ -14360,7 +14368,7 @@ var _renderer = __webpack_require__(368);
 
 var _renderer2 = _interopRequireDefault(_renderer);
 
-var _logs = __webpack_require__(18);
+var _logs = __webpack_require__(19);
 
 var _pipeline = __webpack_require__(81);
 
@@ -14457,7 +14465,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = Track;
 
-var _logs = __webpack_require__(18);
+var _logs = __webpack_require__(19);
 
 var _eventemitter = __webpack_require__(32);
 
@@ -14687,7 +14695,7 @@ var _map2 = _interopRequireDefault(_map);
 
 exports.default = Media;
 
-var _logs = __webpack_require__(18);
+var _logs = __webpack_require__(19);
 
 var _eventemitter = __webpack_require__(32);
 
@@ -14919,7 +14927,7 @@ var _config = __webpack_require__(359);
 
 var _config2 = _interopRequireDefault(_config);
 
-var _logs = __webpack_require__(18);
+var _logs = __webpack_require__(19);
 
 var _eventemitter = __webpack_require__(32);
 
@@ -16028,9 +16036,12 @@ exports.restartMedia = restartMedia;
 exports.restartMediaFinish = restartMediaFinish;
 exports.resync = resync;
 exports.resyncFinish = resyncFinish;
+exports.playAudio = playAudio;
+exports.playAudioPending = playAudioPending;
+exports.playAudioFinish = playAudioFinish;
 exports.updateCall = updateCall;
 
-var _actionTypes = __webpack_require__(19);
+var _actionTypes = __webpack_require__(20);
 
 var actionTypes = _interopRequireWildcard(_actionTypes);
 
@@ -16386,6 +16397,53 @@ function resync(id, params) {
 function resyncFinish(id, params) {
   return callActionHelper(actionTypes.RESYNC_FINISH, id, params);
 }
+
+/**
+ * API action to trigger the "play audio" saga.
+ * @method playAudio
+ * @param {string} id Call ID.
+ * @param {string} filePath
+ * @param {Object} deferred
+ * @param {Function} deferred.playingCallback Callback for when the audio file starts playing.
+ * @param {Promise} deferred.operation The Promise for when the operation completes.
+ */
+function playAudio(id, filePath, { playingCallback, operation }) {
+  return {
+    type: actionTypes.PLAY_AUDIO,
+    payload: { id, filePath },
+    meta: { playingCallback, operation }
+  };
+}
+
+/**
+ * Saga action to signify the "playAudioFile" operation is midway through.
+ * @method playAudioPending
+ * @param {string} id Call ID.
+ */
+function playAudioPending(id) {
+  return {
+    type: actionTypes.PENDING_PLAY_AUDIO,
+    payload: { id }
+  };
+}
+
+/**
+ * Saga action to signify "saga complete".
+ * @method playAudioFinish
+ * @param {string} id Call ID.
+ * @param {BasicError} [error] If the operation failed, the error.
+ */
+function playAudioFinish(id, error) {
+  return {
+    type: actionTypes.PLAY_AUDIO_FINISH,
+    payload: {
+      id,
+      error
+    },
+    error: error !== undefined
+  };
+}
+
 // Generic action.
 function updateCall(id, params) {
   return callActionHelper(actionTypes.UPDATE_CALL, id, params);
@@ -19000,7 +19058,7 @@ var _actions = __webpack_require__(116);
 
 var actions = _interopRequireWildcard(_actions);
 
-var _makeRequest = __webpack_require__(450);
+var _makeRequest = __webpack_require__(451);
 
 var _makeRequest2 = _interopRequireDefault(_makeRequest);
 
@@ -20247,17 +20305,17 @@ var _newCallMe = __webpack_require__(381);
 
 var _newCallMe2 = _interopRequireDefault(_newCallMe);
 
-var _link = __webpack_require__(429);
+var _link = __webpack_require__(430);
 
 var _link2 = _interopRequireDefault(_link);
 
-var _link3 = __webpack_require__(438);
+var _link3 = __webpack_require__(439);
 
 var _link4 = _interopRequireDefault(_link3);
 
-var _request = __webpack_require__(448);
+var _request = __webpack_require__(449);
 
-__webpack_require__(456);
+__webpack_require__(457);
 
 var _sdpHandlers = __webpack_require__(187);
 
@@ -20842,7 +20900,7 @@ $export($export.S + $export.F, 'Object', { assign: __webpack_require__(195) });
 "use strict";
 
 // 19.1.2.1 Object.assign(target, source, ...)
-var DESCRIPTORS = __webpack_require__(21);
+var DESCRIPTORS = __webpack_require__(22);
 var getKeys = __webpack_require__(47);
 var gOPS = __webpack_require__(98);
 var pIE = __webpack_require__(60);
@@ -23118,7 +23176,7 @@ var global = __webpack_require__(14);
 var ctx = __webpack_require__(33);
 var classof = __webpack_require__(102);
 var $export = __webpack_require__(12);
-var isObject = __webpack_require__(20);
+var isObject = __webpack_require__(21);
 var aFunction = __webpack_require__(57);
 var anInstance = __webpack_require__(103);
 var forOf = __webpack_require__(64);
@@ -24525,7 +24583,7 @@ module.exports = __webpack_require__(8).Symbol;
 // ECMAScript 6 symbols shim
 var global = __webpack_require__(14);
 var has = __webpack_require__(35);
-var DESCRIPTORS = __webpack_require__(21);
+var DESCRIPTORS = __webpack_require__(22);
 var $export = __webpack_require__(12);
 var redefine = __webpack_require__(129);
 var META = __webpack_require__(79).KEY;
@@ -24539,7 +24597,7 @@ var wksDefine = __webpack_require__(107);
 var enumKeys = __webpack_require__(234);
 var isArray = __webpack_require__(146);
 var anObject = __webpack_require__(31);
-var isObject = __webpack_require__(20);
+var isObject = __webpack_require__(21);
 var toObject = __webpack_require__(48);
 var toIObject = __webpack_require__(39);
 var toPrimitive = __webpack_require__(91);
@@ -24548,7 +24606,7 @@ var _create = __webpack_require__(75);
 var gOPNExt = __webpack_require__(235);
 var $GOPD = __webpack_require__(148);
 var $GOPS = __webpack_require__(98);
-var $DP = __webpack_require__(25);
+var $DP = __webpack_require__(26);
 var $keys = __webpack_require__(47);
 var gOPD = $GOPD.f;
 var dP = $DP.f;
@@ -26204,7 +26262,7 @@ var _actionTypes = __webpack_require__(80);
 
 var actionTypes = _interopRequireWildcard(_actionTypes);
 
-var _reduxActions = __webpack_require__(23);
+var _reduxActions = __webpack_require__(24);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -26629,7 +26687,7 @@ module.exports = function (original, length) {
 /* 256 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var isObject = __webpack_require__(20);
+var isObject = __webpack_require__(21);
 var isArray = __webpack_require__(146);
 var SPECIES = __webpack_require__(16)('species');
 
@@ -27212,7 +27270,7 @@ module.exports = function defineProperties(T, D) {
 
 var $export = __webpack_require__(12);
 // 19.1.2.3 / 15.2.3.7 Object.defineProperties(O, Properties)
-$export($export.S + $export.F * !__webpack_require__(21), 'Object', { defineProperties: __webpack_require__(130) });
+$export($export.S + $export.F * !__webpack_require__(22), 'Object', { defineProperties: __webpack_require__(130) });
 
 
 /***/ }),
@@ -27274,7 +27332,7 @@ $export($export.S + $export.F * !__webpack_require__(142)(function (iter) { Arra
 
 "use strict";
 
-var $defineProperty = __webpack_require__(25);
+var $defineProperty = __webpack_require__(26);
 var createDesc = __webpack_require__(46);
 
 module.exports = function (object, index, value) {
@@ -27644,7 +27702,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.iceCollectionCheckFunction = iceCollectionCheckFunction;
 
-var _constants = __webpack_require__(22);
+var _constants = __webpack_require__(18);
 
 var _sdpTransform = __webpack_require__(41);
 
@@ -28036,7 +28094,7 @@ var _actionTypes = __webpack_require__(158);
 
 var actionTypes = _interopRequireWildcard(_actionTypes);
 
-var _reduxActions = __webpack_require__(23);
+var _reduxActions = __webpack_require__(24);
 
 var _utils = __webpack_require__(7);
 
@@ -28621,7 +28679,7 @@ var _sagas = __webpack_require__(315);
 
 var sagas = _interopRequireWildcard(_sagas);
 
-var _actions = __webpack_require__(26);
+var _actions = __webpack_require__(27);
 
 var _actions2 = __webpack_require__(42);
 
@@ -28797,7 +28855,7 @@ var _extends3 = _interopRequireDefault(_extends2);
 
 exports.default = mediaAPI;
 
-var _actions = __webpack_require__(26);
+var _actions = __webpack_require__(27);
 
 var _selectors = __webpack_require__(66);
 
@@ -29208,6 +29266,7 @@ exports.sessionIceConnectionStateChange = sessionIceConnectionStateChange;
 exports.sessionIceGatheringStateChange = sessionIceGatheringStateChange;
 exports.sessionIceCandidateCollected = sessionIceCandidateCollected;
 exports.sessionIceCollectionScheduledCheck = sessionIceCollectionScheduledCheck;
+exports.sessionAudioEnded = sessionAudioEnded;
 
 var _actionTypes = __webpack_require__(9);
 
@@ -29276,6 +29335,18 @@ function sessionIceCandidateCollected(id, params) {
 
 function sessionIceCollectionScheduledCheck(id, params) {
   return sessionActionHelper(actionTypes.SESSION_ICE_COLLECTION_SCHEDULED_CHECK, id, params);
+}
+
+/*
+ * Action to signify that an audio file has ended. Dispatched at the end of the
+ *    `insertAudio` Session method.
+ */
+function sessionAudioEnded(id, params) {
+  return {
+    type: actionTypes.SESSION_AUDIO_ENDED,
+    payload: (0, _extends3.default)({ id }, params),
+    error: Boolean(params.error)
+  };
 }
 
 /***/ }),
@@ -29434,7 +29505,7 @@ var _actionTypes = __webpack_require__(9);
 
 var actionTypes = _interopRequireWildcard(_actionTypes);
 
-var _reduxActions = __webpack_require__(23);
+var _reduxActions = __webpack_require__(24);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -29490,7 +29561,7 @@ var _actionTypes = __webpack_require__(9);
 
 var actionTypes = _interopRequireWildcard(_actionTypes);
 
-var _reduxActions = __webpack_require__(23);
+var _reduxActions = __webpack_require__(24);
 
 var _fp = __webpack_require__(4);
 
@@ -29580,7 +29651,7 @@ var _actionTypes = __webpack_require__(9);
 
 var actionTypes = _interopRequireWildcard(_actionTypes);
 
-var _reduxActions = __webpack_require__(23);
+var _reduxActions = __webpack_require__(24);
 
 var _fp = __webpack_require__(4);
 
@@ -29751,7 +29822,7 @@ var _actionTypes = __webpack_require__(9);
 
 var actionTypes = _interopRequireWildcard(_actionTypes);
 
-var _reduxActions = __webpack_require__(23);
+var _reduxActions = __webpack_require__(24);
 
 var _fp = __webpack_require__(4);
 
@@ -29858,7 +29929,7 @@ var _actionTypes = __webpack_require__(9);
 
 var actionTypes = _interopRequireWildcard(_actionTypes);
 
-var _reduxActions = __webpack_require__(23);
+var _reduxActions = __webpack_require__(24);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -30143,7 +30214,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = watchDeviceEvents;
 exports.setListeners = setListeners;
 
-var _actions = __webpack_require__(26);
+var _actions = __webpack_require__(27);
 
 var _utils = __webpack_require__(7);
 
@@ -30218,7 +30289,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = watchTrackManagerEvents;
 exports.setListeners = setListeners;
 
-var _actions = __webpack_require__(26);
+var _actions = __webpack_require__(27);
 
 var _actionTypes = __webpack_require__(9);
 
@@ -30347,7 +30418,7 @@ var _effects = __webpack_require__(1);
 
 var _reduxSaga = __webpack_require__(30);
 
-var _actions = __webpack_require__(26);
+var _actions = __webpack_require__(27);
 
 var _utils = __webpack_require__(7);
 
@@ -30429,7 +30500,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = watchMediaManagerEvents;
 exports.setListeners = setListeners;
 
-var _actions = __webpack_require__(26);
+var _actions = __webpack_require__(27);
 
 var _actionTypes = __webpack_require__(9);
 
@@ -30541,7 +30612,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = watchMediaEvents;
 exports.setListeners = setListeners;
 
-var _actions = __webpack_require__(26);
+var _actions = __webpack_require__(27);
 
 var _utils = __webpack_require__(7);
 
@@ -30634,7 +30705,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = watchSessionManagerEvents;
 exports.setListeners = setListeners;
 
-var _actions = __webpack_require__(26);
+var _actions = __webpack_require__(27);
 
 var _actionTypes = __webpack_require__(9);
 
@@ -30739,7 +30810,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = watchSessionEvents;
 exports.setListeners = setListeners;
 
-var _actions = __webpack_require__(26);
+var _actions = __webpack_require__(27);
 
 var _utils = __webpack_require__(7);
 
@@ -30838,6 +30909,11 @@ function setListeners(session, emit, END = 'END') {
     emit(_actions.sessionActions.sessionIceCollectionScheduledCheck(session.id, obj));
   };
 
+  // Listen for when audio files end (from `insertAudio` API).
+  const audioFileEnded = isSuccess => {
+    emit(_actions.sessionActions.sessionAudioEnded(session.id, { error: !isSuccess }));
+  };
+
   // Generic "something changed" handler.
   // TODO: Either use this for other events or remove it.
   // eslint-disable-next-line no-unused-vars
@@ -30858,6 +30934,7 @@ function setListeners(session, emit, END = 'END') {
   session.on('peer:iceGatheringStateChange', iceGatheringStateChange);
   session.on('peer:iceCandidateCollected', iceCandidateCollected);
   session.on('peer:iceCollectionScheduledCheck', iceCollectionScheduledCheck);
+  session.on('audioFileEnded', audioFileEnded);
 
   const unsubscribe = () => {
     session.off('new:track', newTrack);
@@ -30867,6 +30944,7 @@ function setListeners(session, emit, END = 'END') {
     session.off('peer:iceGatheringStateChange', iceGatheringStateChange);
     session.off('peer:iceCandidateCollected', iceCandidateCollected);
     session.off('peer:iceCollectionScheduledCheck', iceCollectionScheduledCheck);
+    session.off('audioFileEnded', audioFileEnded);
   };
   return unsubscribe;
 }
@@ -31019,7 +31097,7 @@ exports.muteTracks = muteTracks;
 exports.unmuteTracks = unmuteTracks;
 exports.initializeDevices = initializeDevices;
 
-var _actions = __webpack_require__(26);
+var _actions = __webpack_require__(27);
 
 var _logs = __webpack_require__(2);
 
@@ -31302,14 +31380,14 @@ module.exports = __webpack_require__(8).Reflect.set;
 /***/ (function(module, exports, __webpack_require__) {
 
 // 26.1.13 Reflect.set(target, propertyKey, V [, receiver])
-var dP = __webpack_require__(25);
+var dP = __webpack_require__(26);
 var gOPD = __webpack_require__(148);
 var getPrototypeOf = __webpack_require__(132);
 var has = __webpack_require__(35);
 var $export = __webpack_require__(12);
 var createDesc = __webpack_require__(46);
 var anObject = __webpack_require__(31);
-var isObject = __webpack_require__(20);
+var isObject = __webpack_require__(21);
 
 function set(target, propertyKey, V /* , receiver */) {
   var receiver = arguments.length < 4 ? target : arguments[3];
@@ -31940,7 +32018,7 @@ module.exports = __webpack_require__(8).Object.freeze;
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.2.5 Object.freeze(O)
-var isObject = __webpack_require__(20);
+var isObject = __webpack_require__(21);
 var meta = __webpack_require__(79).onFreeze;
 
 __webpack_require__(143)('freeze', function ($freeze) {
@@ -32578,7 +32656,7 @@ var _constants = __webpack_require__(28);
 
 var _fp = __webpack_require__(4);
 
-var _logs = __webpack_require__(18);
+var _logs = __webpack_require__(19);
 
 const log = _logs.logManager.getLogger('SdpPipeline');
 
@@ -36491,7 +36569,7 @@ var _map2 = _interopRequireDefault(_map);
 
 exports.default = MediaManager;
 
-var _logs = __webpack_require__(18);
+var _logs = __webpack_require__(19);
 
 var _media = __webpack_require__(165);
 
@@ -36814,7 +36892,7 @@ var _map2 = _interopRequireDefault(_map);
 
 exports.default = PeerManager;
 
-var _logs = __webpack_require__(18);
+var _logs = __webpack_require__(19);
 
 var _Peer = __webpack_require__(166);
 
@@ -36938,7 +37016,7 @@ var _map2 = _interopRequireDefault(_map);
 
 exports.default = SessionManager;
 
-var _logs = __webpack_require__(18);
+var _logs = __webpack_require__(19);
 
 var _session = __webpack_require__(364);
 
@@ -37057,7 +37135,7 @@ var _map2 = _interopRequireDefault(_map);
 
 exports.default = Session;
 
-var _logs = __webpack_require__(18);
+var _logs = __webpack_require__(19);
 
 var _constants = __webpack_require__(28);
 
@@ -38074,6 +38152,156 @@ function Session(id, managers, config = {}) {
   }
 
   /**
+   * Session method to load an audio file and insert it into the Session by
+   *    replacing an existing audio track temporarily.
+   *
+   * Provides feedback at two points in time:
+   *    1) When the audio file starts playing, or fails to start playing.
+   *        Done by fulfilling the method's Promise.
+   *    2) When the audio file ends playing, or encounters an error while playing.
+   *        Done by emitting an event.
+   *
+   * If the original audio track is replaced, but cannot be put back on the Session afterwards,
+   *    it is considered an error scenario. To "fix" this, the method will stop that track.
+   *    this is meant to avoid it being a "ghost" track. It will:
+   *        1) Clean-up resources and release the microphone,
+   *        2) Allow an application to handle it the same as any other track ending unsolicated.
+   *
+   * @method insertAudio
+   * @param {string} filePath
+   * @return {Promise} Resolves when audio file starts playing. Rejects if fails to start.
+   */
+  function insertAudio(filePath) {
+    return new _promise2.default((resolve, reject) => {
+      let isReady = false;
+      /*
+       * `playIfReady` needs to be called twice to start playing the audio file.
+       *    Once to ensure it "can play through".
+       *    Once to ensure the media will be streamed through the Peer.
+       */
+      function playIfReady() {
+        if (isReady) {
+          audio.play();
+        } else {
+          isReady = true;
+        }
+      }
+
+      /*
+       * End the original track from the Call, but pretend that it was "unsolicited". This
+       *    makes it appear the same as if something other than the SDK stopped the track
+       *    so that it falls into the same error-handling scenario as them.
+       */
+      function endOriginalTrack() {
+        log.info(`Stopping track ${oldTrack.id} to release the microphone after error.`);
+        oldTrack.track.stop();
+        oldTrack.track.onended(new Event('track-error'));
+      }
+
+      // Get the audio track we will be replacing temporarily.
+      const peer = peerManager.get(peerId);
+      const oldTrack = peer.localTracks.find(track => {
+        return track.track.kind === 'audio' && track.track.readyState === 'live';
+      });
+      if (!oldTrack) {
+        reject(new Error('No valid local audio track found to insert audio file on.'));
+      }
+      // The ID of the track currently on the Call.
+      let currentTrackId = oldTrack.id;
+
+      const audio = new Audio(filePath);
+      // Set the volume to 20%.
+      audio.volume = 0.2;
+
+      // Create a source node from that MediaElement.
+      const context = new AudioContext();
+      const source = context.createMediaElementSource(audio);
+
+      // Connect the source node to the destination (which has a MediaStream).
+      const dest = context.createMediaStreamDestination();
+      source.connect(dest);
+      const audioTrack = dest.stream.getAudioTracks()[0];
+
+      /*
+       * Replace the existing audio track on the Peer with the file's track.
+       * When it has been replaced, that is 1 of 2 conditions to be met before playing it.
+       */
+      peer.replaceTrack(audioTrack, { trackId: oldTrack.id }).then(() => {
+        // The original track has successfully been replaced; take note of that.
+        currentTrackId = audioTrack.id;
+        log.debug('Replaced audio from file media.');
+        playIfReady();
+      }).catch(err => {
+        log.info(`Failed to replace audio with file media: ${err.message}.`);
+        reject(new Error('Failed to replace audio track with file media.'));
+      });
+
+      /*
+       * Audio event listeners:
+       *    - canplaythrough: Enough of the file has been loaded that buffering isn't needed.
+       *    - play: The file has started playing.
+       *    - error: An error was encountered.
+       *    - ended: The file has stopped playing.
+       *
+       * From our usage of `audio`:
+       *    - canplaythrough: Happens once, before we start playing the file.
+       *    - play: Indicates we have started playing the file.
+       *    - error: Most likely that the file could not start playing because `new Audio(filePath)`
+       *        failed. Could also happen mid-play, but unknown.
+       *    - ended: Indicates the file reached the end (successfully).
+       *
+       * Ref: https://developer.mozilla.org/en-US/docs/Web/API/HTMLAudioElement
+       */
+
+      // When the track "can play through", that is 1 of 2 conditions to be met before playing it.
+      audio.oncanplaythrough = () => {
+        log.debug('File media ready to be played.');
+        playIfReady();
+      };
+
+      // When the file start's playing, resolve the `insertAudio` promise to provide feedback.
+      audio.onplay = () => {
+        log.debug(`Audio file started playing. Duration of ${audio.duration} seconds.`);
+        resolve(audio.duration);
+      };
+
+      // On an error, reject the `insertAudio` promise to provide feedback.
+      audio.onerror = () => {
+        log.info('Encountered error trying to play audio file.');
+
+        // If the original track is not on the Peer when this error happened,
+        //    try to put it back before rejecting the `insertAudio` method.
+        if (currentTrackId !== oldTrack.id) {
+          peer.replaceTrack(oldTrack.track, { trackId: audioTrack.id }).catch(() => {
+            // If we can't "rollback" the operation, end the original track
+            //    to prevent it from becoming a "ghost" track.
+            endOriginalTrack();
+          });
+        }
+        // Reject the promise if it hasn't been fulfilled.
+        reject(new Error('Failed to play audio file.'));
+        // Emit a failure event in case the promise has already been fulfilled.
+        emitter.emit('audioFileEnded', false);
+      };
+
+      // When the file ends, replace the original audio track back on the Peer.
+      audio.onended = event => {
+        log.debug('Audio file ended playing.');
+
+        peer.replaceTrack(oldTrack.track, { trackId: audioTrack.id }).then(() => {
+          log.debug('Replaced original audio track.');
+          emitter.emit('audioFileEnded', true);
+        }).catch(err => {
+          log.info('Failed to replace original audio track.', err);
+          endOriginalTrack();
+          // Failed to replace the original audio track.
+          emitter.emit('audioFileEnded', false);
+        });
+      };
+    });
+  }
+
+  /**
    * The exposed API.
    */
   return {
@@ -38123,6 +38351,7 @@ function Session(id, managers, config = {}) {
     getRemoteTrackIdsFromTransceivers,
     getIncomingRemoteTrackIds,
     getActiveRemoteTrackIds,
+    insertAudio,
     // Event APIs.
     on,
     once,
@@ -38148,7 +38377,7 @@ var _promise2 = _interopRequireDefault(_promise);
 
 exports.default = DeviceManager;
 
-var _logs = __webpack_require__(18);
+var _logs = __webpack_require__(19);
 
 var _eventemitter = __webpack_require__(32);
 
@@ -38501,7 +38730,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = Renderer;
 
-var _logs = __webpack_require__(18);
+var _logs = __webpack_require__(19);
 
 var _utils = __webpack_require__(82);
 
@@ -38893,7 +39122,7 @@ var _actionTypes = __webpack_require__(44);
 
 var actionTypes = _interopRequireWildcard(_actionTypes);
 
-var _reduxActions = __webpack_require__(23);
+var _reduxActions = __webpack_require__(24);
 
 var _fp = __webpack_require__(4);
 
@@ -40419,7 +40648,7 @@ var _extends3 = _interopRequireDefault(_extends2);
 exports.makeAnonymousCallEntry = makeAnonymousCallEntry;
 exports.anonymousCallEnd = anonymousCallEnd;
 
-var _actionTypes = __webpack_require__(19);
+var _actionTypes = __webpack_require__(20);
 
 var _actions = __webpack_require__(67);
 
@@ -40487,7 +40716,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.makeAnonymousCall = makeAnonymousCall;
 
-var _actions = __webpack_require__(27);
+var _actions = __webpack_require__(23);
 
 var _normalization = __webpack_require__(119);
 
@@ -40620,7 +40849,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.turnChanged = turnChanged;
 
-var _actionTypes = __webpack_require__(19);
+var _actionTypes = __webpack_require__(20);
 
 var actionTypes = _interopRequireWildcard(_actionTypes);
 
@@ -40662,7 +40891,7 @@ var _extends3 = _interopRequireDefault(_extends2);
 
 exports.default = anonymousAPI;
 
-var _actions = __webpack_require__(27);
+var _actions = __webpack_require__(23);
 
 var _uuid = __webpack_require__(55);
 
@@ -40694,7 +40923,7 @@ function anonymousAPI(otherApi) {
     // Setters.
     'setCustomParameters', 'setSdpHandlers',
     // Call functionality.
-    'hold', 'unhold', 'sendCustomParameters', 'end', 'addMedia', 'removeMedia', 'startVideo', 'stopVideo', 'sendDTMF', 'getStats', 'replaceTrack', 'restartMedia',
+    'hold', 'unhold', 'sendCustomParameters', 'end', 'addMedia', 'removeMedia', 'startVideo', 'stopVideo', 'sendDTMF', 'getStats', 'replaceTrack', 'restartMedia', 'playAudioFile',
     // States,
     'states', 'mediaConnectionStates'];
 
@@ -40821,7 +41050,7 @@ var _sagas = __webpack_require__(394);
 
 var sagas = _interopRequireWildcard(_sagas);
 
-var _events = __webpack_require__(424);
+var _events = __webpack_require__(425);
 
 var _events2 = _interopRequireDefault(_events);
 
@@ -41543,13 +41772,17 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _promise = __webpack_require__(15);
+
+var _promise2 = _interopRequireDefault(_promise);
+
 var _extends2 = __webpack_require__(5);
 
 var _extends3 = _interopRequireDefault(_extends2);
 
 exports.default = callAPI;
 
-var _actions = __webpack_require__(27);
+var _actions = __webpack_require__(23);
 
 var _selectors = __webpack_require__(10);
 
@@ -41565,7 +41798,7 @@ var _fp = __webpack_require__(4);
 
 var _utils = __webpack_require__(7);
 
-var _constants = __webpack_require__(22);
+var _constants = __webpack_require__(18);
 
 var _logs = __webpack_require__(2);
 
@@ -42800,6 +43033,102 @@ function callAPI({ dispatch, getState }) {
     },
 
     /**
+     * Plays an audio file to the remote side of the Call. This API will temporarily
+     *    replace the Call's local audio track with an audio file for the duration
+     *    of the audio file.
+     *
+     * The Call must be in `Connected` state and have a local audio track for this operation.
+     *
+     * This API will not affect media other than the local audio track. Other media on
+     *    the Call, such as local video or remote audio, can be {@link media.muteTracks muted}
+     *    or {@link media.removeTracks unrendered} during this operation if desired.
+     *
+     * This operation will use the browser's
+     *    [Audio constructor](https://developer.mozilla.org/en-US/docs/Web/API/HTMLAudioElement/Audio)
+     *    to read in the audio file. The `filePath` parameter will be used directly with `Audio`, so
+     *    can be either a relative file path to your audio file or a URL pointing to a file.
+     *
+     * This API returns a promise that can be used to track the progress of the operation.
+     *    The promise will resolve after the operation completes or reject if an error is
+     *    encountered. Additionally, an extra `onPlaying` callback is provided on the Promise
+     *    to indicate when the audio file actually begins to play. See the code example below
+     *    for a sample.
+     *
+     * The SDK will emit {@link call.event:call:operation call:operation} events locally
+     *    as the operation progresses. The remote endpoint will not receive an event for
+     *    this operation.
+     *
+     * If an error is encountered during the operation and the SDK is unable to replace
+     *    the original local audio track, then that track will be forcibly ended and an
+     *    {@link media.event:media:trackEnded media:trackEnded} event will be emitted
+     *    for it. This will release the microphone and avoid losing access to the track
+     *    while it is active, allowing the application to resolve the scenario by using
+     *    the {@link call.replaceTrack} API to revert the local audio track.
+     *
+     * @public
+     * @static
+     * @memberof call
+     * @requires call
+     * @requires callMe
+     * @method playAudioFile
+     * @param {string} callId The ID of the Call to act on.
+     * @param {string} filePath The path to the audio file.
+     * @return {Promise} Promise that resolves when the operation is complete.
+     * @example
+     * // The API returns a promise which will provide feedback about the operation.
+     * client.call.playAudioFile(callId, filePath)
+     *    .then(() => {
+     *      // Audio file has finished playing; call has reverted to previous audio.
+     *    })
+     *    .catch(err => {
+     *      // An error has occurred during the operation.
+     *    })
+     *
+     * // The returned promise can optionally provide feedback midway through the
+     * //   operation. A chainable `onPlaying` method denotes when the audio file has
+     * //   started to play and the Call's audio has been replaced.
+     * client.call.playAudioFile(callId, filePath)
+     *    .onPlaying(({ duration }) => {
+     *      // Audio file has started playing; call audio is now the file.
+     *      // Note: Calling `onPlaying` must be done before `then` and `catch` for it
+     *      //    to be chainable.
+     *    })
+     *    .then(() => { ... })
+     *    .catch(err => { ... })
+     */
+    playAudioFile(callId, filePath) {
+      log.debug(`${_logs.API_LOG_TAG}call.playAudioFile`, filePath);
+
+      let onPlayingCallback;
+      const operation = new _promise2.default((resolve, reject) => {
+        // Internal callback for when audio starts playing. Calls the app-callback
+        //    if one was provided.
+        function onPlaying(val) {
+          if (onPlayingCallback && typeof onPlayingCallback === 'function') {
+            onPlayingCallback(val);
+          }
+        }
+
+        dispatch(_actions.callActions.playAudio(callId, filePath, {
+          playingCallback: onPlaying,
+          operation: { resolve, reject }
+        }));
+      });
+
+      /*
+       * Add a function to the Promise so the application can provide a callback
+       *    function for when the audio starts playing.
+       */
+      operation.onPlaying = callback => {
+        onPlayingCallback = callback;
+        // Return the `operation` so this can be chained.
+        return operation;
+      };
+
+      return operation;
+    },
+
+    /**
      * Set {@link call.SdpHandlerFunction SDP Handler Functions} that will be run as part of a pipeline for all future calls.
      *  This will replace any SDP Handlers that were previously set.
      *
@@ -43175,7 +43504,7 @@ var _extends2 = __webpack_require__(5);
 
 var _extends3 = _interopRequireDefault(_extends2);
 
-var _actionTypes = __webpack_require__(19);
+var _actionTypes = __webpack_require__(20);
 
 var actionTypes = _interopRequireWildcard(_actionTypes);
 
@@ -43183,13 +43512,13 @@ var _actionTypes2 = __webpack_require__(9);
 
 var webrtcActionTypes = _interopRequireWildcard(_actionTypes2);
 
-var _constants = __webpack_require__(22);
+var _constants = __webpack_require__(18);
 
 var _constants2 = __webpack_require__(29);
 
 var _utils = __webpack_require__(392);
 
-var _reduxActions = __webpack_require__(23);
+var _reduxActions = __webpack_require__(24);
 
 var _fp = __webpack_require__(4);
 
@@ -43366,6 +43695,9 @@ callReducers[actionTypes.REPLACE_TRACK] = noop;
 callReducers[actionTypes.REMOTE_SLOW_START] = noop;
 callReducers[actionTypes.GET_STATS] = noop;
 callReducers[actionTypes.GET_STATS_FINISH] = noop;
+callReducers[actionTypes.PLAY_AUDIO] = noop;
+callReducers[actionTypes.PENDING_PLAY_AUDIO] = noop;
+callReducers[actionTypes.PLAY_AUDIO_FINISH] = noop;
 
 /*
  * When answering, rejecting, or forwarding a call, update state to say that we
@@ -43946,7 +44278,7 @@ callReducers[webrtcActionTypes.SESSION_ICE_CONNECTION_STATE_CHANGE] = {
 const callReducer = (0, _reduxActions.handleActions)(callReducers, {});
 
 // Actions routed to call-tier reducers.
-const specificCallActions = (0, _reduxActions.combineActions)(actionTypes.PENDING_OPERATION, actionTypes.PENDING_MAKE_CALL, actionTypes.MAKE_CALL_FINISH, actionTypes.ANSWER_CALL, actionTypes.ANSWER_CALL_FINISH, actionTypes.REJECT_CALL, actionTypes.REJECT_CALL_FINISH, actionTypes.CALL_ACCEPTED, actionTypes.SEND_RINGING_FEEDBACK, actionTypes.SEND_RINGING_FEEDBACK_FINISH, actionTypes.CALL_RINGING, actionTypes.SESSION_PROGRESS, actionTypes.CALL_CANCELLED, actionTypes.IGNORE_CALL, actionTypes.IGNORE_CALL_FINISH, actionTypes.END_CALL, actionTypes.END_CALL_FINISH, actionTypes.CALL_HOLD, actionTypes.CALL_HOLD_FINISH, actionTypes.CALL_UNHOLD, actionTypes.CALL_UNHOLD_FINISH, actionTypes.SET_CUSTOM_PARAMETERS, actionTypes.SEND_CUSTOM_PARAMETERS, actionTypes.SEND_CUSTOM_PARAMETERS_FINISH, actionTypes.CALL_REMOTE_HOLD_FINISH, actionTypes.CALL_REMOTE_UNHOLD_FINISH, actionTypes.REMOTE_ADD_MEDIA_FINISH, actionTypes.REMOTE_REMOVE_MEDIA_FINISH, actionTypes.ADD_MEDIA, actionTypes.ADD_BASIC_MEDIA, actionTypes.ADD_MEDIA_FINISH, actionTypes.REMOVE_MEDIA, actionTypes.REMOVE_BASIC_MEDIA, actionTypes.REMOVE_MEDIA_FINISH, actionTypes.UPDATE_CALL, actionTypes.FORWARD_CALL, actionTypes.FORWARD_CALL_FINISH, actionTypes.DIRECT_TRANSFER, actionTypes.DIRECT_TRANSFER_FINISH, actionTypes.SEND_DTMF, actionTypes.SEND_DTMF_FINISH, actionTypes.JOIN, actionTypes.REPLACE_TRACK, actionTypes.REPLACE_TRACK_FINISH, actionTypes.MEDIA_RESTART, actionTypes.MEDIA_RESTART_FINISH, actionTypes.RESYNC, actionTypes.RESYNC_FINISH, actionTypes.REMOTE_SLOW_START, actionTypes.REMOTE_START_MOH_FINISH, actionTypes.REMOTE_STOP_MOH_FINISH, actionTypes.GET_STATS, actionTypes.GET_STATS_FINISH, actionTypes.SESSION_CREATED);
+const specificCallActions = (0, _reduxActions.combineActions)(actionTypes.PENDING_OPERATION, actionTypes.PENDING_MAKE_CALL, actionTypes.MAKE_CALL_FINISH, actionTypes.ANSWER_CALL, actionTypes.ANSWER_CALL_FINISH, actionTypes.REJECT_CALL, actionTypes.REJECT_CALL_FINISH, actionTypes.CALL_ACCEPTED, actionTypes.SEND_RINGING_FEEDBACK, actionTypes.SEND_RINGING_FEEDBACK_FINISH, actionTypes.CALL_RINGING, actionTypes.SESSION_PROGRESS, actionTypes.CALL_CANCELLED, actionTypes.IGNORE_CALL, actionTypes.IGNORE_CALL_FINISH, actionTypes.END_CALL, actionTypes.END_CALL_FINISH, actionTypes.CALL_HOLD, actionTypes.CALL_HOLD_FINISH, actionTypes.CALL_UNHOLD, actionTypes.CALL_UNHOLD_FINISH, actionTypes.SET_CUSTOM_PARAMETERS, actionTypes.SEND_CUSTOM_PARAMETERS, actionTypes.SEND_CUSTOM_PARAMETERS_FINISH, actionTypes.CALL_REMOTE_HOLD_FINISH, actionTypes.CALL_REMOTE_UNHOLD_FINISH, actionTypes.REMOTE_ADD_MEDIA_FINISH, actionTypes.REMOTE_REMOVE_MEDIA_FINISH, actionTypes.ADD_MEDIA, actionTypes.ADD_BASIC_MEDIA, actionTypes.ADD_MEDIA_FINISH, actionTypes.REMOVE_MEDIA, actionTypes.REMOVE_BASIC_MEDIA, actionTypes.REMOVE_MEDIA_FINISH, actionTypes.UPDATE_CALL, actionTypes.FORWARD_CALL, actionTypes.FORWARD_CALL_FINISH, actionTypes.DIRECT_TRANSFER, actionTypes.DIRECT_TRANSFER_FINISH, actionTypes.SEND_DTMF, actionTypes.SEND_DTMF_FINISH, actionTypes.JOIN, actionTypes.REPLACE_TRACK, actionTypes.REPLACE_TRACK_FINISH, actionTypes.MEDIA_RESTART, actionTypes.MEDIA_RESTART_FINISH, actionTypes.RESYNC, actionTypes.RESYNC_FINISH, actionTypes.REMOTE_SLOW_START, actionTypes.REMOTE_START_MOH_FINISH, actionTypes.REMOTE_STOP_MOH_FINISH, actionTypes.GET_STATS, actionTypes.GET_STATS_FINISH, actionTypes.SESSION_CREATED, actionTypes.PLAY_AUDIO, actionTypes.PENDING_PLAY_AUDIO, actionTypes.PLAY_AUDIO_FINISH);
 
 const specificWebrtcSessionActions = (0, _reduxActions.combineActions)(webrtcActionTypes.SESSION_ICE_CONNECTION_STATE_CHANGE);
 
@@ -44208,11 +44540,11 @@ var _extends2 = __webpack_require__(5);
 
 var _extends3 = _interopRequireDefault(_extends2);
 
-var _actionTypes = __webpack_require__(19);
+var _actionTypes = __webpack_require__(20);
 
 var actionTypes = _interopRequireWildcard(_actionTypes);
 
-var _reduxActions = __webpack_require__(23);
+var _reduxActions = __webpack_require__(24);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -44289,8 +44621,9 @@ exports.getAvailableCodecsEntry = getAvailableCodecsEntry;
 exports.restartIce = restartIce;
 exports.watchForMediaDisconnect = watchForMediaDisconnect;
 exports.callCollectionCheckEntry = callCollectionCheckEntry;
+exports.playAudioEntry = playAudioEntry;
 
-var _actionTypes = __webpack_require__(19);
+var _actionTypes = __webpack_require__(20);
 
 var actionTypes = _interopRequireWildcard(_actionTypes);
 
@@ -44312,7 +44645,7 @@ var requests = _interopRequireWildcard(_calls);
 
 var _utils = __webpack_require__(398);
 
-var _constants = __webpack_require__(22);
+var _constants = __webpack_require__(18);
 
 var _selectors = __webpack_require__(10);
 
@@ -44330,6 +44663,10 @@ var _support2 = __webpack_require__(422);
 
 var _codecs = __webpack_require__(423);
 
+var _audioFile = __webpack_require__(424);
+
+var _audioFile2 = _interopRequireDefault(_audioFile);
+
 var _effects = __webpack_require__(1);
 
 var _actionTypes4 = __webpack_require__(45);
@@ -44345,6 +44682,15 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // Other plugins
+
+
+// Callstack plugin.
+/**
+ * Call saga index.
+ * Defines which actions trigger which sagas.
+ */
+
+// Call plugin.
 const log = _logs.logManager.getLogger('CALL');
 
 /**
@@ -44360,15 +44706,6 @@ const log = _logs.logManager.getLogger('CALL');
 
 
 // Libraries.
-
-
-// Callstack plugin.
-/**
- * Call saga index.
- * Defines which actions trigger which sagas.
- */
-
-// Call plugin.
 function* createCall(deps) {
   yield (0, _effects.takeEvery)(actionTypes.MAKE_CALL, _establish.makeCall, (0, _extends3.default)({}, deps, { requests }));
 }
@@ -44980,6 +45317,14 @@ function* callCollectionCheckEntry(deps) {
   yield (0, _effects.takeEvery)(onIceCollectionActions, _support2.callIceCollectionCheck, deps);
 }
 
+/**
+ * Entry saga to forward actions to the saga.
+ * @method playAudioEntry
+ */
+function* playAudioEntry(deps) {
+  yield (0, _effects.takeLeading)(actionTypes.PLAY_AUDIO, _audioFile2.default, deps);
+}
+
 /***/ }),
 /* 395 */
 /***/ (function(module, exports, __webpack_require__) {
@@ -44997,7 +45342,7 @@ var _extends3 = _interopRequireDefault(_extends2);
 
 exports.setTurnCredentials = setTurnCredentials;
 
-var _actions = __webpack_require__(27);
+var _actions = __webpack_require__(23);
 
 var _selectors = __webpack_require__(10);
 
@@ -46107,11 +46452,11 @@ exports.rejectCall = rejectCall;
 exports.ignoreCall = ignoreCall;
 exports.forwardCall = forwardCall;
 
-var _actions = __webpack_require__(27);
+var _actions = __webpack_require__(23);
 
 var _selectors = __webpack_require__(10);
 
-var _constants = __webpack_require__(22);
+var _constants = __webpack_require__(18);
 
 var _bandwidth = __webpack_require__(175);
 
@@ -47941,7 +48286,7 @@ var rollbackOps = _interopRequireWildcard(_rollback);
 
 var _bandwidth = __webpack_require__(175);
 
-var _actions = __webpack_require__(27);
+var _actions = __webpack_require__(23);
 
 var _selectors = __webpack_require__(10);
 
@@ -47959,7 +48304,7 @@ var _selectors4 = __webpack_require__(68);
 
 var _effects = __webpack_require__(118);
 
-var _constants = __webpack_require__(22);
+var _constants = __webpack_require__(18);
 
 var _effects2 = __webpack_require__(1);
 
@@ -49627,13 +49972,13 @@ exports.callStatusUpdateFailed = callStatusUpdateFailed;
 exports.callCancelled = callCancelled;
 exports.receiveEarlyMedia = receiveEarlyMedia;
 
-var _actions = __webpack_require__(27);
+var _actions = __webpack_require__(23);
 
-var _actionTypes = __webpack_require__(19);
+var _actionTypes = __webpack_require__(20);
 
 var _selectors = __webpack_require__(10);
 
-var _constants = __webpack_require__(22);
+var _constants = __webpack_require__(18);
 
 var _constants2 = __webpack_require__(29);
 
@@ -50492,15 +50837,15 @@ var _remoteTracks = __webpack_require__(121);
 
 var _remoteTracks2 = _interopRequireDefault(_remoteTracks);
 
-var _actions = __webpack_require__(27);
+var _actions = __webpack_require__(23);
 
-var _actionTypes = __webpack_require__(19);
+var _actionTypes = __webpack_require__(20);
 
 var actionTypes = _interopRequireWildcard(_actionTypes);
 
 var _selectors = __webpack_require__(10);
 
-var _constants = __webpack_require__(22);
+var _constants = __webpack_require__(18);
 
 var _sdp = __webpack_require__(417);
 
@@ -51378,7 +51723,7 @@ exports.isLocalHold = isLocalHold;
 exports.isRemoteHold = isRemoteHold;
 exports.isDualHold = isDualHold;
 
-var _constants = __webpack_require__(22);
+var _constants = __webpack_require__(18);
 
 /**
  * Retrieves the current state of media flow based on a call's state.
@@ -51651,11 +51996,11 @@ exports.hasTelephoneEvent = hasTelephoneEvent;
 exports.convertTone = convertTone;
 exports.splitTones = splitTones;
 
-var _actions = __webpack_require__(27);
+var _actions = __webpack_require__(23);
 
 var _selectors = __webpack_require__(10);
 
-var _constants = __webpack_require__(22);
+var _constants = __webpack_require__(18);
 
 var _logs = __webpack_require__(2);
 
@@ -52093,21 +52438,21 @@ exports.resyncCallState = resyncCallState;
 exports.normalizeIceFailure = normalizeIceFailure;
 exports.callIceCollectionCheck = callIceCollectionCheck;
 
-var _actions = __webpack_require__(27);
+var _actions = __webpack_require__(23);
 
-var _actionTypes = __webpack_require__(19);
+var _actionTypes = __webpack_require__(20);
 
 var actionTypes = _interopRequireWildcard(_actionTypes);
 
 var _selectors = __webpack_require__(10);
 
-var _constants = __webpack_require__(22);
+var _constants = __webpack_require__(18);
 
 var _midcall = __webpack_require__(69);
 
 var _logs = __webpack_require__(2);
 
-var _actions2 = __webpack_require__(26);
+var _actions2 = __webpack_require__(27);
 
 var _actionTypes2 = __webpack_require__(9);
 
@@ -52650,25 +52995,186 @@ function* getAvailableCodecs(deps, action) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.default = playAudioFile;
+
+var _actions = __webpack_require__(23);
+
+var _selectors = __webpack_require__(10);
+
+var _constants = __webpack_require__(18);
+
+var _logs = __webpack_require__(2);
+
+var _errors = __webpack_require__(11);
+
+var _errors2 = _interopRequireDefault(_errors);
+
+var _actionTypes = __webpack_require__(9);
+
+var _effects = __webpack_require__(1);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+ * "Play audio file" operation.
+ * Validates that it can perform the operation, then passes it off to the
+ *    Call's Session object. The WebRTC stack performs the actual operation; this
+ *    function manages the responses from the WebRTC stack and forwards feedback
+ *    to the API.
+ *
+ * @method playAudioFile
+ * @param {Object}   deps          Dependencies that the saga uses.
+ * @param {Object}   deps.webRTC   The WebRTC stack.
+ * @param {Object}   action        An action of type `PLAY_AUDIO`.
+ */
+
+
+// Other plugins.
+function* playAudioFile(deps, action) {
+  const { webRTC } = deps;
+  const { id: callId, filePath } = action.payload;
+  const { playingCallback, operation } = action.meta;
+
+  const log = _logs.logManager.getLogger('CALL', callId);
+  log.info('Replacing call audio with file media.');
+
+  const targetCall = yield (0, _effects.select)(_selectors.getCallById, callId);
+  if (!targetCall) {
+    const err = new _errors2.default({
+      code: _errors.callCodes.INVALID_PARAM,
+      message: 'Call state not found; invalid call ID.'
+    });
+    yield (0, _effects.put)(_actions.callActions.playAudioFinish(callId, err));
+    operation.reject(err);
+    return;
+  } else if (_constants.CALL_STATES.CONNECTED !== targetCall.state) {
+    const err = new _errors2.default({
+      code: _errors.callCodes.INVALID_STATE,
+      message: `Call is in an invalid state: state=${targetCall.state}. It should be: state=${_constants.CALL_STATES.CONNECTED}.`
+    });
+    yield (0, _effects.put)(_actions.callActions.playAudioFinish(callId, err));
+    operation.reject(err);
+    return;
+  }
+
+  let session;
+  try {
+    session = yield (0, _effects.call)([webRTC.sessionManager, 'get'], targetCall.webrtcSessionId);
+
+    if (!session) {
+      throw new _errors2.default({
+        code: _errors.callCodes.INVALID_STATE,
+        message: "Call's WebRTC session not found."
+      });
+    }
+  } catch (err) {
+    yield (0, _effects.put)(_actions.callActions.playAudioFinish(callId, err));
+    operation.reject(err);
+    return;
+  }
+
+  let duration;
+  try {
+    duration = yield (0, _effects.call)([session, 'insertAudio'], filePath);
+    log.info('Audio file has started to play.');
+    yield (0, _effects.put)(_actions.callActions.playAudioPending(callId));
+  } catch (err) {
+    // Failed to start playing audio file.
+    log.info('Failed to start playing audio file.');
+
+    let code;
+    switch (err.message) {
+      case 'Failed to play audio file.':
+        // Likely: the filePath is invalid.
+        code = _errors.callCodes.INVALID_PARAM;
+        break;
+      case 'No valid local audio track found to insert audio file on.':
+        // Error: The Call needs to have a local audio track.
+        code = _errors.callCodes.NOT_SUPPORTED;
+        break;
+      default:
+        // Likely: the native `replaceTrack` function failed.
+        code = _errors.callCodes.UNKNOWN_ERROR;
+        break;
+    }
+
+    const error = new _errors2.default({ code, message: err.message });
+    yield (0, _effects.put)(_actions.callActions.playAudioFinish(callId, error));
+    operation.reject(error);
+    return;
+  }
+
+  // Resolve the 'pending' promise to signify the file has started to play.
+  playingCallback({ duration });
+
+  // Wait for the notice saying that the audio file has stopped playing.
+  const { timeout, endedAction } = yield (0, _effects.race)({
+    timeout: (0, _effects.delay)(duration * 1000 + 3000),
+    endedAction: (0, _effects.take)(action => {
+      return action.type === _actionTypes.SESSION_AUDIO_ENDED && action.payload.id === session.id;
+    })
+  });
+
+  if (timeout) {
+    // Audio file hasn't completed when it should have; assume error.
+    log.info('No response from audio file after expected duration; timing-out.');
+    const error = new _errors2.default({
+      code: _errors.callCodes.STATE_DESYNC,
+      message: 'Play audio file operation timed-out.'
+    });
+
+    yield (0, _effects.put)(_actions.callActions.playAudioFinish(callId, error));
+    operation.reject(error);
+  } else if (endedAction.error) {
+    // Audio file encountered an error.
+    log.info('Audio file encountered an error while playing.');
+    const error = new _errors2.default({
+      code: _errors.callCodes.UNKNOWN_ERROR,
+      message: 'Encountered error while playing audio file.'
+    });
+
+    yield (0, _effects.put)(_actions.callActions.playAudioFinish(callId, error));
+    operation.reject(error);
+  } else {
+    // Audio file ended.
+    log.info('Audio file has finished playing.');
+    yield (0, _effects.put)(_actions.callActions.playAudioFinish(callId));
+    operation.resolve();
+  }
+}
+
+// Libraries.
+// Call plugin.
+
+/***/ }),
+/* 425 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 exports.callEvents = undefined;
 
 var _extends2 = __webpack_require__(5);
 
 var _extends3 = _interopRequireDefault(_extends2);
 
-var _establish = __webpack_require__(425);
+var _establish = __webpack_require__(426);
 
 var _establish2 = _interopRequireDefault(_establish);
 
-var _media = __webpack_require__(426);
+var _media = __webpack_require__(427);
 
 var _media2 = _interopRequireDefault(_media);
 
-var _complex = __webpack_require__(427);
+var _complex = __webpack_require__(428);
 
 var _complex2 = _interopRequireDefault(_complex);
 
-var _misc = __webpack_require__(428);
+var _misc = __webpack_require__(429);
 
 var _misc2 = _interopRequireDefault(_misc);
 
@@ -52679,7 +53185,7 @@ const callEvents = exports.callEvents = (0, _extends3.default)({}, _establish2.d
 exports.default = callEvents;
 
 /***/ }),
-/* 425 */
+/* 426 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -52697,7 +53203,7 @@ var _eventTypes = __webpack_require__(70);
 
 var eventTypes = _interopRequireWildcard(_eventTypes);
 
-var _actionTypes = __webpack_require__(19);
+var _actionTypes = __webpack_require__(20);
 
 var actionTypes = _interopRequireWildcard(_actionTypes);
 
@@ -52932,7 +53438,7 @@ callEvents[actionTypes.END_CALL_FINISH] = (action, params) => {
 exports.default = callEvents;
 
 /***/ }),
-/* 426 */
+/* 427 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -52950,7 +53456,7 @@ var _eventTypes = __webpack_require__(70);
 
 var eventTypes = _interopRequireWildcard(_eventTypes);
 
-var _actionTypes = __webpack_require__(19);
+var _actionTypes = __webpack_require__(20);
 
 var actionTypes = _interopRequireWildcard(_actionTypes);
 
@@ -52990,6 +53496,10 @@ const callEvents = {};
 
     - REMOTE_START_MOH_FINISH
     - REMOTE_STOP_MOH_FINISH
+
+    - PLAY_AUDIO
+    - PENDING_PLAY_AUDIO
+    - PLAY_AUDIO_FINISH
  */
 
 // Handlers.
@@ -53180,10 +53690,36 @@ callEvents[actionTypes.REMOTE_STOP_MOH_FINISH] = action => {
   return (0, _handlers.trackRemovedHandler)(action);
 };
 
+// -----
+
+callEvents[actionTypes.PLAY_AUDIO] = (action, params) => {
+  return (0, _handlers.callOperationHandler)(action, (0, _extends3.default)({}, params, {
+    operation: _constants.OPERATIONS.PLAY_AUDIO,
+    transition: _constants.OP_TRANSITIONS.START,
+    isLocal: true
+  }));
+};
+
+callEvents[actionTypes.PENDING_PLAY_AUDIO] = (action, params) => {
+  return (0, _handlers.callOperationHandler)(action, (0, _extends3.default)({}, params, {
+    operation: _constants.OPERATIONS.PLAY_AUDIO,
+    transition: _constants.OP_TRANSITIONS.UPDATE,
+    isLocal: true
+  }));
+};
+
+callEvents[actionTypes.PLAY_AUDIO_FINISH] = (action, params) => {
+  return (0, _handlers.callOperationHandler)(action, (0, _extends3.default)({}, params, {
+    operation: _constants.OPERATIONS.PLAY_AUDIO,
+    transition: _constants.OP_TRANSITIONS.FINISH,
+    isLocal: true
+  }));
+};
+
 exports.default = callEvents;
 
 /***/ }),
-/* 427 */
+/* 428 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -53201,7 +53737,7 @@ var _eventTypes = __webpack_require__(70);
 
 var eventTypes = _interopRequireWildcard(_eventTypes);
 
-var _actionTypes = __webpack_require__(19);
+var _actionTypes = __webpack_require__(20);
 
 var actionTypes = _interopRequireWildcard(_actionTypes);
 
@@ -53316,7 +53852,7 @@ callEvents[actionTypes.JOIN_FINISH] = (action, params) => {
 exports.default = callEvents;
 
 /***/ }),
-/* 428 */
+/* 429 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -53334,7 +53870,7 @@ var _eventTypes = __webpack_require__(70);
 
 var eventTypes = _interopRequireWildcard(_eventTypes);
 
-var _actionTypes = __webpack_require__(19);
+var _actionTypes = __webpack_require__(20);
 
 var actionTypes = _interopRequireWildcard(_actionTypes);
 
@@ -53549,7 +54085,7 @@ callEvents[webrtcActionTypes.SESSION_ICE_CONNECTION_STATE_CHANGE] = (action, con
 exports.default = callEvents;
 
 /***/ }),
-/* 429 */
+/* 430 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -53560,7 +54096,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = connectivity;
 
-var _base = __webpack_require__(430);
+var _base = __webpack_require__(431);
 
 var _base2 = _interopRequireDefault(_base);
 
@@ -53631,7 +54167,7 @@ function connectivity(options = {}) {
 }
 
 /***/ }),
-/* 430 */
+/* 431 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -53642,15 +54178,15 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = baseConnectivity;
 
-var _interface = __webpack_require__(431);
+var _interface = __webpack_require__(432);
 
 var _interface2 = _interopRequireDefault(_interface);
 
-var _events = __webpack_require__(434);
+var _events = __webpack_require__(435);
 
 var _events2 = _interopRequireDefault(_events);
 
-var _sagas = __webpack_require__(436);
+var _sagas = __webpack_require__(437);
 
 var _actions = __webpack_require__(36);
 
@@ -53701,7 +54237,7 @@ function baseConnectivity(options) {
 } // Connectivity plugin.
 
 /***/ }),
-/* 431 */
+/* 432 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -53715,11 +54251,11 @@ var _name = __webpack_require__(171);
 
 var _name2 = _interopRequireDefault(_name);
 
-var _api = __webpack_require__(432);
+var _api = __webpack_require__(433);
 
 var _api2 = _interopRequireDefault(_api);
 
-var _reducers = __webpack_require__(433);
+var _reducers = __webpack_require__(434);
 
 var _reducers2 = _interopRequireDefault(_reducers);
 
@@ -53728,7 +54264,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 exports.default = { name: _name2.default, api: _api2.default, reducer: _reducers2.default };
 
 /***/ }),
-/* 432 */
+/* 433 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -53854,7 +54390,7 @@ function api({ dispatch, getState }) {
 }
 
 /***/ }),
-/* 433 */
+/* 434 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -53872,7 +54408,7 @@ var _actionTypes = __webpack_require__(37);
 
 var actionTypes = _interopRequireWildcard(_actionTypes);
 
-var _reduxActions = __webpack_require__(23);
+var _reduxActions = __webpack_require__(24);
 
 var _fp = __webpack_require__(4);
 
@@ -54006,7 +54542,7 @@ const reducer = (0, _reduxActions.handleActions)(reducers, {});
 exports.default = reducer;
 
 /***/ }),
-/* 434 */
+/* 435 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -54016,7 +54552,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _eventTypes = __webpack_require__(435);
+var _eventTypes = __webpack_require__(436);
 
 var eventTypes = _interopRequireWildcard(_eventTypes);
 
@@ -54059,7 +54595,7 @@ events[actionTypes.WS_ATTEMPT_CONNECT] = function (action) {
 exports.default = events;
 
 /***/ }),
-/* 435 */
+/* 436 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -54080,7 +54616,7 @@ Object.defineProperty(exports, "__esModule", {
 const WS_CHANGE = exports.WS_CHANGE = 'ws:change';
 
 /***/ }),
-/* 436 */
+/* 437 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -54100,7 +54636,7 @@ exports.serverPingFlow = serverPingFlow;
 exports.clientPingFlow = clientPingFlow;
 exports.connectWebsocket = connectWebsocket;
 
-var _websocket = __webpack_require__(437);
+var _websocket = __webpack_require__(438);
 
 var _selectors = __webpack_require__(68);
 
@@ -54579,7 +55115,7 @@ function* connectWebsocket(wsInfo, platform) {
 }
 
 /***/ }),
-/* 437 */
+/* 438 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -54729,7 +55265,7 @@ function* wsEmitter(ws, platform) {
 }
 
 /***/ }),
-/* 438 */
+/* 439 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -54740,19 +55276,19 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = notifications;
 
-var _interface = __webpack_require__(439);
+var _interface = __webpack_require__(440);
 
-var _events = __webpack_require__(442);
+var _events = __webpack_require__(443);
 
 var _events2 = _interopRequireDefault(_events);
 
-var _pushRegistration = __webpack_require__(444);
+var _pushRegistration = __webpack_require__(445);
 
 var pushRegistrationSagas = _interopRequireWildcard(_pushRegistration);
 
-var _notification = __webpack_require__(445);
+var _notification = __webpack_require__(446);
 
-var _middleware = __webpack_require__(447);
+var _middleware = __webpack_require__(448);
 
 var _middleware2 = _interopRequireDefault(_middleware);
 
@@ -54842,7 +55378,7 @@ function notifications(options = {}, bottle) {
 }
 
 /***/ }),
-/* 439 */
+/* 440 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -54853,11 +55389,11 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.reducer = exports.api = exports.name = undefined;
 
-var _reducers = __webpack_require__(440);
+var _reducers = __webpack_require__(441);
 
 var _reducers2 = _interopRequireDefault(_reducers);
 
-var _api = __webpack_require__(441);
+var _api = __webpack_require__(442);
 
 var _api2 = _interopRequireDefault(_api);
 
@@ -54870,7 +55406,7 @@ exports.api = _api2.default;
 exports.reducer = _reducers2.default;
 
 /***/ }),
-/* 440 */
+/* 441 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -54890,7 +55426,7 @@ var actionTypes = _interopRequireWildcard(_actionTypes);
 
 var _actionTypes2 = __webpack_require__(37);
 
-var _reduxActions = __webpack_require__(23);
+var _reduxActions = __webpack_require__(24);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -54967,7 +55503,7 @@ const defaultState = {
 exports.default = reducer;
 
 /***/ }),
-/* 441 */
+/* 442 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -55166,7 +55702,7 @@ function api({ dispatch }) {
 }
 
 /***/ }),
-/* 442 */
+/* 443 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -55176,7 +55712,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _eventTypes = __webpack_require__(443);
+var _eventTypes = __webpack_require__(444);
 
 var eventTypes = _interopRequireWildcard(_eventTypes);
 
@@ -55214,7 +55750,7 @@ events[actionTypes.NOTIFICATION_RECEIVED] = function (action) {
 exports.default = events;
 
 /***/ }),
-/* 443 */
+/* 444 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -55260,7 +55796,7 @@ const NOTI_ERROR = exports.NOTI_ERROR = 'notifications:error';
 const NOTI_RECEIVED = exports.NOTI_RECEIVED = 'notification:received';
 
 /***/ }),
-/* 444 */
+/* 445 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -55402,7 +55938,7 @@ function* unregisterPushDeviceToken(action) {
 }
 
 /***/ }),
-/* 445 */
+/* 446 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -55428,7 +55964,7 @@ var _fp = __webpack_require__(4);
 
 var _reduxSaga = __webpack_require__(30);
 
-var _pako = __webpack_require__(446);
+var _pako = __webpack_require__(447);
 
 var _effects = __webpack_require__(1);
 
@@ -55639,7 +56175,7 @@ function* normalizeSDP(payload) {
 }
 
 /***/ }),
-/* 446 */
+/* 447 */
 /***/ (function(__webpack_module__, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -62534,7 +63070,7 @@ var pako = {
 
 
 /***/ }),
-/* 447 */
+/* 448 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -62631,7 +63167,7 @@ function createMiddleware(bottle) {
 }
 
 /***/ }),
-/* 448 */
+/* 449 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -62642,21 +63178,21 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.cpaasRequest = exports.ucRequest = exports.linkRequest = undefined;
 
-var _configs = __webpack_require__(449);
+var _configs = __webpack_require__(450);
 
 var _sagas = __webpack_require__(183);
 
 var _sagas2 = _interopRequireDefault(_sagas);
 
-var _events = __webpack_require__(451);
+var _events = __webpack_require__(452);
 
 var _events2 = _interopRequireDefault(_events);
 
-var _requestModule = __webpack_require__(452);
+var _requestModule = __webpack_require__(453);
 
 var _requestModule2 = _interopRequireDefault(_requestModule);
 
-var _interface = __webpack_require__(453);
+var _interface = __webpack_require__(454);
 
 var _actions = __webpack_require__(36);
 
@@ -62726,7 +63262,7 @@ function pluginFactory(platform) {
 }
 
 /***/ }),
-/* 449 */
+/* 450 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -62761,7 +63297,7 @@ const v8nValidation = _validation.validation.schema({
 const parseOptions = exports.parseOptions = (0, _validation.parse)('request', v8nValidation);
 
 /***/ }),
-/* 450 */
+/* 451 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -63068,7 +63604,7 @@ function makeResponse(apiResponse = {}, httpResponse = {}) {
 }
 
 /***/ }),
-/* 451 */
+/* 452 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -63102,7 +63638,7 @@ eventsMap[actionTypes.AUTHORIZATION_ERROR] = function (action) {
 exports.default = eventsMap;
 
 /***/ }),
-/* 452 */
+/* 453 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -63262,7 +63798,7 @@ function getTime() {
 }
 
 /***/ }),
-/* 453 */
+/* 454 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -63273,11 +63809,11 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.api = exports.name = undefined;
 
-var _name = __webpack_require__(454);
+var _name = __webpack_require__(455);
 
 var _name2 = _interopRequireDefault(_name);
 
-var _api = __webpack_require__(455);
+var _api = __webpack_require__(456);
 
 var _api2 = _interopRequireDefault(_api);
 
@@ -63287,7 +63823,7 @@ exports.name = _name2.default;
 exports.api = _api2.default;
 
 /***/ }),
-/* 454 */
+/* 455 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -63304,7 +63840,7 @@ const name = 'requests';
 exports.default = name;
 
 /***/ }),
-/* 455 */
+/* 456 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -63388,7 +63924,7 @@ function api({ dispatch, getState }) {
 }
 
 /***/ }),
-/* 456 */
+/* 457 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";

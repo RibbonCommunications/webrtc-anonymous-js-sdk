@@ -5,6 +5,14 @@ Kandy.js change log.
 - This project adheres to [Semantic Versioning](http://semver.org/).
 - This change log follows [keepachangelog.com](http://keepachangelog.com/) recommendations.
 
+## 5.6.0 - beta
+
+### Added
+
+- Added a new Call feature: the `call.playAudioFile` API. `KJS-892`
+  - This API allows an application to temporarily replace their local audio track with audio from a file, allowing the remote call endpoint to hear the file.
+  - Please see the `call.playAudioFile` API documentation for more information.
+
 ## 5.5.0 - 2022-12-22
 
 ### Fixed
