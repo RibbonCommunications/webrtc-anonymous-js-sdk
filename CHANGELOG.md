@@ -1,6 +1,6 @@
 # Change Log
 
-Kandy.js change log.
+Ribbon WebRTC SDK change log.
 
 - This project adheres to [Semantic Versioning](http://semver.org/).
 - This change log follows [keepachangelog.com](http://keepachangelog.com/) recommendations.
@@ -572,7 +572,7 @@ Browsers other than Chrome or Chrome-based browsers are unaffected by this chang
 SDK like so:
 
 ```javascript
-import { create } from '@kandy-io/callme-sdk'
+import { create } from '@rbbn/webrtc-anonymous-js-sdk'
 const client = create({
   call: {
     sdpSemantics: 'unified-plan'

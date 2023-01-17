@@ -4,7 +4,7 @@
 
 ### Using npm :
 
-`$ npm install @kandy-io/callme-sdk`
+`$ npm install @rbbn/webrtc-anonymous-js-sdk`
 
 #### Install a particular build :
 
@@ -14,8 +14,8 @@ To install a particular build branch or beta branch with the Github URL, run:
 
 ### In the browser :
 ```html
-<script src="https://unpkg.com/@kandy-io/callme-sdk@5.6.0/dist/kandy.js"
-  integrity="sha384-pPN9wxi4mQQWXmNwcfGudTeMLmEwVAsPrw3bhe4tQ59NyW7nQUa0BgUwfE+fKBPF"
+<script src="https://unpkg.com/@rbbn/webrtc-anonymous-js-sdk@5.6.0/dist/kandy.js"
+  integrity="sha384-ajG4Cd3+3Cv97uWWViUuejt90TsbXfT0xQ8LoHLAc+9Xz2MxTS5lY9xN7+8+Gywx"
   crossorigin="anonymous">
 </script>
 ```
