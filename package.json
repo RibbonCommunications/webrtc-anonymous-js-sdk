@@ -2,7 +2,7 @@
     "name": "@rbbn/webrtc-anonymous-js-sdk",
     "version": "5.6.0",
     "license": "SEE LICENSE IN LICENSE.md",
-    "main":"./dist/kandy.js",
+    "main":"./dist/webrtc.js",
     "repository": {
         "type": "git",
         "url": "https://github.com/RibbonCommunications/webrtc-anonymous-js-sdk"
