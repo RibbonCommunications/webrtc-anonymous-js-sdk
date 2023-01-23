@@ -34,7 +34,7 @@ To begin, you will need to include the javascript library in your application. T
 
 #### As a Script
 
-The library will expose the `Kandy` object to global scope. The `Kandy.create` function is used to create an instance of the SDK, as well as to configure that instance.
+The library will expose the `WebRTC` object to global scope. The `WebRTC.create` function is used to create an instance of the SDK, as well as to configure that instance.
 
 ```html
 <!-- HTML -->
@@ -44,7 +44,7 @@ The library will expose the `Kandy` object to global scope. The `Kandy.create` f
 
 <script type="text/javascript">
   // Instantiate the library.
-  const client = Kandy.create(configs)
+  const client = WebRTC.create(configs)
 
   // Use the library.
   client.on( ... )

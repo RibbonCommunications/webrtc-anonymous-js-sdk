@@ -71,7 +71,7 @@ const configs = {
 }
 
 // Initialize the SDK with the configs.
-const client = Kandy.create(configs)
+const client = WebRTC.create(configs)
 ```
 
 ### Writing a custom Log Handler
