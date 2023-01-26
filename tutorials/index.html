@@ -166,6 +166,13 @@
             }
           },
           {
+            name: 'Convert SERVERBASE',
+            extend(api) {
+              const serverBase = useDefault ? '$SERVERBASE$' : configs[configIdx].data.SERVERBASE
+              api.processMarkdown(md => md.replace(/\$SERVERBASE\$/gm, serverBase))
+            }
+          },
+          {
             name: 'Convert SUBSCRIPTIONFQDN',
             extend(api) {
               const subscriptionFQDN = useDefault ? '$SUBSCRIPTIONFQDN$' : configs[configIdx].data.SUBSCRIPTIONFQDN
