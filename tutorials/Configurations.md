@@ -28,9 +28,7 @@ call: {
     // parameter in the query section and STUN urls must not specify any query section.
     iceServers: [
       { urls: '$RIBBONTURN1$' },
-      { urls: '$RIBBONSTUN1$' },
-      { urls: '$RIBBONTURN2$' },
-      { urls: '$RIBBONSTUN2$' }
+      { urls: '$RIBBONSTUN1$' }
     ]
   },
   // Other feature configs.

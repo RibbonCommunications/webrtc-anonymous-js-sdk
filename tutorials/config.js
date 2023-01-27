@@ -2,13 +2,10 @@
 // ICE server urls to be used for Anonymous Call.
 export const configs = [
   {
-    name: 'us',
+    name: 'blue',
     data: {
-      RIBBONTURN1: 'turns:turn-sr1.kandy.io:443?transport=tcp',
-      RIBBONSTUN1: 'stun:turn-sr1.kandy.io:3478',
-      RIBBONTURN2: 'turns:turn-sr2.kandy.io:443?transport=tcp',
-      RIBBONSTUN2: 'stun:turn-sr2.kandy.io:3478',
-      SUBSCRIPTIONFQDN: 'sr1.kandy.io',
+      RIBBONTURN1: 'turns:turn-blue.rbbn.com:443?transport=tcp',
+      SUBSCRIPTIONFQDN: 'webrtc-blue.rbbn.com',
       RIBBON: 'Ribbon WebRTC'
     }
   }

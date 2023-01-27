@@ -48,7 +48,7 @@
       },
       {
         "title": "example",
-        "description": "// Instantiate the SDK.\nimport { create } from 'kandy'\nconst client = create({\n    authentication: { ... },\n    logs: { ... },\n    ...\n});\n// Use the SDK's API.\nclient.on( ... );",
+        "description": "// Instantiate the SDK.\nimport { create } from '@rbbn/webrtc-js-sdk'\nconst client = create({\n    authentication: { ... },\n    logs: { ... },\n    ...\n});\n// Use the SDK's API.\nclient.on( ... );",
         "lineNumber": 7
       }
     ],
@@ -78,7 +78,7 @@
     "augments": [],
     "examples": [
       {
-        "description": "// Instantiate the SDK.\nimport { create } from 'kandy'\nconst client = create({\n    authentication: { ... },\n    logs: { ... },\n    ...\n});\n// Use the SDK's API.\nclient.on( ... );"
+        "description": "// Instantiate the SDK.\nimport { create } from '@rbbn/webrtc-js-sdk'\nconst client = create({\n    authentication: { ... },\n    logs: { ... },\n    ...\n});\n// Use the SDK's API.\nclient.on( ... );"
       }
     ],
     "implements": [],
@@ -3331,7 +3331,7 @@
             },
             {
               "title": "example",
-              "description": "// Instantiate the SDK.\nimport { create } from 'kandy'\nconst config = {\n    authentication: { ... },\n    logs: { ... },\n    ...\n}\nlet client = create(config);\nclient.on( ... )\n// Use the SDK\n...\n// Destroy the SDK, then recreate on the next step\nclient.destroy()\nclient = create(config)\nclient.on( ... )",
+              "description": "// Instantiate the SDK.\nimport { create } from '@rbbn/webrtc-js-sdk'\nconst config = {\n    authentication: { ... },\n    logs: { ... },\n    ...\n}\nlet client = create(config);\nclient.on( ... )\n// Use the SDK\n...\n// Destroy the SDK, then recreate on the next step\nclient.destroy()\nclient = create(config)\nclient.on( ... )",
               "lineNumber": 10
             }
           ],
@@ -3361,7 +3361,7 @@
           "augments": [],
           "examples": [
             {
-              "description": "// Instantiate the SDK.\nimport { create } from 'kandy'\nconst config = {\n    authentication: { ... },\n    logs: { ... },\n    ...\n}\nlet client = create(config);\nclient.on( ... )\n// Use the SDK\n...\n// Destroy the SDK, then recreate on the next step\nclient.destroy()\nclient = create(config)\nclient.on( ... )"
+              "description": "// Instantiate the SDK.\nimport { create } from '@rbbn/webrtc-js-sdk'\nconst config = {\n    authentication: { ... },\n    logs: { ... },\n    ...\n}\nlet client = create(config);\nclient.on( ... )\n// Use the SDK\n...\n// Destroy the SDK, then recreate on the next step\nclient.destroy()\nclient = create(config)\nclient.on( ... )"
             }
           ],
           "implements": [],
@@ -9211,22 +9211,22 @@
           ],
           "loc": {
             "start": {
-              "line": 54,
+              "line": 55,
               "column": 8
             },
             "end": {
-              "line": 116,
+              "line": 117,
               "column": 11
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 126,
+                "line": 127,
                 "column": 8
               },
               "end": {
-                "line": 149,
+                "line": 150,
                 "column": 9
               }
             },
@@ -21067,6 +21067,402 @@
                 "children": [
                   {
                     "type": "text",
+                    "value": "Plays an audio file to the remote side of the Call. This API will temporarily\nreplace the Call's local audio track with an audio file for the duration\nof the audio file."
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "type": "text",
+                    "value": "The Call must be in "
+                  },
+                  {
+                    "type": "inlineCode",
+                    "value": "Connected"
+                  },
+                  {
+                    "type": "text",
+                    "value": " state and have a local audio track for this operation."
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "type": "text",
+                    "value": "This API will not affect media other than the local audio track. Other media on\nthe Call, such as local video or remote audio, can be "
+                  },
+                  {
+                    "type": "link",
+                    "url": "#mediamutetracks",
+                    "title": null,
+                    "jsdoc": true,
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "muted"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "text",
+                    "value": "\nor "
+                  },
+                  {
+                    "type": "link",
+                    "url": "#mediaremovetracks",
+                    "title": null,
+                    "jsdoc": true,
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "unrendered"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "text",
+                    "value": " during this operation if desired."
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "type": "text",
+                    "value": "This operation will use the browser's\n"
+                  },
+                  {
+                    "type": "link",
+                    "title": null,
+                    "url": "https://developer.mozilla.org/en-US/docs/Web/API/HTMLAudioElement/Audio",
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "Audio constructor"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "text",
+                    "value": "\nto read in the audio file. The "
+                  },
+                  {
+                    "type": "inlineCode",
+                    "value": "filePath"
+                  },
+                  {
+                    "type": "text",
+                    "value": " parameter will be used directly with "
+                  },
+                  {
+                    "type": "inlineCode",
+                    "value": "Audio"
+                  },
+                  {
+                    "type": "text",
+                    "value": ", so\ncan be either a relative file path to your audio file or a URL pointing to a file."
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "type": "text",
+                    "value": "This API returns a promise that can be used to track the progress of the operation.\nThe promise will resolve after the operation completes or reject if an error is\nencountered. Additionally, an extra "
+                  },
+                  {
+                    "type": "inlineCode",
+                    "value": "onPlaying"
+                  },
+                  {
+                    "type": "text",
+                    "value": " callback is provided on the Promise\nto indicate when the audio file actually begins to play. See the code example below\nfor a sample."
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "type": "text",
+                    "value": "The SDK will emit "
+                  },
+                  {
+                    "type": "link",
+                    "url": "#calleventcalloperation",
+                    "title": null,
+                    "jsdoc": true,
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "call:operation"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "text",
+                    "value": " events locally\nas the operation progresses. The remote endpoint will not receive an event for\nthis operation."
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "type": "text",
+                    "value": "If an error is encountered during the operation and the SDK is unable to replace\nthe original local audio track, then that track will be forcibly ended and an\n"
+                  },
+                  {
+                    "type": "link",
+                    "url": "#mediaeventmediatrackended",
+                    "title": null,
+                    "jsdoc": true,
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "media:trackEnded"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "text",
+                    "value": " event will be emitted\nfor it. This will release the microphone and avoid losing access to the track\nwhile it is active, allowing the application to resolve the scenario by using\nthe "
+                  },
+                  {
+                    "type": "link",
+                    "url": "#callreplacetrack",
+                    "title": null,
+                    "jsdoc": true,
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "call.replaceTrack"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "text",
+                    "value": " API to revert the local audio track."
+                  }
+                ]
+              }
+            ]
+          },
+          "tags": [
+            {
+              "title": "public",
+              "description": null,
+              "lineNumber": 33,
+              "type": null
+            },
+            {
+              "title": "static",
+              "description": null,
+              "lineNumber": 34
+            },
+            {
+              "title": "memberof",
+              "description": "call",
+              "lineNumber": 35
+            },
+            {
+              "title": "requires",
+              "description": null,
+              "lineNumber": 36,
+              "name": "call"
+            },
+            {
+              "title": "requires",
+              "description": null,
+              "lineNumber": 37,
+              "name": "callMe"
+            },
+            {
+              "title": "method",
+              "description": null,
+              "lineNumber": 38,
+              "name": "playAudioFile"
+            },
+            {
+              "title": "param",
+              "description": "The ID of the Call to act on.",
+              "lineNumber": 39,
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              },
+              "name": "callId"
+            },
+            {
+              "title": "param",
+              "description": "The path to the audio file.",
+              "lineNumber": 40,
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              },
+              "name": "filePath"
+            },
+            {
+              "title": "return",
+              "description": "Promise that resolves when the operation is complete.",
+              "lineNumber": 41,
+              "type": {
+                "type": "NameExpression",
+                "name": "Promise"
+              }
+            },
+            {
+              "title": "example",
+              "description": "// The API returns a promise which will provide feedback about the operation.\nclient.call.playAudioFile(callId, filePath)\n   .then(() => {\n     // Audio file has finished playing; call has reverted to previous audio.\n   })\n   .catch(err => {\n     // An error has occurred during the operation.\n   })\n\n// The returned promise can optionally provide feedback midway through the\n//   operation. A chainable `onPlaying` method denotes when the audio file has\n//   started to play and the Call's audio has been replaced.\nclient.call.playAudioFile(callId, filePath)\n   .onPlaying(({ duration }) => {\n     // Audio file has started playing; call audio is now the file.\n     // Note: Calling `onPlaying` must be done before `then` and `catch` for it\n     //    to be chainable.\n   })\n   .then(() => { ... })\n   .catch(err => { ... })",
+              "lineNumber": 42
+            }
+          ],
+          "loc": {
+            "start": {
+              "line": 1248,
+              "column": 4
+            },
+            "end": {
+              "line": 1311,
+              "column": 7
+            }
+          },
+          "context": {
+            "loc": {
+              "start": {
+                "line": 1312,
+                "column": 4
+              },
+              "end": {
+                "line": 1344,
+                "column": 5
+              }
+            },
+            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/call/interfaceNew/api/call.js"
+          },
+          "augments": [],
+          "examples": [
+            {
+              "description": "// The API returns a promise which will provide feedback about the operation.\nclient.call.playAudioFile(callId, filePath)\n   .then(() => {\n     // Audio file has finished playing; call has reverted to previous audio.\n   })\n   .catch(err => {\n     // An error has occurred during the operation.\n   })\n\n// The returned promise can optionally provide feedback midway through the\n//   operation. A chainable `onPlaying` method denotes when the audio file has\n//   started to play and the Call's audio has been replaced.\nclient.call.playAudioFile(callId, filePath)\n   .onPlaying(({ duration }) => {\n     // Audio file has started playing; call audio is now the file.\n     // Note: Calling `onPlaying` must be done before `then` and `catch` for it\n     //    to be chainable.\n   })\n   .then(() => { ... })\n   .catch(err => { ... })"
+            }
+          ],
+          "implements": [],
+          "params": [
+            {
+              "title": "param",
+              "name": "callId",
+              "lineNumber": 39,
+              "description": {
+                "type": "root",
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "The ID of the Call to act on."
+                      }
+                    ]
+                  }
+                ]
+              },
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              }
+            },
+            {
+              "title": "param",
+              "name": "filePath",
+              "lineNumber": 40,
+              "description": {
+                "type": "root",
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "The path to the audio file."
+                      }
+                    ]
+                  }
+                ]
+              },
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              }
+            }
+          ],
+          "properties": [],
+          "returns": [
+            {
+              "description": {
+                "type": "root",
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "Promise that resolves when the operation is complete."
+                      }
+                    ]
+                  }
+                ]
+              },
+              "title": "returns",
+              "type": {
+                "type": "NameExpression",
+                "name": "Promise"
+              }
+            }
+          ],
+          "sees": [],
+          "throws": [],
+          "todos": [],
+          "yields": [],
+          "access": "public",
+          "scope": "static",
+          "memberof": "call",
+          "kind": "function",
+          "name": "playAudioFile",
+          "members": {
+            "global": [],
+            "inner": [],
+            "instance": [],
+            "events": [],
+            "static": []
+          },
+          "path": [
+            {
+              "name": "call"
+            },
+            {
+              "name": "playAudioFile",
+              "kind": "function",
+              "scope": "static"
+            }
+          ],
+          "namespace": "call.playAudioFile"
+        },
+        {
+          "description": {
+            "type": "root",
+            "children": [
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "type": "text",
                     "value": "Set "
                   },
                   {
@@ -21158,22 +21554,22 @@
           ],
           "loc": {
             "start": {
-              "line": 1248,
+              "line": 1346,
               "column": 4
             },
             "end": {
-              "line": 1264,
+              "line": 1362,
               "column": 7
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 1265,
+                "line": 1363,
                 "column": 4
               },
               "end": {
-                "line": 1273,
+                "line": 1371,
                 "column": 5
               }
             },
@@ -21478,22 +21874,22 @@
           ],
           "loc": {
             "start": {
-              "line": 1300,
+              "line": 1398,
               "column": 4
             },
             "end": {
-              "line": 1344,
+              "line": 1442,
               "column": 7
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 1345,
+                "line": 1443,
                 "column": 4
               },
               "end": {
-                "line": 1345,
+                "line": 1443,
                 "column": 23
               }
             },
@@ -22035,22 +22431,22 @@
           ],
           "loc": {
             "start": {
-              "line": 1347,
+              "line": 1445,
               "column": 4
             },
             "end": {
-              "line": 1426,
+              "line": 1524,
               "column": 7
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 1427,
+                "line": 1525,
                 "column": 4
               },
               "end": {
-                "line": 1427,
+                "line": 1525,
                 "column": 55
               }
             },
@@ -22651,22 +23047,22 @@
           ],
           "loc": {
             "start": {
-              "line": 1429,
+              "line": 1527,
               "column": 4
             },
             "end": {
-              "line": 1473,
+              "line": 1571,
               "column": 7
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 1474,
+                "line": 1572,
                 "column": 4
               },
               "end": {
-                "line": 1477,
+                "line": 1575,
                 "column": 5
               }
             },
@@ -22848,22 +23244,22 @@
           ],
           "loc": {
             "start": {
-              "line": 1479,
+              "line": 1577,
               "column": 4
             },
             "end": {
-              "line": 1495,
+              "line": 1593,
               "column": 7
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 1474,
+                "line": 1572,
                 "column": 4
               },
               "end": {
-                "line": 1477,
+                "line": 1575,
                 "column": 5
               }
             },
@@ -23003,22 +23399,22 @@
           ],
           "loc": {
             "start": {
-              "line": 1497,
+              "line": 1595,
               "column": 4
             },
             "end": {
-              "line": 1534,
+              "line": 1632,
               "column": 7
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 1474,
+                "line": 1572,
                 "column": 4
               },
               "end": {
-                "line": 1477,
+                "line": 1575,
                 "column": 5
               }
             },
@@ -23178,22 +23574,22 @@
           ],
           "loc": {
             "start": {
-              "line": 1536,
+              "line": 1634,
               "column": 4
             },
             "end": {
-              "line": 1573,
+              "line": 1671,
               "column": 7
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 1474,
+                "line": 1572,
                 "column": 4
               },
               "end": {
-                "line": 1477,
+                "line": 1575,
                 "column": 5
               }
             },
@@ -31413,7 +31809,7 @@
       },
       {
         "title": "example",
-        "description": "import { create, sdpHandlers } from 'kandy';\nconst codecRemover = sdpHandlers.createCodecRemover(['VP8', 'VP9'])\nconst client = create({\n  call: {\n    sdpHandlers: [ codecRemover, <Your-SDP-Handler-Function>, ...]\n  }\n})",
+        "description": "import { create, sdpHandlers } from '@rbbn/webrtc-js-sdk';\nconst codecRemover = sdpHandlers.createCodecRemover(['VP8', 'VP9'])\nconst client = create({\n  call: {\n    sdpHandlers: [ codecRemover, <Your-SDP-Handler-Function>, ...]\n  }\n})",
         "lineNumber": 12
       },
       {
@@ -31448,7 +31844,7 @@
     "augments": [],
     "examples": [
       {
-        "description": "import { create, sdpHandlers } from 'kandy';\nconst codecRemover = sdpHandlers.createCodecRemover(['VP8', 'VP9'])\nconst client = create({\n  call: {\n    sdpHandlers: [ codecRemover, <Your-SDP-Handler-Function>, ...]\n  }\n})"
+        "description": "import { create, sdpHandlers } from '@rbbn/webrtc-js-sdk';\nconst codecRemover = sdpHandlers.createCodecRemover(['VP8', 'VP9'])\nconst client = create({\n  call: {\n    sdpHandlers: [ codecRemover, <Your-SDP-Handler-Function>, ...]\n  }\n})"
       },
       {
         "description": "// Through the Call API post-instantiation\nclient.call.setSdpHandlers([ codecRemover, <Your-SDP-Handler-Function>, ...])"
@@ -31785,7 +32181,7 @@
             },
             {
               "title": "example",
-              "description": "import { create, sdpHandlers } from 'kandy';\n\nconst codecRemover = sdpHandlers.createCodecRemover([\n  // Remove all VP8 and VP9 codecs.\n  'VP8',\n  'VP9',\n\n  // Remove all H264 codecs with the specified FMTP parameters.\n  {\n    name: 'H264',\n    fmtpParams: ['profile-level-id=4d0032', 'packetization-mode=1']\n  }\n])\n\nconst client = create({\n  call: {\n    sdpHandlers: [codecRemover]\n  }\n})",
+              "description": "import { create, sdpHandlers } from '@rbbn/webrtc-js-sdk';\n\nconst codecRemover = sdpHandlers.createCodecRemover([\n  // Remove all VP8 and VP9 codecs.\n  'VP8',\n  'VP9',\n\n  // Remove all H264 codecs with the specified FMTP parameters.\n  {\n    name: 'H264',\n    fmtpParams: ['profile-level-id=4d0032', 'packetization-mode=1']\n  }\n])\n\nconst client = create({\n  call: {\n    sdpHandlers: [codecRemover]\n  }\n})",
               "lineNumber": 18
             }
           ],
@@ -31815,7 +32211,7 @@
           "augments": [],
           "examples": [
             {
-              "description": "import { create, sdpHandlers } from 'kandy';\n\nconst codecRemover = sdpHandlers.createCodecRemover([\n  // Remove all VP8 and VP9 codecs.\n  'VP8',\n  'VP9',\n\n  // Remove all H264 codecs with the specified FMTP parameters.\n  {\n    name: 'H264',\n    fmtpParams: ['profile-level-id=4d0032', 'packetization-mode=1']\n  }\n])\n\nconst client = create({\n  call: {\n    sdpHandlers: [codecRemover]\n  }\n})"
+              "description": "import { create, sdpHandlers } from '@rbbn/webrtc-js-sdk';\n\nconst codecRemover = sdpHandlers.createCodecRemover([\n  // Remove all VP8 and VP9 codecs.\n  'VP8',\n  'VP9',\n\n  // Remove all H264 codecs with the specified FMTP parameters.\n  {\n    name: 'H264',\n    fmtpParams: ['profile-level-id=4d0032', 'packetization-mode=1']\n  }\n])\n\nconst client = create({\n  call: {\n    sdpHandlers: [codecRemover]\n  }\n})"
             }
           ],
           "implements": [],

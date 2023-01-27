@@ -19,13 +19,13 @@ The Anonymous Call SDK is available on NPM and can be added to your project usin
 **NPM**
 
 ```
-  > npm install @kandy-io/callme-sdk
+  > npm install @rbbn/webrtc-anonymous-js-sdk
 ```
 
 **Yarn**
 
 ```
-  > yarn add @kandy-io/callme-sdk
+  > yarn add @rbbn/webrtc-anonymous-js-sdk
 ```
 
 ## Using the SDK
@@ -34,17 +34,17 @@ To begin, you will need to include the javascript library in your application. T
 
 #### As a Script
 
-The library will expose the `Kandy` object to global scope. The `Kandy.create` function is used to create an instance of the SDK, as well as to configure that instance.
+The library will expose the `WebRTC` object to global scope. The `WebRTC.create` function is used to create an instance of the SDK, as well as to configure that instance.
 
 ```html
 <!-- HTML -->
 
 <!-- Load the library. -->
-<script src="path/to/kandy.js"></script>
+<script src="path/to/webrtc.js"></script>
 
 <script type="text/javascript">
   // Instantiate the library.
-  const client = Kandy.create(configs)
+  const client = WebRTC.create(configs)
 
   // Use the library.
   client.on( ... )
@@ -58,9 +58,9 @@ Different module bundlers can be used to bundle the library with your applicatio
 
 ```javascript
 // ES6 import or...
-import { create } from '@kandy-io/callme-sdk'
+import { create } from '@rbbn/webrtc-anonymous-js-sdk'
 // CommonJS module.
-var create = require('@kandy-io/callme-sdk').create
+var create = require('@rbbn/webrtc-anonymous-js-sdk').create
 
 // Instantiate the library.
 const client = create(configs)
@@ -71,7 +71,7 @@ client.on( ... )
 
 After you've created your instance of the SDK, you can begin playing around with it to learn its functionality and see how it fits in your application. The API reference documentation will help to explain the details of the available features.
 
-The examples that follow will assume that you are using bundling and that the WebRTC Anonymous JS SDK library is accessible from the <i>/node_modules/<i> folder and therefore required to be accessed by the name `@kandy-io/callme-sdk` only.
+The examples that follow will assume that you are using bundling and that the WebRTC Anonymous JS SDK library is accessible from the <i>/node_modules/<i> folder and therefore required to be accessed by the name `@rbbn/webrtc-anonymous-js-sdk` only.
 
 ## Configurations
 
@@ -79,7 +79,7 @@ When instantiating the library, there are many configurations that will help to 
 
 ```javascript
 // Instantiate the SDK.
-import { create } from '@kandy-io/callme-sdk'
+import { create } from '@rbbn/webrtc-anonymous-js-sdk'
 const client = create({
   // Required: Server connection configs.
   authentication: {

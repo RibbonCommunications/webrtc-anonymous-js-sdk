@@ -1,9 +1,25 @@
 # Change Log
 
-Kandy.js change log.
+Ribbon WebRTC SDK change log.
 
 - This project adheres to [Semantic Versioning](http://semver.org/).
 - This change log follows [keepachangelog.com](http://keepachangelog.com/) recommendations.
+
+## 5.6.0 - 2023-01-27
+
+### Added
+
+- Added a new Call feature: the `call.playAudioFile` API. `KJS-892`
+  - This API allows an application to temporarily replace their local audio track with audio from a file, allowing the remote call endpoint to hear the file.
+  - Please see the `call.playAudioFile` API documentation for more information.
+
+### Changed
+
+- As part of rebranding of Ribbon's WebRTC JS SDKs, the build filename (as well as its associated map filename) for `Kandy Anonymous Call` SDK, were changed as follows:
+  - kandy.callMe.js was renamed to: webrtc.anonymous.js
+  - kandy.callMe.js.map was renamed to: webrtc.anonymous.js.map
+- Also, the global exported variable from this build file, has changed from `Kandy` to `WebRTC`.
+  `KJS-1220`
 
 ## 5.5.0 - 2022-12-22
 
@@ -564,7 +580,7 @@ Browsers other than Chrome or Chrome-based browsers are unaffected by this chang
 SDK like so:
 
 ```javascript
-import { create } from '@kandy-io/callme-sdk'
+import { create } from '@rbbn/webrtc-anonymous-js-sdk'
 const client = create({
   call: {
     sdpSemantics: 'unified-plan'

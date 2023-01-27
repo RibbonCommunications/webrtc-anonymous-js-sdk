@@ -4,7 +4,7 @@
 
 ### Using npm :
 
-`$ npm install @kandy-io/callme-sdk`
+`$ npm install @rbbn/webrtc-anonymous-js-sdk`
 
 #### Install a particular build :
 
@@ -14,8 +14,8 @@ To install a particular build branch or beta branch with the Github URL, run:
 
 ### In the browser :
 ```html
-<script src="https://unpkg.com/@kandy-io/callme-sdk@5.5.0/dist/kandy.js"
-  integrity="sha384-tm/BOOKCl8BxPyvV/yXIwqm/f3mBrB/H/U8snTssGh0LR/REm13XmXxlS+rhXSy4"
+<script src="https://unpkg.com/@rbbn/webrtc-anonymous-js-sdk@5.6.0/dist/webrtc.js"
+  integrity="sha384-F2ENVhweg39grOX+wbzjHpS50/3f+gYhSY2Yt5pZPTm6pr9HXy4Ho8/tuac+26Xs"
   crossorigin="anonymous">
 </script>
 ```
@@ -25,7 +25,7 @@ The information about tutorials and documents can be found in the links below
 
 * `Documents`: [docs](https://RibbonCommunications.github.io/webrtc-anonymous-js-sdk/docs)
 
-* `Tutorials`:  [Get Started](https://RibbonCommunications.github.io/webrtc-anonymous-js-sdk/tutorials/?config=us#/Get%20Started)
+* `Tutorials`:  [Get Started](https://RibbonCommunications.github.io/webrtc-anonymous-js-sdk/tutorials/?config=blue#/Get%20Started)
 
 ## Compatibility
 
