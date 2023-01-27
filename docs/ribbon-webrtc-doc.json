@@ -48,7 +48,7 @@
       },
       {
         "title": "example",
-        "description": "// Instantiate the SDK.\nimport { create } from 'kandy'\nconst client = create({\n    authentication: { ... },\n    logs: { ... },\n    ...\n});\n// Use the SDK's API.\nclient.on( ... );",
+        "description": "// Instantiate the SDK.\nimport { create } from '@rbbn/webrtc-js-sdk'\nconst client = create({\n    authentication: { ... },\n    logs: { ... },\n    ...\n});\n// Use the SDK's API.\nclient.on( ... );",
         "lineNumber": 7
       }
     ],
@@ -78,7 +78,7 @@
     "augments": [],
     "examples": [
       {
-        "description": "// Instantiate the SDK.\nimport { create } from 'kandy'\nconst client = create({\n    authentication: { ... },\n    logs: { ... },\n    ...\n});\n// Use the SDK's API.\nclient.on( ... );"
+        "description": "// Instantiate the SDK.\nimport { create } from '@rbbn/webrtc-js-sdk'\nconst client = create({\n    authentication: { ... },\n    logs: { ... },\n    ...\n});\n// Use the SDK's API.\nclient.on( ... );"
       }
     ],
     "implements": [],
@@ -3331,7 +3331,7 @@
             },
             {
               "title": "example",
-              "description": "// Instantiate the SDK.\nimport { create } from 'kandy'\nconst config = {\n    authentication: { ... },\n    logs: { ... },\n    ...\n}\nlet client = create(config);\nclient.on( ... )\n// Use the SDK\n...\n// Destroy the SDK, then recreate on the next step\nclient.destroy()\nclient = create(config)\nclient.on( ... )",
+              "description": "// Instantiate the SDK.\nimport { create } from '@rbbn/webrtc-js-sdk'\nconst config = {\n    authentication: { ... },\n    logs: { ... },\n    ...\n}\nlet client = create(config);\nclient.on( ... )\n// Use the SDK\n...\n// Destroy the SDK, then recreate on the next step\nclient.destroy()\nclient = create(config)\nclient.on( ... )",
               "lineNumber": 10
             }
           ],
@@ -3361,7 +3361,7 @@
           "augments": [],
           "examples": [
             {
-              "description": "// Instantiate the SDK.\nimport { create } from 'kandy'\nconst config = {\n    authentication: { ... },\n    logs: { ... },\n    ...\n}\nlet client = create(config);\nclient.on( ... )\n// Use the SDK\n...\n// Destroy the SDK, then recreate on the next step\nclient.destroy()\nclient = create(config)\nclient.on( ... )"
+              "description": "// Instantiate the SDK.\nimport { create } from '@rbbn/webrtc-js-sdk'\nconst config = {\n    authentication: { ... },\n    logs: { ... },\n    ...\n}\nlet client = create(config);\nclient.on( ... )\n// Use the SDK\n...\n// Destroy the SDK, then recreate on the next step\nclient.destroy()\nclient = create(config)\nclient.on( ... )"
             }
           ],
           "implements": [],
@@ -31809,7 +31809,7 @@
       },
       {
         "title": "example",
-        "description": "import { create, sdpHandlers } from 'kandy';\nconst codecRemover = sdpHandlers.createCodecRemover(['VP8', 'VP9'])\nconst client = create({\n  call: {\n    sdpHandlers: [ codecRemover, <Your-SDP-Handler-Function>, ...]\n  }\n})",
+        "description": "import { create, sdpHandlers } from '@rbbn/webrtc-js-sdk';\nconst codecRemover = sdpHandlers.createCodecRemover(['VP8', 'VP9'])\nconst client = create({\n  call: {\n    sdpHandlers: [ codecRemover, <Your-SDP-Handler-Function>, ...]\n  }\n})",
         "lineNumber": 12
       },
       {
@@ -31844,7 +31844,7 @@
     "augments": [],
     "examples": [
       {
-        "description": "import { create, sdpHandlers } from 'kandy';\nconst codecRemover = sdpHandlers.createCodecRemover(['VP8', 'VP9'])\nconst client = create({\n  call: {\n    sdpHandlers: [ codecRemover, <Your-SDP-Handler-Function>, ...]\n  }\n})"
+        "description": "import { create, sdpHandlers } from '@rbbn/webrtc-js-sdk';\nconst codecRemover = sdpHandlers.createCodecRemover(['VP8', 'VP9'])\nconst client = create({\n  call: {\n    sdpHandlers: [ codecRemover, <Your-SDP-Handler-Function>, ...]\n  }\n})"
       },
       {
         "description": "// Through the Call API post-instantiation\nclient.call.setSdpHandlers([ codecRemover, <Your-SDP-Handler-Function>, ...])"
@@ -32181,7 +32181,7 @@
             },
             {
               "title": "example",
-              "description": "import { create, sdpHandlers } from 'kandy';\n\nconst codecRemover = sdpHandlers.createCodecRemover([\n  // Remove all VP8 and VP9 codecs.\n  'VP8',\n  'VP9',\n\n  // Remove all H264 codecs with the specified FMTP parameters.\n  {\n    name: 'H264',\n    fmtpParams: ['profile-level-id=4d0032', 'packetization-mode=1']\n  }\n])\n\nconst client = create({\n  call: {\n    sdpHandlers: [codecRemover]\n  }\n})",
+              "description": "import { create, sdpHandlers } from '@rbbn/webrtc-js-sdk';\n\nconst codecRemover = sdpHandlers.createCodecRemover([\n  // Remove all VP8 and VP9 codecs.\n  'VP8',\n  'VP9',\n\n  // Remove all H264 codecs with the specified FMTP parameters.\n  {\n    name: 'H264',\n    fmtpParams: ['profile-level-id=4d0032', 'packetization-mode=1']\n  }\n])\n\nconst client = create({\n  call: {\n    sdpHandlers: [codecRemover]\n  }\n})",
               "lineNumber": 18
             }
           ],
@@ -32211,7 +32211,7 @@
           "augments": [],
           "examples": [
             {
-              "description": "import { create, sdpHandlers } from 'kandy';\n\nconst codecRemover = sdpHandlers.createCodecRemover([\n  // Remove all VP8 and VP9 codecs.\n  'VP8',\n  'VP9',\n\n  // Remove all H264 codecs with the specified FMTP parameters.\n  {\n    name: 'H264',\n    fmtpParams: ['profile-level-id=4d0032', 'packetization-mode=1']\n  }\n])\n\nconst client = create({\n  call: {\n    sdpHandlers: [codecRemover]\n  }\n})"
+              "description": "import { create, sdpHandlers } from '@rbbn/webrtc-js-sdk';\n\nconst codecRemover = sdpHandlers.createCodecRemover([\n  // Remove all VP8 and VP9 codecs.\n  'VP8',\n  'VP9',\n\n  // Remove all H264 codecs with the specified FMTP parameters.\n  {\n    name: 'H264',\n    fmtpParams: ['profile-level-id=4d0032', 'packetization-mode=1']\n  }\n])\n\nconst client = create({\n  call: {\n    sdpHandlers: [codecRemover]\n  }\n})"
             }
           ],
           "implements": [],
