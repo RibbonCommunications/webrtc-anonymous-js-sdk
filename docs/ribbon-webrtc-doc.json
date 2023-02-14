@@ -5561,7 +5561,8 @@
           },
           "path": [
             {
-              "name": "call"
+              "name": "call",
+              "kind": "namespace"
             },
             {
               "name": "call:operation",
@@ -5768,7 +5769,8 @@
           },
           "path": [
             {
-              "name": "call"
+              "name": "call",
+              "kind": "namespace"
             },
             {
               "name": "call:start",
@@ -5984,7 +5986,8 @@
           },
           "path": [
             {
-              "name": "call"
+              "name": "call",
+              "kind": "namespace"
             },
             {
               "name": "call:receive",
@@ -6451,7 +6454,8 @@
           },
           "path": [
             {
-              "name": "call"
+              "name": "call",
+              "kind": "namespace"
             },
             {
               "name": "call:stateChange",
@@ -6693,7 +6697,8 @@
           },
           "path": [
             {
-              "name": "call"
+              "name": "call",
+              "kind": "namespace"
             },
             {
               "name": "call:newMedia",
@@ -6902,7 +6907,8 @@
           },
           "path": [
             {
-              "name": "call"
+              "name": "call",
+              "kind": "namespace"
             },
             {
               "name": "call:removedMedia",
@@ -7189,7 +7195,8 @@
           },
           "path": [
             {
-              "name": "call"
+              "name": "call",
+              "kind": "namespace"
             },
             {
               "name": "call:tracksAdded",
@@ -7467,7 +7474,8 @@
           },
           "path": [
             {
-              "name": "call"
+              "name": "call",
+              "kind": "namespace"
             },
             {
               "name": "call:tracksRemoved",
@@ -7755,7 +7763,8 @@
           },
           "path": [
             {
-              "name": "call"
+              "name": "call",
+              "kind": "namespace"
             },
             {
               "name": "call:statsReceived",
@@ -8081,7 +8090,8 @@
           },
           "path": [
             {
-              "name": "call"
+              "name": "call",
+              "kind": "namespace"
             },
             {
               "name": "call:trackReplaced",
@@ -8300,7 +8310,8 @@
           },
           "path": [
             {
-              "name": "call"
+              "name": "call",
+              "kind": "namespace"
             },
             {
               "name": "call:availableCodecs",
@@ -8553,7 +8564,8 @@
           },
           "path": [
             {
-              "name": "call"
+              "name": "call",
+              "kind": "namespace"
             },
             {
               "name": "call:mediaConnectionChange",
@@ -8816,7 +8828,8 @@
           },
           "path": [
             {
-              "name": "call"
+              "name": "call",
+              "kind": "namespace"
             },
             {
               "name": "call:mediaRestart",
@@ -9933,7 +9946,8 @@
           },
           "path": [
             {
-              "name": "call"
+              "name": "call",
+              "kind": "namespace"
             },
             {
               "name": "makeAnonymous",
@@ -10803,7 +10817,8 @@
           },
           "path": [
             {
-              "name": "call"
+              "name": "call",
+              "kind": "namespace"
             },
             {
               "name": "CallObject",
@@ -11086,7 +11101,8 @@
           },
           "path": [
             {
-              "name": "call"
+              "name": "call",
+              "kind": "namespace"
             },
             {
               "name": "MediaConstraint",
@@ -11257,7 +11273,8 @@
           },
           "path": [
             {
-              "name": "call"
+              "name": "call",
+              "kind": "namespace"
             },
             {
               "name": "MediaOffered",
@@ -11488,7 +11505,8 @@
           },
           "path": [
             {
-              "name": "call"
+              "name": "call",
+              "kind": "namespace"
             },
             {
               "name": "BandwidthControls",
@@ -11770,7 +11788,8 @@
           },
           "path": [
             {
-              "name": "call"
+              "name": "call",
+              "kind": "namespace"
             },
             {
               "name": "DSCPControls",
@@ -12151,7 +12170,8 @@
           },
           "path": [
             {
-              "name": "call"
+              "name": "call",
+              "kind": "namespace"
             },
             {
               "name": "RTCPeerConnectionConfig",
@@ -12406,7 +12426,8 @@
           },
           "path": [
             {
-              "name": "call"
+              "name": "call",
+              "kind": "namespace"
             },
             {
               "name": "IceServer",
@@ -12849,7 +12870,8 @@
           },
           "path": [
             {
-              "name": "call"
+              "name": "call",
+              "kind": "namespace"
             },
             {
               "name": "IceCollectionInfo",
@@ -13500,7 +13522,8 @@
           },
           "path": [
             {
-              "name": "call"
+              "name": "call",
+              "kind": "namespace"
             },
             {
               "name": "IceCollectionCheckFunction",
@@ -13735,7 +13758,8 @@
           },
           "path": [
             {
-              "name": "call"
+              "name": "call",
+              "kind": "namespace"
             },
             {
               "name": "IceCollectionCheckResult",
@@ -13959,7 +13983,8 @@
           },
           "path": [
             {
-              "name": "call"
+              "name": "call",
+              "kind": "namespace"
             },
             {
               "name": "SdpHandlerInfo",
@@ -14194,7 +14219,8 @@
           },
           "path": [
             {
-              "name": "call"
+              "name": "call",
+              "kind": "namespace"
             },
             {
               "name": "SdpHandlerFunction",
@@ -14416,7 +14442,8 @@
           },
           "path": [
             {
-              "name": "call"
+              "name": "call",
+              "kind": "namespace"
             },
             {
               "name": "MediaObject",
@@ -14877,7 +14904,8 @@
           },
           "path": [
             {
-              "name": "call"
+              "name": "call",
+              "kind": "namespace"
             },
             {
               "name": "TrackObject",
@@ -15135,7 +15163,8 @@
           },
           "path": [
             {
-              "name": "call"
+              "name": "call",
+              "kind": "namespace"
             },
             {
               "name": "DevicesObject",
@@ -15380,7 +15409,8 @@
           },
           "path": [
             {
-              "name": "call"
+              "name": "call",
+              "kind": "namespace"
             },
             {
               "name": "DeviceInfo",
@@ -15759,7 +15789,8 @@
           },
           "path": [
             {
-              "name": "call"
+              "name": "call",
+              "kind": "namespace"
             },
             {
               "name": "CustomParameter",
@@ -16001,7 +16032,8 @@
           },
           "path": [
             {
-              "name": "call"
+              "name": "call",
+              "kind": "namespace"
             },
             {
               "name": "hold",
@@ -16218,7 +16250,8 @@
           },
           "path": [
             {
-              "name": "call"
+              "name": "call",
+              "kind": "namespace"
             },
             {
               "name": "unhold",
@@ -16535,7 +16568,8 @@
           },
           "path": [
             {
-              "name": "call"
+              "name": "call",
+              "kind": "namespace"
             },
             {
               "name": "setCustomParameters",
@@ -16759,7 +16793,8 @@
           },
           "path": [
             {
-              "name": "call"
+              "name": "call",
+              "kind": "namespace"
             },
             {
               "name": "sendCustomParameters",
@@ -16925,7 +16960,8 @@
           },
           "path": [
             {
-              "name": "call"
+              "name": "call",
+              "kind": "namespace"
             },
             {
               "name": "getAll",
@@ -17103,7 +17139,8 @@
           },
           "path": [
             {
-              "name": "call"
+              "name": "call",
+              "kind": "namespace"
             },
             {
               "name": "getById",
@@ -17336,7 +17373,8 @@
           },
           "path": [
             {
-              "name": "call"
+              "name": "call",
+              "kind": "namespace"
             },
             {
               "name": "end",
@@ -18217,7 +18255,8 @@
           },
           "path": [
             {
-              "name": "call"
+              "name": "call",
+              "kind": "namespace"
             },
             {
               "name": "addMedia",
@@ -18503,7 +18542,8 @@
           },
           "path": [
             {
-              "name": "call"
+              "name": "call",
+              "kind": "namespace"
             },
             {
               "name": "removeMedia",
@@ -19022,7 +19062,8 @@
           },
           "path": [
             {
-              "name": "call"
+              "name": "call",
+              "kind": "namespace"
             },
             {
               "name": "startVideo",
@@ -19239,7 +19280,8 @@
           },
           "path": [
             {
-              "name": "call"
+              "name": "call",
+              "kind": "namespace"
             },
             {
               "name": "stopVideo",
@@ -19430,7 +19472,8 @@
           },
           "path": [
             {
-              "name": "call"
+              "name": "call",
+              "kind": "namespace"
             },
             {
               "name": "startScreenshare",
@@ -19630,7 +19673,8 @@
           },
           "path": [
             {
-              "name": "call"
+              "name": "call",
+              "kind": "namespace"
             },
             {
               "name": "stopScreenshare",
@@ -19933,7 +19977,8 @@
           },
           "path": [
             {
-              "name": "call"
+              "name": "call",
+              "kind": "namespace"
             },
             {
               "name": "sendDTMF",
@@ -20215,7 +20260,8 @@
           },
           "path": [
             {
-              "name": "call"
+              "name": "call",
+              "kind": "namespace"
             },
             {
               "name": "getStats",
@@ -20862,7 +20908,8 @@
           },
           "path": [
             {
-              "name": "call"
+              "name": "call",
+              "kind": "namespace"
             },
             {
               "name": "replaceTrack",
@@ -21048,7 +21095,8 @@
           },
           "path": [
             {
-              "name": "call"
+              "name": "call",
+              "kind": "namespace"
             },
             {
               "name": "getAvailableCodecs",
@@ -21444,7 +21492,8 @@
           },
           "path": [
             {
-              "name": "call"
+              "name": "call",
+              "kind": "namespace"
             },
             {
               "name": "playAudioFile",
@@ -21632,7 +21681,8 @@
           },
           "path": [
             {
-              "name": "call"
+              "name": "call",
+              "kind": "namespace"
             },
             {
               "name": "setSdpHandlers",
@@ -22111,7 +22161,8 @@
           },
           "path": [
             {
-              "name": "call"
+              "name": "call",
+              "kind": "namespace"
             },
             {
               "name": "states",
@@ -22709,7 +22760,8 @@
           },
           "path": [
             {
-              "name": "call"
+              "name": "call",
+              "kind": "namespace"
             },
             {
               "name": "mediaConnectionStates",
@@ -23116,7 +23168,8 @@
           },
           "path": [
             {
-              "name": "call"
+              "name": "call",
+              "kind": "namespace"
             },
             {
               "name": "restartMedia",
@@ -23289,7 +23342,8 @@
           },
           "path": [
             {
-              "name": "call"
+              "name": "call",
+              "kind": "namespace"
             },
             {
               "name": "setDefaultDevices",
@@ -23448,7 +23502,8 @@
           },
           "path": [
             {
-              "name": "call"
+              "name": "call",
+              "kind": "namespace"
             },
             {
               "name": "changeInputDevices",
@@ -23623,7 +23678,8 @@
           },
           "path": [
             {
-              "name": "call"
+              "name": "call",
+              "kind": "namespace"
             },
             {
               "name": "changeSpeaker",
