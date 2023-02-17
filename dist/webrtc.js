@@ -1,7 +1,7 @@
 /**
  * WebRTC.js
  * webrtc.anonymous.js
- * Version: 5.7.0-beta.1023
+ * Version: 5.7.0-beta.1024
  */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
@@ -2020,6 +2020,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.getAuthConfig = getAuthConfig;
+exports.getServiceUnavailableMaxRetries = getServiceUnavailableMaxRetries;
 exports.getSubscriptionInfo = getSubscriptionInfo;
 exports.getConnectionInfo = getConnectionInfo;
 exports.getDomain = getDomain;
@@ -2049,6 +2050,17 @@ var _constants2 = __webpack_require__(17);
  */
 function getAuthConfig(state) {
   return (0, _fp.cloneDeep)(state.config.authentication);
+}
+
+/**
+ * Retrieves the maximum number of times this client will attempt to subscribe, while getting a
+ * 'Service Unavailable' response from backend.
+ * @method getServiceUnavailableMaxRetries
+ * @param {Object} state Current state object.
+ * @return {number}
+ */
+function getServiceUnavailableMaxRetries(state) {
+  return state.config.authentication.subscription.serviceUnavailableMaxRetries;
 }
 
 /**
@@ -5792,7 +5804,7 @@ exports.getVersion = getVersion;
  * for the @@ tag below with actual version value.
  */
 function getVersion() {
-  return '5.7.0-beta.1023';
+  return '5.7.0-beta.1024';
 }
 
 /***/ }),
@@ -15374,10 +15386,11 @@ function* subscribe(connection, credentials, extras = {}) {
   const response = yield (0, _effects2.default)(requestOptions);
 
   if (response.error) {
+    let errorCode = _errors.authCodes.LINK_SUBSCRIBE_FAIL;
     if (response.payload.body) {
       const body = response.payload.body;
-
       let statusCode;
+      let retryAfter;
       if (body.statusCode && body.reason) {
         /*
          * In some cases, the response is not wrapped in a `subscribeResponse`
@@ -15387,6 +15400,10 @@ function* subscribe(connection, credentials, extras = {}) {
          * Reference: ABE-23981 (and KAA-1937)
          */
         statusCode = body.statusCode;
+        if (statusCode === 503) {
+          retryAfter = body.retryAfter;
+          errorCode = _errors.authCodes.LINK_SUBSCRIBE_UNAVAILABLE;
+        }
       } else if (body.authorizationResponse && body.authorizationResponse.statusCode) {
         /*
          * In other cases, the response is wrapped in a `authorizationResponse`
@@ -15396,18 +15413,29 @@ function* subscribe(connection, credentials, extras = {}) {
          */
         statusCode = body.authorizationResponse.statusCode;
       } else {
+        // As last resort, look into body.subscribeResponse
         statusCode = body.subscribeResponse.statusCode;
+        if (statusCode === 503) {
+          retryAfter = body.subscribeResponse.retryAfter;
+          errorCode = _errors.authCodes.LINK_SUBSCRIBE_UNAVAILABLE;
+        }
       }
       log.debug(`Failed user subscription with status code ${statusCode}.`);
 
       // Handle errors from the server.
-      return {
-        // TODO: Better error; more info.
-        error: new _errors2.default({
-          message: `Failed to subscribe user. Code: ${statusCode}.`,
-          code: _errors.authCodes.LINK_SUBSCRIBE_FAIL
-        })
+      const errorInfo = {
+        message: `Failed to subscribe user. Status Code: ${statusCode}.`,
+        code: errorCode
       };
+      const returnValue = {
+        // TODO: Better error; more info.
+        error: new _errors2.default(errorInfo)
+      };
+      if (retryAfter && retryAfter > 0) {
+        returnValue.retryAfter = retryAfter;
+      }
+
+      return returnValue;
     } else {
       log.debug('Failed user subscription.', response.payload.result.message);
       // Handle errors from the request plugin.
@@ -38322,6 +38350,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @instance
  * @param {Object}  authentication Authentication configs.
  * @param {Object}  authentication.subscription
+ * @param {number} [authentication.subscription.serviceUnavailableMaxRetries=3] The maximum number of times this client will retry in order to subscribe for a
+ * given service, while getting 'Service Unavailable' from backend.
  * @param {string} [authentication.subscription.protocol='https'] Protocol to be used for subscription requests.
  * @param {string}  authentication.subscription.server Server to be used for subscription requests.
  * @param {Number} [authentication.subscription.port=443] Port to be used for subscription requests.
@@ -38334,6 +38364,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 const defaultOptions = exports.defaultOptions = {
   subscription: {
+    serviceUnavailableMaxRetries: 3,
     protocol: 'https',
     server: null,
     port: 443,
@@ -38353,6 +38384,7 @@ const defaultOptions = exports.defaultOptions = {
 // Re-use the no-op auth plugin.
 const v8nValidation = _validation.validation.schema({
   subscription: _validation.validation.schema({
+    serviceUnavailableMaxRetries: _validation.validation.positive(),
     protocol: (0, _validation.enums)(['http', 'https']),
     server: _validation.validation.string(),
     port: _validation.validation.positive(),
@@ -39394,24 +39426,65 @@ function* anonymousConnect() {
       service: ['callMe']
     });
 
-    log.info('Subscribing to callMe service.');
-    const response = yield (0, _effects2.call)(_requests.subscribe, subscriptionInfo, credentials, requestOptions);
+    let response;
+    let attemptNum = 1; // keeps count of how many subscription requests we sent so far
+    const maxReAttempts = yield (0, _effects2.select)(_selectors.getServiceUnavailableMaxRetries);
 
-    if (response.error) {
-      log.info('Subscription failed. Error: ', response.error);
-      // Subscription failed.
-      yield (0, _effects2.put)(actions.connectFinished(response, _constants.platforms.LINK));
-      continue;
-    } else if (!response.subscriptionParams.service.includes('callMe')) {
-      // Subscription was successful, but didn't include the callMe service.
-      log.info('Subscription failed. Call Me service not provided with subscription.');
-      yield (0, _effects2.put)(actions.connectFinished({
-        error: new _errors2.default({
-          message: 'Subscription failed to receive required service: callMe',
-          code: _errors.authCodes.MISSING_SERVICE
-        })
-      }));
-      continue;
+    // 1 + : there will be one initial attempt followed by up to a maximum number of re-attempts.
+    while (attemptNum <= 1 + maxReAttempts) {
+      log.info('Subscribing to callMe service.');
+      response = yield (0, _effects2.call)(_requests.subscribe, subscriptionInfo, credentials, requestOptions);
+
+      if (response.error) {
+        log.info('Subscription failed. Error: ', response.error);
+        if (response.error.code === _errors.authCodes.LINK_SUBSCRIBE_UNAVAILABLE && response.retryAfter) {
+          if (attemptNum === 1 + maxReAttempts) {
+            // Trigger the usual action in case of failure & abort right away.
+            // NOTE: This action won't mention the fact that we tried so many times,
+            // as it should be transparent to the application level.
+            yield (0, _effects2.put)(actions.connectFinished(response, _constants.platforms.LINK));
+            // Just the log would include this info, to help in debugging.
+            log.debug(`Subscription failed: ${response.error} after ${attemptNum - 1} re-attempts.`);
+            return;
+          }
+
+          // Wait for the subscribe delay
+          yield (0, _effects2.delay)(response.retryAfter);
+          log.debug(`Retrying after a ${response.retryAfter} ms delay...`);
+
+          // Attempt another `subscribe` request by
+          // incrementing our attempts count.
+          // We got a 503 error, but we're still allowed to retry our `subscribe` request.
+          // We also won't log any of these intermediary 503 errors, since we'll make yet another attempt.
+          attemptNum++;
+        } else {
+          // We got an error other than 503 (or the 503 did not have a retryAfter value).
+          // Either way, we treat it as a final error as it should mark the end of our attempts.
+          yield (0, _effects2.put)(actions.connectFinished(response, _constants.platforms.LINK));
+
+          if (attemptNum > 1) {
+            log.debug(`Subscription subsequently failed: ${response.error} (after getting an initial 503 response).`);
+          } else {
+            // We got an error the first time we tried to subscribe.
+            log.debug(`Subscription failed: ${response.error}`);
+          }
+          return;
+        }
+      } else if (!response.subscriptionParams.service.includes('callMe')) {
+        // Subscription was successful, but didn't include the callMe service.
+        log.info('Subscription failed. Call Me service not provided with subscription.');
+        yield (0, _effects2.put)(actions.connectFinished({
+          error: new _errors2.default({
+            message: 'Subscription failed to receive required service: callMe',
+            code: _errors.authCodes.MISSING_SERVICE
+          })
+        }));
+        return;
+      } else {
+        // We got a succesul response to our latest `subscribe` request,
+        // so cancel any further `subscribe` attempts.
+        break;
+      }
     }
 
     log.info('Successfully subscribed to callMe service. Connecting to websocket.');
@@ -62847,6 +62920,9 @@ exports.default = async function makeRequest(options, requestId) {
           // Try to get the retry value from the body of the response.
           // If it is in the body, then its value is a number
           retryValue = responseBody.subscribeResponse.retryAfter;
+        } else if (responseBody && responseBody.authorizationResponse) {
+          // This is the case where request has been initiated as part of an anonymous call.
+          retryValue = responseBody.authorizationResponse.retryAfter;
         }
 
         let retryAfter; // the final value to be used
@@ -62883,7 +62959,8 @@ exports.default = async function makeRequest(options, requestId) {
         //       as HTTP reverse proxy/load balancer does not guarantee to provide one
         //       (see `SPiDR REST Overload Controls - Functional Description` spec).
         if (retryAfter && retryAfter > 0) {
-          // retry value is available & valid
+          // retry value is available & valid.
+          // return the same body for both link & anonymous rquest.
           responseBody = { subscribeResponse: { statusCode: 503, retryAfter } };
         } else {
           // The spec says that if we got a 503 but with no retryAfter available, then treat the reply as 500 error.

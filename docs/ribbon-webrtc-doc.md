@@ -79,6 +79,8 @@ Configuration options for the CallMe Authentication feature.
 
     *   `authentication.subscription` **[Object][7]** 
 
+        *   `authentication.subscription.serviceUnavailableMaxRetries` **[number][12]** The maximum number of times this client will retry in order to subscribe for a
+            given service, while getting 'Service Unavailable' from backend. (optional, default `3`)
         *   `authentication.subscription.protocol` **[string][8]** Protocol to be used for subscription requests. (optional, default `'https'`)
         *   `authentication.subscription.server` **[string][8]** Server to be used for subscription requests.
         *   `authentication.subscription.port` **[Number][12]** Port to be used for subscription requests. (optional, default `443`)
