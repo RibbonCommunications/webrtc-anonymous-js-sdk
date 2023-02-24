@@ -887,8 +887,22 @@
             },
             {
               "title": "param",
-              "description": "Protocol to be used for subscription requests.",
+              "description": "The maximum number of times this client will retry in order to subscribe for a\ngiven service, while getting 'Service Unavailable' from backend.",
               "lineNumber": 8,
+              "type": {
+                "type": "OptionalType",
+                "expression": {
+                  "type": "NameExpression",
+                  "name": "number"
+                }
+              },
+              "name": "authentication.subscription.serviceUnavailableMaxRetries",
+              "default": "3"
+            },
+            {
+              "title": "param",
+              "description": "Protocol to be used for subscription requests.",
+              "lineNumber": 10,
               "type": {
                 "type": "OptionalType",
                 "expression": {
@@ -902,7 +916,7 @@
             {
               "title": "param",
               "description": "Server to be used for subscription requests.",
-              "lineNumber": 9,
+              "lineNumber": 11,
               "type": {
                 "type": "NameExpression",
                 "name": "string"
@@ -912,7 +926,7 @@
             {
               "title": "param",
               "description": "Port to be used for subscription requests.",
-              "lineNumber": 10,
+              "lineNumber": 12,
               "type": {
                 "type": "OptionalType",
                 "expression": {
@@ -926,7 +940,7 @@
             {
               "title": "param",
               "description": "Services to subscribe to for notifications.",
-              "lineNumber": 11,
+              "lineNumber": 13,
               "type": {
                 "type": "OptionalType",
                 "expression": {
@@ -939,7 +953,7 @@
             {
               "title": "param",
               "description": null,
-              "lineNumber": 12,
+              "lineNumber": 14,
               "type": {
                 "type": "NameExpression",
                 "name": "Object"
@@ -949,7 +963,7 @@
             {
               "title": "param",
               "description": "Protocol to be used for websocket notifications.",
-              "lineNumber": 13,
+              "lineNumber": 15,
               "type": {
                 "type": "OptionalType",
                 "expression": {
@@ -963,7 +977,7 @@
             {
               "title": "param",
               "description": "Server to be used for websocket notifications.",
-              "lineNumber": 14,
+              "lineNumber": 16,
               "type": {
                 "type": "NameExpression",
                 "name": "string"
@@ -973,7 +987,7 @@
             {
               "title": "param",
               "description": "Port to be used for websocket notifications.",
-              "lineNumber": 15,
+              "lineNumber": 17,
               "type": {
                 "type": "OptionalType",
                 "expression": {
@@ -991,18 +1005,18 @@
               "column": 0
             },
             "end": {
-              "line": 27,
+              "line": 29,
               "column": 3
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 29,
+                "line": 31,
                 "column": 0
               },
               "end": {
-                "line": 42,
+                "line": 45,
                 "column": 1
               }
             },
@@ -1046,8 +1060,32 @@
                   "properties": [
                     {
                       "title": "param",
-                      "name": "authentication.subscription.protocol",
+                      "name": "authentication.subscription.serviceUnavailableMaxRetries",
                       "lineNumber": 8,
+                      "description": {
+                        "type": "root",
+                        "children": [
+                          {
+                            "type": "paragraph",
+                            "children": [
+                              {
+                                "type": "text",
+                                "value": "The maximum number of times this client will retry in order to subscribe for a\ngiven service, while getting 'Service Unavailable' from backend."
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      "type": {
+                        "type": "NameExpression",
+                        "name": "number"
+                      },
+                      "default": "3"
+                    },
+                    {
+                      "title": "param",
+                      "name": "authentication.subscription.protocol",
+                      "lineNumber": 10,
                       "description": {
                         "type": "root",
                         "children": [
@@ -1071,7 +1109,7 @@
                     {
                       "title": "param",
                       "name": "authentication.subscription.server",
-                      "lineNumber": 9,
+                      "lineNumber": 11,
                       "description": {
                         "type": "root",
                         "children": [
@@ -1094,7 +1132,7 @@
                     {
                       "title": "param",
                       "name": "authentication.subscription.port",
-                      "lineNumber": 10,
+                      "lineNumber": 12,
                       "description": {
                         "type": "root",
                         "children": [
@@ -1118,7 +1156,7 @@
                     {
                       "title": "param",
                       "name": "authentication.subscription.service",
-                      "lineNumber": 11,
+                      "lineNumber": 13,
                       "description": {
                         "type": "root",
                         "children": [
@@ -1146,7 +1184,7 @@
                 {
                   "title": "param",
                   "name": "authentication.websocket",
-                  "lineNumber": 12,
+                  "lineNumber": 14,
                   "type": {
                     "type": "NameExpression",
                     "name": "Object"
@@ -1155,7 +1193,7 @@
                     {
                       "title": "param",
                       "name": "authentication.websocket.protocol",
-                      "lineNumber": 13,
+                      "lineNumber": 15,
                       "description": {
                         "type": "root",
                         "children": [
@@ -1179,7 +1217,7 @@
                     {
                       "title": "param",
                       "name": "authentication.websocket.server",
-                      "lineNumber": 14,
+                      "lineNumber": 16,
                       "description": {
                         "type": "root",
                         "children": [
@@ -1202,7 +1240,7 @@
                     {
                       "title": "param",
                       "name": "authentication.websocket.port",
-                      "lineNumber": 15,
+                      "lineNumber": 17,
                       "description": {
                         "type": "root",
                         "children": [
@@ -5561,7 +5599,8 @@
           },
           "path": [
             {
-              "name": "call"
+              "name": "call",
+              "kind": "namespace"
             },
             {
               "name": "call:operation",
@@ -5768,7 +5807,8 @@
           },
           "path": [
             {
-              "name": "call"
+              "name": "call",
+              "kind": "namespace"
             },
             {
               "name": "call:start",
@@ -5984,7 +6024,8 @@
           },
           "path": [
             {
-              "name": "call"
+              "name": "call",
+              "kind": "namespace"
             },
             {
               "name": "call:receive",
@@ -6451,7 +6492,8 @@
           },
           "path": [
             {
-              "name": "call"
+              "name": "call",
+              "kind": "namespace"
             },
             {
               "name": "call:stateChange",
@@ -6693,7 +6735,8 @@
           },
           "path": [
             {
-              "name": "call"
+              "name": "call",
+              "kind": "namespace"
             },
             {
               "name": "call:newMedia",
@@ -6902,7 +6945,8 @@
           },
           "path": [
             {
-              "name": "call"
+              "name": "call",
+              "kind": "namespace"
             },
             {
               "name": "call:removedMedia",
@@ -7189,7 +7233,8 @@
           },
           "path": [
             {
-              "name": "call"
+              "name": "call",
+              "kind": "namespace"
             },
             {
               "name": "call:tracksAdded",
@@ -7467,7 +7512,8 @@
           },
           "path": [
             {
-              "name": "call"
+              "name": "call",
+              "kind": "namespace"
             },
             {
               "name": "call:tracksRemoved",
@@ -7755,7 +7801,8 @@
           },
           "path": [
             {
-              "name": "call"
+              "name": "call",
+              "kind": "namespace"
             },
             {
               "name": "call:statsReceived",
@@ -8081,7 +8128,8 @@
           },
           "path": [
             {
-              "name": "call"
+              "name": "call",
+              "kind": "namespace"
             },
             {
               "name": "call:trackReplaced",
@@ -8300,7 +8348,8 @@
           },
           "path": [
             {
-              "name": "call"
+              "name": "call",
+              "kind": "namespace"
             },
             {
               "name": "call:availableCodecs",
@@ -8553,7 +8602,8 @@
           },
           "path": [
             {
-              "name": "call"
+              "name": "call",
+              "kind": "namespace"
             },
             {
               "name": "call:mediaConnectionChange",
@@ -8816,7 +8866,8 @@
           },
           "path": [
             {
-              "name": "call"
+              "name": "call",
+              "kind": "namespace"
             },
             {
               "name": "call:mediaRestart",
@@ -9933,7 +9984,8 @@
           },
           "path": [
             {
-              "name": "call"
+              "name": "call",
+              "kind": "namespace"
             },
             {
               "name": "makeAnonymous",
@@ -10803,7 +10855,8 @@
           },
           "path": [
             {
-              "name": "call"
+              "name": "call",
+              "kind": "namespace"
             },
             {
               "name": "CallObject",
@@ -11086,7 +11139,8 @@
           },
           "path": [
             {
-              "name": "call"
+              "name": "call",
+              "kind": "namespace"
             },
             {
               "name": "MediaConstraint",
@@ -11257,7 +11311,8 @@
           },
           "path": [
             {
-              "name": "call"
+              "name": "call",
+              "kind": "namespace"
             },
             {
               "name": "MediaOffered",
@@ -11488,7 +11543,8 @@
           },
           "path": [
             {
-              "name": "call"
+              "name": "call",
+              "kind": "namespace"
             },
             {
               "name": "BandwidthControls",
@@ -11770,7 +11826,8 @@
           },
           "path": [
             {
-              "name": "call"
+              "name": "call",
+              "kind": "namespace"
             },
             {
               "name": "DSCPControls",
@@ -12151,7 +12208,8 @@
           },
           "path": [
             {
-              "name": "call"
+              "name": "call",
+              "kind": "namespace"
             },
             {
               "name": "RTCPeerConnectionConfig",
@@ -12406,7 +12464,8 @@
           },
           "path": [
             {
-              "name": "call"
+              "name": "call",
+              "kind": "namespace"
             },
             {
               "name": "IceServer",
@@ -12849,7 +12908,8 @@
           },
           "path": [
             {
-              "name": "call"
+              "name": "call",
+              "kind": "namespace"
             },
             {
               "name": "IceCollectionInfo",
@@ -13500,7 +13560,8 @@
           },
           "path": [
             {
-              "name": "call"
+              "name": "call",
+              "kind": "namespace"
             },
             {
               "name": "IceCollectionCheckFunction",
@@ -13735,7 +13796,8 @@
           },
           "path": [
             {
-              "name": "call"
+              "name": "call",
+              "kind": "namespace"
             },
             {
               "name": "IceCollectionCheckResult",
@@ -13959,7 +14021,8 @@
           },
           "path": [
             {
-              "name": "call"
+              "name": "call",
+              "kind": "namespace"
             },
             {
               "name": "SdpHandlerInfo",
@@ -14194,7 +14257,8 @@
           },
           "path": [
             {
-              "name": "call"
+              "name": "call",
+              "kind": "namespace"
             },
             {
               "name": "SdpHandlerFunction",
@@ -14416,7 +14480,8 @@
           },
           "path": [
             {
-              "name": "call"
+              "name": "call",
+              "kind": "namespace"
             },
             {
               "name": "MediaObject",
@@ -14877,7 +14942,8 @@
           },
           "path": [
             {
-              "name": "call"
+              "name": "call",
+              "kind": "namespace"
             },
             {
               "name": "TrackObject",
@@ -15135,7 +15201,8 @@
           },
           "path": [
             {
-              "name": "call"
+              "name": "call",
+              "kind": "namespace"
             },
             {
               "name": "DevicesObject",
@@ -15380,7 +15447,8 @@
           },
           "path": [
             {
-              "name": "call"
+              "name": "call",
+              "kind": "namespace"
             },
             {
               "name": "DeviceInfo",
@@ -15759,7 +15827,8 @@
           },
           "path": [
             {
-              "name": "call"
+              "name": "call",
+              "kind": "namespace"
             },
             {
               "name": "CustomParameter",
@@ -16001,7 +16070,8 @@
           },
           "path": [
             {
-              "name": "call"
+              "name": "call",
+              "kind": "namespace"
             },
             {
               "name": "hold",
@@ -16218,7 +16288,8 @@
           },
           "path": [
             {
-              "name": "call"
+              "name": "call",
+              "kind": "namespace"
             },
             {
               "name": "unhold",
@@ -16535,7 +16606,8 @@
           },
           "path": [
             {
-              "name": "call"
+              "name": "call",
+              "kind": "namespace"
             },
             {
               "name": "setCustomParameters",
@@ -16759,7 +16831,8 @@
           },
           "path": [
             {
-              "name": "call"
+              "name": "call",
+              "kind": "namespace"
             },
             {
               "name": "sendCustomParameters",
@@ -16925,7 +16998,8 @@
           },
           "path": [
             {
-              "name": "call"
+              "name": "call",
+              "kind": "namespace"
             },
             {
               "name": "getAll",
@@ -17103,7 +17177,8 @@
           },
           "path": [
             {
-              "name": "call"
+              "name": "call",
+              "kind": "namespace"
             },
             {
               "name": "getById",
@@ -17336,7 +17411,8 @@
           },
           "path": [
             {
-              "name": "call"
+              "name": "call",
+              "kind": "namespace"
             },
             {
               "name": "end",
@@ -18217,7 +18293,8 @@
           },
           "path": [
             {
-              "name": "call"
+              "name": "call",
+              "kind": "namespace"
             },
             {
               "name": "addMedia",
@@ -18503,7 +18580,8 @@
           },
           "path": [
             {
-              "name": "call"
+              "name": "call",
+              "kind": "namespace"
             },
             {
               "name": "removeMedia",
@@ -19022,7 +19100,8 @@
           },
           "path": [
             {
-              "name": "call"
+              "name": "call",
+              "kind": "namespace"
             },
             {
               "name": "startVideo",
@@ -19239,7 +19318,8 @@
           },
           "path": [
             {
-              "name": "call"
+              "name": "call",
+              "kind": "namespace"
             },
             {
               "name": "stopVideo",
@@ -19430,7 +19510,8 @@
           },
           "path": [
             {
-              "name": "call"
+              "name": "call",
+              "kind": "namespace"
             },
             {
               "name": "startScreenshare",
@@ -19630,7 +19711,8 @@
           },
           "path": [
             {
-              "name": "call"
+              "name": "call",
+              "kind": "namespace"
             },
             {
               "name": "stopScreenshare",
@@ -19933,7 +20015,8 @@
           },
           "path": [
             {
-              "name": "call"
+              "name": "call",
+              "kind": "namespace"
             },
             {
               "name": "sendDTMF",
@@ -20215,7 +20298,8 @@
           },
           "path": [
             {
-              "name": "call"
+              "name": "call",
+              "kind": "namespace"
             },
             {
               "name": "getStats",
@@ -20862,7 +20946,8 @@
           },
           "path": [
             {
-              "name": "call"
+              "name": "call",
+              "kind": "namespace"
             },
             {
               "name": "replaceTrack",
@@ -21048,7 +21133,8 @@
           },
           "path": [
             {
-              "name": "call"
+              "name": "call",
+              "kind": "namespace"
             },
             {
               "name": "getAvailableCodecs",
@@ -21444,7 +21530,8 @@
           },
           "path": [
             {
-              "name": "call"
+              "name": "call",
+              "kind": "namespace"
             },
             {
               "name": "playAudioFile",
@@ -21632,7 +21719,8 @@
           },
           "path": [
             {
-              "name": "call"
+              "name": "call",
+              "kind": "namespace"
             },
             {
               "name": "setSdpHandlers",
@@ -22111,7 +22199,8 @@
           },
           "path": [
             {
-              "name": "call"
+              "name": "call",
+              "kind": "namespace"
             },
             {
               "name": "states",
@@ -22709,7 +22798,8 @@
           },
           "path": [
             {
-              "name": "call"
+              "name": "call",
+              "kind": "namespace"
             },
             {
               "name": "mediaConnectionStates",
@@ -23116,7 +23206,8 @@
           },
           "path": [
             {
-              "name": "call"
+              "name": "call",
+              "kind": "namespace"
             },
             {
               "name": "restartMedia",
@@ -23289,7 +23380,8 @@
           },
           "path": [
             {
-              "name": "call"
+              "name": "call",
+              "kind": "namespace"
             },
             {
               "name": "setDefaultDevices",
@@ -23448,7 +23540,8 @@
           },
           "path": [
             {
-              "name": "call"
+              "name": "call",
+              "kind": "namespace"
             },
             {
               "name": "changeInputDevices",
@@ -23623,7 +23716,8 @@
           },
           "path": [
             {
-              "name": "call"
+              "name": "call",
+              "kind": "namespace"
             },
             {
               "name": "changeSpeaker",

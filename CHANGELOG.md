@@ -5,6 +5,13 @@ Ribbon WebRTC SDK change log.
 - This project adheres to [Semantic Versioning](http://semver.org/).
 - This change log follows [keepachangelog.com](http://keepachangelog.com/) recommendations.
 
+## 5.7.0 - 2023-02-24
+
+### Added
+
+- Added capability to make subsequent `subscribe` requests in case the server responds with a `503 - Service Unavailable` response (e.g., when subscribing for a certain service).
+  - Added a new subscription configuration parameter: `config.authentication.serviceUnavailableMaxRetries` which can be used to override the default value of subscription re-attempts (i.e. 3 re-attempts). `KJS-961`
+
 ## 5.6.0 - 2023-01-27
 
 ### Added
