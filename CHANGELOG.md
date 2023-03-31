@@ -7,6 +7,10 @@ Ribbon WebRTC SDK change log.
 
 ## 5.8.0 - 2023-03-31
 
+### Fixed
+
+- Fixed the API documentation (for `call.stopVideo`) by indicating the correct final event names that are being triggered to application. `KJS-1459`
+
 ## 5.7.0 - 2023-02-24
 
 ### Added

@@ -1,7 +1,7 @@
 /**
  * WebRTC.js
  * webrtc.anonymous.js
- * Version: 5.8.0-beta.1041
+ * Version: 5.8.0-beta.1042
  */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
@@ -5804,7 +5804,7 @@ exports.getVersion = getVersion;
  * for the @@ tag below with actual version value.
  */
 function getVersion() {
-  return '5.8.0-beta.1041';
+  return '5.8.0-beta.1042';
 }
 
 /***/ }),
@@ -41918,7 +41918,7 @@ function callAPI({ dispatch, getState }) {
      * The progress of the operation will be tracked via the
      *    {@link call.event:call:operation call:operation} event.
      *
-     * The SDK will emit a {@link call.event:call:newTrack call:newTrack} event
+     * The SDK will emit a {@link call.event:call:tracksAdded call:tracksAdded} event
      *    both for the local and remote users to indicate a track has been
      *    added to the Call.
      *
@@ -41960,7 +41960,7 @@ function callAPI({ dispatch, getState }) {
      * The progress of the operation will be tracked via the
      *    {@link call.event:call:operation call:operation} event.
      *
-     * The SDK will emit a {@link call.event:call:trackEnded call:trackEnded}
+     * The SDK will emit a {@link call.event:call:tracksRemoved call:tracksRemoved}
      *    event for both the local and remote users to indicate that a track
      *    has been removed.
      *
