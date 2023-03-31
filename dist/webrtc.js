@@ -1,7 +1,7 @@
 /**
  * WebRTC.js
  * webrtc.anonymous.js
- * Version: 5.7.0
+ * Version: 5.8.0
  */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
@@ -5804,7 +5804,7 @@ exports.getVersion = getVersion;
  * for the @@ tag below with actual version value.
  */
 function getVersion() {
-  return '5.7.0';
+  return '5.8.0';
 }
 
 /***/ }),
@@ -49121,7 +49121,7 @@ function* iceRestart(deps, action) {
 
     if (!isConnected) {
       log.info('Subscription lost; stopping media restart attempt.');
-      yield (0, _effects2.put)(_actions.callActions.restartIceFinish(callId, {
+      yield (0, _effects2.put)(_actions.callActions.restartMediaFinish(callId, {
         local: true,
         error: new _errors2.default({
           code: _errors.subscriptionCodes.WS_CONNECTION_ERROR,
