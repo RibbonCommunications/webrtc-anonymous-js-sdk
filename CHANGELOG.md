@@ -5,11 +5,13 @@ Ribbon WebRTC SDK change log.
 - This project adheres to [Semantic Versioning](http://semver.org/).
 - This change log follows [keepachangelog.com](http://keepachangelog.com/) recommendations.
 
-## 5.8.0 - 2023-03-31
+## 5.9.0 - beta
 
 ### Fixed
 
 - Fixed the API documentation (for `call.stopVideo`) by indicating the correct final event names that are being triggered to application. `KJS-1459`
+
+## 5.8.0 - 2023-03-31
 
 ## 5.7.0 - 2023-02-24
 
