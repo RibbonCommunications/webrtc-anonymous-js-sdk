@@ -1,7 +1,7 @@
 /**
  * WebRTC.js
  * webrtc.anonymous.js
- * Version: 5.9.0-beta.1046
+ * Version: 5.9.0-beta.1047
  */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
@@ -5804,7 +5804,7 @@ exports.getVersion = getVersion;
  * for the @@ tag below with actual version value.
  */
 function getVersion() {
-  return '5.9.0-beta.1046';
+  return '5.9.0-beta.1047';
 }
 
 /***/ }),
@@ -53511,14 +53511,15 @@ callEvents[actionTypes.UPDATE_CALL] = (action, params) => {
    *    If so, emit a "track removed" event as well.
    */
   const prevCall = (0, _selectors.getCallById)(params.prevState, action.payload.id);
+  const currCall = (0, _selectors.getCallById)(params.state, action.payload.id);
 
   let trackEvent;
   if (prevCall) {
     const { remoteTracks: prevRemote } = prevCall;
-    const { remoteTracks = [] } = action.payload;
+    const { remoteTracks: currRemote } = currCall;
 
-    if (prevRemote.length > remoteTracks.length) {
-      const removedTracks = (0, _fp.without)(remoteTracks, prevRemote);
+    const removedTracks = (0, _fp.without)(currRemote, prevRemote);
+    if (removedTracks.length) {
       const payload = { id: prevCall.id, remoteTracks: removedTracks };
       trackEvent = (0, _handlers.trackRemovedHandler)({ payload });
     }
