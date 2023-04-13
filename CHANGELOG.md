@@ -11,6 +11,7 @@ Ribbon WebRTC SDK change log.
 
 - Fixed the API documentation (for `call.stopVideo`) by indicating the correct final event names that are being triggered to application. `KJS-1459`
 - Fixed a Call issue where a `call:tracksRemoved` event was being emitted falsely (i.e., for a track that was not removed) after an `unhold` operation. `KJS-1454`
+- Fixed the issue of re-rendering the same track (under the same CSS Selector) multiple times. `KJS-1468`
 
 ## 5.8.0 - 2023-03-31
 
