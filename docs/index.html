@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset='utf-8' />
-  <title>webrtc-anonymous-js-sdk 5.8.0 | Documentation</title>
+  <title>webrtc-anonymous-js-sdk 5.9.0 | Documentation</title>
   <meta name='viewport' content='width=device-width,initial-scale=1'>
   <link href='assets/bass.css' type='text/css' rel='stylesheet' />
   <link href='assets/style.css' type='text/css' rel='stylesheet' />
@@ -14,7 +14,7 @@
       <div id='split-left' class='overflow-auto fs0 height-viewport-100'>
         <div class='py1 px2'>
           <h3 class='mb0 no-anchor'>webrtc-anonymous-js-sdk</h3>
-          <div class='mb1'><code>5.8.0</code></div>
+          <div class='mb1'><code>5.9.0</code></div>
           <input
             placeholder='Filter'
             id='filter-input'
@@ -6475,7 +6475,7 @@ already have video. For more advanced scenarios, the
 <a href="#calladdmedia">call.addMedia</a> API can be used.</p>
 <p>The progress of the operation will be tracked via the
 <a href="#calleventcalloperation">call:operation</a> event.</p>
-<p>The SDK will emit a <a>call:newTrack</a> event
+<p>The SDK will emit a <a href="#calleventcalltracksadded">call:tracksAdded</a> event
 both for the local and remote users to indicate a track has been
 added to the Call.</p>
 
@@ -6647,7 +6647,7 @@ video track. For more advanced scenarios, the
 <a href="#callremovemedia">call.removeMedia</a> API can be used.</p>
 <p>The progress of the operation will be tracked via the
 <a href="#calleventcalloperation">call:operation</a> event.</p>
-<p>The SDK will emit a <a>call:trackEnded</a>
+<p>The SDK will emit a <a href="#calleventcalltracksremoved">call:tracksRemoved</a>
 event for both the local and remote users to indicate that a track
 has been removed.</p>
 
