@@ -17469,13 +17469,13 @@
                   },
                   {
                     "type": "link",
-                    "url": "call.event:call:newTrack",
+                    "url": "#calleventcalltracksadded",
                     "title": null,
                     "jsdoc": true,
                     "children": [
                       {
                         "type": "text",
-                        "value": "call:newTrack"
+                        "value": "call:tracksAdded"
                       }
                     ]
                   },
@@ -28921,7 +28921,7 @@
             },
             {
               "title": "example",
-              "description": "// When a Call receives a new track, render it.\nclient.on('call:newTrack', function (params) {\n   const track = client.media.getTrackById(params.trackId)\n   const container = params.local ? localContainer : remoteContainer\n\n   // Render the Call's new track when it first becomes available.\n   client.media.renderTracks([ track.trackId ], container)\n})",
+              "description": "// When a Call receives a new track, render it.\nclient.on('call:tracksAdded', function (params) {\n   params.trackIds.forEach(trackId => {\n     const track = client.media.getTrackById(trackId)\n     const container = track.isLocal ? localContainer : remoteContainer\n\n     // Render the Call's new track when it first becomes available.\n     client.media.renderTracks([ trackId ], container)\n   }\n})",
               "lineNumber": 15
             }
           ],
@@ -28931,18 +28931,18 @@
               "column": 4
             },
             "end": {
-              "line": 144,
+              "line": 146,
               "column": 7
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 145,
+                "line": 147,
                 "column": 4
               },
               "end": {
-                "line": 153,
+                "line": 155,
                 "column": 5
               }
             },
@@ -28951,7 +28951,7 @@
           "augments": [],
           "examples": [
             {
-              "description": "// When a Call receives a new track, render it.\nclient.on('call:newTrack', function (params) {\n   const track = client.media.getTrackById(params.trackId)\n   const container = params.local ? localContainer : remoteContainer\n\n   // Render the Call's new track when it first becomes available.\n   client.media.renderTracks([ track.trackId ], container)\n})"
+              "description": "// When a Call receives a new track, render it.\nclient.on('call:tracksAdded', function (params) {\n   params.trackIds.forEach(trackId => {\n     const track = client.media.getTrackById(trackId)\n     const container = track.isLocal ? localContainer : remoteContainer\n\n     // Render the Call's new track when it first becomes available.\n     client.media.renderTracks([ trackId ], container)\n   }\n})"
             }
           ],
           "implements": [],
@@ -29176,22 +29176,22 @@
           ],
           "loc": {
             "start": {
-              "line": 155,
+              "line": 157,
               "column": 4
             },
             "end": {
-              "line": 168,
+              "line": 170,
               "column": 7
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 169,
+                "line": 171,
                 "column": 4
               },
               "end": {
-                "line": 172,
+                "line": 174,
                 "column": 5
               }
             },
@@ -29400,22 +29400,22 @@
           ],
           "loc": {
             "start": {
-              "line": 174,
+              "line": 176,
               "column": 4
             },
             "end": {
-              "line": 196,
+              "line": 198,
               "column": 7
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 197,
+                "line": 199,
                 "column": 4
               },
               "end": {
-                "line": 200,
+                "line": 202,
                 "column": 5
               }
             },
@@ -29583,22 +29583,22 @@
           ],
           "loc": {
             "start": {
-              "line": 202,
+              "line": 204,
               "column": 4
             },
             "end": {
-              "line": 216,
+              "line": 218,
               "column": 7
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 217,
+                "line": 219,
                 "column": 4
               },
               "end": {
-                "line": 220,
+                "line": 222,
                 "column": 5
               }
             },
