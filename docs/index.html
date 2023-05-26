@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset='utf-8' />
-  <title>webrtc-anonymous-js-sdk 5.9.0 | Documentation</title>
+  <title>webrtc-anonymous-js-sdk 5.10.0 | Documentation</title>
   <meta name='viewport' content='width=device-width,initial-scale=1'>
   <link href='assets/bass.css' type='text/css' rel='stylesheet' />
   <link href='assets/style.css' type='text/css' rel='stylesheet' />
@@ -14,7 +14,7 @@
       <div id='split-left' class='overflow-auto fs0 height-viewport-100'>
         <div class='py1 px2'>
           <h3 class='mb0 no-anchor'>webrtc-anonymous-js-sdk</h3>
-          <div class='mb1'><code>5.9.0</code></div>
+          <div class='mb1'><code>5.10.0</code></div>
           <input
             placeholder='Filter'
             id='filter-input'
@@ -6091,7 +6091,7 @@ call was ended.</p>
 Will get new media tracks from the specific sources to add to the call.</p>
 <p>The progress of the operation will be tracked via the
 <a href="#calleventcalloperation">call:operation</a> event.</p>
-<p>The SDK will emit a <a>call:newTrack</a> event
+<p>The SDK will emit a <a href="#calleventcalltracksadded">call:tracksAdded</a> event
 both for the local and remote users to indicate a track has been
 added to the Call.</p>
 
@@ -11513,12 +11513,14 @@ escaped.
     
       
       <pre class='p1 overflow-auto round fill-light'><span class="hljs-comment">// When a Call receives a new track, render it.</span>
-client.on(<span class="hljs-string">&#x27;call:newTrack&#x27;</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">params</span>) </span>{
-   <span class="hljs-keyword">const</span> track = client.media.getTrackById(params.trackId)
-   <span class="hljs-keyword">const</span> container = params.local ? localContainer : remoteContainer
+client.on(<span class="hljs-string">&#x27;call:tracksAdded&#x27;</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">params</span>) </span>{
+   params.trackIds.forEach(<span class="hljs-function"><span class="hljs-params">trackId</span> =&gt;</span> {
+     <span class="hljs-keyword">const</span> track = client.media.getTrackById(trackId)
+     <span class="hljs-keyword">const</span> container = track.isLocal ? localContainer : remoteContainer
 
-   <span class="hljs-comment">// Render the Call&#x27;s new track when it first becomes available.</span>
-   client.media.renderTracks([ track.trackId ], container)
+     <span class="hljs-comment">// Render the Call&#x27;s new track when it first becomes available.</span>
+     client.media.renderTracks([ trackId ], container)
+   }
 })</pre>
     
   
