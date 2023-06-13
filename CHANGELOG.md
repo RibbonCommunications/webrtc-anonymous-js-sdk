@@ -1,3 +1,5 @@
+[copyright © 2023 ribbon communications operating company, inc. all rights reserved]: #
+
 # Change Log
 
 Ribbon WebRTC SDK change log.
@@ -925,3 +927,5 @@ Choose the configuration that applies to you:
 ### Added
 
 - Initial release of 4.x callMe SDK. It supports making anonymous calls using the new 4.x call stack.
+
+[copyright © 2023 ribbon communications operating company, inc. all rights reserved]: #

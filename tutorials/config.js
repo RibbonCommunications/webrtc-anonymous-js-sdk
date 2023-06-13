@@ -1,5 +1,4 @@
-// TODO: Update SUBSCRIPTIONFQDN & RIBBONTURN* when changes are also covered by backend
-// ICE server urls to be used for Anonymous Call.
+// COPYRIGHT © 2023 RIBBON COMMUNICATIONS OPERATING COMPANY, INC. ALL RIGHTS RESERVED
 export const configs = [
   {
     name: 'blue',
@@ -10,3 +9,4 @@ export const configs = [
     }
   }
 ]
+// COPYRIGHT © 2023 RIBBON COMMUNICATIONS OPERATING COMPANY, INC. ALL RIGHTS RESERVED
