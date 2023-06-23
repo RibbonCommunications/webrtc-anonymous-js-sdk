@@ -4,7 +4,7 @@
  *
  * WebRTC.js
  * webrtc.anonymous.js
- * Version: 6.0.0-beta.1062
+ * Version: 6.0.0-beta.1063
  */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
@@ -5804,7 +5804,7 @@ exports.getVersion = getVersion;
  * for the @@ tag below with actual version value.
  */
 function getVersion() {
-  return '6.0.0-beta.1062';
+  return '6.0.0-beta.1063';
 }
 
 /***/ }),
@@ -66770,6 +66770,10 @@ function createMiddleware(bottle) {
 
   /*
    * The middleware that will be given to the Factory.
+   *
+   * TODO: Eventually, when the Connectivity plugin is redesigned (or maybe as
+   *    technical-debt follow-up afterwards?), this middleware can be replaced
+   *    so that the Notifications plugin doesn't need to use redux middlewares anymore.
    */
   const middleware = context => next => action => {
     // Act after the action has gone through the reducers.
@@ -66781,15 +66785,22 @@ function createMiddleware(bottle) {
     while (i--) {
       const listener = actionListeners[i];
       /*
-       * If the action matches a listener, remove that listener from the list
-       *    then resolve its promise to unpause the operation that called it.
+       * If the action matches a listener, then process the action with the listener
+       *    and eventually call the listener's callback function.
        */
       if (listener.pattern(action)) {
-        actionListeners.splice(i, 1);
-        if (listener.timeoutId) {
-          clearTimeout(listener.timeoutId);
+        /*
+         * If this `take` was only intended for a single action, remove the listener
+         *    from the list and clear its timeout.
+         */
+        if (listener.singleTake) {
+          actionListeners.splice(i, 1);
+          if (listener.timeoutId) {
+            clearTimeout(listener.timeoutId);
+          }
         }
-        listener.resolve(action);
+
+        listener.callback(action);
       }
     }
     return returnVal;
@@ -66826,15 +66837,55 @@ function createMiddleware(bottle) {
       }
 
       actionListeners.push({
+        singleTake: true,
         pattern,
-        resolve,
+        callback: resolve,
         timeoutId
       });
     });
   }
 
-  // Add the utility to the bottle container.
+  /**
+   * Utility function to act on dispatched actions.
+   * Will call the provided callback function every time a matching action is
+   *    dispatched.
+   *
+   * This was created as a stop-gap between pre-redesign sagas and post-redesign
+   *    operations. It simulates the behaviour of a redux middleware without
+   *    other Plugins needing to actually create/use a redux middleware themselves.
+   *
+   * @method takeEveryAction
+   * @param {Function} pattern Function that decides whether the action should trigger the listener.
+   * @param {Function} callback Function to be called with a matched action.
+   * @return {undefined}
+   * @throws {Error} When either parameter provided is invalid.
+   * @example
+   * const takeEveryAction = container.Notifications.takeEveryAction
+   * takeAction((action) => { ... }, aCallback)
+   *
+   * function aCallback (action) { ... }
+   */
+  function takeEveryAction(pattern, callback) {
+    if (typeof pattern === 'string') {
+      // If a single action type was passed in, convert it to a function for consistency.
+      const actionType = pattern;
+      pattern = action => action.type === actionType;
+    }
+
+    if (typeof pattern !== 'function' || typeof callback !== 'function') {
+      throw new Error('takeEveryAction parametesr must be functions.');
+    }
+
+    actionListeners.push({
+      singleTake: false,
+      pattern,
+      callback
+    });
+  }
+
+  // Add the utilities to the bottle container.
   bottle.value('Notifications.takeAction', takeAction);
+  bottle.value('Notifications.takeEveryAction', takeEveryAction);
 
   return middleware;
 }
