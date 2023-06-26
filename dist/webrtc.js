@@ -4,7 +4,7 @@
  *
  * WebRTC.js
  * webrtc.anonymous.js
- * Version: 6.0.0-beta.1064
+ * Version: 6.0.0-beta.1065
  */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
@@ -5807,7 +5807,7 @@ exports.getVersion = getVersion;
  * for the @@ tag below with actual version value.
  */
 function getVersion() {
-  return '6.0.0-beta.1064';
+  return '6.0.0-beta.1065';
 }
 
 /***/ }),
