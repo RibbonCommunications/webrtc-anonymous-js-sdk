@@ -37,3 +37,8 @@
   description: # Call Statistics
   link: /quickstarts/javascript/newCallMe/Call%20Statistics
 
+- name: Call Reports
+  description: # Call Reports
+A call report can be created for any call, in any state. The report is in JSON format and will contain the following information.
+  link: /quickstarts/javascript/newCallMe/Call%20Reports
+
