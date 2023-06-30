@@ -1,9 +1,75 @@
+[copyright © 2023 ribbon communications operating company, inc. all rights reserved]: #
+
 # Change Log
 
 Ribbon WebRTC SDK change log.
 
 - This project adheres to [Semantic Versioning](http://semver.org/).
 - This change log follows [keepachangelog.com](http://keepachangelog.com/) recommendations.
+
+## 6.0.0 - 2023-06-30
+
+### Removed
+
+- Removed support for the `Plan-B` SDP Semantic for Calls. `KJS-1412`
+  - Browsers only support the `Unified-Plan` SDP Semantic, and the WebRTC JS SDK is aligning with WebRTC specification.
+  - The removal of the `Plan-B` configuration was announced in v4.29.0 (2021-06-25).
+- The `call.defaultPeerConfig.sdpSemantics` configuration is no longer changeable from the default `Unified-Plan`.
+- Removed backwards-compatibility support for deprecated authentication configurations format. `KJS-422`
+  - Please see the `configs` API documentation or the `User Connect` tutorial for information about the latest format for the authentication and subscription configurations.
+- Removed backwards-compatibility support for the following call configurations: `iceserver`, `iceServers`, and `sdpSemanatics`.
+  - Please see the `configs` API documentation or the `Voice and Video Calls` tutorial for information about the format for the call configurations.
+
+### Other Changes
+
+The v6.0 release also includes changes to a few other parts of the SDK, similar to what our v5.0 release included. These changes should not be noticeable to an application, but are worth mentioning for awareness. A number of features of the SDK have had their codebase renewed to better support the direction of the SDK going forward. This will translate to a better developer experience in the future.
+
+The following features have been updated internally: Calls. They do not require any application changes as part of v6.0, as the changes are backwards-compatible. As always, if you encounter an issue with a release change, please report the issue to us.
+
+### Removed
+
+- Removed the Call configuration `call.removeH264Codecs`. `KJS-839`
+  - Call codecs should be removed using the `call.sdpHandlers` configuration with the `createCodecRemover` helper.
+  - This is a breaking change: H264 codecs will not be removed by default any longer. Please see the Migration section below for more information.
+
+### Migration
+
+#### H264 Codec Removal
+
+The `call.removeH264Codecs` configuration is being removed since it overlaps with the preferred `call.sdpHandlers` and `createCodecRemover` functionality. They perform the same behaviour but allow for more control and ability in choosing specifically which codecs should be removed.
+
+Below is a comparison of how the H264 codecs can be removed using both methods. For more information about the `createCodecRemover`, please see the `sdpHandlers.createCodecRemover` function and `CodecSelector` type in the documentation.
+
+_Note_: The `call.removeH264Codecs` configuration was `true` by default, meaning the SDK would remove H264 codecs unless specified not to. With the removal of `call.removeH264Codecs`, H264 codecs will not be removed unless specified to.
+
+```javascript
+// Example SDK initialization with a codec-remover for H264.
+// Only available prior to v6.0 changes.
+import { create } from '@rbbn/webrtc-js-sdk'
+const client = create({
+  call: {
+    removeH264Codecs: true
+  }
+})
+
+// Example SDK initialization with a codec-remover for H264.
+// Available in both v5.0 and v6.0.
+import { create, sdpHandlers } from '@rbbn/webrtc-js-sdk'
+const codecRemover = sdpHandlers.createCodecRemover(['H264'])
+const client = create({
+  call: {
+    sdpHandlers: [codecRemover]
+  }
+})
+
+// Example codec-remover for more specific H264 codecs.
+const codecRemover = sdpHandlers.createCodecRemover([
+  {
+    name: 'H264',
+    fmtpParams: ['profile-level-id=4d0032', 'packetization-mode=1']
+  }
+])
+```
 
 ## 5.10.0 - 2023-05-26
 
@@ -27,6 +93,16 @@ Ribbon WebRTC SDK change log.
 
 - Added capability to make subsequent `subscribe` requests in case the server responds with a `503 - Service Unavailable` response (e.g., when subscribing for a certain service).
   - Added a new subscription configuration parameter: `config.authentication.serviceUnavailableMaxRetries` which can be used to override the default value of subscription re-attempts (i.e. 3 re-attempts). `KJS-961`
+
+### Removed
+
+- Dropping support for `plan-b`: WebRTC JS SDK no longer supports Plab-B, as part of its webrtc call functionality. The plan to remove `plan-b` was previously announced in version `4.29.0` on 2021-06-25. Current support is for `unified-plan` only. `KJS-1412`
+- Removal of deprecated (3.x) functionality, as follows:
+  - Removed support for `auth` configuration objects: `config.authentication.subscription` & `config.authentication.websocket`
+  - Removed support for `call` configuration objects: `config.call.iceserver`, `config.call.iceServers` & `config.call.sdpSemantics`
+  - Removed API docs for deprecated API: `setDefaultDevices`
+  - Removed support for passing a `contact` parameter (as a String) for API: `contacts.update`. Supported parameter is now an Object instance.
+    `KJS-727`
 
 ## 5.6.0 - 2023-01-27
 
@@ -851,3 +927,5 @@ Choose the configuration that applies to you:
 ### Added
 
 - Initial release of 4.x callMe SDK. It supports making anonymous calls using the new 4.x call stack.
+
+[copyright © 2023 ribbon communications operating company, inc. all rights reserved]: #

@@ -1,3 +1,4 @@
+[COPYRIGHT © 2023 RIBBON COMMUNICATIONS OPERATING COMPANY, INC. ALL RIGHTS RESERVED]: #
 ---
 layout: page
 categories: quickstarts-javascript
@@ -126,4 +127,5 @@ console.log('    fromToken: ', fromToken)
 ```
 
 Notice that the token realm value is not used (yet) at this point in time. It will be used later on, when the actual API call is made. See the [Anonymous Calls Quickstart](Anonymous%20Calls).
+[COPYRIGHT © 2023 RIBBON COMMUNICATIONS OPERATING COMPANY, INC. ALL RIGHTS RESERVED]: #
 
