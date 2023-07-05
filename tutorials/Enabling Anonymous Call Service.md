@@ -1,13 +1,4 @@
 [COPYRIGHT © 2023 RIBBON COMMUNICATIONS OPERATING COMPANY, INC. ALL RIGHTS RESERVED]: #
----
-layout: page
-categories: quickstarts-javascript
-title: Enabling Anonymous Call Service
-permalink: /quickstarts/javascript/newCallMe/Enabling%20Anonymous%20Call%20Service
-position: 2
-categories:
-  - getting_started
----
 
 # Enabling Anonymous Call Service
 

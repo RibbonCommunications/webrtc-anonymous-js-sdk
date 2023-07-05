@@ -1,13 +1,4 @@
 [COPYRIGHT © 2023 RIBBON COMMUNICATIONS OPERATING COMPANY, INC. ALL RIGHTS RESERVED]: #
----
-layout: page
-categories: quickstarts-javascript
-title: Configurations
-permalink: /quickstarts/javascript/newCallMe/Configurations
-position: 1
-categories:
-  - getting_started
----
 
 # Configurations
 

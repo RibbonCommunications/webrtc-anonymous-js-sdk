@@ -102,12 +102,6 @@
         plugins: [
           docuteMermaid(),
           {
-            name: 'Hide Front Matter',
-            extend(api) {
-              api.processMarkdown(md => md.replace(/---([^]*?)---/m, ''))
-            }
-          },
-          {
             name: 'Convert RIBBONFQDN',
             extend(api) {
               const ribbonFQDN = useDefault ? '$RIBBONFQDN$' : configs[configIdx].data.RIBBONFQDN

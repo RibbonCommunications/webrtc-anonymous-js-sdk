@@ -1,13 +1,4 @@
 [COPYRIGHT © 2023 RIBBON COMMUNICATIONS OPERATING COMPANY, INC. ALL RIGHTS RESERVED]: #
----
-layout: page
-categories: quickstarts-javascript
-title: Generating Tokens
-permalink: /quickstarts/javascript/newCallMe/Generating%20Tokens
-position: 3
-categories:
-  - getting_started
----
 
 # Generating Tokens
 

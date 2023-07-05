@@ -1,13 +1,4 @@
 [COPYRIGHT © 2023 RIBBON COMMUNICATIONS OPERATING COMPANY, INC. ALL RIGHTS RESERVED]: #
----
-layout: page
-categories: quickstarts-javascript
-title: Get Started
-permalink: /quickstarts/javascript/newCallMe/Get%20Started
-position: 0
-categories:
-  - getting_started
----
 
 # Get Started
 
