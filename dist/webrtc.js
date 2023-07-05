@@ -3,7 +3,7 @@
  *
  * WebRTC.js
  * webrtc.anonymous.js
- * Version: 6.1.0-beta.1070
+ * Version: 6.1.0-beta.1071
  */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
@@ -979,7 +979,7 @@ var effect = function effect(eff) {
 
 exports.__esModule = true;
 
-var _assign = __webpack_require__(126);
+var _assign = __webpack_require__(127);
 
 var _assign2 = _interopRequireDefault(_assign);
 
@@ -1018,7 +1018,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _codes = __webpack_require__(163);
+var _codes = __webpack_require__(164);
 
 Object.defineProperty(exports, 'authCodes', {
   enumerable: true,
@@ -1361,7 +1361,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.turnActions = exports.callActions = undefined;
 
-var _call = __webpack_require__(174);
+var _call = __webpack_require__(175);
 
 var callActionsImport = _interopRequireWildcard(_call);
 
@@ -1810,7 +1810,7 @@ var _kandyLogger = __webpack_require__(79);
 
 var _kandyLogger2 = _interopRequireDefault(_kandyLogger);
 
-var _config = __webpack_require__(151);
+var _config = __webpack_require__(152);
 
 var _config2 = _interopRequireDefault(_config);
 
@@ -3376,7 +3376,7 @@ function createAction(type, payloadCreator, metaCreator) {
   return array[array.length - 1];
 });
 // EXTERNAL MODULE: /var/jenkins_home/workspace/Kandy.js_beta/node_modules/to-camel-case/index.js
-var to_camel_case = __webpack_require__(125);
+var to_camel_case = __webpack_require__(126);
 var to_camel_case_default = /*#__PURE__*/__webpack_require__.n(to_camel_case);
 
 // CONCATENATED MODULE: /var/jenkins_home/workspace/Kandy.js_beta/node_modules/redux-actions/es/utils/camelCase.js
@@ -4246,7 +4246,7 @@ module.exports = invariant;
 /***/ (function(module, exports, __webpack_require__) {
 
 var anObject = __webpack_require__(33);
-var IE8_DOM_DEFINE = __webpack_require__(127);
+var IE8_DOM_DEFINE = __webpack_require__(128);
 var toPrimitive = __webpack_require__(93);
 var dP = Object.defineProperty;
 
@@ -4471,7 +4471,7 @@ var _tracks = __webpack_require__(295);
 
 var trackActionsImport = _interopRequireWildcard(_tracks);
 
-var _sessions = __webpack_require__(162);
+var _sessions = __webpack_require__(163);
 
 var sessionActionsImport = _interopRequireWildcard(_sessions);
 
@@ -5679,7 +5679,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.update = update;
 exports.setSdpHandlers = setSdpHandlers;
 
-var _actionTypes = __webpack_require__(158);
+var _actionTypes = __webpack_require__(159);
 
 var actionTypes = _interopRequireWildcard(_actionTypes);
 
@@ -5759,15 +5759,15 @@ exports.getBrowserDetails = undefined;
 exports.getWebRTCSupportCapabilities = getWebRTCSupportCapabilities;
 exports.default = initialize;
 
-var _track = __webpack_require__(164);
+var _track = __webpack_require__(165);
 
 var _track2 = _interopRequireDefault(_track);
 
-var _media = __webpack_require__(165);
+var _media = __webpack_require__(166);
 
 var _media2 = _interopRequireDefault(_media);
 
-var _Peer = __webpack_require__(166);
+var _Peer = __webpack_require__(167);
 
 var _Peer2 = _interopRequireDefault(_Peer);
 
@@ -5951,7 +5951,7 @@ module.exports = function (bitmap, value) {
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.2.14 / 15.2.3.14 Object.keys(O)
-var $keys = __webpack_require__(128);
+var $keys = __webpack_require__(129);
 var enumBugKeys = __webpack_require__(99);
 
 module.exports = Object.keys || function keys(O) {
@@ -6010,7 +6010,7 @@ exports.getVersion = getVersion;
  * for the @@ tag below with actual version value.
  */
 function getVersion() {
-  return '6.1.0-beta.1070';
+  return '6.1.0-beta.1071';
 }
 
 /***/ }),
@@ -6158,7 +6158,7 @@ exports.getCheckConnectivity = getCheckConnectivity;
 
 var _fp = __webpack_require__(4);
 
-var _name = __webpack_require__(172);
+var _name = __webpack_require__(173);
 
 var _name2 = _interopRequireDefault(_name);
 
@@ -6281,7 +6281,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.getAllRemoteTracks = getAllRemoteTracks;
 exports.getIncomingRemoteTracks = getIncomingRemoteTracks;
 
-var _operations = __webpack_require__(121);
+var _operations = __webpack_require__(122);
 
 var _constants = __webpack_require__(7);
 
@@ -6597,11 +6597,11 @@ module.exports = function (it, tag, stat) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var ctx = __webpack_require__(40);
-var call = __webpack_require__(135);
-var isArrayIter = __webpack_require__(136);
+var call = __webpack_require__(136);
+var isArrayIter = __webpack_require__(137);
 var anObject = __webpack_require__(33);
 var toLength = __webpack_require__(74);
-var getIterFn = __webpack_require__(137);
+var getIterFn = __webpack_require__(138);
 var BREAK = {};
 var RETURN = {};
 var exports = module.exports = function (iterable, entries, fn, that, ITERATOR) {
@@ -7396,7 +7396,7 @@ var createDict = function () {
   var gt = '>';
   var iframeDocument;
   iframe.style.display = 'none';
-  __webpack_require__(132).appendChild(iframe);
+  __webpack_require__(133).appendChild(iframe);
   iframe.src = 'javascript:'; // eslint-disable-line no-script-url
   // createDict = iframe.contentWindow.Object;
   // html.removeChild(iframe);
@@ -7438,7 +7438,7 @@ var _logManager = __webpack_require__(228);
 
 var _logManager2 = _interopRequireDefault(_logManager);
 
-var _logFormatter = __webpack_require__(150);
+var _logFormatter = __webpack_require__(151);
 
 var _logFormatter2 = _interopRequireDefault(_logFormatter);
 
@@ -9121,12 +9121,12 @@ module.exports = function isObject(arg) {
 
 var LIBRARY = __webpack_require__(63);
 var $export = __webpack_require__(18);
-var redefine = __webpack_require__(131);
+var redefine = __webpack_require__(132);
 var hide = __webpack_require__(41);
 var Iterators = __webpack_require__(65);
 var $iterCreate = __webpack_require__(211);
 var setToStringTag = __webpack_require__(66);
-var getPrototypeOf = __webpack_require__(133);
+var getPrototypeOf = __webpack_require__(134);
 var ITERATOR = __webpack_require__(23)('iterator');
 var BUGGY = !([].keys && 'next' in [].keys()); // Safari has buggy iterators w/o `next`
 var FF_ITERATOR = '@@iterator';
@@ -9299,7 +9299,7 @@ module.exports = function (target, src, safe) {
 var global = __webpack_require__(21);
 var core = __webpack_require__(15);
 var LIBRARY = __webpack_require__(63);
-var wksExt = __webpack_require__(146);
+var wksExt = __webpack_require__(147);
 var defineProperty = __webpack_require__(30).f;
 module.exports = function (name) {
   var $Symbol = core.Symbol || (core.Symbol = LIBRARY ? {} : global.Symbol || {});
@@ -10090,6 +10090,144 @@ function formatMediaConstraints(media) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.default = createMakeResponse;
+
+var _actions = __webpack_require__(8);
+
+var _eventTypes = __webpack_require__(10);
+
+var eventTypes = _interopRequireWildcard(_eventTypes);
+
+var _constants = __webpack_require__(6);
+
+var _remoteTracks = __webpack_require__(59);
+
+var _constants2 = __webpack_require__(14);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+function createMakeResponse(container) {
+  const { context, logManager, emitEvent, CallstackWebrtc, CallReporter, WebRTC } = container;
+
+  /**
+   * Operation for handling the answer SDP of a locally-started make operation.
+   *
+   * On succesful handling:
+   *    - updates call state to "connected",
+   *    - emits a "tracks added" event
+   *    - emits a "call state change" event.
+   *
+   * On failure to handle, ends the call as unrecoverable:
+   *    - updates call state to "ended",
+   *    - emits a "tracks removed" event
+   *    - emits a "call state change" event.
+   *
+   * @method makeResponse
+   * @param {Object} call The call being acted on.
+   * @param {Object} params
+   * @param {Object} params.sdp The remote answer SDP.
+   * @return {undefined}
+   */
+  async function makeResponse(call, params) {
+    const log = logManager.getLogger('CALL', call.id);
+
+    const callReport = CallReporter.getReport(call.id);
+    // Start the process reseponse event
+    const operationEvent = callReport.getEvent(call.localOp.eventId);
+    const processResponseEvent = operationEvent.addEvent(_constants2.REPORTER_EVENTS.PROCESS_RESPONSE);
+
+    // Handle the remote answer SDP.
+    try {
+      const sessionInfo = { sessionId: call.webrtcSessionId, answerSdp: params.sdp };
+      await CallstackWebrtc.receivedAnswer(sessionInfo, call);
+    } catch (error) {
+      /*
+       * Failed to set the remote answer SDP. End the call.
+       * TODO: Better error handling. Is the Call fully cleaned-up here?
+       */
+      context.dispatch(_actions.callActions.endCallFinish(call.id, {
+        error
+      }));
+
+      // Tell the application that local tracks are not available, since the
+      //    call is ending in error.
+      emitEvent(eventTypes.CALL_TRACKS_REMOVED, {
+        callId: call.id,
+        trackIds: [...call.localTracks, ...call.remoteTracks]
+      });
+
+      emitEvent(eventTypes.CALL_STATE_CHANGE, {
+        callId: call.id,
+        previous: {
+          state: call.state,
+          localHold: call.localHold,
+          remoteHold: call.remoteHold
+        },
+        error
+      });
+      processResponseEvent.setError(error);
+      processResponseEvent.endEvent();
+      return;
+    }
+
+    log.info(`Finished processing remote response to local ${call.localOp.operation}. Changing state based on operation.`);
+
+    // Get the list of all remote tracks being offered in this call. This is a
+    //    new call, so this should be the full list of remote tracks available.
+    const session = await WebRTC.sessionManager.get(call.webrtcSessionId);
+    const remoteTracks = await (0, _remoteTracks.getAllRemoteTracks)(session);
+
+    /*
+     * Update call state:
+     *    - state change to "connected",
+     *    - remote tracks added to call
+     */
+    context.dispatch(_actions.callActions.makeCallFinish(call.id, {
+      state: _constants.CALL_STATES.CONNECTED,
+      // TODO: Make sure this is the correct units
+      startTime: Date.now(),
+      // Remote participant's information.
+      remoteParticipant: {
+        displayNumber: params.remoteNumber,
+        displayName: params.remoteName
+      },
+      // Add the remote tracks to the call state.
+      remoteTracks
+      // Local tracks have already been added on "pending make call".
+    }));
+
+    // Tell the application that tracks have been added.
+    emitEvent(eventTypes.CALL_TRACKS_ADDED, {
+      callId: call.id,
+      trackIds: remoteTracks
+    });
+
+    // Tell the application that call state has changed.
+    emitEvent(eventTypes.CALL_STATE_CHANGE, {
+      callId: call.id,
+      previous: {
+        state: call.state,
+        localHold: call.localHold,
+        remoteHold: call.remoteHold
+      }
+    });
+
+    processResponseEvent.endEvent();
+  }
+
+  return makeResponse;
+} // Callstack.
+
+/***/ }),
+/* 122 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 exports.default = getOperation;
 exports.wasHold = wasHold;
 exports.wasUnhold = wasUnhold;
@@ -10103,7 +10241,7 @@ exports.wasNoChange = wasNoChange;
 exports.hadMediaFlowing = hadMediaFlowing;
 exports.hasMediaFlowing = hasMediaFlowing;
 
-var _constants = __webpack_require__(122);
+var _constants = __webpack_require__(123);
 
 var _constants2 = __webpack_require__(7);
 
@@ -10761,7 +10899,7 @@ function hasMediaFlowing(mediaDiff) {
 }
 
 /***/ }),
-/* 122 */
+/* 123 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10777,7 +10915,7 @@ const MEDIA_TRANSITIONS = exports.MEDIA_TRANSITIONS = {
 };
 
 /***/ }),
-/* 123 */
+/* 124 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11013,7 +11151,7 @@ function enableNotificationChannelFinish(channel, { params, error } = {}) {
 }
 
 /***/ }),
-/* 124 */
+/* 125 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -12482,7 +12620,7 @@ function sagaMiddlewareFactory(_temp) {
 
 
 /***/ }),
-/* 125 */
+/* 126 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -12509,13 +12647,13 @@ function toCamelCase(string) {
 
 
 /***/ }),
-/* 126 */
+/* 127 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = { "default": __webpack_require__(192), __esModule: true };
 
 /***/ }),
-/* 127 */
+/* 128 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = !__webpack_require__(31) && !__webpack_require__(44)(function () {
@@ -12524,7 +12662,7 @@ module.exports = !__webpack_require__(31) && !__webpack_require__(44)(function (
 
 
 /***/ }),
-/* 128 */
+/* 129 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var has = __webpack_require__(42);
@@ -12547,14 +12685,14 @@ module.exports = function (object, names) {
 
 
 /***/ }),
-/* 129 */
+/* 130 */
 /***/ (function(module, exports) {
 
 module.exports = Array.isArray;
 
 
 /***/ }),
-/* 130 */
+/* 131 */
 /***/ (function(module, exports) {
 
 module.exports = function isFunction(arg) {
@@ -12563,14 +12701,14 @@ module.exports = function isFunction(arg) {
 
 
 /***/ }),
-/* 131 */
+/* 132 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(41);
 
 
 /***/ }),
-/* 132 */
+/* 133 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var document = __webpack_require__(21).document;
@@ -12578,7 +12716,7 @@ module.exports = document && document.documentElement;
 
 
 /***/ }),
-/* 133 */
+/* 134 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.2.9 / 15.2.3.2 Object.getPrototypeOf(O)
@@ -12597,7 +12735,7 @@ module.exports = Object.getPrototypeOf || function (O) {
 
 
 /***/ }),
-/* 134 */
+/* 135 */
 /***/ (function(module, exports) {
 
 module.exports = function (done, value) {
@@ -12606,7 +12744,7 @@ module.exports = function (done, value) {
 
 
 /***/ }),
-/* 135 */
+/* 136 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // call something on iterator step with safe closing on error
@@ -12624,7 +12762,7 @@ module.exports = function (iterator, fn, value, entries) {
 
 
 /***/ }),
-/* 136 */
+/* 137 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // check on default Array iterator
@@ -12638,7 +12776,7 @@ module.exports = function (it) {
 
 
 /***/ }),
-/* 137 */
+/* 138 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var classof = __webpack_require__(106);
@@ -12652,7 +12790,7 @@ module.exports = __webpack_require__(15).getIteratorMethod = function (it) {
 
 
 /***/ }),
-/* 138 */
+/* 139 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 7.3.20 SpeciesConstructor(O, defaultConstructor)
@@ -12667,12 +12805,12 @@ module.exports = function (O, D) {
 
 
 /***/ }),
-/* 139 */
+/* 140 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ctx = __webpack_require__(40);
 var invoke = __webpack_require__(216);
-var html = __webpack_require__(132);
+var html = __webpack_require__(133);
 var cel = __webpack_require__(92);
 var global = __webpack_require__(21);
 var process = global.process;
@@ -12757,7 +12895,7 @@ module.exports = {
 
 
 /***/ }),
-/* 140 */
+/* 141 */
 /***/ (function(module, exports) {
 
 module.exports = function (exec) {
@@ -12770,7 +12908,7 @@ module.exports = function (exec) {
 
 
 /***/ }),
-/* 141 */
+/* 142 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var anObject = __webpack_require__(33);
@@ -12788,7 +12926,7 @@ module.exports = function (C, x) {
 
 
 /***/ }),
-/* 142 */
+/* 143 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12809,7 +12947,7 @@ module.exports = function (KEY) {
 
 
 /***/ }),
-/* 143 */
+/* 144 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ITERATOR = __webpack_require__(23)('iterator');
@@ -12837,7 +12975,7 @@ module.exports = function (exec, skipClosing) {
 
 
 /***/ }),
-/* 144 */
+/* 145 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // most Object methods by ES6 should accept primitives
@@ -12853,7 +12991,7 @@ module.exports = function (KEY, exec) {
 
 
 /***/ }),
-/* 145 */
+/* 146 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var DESCRIPTORS = __webpack_require__(31);
@@ -12880,14 +13018,14 @@ module.exports = function (isEntries) {
 
 
 /***/ }),
-/* 146 */
+/* 147 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports.f = __webpack_require__(23);
 
 
 /***/ }),
-/* 147 */
+/* 148 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 7.2.2 IsArray(argument)
@@ -12898,11 +13036,11 @@ module.exports = Array.isArray || function isArray(arg) {
 
 
 /***/ }),
-/* 148 */
+/* 149 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.2.7 / 15.2.3.4 Object.getOwnPropertyNames(O)
-var $keys = __webpack_require__(128);
+var $keys = __webpack_require__(129);
 var hiddenKeys = __webpack_require__(99).concat('length', 'prototype');
 
 exports.f = Object.getOwnPropertyNames || function getOwnPropertyNames(O) {
@@ -12911,7 +13049,7 @@ exports.f = Object.getOwnPropertyNames || function getOwnPropertyNames(O) {
 
 
 /***/ }),
-/* 149 */
+/* 150 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var pIE = __webpack_require__(64);
@@ -12919,7 +13057,7 @@ var createDesc = __webpack_require__(50);
 var toIObject = __webpack_require__(45);
 var toPrimitive = __webpack_require__(93);
 var has = __webpack_require__(42);
-var IE8_DOM_DEFINE = __webpack_require__(127);
+var IE8_DOM_DEFINE = __webpack_require__(128);
 var gOPD = Object.getOwnPropertyDescriptor;
 
 exports.f = __webpack_require__(31) ? gOPD : function getOwnPropertyDescriptor(O, P) {
@@ -12933,7 +13071,7 @@ exports.f = __webpack_require__(31) ? gOPD : function getOwnPropertyDescriptor(O
 
 
 /***/ }),
-/* 150 */
+/* 151 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12967,7 +13105,7 @@ function defaultLogFormatter(entry) {
 }
 
 /***/ }),
-/* 151 */
+/* 152 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13070,7 +13208,7 @@ const partialDefaultLogActions = exports.partialDefaultLogActions = {
 };
 
 /***/ }),
-/* 152 */
+/* 153 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13116,7 +13254,7 @@ function getTypes(state) {
 }
 
 /***/ }),
-/* 153 */
+/* 154 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13128,8 +13266,8 @@ var ctx = __webpack_require__(40);
 var anInstance = __webpack_require__(107);
 var forOf = __webpack_require__(67);
 var $iterDefine = __webpack_require__(104);
-var step = __webpack_require__(134);
-var setSpecies = __webpack_require__(142);
+var step = __webpack_require__(135);
+var setSpecies = __webpack_require__(143);
 var DESCRIPTORS = __webpack_require__(31);
 var fastKey = __webpack_require__(80).fastKey;
 var validate = __webpack_require__(113);
@@ -13267,7 +13405,7 @@ module.exports = {
 
 
 /***/ }),
-/* 154 */
+/* 155 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13333,7 +13471,7 @@ module.exports = function (NAME, wrapper, methods, common, IS_MAP, IS_WEAK) {
 
 
 /***/ }),
-/* 155 */
+/* 156 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // https://github.com/DavidBruant/Map-Set.prototype.toJSON
@@ -13348,7 +13486,7 @@ module.exports = function (NAME) {
 
 
 /***/ }),
-/* 156 */
+/* 157 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13367,7 +13505,7 @@ module.exports = function (COLLECTION) {
 
 
 /***/ }),
-/* 157 */
+/* 158 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13402,7 +13540,7 @@ module.exports = function (COLLECTION) {
 
 
 /***/ }),
-/* 158 */
+/* 159 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13418,7 +13556,7 @@ const CONFIG_UPDATE = exports.CONFIG_UPDATE = PREFIX + 'CONFIG_UPDATE';
 const SET_SDP_HANDLERS = exports.SET_SDP_HANDLERS = PREFIX + 'SET_SDP_HANDLERS';
 
 /***/ }),
-/* 159 */
+/* 160 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13621,7 +13759,7 @@ function mergeDefaults(options = {}) {
 }
 
 /***/ }),
-/* 160 */
+/* 161 */
 /***/ (function(module, exports) {
 
 var grammar = module.exports = {
@@ -14121,7 +14259,7 @@ Object.keys(grammar).forEach(function (key) {
 
 
 /***/ }),
-/* 161 */
+/* 162 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14182,7 +14320,7 @@ function createAPI(container) {
 // Namespaced APIs.
 
 /***/ }),
-/* 162 */
+/* 163 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14285,7 +14423,7 @@ function sessionAudioEnded(id, params) {
 }
 
 /***/ }),
-/* 163 */
+/* 164 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14468,7 +14606,7 @@ const authCodes = exports.authCodes = {
 };
 
 /***/ }),
-/* 164 */
+/* 165 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14689,7 +14827,7 @@ function Track(mediaTrack, mediaStream) {
 // Libraries.
 
 /***/ }),
-/* 165 */
+/* 166 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14899,7 +15037,7 @@ function Media(nativeStream, isLocal) {
 // Libraries.
 
 /***/ }),
-/* 166 */
+/* 167 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -15123,7 +15261,7 @@ function peer(id, config = {}, trackManager) {
 }
 
 /***/ }),
-/* 167 */
+/* 168 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -15156,7 +15294,7 @@ function iceCollectionScheduledCheck(proxyBase) {
 }
 
 /***/ }),
-/* 168 */
+/* 169 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -15180,7 +15318,7 @@ exports.resubscribe = resubscribe;
 
 var _services = __webpack_require__(372);
 
-var _effects = __webpack_require__(169);
+var _effects = __webpack_require__(170);
 
 var _effects2 = _interopRequireDefault(_effects);
 
@@ -15470,7 +15608,7 @@ function* resubscribe(connection, subscription) {
 }
 
 /***/ }),
-/* 169 */
+/* 170 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -15547,7 +15685,7 @@ function* requestSaga(options, manualOptions) {
 }
 
 /***/ }),
-/* 170 */
+/* 171 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -15590,7 +15728,7 @@ var _errors = __webpack_require__(5);
 
 var _errors2 = _interopRequireDefault(_errors);
 
-var _requests = __webpack_require__(168);
+var _requests = __webpack_require__(169);
 
 var _actionTypes2 = __webpack_require__(22);
 
@@ -15598,7 +15736,7 @@ var _actionTypes3 = __webpack_require__(39);
 
 var connectivityActionTypes = _interopRequireWildcard(_actionTypes3);
 
-var _effects2 = __webpack_require__(171);
+var _effects2 = __webpack_require__(172);
 
 var _selectors2 = __webpack_require__(57);
 
@@ -15993,7 +16131,7 @@ function* onConnectionLost() {
 }
 
 /***/ }),
-/* 171 */
+/* 172 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -16100,7 +16238,7 @@ function* waitForReconnect(timeout = 60000) {
 }
 
 /***/ }),
-/* 172 */
+/* 173 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -16113,7 +16251,7 @@ const name = 'connectivity';
 exports.default = name;
 
 /***/ }),
-/* 173 */
+/* 174 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -16639,7 +16777,7 @@ function createAPI(container) {
 }
 
 /***/ }),
-/* 174 */
+/* 175 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -17156,7 +17294,7 @@ function operationUpdate(id, operation, isLocal, { transition, operationData, ev
 }
 
 /***/ }),
-/* 175 */
+/* 176 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -17373,144 +17511,6 @@ function getWebsocketId(state, service) {
 function getPendingOperation(state) {
   return state.subscription.pendingOperation;
 }
-
-/***/ }),
-/* 176 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = createMakeResponse;
-
-var _actions = __webpack_require__(8);
-
-var _eventTypes = __webpack_require__(10);
-
-var eventTypes = _interopRequireWildcard(_eventTypes);
-
-var _constants = __webpack_require__(6);
-
-var _remoteTracks = __webpack_require__(59);
-
-var _constants2 = __webpack_require__(14);
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-
-function createMakeResponse(container) {
-  const { context, logManager, emitEvent, CallstackWebrtc, CallReporter, WebRTC } = container;
-
-  /**
-   * Operation for handling the answer SDP of a locally-started make operation.
-   *
-   * On succesful handling:
-   *    - updates call state to "connected",
-   *    - emits a "tracks added" event
-   *    - emits a "call state change" event.
-   *
-   * On failure to handle, ends the call as unrecoverable:
-   *    - updates call state to "ended",
-   *    - emits a "tracks removed" event
-   *    - emits a "call state change" event.
-   *
-   * @method makeResponse
-   * @param {Object} call The call being acted on.
-   * @param {Object} params
-   * @param {Object} params.sdp The remote answer SDP.
-   * @return {undefined}
-   */
-  async function makeResponse(call, params) {
-    const log = logManager.getLogger('CALL', call.id);
-
-    const callReport = CallReporter.getReport(call.id);
-    // Start the process reseponse event
-    const operationEvent = callReport.getEvent(call.localOp.eventId);
-    const processResponseEvent = operationEvent.addEvent(_constants2.REPORTER_EVENTS.PROCESS_RESPONSE);
-
-    // Handle the remote answer SDP.
-    try {
-      const sessionInfo = { sessionId: call.webrtcSessionId, answerSdp: params.sdp };
-      await CallstackWebrtc.receivedAnswer(sessionInfo, call);
-    } catch (error) {
-      /*
-       * Failed to set the remote answer SDP. End the call.
-       * TODO: Better error handling. Is the Call fully cleaned-up here?
-       */
-      context.dispatch(_actions.callActions.endCallFinish(call.id, {
-        error
-      }));
-
-      // Tell the application that local tracks are not available, since the
-      //    call is ending in error.
-      emitEvent(eventTypes.CALL_TRACKS_REMOVED, {
-        callId: call.id,
-        trackIds: [...call.localTracks, ...call.remoteTracks]
-      });
-
-      emitEvent(eventTypes.CALL_STATE_CHANGE, {
-        callId: call.id,
-        previous: {
-          state: call.state,
-          localHold: call.localHold,
-          remoteHold: call.remoteHold
-        },
-        error
-      });
-      processResponseEvent.setError(error);
-      processResponseEvent.endEvent();
-      return;
-    }
-
-    log.info(`Finished processing remote response to local ${call.localOp.operation}. Changing state based on operation.`);
-
-    // Get the list of all remote tracks being offered in this call. This is a
-    //    new call, so this should be the full list of remote tracks available.
-    const session = await WebRTC.sessionManager.get(call.webrtcSessionId);
-    const remoteTracks = await (0, _remoteTracks.getAllRemoteTracks)(session);
-
-    /*
-     * Update call state:
-     *    - state change to "connected",
-     *    - remote tracks added to call
-     */
-    context.dispatch(_actions.callActions.makeCallFinish(call.id, {
-      state: _constants.CALL_STATES.CONNECTED,
-      // TODO: Make sure this is the correct units
-      startTime: Date.now(),
-      // Remote participant's information.
-      remoteParticipant: {
-        displayNumber: params.remoteNumber,
-        displayName: params.remoteName
-      },
-      // Add the remote tracks to the call state.
-      remoteTracks
-      // Local tracks have already been added on "pending make call".
-    }));
-
-    // Tell the application that tracks have been added.
-    emitEvent(eventTypes.CALL_TRACKS_ADDED, {
-      callId: call.id,
-      trackIds: remoteTracks
-    });
-
-    // Tell the application that call state has changed.
-    emitEvent(eventTypes.CALL_STATE_CHANGE, {
-      callId: call.id,
-      previous: {
-        state: call.state,
-        localHold: call.localHold,
-        remoteHold: call.remoteHold
-      }
-    });
-
-    processResponseEvent.endEvent();
-  }
-
-  return makeResponse;
-} // Callstack.
 
 /***/ }),
 /* 177 */
@@ -18853,7 +18853,7 @@ exports.pushNotificationsRegistration = pushNotificationsRegistration;
 exports.pushNotificationsDeRegistration = pushNotificationsDeRegistration;
 exports.fetchSDP = fetchSDP;
 
-var _effects = __webpack_require__(169);
+var _effects = __webpack_require__(170);
 
 var _effects2 = _interopRequireDefault(_effects);
 
@@ -19621,7 +19621,7 @@ var _redux = __webpack_require__(91);
 
 var _reduxDevtoolsExtension = __webpack_require__(197);
 
-var _reduxSaga = __webpack_require__(124);
+var _reduxSaga = __webpack_require__(125);
 
 var _reduxSaga2 = _interopRequireDefault(_reduxSaga);
 
@@ -21217,8 +21217,8 @@ module.exports = {};
 /* 202 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var isArray = __webpack_require__(129);
-var isFunction = __webpack_require__(130);
+var isArray = __webpack_require__(130);
+var isFunction = __webpack_require__(131);
 var isObject = __webpack_require__(103);
 var isStamp = __webpack_require__(203);
 var isComposable = __webpack_require__(204);
@@ -21413,7 +21413,7 @@ module.exports = function compose() {
 /* 203 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var isFunction = __webpack_require__(130);
+var isFunction = __webpack_require__(131);
 
 module.exports = function isStamp(arg) {
   return isFunction(arg) && isFunction(arg.compose);
@@ -21443,7 +21443,7 @@ module.exports = Object.assign;
 
 var isPlainObject = __webpack_require__(207);
 var isObject = __webpack_require__(103);
-var isArray = __webpack_require__(129);
+var isArray = __webpack_require__(130);
 
 /**
  * The 'src' argument plays the command role.
@@ -22219,7 +22219,7 @@ module.exports = __webpack_require__(31) ? Object.defineProperties : function de
 "use strict";
 
 var addToUnscopables = __webpack_require__(214);
-var step = __webpack_require__(134);
+var step = __webpack_require__(135);
 var Iterators = __webpack_require__(65);
 var toIObject = __webpack_require__(45);
 
@@ -22275,13 +22275,13 @@ var isObject = __webpack_require__(26);
 var aFunction = __webpack_require__(61);
 var anInstance = __webpack_require__(107);
 var forOf = __webpack_require__(67);
-var speciesConstructor = __webpack_require__(138);
-var task = __webpack_require__(139).set;
+var speciesConstructor = __webpack_require__(139);
+var task = __webpack_require__(140).set;
 var microtask = __webpack_require__(217)();
 var newPromiseCapabilityModule = __webpack_require__(108);
-var perform = __webpack_require__(140);
+var perform = __webpack_require__(141);
 var userAgent = __webpack_require__(218);
-var promiseResolve = __webpack_require__(141);
+var promiseResolve = __webpack_require__(142);
 var PROMISE = 'Promise';
 var TypeError = global.TypeError;
 var process = global.process;
@@ -22488,7 +22488,7 @@ if (!USE_NATIVE) {
 
 $export($export.G + $export.W + $export.F * !USE_NATIVE, { Promise: $Promise });
 __webpack_require__(66)($Promise, PROMISE);
-__webpack_require__(142)(PROMISE);
+__webpack_require__(143)(PROMISE);
 Wrapper = __webpack_require__(15)[PROMISE];
 
 // statics
@@ -22507,7 +22507,7 @@ $export($export.S + $export.F * (LIBRARY || !USE_NATIVE), PROMISE, {
     return promiseResolve(LIBRARY && this === Wrapper ? $Promise : this, x);
   }
 });
-$export($export.S + $export.F * !(USE_NATIVE && __webpack_require__(143)(function (iter) {
+$export($export.S + $export.F * !(USE_NATIVE && __webpack_require__(144)(function (iter) {
   $Promise.all(iter)['catch'](empty);
 })), PROMISE, {
   // 25.4.4.1 Promise.all(iterable)
@@ -22580,7 +22580,7 @@ module.exports = function (fn, args, that) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var global = __webpack_require__(21);
-var macrotask = __webpack_require__(139).set;
+var macrotask = __webpack_require__(140).set;
 var Observer = global.MutationObserver || global.WebKitMutationObserver;
 var process = global.process;
 var Promise = global.Promise;
@@ -22670,8 +22670,8 @@ module.exports = navigator && navigator.userAgent || '';
 var $export = __webpack_require__(18);
 var core = __webpack_require__(15);
 var global = __webpack_require__(21);
-var speciesConstructor = __webpack_require__(138);
-var promiseResolve = __webpack_require__(141);
+var speciesConstructor = __webpack_require__(139);
+var promiseResolve = __webpack_require__(142);
 
 $export($export.P + $export.R, 'Promise', { 'finally': function (onFinally) {
   var C = speciesConstructor(this, core.Promise || global.Promise);
@@ -22696,7 +22696,7 @@ $export($export.P + $export.R, 'Promise', { 'finally': function (onFinally) {
 // https://github.com/tc39/proposal-promise-try
 var $export = __webpack_require__(18);
 var newPromiseCapability = __webpack_require__(108);
-var perform = __webpack_require__(140);
+var perform = __webpack_require__(141);
 
 $export($export.S, 'Promise', { 'try': function (callbackfn) {
   var promiseCapability = newPromiseCapability.f(this);
@@ -22722,7 +22722,7 @@ module.exports = __webpack_require__(15).Object.keys;
 var toObject = __webpack_require__(52);
 var $keys = __webpack_require__(51);
 
-__webpack_require__(144)('keys', function () {
+__webpack_require__(145)('keys', function () {
   return function keys(it) {
     return $keys(toObject(it));
   };
@@ -23684,7 +23684,7 @@ module.exports = __webpack_require__(15).Object.values;
 
 // https://github.com/tc39/proposal-object-values-entries
 var $export = __webpack_require__(18);
-var $values = __webpack_require__(145)(false);
+var $values = __webpack_require__(146)(false);
 
 $export($export.S, 'Object', {
   values: function values(it) {
@@ -23721,17 +23721,17 @@ var global = __webpack_require__(21);
 var has = __webpack_require__(42);
 var DESCRIPTORS = __webpack_require__(31);
 var $export = __webpack_require__(18);
-var redefine = __webpack_require__(131);
+var redefine = __webpack_require__(132);
 var META = __webpack_require__(80).KEY;
 var $fails = __webpack_require__(44);
 var shared = __webpack_require__(98);
 var setToStringTag = __webpack_require__(66);
 var uid = __webpack_require__(75);
 var wks = __webpack_require__(23);
-var wksExt = __webpack_require__(146);
+var wksExt = __webpack_require__(147);
 var wksDefine = __webpack_require__(110);
 var enumKeys = __webpack_require__(234);
-var isArray = __webpack_require__(147);
+var isArray = __webpack_require__(148);
 var anObject = __webpack_require__(33);
 var isObject = __webpack_require__(26);
 var toObject = __webpack_require__(52);
@@ -23740,7 +23740,7 @@ var toPrimitive = __webpack_require__(93);
 var createDesc = __webpack_require__(50);
 var _create = __webpack_require__(78);
 var gOPNExt = __webpack_require__(235);
-var $GOPD = __webpack_require__(149);
+var $GOPD = __webpack_require__(150);
 var $GOPS = __webpack_require__(100);
 var $DP = __webpack_require__(30);
 var $keys = __webpack_require__(51);
@@ -23866,7 +23866,7 @@ if (!USE_NATIVE) {
 
   $GOPD.f = $getOwnPropertyDescriptor;
   $DP.f = $defineProperty;
-  __webpack_require__(148).f = gOPNExt.f = $getOwnPropertyNames;
+  __webpack_require__(149).f = gOPNExt.f = $getOwnPropertyNames;
   __webpack_require__(64).f = $propertyIsEnumerable;
   $GOPS.f = $getOwnPropertySymbols;
 
@@ -23990,7 +23990,7 @@ module.exports = function (it) {
 
 // fallback for IE11 buggy Object.getOwnPropertyNames with iframe and window
 var toIObject = __webpack_require__(45);
-var gOPN = __webpack_require__(148).f;
+var gOPN = __webpack_require__(149).f;
 var toString = {}.toString;
 
 var windowNames = typeof window == 'object' && window && Object.getOwnPropertyNames
@@ -24334,7 +24334,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = defaultLogHandler;
 
-var _logFormatter = __webpack_require__(150);
+var _logFormatter = __webpack_require__(151);
 
 var _logFormatter2 = _interopRequireDefault(_logFormatter);
 
@@ -25049,7 +25049,7 @@ var _actions = __webpack_require__(112);
 
 var actions = _interopRequireWildcard(_actions);
 
-var _config = __webpack_require__(151);
+var _config = __webpack_require__(152);
 
 var _sagas = __webpack_require__(250);
 
@@ -25198,7 +25198,7 @@ var _actions = __webpack_require__(112);
 
 var actions = _interopRequireWildcard(_actions);
 
-var _selectors = __webpack_require__(152);
+var _selectors = __webpack_require__(153);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -25742,12 +25742,12 @@ module.exports = __webpack_require__(15).Set;
 
 "use strict";
 
-var strong = __webpack_require__(153);
+var strong = __webpack_require__(154);
 var validate = __webpack_require__(113);
 var SET = 'Set';
 
 // 23.2 Set Objects
-module.exports = __webpack_require__(154)(SET, function (get) {
+module.exports = __webpack_require__(155)(SET, function (get) {
   return function Set() { return get(this, arguments.length > 0 ? arguments[0] : undefined); };
 }, {
   // 23.2.3.1 Set.prototype.add(value)
@@ -25824,7 +25824,7 @@ module.exports = function (original, length) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var isObject = __webpack_require__(26);
-var isArray = __webpack_require__(147);
+var isArray = __webpack_require__(148);
 var SPECIES = __webpack_require__(23)('species');
 
 module.exports = function (original) {
@@ -25848,7 +25848,7 @@ module.exports = function (original) {
 // https://github.com/DavidBruant/Map-Set.prototype.toJSON
 var $export = __webpack_require__(18);
 
-$export($export.P + $export.R, 'Set', { toJSON: __webpack_require__(155)('Set') });
+$export($export.P + $export.R, 'Set', { toJSON: __webpack_require__(156)('Set') });
 
 
 /***/ }),
@@ -25869,7 +25869,7 @@ module.exports = function (iter, ITERATOR) {
 /***/ (function(module, exports, __webpack_require__) {
 
 // https://tc39.github.io/proposal-setmap-offrom/#sec-set.of
-__webpack_require__(156)('Set');
+__webpack_require__(157)('Set');
 
 
 /***/ }),
@@ -25877,7 +25877,7 @@ __webpack_require__(156)('Set');
 /***/ (function(module, exports, __webpack_require__) {
 
 // https://tc39.github.io/proposal-setmap-offrom/#sec-set.from
-__webpack_require__(157)('Set');
+__webpack_require__(158)('Set');
 
 
 /***/ }),
@@ -26374,7 +26374,7 @@ var _selectors = __webpack_require__(271);
 
 var _logs = __webpack_require__(11);
 
-var _configs = __webpack_require__(159);
+var _configs = __webpack_require__(160);
 
 var _configs2 = _interopRequireDefault(_configs);
 
@@ -26504,13 +26504,13 @@ module.exports = __webpack_require__(15).Array.from;
 var ctx = __webpack_require__(40);
 var $export = __webpack_require__(18);
 var toObject = __webpack_require__(52);
-var call = __webpack_require__(135);
-var isArrayIter = __webpack_require__(136);
+var call = __webpack_require__(136);
+var isArrayIter = __webpack_require__(137);
 var toLength = __webpack_require__(74);
 var createProperty = __webpack_require__(274);
-var getIterFn = __webpack_require__(137);
+var getIterFn = __webpack_require__(138);
 
-$export($export.S + $export.F * !__webpack_require__(143)(function (iter) { Array.from(iter); }), 'Array', {
+$export($export.S + $export.F * !__webpack_require__(144)(function (iter) { Array.from(iter); }), 'Array', {
   // 22.1.2.1 Array.from(arrayLike, mapfn = undefined, thisArg = undefined)
   from: function from(arrayLike /* , mapfn = undefined, thisArg = undefined */) {
     var O = toObject(arrayLike);
@@ -26729,7 +26729,7 @@ var parseReg = function (obj, location, content) {
   }
 };
 
-var grammar = __webpack_require__(160);
+var grammar = __webpack_require__(161);
 var validLine = RegExp.prototype.test.bind(/^([a-z])=(.*)/);
 
 exports.parse = function (sdp) {
@@ -26823,7 +26823,7 @@ exports.parseSimulcastStreamList = function (str) {
 /* 277 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var grammar = __webpack_require__(160);
+var grammar = __webpack_require__(161);
 
 // customized util.format - discards excess arguments and can void middle ones
 var formatRegExp = /%[sdv%]/g;
@@ -26954,7 +26954,7 @@ var _extends2 = __webpack_require__(3);
 
 var _extends3 = _interopRequireDefault(_extends2);
 
-var _actionTypes = __webpack_require__(158);
+var _actionTypes = __webpack_require__(159);
 
 var actionTypes = _interopRequireWildcard(_actionTypes);
 
@@ -27353,7 +27353,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _assign = __webpack_require__(126);
+var _assign = __webpack_require__(127);
 
 var _assign2 = _interopRequireDefault(_assign);
 
@@ -27532,7 +27532,7 @@ var _interface = __webpack_require__(285);
 
 var _interface2 = _interopRequireDefault(_interface);
 
-var _index = __webpack_require__(161);
+var _index = __webpack_require__(162);
 
 var _index2 = _interopRequireDefault(_index);
 
@@ -27556,7 +27556,7 @@ var _middleware2 = _interopRequireDefault(_middleware);
 
 var _logs3 = __webpack_require__(11);
 
-var _selectors = __webpack_require__(152);
+var _selectors = __webpack_require__(153);
 
 var _kandyWebrtc = __webpack_require__(47);
 
@@ -27654,7 +27654,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _api = __webpack_require__(161);
+var _api = __webpack_require__(162);
 
 var _api2 = _interopRequireDefault(_api);
 
@@ -29735,12 +29735,12 @@ module.exports = __webpack_require__(15).Map;
 
 "use strict";
 
-var strong = __webpack_require__(153);
+var strong = __webpack_require__(154);
 var validate = __webpack_require__(113);
 var MAP = 'Map';
 
 // 23.1 Map Objects
-module.exports = __webpack_require__(154)(MAP, function (get) {
+module.exports = __webpack_require__(155)(MAP, function (get) {
   return function Map() { return get(this, arguments.length > 0 ? arguments[0] : undefined); };
 }, {
   // 23.1.3.6 Map.prototype.get(key)
@@ -29762,7 +29762,7 @@ module.exports = __webpack_require__(154)(MAP, function (get) {
 // https://github.com/DavidBruant/Map-Set.prototype.toJSON
 var $export = __webpack_require__(18);
 
-$export($export.P + $export.R, 'Map', { toJSON: __webpack_require__(155)('Map') });
+$export($export.P + $export.R, 'Map', { toJSON: __webpack_require__(156)('Map') });
 
 
 /***/ }),
@@ -29770,7 +29770,7 @@ $export($export.P + $export.R, 'Map', { toJSON: __webpack_require__(155)('Map') 
 /***/ (function(module, exports, __webpack_require__) {
 
 // https://tc39.github.io/proposal-setmap-offrom/#sec-map.of
-__webpack_require__(156)('Map');
+__webpack_require__(157)('Map');
 
 
 /***/ }),
@@ -29778,7 +29778,7 @@ __webpack_require__(156)('Map');
 /***/ (function(module, exports, __webpack_require__) {
 
 // https://tc39.github.io/proposal-setmap-offrom/#sec-map.from
-__webpack_require__(157)('Map');
+__webpack_require__(158)('Map');
 
 
 /***/ }),
@@ -29801,8 +29801,8 @@ module.exports = __webpack_require__(15).Reflect.set;
 
 // 26.1.13 Reflect.set(target, propertyKey, V [, receiver])
 var dP = __webpack_require__(30);
-var gOPD = __webpack_require__(149);
-var getPrototypeOf = __webpack_require__(133);
+var gOPD = __webpack_require__(150);
+var getPrototypeOf = __webpack_require__(134);
 var has = __webpack_require__(42);
 var $export = __webpack_require__(18);
 var createDesc = __webpack_require__(50);
@@ -30437,7 +30437,7 @@ module.exports = __webpack_require__(15).Object.freeze;
 var isObject = __webpack_require__(26);
 var meta = __webpack_require__(80).onFreeze;
 
-__webpack_require__(144)('freeze', function ($freeze) {
+__webpack_require__(145)('freeze', function ($freeze) {
   return function freeze(it) {
     return $freeze && isObject(it) ? $freeze(meta(it)) : it;
   };
@@ -30827,7 +30827,7 @@ exports.default = setLocalDescription;
 
 var _constants = __webpack_require__(38);
 
-var _iceCollectionScheduledCheck = __webpack_require__(167);
+var _iceCollectionScheduledCheck = __webpack_require__(168);
 
 var _iceCollectionScheduledCheck2 = _interopRequireDefault(_iceCollectionScheduledCheck);
 
@@ -35032,7 +35032,7 @@ exports.default = MediaManager;
 
 var _logs = __webpack_require__(24);
 
-var _media = __webpack_require__(165);
+var _media = __webpack_require__(166);
 
 var _media2 = _interopRequireDefault(_media);
 
@@ -35355,7 +35355,7 @@ exports.default = PeerManager;
 
 var _logs = __webpack_require__(24);
 
-var _Peer = __webpack_require__(166);
+var _Peer = __webpack_require__(167);
 
 var _Peer2 = _interopRequireDefault(_Peer);
 
@@ -35608,7 +35608,7 @@ var _extractors = __webpack_require__(359);
 
 var _utils = __webpack_require__(84);
 
-var _iceCollectionScheduledCheck = __webpack_require__(167);
+var _iceCollectionScheduledCheck = __webpack_require__(168);
 
 var _iceCollectionScheduledCheck2 = _interopRequireDefault(_iceCollectionScheduledCheck);
 
@@ -37023,7 +37023,7 @@ var _map2 = _interopRequireDefault(_map);
 
 exports.default = TrackManager;
 
-var _track = __webpack_require__(164);
+var _track = __webpack_require__(165);
 
 var _track2 = _interopRequireDefault(_track);
 
@@ -37396,7 +37396,7 @@ var _noop2 = _interopRequireDefault(_noop);
 
 var _sagas = __webpack_require__(371);
 
-var _sagas2 = __webpack_require__(170);
+var _sagas2 = __webpack_require__(171);
 
 var _utils = __webpack_require__(17);
 
@@ -38222,11 +38222,11 @@ var actions = _interopRequireWildcard(_actions);
 
 var _selectors = __webpack_require__(12);
 
-var _requests = __webpack_require__(168);
+var _requests = __webpack_require__(169);
 
-var _sagas = __webpack_require__(170);
+var _sagas = __webpack_require__(171);
 
-var _effects = __webpack_require__(171);
+var _effects = __webpack_require__(172);
 
 var _errors = __webpack_require__(5);
 
@@ -38326,7 +38326,7 @@ function* anonymousConnect() {
             log.debug(`Subscription subsequently failed: ${response.error} (after getting an initial 503 response).`);
           } else {
             // We got an error the first time we tried to subscribe.
-            log.debug(`Subscription failed: ${response.error}`);
+            log.debug(`Subscription failed: ${response.error.message}`);
           }
           return;
         }
@@ -38901,7 +38901,7 @@ var _operations2 = __webpack_require__(414);
 
 var anonOperations = _interopRequireWildcard(_operations2);
 
-var _configs = __webpack_require__(159);
+var _configs = __webpack_require__(160);
 
 var _configs2 = _interopRequireDefault(_configs);
 
@@ -38999,7 +38999,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _index = __webpack_require__(173);
+var _index = __webpack_require__(174);
 
 var _index2 = _interopRequireDefault(_index);
 
@@ -41771,8 +41771,17 @@ callReducers[actionTypes.MAKE_CALL_FINISH] = {
   }
 };
 
-// Update the call state based on the outcome.
-callReducers[actionTypes.ANSWER_CALL_FINISH] = {
+// Update the new call state based on the outcome.
+callReducers[actionTypes.MAKE_ANONYMOUS_CALL_FINISH] = {
+  next(state, action) {
+    // Change nothing.
+    return state;
+  },
+  // End the call.
+  throw: callEnder
+
+  // Update the call state based on the outcome.
+};callReducers[actionTypes.ANSWER_CALL_FINISH] = {
   next(state, action) {
     // If the action has a Session ID, store it as the ID.
     // In some scenarios (slow start), the we only get an ID
@@ -42202,7 +42211,7 @@ callReducers[webrtcActionTypes.SESSION_ICE_CONNECTION_STATE_CHANGE] = {
 const callReducer = (0, _reduxActions.handleActions)(callReducers, {});
 
 // Actions routed to call-tier reducers.
-const specificCallActions = (0, _reduxActions.combineActions)(actionTypes.PENDING_OPERATION, actionTypes.PENDING_MAKE_CALL, actionTypes.MAKE_CALL_FINISH, actionTypes.ANSWER_CALL, actionTypes.ANSWER_CALL_FINISH, actionTypes.REJECT_CALL, actionTypes.REJECT_CALL_FINISH, actionTypes.CALL_ACCEPTED, actionTypes.SEND_RINGING_FEEDBACK_FINISH, actionTypes.CALL_RINGING, actionTypes.SESSION_PROGRESS, actionTypes.CALL_CANCELLED, actionTypes.IGNORE_CALL_FINISH, actionTypes.END_CALL_FINISH, actionTypes.CALL_HOLD_FINISH, actionTypes.CALL_UNHOLD_FINISH, actionTypes.SET_CUSTOM_PARAMETERS, actionTypes.SEND_CUSTOM_PARAMETERS_FINISH, actionTypes.CALL_REMOTE_HOLD_FINISH, actionTypes.CALL_REMOTE_UNHOLD_FINISH, actionTypes.REMOTE_ADD_MEDIA_FINISH, actionTypes.REMOTE_REMOVE_MEDIA_FINISH, actionTypes.ADD_MEDIA_FINISH, actionTypes.REMOVE_MEDIA_FINISH, actionTypes.UPDATE_CALL, actionTypes.FORWARD_CALL, actionTypes.FORWARD_CALL_FINISH, actionTypes.DIRECT_TRANSFER_FINISH, actionTypes.REPLACE_TRACK_FINISH, actionTypes.MEDIA_RESTART, actionTypes.MEDIA_RESTART_FINISH, actionTypes.REMOTE_SLOW_START, actionTypes.REMOTE_START_MOH_FINISH, actionTypes.REMOTE_STOP_MOH_FINISH, actionTypes.SESSION_CREATED, actionTypes.OPERATION_UPDATE);
+const specificCallActions = (0, _reduxActions.combineActions)(actionTypes.PENDING_OPERATION, actionTypes.PENDING_MAKE_CALL, actionTypes.MAKE_CALL_FINISH, actionTypes.MAKE_ANONYMOUS_CALL_FINISH, actionTypes.ANSWER_CALL, actionTypes.ANSWER_CALL_FINISH, actionTypes.REJECT_CALL, actionTypes.REJECT_CALL_FINISH, actionTypes.CALL_ACCEPTED, actionTypes.SEND_RINGING_FEEDBACK_FINISH, actionTypes.CALL_RINGING, actionTypes.SESSION_PROGRESS, actionTypes.CALL_CANCELLED, actionTypes.IGNORE_CALL_FINISH, actionTypes.END_CALL_FINISH, actionTypes.CALL_HOLD_FINISH, actionTypes.CALL_UNHOLD_FINISH, actionTypes.SET_CUSTOM_PARAMETERS, actionTypes.SEND_CUSTOM_PARAMETERS_FINISH, actionTypes.CALL_REMOTE_HOLD_FINISH, actionTypes.CALL_REMOTE_UNHOLD_FINISH, actionTypes.REMOTE_ADD_MEDIA_FINISH, actionTypes.REMOTE_REMOVE_MEDIA_FINISH, actionTypes.ADD_MEDIA_FINISH, actionTypes.REMOVE_MEDIA_FINISH, actionTypes.UPDATE_CALL, actionTypes.FORWARD_CALL, actionTypes.FORWARD_CALL_FINISH, actionTypes.DIRECT_TRANSFER_FINISH, actionTypes.REPLACE_TRACK_FINISH, actionTypes.MEDIA_RESTART, actionTypes.MEDIA_RESTART_FINISH, actionTypes.REMOTE_SLOW_START, actionTypes.REMOTE_START_MOH_FINISH, actionTypes.REMOTE_STOP_MOH_FINISH, actionTypes.SESSION_CREATED, actionTypes.OPERATION_UPDATE);
 
 const specificWebrtcSessionActions = (0, _reduxActions.combineActions)(webrtcActionTypes.SESSION_ICE_CONNECTION_STATE_CHANGE);
 
@@ -42433,7 +42442,7 @@ var _objectWithoutProperties3 = _interopRequireDefault(_objectWithoutProperties2
 
 exports.default = createAnonApi;
 
-var _index = __webpack_require__(173);
+var _index = __webpack_require__(174);
 
 var _index2 = _interopRequireDefault(_index);
 
@@ -42598,10 +42607,9 @@ function createAnonApi(container) {
       try {
         const participants = { to: callee, from: options.from };
         await CallManager.makeAnonymousCall(callId, participants, credentials, mediaConstraints, options);
-      } catch (err) {
-        console.warn(err);
-        // Errors are handled by the operation.
-      }
+      } catch (err) {}
+      // Errors are handled by the operation.
+
       // Use a minimal timeout value to help make sure the operation does happen
       //     "immediately" after the return.
     }, 0);
@@ -43917,7 +43925,7 @@ var _constants = __webpack_require__(14);
 
 var _selectors2 = __webpack_require__(12);
 
-var _selectors3 = __webpack_require__(175);
+var _selectors3 = __webpack_require__(176);
 
 var _normalization = __webpack_require__(88);
 
@@ -44863,6 +44871,10 @@ var _makeAnonymous2 = _interopRequireDefault(_makeAnonymous);
 
 var _constants = __webpack_require__(7);
 
+var _remoteAnswer = __webpack_require__(121);
+
+var _remoteAnswer2 = _interopRequireDefault(_remoteAnswer);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /*
@@ -44872,6 +44884,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function registerOperation(bottle) {
   bottle.factory('Callstack.operations.makeAnonymousCall', () => {
     const operation = (0, _makeAnonymous2.default)(bottle.container);
+    operation.remoteAnswer = (0, _remoteAnswer2.default)(bottle.container);
     operation.isNegotiation = true;
     operation.type = _constants.OPERATIONS.MAKE_ANONYMOUS;
     return operation;
@@ -44999,7 +45012,7 @@ function createAnonOperations(container) {
     // Wait for the connect to finish.
     const action = await Notifications.takeAction(authActionTypes.CONNECT_FINISHED);
 
-    if (action && action.payload.error) {
+    if (action && action.error) {
       const error = new _errors2.default({
         code: _errors.callCodes.INVALID_PARAM,
         message: 'Failed to connect to server.'
@@ -46044,7 +46057,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _remoteAnswer = __webpack_require__(176);
+var _remoteAnswer = __webpack_require__(121);
 
 var _remoteAnswer2 = _interopRequireDefault(_remoteAnswer);
 
@@ -46082,7 +46095,7 @@ var _incomingCall = __webpack_require__(430);
 
 var _incomingCall2 = _interopRequireDefault(_incomingCall);
 
-var _remoteAnswer = __webpack_require__(176);
+var _remoteAnswer = __webpack_require__(121);
 
 var _remoteAnswer2 = _interopRequireDefault(_remoteAnswer);
 
@@ -50290,7 +50303,7 @@ module.exports = __webpack_require__(15).Object.entries;
 
 // https://github.com/tc39/proposal-object-values-entries
 var $export = __webpack_require__(18);
-var $entries = __webpack_require__(145)(true);
+var $entries = __webpack_require__(146)(true);
 
 $export($export.S, 'Object', {
   entries: function entries(it) {
@@ -52303,7 +52316,7 @@ var _actionTypes = __webpack_require__(20);
 
 var _actionTypes2 = __webpack_require__(32);
 
-var _sessions = __webpack_require__(162);
+var _sessions = __webpack_require__(163);
 
 var sessionActions = _interopRequireWildcard(_sessions);
 
@@ -53845,7 +53858,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = handleSlowUpdateRequestOperation;
 
-var _call = __webpack_require__(174);
+var _call = __webpack_require__(175);
 
 var callActions = _interopRequireWildcard(_call);
 
@@ -54006,7 +54019,7 @@ var _constants2 = __webpack_require__(7);
 
 var _state = __webpack_require__(73);
 
-var _operations = __webpack_require__(121);
+var _operations = __webpack_require__(122);
 
 var _operations2 = _interopRequireDefault(_operations);
 
@@ -54224,7 +54237,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = handleUpdateRequestOperation;
 
-var _operations = __webpack_require__(121);
+var _operations = __webpack_require__(122);
 
 var _operations2 = _interopRequireDefault(_operations);
 
@@ -54730,7 +54743,7 @@ var _compareSummary = __webpack_require__(521);
 
 var _compareSummary2 = _interopRequireDefault(_compareSummary);
 
-var _constants = __webpack_require__(122);
+var _constants = __webpack_require__(123);
 
 var _sdpTransform = __webpack_require__(35);
 
@@ -55114,7 +55127,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = compareSummary;
 
-var _constants = __webpack_require__(122);
+var _constants = __webpack_require__(123);
 
 /**
  * Compare two summarized Media section objects to determine how it changed.
@@ -59043,7 +59056,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _name = __webpack_require__(172);
+var _name = __webpack_require__(173);
 
 var _name2 = _interopRequireDefault(_name);
 
@@ -59446,7 +59459,7 @@ var actions = _interopRequireWildcard(_actions);
 
 var _selectors2 = __webpack_require__(12);
 
-var _selectors3 = __webpack_require__(175);
+var _selectors3 = __webpack_require__(176);
 
 var _logs = __webpack_require__(11);
 
@@ -59458,7 +59471,7 @@ var _errors = __webpack_require__(5);
 
 var _errors2 = _interopRequireDefault(_errors);
 
-var _codes = __webpack_require__(163);
+var _codes = __webpack_require__(164);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -59931,13 +59944,13 @@ exports.wsEmitter = wsEmitter;
 
 var _actions = __webpack_require__(87);
 
-var _reduxSaga = __webpack_require__(124);
+var _reduxSaga = __webpack_require__(125);
 
 var _effects = __webpack_require__(16);
 
 var _utils = __webpack_require__(17);
 
-var _actions2 = __webpack_require__(123);
+var _actions2 = __webpack_require__(124);
 
 var _logs = __webpack_require__(11);
 
@@ -60310,7 +60323,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = api;
 
-var _actions = __webpack_require__(123);
+var _actions = __webpack_require__(124);
 
 var actions = _interopRequireWildcard(_actions);
 
@@ -60758,7 +60771,7 @@ exports.normalizeSDP = normalizeSDP;
 
 var _fp = __webpack_require__(4);
 
-var _reduxSaga = __webpack_require__(124);
+var _reduxSaga = __webpack_require__(125);
 
 var _pako = __webpack_require__(566);
 
@@ -60770,7 +60783,7 @@ var _constants = __webpack_require__(19);
 
 var _logs = __webpack_require__(11);
 
-var _actions = __webpack_require__(123);
+var _actions = __webpack_require__(124);
 
 var actions = _interopRequireWildcard(_actions);
 
