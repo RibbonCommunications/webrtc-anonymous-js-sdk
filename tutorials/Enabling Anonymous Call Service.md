@@ -34,5 +34,6 @@ Then check the appropriate checkboxes and click _Save_ button.
 
 This completes the process of adding Anonymous Call service for a user account.
 Repeat above steps for any account you wish to allow for receiving anonymous calls.
+
 [COPYRIGHT © 2023 RIBBON COMMUNICATIONS OPERATING COMPANY, INC. ALL RIGHTS RESERVED]: #
 

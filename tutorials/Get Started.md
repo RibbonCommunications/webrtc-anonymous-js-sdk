@@ -168,5 +168,6 @@ This diagram shows the initial message interaction between the three entities in
 
 - WebRTC Gateway
 - Accepts anonymous calls from Client, forwards request to callee and replies back to Client with an SDP offer.
+
 [COPYRIGHT © 2023 RIBBON COMMUNICATIONS OPERATING COMPANY, INC. ALL RIGHTS RESERVED]: #
 
