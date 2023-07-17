@@ -3,7 +3,7 @@
  *
  * WebRTC.js
  * webrtc.anonymous.js
- * Version: 6.1.0-beta.1085
+ * Version: 6.1.0-beta.1086
  */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
@@ -6258,7 +6258,7 @@ exports.getVersion = getVersion;
  * for the @@ tag below with actual version value.
  */
 function getVersion() {
-  return '6.1.0-beta.1085';
+  return '6.1.0-beta.1086';
 }
 
 /***/ }),
@@ -59634,7 +59634,9 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 /**
- * The websocket to the server has changed state.
+ * The WebSocket to the server has changed state.
+ *
+ * This event is only emitted when the WebSocket is connected, or has lost connection.
  *
  * @public
  * @memberof connection

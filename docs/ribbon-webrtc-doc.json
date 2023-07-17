@@ -24743,7 +24743,16 @@
                 "children": [
                   {
                     "type": "text",
-                    "value": "The websocket to the server has changed state."
+                    "value": "The WebSocket to the server has changed state."
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "type": "text",
+                    "value": "This event is only emitted when the WebSocket is connected, or has lost connection."
                   }
                 ]
               }
@@ -24753,23 +24762,23 @@
             {
               "title": "public",
               "description": null,
-              "lineNumber": 3,
+              "lineNumber": 5,
               "type": null
             },
             {
               "title": "memberof",
               "description": "connection",
-              "lineNumber": 4
+              "lineNumber": 6
             },
             {
               "title": "event",
               "description": "ws:change",
-              "lineNumber": 5
+              "lineNumber": 7
             },
             {
               "title": "param",
               "description": null,
-              "lineNumber": 6,
+              "lineNumber": 8,
               "type": {
                 "type": "NameExpression",
                 "name": "Object"
@@ -24779,7 +24788,7 @@
             {
               "title": "param",
               "description": "The platform",
-              "lineNumber": 7,
+              "lineNumber": 9,
               "type": {
                 "type": "NameExpression",
                 "name": "string"
@@ -24793,18 +24802,18 @@
               "column": 0
             },
             "end": {
-              "line": 9,
+              "line": 11,
               "column": 3
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 10,
+                "line": 12,
                 "column": 0
               },
               "end": {
-                "line": 10,
+                "line": 12,
                 "column": 36
               }
             },
@@ -24817,7 +24826,7 @@
             {
               "title": "param",
               "name": "params",
-              "lineNumber": 6,
+              "lineNumber": 8,
               "type": {
                 "type": "NameExpression",
                 "name": "Object"
@@ -24826,7 +24835,7 @@
                 {
                   "title": "param",
                   "name": "params.platform",
-                  "lineNumber": 7,
+                  "lineNumber": 9,
                   "description": {
                     "type": "root",
                     "children": [

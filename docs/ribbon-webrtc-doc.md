@@ -2097,7 +2097,9 @@ SDK and preventing proper operation.
 
 ### ws:change
 
-The websocket to the server has changed state.
+The WebSocket to the server has changed state.
+
+This event is only emitted when the WebSocket is connected, or has lost connection.
 
 #### Parameters
 
