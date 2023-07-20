@@ -3,7 +3,7 @@
  *
  * WebRTC.js
  * webrtc.anonymous.js
- * Version: 6.1.0-beta.1087
+ * Version: 6.1.0-beta.1088
  */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
@@ -6258,7 +6258,7 @@ exports.getVersion = getVersion;
  * for the @@ tag below with actual version value.
  */
 function getVersion() {
-  return '6.1.0-beta.1087';
+  return '6.1.0-beta.1088';
 }
 
 /***/ }),
@@ -58299,6 +58299,45 @@ function durationHandler(metric, startEvents, autoUnregister = true) {
         return startEvents.includes(subEvent.type);
       });
     });
+
+    if (startEvent) {
+      // We found the start event, so save its associated metric containing the measurement.
+      callReport.addMetric(metric, event.end - startEvent.start);
+      if (autoUnregister) {
+        // We automatically unregister the handler once it was executed.
+        callReport.unregisterMetricHandler(metric);
+      }
+      return true;
+    }
+    return false;
+  };
+}
+
+/**
+ * @method joinedCallDurationHandler
+ * @param {string} metric The metric type which will be added to report when handler function is executed.
+ * @param {Array} startEvents The set of event types whose `start` timestamp will be used to calculate the metric value.
+ * @param {boolean} autoUnregister Specifies wether to automatically unregister the event handler function after it executed once.
+ *   By default (if not specified), it will unregister the handler once it executed.
+ * @returns {undefined}
+ */
+function joinedCallDurationHandler(metric, startEvents, autoUnregister = true) {
+  /**
+   * Handler function which executes when a certain registered event has ended.
+   * @return {boolean} Returns true if handler was executed AND metric was saved. False otherwise.
+   */
+  return function (callReport, event) {
+    // First search for the event in the timeline of the report
+    // i.e. see if it's a top-level event
+    const startEvent = callReport.timeline.find(event => {
+      if (startEvents.includes(event.type)) {
+        return true;
+      }
+      // We didn't find it in top-level events, search within the sub-events
+      return event.timeline.find(subEvent => {
+        return startEvents.includes(subEvent.type);
+      });
+    });
     // startEvent !== event is for the special case join operation which is used as the end for the initial
     // two calls, but the starting event for the joined call.
     if (startEvent && startEvent !== event) {
@@ -58351,7 +58390,7 @@ function relayCandidatesHandler() {
 // Generic function to register all metric handlers to the call reporter
 function registerAllMetricHandlers(callReport) {
   // Register the call duration handler
-  callReport.registerMetricHandler(_constants.REPORTER_METRICS.CALL_DURATION, [_constants.REPORTER_EVENTS.END_LOCAL, _constants.REPORTER_EVENTS.END_REMOTE, _constants.REPORTER_EVENTS.JOIN, _constants.REPORTER_EVENTS.DIRECT_TRANSFER, _constants.REPORTER_EVENTS.CONSULTATIVE_TRANSFER], durationHandler(_constants.REPORTER_METRICS.CALL_DURATION, [_constants.REPORTER_EVENTS.MAKE, _constants.REPORTER_EVENTS.RECEIVE_CALL, _constants.REPORTER_EVENTS.JOIN]));
+  callReport.registerMetricHandler(_constants.REPORTER_METRICS.CALL_DURATION, [_constants.REPORTER_EVENTS.END_LOCAL, _constants.REPORTER_EVENTS.END_REMOTE, _constants.REPORTER_EVENTS.JOIN, _constants.REPORTER_EVENTS.DIRECT_TRANSFER, _constants.REPORTER_EVENTS.CONSULTATIVE_TRANSFER], joinedCallDurationHandler(_constants.REPORTER_METRICS.CALL_DURATION, [_constants.REPORTER_EVENTS.MAKE, _constants.REPORTER_EVENTS.RECEIVE_CALL, _constants.REPORTER_EVENTS.JOIN]));
 
   // Register the local-setup handler
   callReport.registerMetricHandler(_constants.REPORTER_METRICS.MAKE_CALL_LOCAL_SETUP, [_constants.REPORTER_EVENTS.SET_LOCAL_DESCRIPTION], durationHandler(_constants.REPORTER_METRICS.MAKE_CALL_LOCAL_SETUP, [_constants.REPORTER_EVENTS.MAKE]));
@@ -58427,12 +58466,13 @@ function registerAllMetricHandlers(callReport) {
   callReport.registerMetricHandler(_constants.REPORTER_METRICS.TIME_TO_CONSULTATIVE_TRANSFER, [_constants.REPORTER_EVENTS.CONSULTATIVE_TRANSFER], durationHandler(_constants.REPORTER_METRICS.TIME_TO_CONSULTATIVE_TRANSFER, [_constants.REPORTER_EVENTS.CONSULTATIVE_TRANSFER]));
 
   // Register the time-to-join handler
-  callReport.registerMetricHandler(_constants.REPORTER_METRICS.TIME_TO_JOIN, _constants.REPORTER_OPERATION_EVENTS_MAP.JOIN, durationHandler(_constants.REPORTER_METRICS.TIME_TO_JOIN, [_constants.REPORTER_OPERATION_EVENTS_MAP.JOIN]));
+  callReport.registerMetricHandler(_constants.REPORTER_METRICS.TIME_TO_JOIN, _constants.REPORTER_OPERATION_EVENTS_MAP.JOIN, joinedCallDurationHandler(_constants.REPORTER_METRICS.TIME_TO_JOIN, [_constants.REPORTER_OPERATION_EVENTS_MAP.JOIN]));
 }
 
 exports.default = {
   handlers: {
     durationHandler,
+    joinedCallDurationHandler,
     relayCandidatesHandler
   },
   registerAllMetricHandlers
