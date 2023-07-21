@@ -3,7 +3,7 @@
  *
  * WebRTC.js
  * webrtc.anonymous.js
- * Version: 6.1.0-beta.1089
+ * Version: 6.1.0-beta.1090
  */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
@@ -6258,7 +6258,7 @@ exports.getVersion = getVersion;
  * for the @@ tag below with actual version value.
  */
 function getVersion() {
-  return '6.1.0-beta.1089';
+  return '6.1.0-beta.1090';
 }
 
 /***/ }),
@@ -46322,7 +46322,7 @@ function incomingCallOperation(container) {
 
       // Since we have the remote offer SDP, we can setup a webRTC session.
       try {
-        setupIncomingCall({
+        await setupIncomingCall({
           offer: {
             sdp,
             type: 'offer'
@@ -46472,7 +46472,7 @@ function setupIncomingCallOperation(container) {
 
     let session;
     try {
-      session = WebRTC.sessionManager.create({
+      session = await WebRTC.sessionManager.create({
         peer: {
           rtcConfig: (0, _extends3.default)({}, defaultPeerConfig, {
             iceServers: turnInfo.servers
@@ -46510,7 +46510,7 @@ function setupIncomingCallOperation(container) {
       endpoint: 'remote'
     });
 
-    session.processOffer({
+    await session.processOffer({
       type: 'offer',
       sdp: offer.sdp
     });
@@ -47387,7 +47387,7 @@ function answerWebrtcSessionOperation(container) {
     log.info('Setting up local WebRTC portions of call.');
 
     // Get the webRTC session that represents this call.
-    const session = WebRTC.sessionManager.get(sessionId);
+    const session = await WebRTC.sessionManager.get(sessionId);
     if (!session) {
       const message = `Error: webRTC session ${sessionId} not found.`;
       log.error(message);
@@ -47413,7 +47413,7 @@ function answerWebrtcSessionOperation(container) {
     let allTracks = [];
 
     for (const eachMedia of medias) {
-      const tracks = eachMedia.media.getTracks();
+      const tracks = await eachMedia.media.getTracks();
       if (eachMedia.type === 'screen') {
         screen = [...screen, ...tracks];
       } else if (eachMedia.type === 'audio') {
@@ -52255,7 +52255,7 @@ function callIceCollectionCheckOperation(container) {
     const session = await WebRTC.sessionManager.get(webrtcSessionId);
     // Get the remote description for the Session.
     log.debug('Handling ICE collection check result:', result.type);
-    session.iceCollectionCheckResult(result);
+    await session.iceCollectionCheckResult(result);
 
     // If the result is neither 'StartCall' or 'Wait', then it is either an error or an undefined result type.
     //   In either case, the session will cleanup the WebRTC portions of the call so just cleanup the state here.
@@ -53997,7 +53997,7 @@ function receiveEarlyMediaOperation(container) {
         step: 'set',
         endpoint: 'remote'
       });
-      session.processAnswer({
+      await session.processAnswer({
         type: 'pranswer',
         sdp: sdp
       });
