@@ -3,7 +3,7 @@
  *
  * WebRTC.js
  * webrtc.anonymous.js
- * Version: 6.1.0-beta.1093
+ * Version: 6.1.0-beta.1095
  */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
@@ -6258,7 +6258,7 @@ exports.getVersion = getVersion;
  * for the @@ tag below with actual version value.
  */
 function getVersion() {
-  return '6.1.0-beta.1093';
+  return '6.1.0-beta.1095';
 }
 
 /***/ }),
@@ -41123,7 +41123,8 @@ function createAPI(container) {
   function getReport(callId) {
     log.debug(API_LOG_TAG + 'call.getReport: ', callId);
 
-    return CallReporter.getReport(callId);
+    const report = CallReporter.getReport(callId);
+    return report ? report.getSerializable() : report;
   }
 
   async function setSdpHandlers() {}
