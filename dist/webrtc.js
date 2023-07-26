@@ -3,7 +3,7 @@
  *
  * WebRTC.js
  * webrtc.anonymous.js
- * Version: 6.1.0-beta.1097
+ * Version: 6.1.0-beta.1098
  */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
@@ -6264,7 +6264,7 @@ exports.getVersion = getVersion;
  * for the @@ tag below with actual version value.
  */
 function getVersion() {
-  return '6.1.0-beta.1097';
+  return '6.1.0-beta.1098';
 }
 
 /***/ }),
@@ -58639,12 +58639,12 @@ function createReporter() {
    * Get a report.
    * @method getReport
    * @param {string} id A unique identifier representing a report.
-   * @throws {Error} Throws an error if id fails to validate.
-   * @return {Report|undefined} The report object or undefined if no report was found for that id.
+   * @return {Report|undefined} The report object or undefined if no report was found for that id (or the id was invalid).
    */
   function getReport(id) {
     if (!id || !(0, _fp.isString)(id)) {
-      throw new Error(`${API_TAG}reporter.getReport: Invalid id ${typeof id} (must be of type string).`);
+      console.error(`${API_TAG}reporter.getReport: Invalid id ${typeof id} (must be of type string).`);
+      return undefined;
     }
     return reports[id];
   }
