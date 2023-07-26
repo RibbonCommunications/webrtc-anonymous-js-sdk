@@ -3,7 +3,7 @@
  *
  * WebRTC.js
  * webrtc.anonymous.js
- * Version: 6.1.0-beta.1096
+ * Version: 6.1.0-beta.1097
  */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
@@ -2141,7 +2141,13 @@ const REPORTER_EVENTS = exports.REPORTER_EVENTS = {
   UNHOLD_REMOTE: 'UNHOLD_REMOTE',
   FORWARD_CALL: 'FORWARD_CALL',
   DIRECT_TRANSFER: 'DIRECT_TRANSFER',
-  CONSULTATIVE_TRANSFER: 'CONSULTATIVE_TRANSFER'
+  CONSULTATIVE_TRANSFER: 'CONSULTATIVE_TRANSFER',
+  ADD_MEDIA: 'ADD_MEDIA_LOCAL',
+  ADD_BASIC_MEDIA: 'ADD_BASIC_MEDIA_LOCAL',
+  REMOVE_MEDIA: 'REMOVE_MEDIA_LOCAL',
+  REMOVE_BASIC_MEDIA: 'REMOVE_BASIC_MEDIA_LOCAL',
+  ADD_MEDIA_REMOTE: 'ADD_MEDIA_REMOTE',
+  REMOVE_MEDIA_REMOTE: 'REMOVE_MEDIA_REMOTE'
 };
 
 const REPORTER_REQUESTS = exports.REPORTER_REQUESTS = {
@@ -6258,7 +6264,7 @@ exports.getVersion = getVersion;
  * for the @@ tag below with actual version value.
  */
 function getVersion() {
-  return '6.1.0-beta.1096';
+  return '6.1.0-beta.1097';
 }
 
 /***/ }),
@@ -17691,6 +17697,7 @@ function addMediaOperation(container) {
       audio: bandwidth && bandwidth.audio ? bandwidth.audio : callBandwidth.audio,
       video: bandwidth && bandwidth.video ? bandwidth.video : callBandwidth.video
       // Create media and add tracks using webRTC
+      // TODO: This could so add try/catch and end the event if is an error
     };const { sdp, medias } = await Callstack.utils.webrtcAddMedia(mediaConstraints, {
       sessionId: webrtcSessionId,
       bandwidth: finalBandwidth,
@@ -58345,8 +58352,9 @@ function durationHandler(metric, startEvents, autoUnregister = true) {
         // PROCESS_RESPONSE event is triggered as part of many SDK operations and on both sides of the call.
         // But we don't want to add a 'MAKE_CALL_REMOTE_SETUP' metric for the callee side,
         // because it only makes sense for caller side.
-        return;
+        return false;
       }
+
       // We found the start event, so save its associated metric containing the measurement.
       callReport.addMetric(metric, event.end - startEvent.start);
       if (autoUnregister) {
@@ -58473,10 +58481,18 @@ function registerAllMetricHandlers(callReport) {
   callReport.registerMetricHandler(_constants.REPORTER_METRICS.TIME_TO_IGNORE, [_constants.REPORTER_EVENTS.IGNORE], durationHandler(_constants.REPORTER_METRICS.TIME_TO_IGNORE, [_constants.REPORTER_EVENTS.IGNORE]));
 
   // Register the time-to-add-media handler
-  callReport.registerMetricHandler(_constants.REPORTER_METRICS.TIME_TO_ADD_MEDIA, _constants.REPORTER_EVENTS.SET_LOCAL_DESCRIPTION, durationHandler(_constants.REPORTER_METRICS.TIME_TO_ADD_MEDIA, [_constants.REPORTER_OPERATION_EVENTS_MAP.ADD_MEDIA], false));
+  callReport.registerMetricHandler(_constants.REPORTER_METRICS.TIME_TO_ADD_MEDIA, [_constants.REPORTER_EVENTS.ADD_MEDIA, _constants.REPORTER_EVENTS.ADD_BASIC_MEDIA], (report, event) => {
+    // The TIME_TO_ADD_MEDIA metric is calculated from the start to end of the
+    //    ADD_MEDIA (or ADD_BASIC_MEDIA) event.
+    callReport.addMetric(_constants.REPORTER_METRICS.TIME_TO_ADD_MEDIA, event.end - event.start);
+  }, false);
 
-  // Register the time-to-add-remote-media handler
-  callReport.registerMetricHandler(_constants.REPORTER_METRICS.TIME_TO_ADD_MEDIA_REMOTE, _constants.REPORTER_EVENTS.SET_REMOTE_DESCRIPTION, durationHandler(_constants.REPORTER_METRICS.TIME_TO_ADD_MEDIA_REMOTE, [_constants.REPORTER_OPERATION_EVENTS_MAP.ADD_MEDIA_REMOTE], false));
+  // Register the time-to-add-media-remote handler
+  callReport.registerMetricHandler(_constants.REPORTER_METRICS.TIME_TO_ADD_MEDIA_REMOTE, [_constants.REPORTER_EVENTS.ADD_MEDIA_REMOTE], (report, event) => {
+    // The TIME_TO_ADD_MEDIA_REMOTE metric is calculated from the start to end of the
+    //    ADD_MEDIA_REMOTE event.
+    callReport.addMetric(_constants.REPORTER_METRICS.TIME_TO_ADD_MEDIA_REMOTE, event.end - event.start);
+  }, false);
 
   // Register the time-to-hold-local handler
   callReport.registerMetricHandler(_constants.REPORTER_METRICS.TIME_TO_HOLD_LOCAL, [_constants.REPORTER_EVENTS.HOLD_LOCAL], durationHandler(_constants.REPORTER_METRICS.TIME_TO_HOLD_LOCAL, [_constants.REPORTER_EVENTS.HOLD_LOCAL], false));
@@ -58491,10 +58507,18 @@ function registerAllMetricHandlers(callReport) {
   callReport.registerMetricHandler(_constants.REPORTER_METRICS.TIME_TO_UNHOLD_REMOTE, [_constants.REPORTER_EVENTS.UNHOLD_REMOTE], durationHandler(_constants.REPORTER_METRICS.TIME_TO_UNHOLD_REMOTE, [_constants.REPORTER_EVENTS.UNHOLD_REMOTE], false));
 
   // Register the time-to-remove-media handler
-  callReport.registerMetricHandler(_constants.REPORTER_METRICS.TIME_TO_REMOVE_MEDIA, _constants.REPORTER_EVENTS.SET_LOCAL_DESCRIPTION, durationHandler(_constants.REPORTER_METRICS.TIME_TO_REMOVE_MEDIA, [_constants.REPORTER_OPERATION_EVENTS_MAP.REMOVE_MEDIA], false));
+  callReport.registerMetricHandler(_constants.REPORTER_METRICS.TIME_TO_REMOVE_MEDIA, [_constants.REPORTER_EVENTS.REMOVE_MEDIA, _constants.REPORTER_EVENTS.REMOVE_BASIC_MEDIA], (report, event) => {
+    // The TIME_TO_REMOVE_MEDIA metric is calculated from the start to end of the
+    //    REMOVE_MEDIA (or REMOVE_BASIC_MEDIA) event.
+    callReport.addMetric(_constants.REPORTER_METRICS.TIME_TO_REMOVE_MEDIA, event.end - event.start);
+  }, false);
 
   // Register the time-to-remove-media-remote handler
-  callReport.registerMetricHandler(_constants.REPORTER_METRICS.TIME_TO_REMOVE_MEDIA_REMOTE, _constants.REPORTER_EVENTS.SET_REMOTE_DESCRIPTION, durationHandler(_constants.REPORTER_METRICS.TIME_TO_REMOVE_MEDIA_REMOTE, [_constants.REPORTER_OPERATION_EVENTS_MAP.REMOVE_MEDIA_REMOTE], false));
+  callReport.registerMetricHandler(_constants.REPORTER_METRICS.TIME_TO_REMOVE_MEDIA_REMOTE, [_constants.REPORTER_EVENTS.REMOVE_MEDIA_REMOTE], (report, event) => {
+    // The TIME_TO_REMOVE_MEDIA_REMOTE metric is calculated from the start to end of the
+    //    REMOVE_MEDIA_REMOTE event.
+    callReport.addMetric(_constants.REPORTER_METRICS.TIME_TO_REMOVE_MEDIA_REMOTE, event.end - event.start);
+  }, false);
 
   // Register the time-to-restart-media handler
   callReport.registerMetricHandler(_constants.REPORTER_METRICS.TIME_TO_RESTART_MEDIA, _constants.REPORTER_OPERATION_EVENTS_MAP.MEDIA_RESTART, durationHandler(_constants.REPORTER_METRICS.TIME_TO_RESTART_MEDIA, [_constants.REPORTER_OPERATION_EVENTS_MAP.MEDIA_RESTART], false));
@@ -58859,12 +58883,10 @@ function reportFactory(type, id) {
     // Check if we need to run a metric calculation handler against this event
     for (const metric in metricHandlers) {
       if (metricHandlers[metric].events.includes(event.type)) {
-        if (metricHandlers[metric].handler(report, event)) {
-          // Now that the handler has run & metric was saved,
-          // record the event ID that triggered this handler.
-          // The event id will be added as part of that saved metric object.
-          addEventIdToMetric(metric, event.id);
-        }
+        // Call the provided metric handler.
+        metricHandlers[metric].handler(report, event);
+        // Add the event's ID to the metric.
+        addEventIdToMetric(metric, event.id);
       }
     }
   }
