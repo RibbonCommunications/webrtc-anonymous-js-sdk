@@ -3,7 +3,7 @@
  *
  * WebRTC.js
  * webrtc.anonymous.js
- * Version: 6.1.0-beta.1098
+ * Version: 6.1.0-beta.1099
  */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
@@ -6264,7 +6264,7 @@ exports.getVersion = getVersion;
  * for the @@ tag below with actual version value.
  */
 function getVersion() {
-  return '6.1.0-beta.1098';
+  return '6.1.0-beta.1099';
 }
 
 /***/ }),
@@ -58474,69 +58474,90 @@ function registerAllMetricHandlers(callReport) {
   // Time to setup incoming call (incoming call notification until media is connected)
   callReport.registerMetricHandler(_constants.REPORTER_METRICS.TIME_TO_CALL_SETUP_DURATION, _constants.REPORTER_EVENTS.SET_LOCAL_DESCRIPTION, durationHandler(_constants.REPORTER_METRICS.TIME_TO_CALL_SETUP_DURATION, [_constants.REPORTER_EVENTS.RECEIVE_CALL]));
 
-  // Time to reject incoming call
-  callReport.registerMetricHandler(_constants.REPORTER_METRICS.TIME_TO_REJECT, [_constants.REPORTER_EVENTS.REJECT], durationHandler(_constants.REPORTER_METRICS.TIME_TO_REJECT, [_constants.REPORTER_EVENTS.REJECT]));
-
-  // Register the time-to-ignore handler
-  callReport.registerMetricHandler(_constants.REPORTER_METRICS.TIME_TO_IGNORE, [_constants.REPORTER_EVENTS.IGNORE], durationHandler(_constants.REPORTER_METRICS.TIME_TO_IGNORE, [_constants.REPORTER_EVENTS.IGNORE]));
-
-  // Register the time-to-add-media handler
-  callReport.registerMetricHandler(_constants.REPORTER_METRICS.TIME_TO_ADD_MEDIA, [_constants.REPORTER_EVENTS.ADD_MEDIA, _constants.REPORTER_EVENTS.ADD_BASIC_MEDIA], (report, event) => {
-    // The TIME_TO_ADD_MEDIA metric is calculated from the start to end of the
-    //    ADD_MEDIA (or ADD_BASIC_MEDIA) event.
-    callReport.addMetric(_constants.REPORTER_METRICS.TIME_TO_ADD_MEDIA, event.end - event.start);
-  }, false);
-
-  // Register the time-to-add-media-remote handler
-  callReport.registerMetricHandler(_constants.REPORTER_METRICS.TIME_TO_ADD_MEDIA_REMOTE, [_constants.REPORTER_EVENTS.ADD_MEDIA_REMOTE], (report, event) => {
-    // The TIME_TO_ADD_MEDIA_REMOTE metric is calculated from the start to end of the
-    //    ADD_MEDIA_REMOTE event.
-    callReport.addMetric(_constants.REPORTER_METRICS.TIME_TO_ADD_MEDIA_REMOTE, event.end - event.start);
-  }, false);
-
-  // Register the time-to-hold-local handler
-  callReport.registerMetricHandler(_constants.REPORTER_METRICS.TIME_TO_HOLD_LOCAL, [_constants.REPORTER_EVENTS.HOLD_LOCAL], durationHandler(_constants.REPORTER_METRICS.TIME_TO_HOLD_LOCAL, [_constants.REPORTER_EVENTS.HOLD_LOCAL], false));
-
-  // Register the time-to-hold-remote handler
-  callReport.registerMetricHandler(_constants.REPORTER_METRICS.TIME_TO_HOLD_REMOTE, [_constants.REPORTER_EVENTS.HOLD_REMOTE], durationHandler(_constants.REPORTER_METRICS.TIME_TO_HOLD_REMOTE, [_constants.REPORTER_EVENTS.HOLD_REMOTE], false));
-
-  // Register the time-to-unhold-local handler
-  callReport.registerMetricHandler(_constants.REPORTER_METRICS.TIME_TO_UNHOLD_LOCAL, [_constants.REPORTER_EVENTS.UNHOLD_LOCAL], durationHandler(_constants.REPORTER_METRICS.TIME_TO_UNHOLD_LOCAL, [_constants.REPORTER_EVENTS.UNHOLD_LOCAL], false));
-
-  // Register the time-to-unhold-remote handler
-  callReport.registerMetricHandler(_constants.REPORTER_METRICS.TIME_TO_UNHOLD_REMOTE, [_constants.REPORTER_EVENTS.UNHOLD_REMOTE], durationHandler(_constants.REPORTER_METRICS.TIME_TO_UNHOLD_REMOTE, [_constants.REPORTER_EVENTS.UNHOLD_REMOTE], false));
-
-  // Register the time-to-remove-media handler
-  callReport.registerMetricHandler(_constants.REPORTER_METRICS.TIME_TO_REMOVE_MEDIA, [_constants.REPORTER_EVENTS.REMOVE_MEDIA, _constants.REPORTER_EVENTS.REMOVE_BASIC_MEDIA], (report, event) => {
-    // The TIME_TO_REMOVE_MEDIA metric is calculated from the start to end of the
-    //    REMOVE_MEDIA (or REMOVE_BASIC_MEDIA) event.
-    callReport.addMetric(_constants.REPORTER_METRICS.TIME_TO_REMOVE_MEDIA, event.end - event.start);
-  }, false);
-
-  // Register the time-to-remove-media-remote handler
-  callReport.registerMetricHandler(_constants.REPORTER_METRICS.TIME_TO_REMOVE_MEDIA_REMOTE, [_constants.REPORTER_EVENTS.REMOVE_MEDIA_REMOTE], (report, event) => {
-    // The TIME_TO_REMOVE_MEDIA_REMOTE metric is calculated from the start to end of the
-    //    REMOVE_MEDIA_REMOTE event.
-    callReport.addMetric(_constants.REPORTER_METRICS.TIME_TO_REMOVE_MEDIA_REMOTE, event.end - event.start);
-  }, false);
-
-  // Register the time-to-restart-media handler
-  callReport.registerMetricHandler(_constants.REPORTER_METRICS.TIME_TO_RESTART_MEDIA, _constants.REPORTER_OPERATION_EVENTS_MAP.MEDIA_RESTART, durationHandler(_constants.REPORTER_METRICS.TIME_TO_RESTART_MEDIA, [_constants.REPORTER_OPERATION_EVENTS_MAP.MEDIA_RESTART], false));
-
-  // Register the time-to-send-custom-paramters handler
-  callReport.registerMetricHandler(_constants.REPORTER_METRICS.TIME_TO_SEND_CUSTOM_PARAMETERS, _constants.REPORTER_OPERATION_EVENTS_MAP.SEND_CUSTOM_PARAMETERS, durationHandler(_constants.REPORTER_METRICS.TIME_TO_SEND_CUSTOM_PARAMETERS, [_constants.REPORTER_OPERATION_EVENTS_MAP.SEND_CUSTOM_PARAMETERS]));
-
   // Register the time-to-relay-candidates handler
   callReport.registerMetricHandler(_constants.REPORTER_METRICS.TIME_TO_RELAY_CANDIDATES, [_constants.REPORTER_EVENTS.SET_LOCAL_DESCRIPTION, _constants.REPORTER_EVENTS.RELAY_CANDIDATE_COLLECTED], relayCandidatesHandler());
 
+  /*
+   * **************************
+   * TIME-TO-OPERATION metrics.
+   *  ie. metrics that are the duration of a single event.
+   * **************************
+   */
+
+  // Time to reject incoming call
+  callReport.registerMetricHandler(_constants.REPORTER_METRICS.TIME_TO_REJECT, [_constants.REPORTER_EVENTS.REJECT], (report, event) => {
+    callReport.addMetric(_constants.REPORTER_METRICS.TIME_TO_REJECT, event.end - event.start);
+  });
+
+  // Register the time-to-ignore handler
+  callReport.registerMetricHandler(_constants.REPORTER_METRICS.TIME_TO_IGNORE, [_constants.REPORTER_EVENTS.IGNORE], (report, event) => {
+    callReport.addMetric(_constants.REPORTER_METRICS.TIME_TO_IGNORE, event.end - event.start);
+  });
+
+  // Register the time-to-add-media handler
+  callReport.registerMetricHandler(_constants.REPORTER_METRICS.TIME_TO_ADD_MEDIA, [_constants.REPORTER_EVENTS.ADD_MEDIA, _constants.REPORTER_EVENTS.ADD_BASIC_MEDIA], (report, event) => {
+    callReport.addMetric(_constants.REPORTER_METRICS.TIME_TO_ADD_MEDIA, event.end - event.start);
+  });
+
+  // Register the time-to-add-media-remote handler
+  callReport.registerMetricHandler(_constants.REPORTER_METRICS.TIME_TO_ADD_MEDIA_REMOTE, [_constants.REPORTER_EVENTS.ADD_MEDIA_REMOTE], (report, event) => {
+    callReport.addMetric(_constants.REPORTER_METRICS.TIME_TO_ADD_MEDIA_REMOTE, event.end - event.start);
+  });
+
+  // Register the time-to-hold-local handler
+  callReport.registerMetricHandler(_constants.REPORTER_METRICS.TIME_TO_HOLD_LOCAL, [_constants.REPORTER_EVENTS.HOLD_LOCAL], (report, event) => {
+    callReport.addMetric(_constants.REPORTER_METRICS.TIME_TO_HOLD_LOCAL, event.end - event.start);
+  });
+
+  // Register the time-to-hold-remote handler
+  callReport.registerMetricHandler(_constants.REPORTER_METRICS.TIME_TO_HOLD_REMOTE, [_constants.REPORTER_EVENTS.HOLD_REMOTE], (report, event) => {
+    callReport.addMetric(_constants.REPORTER_METRICS.TIME_TO_HOLD_REMOTE, event.end - event.start);
+  });
+
+  // Register the time-to-unhold-local handler
+  callReport.registerMetricHandler(_constants.REPORTER_METRICS.TIME_TO_UNHOLD_LOCAL, [_constants.REPORTER_EVENTS.UNHOLD_LOCAL], (report, event) => {
+    callReport.addMetric(_constants.REPORTER_METRICS.TIME_TO_UNHOLD_LOCAL, event.end - event.start);
+  });
+
+  // Register the time-to-unhold-remote handler
+  callReport.registerMetricHandler(_constants.REPORTER_METRICS.TIME_TO_UNHOLD_REMOTE, [_constants.REPORTER_EVENTS.UNHOLD_REMOTE], (report, event) => {
+    callReport.addMetric(_constants.REPORTER_METRICS.TIME_TO_UNHOLD_REMOTE, event.end - event.start);
+  });
+
+  // Register the time-to-remove-media handler
+  callReport.registerMetricHandler(_constants.REPORTER_METRICS.TIME_TO_REMOVE_MEDIA, [_constants.REPORTER_EVENTS.REMOVE_MEDIA, _constants.REPORTER_EVENTS.REMOVE_BASIC_MEDIA], (report, event) => {
+    callReport.addMetric(_constants.REPORTER_METRICS.TIME_TO_REMOVE_MEDIA, event.end - event.start);
+  });
+
+  // Register the time-to-remove-media-remote handler
+  callReport.registerMetricHandler(_constants.REPORTER_METRICS.TIME_TO_REMOVE_MEDIA_REMOTE, [_constants.REPORTER_EVENTS.REMOVE_MEDIA_REMOTE], (report, event) => {
+    callReport.addMetric(_constants.REPORTER_METRICS.TIME_TO_REMOVE_MEDIA_REMOTE, event.end - event.start);
+  });
+
+  // Register the time-to-restart-media handler
+  callReport.registerMetricHandler(_constants.REPORTER_METRICS.TIME_TO_RESTART_MEDIA, _constants.REPORTER_OPERATION_EVENTS_MAP.MEDIA_RESTART, (report, event) => {
+    callReport.addMetric(_constants.REPORTER_METRICS.TIME_TO_RESTART_MEDIA, event.end - event.start);
+  });
+
+  // Register the time-to-send-custom-paramters handler
+  callReport.registerMetricHandler(_constants.REPORTER_METRICS.TIME_TO_SEND_CUSTOM_PARAMETERS, _constants.REPORTER_OPERATION_EVENTS_MAP.SEND_CUSTOM_PARAMETERS, (report, event) => {
+    callReport.addMetric(_constants.REPORTER_METRICS.TIME_TO_SEND_CUSTOM_PARAMETERS, event.end - event.start);
+  });
+
   // Time to forward incoming call
-  callReport.registerMetricHandler(_constants.REPORTER_METRICS.TIME_TO_FORWARD, [_constants.REPORTER_EVENTS.FORWARD_CALL], durationHandler(_constants.REPORTER_METRICS.TIME_TO_FORWARD, [_constants.REPORTER_EVENTS.FORWARD_CALL]));
+  callReport.registerMetricHandler(_constants.REPORTER_METRICS.TIME_TO_FORWARD, [_constants.REPORTER_EVENTS.FORWARD_CALL], (report, event) => {
+    callReport.addMetric(_constants.REPORTER_METRICS.TIME_TO_FORWARD, event.end - event.start);
+  });
 
   // Register the time-to-direct-transfer handler
-  callReport.registerMetricHandler(_constants.REPORTER_METRICS.TIME_TO_DIRECT_TRANSFER, [_constants.REPORTER_EVENTS.DIRECT_TRANSFER], durationHandler(_constants.REPORTER_METRICS.TIME_TO_DIRECT_TRANSFER, [_constants.REPORTER_EVENTS.DIRECT_TRANSFER]));
+  callReport.registerMetricHandler(_constants.REPORTER_METRICS.TIME_TO_DIRECT_TRANSFER, [_constants.REPORTER_EVENTS.DIRECT_TRANSFER], (report, event) => {
+    callReport.addMetric(_constants.REPORTER_METRICS.TIME_TO_DIRECT_TRANSFER, event.end - event.start);
+  });
 
   // Register the time-to-consultative-transfer handler
-  callReport.registerMetricHandler(_constants.REPORTER_METRICS.TIME_TO_CONSULTATIVE_TRANSFER, [_constants.REPORTER_EVENTS.CONSULTATIVE_TRANSFER], durationHandler(_constants.REPORTER_METRICS.TIME_TO_CONSULTATIVE_TRANSFER, [_constants.REPORTER_EVENTS.CONSULTATIVE_TRANSFER]));
+  callReport.registerMetricHandler(_constants.REPORTER_METRICS.TIME_TO_CONSULTATIVE_TRANSFER, [_constants.REPORTER_EVENTS.CONSULTATIVE_TRANSFER], (report, event) => {
+    callReport.addMetric(_constants.REPORTER_METRICS.TIME_TO_CONSULTATIVE_TRANSFER, event.end - event.start);
+  });
 
   // Register the time-to-join handler
   callReport.registerMetricHandler(_constants.REPORTER_METRICS.TIME_TO_JOIN, _constants.REPORTER_OPERATION_EVENTS_MAP.JOIN, joinedCallDurationHandler(_constants.REPORTER_METRICS.TIME_TO_JOIN, [_constants.REPORTER_OPERATION_EVENTS_MAP.JOIN]));
