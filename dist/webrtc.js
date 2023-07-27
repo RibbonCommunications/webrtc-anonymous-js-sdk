@@ -3,7 +3,7 @@
  *
  * WebRTC.js
  * webrtc.anonymous.js
- * Version: 6.1.0-beta.1099
+ * Version: 6.1.0-beta.1100
  */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
@@ -6264,7 +6264,7 @@ exports.getVersion = getVersion;
  * for the @@ tag below with actual version value.
  */
 function getVersion() {
-  return '6.1.0-beta.1099';
+  return '6.1.0-beta.1100';
 }
 
 /***/ }),
@@ -58332,34 +58332,52 @@ function durationHandler(metric, startEvents, autoUnregister = true) {
    * @return {boolean} Returns true if handler was executed AND metric was saved. False otherwise.
    */
   return function (callReport, event) {
-    // First search for the event in the timeline of the report
-    // i.e. see if it's a top-level event
-    // We need to find the last type of that event because in the case of
-    // mutiple HOLD/UNHOLD operations, the metric calculated for it needs to
-    // use the last entry.
-    const startEvent = callReport.timeline.findLast(event => {
-      if (startEvents.includes(event.type)) {
-        return true;
+    // First search for the event in the timeline of the report (i.e. see if it's a top-level event).
+    // Loop through the timeline backwards to find the last type of the specified start event in the case of
+    // mutiple identical operations (i.e., multiple holds).
+    let startEvent;
+    for (let i = callReport.timeline.length - 1; i >= 0; i--) {
+      const timelineEvent = callReport.timeline[i];
+      if (startEvents.includes(timelineEvent.type)) {
+        startEvent = timelineEvent;
+        break;
+      } else {
+        // Check the sub-events for the start event (e.g., set local description is a common start event)
+        for (let j = 0; j <= timelineEvent.timeline.length - 1; j++) {
+          const timelineSubEvent = timelineEvent.timeline[j];
+          if (startEvents.includes(timelineSubEvent.type)) {
+            startEvent = timelineSubEvent;
+            break;
+          }
+        }
+        // If we found the start event in the sub-events break out of the loop
+        if (startEvent) {
+          break;
+        }
       }
-      // We didn't find it in top-level events, search within the sub-events
-      return event.timeline.find(subEvent => {
-        return startEvents.includes(subEvent.type);
-      });
-    });
+    }
 
     if (startEvent) {
+      // PROCESS_RESPONSE event is triggered as part of many SDK operations and on both sides of the call.
+      // But we don't want to add a 'MAKE_CALL_REMOTE_SETUP' metric for the callee side,
+      // because it only makes sense for caller side.
       if (event.type === _constants.REPORTER_EVENTS.PROCESS_RESPONSE && metric === 'MAKE_CALL_REMOTE_SETUP' && event.getData('operation') !== 'MAKE') {
-        // PROCESS_RESPONSE event is triggered as part of many SDK operations and on both sides of the call.
-        // But we don't want to add a 'MAKE_CALL_REMOTE_SETUP' metric for the callee side,
-        // because it only makes sense for caller side.
         return false;
       }
 
-      // We found the start event, so save its associated metric containing the measurement.
-      callReport.addMetric(metric, event.end - startEvent.start);
-      if (autoUnregister) {
-        // We automatically unregister the handler once it was executed.
-        callReport.unregisterMetricHandler(metric);
+      // Special-case: For ice collection time, add the operation that triggered the ice collection
+      if (metric === _constants.REPORTER_METRICS.TIME_TO_COLLECT_ICE_CANDIDATES) {
+        callReport.addMetric(metric, {
+          operation: startEvent.getData('operation'), // Get the operation from the set local desc event data
+          duration: event.end - startEvent.start
+        });
+      } else {
+        // We found the start event, so save its associated metric containing the measurement.
+        callReport.addMetric(metric, event.end - startEvent.start);
+        if (autoUnregister) {
+          // We automatically unregister the handler once it was executed.
+          callReport.unregisterMetricHandler(metric);
+        }
       }
       return true;
     }
@@ -58375,32 +58393,22 @@ function durationHandler(metric, startEvents, autoUnregister = true) {
  *   By default (if not specified), it will unregister the handler once it executed.
  * @returns {undefined}
  */
-function joinedCallDurationHandler(metric, startEvents, autoUnregister = true) {
+function joinedCallDurationHandler(metric, startEvents) {
   /**
    * Handler function which executes when a certain registered event has ended.
    * @return {boolean} Returns true if handler was executed AND metric was saved. False otherwise.
    */
   return function (callReport, event) {
-    // First search for the event in the timeline of the report
-    // i.e. see if it's a top-level event
-    const startEvent = callReport.timeline.find(event => {
-      if (startEvents.includes(event.type)) {
-        return true;
-      }
-      // We didn't find it in top-level events, search within the sub-events
-      return event.timeline.find(subEvent => {
-        return startEvents.includes(subEvent.type);
-      });
-    });
+    // Search for the event in the timeline of the report
+    const startEvent = callReport.timeline.find(event => startEvents.includes(event.type));
+
     // startEvent !== event is for the special case join operation which is used as the end for the initial
     // two calls, but the starting event for the joined call.
     if (startEvent && startEvent !== event) {
       // We found the start event, so save its associated metric containing the measurement.
       callReport.addMetric(metric, event.end - startEvent.start);
-      if (autoUnregister) {
-        // We automatically unregister the handler once it was executed.
-        callReport.unregisterMetricHandler(metric);
-      }
+      // We automatically unregister the handler once it was executed.
+      callReport.unregisterMetricHandler(metric);
       return true;
     }
     return false;
@@ -58457,7 +58465,7 @@ function registerAllMetricHandlers(callReport) {
   // its sub-event (i.e. ICE_COLLECTION) has ended.
   // Since SET_LOCAL_DESCRIPTION event occurs on both caller & callee, its sub-event: ICE_COLLECTION
   // will also be available for each party.
-  callReport.registerMetricHandler(_constants.REPORTER_METRICS.TIME_TO_COLLECT_ICE_CANDIDATES, [_constants.REPORTER_EVENTS.ICE_COLLECTION], durationHandler(_constants.REPORTER_METRICS.TIME_TO_COLLECT_ICE_CANDIDATES, [_constants.REPORTER_EVENTS.SET_LOCAL_DESCRIPTION]));
+  callReport.registerMetricHandler(_constants.REPORTER_METRICS.TIME_TO_COLLECT_ICE_CANDIDATES, [_constants.REPORTER_EVENTS.ICE_COLLECTION], durationHandler(_constants.REPORTER_METRICS.TIME_TO_COLLECT_ICE_CANDIDATES, [_constants.REPORTER_EVENTS.SET_LOCAL_DESCRIPTION], false));
 
   // Register the remote-setup handler
   callReport.registerMetricHandler(_constants.REPORTER_METRICS.MAKE_CALL_REMOTE_SETUP, [_constants.REPORTER_EVENTS.PROCESS_RESPONSE], durationHandler(_constants.REPORTER_METRICS.MAKE_CALL_REMOTE_SETUP, [_constants.REPORTER_EVENTS.REST_REQUEST]));
