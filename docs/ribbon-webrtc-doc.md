@@ -1640,6 +1640,7 @@ Type: [Object][7]
 *   `TIME_TO_FORWARD` **[string][8]** The amount of time it takes from when the `forward call` operation starts until it has finished.
 *   `TIME_TO_DIRECT_TRANSFER` **[string][8]** The amount of time it takes from when the `direct transfer` operation starts until it has finished.
 *   `TIME_TO_JOIN` **[string][8]** The amount of time it takes from when the `join call` operation starts until it has finished.
+*   `TIME_TO_MAKE_OPERATION` **[string][8]** The amount of time it takes from when the `make call` operation starts until it has finished.
 *   `TIME_TO_ANSWER_OPERATION` **[string][8]** The amount of time it takes from when the `answer call` operation starts until it has finished.
 *   `MAKE_CALL_PRE_LOCAL_SETUP` **[string][8]** The amount of time it takes from when the `make call` operation starts up until right before we set local description.
 *   `ANSWER_CALL_PRE_LOCAL_SETUP` **[string][8]** The amount of time it takes from when the `answer call` operation starts up until right before we set local description.
