@@ -23000,8 +23000,28 @@
             },
             {
               "title": "property",
-              "description": "The amount of time it takes from when the `answer call` operation starts until it is setup locally.",
+              "description": "The amount of time it takes from when the `make call` operation starts up until right before we set local description.",
               "lineNumber": 30,
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              },
+              "name": "MAKE_CALL_PRE_LOCAL_SETUP"
+            },
+            {
+              "title": "property",
+              "description": "The amount of time it takes from when the `answer call` operation starts up until right before we set local description.",
+              "lineNumber": 31,
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              },
+              "name": "ANSWER_CALL_PRE_LOCAL_SETUP"
+            },
+            {
+              "title": "property",
+              "description": "The amount of time it takes from when the `answer call` operation starts until it is setup locally.",
+              "lineNumber": 32,
               "type": {
                 "type": "NameExpression",
                 "name": "string"
@@ -23015,18 +23035,18 @@
               "column": 0
             },
             "end": {
-              "line": 75,
+              "line": 77,
               "column": 3
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 76,
+                "line": 78,
                 "column": 0
               },
               "end": {
-                "line": 103,
+                "line": 107,
                 "column": 1
               }
             },
@@ -23556,8 +23576,70 @@
             },
             {
               "title": "property",
-              "name": "ANSWER_CALL_LOCAL_SETUP",
+              "name": "MAKE_CALL_PRE_LOCAL_SETUP",
               "lineNumber": 30,
+              "description": {
+                "type": "root",
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "The amount of time it takes from when the "
+                      },
+                      {
+                        "type": "inlineCode",
+                        "value": "make call"
+                      },
+                      {
+                        "type": "text",
+                        "value": " operation starts up until right before we set local description."
+                      }
+                    ]
+                  }
+                ]
+              },
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              }
+            },
+            {
+              "title": "property",
+              "name": "ANSWER_CALL_PRE_LOCAL_SETUP",
+              "lineNumber": 31,
+              "description": {
+                "type": "root",
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "The amount of time it takes from when the "
+                      },
+                      {
+                        "type": "inlineCode",
+                        "value": "answer call"
+                      },
+                      {
+                        "type": "text",
+                        "value": " operation starts up until right before we set local description."
+                      }
+                    ]
+                  }
+                ]
+              },
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              }
+            },
+            {
+              "title": "property",
+              "name": "ANSWER_CALL_LOCAL_SETUP",
+              "lineNumber": 32,
               "description": {
                 "type": "root",
                 "children": [
@@ -23966,22 +24048,22 @@
           ],
           "loc": {
             "start": {
-              "line": 105,
+              "line": 109,
               "column": 0
             },
             "end": {
-              "line": 143,
+              "line": 147,
               "column": 3
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 144,
+                "line": 148,
                 "column": 0
               },
               "end": {
-                "line": 183,
+                "line": 187,
                 "column": 1
               }
             },

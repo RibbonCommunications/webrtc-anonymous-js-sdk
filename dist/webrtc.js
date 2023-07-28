@@ -3,7 +3,7 @@
  *
  * WebRTC.js
  * webrtc.anonymous.js
- * Version: 6.1.0-beta.1102
+ * Version: 6.1.0-beta.1103
  */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
@@ -2188,6 +2188,8 @@ const REPORTER_REQUESTS = exports.REPORTER_REQUESTS = {
    * @property {string} TIME_TO_FORWARD The amount of time it takes from when the `forward call` operation starts until it has finished.
    * @property {string} TIME_TO_DIRECT_TRANSFER The amount of time it takes from when the `direct transfer` operation starts until it has finished.
    * @property {string} TIME_TO_JOIN The amount of time it takes from when the `join call` operation starts until it has finished.
+   * @property {string} MAKE_CALL_PRE_LOCAL_SETUP The amount of time it takes from when the `make call` operation starts up until right before we set local description.
+   * @property {string} ANSWER_CALL_PRE_LOCAL_SETUP The amount of time it takes from when the `answer call` operation starts up until right before we set local description.
    * @property {string} ANSWER_CALL_LOCAL_SETUP The amount of time it takes from when the `answer call` operation starts until it is setup locally.
    */
 };const REPORTER_METRICS = exports.REPORTER_METRICS = {
@@ -2216,6 +2218,8 @@ const REPORTER_REQUESTS = exports.REPORTER_REQUESTS = {
   TIME_TO_DIRECT_TRANSFER: 'TIME_TO_DIRECT_TRANSFER',
   TIME_TO_CONSULTATIVE_TRANSFER: 'TIME_TO_CONSULTATIVE_TRANSFER',
   TIME_TO_JOIN: 'TIME_TO_JOIN',
+  MAKE_CALL_PRE_LOCAL_SETUP: 'MAKE_CALL_PRE_LOCAL_SETUP',
+  ANSWER_CALL_PRE_LOCAL_SETUP: 'ANSWER_CALL_PRE_LOCAL_SETUP',
   ANSWER_CALL_LOCAL_SETUP: 'ANSWER_CALL_LOCAL_SETUP'
 
   /**
@@ -6266,7 +6270,7 @@ exports.getVersion = getVersion;
  * for the @@ tag below with actual version value.
  */
 function getVersion() {
-  return '6.1.0-beta.1102';
+  return '6.1.0-beta.1103';
 }
 
 /***/ }),
@@ -58388,11 +58392,33 @@ function durationHandler(metric, startEvents, autoUnregister = true) {
 }
 
 /**
+ * @method callPreSDPHandler
+ * @param {string} metric The metric type which will be added to report when handler function is executed.
+ * @param {Array} startEvents The set of event types whose `start` timestamp will be used to calculate the metric value.
+ * @returns {undefined}
+ */
+function callPreSDPHandler(metric, startEvents) {
+  /**
+   * Handler function which executes when a certain registered event has ended.
+   * @return {boolean} Returns true if handler was executed AND metric was saved. False otherwise.
+   */
+  return function (callReport, event) {
+    // Search for the event in the timeline of the report
+    const startEvent = callReport.timeline.find(event => startEvents.includes(event.type));
+
+    if (startEvent) {
+      callReport.addMetric(metric, event.start - startEvent.start);
+      callReport.unregisterMetricHandler(metric);
+      return true;
+    }
+    return false;
+  };
+}
+
+/**
  * @method joinedCallDurationHandler
  * @param {string} metric The metric type which will be added to report when handler function is executed.
  * @param {Array} startEvents The set of event types whose `start` timestamp will be used to calculate the metric value.
- * @param {boolean} autoUnregister Specifies wether to automatically unregister the event handler function after it executed once.
- *   By default (if not specified), it will unregister the handler once it executed.
  * @returns {undefined}
  */
 function joinedCallDurationHandler(metric, startEvents) {
@@ -58489,6 +58515,12 @@ function registerAllMetricHandlers(callReport) {
 
   // Register the time-to-relay-candidates handler
   callReport.registerMetricHandler(_constants.REPORTER_METRICS.TIME_TO_RELAY_CANDIDATES, [_constants.REPORTER_EVENTS.SET_LOCAL_DESCRIPTION, _constants.REPORTER_EVENTS.RELAY_CANDIDATE_COLLECTED], relayCandidatesHandler());
+
+  // Register the answer-call-pre-local-setup handler
+  callReport.registerMetricHandler(_constants.REPORTER_METRICS.ANSWER_CALL_PRE_LOCAL_SETUP, _constants.REPORTER_EVENTS.SET_LOCAL_DESCRIPTION, callPreSDPHandler(_constants.REPORTER_METRICS.ANSWER_CALL_PRE_LOCAL_SETUP, [_constants.REPORTER_OPERATION_EVENTS_MAP.ANSWER]));
+
+  // Register the make-call-pre-local-setup handler
+  callReport.registerMetricHandler(_constants.REPORTER_METRICS.MAKE_CALL_PRE_LOCAL_SETUP, _constants.REPORTER_EVENTS.SET_LOCAL_DESCRIPTION, callPreSDPHandler(_constants.REPORTER_METRICS.MAKE_CALL_PRE_LOCAL_SETUP, [_constants.REPORTER_OPERATION_EVENTS_MAP.MAKE]));
 
   /*
    * **************************
