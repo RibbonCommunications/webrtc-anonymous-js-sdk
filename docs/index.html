@@ -411,9 +411,9 @@
                             </a></li>
                           
                             <li><a
-                              href='#callreporter_metrics'
+                              href='#callmetrics'
                               class='regular pre-open'>
-                              <span style="color:green">ⓕ</span> .REPORTER_METRICS
+                              <span style="color:green">ⓕ</span> .metrics
                             </a></li>
                           
                             <li><a
@@ -7987,11 +7987,11 @@ client.on(<span class="hljs-string">&#x27;call:mediaConnectionChange&#x27;</span
       </div>
     </div>
   
-    <div class='border-bottom' id='callreporter_metrics'>
+    <div class='border-bottom' id='callmetrics'>
       <div class="clearfix small pointer toggle-sibling">
         <div class="py1 contain">
             <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>REPORTER_METRICS</span>
+            <span class='code strong strong truncate'>metrics</span>
         </div>
       </div>
       <div class="clearfix display-none toggle-target">
@@ -7999,11 +7999,13 @@ client.on(<span class="hljs-string">&#x27;call:mediaConnectionChange&#x27;</span
 
   
 
-  <p>Call report metrics</p>
-<p>Metrics that are computed and recorded in a call report.</p>
+  <p>List of metrics available as part of a Call Report.</p>
+<p>As a call progresses, timings are calculated for the duration of operations and
+other events. They are recorded in a call report that can be retrieved via
+the <a href="call.getReport">call.getReport</a> API.</p>
 
 
-  <div class='pre p1 fill-light mt0'>REPORTER_METRICS</div>
+  <div class='pre p1 fill-light mt0'>metrics</div>
   
     <p>
       Type:
@@ -8422,6 +8424,14 @@ client.on(<span class="hljs-string">&#x27;call:mediaConnectionChange&#x27;</span
 
   
 
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">const</span> report = client.call.getReport(callId)
+<span class="hljs-keyword">const</span> callDuration = report.metrics.find(<span class="hljs-function"><span class="hljs-params">metric</span> =&gt;</span> metric.type === client.call.metrics.CALL_DURATION)
+log(<span class="hljs-string">`Call duration was <span class="hljs-subst">${callDuration.data}</span>ms.`</span>)</pre>
+    
   
 
   

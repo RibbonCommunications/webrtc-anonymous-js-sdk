@@ -3,7 +3,7 @@
  *
  * WebRTC.js
  * webrtc.anonymous.js
- * Version: 6.1.0-beta.1106
+ * Version: 6.1.0-beta.1107
  */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
@@ -2104,12 +2104,6 @@ function getRequestInfo(state, platform) {
 /* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = { "default": __webpack_require__(209), __esModule: true };
-
-/***/ }),
-/* 14 */
-/***/ (function(module, exports, __webpack_require__) {
-
 "use strict";
 
 
@@ -2159,12 +2153,15 @@ const REPORTER_REQUESTS = exports.REPORTER_REQUESTS = {
   END_SESSION: 'END_SESSION'
 
   /**
-   * Call report metrics
+   * List of metrics available as part of a Call Report.
    *
-   * Metrics that are computed and recorded in a call report.
+   * As a call progresses, timings are calculated for the duration of operations and
+   *    other events. They are recorded in a call report that can be retrieved via
+   *    the {@link call.getReport} API.
    *
    * @public
    * @static
+   * @name metrics
    * @memberof call
    * @requires callMe
    * @requires call
@@ -2193,6 +2190,10 @@ const REPORTER_REQUESTS = exports.REPORTER_REQUESTS = {
    * @property {string} MAKE_CALL_PRE_LOCAL_SETUP The amount of time it takes from when the `make call` operation starts up until right before we set local description.
    * @property {string} ANSWER_CALL_PRE_LOCAL_SETUP The amount of time it takes from when the `answer call` operation starts up until right before we set local description.
    * @property {string} ANSWER_CALL_LOCAL_SETUP The amount of time it takes from when the `answer call` operation starts until it is setup locally.
+   * @example
+   * const report = client.call.getReport(callId)
+   * const callDuration = report.metrics.find(metric => metric.type === client.call.metrics.CALL_DURATION)
+   * log(`Call duration was ${callDuration.data}ms.`)
    */
 };const REPORTER_METRICS = exports.REPORTER_METRICS = {
   CALL_DURATION: 'CALL_DURATION',
@@ -2323,6 +2324,12 @@ const ICE_COLLECTION_OPERATIONS = exports.ICE_COLLECTION_OPERATIONS = {
   SLOW_START: 'SLOW_START',
   UNKNOWN: 'UNKNOWN'
 };
+
+/***/ }),
+/* 14 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = { "default": __webpack_require__(209), __esModule: true };
 
 /***/ }),
 /* 15 */
@@ -2844,7 +2851,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _promise = __webpack_require__(13);
+var _promise = __webpack_require__(14);
 
 var _promise2 = _interopRequireDefault(_promise);
 
@@ -6274,7 +6281,7 @@ exports.getVersion = getVersion;
  * for the @@ tag below with actual version value.
  */
 function getVersion() {
-  return '6.1.0-beta.1106';
+  return '6.1.0-beta.1107';
 }
 
 /***/ }),
@@ -10118,7 +10125,7 @@ var _constants = __webpack_require__(6);
 
 var _remoteTracks = __webpack_require__(50);
 
-var _constants2 = __webpack_require__(14);
+var _constants2 = __webpack_require__(13);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -17540,7 +17547,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _promise = __webpack_require__(13);
+var _promise = __webpack_require__(14);
 
 var _promise2 = _interopRequireDefault(_promise);
 
@@ -27018,7 +27025,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _promise = __webpack_require__(13);
+var _promise = __webpack_require__(14);
 
 var _promise2 = _interopRequireDefault(_promise);
 
@@ -28485,7 +28492,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _promise = __webpack_require__(13);
+var _promise = __webpack_require__(14);
 
 var _promise2 = _interopRequireDefault(_promise);
 
@@ -30267,7 +30274,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _promise = __webpack_require__(13);
+var _promise = __webpack_require__(14);
 
 var _promise2 = _interopRequireDefault(_promise);
 
@@ -30367,7 +30374,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _promise = __webpack_require__(13);
+var _promise = __webpack_require__(14);
 
 var _promise2 = _interopRequireDefault(_promise);
 
@@ -30469,7 +30476,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _promise = __webpack_require__(13);
+var _promise = __webpack_require__(14);
 
 var _promise2 = _interopRequireDefault(_promise);
 
@@ -30599,7 +30606,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _promise = __webpack_require__(13);
+var _promise = __webpack_require__(14);
 
 var _promise2 = _interopRequireDefault(_promise);
 
@@ -30684,7 +30691,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _promise = __webpack_require__(13);
+var _promise = __webpack_require__(14);
 
 var _promise2 = _interopRequireDefault(_promise);
 
@@ -30833,7 +30840,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _promise = __webpack_require__(13);
+var _promise = __webpack_require__(14);
 
 var _promise2 = _interopRequireDefault(_promise);
 
@@ -30944,7 +30951,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _promise = __webpack_require__(13);
+var _promise = __webpack_require__(14);
 
 var _promise2 = _interopRequireDefault(_promise);
 
@@ -34941,7 +34948,7 @@ var _from = __webpack_require__(57);
 
 var _from2 = _interopRequireDefault(_from);
 
-var _promise = __webpack_require__(13);
+var _promise = __webpack_require__(14);
 
 var _promise2 = _interopRequireDefault(_promise);
 
@@ -35507,7 +35514,7 @@ var _extends2 = __webpack_require__(3);
 
 var _extends3 = _interopRequireDefault(_extends2);
 
-var _promise = __webpack_require__(13);
+var _promise = __webpack_require__(14);
 
 var _promise2 = _interopRequireDefault(_promise);
 
@@ -36782,7 +36789,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.WEBRTC_DEVICE_KINDS = undefined;
 
-var _promise = __webpack_require__(13);
+var _promise = __webpack_require__(14);
 
 var _promise2 = _interopRequireDefault(_promise);
 
@@ -39652,7 +39659,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _promise = __webpack_require__(13);
+var _promise = __webpack_require__(14);
 
 var _promise2 = _interopRequireDefault(_promise);
 
@@ -40740,7 +40747,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _promise = __webpack_require__(13);
+var _promise = __webpack_require__(14);
 
 var _promise2 = _interopRequireDefault(_promise);
 
@@ -41252,12 +41259,15 @@ exports.default = createAPI;
 
 var _constants = __webpack_require__(6);
 
+var _constants2 = __webpack_require__(13);
+
 /**
  * Call Constant APIs factory function.
  * @method createAPI
  * @param  {Object} container The bottle container.
  * @return {Object} Constants API.
  */
+// Call plugin.
 function createAPI() {
   /**
    * Possible states that a Call can be in.
@@ -41388,11 +41398,15 @@ function createAPI() {
    */
   const mediaConnectionStates = _constants.CALL_MEDIA_CONNECTION_STATES;
 
+  /* Documentation attached to the constant definitions. */
+  const metrics = _constants2.REPORTER_METRICS;
+
   return {
     states,
-    mediaConnectionStates
+    mediaConnectionStates,
+    metrics
   };
-} // Call plugin.
+}
 
 /***/ }),
 /* 383 */
@@ -43863,7 +43877,7 @@ exports.default = establishRequests;
 
 var _selectors = __webpack_require__(1);
 
-var _constants = __webpack_require__(14);
+var _constants = __webpack_require__(13);
 
 var _selectors2 = __webpack_require__(12);
 
@@ -44500,7 +44514,7 @@ var _selectors = __webpack_require__(12);
 
 var _selectors2 = __webpack_require__(1);
 
-var _constants = __webpack_require__(14);
+var _constants = __webpack_require__(13);
 
 var _constants2 = __webpack_require__(19);
 
@@ -45741,7 +45755,7 @@ var _selectors = __webpack_require__(1);
 
 var _constants2 = __webpack_require__(7);
 
-var _constants3 = __webpack_require__(14);
+var _constants3 = __webpack_require__(13);
 
 var _errors = __webpack_require__(5);
 
@@ -46282,7 +46296,7 @@ var _constants = __webpack_require__(7);
 
 var _constants2 = __webpack_require__(6);
 
-var _constants3 = __webpack_require__(14);
+var _constants3 = __webpack_require__(13);
 
 /**
  * Bottle wrapper for "incoming call" notification handler.
@@ -46572,7 +46586,7 @@ var _errors = __webpack_require__(5);
 
 var _errors2 = _interopRequireDefault(_errors);
 
-var _constants = __webpack_require__(14);
+var _constants = __webpack_require__(13);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -47228,7 +47242,7 @@ var _constants = __webpack_require__(6);
 
 var _remoteTracks = __webpack_require__(50);
 
-var _constants2 = __webpack_require__(14);
+var _constants2 = __webpack_require__(13);
 
 var _selectors = __webpack_require__(24);
 
@@ -47361,7 +47375,7 @@ exports.default = answerWebrtcSessionOperation;
 
 var _selectors = __webpack_require__(1);
 
-var _constants = __webpack_require__(14);
+var _constants = __webpack_require__(13);
 
 var _call = __webpack_require__(26);
 
@@ -48254,7 +48268,7 @@ exports.default = webrtcAddMediaOperation;
 
 var _selectors = __webpack_require__(1);
 
-var _constants = __webpack_require__(14);
+var _constants = __webpack_require__(13);
 
 var _call = __webpack_require__(26);
 
@@ -48386,7 +48400,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _promise = __webpack_require__(13);
+var _promise = __webpack_require__(14);
 
 var _promise2 = _interopRequireDefault(_promise);
 
@@ -48587,7 +48601,7 @@ var _eventTypes = __webpack_require__(10);
 
 var eventTypes = _interopRequireWildcard(_eventTypes);
 
-var _constants = __webpack_require__(14);
+var _constants = __webpack_require__(13);
 
 var _selectors = __webpack_require__(24);
 
@@ -48991,7 +49005,7 @@ var _eventTypes = __webpack_require__(10);
 
 var eventTypes = _interopRequireWildcard(_eventTypes);
 
-var _constants = __webpack_require__(14);
+var _constants = __webpack_require__(13);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -49399,7 +49413,7 @@ var eventTypes = _interopRequireWildcard(_eventTypes);
 
 var _remoteTracks = __webpack_require__(50);
 
-var _constants = __webpack_require__(14);
+var _constants = __webpack_require__(13);
 
 var _selectors = __webpack_require__(1);
 
@@ -49816,7 +49830,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _promise = __webpack_require__(13);
+var _promise = __webpack_require__(14);
 
 var _promise2 = _interopRequireDefault(_promise);
 
@@ -49824,7 +49838,7 @@ exports.default = webrtcRemoveMediaOperation;
 
 var _selectors = __webpack_require__(1);
 
-var _constants = __webpack_require__(14);
+var _constants = __webpack_require__(13);
 
 var _fp = __webpack_require__(4);
 
@@ -50130,7 +50144,7 @@ var _eventTypes = __webpack_require__(10);
 
 var eventTypes = _interopRequireWildcard(_eventTypes);
 
-var _constants = __webpack_require__(14);
+var _constants = __webpack_require__(13);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -51136,7 +51150,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _promise = __webpack_require__(13);
+var _promise = __webpack_require__(14);
 
 var _promise2 = _interopRequireDefault(_promise);
 
@@ -51204,7 +51218,7 @@ var _eventTypes = __webpack_require__(10);
 
 var eventTypes = _interopRequireWildcard(_eventTypes);
 
-var _constants = __webpack_require__(14);
+var _constants = __webpack_require__(13);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -51578,7 +51592,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _promise = __webpack_require__(13);
+var _promise = __webpack_require__(14);
 
 var _promise2 = _interopRequireDefault(_promise);
 
@@ -52207,7 +52221,7 @@ var _actions = __webpack_require__(8);
 
 var _constants = __webpack_require__(6);
 
-var _constants2 = __webpack_require__(14);
+var _constants2 = __webpack_require__(13);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -52723,7 +52737,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _promise = __webpack_require__(13);
+var _promise = __webpack_require__(14);
 
 var _promise2 = _interopRequireDefault(_promise);
 
@@ -53467,7 +53481,7 @@ var _selectors = __webpack_require__(1);
 
 var _constants = __webpack_require__(6);
 
-var _constants2 = __webpack_require__(14);
+var _constants2 = __webpack_require__(13);
 
 /**
  * Bottle wrapper for "call status ringing" notification handler.
@@ -54536,7 +54550,7 @@ var _state = __webpack_require__(73);
 
 var _actions = __webpack_require__(8);
 
-var _constants3 = __webpack_require__(14);
+var _constants3 = __webpack_require__(13);
 
 var _selectors = __webpack_require__(24);
 
@@ -56855,7 +56869,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _promise = __webpack_require__(13);
+var _promise = __webpack_require__(14);
 
 var _promise2 = _interopRequireDefault(_promise);
 
@@ -56914,7 +56928,7 @@ var _errors = __webpack_require__(5);
 
 var _errors2 = _interopRequireDefault(_errors);
 
-var _constants = __webpack_require__(14);
+var _constants = __webpack_require__(13);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -57038,7 +57052,7 @@ var _errors = __webpack_require__(5);
 
 var _errors2 = _interopRequireDefault(_errors);
 
-var _constants = __webpack_require__(14);
+var _constants = __webpack_require__(13);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -57154,7 +57168,7 @@ exports.default = handleOfferOperation;
 
 var _selectors = __webpack_require__(1);
 
-var _constants = __webpack_require__(14);
+var _constants = __webpack_require__(13);
 
 var _errors = __webpack_require__(5);
 
@@ -57482,7 +57496,7 @@ var _selectors = __webpack_require__(1);
 
 var _operationMap = __webpack_require__(182);
 
-var _constants3 = __webpack_require__(14);
+var _constants3 = __webpack_require__(13);
 
 var _negotiations = __webpack_require__(543);
 
@@ -58037,7 +58051,7 @@ var _operationMap = __webpack_require__(182);
 
 var _constants2 = __webpack_require__(6);
 
-var _constants3 = __webpack_require__(14);
+var _constants3 = __webpack_require__(13);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -58350,7 +58364,7 @@ var _extends2 = __webpack_require__(3);
 
 var _extends3 = _interopRequireDefault(_extends2);
 
-var _constants = __webpack_require__(14);
+var _constants = __webpack_require__(13);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -60373,7 +60387,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _promise = __webpack_require__(13);
+var _promise = __webpack_require__(14);
 
 var _promise2 = _interopRequireDefault(_promise);
 
@@ -68328,7 +68342,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _promise = __webpack_require__(13);
+var _promise = __webpack_require__(14);
 
 var _promise2 = _interopRequireDefault(_promise);
 
