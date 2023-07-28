@@ -3,7 +3,7 @@
  *
  * WebRTC.js
  * webrtc.anonymous.js
- * Version: 6.1.0-beta.1103
+ * Version: 6.1.0-beta.1104
  */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
@@ -2188,6 +2188,7 @@ const REPORTER_REQUESTS = exports.REPORTER_REQUESTS = {
    * @property {string} TIME_TO_FORWARD The amount of time it takes from when the `forward call` operation starts until it has finished.
    * @property {string} TIME_TO_DIRECT_TRANSFER The amount of time it takes from when the `direct transfer` operation starts until it has finished.
    * @property {string} TIME_TO_JOIN The amount of time it takes from when the `join call` operation starts until it has finished.
+   * @property {string} TIME_TO_ANSWER_OPERATION The amount of time it takes from when the `answer call` operation starts until it has finished.
    * @property {string} MAKE_CALL_PRE_LOCAL_SETUP The amount of time it takes from when the `make call` operation starts up until right before we set local description.
    * @property {string} ANSWER_CALL_PRE_LOCAL_SETUP The amount of time it takes from when the `answer call` operation starts up until right before we set local description.
    * @property {string} ANSWER_CALL_LOCAL_SETUP The amount of time it takes from when the `answer call` operation starts until it is setup locally.
@@ -2218,6 +2219,7 @@ const REPORTER_REQUESTS = exports.REPORTER_REQUESTS = {
   TIME_TO_DIRECT_TRANSFER: 'TIME_TO_DIRECT_TRANSFER',
   TIME_TO_CONSULTATIVE_TRANSFER: 'TIME_TO_CONSULTATIVE_TRANSFER',
   TIME_TO_JOIN: 'TIME_TO_JOIN',
+  TIME_TO_ANSWER_OPERATION: 'TIME_TO_ANSWER_OPERATION',
   MAKE_CALL_PRE_LOCAL_SETUP: 'MAKE_CALL_PRE_LOCAL_SETUP',
   ANSWER_CALL_PRE_LOCAL_SETUP: 'ANSWER_CALL_PRE_LOCAL_SETUP',
   ANSWER_CALL_LOCAL_SETUP: 'ANSWER_CALL_LOCAL_SETUP'
@@ -6270,7 +6272,7 @@ exports.getVersion = getVersion;
  * for the @@ tag below with actual version value.
  */
 function getVersion() {
-  return '6.1.0-beta.1103';
+  return '6.1.0-beta.1104';
 }
 
 /***/ }),
@@ -58606,6 +58608,11 @@ function registerAllMetricHandlers(callReport) {
 
   // Register the time-to-join handler
   callReport.registerMetricHandler(_constants.REPORTER_METRICS.TIME_TO_JOIN, _constants.REPORTER_OPERATION_EVENTS_MAP.JOIN, joinedCallDurationHandler(_constants.REPORTER_METRICS.TIME_TO_JOIN, [_constants.REPORTER_OPERATION_EVENTS_MAP.JOIN]));
+
+  // Register the time-to-answer-operation handler
+  callReport.registerMetricHandler(_constants.REPORTER_METRICS.TIME_TO_ANSWER_OPERATION, _constants.REPORTER_EVENTS.ANSWER, (report, event) => {
+    callReport.addMetric(_constants.REPORTER_METRICS.TIME_TO_ANSWER_OPERATION, event.end - event.start);
+  });
 }
 
 exports.default = {
