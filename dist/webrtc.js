@@ -3,7 +3,7 @@
  *
  * WebRTC.js
  * webrtc.anonymous.js
- * Version: 6.1.0-beta.1101
+ * Version: 6.1.0-beta.1102
  */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
@@ -2188,6 +2188,7 @@ const REPORTER_REQUESTS = exports.REPORTER_REQUESTS = {
    * @property {string} TIME_TO_FORWARD The amount of time it takes from when the `forward call` operation starts until it has finished.
    * @property {string} TIME_TO_DIRECT_TRANSFER The amount of time it takes from when the `direct transfer` operation starts until it has finished.
    * @property {string} TIME_TO_JOIN The amount of time it takes from when the `join call` operation starts until it has finished.
+   * @property {string} ANSWER_CALL_LOCAL_SETUP The amount of time it takes from when the `answer call` operation starts until it is setup locally.
    */
 };const REPORTER_METRICS = exports.REPORTER_METRICS = {
   CALL_DURATION: 'CALL_DURATION',
@@ -2214,7 +2215,8 @@ const REPORTER_REQUESTS = exports.REPORTER_REQUESTS = {
   TIME_TO_FORWARD: 'TIME_TO_FORWARD',
   TIME_TO_DIRECT_TRANSFER: 'TIME_TO_DIRECT_TRANSFER',
   TIME_TO_CONSULTATIVE_TRANSFER: 'TIME_TO_CONSULTATIVE_TRANSFER',
-  TIME_TO_JOIN: 'TIME_TO_JOIN'
+  TIME_TO_JOIN: 'TIME_TO_JOIN',
+  ANSWER_CALL_LOCAL_SETUP: 'ANSWER_CALL_LOCAL_SETUP'
 
   /**
    * Call operation events recorded by the call reporter.
@@ -6264,7 +6266,7 @@ exports.getVersion = getVersion;
  * for the @@ tag below with actual version value.
  */
 function getVersion() {
-  return '6.1.0-beta.1101';
+  return '6.1.0-beta.1102';
 }
 
 /***/ }),
@@ -58481,6 +58483,9 @@ function registerAllMetricHandlers(callReport) {
 
   // Time to setup incoming call (incoming call notification until media is connected)
   callReport.registerMetricHandler(_constants.REPORTER_METRICS.TIME_TO_CALL_SETUP_DURATION, _constants.REPORTER_EVENTS.SET_LOCAL_DESCRIPTION, durationHandler(_constants.REPORTER_METRICS.TIME_TO_CALL_SETUP_DURATION, [_constants.REPORTER_EVENTS.RECEIVE_CALL]));
+
+  // Time to setup incoming call (answer call operation until media is connected)
+  callReport.registerMetricHandler(_constants.REPORTER_METRICS.ANSWER_CALL_LOCAL_SETUP, _constants.REPORTER_EVENTS.SET_LOCAL_DESCRIPTION, durationHandler(_constants.REPORTER_METRICS.ANSWER_CALL_LOCAL_SETUP, [_constants.REPORTER_OPERATION_EVENTS_MAP.ANSWER]));
 
   // Register the time-to-relay-candidates handler
   callReport.registerMetricHandler(_constants.REPORTER_METRICS.TIME_TO_RELAY_CANDIDATES, [_constants.REPORTER_EVENTS.SET_LOCAL_DESCRIPTION, _constants.REPORTER_EVENTS.RELAY_CANDIDATE_COLLECTED], relayCandidatesHandler());
