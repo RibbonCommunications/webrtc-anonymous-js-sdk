@@ -8073,6 +8073,23 @@ the <a href="call.getReport">call.getReport</a> API.</p>
         </div>
       
         <div class='space-bottom0'>
+          <span class='code bold'>TIME_TO_MAKE</span> 
+          <code class='quiet'>
+            (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
+          </code>
+
+          
+
+          
+             : For outgoing calls, the time for the 
+<code>make</code>
+ operation to complete.
+
+          
+          
+        </div>
+      
+        <div class='space-bottom0'>
           <span class='code bold'>TIME_TO_ANSWER</span> 
           <code class='quiet'>
             (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
@@ -8081,7 +8098,43 @@ the <a href="call.getReport">call.getReport</a> API.</p>
           
 
           
-             : The amount of time it takes from when a call is made until the SDK receives and processes the remote response.
+             : For incoming calls, the time for the 
+<code>answer</code>
+ operation to complete.
+
+          
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <span class='code bold'>TIME_FROM_RECEIVE_TO_ANSWER</span> 
+          <code class='quiet'>
+            (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
+          </code>
+
+          
+
+          
+             : For incoming calls, the time from the call first being received until it has been answered. Includes call processing and setup, as well as time for the answer API to have been called.
+
+          
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <span class='code bold'>TIME_TO_CALL_SETUP_DURATION</span> 
+          <code class='quiet'>
+            (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
+          </code>
+
+          
+
+          
+             : For incoming calls, the time from the call first being received until media is connected. Similar to 
+<code>TIME_FROM_RECEIVE_TO_ANSWER</code>
+, but without the 
+<code>answer</code>
+ REST request.
 
           
           
@@ -8097,21 +8150,6 @@ the <a href="call.getReport">call.getReport</a> API.</p>
 
           
              : The amount of time it takes from answering an incoming call until media is connected.
-
-          
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <span class='code bold'>TIME_TO_CALL_SETUP_DURATION</span> 
-          <code class='quiet'>
-            (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
-          </code>
-
-          
-
-          
-             : The amount of time it takes from when the SDK recieves an incoming call notification until media is connected. This includes the answer operation.
 
           
           
@@ -8326,40 +8364,6 @@ the <a href="call.getReport">call.getReport</a> API.</p>
           
              : The amount of time it takes from when the 
 <code>join call</code>
- operation starts until it has finished.
-
-          
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <span class='code bold'>TIME_TO_MAKE_OPERATION</span> 
-          <code class='quiet'>
-            (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
-          </code>
-
-          
-
-          
-             : The amount of time it takes from when the 
-<code>make call</code>
- operation starts until it has finished.
-
-          
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <span class='code bold'>TIME_TO_ANSWER_OPERATION</span> 
-          <code class='quiet'>
-            (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
-          </code>
-
-          
-
-          
-             : The amount of time it takes from when the 
-<code>answer call</code>
  operation starts until it has finished.
 
           
