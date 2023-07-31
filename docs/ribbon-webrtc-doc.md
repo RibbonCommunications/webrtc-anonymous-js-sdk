@@ -1627,7 +1627,6 @@ Type: [Object][7]
 #### Properties
 
 *   `MAKE` **[string][8]** Starts when the make operation starts. Ends when the make operation finishes.
-*   `MAKE_ANONYMOUS` **[string][8]** Starts when the anonymous make operation starts. Ends when the anonymous make operation finishes.
 *   `SEND_RINGING_FEEDBACK` **[string][8]** Starts when the send ringing feedback operation starts. Ends when the ringing feedback operation finishes.
 *   `RECEIVE_CALL` **[string][8]** Starts when the SDK receives a call and ends when the incoming call is setup.
 *   `REMOTE_RINGING` **[string][8]** 

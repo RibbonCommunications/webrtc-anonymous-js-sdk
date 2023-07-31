@@ -3,7 +3,7 @@
  *
  * WebRTC.js
  * webrtc.anonymous.js
- * Version: 6.1.0-beta.1110
+ * Version: 6.1.0-beta.1111
  */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
@@ -2128,7 +2128,6 @@ Object.defineProperty(exports, "__esModule", {
  * @requires call
  * @type {Object}
  * @property {string} MAKE Starts when the make operation starts. Ends when the make operation finishes.
- * @property {string} MAKE_ANONYMOUS Starts when the anonymous make operation starts. Ends when the anonymous make operation finishes.
  * @property {string} SEND_RINGING_FEEDBACK Starts when the send ringing feedback operation starts. Ends when the ringing feedback operation finishes.
  * @property {string} RECEIVE_CALL Starts when the SDK receives a call and ends when the incoming call is setup.
  * @property {string} REMOTE_RINGING
@@ -2176,7 +2175,6 @@ Object.defineProperty(exports, "__esModule", {
  */
 const REPORT_EVENTS = exports.REPORT_EVENTS = {
   MAKE: 'MAKE',
-  MAKE_ANONYMOUS: 'MAKE_ANONYMOUS',
   SEND_RINGING_FEEDBACK: 'SEND_RINGING_FEEDBACK',
   ANSWER: 'ANSWER',
   GET_USER_MEDIA: 'GET_USER_MEDIA',
@@ -2317,7 +2315,7 @@ const REPORT_EVENTS = exports.REPORT_EVENTS = {
 };const REPORTER_OPERATION_EVENTS_MAP = exports.REPORTER_OPERATION_EVENTS_MAP = {
   // Establishment.
   MAKE: 'MAKE',
-  MAKE_ANONYMOUS: 'MAKE_ANONYMOUS',
+  MAKE_ANONYMOUS: 'MAKE',
   ANSWER: 'ANSWER',
   REJECT: 'REJECT',
   IGNORE: 'IGNORE',
@@ -2359,7 +2357,6 @@ const REPORT_EVENTS = exports.REPORT_EVENTS = {
    */
 };const ICE_COLLECTION_OPERATIONS = exports.ICE_COLLECTION_OPERATIONS = {
   MAKE: 'MAKE',
-  MAKE_ANONYMOUS: 'MAKE_ANONYMOUS',
   ANSWER: 'ANSWER',
   JOIN: 'JOIN',
   HOLD: 'HOLD_LOCAL',
@@ -6331,7 +6328,7 @@ exports.getVersion = getVersion;
  * for the @@ tag below with actual version value.
  */
 function getVersion() {
-  return '6.1.0-beta.1110';
+  return '6.1.0-beta.1111';
 }
 
 /***/ }),
