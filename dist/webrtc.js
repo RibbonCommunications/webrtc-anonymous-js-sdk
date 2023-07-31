@@ -3,7 +3,7 @@
  *
  * WebRTC.js
  * webrtc.anonymous.js
- * Version: 6.1.0-beta.1108
+ * Version: 6.1.0-beta.1109
  */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
@@ -6281,7 +6281,7 @@ exports.getVersion = getVersion;
  * for the @@ tag below with actual version value.
  */
 function getVersion() {
-  return '6.1.0-beta.1108';
+  return '6.1.0-beta.1109';
 }
 
 /***/ }),
@@ -59132,7 +59132,7 @@ function createTimelineEvent(type, onEventEnded) {
   const eventData = {};
   // Computed metrics
   const metrics = [];
-  // Indication of an error during this event, `undefined` if there is no error to report
+  // Any encountered error during the event, `undefined` if there is no error to report
   let error;
 
   const API_TAG = 'API invoked: ';
@@ -59265,16 +59265,16 @@ function createTimelineEvent(type, onEventEnded) {
    *   This can be provided if there is an error by the time SDK ends this event instance.
    * @return {undefined}
    */
-  function endEvent(error) {
-    if (this.end) {
+  function endEvent(err) {
+    if (end) {
       // We already marked this event as ended.
       return;
     }
-    if (error) {
-      this.error = error;
+    if (err) {
+      event.error = err;
     }
     const currentDate = new Date();
-    this.end = currentDate.getTime();
+    event.end = currentDate.getTime();
 
     onEventEnded(event);
   }
@@ -59285,7 +59285,7 @@ function createTimelineEvent(type, onEventEnded) {
    * @return {boolean}
    */
   function isEnded() {
-    return !!this.end;
+    return !!end;
   }
 
   /**
@@ -59295,11 +59295,11 @@ function createTimelineEvent(type, onEventEnded) {
    * @throws {Error} An error indicating that the event has already ended.
    * @return {undefined}
    */
-  function setError(error) {
-    if (this.end) {
+  function setError(err) {
+    if (end) {
       throw new Error("Can't set error on an event that has already ended.");
     }
-    this.error = error;
+    error = err;
   }
 
   /**
@@ -59308,7 +59308,7 @@ function createTimelineEvent(type, onEventEnded) {
    * @return {Error|undefined}
    */
   function getError() {
-    return this.error;
+    return error;
   }
 
   /**
@@ -59325,7 +59325,7 @@ function createTimelineEvent(type, onEventEnded) {
       data: eventData,
       metrics,
       start,
-      end: this.end,
+      end,
       error
     };
   }
@@ -59336,6 +59336,8 @@ function createTimelineEvent(type, onEventEnded) {
     timeline,
     metrics,
     start,
+    end,
+    error,
     addEvent,
     isEnded,
     getEvent,
