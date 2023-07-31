@@ -3,7 +3,7 @@
  *
  * WebRTC.js
  * webrtc.anonymous.js
- * Version: 6.1.0-beta.1109
+ * Version: 6.1.0-beta.1110
  */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
@@ -2110,41 +2110,119 @@ function getRequestInfo(state, platform) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-const REPORTER_EVENTS = exports.REPORTER_EVENTS = {
-  ADD_TRACKS: 'ADD_TRACKS',
-  ANSWER: 'ANSWER',
-  END_LOCAL: 'END_LOCAL',
-  END_REMOTE: 'END_REMOTE',
-  HOLD_LOCAL: 'HOLD_LOCAL',
-  HOLD_REMOTE: 'HOLD_REMOTE',
-  GET_USER_MEDIA: 'GET_USER_MEDIA',
-  ICE_COLLECTION: 'ICE_COLLECTION',
-  IGNORE: 'IGNORE',
-  INCOMING_CALL: 'INCOMING_CALL',
-  JOIN: 'JOIN',
+/**
+ * Events used in the SDK's call reports.
+ *
+ * As a call progresses, the operation(s)/function(s) being performed throughout
+ *    the duration of a call are recorded as events in a call report.
+ *    The call report can be retrieved via the {@link call.getReport} API.
+ *    An application can use these event names to find the associated event(s)
+ *    in the call report for more information on the event.
+ *    See _Call Reports_ tutorial for more information on call reports and events.
+ *
+ * @public
+ * @static
+ * @name reportEvents
+ * @memberof call
+ * @requires callMe
+ * @requires call
+ * @type {Object}
+ * @property {string} MAKE Starts when the make operation starts. Ends when the make operation finishes.
+ * @property {string} MAKE_ANONYMOUS Starts when the anonymous make operation starts. Ends when the anonymous make operation finishes.
+ * @property {string} SEND_RINGING_FEEDBACK Starts when the send ringing feedback operation starts. Ends when the ringing feedback operation finishes.
+ * @property {string} RECEIVE_CALL Starts when the SDK receives a call and ends when the incoming call is setup.
+ * @property {string} REMOTE_RINGING
+ * @property {string} ANSWER Starts when the answer operation starts. Ends when the answer operation finishes.
+ * @property {string} GET_USER_MEDIA Starts when user media is requested from the browser and ends when the media is created.
+ * @property {string} SET_LOCAL_DESCRIPTION Starts when the local description is to be set, and ends when the offer is set and ice collection completes.
+ * @property {string} SET_REMOTE_DESCRIPTION Starts when the remote description is to be set, and ends when the remote description is set.
+ * @property {string} ICE_COLLECTION Starts when ice candidate collection starts and ends when collection is complete.
+ * @property {string} RELAY_CANDIDATE_COLLECTED Starts and ends when a relay candidate is collected. Event data contains info on the candidate.
+ * @property {string} IGNORE Starts when the ignore operation starts. Ends when the ignore operation finishes.
+ * @property {string} REJECT Starts when the reject operation starts. Ends when the reject operation finishes.
+ * @property {string} FORWARD_CALL Starts when the forward call operation starts. Ends when the forward operation finishes.
+ * @property {string} END_LOCAL Starts when the end operation starts. Ends when the end operation finishes.
+ * @property {string} END_REMOTE Starts when the call status update ended operation starts. Ends when the call status update ended operation finishes.
+ * @property {string} ADD_BASIC_MEDIA Starts when the add basic media operation starts. Ends when the add basic media operation finishes.
+ * @property {string} ADD_MEDIA_LOCAL Starts when the add media operation starts. Ends when the add media operation finishes.
+ * @property {string} ADD_MEDIA_REMOTE Starts when a remote add media notification is received and ends when the operation is handled.
+ * @property {string} REMOVE_BASIC_MEDIA Starts when the remove basic media operation starts. Ends when the remove basic operation finishes.
+ * @property {string} REMOVE_MEDIA Starts when the remove media operation starts. Ends when the remove media operation finishes.
+ * @property {string} REMOVE_MEDIA_REMOTE Starts when a remote remove media notification is received and ends when the operation is handled.
+ * @property {string} MEDIA_RESTART Starts when the media restart operation starts. Ends when the media restart operation finishes.
+ * @property {string} REPLACE_TRACK Starts when the replace track operation starts. Ends when the replace track operation finishes.
+ * @property {string} HOLD_LOCAL Starts when the hold operation starts. Ends when the hold operation finishes.
+ * @property {string} HOLD_REMOTE Starts when a remote hold notification is received and ends when the operation is handled.
+ * @property {string} UNHOLD_LOCAL Starts when the unhold operation starts. Ends when the unhold operation finishes.
+ * @property {string} UNHOLD_REMOTE Starts when a remote unhold notification is received and ends when the operation is handled.
+ * @property {string} REST_REQUEST Starts when a REST request is to be made for an operation and ends when a response is received, or it times out.
+ * @property {string} PROCESS_RESPONSE Starts when a notification is received to an update request and ends when the response is handled.
+ * @property {string} PLAY_AUDIO Starts when the play audio operation starts. Ends when the play audio operation finishes.
+ * @property {string} START_MOH Starts when the start music on hold operation starts. Ends when the start music on hold operation finishes.
+ * @property {string} STOP_MOH Starts when the stop music on hold operation starts. Ends when the stop music on hold operation finishes.
+ * @property {string} SEND_CUSTOM_PARAMETERS Starts when the send custom parameters operation starts. Ends send custom parameters operation finishes.
+ * @property {string} GET_STATS Starts when the get stats operation starts. Ends when the get stats operation finishes.
+ * @property {string} SEND_DTMF Starts when the send DTMF operation starts. Ends when the DTMF operation finishes.
+ * @property {string} RESYNC Starts when the resync operation starts. Ends when the resync operation finishes.
+ * @property {string} DIRECT_TRANSFER Starts when the direct transfer operation starts. Ends when the direct transfer operation finishes.
+ * @property {string} CONSULTATIVE_TRANSFER Starts when the consultative transfer operation starts. Ends when the consultative transfer operation finishes.
+ * @property {string} JOIN Starts when the join operation starts. Ends when the join operation finishes.
+ * @property {string} GET_AVAILABLE_CODECS Starts when the get available codecs operation starts. Ends when the get available codecs operation finishes.
+ * @property {string} SLOW_START Starts when the slow start operation starts. Ends when the slow stop operation finishes.
+ * @example
+ * const report = client.call.getReport('callId')
+ * const getAvailableCodecsEvent = report.timeline.find(event => event.type === client.call.reportEvents.GET_AVAILABLE_CODECS)
+ * log(`Took ${getAvailableCodecsEvent.end - getAvailableCodecsEvent.start}ms to get available codecs.`)
+ */
+const REPORT_EVENTS = exports.REPORT_EVENTS = {
   MAKE: 'MAKE',
-  PROCESS_RESPONSE: 'PROCESS_RESPONSE',
-  RECEIVE_CALL: 'RECEIVE_CALL',
-  REJECT: 'REJECT',
-  RELAY_CANDIDATE_COLLECTED: 'RELAY_CANDIDATE_COLLECTED',
-  REMOTE_RINGING: 'REMOTE_RINGING',
-  REST_REQUEST: 'REST_REQUEST',
+  MAKE_ANONYMOUS: 'MAKE_ANONYMOUS',
+  SEND_RINGING_FEEDBACK: 'SEND_RINGING_FEEDBACK',
+  ANSWER: 'ANSWER',
+  GET_USER_MEDIA: 'GET_USER_MEDIA',
   SET_LOCAL_DESCRIPTION: 'SET_LOCAL_DESCRIPTION',
   SET_REMOTE_DESCRIPTION: 'SET_REMOTE_DESCRIPTION',
+  ICE_COLLECTION: 'ICE_COLLECTION',
+  RELAY_CANDIDATE_COLLECTED: 'RELAY_CANDIDATE_COLLECTED',
+  IGNORE: 'IGNORE',
+  REJECT: 'REJECT',
+  FORWARD_CALL: 'FORWARD_CALL',
+  END_LOCAL: 'END_LOCAL',
+  END_REMOTE: 'END_REMOTE',
+  ADD_BASIC_MEDIA: 'ADD_BASIC_MEDIA_LOCAL',
+  ADD_MEDIA: 'ADD_MEDIA_LOCAL',
+  ADD_MEDIA_REMOTE: 'ADD_MEDIA_REMOTE',
+  ADD_TRACKS: 'ADD_TRACKS',
+  REMOVE_BASIC_MEDIA: 'REMOVE_BASIC_MEDIA_LOCAL',
+  REMOVE_MEDIA: 'REMOVE_MEDIA_LOCAL',
+  REMOVE_MEDIA_REMOTE: 'REMOVE_MEDIA_REMOTE',
+  MEDIA_RESTART: 'MEDIA_RESTART',
+  REPLACE_TRACK: 'REPLACE_TRACK',
+  HOLD_LOCAL: 'HOLD_LOCAL',
+  HOLD_REMOTE: 'HOLD_REMOTE',
   UNHOLD_LOCAL: 'UNHOLD_LOCAL',
   UNHOLD_REMOTE: 'UNHOLD_REMOTE',
-  FORWARD_CALL: 'FORWARD_CALL',
+  PLAY_AUDIO: 'PLAY_AUDIO',
+  START_MOH: 'START_MOH',
+  STOP_MOH: 'START_MOH',
+  SEND_CUSTOM_PARAMETERS: 'SEND_CUSTOM_PARAMETERS',
+  GET_STATS: 'GET_STATS',
+  SEND_DTMF: 'SEND_DTMF',
+  RESYNC: 'RESYNC',
   DIRECT_TRANSFER: 'DIRECT_TRANSFER',
   CONSULTATIVE_TRANSFER: 'CONSULTATIVE_TRANSFER',
-  ADD_MEDIA: 'ADD_MEDIA_LOCAL',
-  ADD_BASIC_MEDIA: 'ADD_BASIC_MEDIA_LOCAL',
-  REMOVE_MEDIA: 'REMOVE_MEDIA_LOCAL',
-  REMOVE_BASIC_MEDIA: 'REMOVE_BASIC_MEDIA_LOCAL',
-  ADD_MEDIA_REMOTE: 'ADD_MEDIA_REMOTE',
-  REMOVE_MEDIA_REMOTE: 'REMOVE_MEDIA_REMOTE'
-};
+  JOIN: 'JOIN',
+  GET_AVAILABLE_CODECS: 'GET_AVAILABLE_CODECS',
+  SLOW_START: 'SLOW_START',
+  PROCESS_RESPONSE: 'PROCESS_RESPONSE',
+  RECEIVE_CALL: 'RECEIVE_CALL',
+  REMOTE_RINGING: 'REMOTE_RINGING',
+  REST_REQUEST: 'REST_REQUEST'
 
-const REPORTER_REQUESTS = exports.REPORTER_REQUESTS = {
+  /*
+   * Type of request event data for the REST_REQUEST report event.
+   */
+};const REPORTER_REQUESTS = exports.REPORTER_REQUESTS = {
   CREATE_SESSION: 'CREATE_SESSION',
   ANSWER_SESSION: 'ANSWER_SESSION',
   REJECT_SESSION: 'REJECT_SESSION',
@@ -2167,104 +2245,74 @@ const REPORTER_REQUESTS = exports.REPORTER_REQUESTS = {
    * @requires call
    * @type {Object}
    * @property {string} CALL_DURATION The duration of a completed call starting from the make call API call or incoming call notification until the call ends.
+   * @property {string} MAKE_CALL_PRE_LOCAL_SETUP The amount of time it takes from when the `make call` operation starts up until right before we set local description.
    * @property {string} MAKE_CALL_LOCAL_SETUP The amount of time it takes from when a call is made until the call is setup locally. This does not include any remote session creation.
    * @property {string} MAKE_CALL_REMOTE_SETUP The amount of time it takes from when the create session request is sent until the SDK processes the response.
    * @property {string} TIME_TO_MAKE For outgoing calls, the time for the `make` operation to complete.
+   * @property {string} ANSWER_CALL_LOCAL_SETUP The amount of time it takes from when the `answer call` operation starts until it is setup locally.
+   * @property {string} ANSWER_CALL_PRE_LOCAL_SETUP The amount of time it takes from when the `answer call` operation starts up until right before we set local description.
    * @property {string} TIME_TO_ANSWER For incoming calls, the time for the `answer` operation to complete.
    * @property {string} TIME_FROM_RECEIVE_TO_ANSWER For incoming calls, the time from the call first being received until it has been answered. Includes call processing and setup, as well as time for the answer API to have been called.
-   * @property {string} TIME_TO_CALL_SETUP_DURATION For incoming calls, the time from the call first being received until media is connected. Similar to `TIME_FROM_RECEIVE_TO_ANSWER`, but without the `answer` REST request.
    * @property {string} TIME_TO_MEDIA_DURATION The amount of time it takes from answering an incoming call until media is connected.
+   * @property {string} TIME_TO_CALL_SETUP_DURATION For incoming calls, the time from the call first being received until media is connected. Similar to `TIME_FROM_RECEIVE_TO_ANSWER`, but without the `answer` REST request.
+   * @property {string} TIME_TO_RINGING The amount of time it takes from when a call is made until the SDK recieves the remote ringing notification.
    * @property {string} TIME_TO_IGNORE The amount of time it takes for the ignore call to complete.
    * @property {string} TIME_TO_REJECT The amount of time it takes for the reject call to complete.
-   * @property {string} TIME_TO_RINGING The amount of time it takes from when a call is made until the SDK recieves the remote ringing notification.
-   * @property {string} TIME_TO_REMOVE_MEDIA The amount of time it takes from when the `remove media` operation starts until the local description has been set.
-   * @property {string} TIME_TO_REMOVE_MEDIA_REMOTE The amount of time it takes from when the `remove media` notification handling starts until the remote description has been set.
-   * @property {string} TIME_TO_ADD_MEDIA The amount of time it takes from when the `add media` operation starts until the local description has been set.
-   * @property {string} TIME_TO_ADD_MEDIA_REMOTE The amount of time it takes from when the `add media` notification handling starts until the remote description has been set.
-   * @property {string} TIME_TO_RESTART_MEDIA The amount of time it takes from when the `restart media` operation starts until media has been restarted.
+   * @property {string} TIME_TO_ADD_MEDIA The amount of time it takes from when the local `add media` operation starts until it has finished.
+   * @property {string} TIME_TO_ADD_MEDIA_REMOTE The amount of time it takes from when the SDK receives a remote `add media` notification until it is handled and operation completes.
+   * @property {string} TIME_TO_REMOVE_MEDIA The amount of time it takes from when the local `remove media` operation starts until it has finished.
+   * @property {string} TIME_TO_REMOVE_MEDIA_REMOTE The amount of time it takes from when the SDK receives a remote `remove media` notification until it is handled and operation completes.
+   * @property {string} TIME_TO_RESTART_MEDIA The amount of time it takes from when the `restart media` operation starts until it has finished.
+   * @property {string} TIME_TO_HOLD_LOCAL The amount of time it takes from when the local `hold` operation starts until it has finished.
+   * @property {string} TIME_TO_HOLD_REMOTE The amount of time it takes from when the SDK receives a remote `hold` notification until it is handled and operation completes.
+   * @property {string} TIME_TO_UNHOLD_LOCAL The amount of time it takes from when the local `unhold` operation starts until it has finished.
+   * @property {string} TIME_TO_UNHOLD_REMOTE The amount of time it takes from when the SDK receives a remote `unhold` notification until it is handled and operation completes.
+   * @property {string} TIME_TO_COLLECT_ICE_CANDIDATES The amount of time it takes from when the local description is set to when all ICE candidates have been collected.
    * @property {string} TIME_TO_RELAY_CANDIDATES The amount of time it takes from when the `ice collection` operation starts until each relay candidate has been recieved.
    * @property {string} TIME_TO_SEND_CUSTOM_PARAMETERS The amount of time it takes from when the `send custom parameters` operation starts until it has finished.
    * @property {string} TIME_TO_FORWARD The amount of time it takes from when the `forward call` operation starts until it has finished.
    * @property {string} TIME_TO_DIRECT_TRANSFER The amount of time it takes from when the `direct transfer` operation starts until it has finished.
+   * @property {string} TIME_TO_CONSULTATIVE_TRANSFER The amount of time it takes from when the `consultative transfer` operation starts until it has finished.
    * @property {string} TIME_TO_JOIN The amount of time it takes from when the `join call` operation starts until it has finished.
-   * @property {string} MAKE_CALL_PRE_LOCAL_SETUP The amount of time it takes from when the `make call` operation starts up until right before we set local description.
-   * @property {string} ANSWER_CALL_PRE_LOCAL_SETUP The amount of time it takes from when the `answer call` operation starts up until right before we set local description.
-   * @property {string} ANSWER_CALL_LOCAL_SETUP The amount of time it takes from when the `answer call` operation starts until it is setup locally.
    * @example
    * const report = client.call.getReport(callId)
    * const callDuration = report.metrics.find(metric => metric.type === client.call.metrics.CALL_DURATION)
    * log(`Call duration was ${callDuration.data}ms.`)
    */
-};const REPORTER_METRICS = exports.REPORTER_METRICS = {
+};const REPORT_METRICS = exports.REPORT_METRICS = {
   CALL_DURATION: 'CALL_DURATION',
+  MAKE_CALL_PRE_LOCAL_SETUP: 'MAKE_CALL_PRE_LOCAL_SETUP',
   MAKE_CALL_LOCAL_SETUP: 'MAKE_CALL_LOCAL_SETUP',
   MAKE_CALL_REMOTE_SETUP: 'MAKE_CALL_REMOTE_SETUP',
   TIME_TO_MAKE: 'TIME_TO_MAKE',
+  ANSWER_CALL_PRE_LOCAL_SETUP: 'ANSWER_CALL_PRE_LOCAL_SETUP',
+  ANSWER_CALL_LOCAL_SETUP: 'ANSWER_CALL_LOCAL_SETUP',
   TIME_TO_ANSWER: 'TIME_TO_ANSWER',
   TIME_FROM_RECEIVE_TO_ANSWER: 'TIME_FROM_RECEIVE_TO_ANSWER',
   TIME_TO_MEDIA_DURATION: 'TIME_TO_MEDIA_DURATION',
   TIME_TO_CALL_SETUP_DURATION: 'TIME_TO_CALL_SETUP_DURATION',
-  TIME_TO_IGNORE: 'TIME_TO_IGNORE', // how long it took to ignore the incoming call
-  TIME_TO_REJECT: 'TIME_TO_REJECT', // how long it took to reject an incoming call
   TIME_TO_RINGING: 'TIME_TO_RINGING',
-  TIME_TO_REMOVE_MEDIA: 'TIME_TO_REMOVE_MEDIA',
-  TIME_TO_REMOVE_MEDIA_REMOTE: 'TIME_TO_REMOVE_MEDIA_REMOTE',
+  TIME_TO_IGNORE: 'TIME_TO_IGNORE',
+  TIME_TO_REJECT: 'TIME_TO_REJECT',
   TIME_TO_ADD_MEDIA: 'TIME_TO_ADD_MEDIA',
   TIME_TO_ADD_MEDIA_REMOTE: 'TIME_TO_ADD_MEDIA_REMOTE',
+  TIME_TO_REMOVE_MEDIA: 'TIME_TO_REMOVE_MEDIA',
+  TIME_TO_REMOVE_MEDIA_REMOTE: 'TIME_TO_REMOVE_MEDIA_REMOTE',
+  TIME_TO_RESTART_MEDIA: 'TIME_TO_RESTART_MEDIA',
   TIME_TO_HOLD_LOCAL: 'TIME_TO_HOLD_LOCAL',
   TIME_TO_HOLD_REMOTE: 'TIME_TO_HOLD_REMOTE',
   TIME_TO_UNHOLD_LOCAL: 'TIME_TO_UNHOLD_LOCAL',
   TIME_TO_UNHOLD_REMOTE: 'TIME_TO_UNHOLD_REMOTE',
   TIME_TO_COLLECT_ICE_CANDIDATES: 'TIME_TO_COLLECT_ICE_CANDIDATES',
-  TIME_TO_RESTART_MEDIA: 'TIME_TO_RESTART_MEDIA',
   TIME_TO_RELAY_CANDIDATES: 'TIME_TO_RELAY_CANDIDATES',
   TIME_TO_SEND_CUSTOM_PARAMETERS: 'TIME_TO_SEND_CUSTOM_PARAMETERS',
   TIME_TO_FORWARD: 'TIME_TO_FORWARD',
   TIME_TO_DIRECT_TRANSFER: 'TIME_TO_DIRECT_TRANSFER',
   TIME_TO_CONSULTATIVE_TRANSFER: 'TIME_TO_CONSULTATIVE_TRANSFER',
-  TIME_TO_JOIN: 'TIME_TO_JOIN',
-  MAKE_CALL_PRE_LOCAL_SETUP: 'MAKE_CALL_PRE_LOCAL_SETUP',
-  ANSWER_CALL_PRE_LOCAL_SETUP: 'ANSWER_CALL_PRE_LOCAL_SETUP',
-  ANSWER_CALL_LOCAL_SETUP: 'ANSWER_CALL_LOCAL_SETUP'
+  TIME_TO_JOIN: 'TIME_TO_JOIN'
 
   /**
-   * Call operation events recorded by the call reporter.
-   *
-   * @public
-   * @static
-   * @memberof call
-   * @requires callMe
-   * @requires call
-   * @type {Object}
-   * @property {string} MAKE Starts when the make operation starts. Ends when the make operation finishes.
-   * @property {string} MAKE_ANONYMOUS Starts when the anonymous make operation starts. Ends when the anonymous make operation finishes.
-   * @property {string} ANSWER Starts when the answer operation starts. Ends when the answer operation finishes.
-   * @property {string} REJECT Starts when the reject operation starts. Ends when the reject operation finishes.
-   * @property {string} IGNORE Starts when the ignore operation starts. Ends when the ignore operation finishes.
-   * @property {string} SEND_RINGING_FEEDBACK Starts when the send ringing feedback operation starts. Ends when the ringing feedback operation finishes.
-   * @property {string} FORWARD_CALL Starts when the forward call operation starts. Ends when the forward operation finishes.
-   * @property {string} HOLD Starts when the hold operation starts. Ends when the hold operation finishes.
-   * @property {string} UNHOLD Starts when the unhold operation starts. Ends when the unhold operation finishes.
-   * @property {string} SEND_CUSTOM_PARAMETERS Starts when the send custom parameters operation starts. Ends send custom parameters operation finishes.
-   * @property {string} ADD_MEDIA Starts when the add media operation starts. Ends when the add media operation finishes.
-   * @property {string} ADD_BASIC_MEDIA Starts when the add basic media operation starts. Ends when the add basic media operation finishes.
-   * @property {string} REMOVE_MEDIA Starts when the remove media operation starts. Ends when the remove media operation finishes.
-   * @property {string} REMOVE_BASIC_MEDIA Starts when the remove basic media operation starts. Ends when the remove basic operation finishes.
-   * @property {string} GET_STATS Starts when the get stats operation starts. Ends when the get stats operation finishes..
-   * @property {string} SEND_DTMF Starts when the send DTMF operation starts. Ends when the DTMF operation finishes.
-   * @property {string} CONSULTATIVE_TRANSFER Starts when the consultative transfer operation starts. Ends when the consultative transfer operation finishes.
-   * @property {string} DIRECT_TRANSFER Starts when the direct transfer operation starts. Ends when the direct transfer operation finishes.
-   * @property {string} JOIN Starts when the join operation starts. Ends when the join operation finishes..
-   * @property {string} REPLACE_TRACK Starts when the replace track operation starts. Ends when the replace track operation finishes.
-   * @property {string} MEDIA_RESTART Starts when the media restart operation starts. Ends when the media restart operation finishes.
-   * @property {string} RESYNC Starts when the resync operation starts. Ends when the resync operation finishes.
-   * @property {string} PLAY_AUDIO Starts when the play audio operation starts. Ends when the play audio operation finishes.
-   * @property {string} GET_AVAILABLE_CODECS Starts when the get available codecs operation starts. Ends when the get available codecs operation finishes.
-   * @property {string} START_MOH Starts when the start music on hold operation starts. Ends when the start music on hold operation finishes.
-   * @property {string} STOP_MOH Starts when the stop music on hold operation starts. Ends when the stop music on hold operation finishes.
-   * @property {string} SLOW_START Starts when the slow start operation starts. Ends when the slow stop operation finishes.
-   * @property {string} END Starts when the end operation starts. Ends when the end operation finishes.
-   * @property {string} callStatusUpdateEnded Starts when the call status update ended operation starts. Ends when the call status update ended operation finishes.
+   * A mapping of call operations / notifications to events recorded by the call reporter.
    */
 };const REPORTER_OPERATION_EVENTS_MAP = exports.REPORTER_OPERATION_EVENTS_MAP = {
   // Establishment.
@@ -2305,9 +2353,11 @@ const REPORTER_REQUESTS = exports.REPORTER_REQUESTS = {
   SLOW_START: 'SLOW_START',
   END: 'END_LOCAL',
   callStatusUpdateEnded: 'END_REMOTE'
-};
 
-const ICE_COLLECTION_OPERATIONS = exports.ICE_COLLECTION_OPERATIONS = {
+  /*
+   * List of operations that trigger an ICE candidate collection.
+   */
+};const ICE_COLLECTION_OPERATIONS = exports.ICE_COLLECTION_OPERATIONS = {
   MAKE: 'MAKE',
   MAKE_ANONYMOUS: 'MAKE_ANONYMOUS',
   ANSWER: 'ANSWER',
@@ -6281,7 +6331,7 @@ exports.getVersion = getVersion;
  * for the @@ tag below with actual version value.
  */
 function getVersion() {
-  return '6.1.0-beta.1109';
+  return '6.1.0-beta.1110';
 }
 
 /***/ }),
@@ -10157,7 +10207,7 @@ function createMakeResponse(container) {
     const callReport = CallReporter.getReport(call.id);
     // Start the process reseponse event
     const operationEvent = callReport.getEvent(call.localOp.eventId);
-    const processResponseEvent = operationEvent.addEvent(_constants2.REPORTER_EVENTS.PROCESS_RESPONSE);
+    const processResponseEvent = operationEvent.addEvent(_constants2.REPORT_EVENTS.PROCESS_RESPONSE);
     processResponseEvent.addData('operation', _constants2.REPORTER_OPERATION_EVENTS_MAP.MAKE);
 
     // Handle the remote answer SDP.
@@ -41133,8 +41183,8 @@ function createAPI(container) {
    *
    * The report and some events may have additional data included in a data property.
    *
-   * See event documentation {@link REPORTER_OPERATION_EVENTS_MAP here}.
-   * See metrics documentation {@link REPORTER_METRICS here}.
+   * See event documentation {@link call.reportEvents here}.
+   * See metrics documentation {@link call.metrics here}.
    *
    * @method getReport
    * @public
@@ -41257,9 +41307,9 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = createAPI;
 
-var _constants = __webpack_require__(6);
+var _constants = __webpack_require__(13);
 
-var _constants2 = __webpack_require__(13);
+var _constants2 = __webpack_require__(6);
 
 /**
  * Call Constant APIs factory function.
@@ -41314,7 +41364,7 @@ function createAPI() {
    *    }
    * })
    */
-  const states = _constants.CALL_STATES;
+  const states = _constants2.CALL_STATES;
 
   /**
    * Possible states that a Call's media connection can be in.
@@ -41396,14 +41446,18 @@ function createAPI() {
    *   }
    * }
    */
-  const mediaConnectionStates = _constants.CALL_MEDIA_CONNECTION_STATES;
+  const mediaConnectionStates = _constants2.CALL_MEDIA_CONNECTION_STATES;
 
   /* Documentation attached to the constant definitions. */
-  const metrics = _constants2.REPORTER_METRICS;
+  const reportEvents = _constants.REPORT_EVENTS;
+
+  /* Documentation attached to the constant definitions. */
+  const metrics = _constants.REPORT_METRICS;
 
   return {
     states,
     mediaConnectionStates,
+    reportEvents,
     metrics
   };
 }
@@ -44022,7 +44076,7 @@ function establishRequests(container) {
 
     // Before sending the REST request, mark it's start by creating a sub-event
     // within the timeline of its parent operational event
-    const requestEvent = operationEvent.addEvent(_constants.REPORTER_EVENTS.REST_REQUEST);
+    const requestEvent = operationEvent.addEvent(_constants.REPORT_EVENTS.REST_REQUEST);
     // Add some metadata to it
     requestEvent.addData('requestType', _constants.REPORTER_REQUESTS.CREATE_SESSION);
     const response = await requestUtils.linkCallRequest(sendRequest, requestInfo, fetchInfo);
@@ -44069,7 +44123,7 @@ function establishRequests(container) {
       }
     });
 
-    const requestEvent = operationEvent.addEvent(_constants.REPORTER_EVENTS.REST_REQUEST);
+    const requestEvent = operationEvent.addEvent(_constants.REPORT_EVENTS.REST_REQUEST);
     // Add some metadata to it
     requestEvent.addData('requestType', _constants.REPORTER_REQUESTS.ANSWER_SESSION);
     const response = await requestUtils.linkCallRequest(sendRequest, requestInfo, (0, _extends3.default)({}, options, info));
@@ -44132,7 +44186,7 @@ function establishRequests(container) {
       }
     });
 
-    const requestEvent = operationEvent.addEvent(_constants.REPORTER_EVENTS.REST_REQUEST);
+    const requestEvent = operationEvent.addEvent(_constants.REPORT_EVENTS.REST_REQUEST);
     // Add some metadata to it
     requestEvent.addData('requestType', _constants.REPORTER_REQUESTS.REJECT_SESSION);
     const response = await requestUtils.linkCallRequest(sendRequest, requestInfo, options);
@@ -44195,7 +44249,7 @@ function establishRequests(container) {
       }
     });
 
-    const requestEvent = operationEvent.addEvent(_constants.REPORTER_EVENTS.REST_REQUEST);
+    const requestEvent = operationEvent.addEvent(_constants.REPORT_EVENTS.REST_REQUEST);
     // Add some metadata to it
     requestEvent.addData('requestType', _constants.REPORTER_REQUESTS.FORWARD_SESSION);
     const response = await requestUtils.linkCallRequest(sendRequest, requestInfo, options);
@@ -44236,7 +44290,7 @@ function establishRequests(container) {
       responseType: 'none'
     };
 
-    const requestEvent = operationEvent.addEvent(_constants.REPORTER_EVENTS.REST_REQUEST);
+    const requestEvent = operationEvent.addEvent(_constants.REPORT_EVENTS.REST_REQUEST);
     // Add some metadata to it
     requestEvent.addData('requestType', _constants.REPORTER_REQUESTS.END_SESSION);
     const response = await requestUtils.linkCallRequest(sendRequest, requestInfo, (0, _extends3.default)({}, options, callInfo));
@@ -44628,7 +44682,7 @@ function negotiationRequests(container) {
 
     // Before sending the REST request, mark it's start by creating a sub-event
     // within the timeline of its parent operational event
-    const requestEvent = operationEvent.addEvent(_constants.REPORTER_EVENTS.REST_REQUEST);
+    const requestEvent = operationEvent.addEvent(_constants.REPORT_EVENTS.REST_REQUEST);
     // Add some metadata to it
     requestEvent.addData('requestType', _constants.REPORTER_REQUESTS.UPDATE_SESSION);
 
@@ -46335,7 +46389,7 @@ function incomingCallOperation(container) {
     const callReport = CallReporter.getReport(callId);
 
     // Get the RECEIVE_CALL event from the report
-    const receiveCallEvent = callReport.findLastOngoingEvent(_constants3.REPORTER_EVENTS.RECEIVE_CALL);
+    const receiveCallEvent = callReport.findLastOngoingEvent(_constants3.REPORT_EVENTS.RECEIVE_CALL);
 
     const log = logManager.getLogger('CALL', callId);
 
@@ -46700,7 +46754,7 @@ function setupOutgoingSessionOperation(container) {
      * Create the local SDP offer, run it through any provided SDP handlers,
      *    then set it as the Session's local description.
      */
-    const setLocalDescriptionEvent = operationEvent.addEvent(_constants.REPORTER_EVENTS.SET_LOCAL_DESCRIPTION);
+    const setLocalDescriptionEvent = operationEvent.addEvent(_constants.REPORT_EVENTS.SET_LOCAL_DESCRIPTION);
     setLocalDescriptionEvent.addData('operation', _constants.REPORTER_OPERATION_EVENTS_MAP.MAKE);
     try {
       let offer = await session.createOffer();
@@ -47276,7 +47330,7 @@ function createSlowAnswerResponse(container) {
     const callReport = CallReporter.getReport(call.id);
     // Start the process reseponse event
     const operationEvent = callReport.getEvent(call.localOp.eventId);
-    const processResponseEvent = operationEvent.addEvent(_constants2.REPORTER_EVENTS.PROCESS_RESPONSE);
+    const processResponseEvent = operationEvent.addEvent(_constants2.REPORT_EVENTS.PROCESS_RESPONSE);
     // Add two metadata properties providing more context to this event.
     processResponseEvent.addData('operation', _constants2.REPORTER_OPERATION_EVENTS_MAP.ANSWER);
     processResponseEvent.addData('isSlowStart', call.isSlowStart);
@@ -47471,7 +47525,7 @@ function answerWebrtcSessionOperation(container) {
      */
     let answer, callConfigOptions;
 
-    const setLocalDescriptionEvent = answerEvent.addEvent(_constants.REPORTER_EVENTS.SET_LOCAL_DESCRIPTION);
+    const setLocalDescriptionEvent = answerEvent.addEvent(_constants.REPORT_EVENTS.SET_LOCAL_DESCRIPTION);
     setLocalDescriptionEvent.addData('operation', _constants.REPORTER_OPERATION_EVENTS_MAP.ANSWER);
     try {
       answer = await session.createAnswer();
@@ -48328,7 +48382,7 @@ function webrtcAddMediaOperation(container) {
     // TODO: Make sure the session is in the correct signaling state to start a
     //    renegotiation operation.
     const callConfigOptions = (0, _selectors.getOptions)(context.getState());
-    const setLocalDescriptionEvent = operationEvent.addEvent(_constants.REPORTER_EVENTS.SET_LOCAL_DESCRIPTION);
+    const setLocalDescriptionEvent = operationEvent.addEvent(_constants.REPORT_EVENTS.SET_LOCAL_DESCRIPTION);
     setLocalDescriptionEvent.addData('operation', _constants.REPORTER_OPERATION_EVENTS_MAP.ADD_MEDIA);
     let newSdp;
     try {
@@ -48636,7 +48690,7 @@ function createAddMediaResponse(container) {
     const callReport = CallReporter.getReport(call.id);
     // Start the process reseponse event
     const operationEvent = callReport.getEvent(call.localOp.eventId);
-    const processResponseEvent = operationEvent.addEvent(_constants.REPORTER_EVENTS.PROCESS_RESPONSE);
+    const processResponseEvent = operationEvent.addEvent(_constants.REPORT_EVENTS.PROCESS_RESPONSE);
     processResponseEvent.addData('operation', _constants.REPORTER_OPERATION_EVENTS_MAP.ADD_MEDIA);
 
     // Handle the remote answer SDP.
@@ -49039,7 +49093,7 @@ function createHoldResponse(container) {
     const callReport = CallReporter.getReport(call.id);
     // Start the process reseponse event
     const operationEvent = callReport.getEvent(call.localOp.eventId);
-    const processResponseEvent = operationEvent.addEvent(_constants.REPORTER_EVENTS.PROCESS_RESPONSE);
+    const processResponseEvent = operationEvent.addEvent(_constants.REPORT_EVENTS.PROCESS_RESPONSE);
     processResponseEvent.addData('operation', _constants.REPORTER_OPERATION_EVENTS_MAP.HOLD);
 
     // Handle the remote answer SDP.
@@ -49455,7 +49509,7 @@ function createUnholdResponse(container) {
     const callReport = CallReporter.getReport(call.id);
     // Start the process reseponse event
     const operationEvent = callReport.getEvent(call.localOp.eventId);
-    const processResponseEvent = operationEvent.addEvent(_constants.REPORTER_EVENTS.PROCESS_RESPONSE);
+    const processResponseEvent = operationEvent.addEvent(_constants.REPORT_EVENTS.PROCESS_RESPONSE);
     processResponseEvent.addData('operation', _constants.REPORTER_OPERATION_EVENTS_MAP.UNHOLD);
 
     // Handle the remote answer SDP.
@@ -49914,7 +49968,7 @@ function webrtcRemoveMediaOperation(container) {
     // TODO: Make sure the session is in the correct signaling state to start a
     //    renegotiation operation.
     const callConfigOptions = (0, _selectors.getOptions)(context.getState());
-    const setLocalDescriptionEvent = operationEvent.addEvent(_constants.REPORTER_EVENTS.SET_LOCAL_DESCRIPTION);
+    const setLocalDescriptionEvent = operationEvent.addEvent(_constants.REPORT_EVENTS.SET_LOCAL_DESCRIPTION);
     setLocalDescriptionEvent.addData('operation', _constants.REPORTER_OPERATION_EVENTS_MAP.REMOVE_MEDIA);
     let newSdp;
     try {
@@ -50176,7 +50230,7 @@ function createRemoveMediaResponse(container) {
     const callReport = CallReporter.getReport(call.id);
     // Start the process reseponse event
     const operationEvent = callReport.getEvent(call.localOp.eventId);
-    const processResponseEvent = operationEvent.addEvent(_constants.REPORTER_EVENTS.PROCESS_RESPONSE);
+    const processResponseEvent = operationEvent.addEvent(_constants.REPORT_EVENTS.PROCESS_RESPONSE);
     processResponseEvent.addData('operation', _constants.REPORTER_OPERATION_EVENTS_MAP.REMOVE_MEDIA);
 
     // Handle the remote answer SDP.
@@ -51250,7 +51304,7 @@ function createMediaRestartResponse(container) {
     const callReport = CallReporter.getReport(call.id);
     // Start the process reseponse event
     const operationEvent = callReport.getEvent(call.localOp.eventId);
-    const processResponseEvent = operationEvent.addEvent(_constants.REPORTER_EVENTS.PROCESS_RESPONSE);
+    const processResponseEvent = operationEvent.addEvent(_constants.REPORT_EVENTS.PROCESS_RESPONSE);
     processResponseEvent.addData('operation', _constants.REPORTER_OPERATION_EVENTS_MAP.MEDIA_RESTART);
 
     const mediaState = (0, _state.getMediaState)(call);
@@ -52254,21 +52308,21 @@ function callIceCollectionCheckOperation(container) {
     const latestMainEvent = callReport.findLastOngoingEvent((0, _values2.default)(_constants2.ICE_COLLECTION_OPERATIONS));
     let iceCollectionEvent;
     if (latestMainEvent) {
-      const setLocalDescEvent = latestMainEvent.timeline.find(event => event.type === _constants2.REPORTER_EVENTS.SET_LOCAL_DESCRIPTION);
+      const setLocalDescEvent = latestMainEvent.timeline.find(event => event.type === _constants2.REPORT_EVENTS.SET_LOCAL_DESCRIPTION);
       if (setLocalDescEvent) {
         const relayCandidates = iceCollectionInfo.iceCandidates.filter(candidate => candidate.component === 'rtp' && candidate.type === 'relay');
 
         // Get or create the ice collection reporter event if it doesn't already exist
-        iceCollectionEvent = setLocalDescEvent.timeline.find(event => event.type === _constants2.REPORTER_EVENTS.ICE_COLLECTION);
+        iceCollectionEvent = setLocalDescEvent.timeline.find(event => event.type === _constants2.REPORT_EVENTS.ICE_COLLECTION);
         if (!iceCollectionEvent) {
-          iceCollectionEvent = setLocalDescEvent.addEvent(_constants2.REPORTER_EVENTS.ICE_COLLECTION);
+          iceCollectionEvent = setLocalDescEvent.addEvent(_constants2.REPORT_EVENTS.ICE_COLLECTION);
         }
         if (relayCandidates.length > 0) {
           const eventData = iceCollectionEvent.getData('relayCandidates') || [];
 
           relayCandidates.forEach(candidate => {
             if (!eventData.includes(candidate)) {
-              const relayCollectedEvent = iceCollectionEvent.addEvent(_constants2.REPORTER_EVENTS.RELAY_CANDIDATE_COLLECTED);
+              const relayCollectedEvent = iceCollectionEvent.addEvent(_constants2.REPORT_EVENTS.RELAY_CANDIDATE_COLLECTED);
               relayCollectedEvent.addData('address', candidate.address);
               relayCollectedEvent.addData('port', candidate.port);
               relayCollectedEvent.endEvent();
@@ -53523,7 +53577,7 @@ function callStatusRingingOperation(container) {
 
     const callReport = CallReporter.getReport(call.id);
     const operationEvent = callReport.getEvent(call.localOp.eventId);
-    const receiveRingingEvent = operationEvent.addEvent(_constants2.REPORTER_EVENTS.REMOTE_RINGING);
+    const receiveRingingEvent = operationEvent.addEvent(_constants2.REPORT_EVENTS.REMOTE_RINGING);
 
     // Dispatch a custom parameters received action/event if any custom parameters were
     //    received as part of the notification
@@ -56965,7 +57019,7 @@ function createLocalOperation(container) {
     const call = (0, _selectors.getCallById)(context.getState(), callId);
     const callReport = CallReporter.getReport(callId);
     const operationEvent = callReport.getEvent(call.localOp.eventId);
-    const getUserMediaEvent = operationEvent.addEvent(_constants.REPORTER_EVENTS.GET_USER_MEDIA);
+    const getUserMediaEvent = operationEvent.addEvent(_constants.REPORT_EVENTS.GET_USER_MEDIA);
     getUserMediaEvent.addData('mediaConstraints', mediaConstraints);
 
     const medias = [];
@@ -57094,7 +57148,7 @@ function generateOfferOperation(container) {
     const callReport = CallReporter.getReport(call.id);
     const eventId = call.localOp ? call.localOp.eventId : call.remoteOp.eventId;
     const operationEvent = callReport.getEvent(eventId);
-    const setLocalDescriptionEvent = operationEvent.addEvent(_constants.REPORTER_EVENTS.SET_LOCAL_DESCRIPTION);
+    const setLocalDescriptionEvent = operationEvent.addEvent(_constants.REPORT_EVENTS.SET_LOCAL_DESCRIPTION);
     setLocalDescriptionEvent.addData('operation', operationEvent.type);
     /*
      * Create the local SDP offer, run it through any provided SDP handlers,
@@ -57220,7 +57274,7 @@ function handleOfferOperation(container) {
     const callReport = CallReporter.getReport(targetCall.id);
 
     const operationEvent = callReport.getEvent(targetCall.remoteOp.eventId);
-    const setRemoteDescriptionEvent = operationEvent.addEvent(_constants.REPORTER_EVENTS.SET_REMOTE_DESCRIPTION);
+    const setRemoteDescriptionEvent = operationEvent.addEvent(_constants.REPORT_EVENTS.SET_REMOTE_DESCRIPTION);
 
     let answer;
     let setLocalDescriptionEvent;
@@ -57237,7 +57291,7 @@ function handleOfferOperation(container) {
       }
       setRemoteDescriptionEvent.endEvent();
 
-      setLocalDescriptionEvent = operationEvent.addEvent(_constants.REPORTER_EVENTS.SET_LOCAL_DESCRIPTION);
+      setLocalDescriptionEvent = operationEvent.addEvent(_constants.REPORT_EVENTS.SET_LOCAL_DESCRIPTION);
       setLocalDescriptionEvent.addData('operation', operationEvent.type);
 
       /*
@@ -57851,7 +57905,7 @@ function callManager(container) {
 
     const isSlowStart = !params.sdp;
     const callReport = CallReporter.createReport('CALL', params.callId);
-    const notificationEvent = callReport.addEvent(_constants3.REPORTER_EVENTS.RECEIVE_CALL);
+    const notificationEvent = callReport.addEvent(_constants3.REPORT_EVENTS.RECEIVE_CALL);
 
     let mediaOffered = null;
     if (!isSlowStart) {
@@ -58411,12 +58465,12 @@ function durationHandler(metric, startEvents, autoUnregister = true) {
       // PROCESS_RESPONSE event is triggered as part of many SDK operations and on both sides of the call.
       // But we don't want to add a 'MAKE_CALL_REMOTE_SETUP' metric for the callee side,
       // because it only makes sense for caller side.
-      if (event.type === _constants.REPORTER_EVENTS.PROCESS_RESPONSE && metric === 'MAKE_CALL_REMOTE_SETUP' && event.getData('operation') !== 'MAKE') {
+      if (event.type === _constants.REPORT_EVENTS.PROCESS_RESPONSE && metric === 'MAKE_CALL_REMOTE_SETUP' && event.getData('operation') !== 'MAKE') {
         return false;
       }
 
       // Special-case: For ice collection time, add the operation that triggered the ice collection
-      if (metric === _constants.REPORTER_METRICS.TIME_TO_COLLECT_ICE_CANDIDATES) {
+      if (metric === _constants.REPORT_METRICS.TIME_TO_COLLECT_ICE_CANDIDATES) {
         callReport.addMetric(metric, {
           operation: startEvent.getData('operation'), // Get the operation from the set local desc event data
           duration: event.end - startEvent.start
@@ -58500,13 +58554,13 @@ function joinedCallDurationHandler(metric, startEvents) {
 function relayCandidatesHandler() {
   const collectedCandidates = [];
   return (callReport, event) => {
-    if (event.type === _constants.REPORTER_EVENTS.RELAY_CANDIDATE_COLLECTED) {
+    if (event.type === _constants.REPORT_EVENTS.RELAY_CANDIDATE_COLLECTED) {
       const eventData = event.getData();
       const collectedCandidateInformation = (0, _extends3.default)({}, eventData, {
         duration: event.start // The candidate was collected by the time this event was added
       });
       collectedCandidates.push(collectedCandidateInformation);
-    } else if (event.type === _constants.REPORTER_EVENTS.SET_LOCAL_DESCRIPTION) {
+    } else if (event.type === _constants.REPORT_EVENTS.SET_LOCAL_DESCRIPTION) {
       // Update the duration of all the collected candidates
       collectedCandidates.map(candidateInfo => {
         candidateInfo.duration = candidateInfo.duration - event.start;
@@ -58514,7 +58568,7 @@ function relayCandidatesHandler() {
       });
       // Only need to add metric if there will be any data...
       if (collectedCandidates.length) {
-        callReport.addMetric(_constants.REPORTER_METRICS.TIME_TO_RELAY_CANDIDATES, {
+        callReport.addMetric(_constants.REPORT_METRICS.TIME_TO_RELAY_CANDIDATES, {
           operation: event.getData('operation'),
           candidates: [...collectedCandidates]
         });
@@ -58527,23 +58581,23 @@ function relayCandidatesHandler() {
 // Generic function to register all metric handlers to the call reporter
 function registerAllMetricHandlers(callReport) {
   // Register the call duration handler
-  callReport.registerMetricHandler(_constants.REPORTER_METRICS.CALL_DURATION, [_constants.REPORTER_EVENTS.END_LOCAL, _constants.REPORTER_EVENTS.END_REMOTE, _constants.REPORTER_EVENTS.JOIN, _constants.REPORTER_EVENTS.DIRECT_TRANSFER, _constants.REPORTER_EVENTS.CONSULTATIVE_TRANSFER], joinedCallDurationHandler(_constants.REPORTER_METRICS.CALL_DURATION, [_constants.REPORTER_EVENTS.MAKE, _constants.REPORTER_EVENTS.RECEIVE_CALL, _constants.REPORTER_EVENTS.JOIN]));
+  callReport.registerMetricHandler(_constants.REPORT_METRICS.CALL_DURATION, [_constants.REPORT_EVENTS.END_LOCAL, _constants.REPORT_EVENTS.END_REMOTE, _constants.REPORT_EVENTS.JOIN, _constants.REPORT_EVENTS.DIRECT_TRANSFER, _constants.REPORT_EVENTS.CONSULTATIVE_TRANSFER], joinedCallDurationHandler(_constants.REPORT_METRICS.CALL_DURATION, [_constants.REPORT_EVENTS.MAKE, _constants.REPORT_EVENTS.RECEIVE_CALL, _constants.REPORT_EVENTS.JOIN]));
 
   // Register the local-setup handler
-  callReport.registerMetricHandler(_constants.REPORTER_METRICS.MAKE_CALL_LOCAL_SETUP, [_constants.REPORTER_EVENTS.SET_LOCAL_DESCRIPTION], durationHandler(_constants.REPORTER_METRICS.MAKE_CALL_LOCAL_SETUP, [_constants.REPORTER_EVENTS.MAKE]));
+  callReport.registerMetricHandler(_constants.REPORT_METRICS.MAKE_CALL_LOCAL_SETUP, [_constants.REPORT_EVENTS.SET_LOCAL_DESCRIPTION], durationHandler(_constants.REPORT_METRICS.MAKE_CALL_LOCAL_SETUP, [_constants.REPORT_EVENTS.MAKE]));
 
   // Register the handler for collecting ice candidates during the local-setup.
   // The start event will be SET_LOCAL_DESCRIPTION and the metric will be saved when
   // its sub-event (i.e. ICE_COLLECTION) has ended.
   // Since SET_LOCAL_DESCRIPTION event occurs on both caller & callee, its sub-event: ICE_COLLECTION
   // will also be available for each party.
-  callReport.registerMetricHandler(_constants.REPORTER_METRICS.TIME_TO_COLLECT_ICE_CANDIDATES, [_constants.REPORTER_EVENTS.ICE_COLLECTION], durationHandler(_constants.REPORTER_METRICS.TIME_TO_COLLECT_ICE_CANDIDATES, [_constants.REPORTER_EVENTS.SET_LOCAL_DESCRIPTION], false));
+  callReport.registerMetricHandler(_constants.REPORT_METRICS.TIME_TO_COLLECT_ICE_CANDIDATES, [_constants.REPORT_EVENTS.ICE_COLLECTION], durationHandler(_constants.REPORT_METRICS.TIME_TO_COLLECT_ICE_CANDIDATES, [_constants.REPORT_EVENTS.SET_LOCAL_DESCRIPTION], false));
 
   // Register the remote-setup handler
-  callReport.registerMetricHandler(_constants.REPORTER_METRICS.MAKE_CALL_REMOTE_SETUP, [_constants.REPORTER_EVENTS.PROCESS_RESPONSE], durationHandler(_constants.REPORTER_METRICS.MAKE_CALL_REMOTE_SETUP, [_constants.REPORTER_EVENTS.REST_REQUEST]));
+  callReport.registerMetricHandler(_constants.REPORT_METRICS.MAKE_CALL_REMOTE_SETUP, [_constants.REPORT_EVENTS.PROCESS_RESPONSE], durationHandler(_constants.REPORT_METRICS.MAKE_CALL_REMOTE_SETUP, [_constants.REPORT_EVENTS.REST_REQUEST]));
 
   // Register the time-to-ringing handler
-  callReport.registerMetricHandler(_constants.REPORTER_METRICS.TIME_TO_RINGING, [_constants.REPORTER_EVENTS.REMOTE_RINGING], durationHandler(_constants.REPORTER_METRICS.TIME_TO_RINGING, [_constants.REPORTER_EVENTS.MAKE]));
+  callReport.registerMetricHandler(_constants.REPORT_METRICS.TIME_TO_RINGING, [_constants.REPORT_EVENTS.REMOTE_RINGING], durationHandler(_constants.REPORT_METRICS.TIME_TO_RINGING, [_constants.REPORT_EVENTS.MAKE]));
 
   /*
    * TIME_FROM_RECEIVE_TO_ANSWER
@@ -58555,25 +58609,25 @@ function registerAllMetricHandlers(callReport) {
    * This metric is for the special-case of incoming calls being auto-answered.
    * This is the sum of TIME_TO_CALL_SETUP_DURATION and the answer REST request duration.
    */
-  callReport.registerMetricHandler(_constants.REPORTER_METRICS.TIME_FROM_RECEIVE_TO_ANSWER, _constants.REPORTER_OPERATION_EVENTS_MAP.ANSWER, durationHandler(_constants.REPORTER_METRICS.TIME_FROM_RECEIVE_TO_ANSWER, [_constants.REPORTER_EVENTS.RECEIVE_CALL]));
+  callReport.registerMetricHandler(_constants.REPORT_METRICS.TIME_FROM_RECEIVE_TO_ANSWER, _constants.REPORT_EVENTS.ANSWER, durationHandler(_constants.REPORT_METRICS.TIME_FROM_RECEIVE_TO_ANSWER, [_constants.REPORT_EVENTS.RECEIVE_CALL]));
 
   // Call time to media duration (answer operation starts until media is connected)
-  callReport.registerMetricHandler(_constants.REPORTER_METRICS.TIME_TO_MEDIA_DURATION, _constants.REPORTER_EVENTS.SET_LOCAL_DESCRIPTION, durationHandler(_constants.REPORTER_METRICS.TIME_TO_MEDIA_DURATION, [_constants.REPORTER_OPERATION_EVENTS_MAP.ANSWER]));
+  callReport.registerMetricHandler(_constants.REPORT_METRICS.TIME_TO_MEDIA_DURATION, _constants.REPORT_EVENTS.SET_LOCAL_DESCRIPTION, durationHandler(_constants.REPORT_METRICS.TIME_TO_MEDIA_DURATION, [_constants.REPORT_EVENTS.ANSWER]));
 
   // Time to setup incoming call (incoming call notification until media is connected)
-  callReport.registerMetricHandler(_constants.REPORTER_METRICS.TIME_TO_CALL_SETUP_DURATION, _constants.REPORTER_EVENTS.SET_LOCAL_DESCRIPTION, durationHandler(_constants.REPORTER_METRICS.TIME_TO_CALL_SETUP_DURATION, [_constants.REPORTER_EVENTS.RECEIVE_CALL]));
+  callReport.registerMetricHandler(_constants.REPORT_METRICS.TIME_TO_CALL_SETUP_DURATION, _constants.REPORT_EVENTS.SET_LOCAL_DESCRIPTION, durationHandler(_constants.REPORT_METRICS.TIME_TO_CALL_SETUP_DURATION, [_constants.REPORT_EVENTS.RECEIVE_CALL]));
 
   // Time to setup incoming call (answer call operation until media is connected)
-  callReport.registerMetricHandler(_constants.REPORTER_METRICS.ANSWER_CALL_LOCAL_SETUP, _constants.REPORTER_EVENTS.SET_LOCAL_DESCRIPTION, durationHandler(_constants.REPORTER_METRICS.ANSWER_CALL_LOCAL_SETUP, [_constants.REPORTER_OPERATION_EVENTS_MAP.ANSWER]));
+  callReport.registerMetricHandler(_constants.REPORT_METRICS.ANSWER_CALL_LOCAL_SETUP, _constants.REPORT_EVENTS.SET_LOCAL_DESCRIPTION, durationHandler(_constants.REPORT_METRICS.ANSWER_CALL_LOCAL_SETUP, [_constants.REPORT_EVENTS.ANSWER]));
 
   // Register the time-to-relay-candidates handler
-  callReport.registerMetricHandler(_constants.REPORTER_METRICS.TIME_TO_RELAY_CANDIDATES, [_constants.REPORTER_EVENTS.SET_LOCAL_DESCRIPTION, _constants.REPORTER_EVENTS.RELAY_CANDIDATE_COLLECTED], relayCandidatesHandler());
+  callReport.registerMetricHandler(_constants.REPORT_METRICS.TIME_TO_RELAY_CANDIDATES, [_constants.REPORT_EVENTS.SET_LOCAL_DESCRIPTION, _constants.REPORT_EVENTS.RELAY_CANDIDATE_COLLECTED], relayCandidatesHandler());
 
   // Register the answer-call-pre-local-setup handler
-  callReport.registerMetricHandler(_constants.REPORTER_METRICS.ANSWER_CALL_PRE_LOCAL_SETUP, _constants.REPORTER_EVENTS.SET_LOCAL_DESCRIPTION, callPreSDPHandler(_constants.REPORTER_METRICS.ANSWER_CALL_PRE_LOCAL_SETUP, [_constants.REPORTER_OPERATION_EVENTS_MAP.ANSWER]));
+  callReport.registerMetricHandler(_constants.REPORT_METRICS.ANSWER_CALL_PRE_LOCAL_SETUP, _constants.REPORT_EVENTS.SET_LOCAL_DESCRIPTION, callPreSDPHandler(_constants.REPORT_METRICS.ANSWER_CALL_PRE_LOCAL_SETUP, [_constants.REPORT_EVENTS.ANSWER]));
 
   // Register the make-call-pre-local-setup handler
-  callReport.registerMetricHandler(_constants.REPORTER_METRICS.MAKE_CALL_PRE_LOCAL_SETUP, _constants.REPORTER_EVENTS.SET_LOCAL_DESCRIPTION, callPreSDPHandler(_constants.REPORTER_METRICS.MAKE_CALL_PRE_LOCAL_SETUP, [_constants.REPORTER_OPERATION_EVENTS_MAP.MAKE]));
+  callReport.registerMetricHandler(_constants.REPORT_METRICS.MAKE_CALL_PRE_LOCAL_SETUP, _constants.REPORT_EVENTS.SET_LOCAL_DESCRIPTION, callPreSDPHandler(_constants.REPORT_METRICS.MAKE_CALL_PRE_LOCAL_SETUP, [_constants.REPORT_EVENTS.MAKE]));
 
   /*
    * **************************
@@ -58583,91 +58637,91 @@ function registerAllMetricHandlers(callReport) {
    */
 
   // Time to reject incoming call
-  callReport.registerMetricHandler(_constants.REPORTER_METRICS.TIME_TO_REJECT, [_constants.REPORTER_EVENTS.REJECT], (report, event) => {
-    callReport.addMetric(_constants.REPORTER_METRICS.TIME_TO_REJECT, event.end - event.start);
+  callReport.registerMetricHandler(_constants.REPORT_METRICS.TIME_TO_REJECT, [_constants.REPORT_EVENTS.REJECT], (report, event) => {
+    callReport.addMetric(_constants.REPORT_METRICS.TIME_TO_REJECT, event.end - event.start);
   });
 
   // Register the time-to-ignore handler
-  callReport.registerMetricHandler(_constants.REPORTER_METRICS.TIME_TO_IGNORE, [_constants.REPORTER_EVENTS.IGNORE], (report, event) => {
-    callReport.addMetric(_constants.REPORTER_METRICS.TIME_TO_IGNORE, event.end - event.start);
+  callReport.registerMetricHandler(_constants.REPORT_METRICS.TIME_TO_IGNORE, [_constants.REPORT_EVENTS.IGNORE], (report, event) => {
+    callReport.addMetric(_constants.REPORT_METRICS.TIME_TO_IGNORE, event.end - event.start);
   });
 
   // Register the time-to-add-media handler
-  callReport.registerMetricHandler(_constants.REPORTER_METRICS.TIME_TO_ADD_MEDIA, [_constants.REPORTER_EVENTS.ADD_MEDIA, _constants.REPORTER_EVENTS.ADD_BASIC_MEDIA], (report, event) => {
-    callReport.addMetric(_constants.REPORTER_METRICS.TIME_TO_ADD_MEDIA, event.end - event.start);
+  callReport.registerMetricHandler(_constants.REPORT_METRICS.TIME_TO_ADD_MEDIA, [_constants.REPORT_EVENTS.ADD_MEDIA, _constants.REPORT_EVENTS.ADD_BASIC_MEDIA], (report, event) => {
+    callReport.addMetric(_constants.REPORT_METRICS.TIME_TO_ADD_MEDIA, event.end - event.start);
   });
 
   // Register the time-to-add-media-remote handler
-  callReport.registerMetricHandler(_constants.REPORTER_METRICS.TIME_TO_ADD_MEDIA_REMOTE, [_constants.REPORTER_EVENTS.ADD_MEDIA_REMOTE], (report, event) => {
-    callReport.addMetric(_constants.REPORTER_METRICS.TIME_TO_ADD_MEDIA_REMOTE, event.end - event.start);
+  callReport.registerMetricHandler(_constants.REPORT_METRICS.TIME_TO_ADD_MEDIA_REMOTE, [_constants.REPORT_EVENTS.ADD_MEDIA_REMOTE], (report, event) => {
+    callReport.addMetric(_constants.REPORT_METRICS.TIME_TO_ADD_MEDIA_REMOTE, event.end - event.start);
   });
 
   // Register the time-to-hold-local handler
-  callReport.registerMetricHandler(_constants.REPORTER_METRICS.TIME_TO_HOLD_LOCAL, [_constants.REPORTER_EVENTS.HOLD_LOCAL], (report, event) => {
-    callReport.addMetric(_constants.REPORTER_METRICS.TIME_TO_HOLD_LOCAL, event.end - event.start);
+  callReport.registerMetricHandler(_constants.REPORT_METRICS.TIME_TO_HOLD_LOCAL, [_constants.REPORT_EVENTS.HOLD_LOCAL], (report, event) => {
+    callReport.addMetric(_constants.REPORT_METRICS.TIME_TO_HOLD_LOCAL, event.end - event.start);
   });
 
   // Register the time-to-hold-remote handler
-  callReport.registerMetricHandler(_constants.REPORTER_METRICS.TIME_TO_HOLD_REMOTE, [_constants.REPORTER_EVENTS.HOLD_REMOTE], (report, event) => {
-    callReport.addMetric(_constants.REPORTER_METRICS.TIME_TO_HOLD_REMOTE, event.end - event.start);
+  callReport.registerMetricHandler(_constants.REPORT_METRICS.TIME_TO_HOLD_REMOTE, [_constants.REPORT_EVENTS.HOLD_REMOTE], (report, event) => {
+    callReport.addMetric(_constants.REPORT_METRICS.TIME_TO_HOLD_REMOTE, event.end - event.start);
   });
 
   // Register the time-to-unhold-local handler
-  callReport.registerMetricHandler(_constants.REPORTER_METRICS.TIME_TO_UNHOLD_LOCAL, [_constants.REPORTER_EVENTS.UNHOLD_LOCAL], (report, event) => {
-    callReport.addMetric(_constants.REPORTER_METRICS.TIME_TO_UNHOLD_LOCAL, event.end - event.start);
+  callReport.registerMetricHandler(_constants.REPORT_METRICS.TIME_TO_UNHOLD_LOCAL, [_constants.REPORT_EVENTS.UNHOLD_LOCAL], (report, event) => {
+    callReport.addMetric(_constants.REPORT_METRICS.TIME_TO_UNHOLD_LOCAL, event.end - event.start);
   });
 
   // Register the time-to-unhold-remote handler
-  callReport.registerMetricHandler(_constants.REPORTER_METRICS.TIME_TO_UNHOLD_REMOTE, [_constants.REPORTER_EVENTS.UNHOLD_REMOTE], (report, event) => {
-    callReport.addMetric(_constants.REPORTER_METRICS.TIME_TO_UNHOLD_REMOTE, event.end - event.start);
+  callReport.registerMetricHandler(_constants.REPORT_METRICS.TIME_TO_UNHOLD_REMOTE, [_constants.REPORT_EVENTS.UNHOLD_REMOTE], (report, event) => {
+    callReport.addMetric(_constants.REPORT_METRICS.TIME_TO_UNHOLD_REMOTE, event.end - event.start);
   });
 
   // Register the time-to-remove-media handler
-  callReport.registerMetricHandler(_constants.REPORTER_METRICS.TIME_TO_REMOVE_MEDIA, [_constants.REPORTER_EVENTS.REMOVE_MEDIA, _constants.REPORTER_EVENTS.REMOVE_BASIC_MEDIA], (report, event) => {
-    callReport.addMetric(_constants.REPORTER_METRICS.TIME_TO_REMOVE_MEDIA, event.end - event.start);
+  callReport.registerMetricHandler(_constants.REPORT_METRICS.TIME_TO_REMOVE_MEDIA, [_constants.REPORT_EVENTS.REMOVE_MEDIA, _constants.REPORT_EVENTS.REMOVE_BASIC_MEDIA], (report, event) => {
+    callReport.addMetric(_constants.REPORT_METRICS.TIME_TO_REMOVE_MEDIA, event.end - event.start);
   });
 
   // Register the time-to-remove-media-remote handler
-  callReport.registerMetricHandler(_constants.REPORTER_METRICS.TIME_TO_REMOVE_MEDIA_REMOTE, [_constants.REPORTER_EVENTS.REMOVE_MEDIA_REMOTE], (report, event) => {
-    callReport.addMetric(_constants.REPORTER_METRICS.TIME_TO_REMOVE_MEDIA_REMOTE, event.end - event.start);
+  callReport.registerMetricHandler(_constants.REPORT_METRICS.TIME_TO_REMOVE_MEDIA_REMOTE, [_constants.REPORT_EVENTS.REMOVE_MEDIA_REMOTE], (report, event) => {
+    callReport.addMetric(_constants.REPORT_METRICS.TIME_TO_REMOVE_MEDIA_REMOTE, event.end - event.start);
   });
 
   // Register the time-to-restart-media handler
-  callReport.registerMetricHandler(_constants.REPORTER_METRICS.TIME_TO_RESTART_MEDIA, _constants.REPORTER_OPERATION_EVENTS_MAP.MEDIA_RESTART, (report, event) => {
-    callReport.addMetric(_constants.REPORTER_METRICS.TIME_TO_RESTART_MEDIA, event.end - event.start);
+  callReport.registerMetricHandler(_constants.REPORT_METRICS.TIME_TO_RESTART_MEDIA, _constants.REPORT_EVENTS.MEDIA_RESTART, (report, event) => {
+    callReport.addMetric(_constants.REPORT_METRICS.TIME_TO_RESTART_MEDIA, event.end - event.start);
   });
 
   // Register the time-to-send-custom-paramters handler
-  callReport.registerMetricHandler(_constants.REPORTER_METRICS.TIME_TO_SEND_CUSTOM_PARAMETERS, _constants.REPORTER_OPERATION_EVENTS_MAP.SEND_CUSTOM_PARAMETERS, (report, event) => {
-    callReport.addMetric(_constants.REPORTER_METRICS.TIME_TO_SEND_CUSTOM_PARAMETERS, event.end - event.start);
+  callReport.registerMetricHandler(_constants.REPORT_METRICS.TIME_TO_SEND_CUSTOM_PARAMETERS, _constants.REPORT_EVENTS.SEND_CUSTOM_PARAMETERS, (report, event) => {
+    callReport.addMetric(_constants.REPORT_METRICS.TIME_TO_SEND_CUSTOM_PARAMETERS, event.end - event.start);
   });
 
   // Time to forward incoming call
-  callReport.registerMetricHandler(_constants.REPORTER_METRICS.TIME_TO_FORWARD, [_constants.REPORTER_EVENTS.FORWARD_CALL], (report, event) => {
-    callReport.addMetric(_constants.REPORTER_METRICS.TIME_TO_FORWARD, event.end - event.start);
+  callReport.registerMetricHandler(_constants.REPORT_METRICS.TIME_TO_FORWARD, [_constants.REPORT_EVENTS.FORWARD_CALL], (report, event) => {
+    callReport.addMetric(_constants.REPORT_METRICS.TIME_TO_FORWARD, event.end - event.start);
   });
 
   // Register the time-to-direct-transfer handler
-  callReport.registerMetricHandler(_constants.REPORTER_METRICS.TIME_TO_DIRECT_TRANSFER, [_constants.REPORTER_EVENTS.DIRECT_TRANSFER], (report, event) => {
-    callReport.addMetric(_constants.REPORTER_METRICS.TIME_TO_DIRECT_TRANSFER, event.end - event.start);
+  callReport.registerMetricHandler(_constants.REPORT_METRICS.TIME_TO_DIRECT_TRANSFER, [_constants.REPORT_EVENTS.DIRECT_TRANSFER], (report, event) => {
+    callReport.addMetric(_constants.REPORT_METRICS.TIME_TO_DIRECT_TRANSFER, event.end - event.start);
   });
 
   // Register the time-to-consultative-transfer handler
-  callReport.registerMetricHandler(_constants.REPORTER_METRICS.TIME_TO_CONSULTATIVE_TRANSFER, [_constants.REPORTER_EVENTS.CONSULTATIVE_TRANSFER], (report, event) => {
-    callReport.addMetric(_constants.REPORTER_METRICS.TIME_TO_CONSULTATIVE_TRANSFER, event.end - event.start);
+  callReport.registerMetricHandler(_constants.REPORT_METRICS.TIME_TO_CONSULTATIVE_TRANSFER, [_constants.REPORT_EVENTS.CONSULTATIVE_TRANSFER], (report, event) => {
+    callReport.addMetric(_constants.REPORT_METRICS.TIME_TO_CONSULTATIVE_TRANSFER, event.end - event.start);
   });
 
   // Register the time-to-join handler
-  callReport.registerMetricHandler(_constants.REPORTER_METRICS.TIME_TO_JOIN, _constants.REPORTER_OPERATION_EVENTS_MAP.JOIN, joinedCallDurationHandler(_constants.REPORTER_METRICS.TIME_TO_JOIN, [_constants.REPORTER_OPERATION_EVENTS_MAP.JOIN]));
+  callReport.registerMetricHandler(_constants.REPORT_METRICS.TIME_TO_JOIN, _constants.REPORT_EVENTS.JOIN, joinedCallDurationHandler(_constants.REPORT_METRICS.TIME_TO_JOIN, [_constants.REPORT_EVENTS.JOIN]));
 
   // Register the time-to-make-operation handler
-  callReport.registerMetricHandler(_constants.REPORTER_METRICS.TIME_TO_MAKE, _constants.REPORTER_EVENTS.MAKE, (report, event) => {
-    callReport.addMetric(_constants.REPORTER_METRICS.TIME_TO_MAKE, event.end - event.start);
+  callReport.registerMetricHandler(_constants.REPORT_METRICS.TIME_TO_MAKE, _constants.REPORT_EVENTS.MAKE, (report, event) => {
+    callReport.addMetric(_constants.REPORT_METRICS.TIME_TO_MAKE, event.end - event.start);
   });
 
   // Register the time-to-answer-operation handler
-  callReport.registerMetricHandler(_constants.REPORTER_METRICS.TIME_TO_ANSWER, _constants.REPORTER_EVENTS.ANSWER, (report, event) => {
-    callReport.addMetric(_constants.REPORTER_METRICS.TIME_TO_ANSWER, event.end - event.start);
+  callReport.registerMetricHandler(_constants.REPORT_METRICS.TIME_TO_ANSWER, _constants.REPORT_EVENTS.ANSWER, (report, event) => {
+    callReport.addMetric(_constants.REPORT_METRICS.TIME_TO_ANSWER, event.end - event.start);
   });
 }
 

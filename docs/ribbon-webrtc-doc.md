@@ -1611,6 +1611,72 @@ client.on('call:mediaConnectionChange', function (params) {
 }
 ```
 
+### reportEvents
+
+Events used in the SDK's call reports.
+
+As a call progresses, the operation(s)/function(s) being performed throughout
+the duration of a call are recorded as events in a call report.
+The call report can be retrieved via the [call.getReport][78] API.
+An application can use these event names to find the associated event(s)
+in the call report for more information on the event.
+See *Call Reports* tutorial for more information on call reports and events.
+
+Type: [Object][7]
+
+#### Properties
+
+*   `MAKE` **[string][8]** Starts when the make operation starts. Ends when the make operation finishes.
+*   `MAKE_ANONYMOUS` **[string][8]** Starts when the anonymous make operation starts. Ends when the anonymous make operation finishes.
+*   `SEND_RINGING_FEEDBACK` **[string][8]** Starts when the send ringing feedback operation starts. Ends when the ringing feedback operation finishes.
+*   `RECEIVE_CALL` **[string][8]** Starts when the SDK receives a call and ends when the incoming call is setup.
+*   `REMOTE_RINGING` **[string][8]** 
+*   `ANSWER` **[string][8]** Starts when the answer operation starts. Ends when the answer operation finishes.
+*   `GET_USER_MEDIA` **[string][8]** Starts when user media is requested from the browser and ends when the media is created.
+*   `SET_LOCAL_DESCRIPTION` **[string][8]** Starts when the local description is to be set, and ends when the offer is set and ice collection completes.
+*   `SET_REMOTE_DESCRIPTION` **[string][8]** Starts when the remote description is to be set, and ends when the remote description is set.
+*   `ICE_COLLECTION` **[string][8]** Starts when ice candidate collection starts and ends when collection is complete.
+*   `RELAY_CANDIDATE_COLLECTED` **[string][8]** Starts and ends when a relay candidate is collected. Event data contains info on the candidate.
+*   `IGNORE` **[string][8]** Starts when the ignore operation starts. Ends when the ignore operation finishes.
+*   `REJECT` **[string][8]** Starts when the reject operation starts. Ends when the reject operation finishes.
+*   `FORWARD_CALL` **[string][8]** Starts when the forward call operation starts. Ends when the forward operation finishes.
+*   `END_LOCAL` **[string][8]** Starts when the end operation starts. Ends when the end operation finishes.
+*   `END_REMOTE` **[string][8]** Starts when the call status update ended operation starts. Ends when the call status update ended operation finishes.
+*   `ADD_BASIC_MEDIA` **[string][8]** Starts when the add basic media operation starts. Ends when the add basic media operation finishes.
+*   `ADD_MEDIA_LOCAL` **[string][8]** Starts when the add media operation starts. Ends when the add media operation finishes.
+*   `ADD_MEDIA_REMOTE` **[string][8]** Starts when a remote add media notification is received and ends when the operation is handled.
+*   `REMOVE_BASIC_MEDIA` **[string][8]** Starts when the remove basic media operation starts. Ends when the remove basic operation finishes.
+*   `REMOVE_MEDIA` **[string][8]** Starts when the remove media operation starts. Ends when the remove media operation finishes.
+*   `REMOVE_MEDIA_REMOTE` **[string][8]** Starts when a remote remove media notification is received and ends when the operation is handled.
+*   `MEDIA_RESTART` **[string][8]** Starts when the media restart operation starts. Ends when the media restart operation finishes.
+*   `REPLACE_TRACK` **[string][8]** Starts when the replace track operation starts. Ends when the replace track operation finishes.
+*   `HOLD_LOCAL` **[string][8]** Starts when the hold operation starts. Ends when the hold operation finishes.
+*   `HOLD_REMOTE` **[string][8]** Starts when a remote hold notification is received and ends when the operation is handled.
+*   `UNHOLD_LOCAL` **[string][8]** Starts when the unhold operation starts. Ends when the unhold operation finishes.
+*   `UNHOLD_REMOTE` **[string][8]** Starts when a remote unhold notification is received and ends when the operation is handled.
+*   `REST_REQUEST` **[string][8]** Starts when a REST request is to be made for an operation and ends when a response is received, or it times out.
+*   `PROCESS_RESPONSE` **[string][8]** Starts when a notification is received to an update request and ends when the response is handled.
+*   `PLAY_AUDIO` **[string][8]** Starts when the play audio operation starts. Ends when the play audio operation finishes.
+*   `START_MOH` **[string][8]** Starts when the start music on hold operation starts. Ends when the start music on hold operation finishes.
+*   `STOP_MOH` **[string][8]** Starts when the stop music on hold operation starts. Ends when the stop music on hold operation finishes.
+*   `SEND_CUSTOM_PARAMETERS` **[string][8]** Starts when the send custom parameters operation starts. Ends send custom parameters operation finishes.
+*   `GET_STATS` **[string][8]** Starts when the get stats operation starts. Ends when the get stats operation finishes.
+*   `SEND_DTMF` **[string][8]** Starts when the send DTMF operation starts. Ends when the DTMF operation finishes.
+*   `RESYNC` **[string][8]** Starts when the resync operation starts. Ends when the resync operation finishes.
+*   `DIRECT_TRANSFER` **[string][8]** Starts when the direct transfer operation starts. Ends when the direct transfer operation finishes.
+*   `CONSULTATIVE_TRANSFER` **[string][8]** Starts when the consultative transfer operation starts. Ends when the consultative transfer operation finishes.
+*   `JOIN` **[string][8]** Starts when the join operation starts. Ends when the join operation finishes.
+*   `GET_AVAILABLE_CODECS` **[string][8]** Starts when the get available codecs operation starts. Ends when the get available codecs operation finishes.
+*   `SLOW_START` **[string][8]** Starts when the slow start operation starts. Ends when the slow stop operation finishes.
+
+#### Examples
+
+```javascript
+const report = client.call.getReport('callId')
+const getAvailableCodecsEvent = report.timeline.find(event => event.type === client.call.reportEvents.GET_AVAILABLE_CODECS)
+log(`Took ${getAvailableCodecsEvent.end - getAvailableCodecsEvent.start}ms to get available codecs.`)
+```
+
 ### metrics
 
 List of metrics available as part of a Call Report.
@@ -1624,29 +1690,35 @@ Type: [Object][7]
 #### Properties
 
 *   `CALL_DURATION` **[string][8]** The duration of a completed call starting from the make call API call or incoming call notification until the call ends.
+*   `MAKE_CALL_PRE_LOCAL_SETUP` **[string][8]** The amount of time it takes from when the `make call` operation starts up until right before we set local description.
 *   `MAKE_CALL_LOCAL_SETUP` **[string][8]** The amount of time it takes from when a call is made until the call is setup locally. This does not include any remote session creation.
 *   `MAKE_CALL_REMOTE_SETUP` **[string][8]** The amount of time it takes from when the create session request is sent until the SDK processes the response.
 *   `TIME_TO_MAKE` **[string][8]** For outgoing calls, the time for the `make` operation to complete.
+*   `ANSWER_CALL_LOCAL_SETUP` **[string][8]** The amount of time it takes from when the `answer call` operation starts until it is setup locally.
+*   `ANSWER_CALL_PRE_LOCAL_SETUP` **[string][8]** The amount of time it takes from when the `answer call` operation starts up until right before we set local description.
 *   `TIME_TO_ANSWER` **[string][8]** For incoming calls, the time for the `answer` operation to complete.
 *   `TIME_FROM_RECEIVE_TO_ANSWER` **[string][8]** For incoming calls, the time from the call first being received until it has been answered. Includes call processing and setup, as well as time for the answer API to have been called.
-*   `TIME_TO_CALL_SETUP_DURATION` **[string][8]** For incoming calls, the time from the call first being received until media is connected. Similar to `TIME_FROM_RECEIVE_TO_ANSWER`, but without the `answer` REST request.
 *   `TIME_TO_MEDIA_DURATION` **[string][8]** The amount of time it takes from answering an incoming call until media is connected.
+*   `TIME_TO_CALL_SETUP_DURATION` **[string][8]** For incoming calls, the time from the call first being received until media is connected. Similar to `TIME_FROM_RECEIVE_TO_ANSWER`, but without the `answer` REST request.
+*   `TIME_TO_RINGING` **[string][8]** The amount of time it takes from when a call is made until the SDK recieves the remote ringing notification.
 *   `TIME_TO_IGNORE` **[string][8]** The amount of time it takes for the ignore call to complete.
 *   `TIME_TO_REJECT` **[string][8]** The amount of time it takes for the reject call to complete.
-*   `TIME_TO_RINGING` **[string][8]** The amount of time it takes from when a call is made until the SDK recieves the remote ringing notification.
-*   `TIME_TO_REMOVE_MEDIA` **[string][8]** The amount of time it takes from when the `remove media` operation starts until the local description has been set.
-*   `TIME_TO_REMOVE_MEDIA_REMOTE` **[string][8]** The amount of time it takes from when the `remove media` notification handling starts until the remote description has been set.
-*   `TIME_TO_ADD_MEDIA` **[string][8]** The amount of time it takes from when the `add media` operation starts until the local description has been set.
-*   `TIME_TO_ADD_MEDIA_REMOTE` **[string][8]** The amount of time it takes from when the `add media` notification handling starts until the remote description has been set.
-*   `TIME_TO_RESTART_MEDIA` **[string][8]** The amount of time it takes from when the `restart media` operation starts until media has been restarted.
+*   `TIME_TO_ADD_MEDIA` **[string][8]** The amount of time it takes from when the local `add media` operation starts until it has finished.
+*   `TIME_TO_ADD_MEDIA_REMOTE` **[string][8]** The amount of time it takes from when the SDK receives a remote `add media` notification until it is handled and operation completes.
+*   `TIME_TO_REMOVE_MEDIA` **[string][8]** The amount of time it takes from when the local `remove media` operation starts until it has finished.
+*   `TIME_TO_REMOVE_MEDIA_REMOTE` **[string][8]** The amount of time it takes from when the SDK receives a remote `remove media` notification until it is handled and operation completes.
+*   `TIME_TO_RESTART_MEDIA` **[string][8]** The amount of time it takes from when the `restart media` operation starts until it has finished.
+*   `TIME_TO_HOLD_LOCAL` **[string][8]** The amount of time it takes from when the local `hold` operation starts until it has finished.
+*   `TIME_TO_HOLD_REMOTE` **[string][8]** The amount of time it takes from when the SDK receives a remote `hold` notification until it is handled and operation completes.
+*   `TIME_TO_UNHOLD_LOCAL` **[string][8]** The amount of time it takes from when the local `unhold` operation starts until it has finished.
+*   `TIME_TO_UNHOLD_REMOTE` **[string][8]** The amount of time it takes from when the SDK receives a remote `unhold` notification until it is handled and operation completes.
+*   `TIME_TO_COLLECT_ICE_CANDIDATES` **[string][8]** The amount of time it takes from when the local description is set to when all ICE candidates have been collected.
 *   `TIME_TO_RELAY_CANDIDATES` **[string][8]** The amount of time it takes from when the `ice collection` operation starts until each relay candidate has been recieved.
 *   `TIME_TO_SEND_CUSTOM_PARAMETERS` **[string][8]** The amount of time it takes from when the `send custom parameters` operation starts until it has finished.
 *   `TIME_TO_FORWARD` **[string][8]** The amount of time it takes from when the `forward call` operation starts until it has finished.
 *   `TIME_TO_DIRECT_TRANSFER` **[string][8]** The amount of time it takes from when the `direct transfer` operation starts until it has finished.
+*   `TIME_TO_CONSULTATIVE_TRANSFER` **[string][8]** The amount of time it takes from when the `consultative transfer` operation starts until it has finished.
 *   `TIME_TO_JOIN` **[string][8]** The amount of time it takes from when the `join call` operation starts until it has finished.
-*   `MAKE_CALL_PRE_LOCAL_SETUP` **[string][8]** The amount of time it takes from when the `make call` operation starts up until right before we set local description.
-*   `ANSWER_CALL_PRE_LOCAL_SETUP` **[string][8]** The amount of time it takes from when the `answer call` operation starts up until right before we set local description.
-*   `ANSWER_CALL_LOCAL_SETUP` **[string][8]** The amount of time it takes from when the `answer call` operation starts until it is setup locally.
 
 #### Examples
 
@@ -1655,44 +1727,6 @@ const report = client.call.getReport(callId)
 const callDuration = report.metrics.find(metric => metric.type === client.call.metrics.CALL_DURATION)
 log(`Call duration was ${callDuration.data}ms.`)
 ```
-
-### REPORTER_OPERATION_EVENTS_MAP
-
-Call operation events recorded by the call reporter.
-
-Type: [Object][7]
-
-#### Properties
-
-*   `MAKE` **[string][8]** Starts when the make operation starts. Ends when the make operation finishes.
-*   `MAKE_ANONYMOUS` **[string][8]** Starts when the anonymous make operation starts. Ends when the anonymous make operation finishes.
-*   `ANSWER` **[string][8]** Starts when the answer operation starts. Ends when the answer operation finishes.
-*   `REJECT` **[string][8]** Starts when the reject operation starts. Ends when the reject operation finishes.
-*   `IGNORE` **[string][8]** Starts when the ignore operation starts. Ends when the ignore operation finishes.
-*   `SEND_RINGING_FEEDBACK` **[string][8]** Starts when the send ringing feedback operation starts. Ends when the ringing feedback operation finishes.
-*   `FORWARD_CALL` **[string][8]** Starts when the forward call operation starts. Ends when the forward operation finishes.
-*   `HOLD` **[string][8]** Starts when the hold operation starts. Ends when the hold operation finishes.
-*   `UNHOLD` **[string][8]** Starts when the unhold operation starts. Ends when the unhold operation finishes.
-*   `SEND_CUSTOM_PARAMETERS` **[string][8]** Starts when the send custom parameters operation starts. Ends send custom parameters operation finishes.
-*   `ADD_MEDIA` **[string][8]** Starts when the add media operation starts. Ends when the add media operation finishes.
-*   `ADD_BASIC_MEDIA` **[string][8]** Starts when the add basic media operation starts. Ends when the add basic media operation finishes.
-*   `REMOVE_MEDIA` **[string][8]** Starts when the remove media operation starts. Ends when the remove media operation finishes.
-*   `REMOVE_BASIC_MEDIA` **[string][8]** Starts when the remove basic media operation starts. Ends when the remove basic operation finishes.
-*   `GET_STATS` **[string][8]** Starts when the get stats operation starts. Ends when the get stats operation finishes..
-*   `SEND_DTMF` **[string][8]** Starts when the send DTMF operation starts. Ends when the DTMF operation finishes.
-*   `CONSULTATIVE_TRANSFER` **[string][8]** Starts when the consultative transfer operation starts. Ends when the consultative transfer operation finishes.
-*   `DIRECT_TRANSFER` **[string][8]** Starts when the direct transfer operation starts. Ends when the direct transfer operation finishes.
-*   `JOIN` **[string][8]** Starts when the join operation starts. Ends when the join operation finishes..
-*   `REPLACE_TRACK` **[string][8]** Starts when the replace track operation starts. Ends when the replace track operation finishes.
-*   `MEDIA_RESTART` **[string][8]** Starts when the media restart operation starts. Ends when the media restart operation finishes.
-*   `RESYNC` **[string][8]** Starts when the resync operation starts. Ends when the resync operation finishes.
-*   `PLAY_AUDIO` **[string][8]** Starts when the play audio operation starts. Ends when the play audio operation finishes.
-*   `GET_AVAILABLE_CODECS` **[string][8]** Starts when the get available codecs operation starts. Ends when the get available codecs operation finishes.
-*   `START_MOH` **[string][8]** Starts when the start music on hold operation starts. Ends when the start music on hold operation finishes.
-*   `STOP_MOH` **[string][8]** Starts when the stop music on hold operation starts. Ends when the stop music on hold operation finishes.
-*   `SLOW_START` **[string][8]** Starts when the slow start operation starts. Ends when the slow stop operation finishes.
-*   `END` **[string][8]** Starts when the end operation starts. Ends when the end operation finishes.
-*   `callStatusUpdateEnded` **[string][8]** Starts when the call status update ended operation starts. Ends when the call status update ended operation finishes.
 
 ### call:operation
 
@@ -2966,9 +3000,9 @@ Returns **[call.SdpHandlerFunction][106]** The resulting SDP handler that will r
 
 [72]: https://w3c.github.io/webrtc-pc/#dom-rtcrtpsender-getcapabilities
 
-[73]: REPORTER_OPERATION_EVENTS_MAP
+[73]: #callreportevents
 
-[74]: REPORTER_METRICS
+[74]: #callmetrics
 
 [75]: #mediarendertracks
 
