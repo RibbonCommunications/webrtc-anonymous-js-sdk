@@ -3,7 +3,7 @@
  *
  * WebRTC.js
  * webrtc.anonymous.js
- * Version: 6.2.0-beta.1114
+ * Version: 6.2.0-beta.1115
  */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
@@ -6313,7 +6313,7 @@ exports.getVersion = getVersion;
  * for the @@ tag below with actual version value.
  */
 function getVersion() {
-  return '6.2.0-beta.1114';
+  return '6.2.0-beta.1115';
 }
 
 /***/ }),
@@ -48345,8 +48345,6 @@ function rejectOperation(container) {
     log.info('Rejecting incoming call.');
 
     const incomingCall = (0, _selectors.getCallById)(context.getState(), callId);
-    await CallstackWebrtc.closeCall(incomingCall.webrtcSessionId);
-
     // Collect the information needed to make the request.
     const callInfo = {
       id: callId,
@@ -48358,6 +48356,10 @@ function rejectOperation(container) {
       log.info('Failed to reject call.');
       throw error;
     }
+
+    // Clean-up WebRTC resources AFTER the REST request to ensure that the
+    //    server-side call is ended. Avoids issues if REST request fails.
+    await CallstackWebrtc.closeCall(incomingCall.webrtcSessionId);
 
     log.info(`Finished rejecting call. Changing to ${_constants.CALL_STATES.ENDED}.`);
   }
