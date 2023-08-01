@@ -3,7 +3,7 @@
  *
  * WebRTC.js
  * webrtc.anonymous.js
- * Version: 6.1.0-beta.1111
+ * Version: 6.1.0-beta.1112
  */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
@@ -6328,7 +6328,7 @@ exports.getVersion = getVersion;
  * for the @@ tag below with actual version value.
  */
 function getVersion() {
-  return '6.1.0-beta.1111';
+  return '6.1.0-beta.1112';
 }
 
 /***/ }),
@@ -6539,9 +6539,9 @@ exports.getRemoteParticipant = getRemoteParticipant;
  *                   Or undefined if `callNotificationParams` property does not exist.
  */
 function getRemoteParticipant(targetCall, notification, domain) {
-  if (!notification.callNotificationParams) {
+  if (!notification.callNotificationParams || !targetCall) {
     // `sessionComplete` notification doesn't have `callNotificationParams`.
-    return;
+    return {};
   }
 
   let remoteInfo = {};
