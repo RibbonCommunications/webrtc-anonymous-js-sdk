@@ -3009,7 +3009,7 @@ Returns **[call.SdpHandlerFunction][106]** The resulting SDP handler that will r
 
 [77]: https://developer.mozilla.org/en-US/docs/Web/API/RTCPeerConnection/iceConnectionState
 
-[78]: call.getReport
+[78]: #callgetreport
 
 [79]: #mediagettrackbyid
 

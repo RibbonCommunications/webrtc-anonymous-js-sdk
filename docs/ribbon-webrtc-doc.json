@@ -21190,26 +21190,31 @@
               "type": null
             },
             {
-              "title": "memberof",
-              "description": "call",
+              "title": "static",
+              "description": null,
               "lineNumber": 16
             },
             {
-              "title": "requires",
-              "description": null,
-              "lineNumber": 17,
-              "name": "call"
+              "title": "memberof",
+              "description": "call",
+              "lineNumber": 17
             },
             {
               "title": "requires",
               "description": null,
               "lineNumber": 18,
+              "name": "call"
+            },
+            {
+              "title": "requires",
+              "description": null,
+              "lineNumber": 19,
               "name": "callMe"
             },
             {
               "title": "param",
               "description": "The id of the call to retrieve the report on.",
-              "lineNumber": 19,
+              "lineNumber": 20,
               "type": {
                 "type": "NameExpression",
                 "name": "string"
@@ -21219,7 +21224,7 @@
             {
               "title": "return",
               "description": "An object containing all metrics and data tracked against this call.",
-              "lineNumber": 20,
+              "lineNumber": 21,
               "type": {
                 "type": "NameExpression",
                 "name": "Object"
@@ -21232,18 +21237,18 @@
               "column": 2
             },
             "end": {
-              "line": 388,
+              "line": 389,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 389,
+                "line": 390,
                 "column": 2
               },
               "end": {
-                "line": 394,
+                "line": 395,
                 "column": 3
               }
             },
@@ -21256,7 +21261,7 @@
             {
               "title": "param",
               "name": "callId",
-              "lineNumber": 19,
+              "lineNumber": 20,
               "description": {
                 "type": "root",
                 "children": [
@@ -21308,6 +21313,7 @@
           "kind": "function",
           "name": "getReport",
           "access": "public",
+          "scope": "static",
           "memberof": "call",
           "members": {
             "global": [],
@@ -21323,10 +21329,11 @@
             },
             {
               "name": "getReport",
-              "kind": "function"
+              "kind": "function",
+              "scope": "static"
             }
           ],
-          "namespace": "callgetReport"
+          "namespace": "call.getReport"
         },
         {
           "description": {
@@ -21428,22 +21435,22 @@
           ],
           "loc": {
             "start": {
-              "line": 398,
+              "line": 399,
               "column": 2
             },
             "end": {
-              "line": 435,
+              "line": 436,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 476,
+                "line": 477,
                 "column": 2
               },
               "end": {
-                "line": 487,
+                "line": 488,
                 "column": 3
               }
             },
@@ -21604,22 +21611,22 @@
           ],
           "loc": {
             "start": {
-              "line": 437,
+              "line": 438,
               "column": 2
             },
             "end": {
-              "line": 474,
+              "line": 475,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 476,
+                "line": 477,
                 "column": 2
               },
               "end": {
-                "line": 487,
+                "line": 488,
                 "column": 3
               }
             },
@@ -22768,7 +22775,7 @@
                   },
                   {
                     "type": "link",
-                    "url": "call.getReport",
+                    "url": "#callgetreport",
                     "title": null,
                     "jsdoc": true,
                     "children": [
@@ -24275,7 +24282,7 @@
                   },
                   {
                     "type": "link",
-                    "url": "call.getReport",
+                    "url": "#callgetreport",
                     "title": null,
                     "jsdoc": true,
                     "children": [
