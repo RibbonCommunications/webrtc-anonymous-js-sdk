@@ -1,10 +1,4 @@
 [COPYRIGHT © 2023 RIBBON COMMUNICATIONS OPERATING COMPANY, INC. ALL RIGHTS RESERVED]: #
----
-layout: page
-categories: quickstarts-javascript
-title: Logging
-permalink: /quickstarts/javascript/link/Logging
----
 
 # SDK Logs
 
@@ -181,5 +175,6 @@ function downloadLogs () {
 When saving Log Entries, we recommend saving them in NDJSON format and retaining all of the data from each entry, rather than parsing them beforehand. It is possible to parse the Log Entries from the file afterwards, but impossible to reconstruct any data that is lost when they were parsed. This ensures that whoever is inspecting the log file has all of the data as it was provided by the SDK.
 
 **N.B.:** If you require support about an issue with the SDK itself, we will ask you to provide a log file with the raw JSON Log Entries and the SDK configured at the 'DEBUG' `logLevel`.
+
 [COPYRIGHT © 2023 RIBBON COMMUNICATIONS OPERATING COMPANY, INC. ALL RIGHTS RESERVED]: #
 

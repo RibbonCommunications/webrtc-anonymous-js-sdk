@@ -8330,22 +8330,22 @@
           ],
           "loc": {
             "start": {
-              "line": 52,
+              "line": 53,
               "column": 2
             },
             "end": {
-              "line": 114,
+              "line": 115,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 124,
+                "line": 125,
                 "column": 2
               },
               "end": {
-                "line": 163,
+                "line": 195,
                 "column": 3
               }
             },
@@ -15060,22 +15060,22 @@
           ],
           "loc": {
             "start": {
-              "line": 629,
+              "line": 561,
               "column": 2
             },
             "end": {
-              "line": 652,
+              "line": 584,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 653,
+                "line": 585,
                 "column": 2
               },
               "end": {
-                "line": 661,
+                "line": 616,
                 "column": 3
               }
             },
@@ -15303,22 +15303,22 @@
           ],
           "loc": {
             "start": {
-              "line": 24,
+              "line": 23,
               "column": 2
             },
             "end": {
-              "line": 49,
+              "line": 48,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 50,
+                "line": 49,
                 "column": 2
               },
               "end": {
-                "line": 95,
+                "line": 81,
                 "column": 3
               }
             },
@@ -15521,22 +15521,22 @@
           ],
           "loc": {
             "start": {
-              "line": 97,
+              "line": 83,
               "column": 2
             },
             "end": {
-              "line": 118,
+              "line": 104,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 119,
+                "line": 105,
                 "column": 2
               },
               "end": {
-                "line": 163,
+                "line": 136,
                 "column": 3
               }
             },
@@ -15946,22 +15946,22 @@
           ],
           "loc": {
             "start": {
-              "line": 165,
+              "line": 138,
               "column": 2
             },
             "end": {
-              "line": 200,
+              "line": 173,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 201,
+                "line": 174,
                 "column": 2
               },
               "end": {
-                "line": 250,
+                "line": 202,
                 "column": 3
               }
             },
@@ -16627,22 +16627,22 @@
           ],
           "loc": {
             "start": {
-              "line": 252,
+              "line": 204,
               "column": 2
             },
             "end": {
-              "line": 271,
+              "line": 223,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 272,
+                "line": 224,
                 "column": 2
               },
               "end": {
-                "line": 320,
+                "line": 250,
                 "column": 3
               }
             },
@@ -17014,22 +17014,22 @@
           ],
           "loc": {
             "start": {
-              "line": 322,
+              "line": 252,
               "column": 2
             },
             "end": {
-              "line": 352,
+              "line": 282,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 353,
+                "line": 283,
                 "column": 2
               },
               "end": {
-                "line": 407,
+                "line": 316,
                 "column": 3
               }
             },
@@ -17430,22 +17430,22 @@
           ],
           "loc": {
             "start": {
-              "line": 409,
+              "line": 318,
               "column": 2
             },
             "end": {
-              "line": 431,
+              "line": 340,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 432,
+                "line": 341,
                 "column": 2
               },
               "end": {
-                "line": 480,
+                "line": 367,
                 "column": 3
               }
             },
@@ -17642,22 +17642,22 @@
           ],
           "loc": {
             "start": {
-              "line": 482,
+              "line": 369,
               "column": 2
             },
             "end": {
-              "line": 515,
+              "line": 402,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 629,
+                "line": 516,
                 "column": 2
               },
               "end": {
-                "line": 670,
+                "line": 545,
                 "column": 3
               }
             },
@@ -17843,22 +17843,22 @@
           ],
           "loc": {
             "start": {
-              "line": 517,
+              "line": 404,
               "column": 2
             },
             "end": {
-              "line": 557,
+              "line": 444,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 629,
+                "line": 516,
                 "column": 2
               },
               "end": {
-                "line": 670,
+                "line": 545,
                 "column": 3
               }
             },
@@ -18181,22 +18181,22 @@
           ],
           "loc": {
             "start": {
-              "line": 559,
+              "line": 446,
               "column": 2
             },
             "end": {
-              "line": 628,
+              "line": 515,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 629,
+                "line": 516,
                 "column": 2
               },
               "end": {
-                "line": 670,
+                "line": 545,
                 "column": 3
               }
             },
@@ -18881,22 +18881,22 @@
           ],
           "loc": {
             "start": {
-              "line": 672,
+              "line": 547,
               "column": 2
             },
             "end": {
-              "line": 716,
+              "line": 591,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 717,
+                "line": 592,
                 "column": 2
               },
               "end": {
-                "line": 758,
+                "line": 612,
                 "column": 3
               }
             },
@@ -19229,22 +19229,22 @@
           ],
           "loc": {
             "start": {
-              "line": 812,
+              "line": 648,
               "column": 2
             },
             "end": {
-              "line": 875,
+              "line": 711,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 876,
+                "line": 712,
                 "column": 2
               },
               "end": {
-                "line": 945,
+                "line": 752,
                 "column": 3
               }
             },
@@ -19434,22 +19434,22 @@
           ],
           "loc": {
             "start": {
-              "line": 18,
+              "line": 17,
               "column": 2
             },
             "end": {
-              "line": 32,
+              "line": 31,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 33,
+                "line": 32,
                 "column": 2
               },
               "end": {
-                "line": 36,
+                "line": 35,
                 "column": 3
               }
             },
@@ -19602,22 +19602,22 @@
           ],
           "loc": {
             "start": {
-              "line": 38,
+              "line": 37,
               "column": 2
             },
             "end": {
-              "line": 49,
+              "line": 48,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 50,
+                "line": 49,
                 "column": 2
               },
               "end": {
-                "line": 53,
+                "line": 52,
                 "column": 3
               }
             },
@@ -19910,22 +19910,22 @@
           ],
           "loc": {
             "start": {
-              "line": 121,
+              "line": 105,
               "column": 2
             },
             "end": {
-              "line": 144,
+              "line": 128,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 165,
+                "line": 149,
                 "column": 2
               },
               "end": {
-                "line": 168,
+                "line": 152,
                 "column": 3
               }
             },
@@ -20167,22 +20167,22 @@
           ],
           "loc": {
             "start": {
-              "line": 170,
+              "line": 154,
               "column": 2
             },
             "end": {
-              "line": 186,
+              "line": 170,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 187,
+                "line": 171,
                 "column": 2
               },
               "end": {
-                "line": 225,
+                "line": 183,
                 "column": 3
               }
             },
@@ -20400,22 +20400,22 @@
           ],
           "loc": {
             "start": {
-              "line": 227,
+              "line": 185,
               "column": 2
             },
             "end": {
-              "line": 254,
+              "line": 212,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 255,
+                "line": 213,
                 "column": 2
               },
               "end": {
-                "line": 288,
+                "line": 233,
                 "column": 3
               }
             },
@@ -20733,22 +20733,22 @@
           ],
           "loc": {
             "start": {
-              "line": 290,
+              "line": 235,
               "column": 2
             },
             "end": {
-              "line": 335,
+              "line": 280,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 336,
+                "line": 281,
                 "column": 2
               },
               "end": {
-                "line": 354,
+                "line": 313,
                 "column": 3
               }
             },
@@ -20982,22 +20982,22 @@
           ],
           "loc": {
             "start": {
-              "line": 356,
+              "line": 315,
               "column": 2
             },
             "end": {
-              "line": 374,
+              "line": 333,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 375,
+                "line": 334,
                 "column": 2
               },
               "end": {
-                "line": 406,
+                "line": 365,
                 "column": 3
               }
             },
@@ -21102,6 +21102,241 @@
                 "children": [
                   {
                     "type": "text",
+                    "value": "Retrieve the call metrics report for a call."
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "type": "text",
+                    "value": "The object returned from this API will be in JSON format. The top level object is the report and will include\na timeline of events that were recorded during a call as well as a map object containing computed metrics."
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "type": "text",
+                    "value": "Any event in a timeline will have it's own timeline that may have recorded events. Events in a timeline are scoped\nto that timelines event or report."
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "type": "text",
+                    "value": "The report and some events may have additional data included in a data property."
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "type": "text",
+                    "value": "See event documentation "
+                  },
+                  {
+                    "type": "link",
+                    "url": "#callreportevents",
+                    "title": null,
+                    "jsdoc": true,
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "here"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "text",
+                    "value": ".\nSee metrics documentation "
+                  },
+                  {
+                    "type": "link",
+                    "url": "#callmetrics",
+                    "title": null,
+                    "jsdoc": true,
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "here"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "text",
+                    "value": "."
+                  }
+                ]
+              }
+            ]
+          },
+          "tags": [
+            {
+              "title": "method",
+              "description": null,
+              "lineNumber": 14,
+              "name": "getReport"
+            },
+            {
+              "title": "public",
+              "description": null,
+              "lineNumber": 15,
+              "type": null
+            },
+            {
+              "title": "memberof",
+              "description": "call",
+              "lineNumber": 16
+            },
+            {
+              "title": "requires",
+              "description": null,
+              "lineNumber": 17,
+              "name": "call"
+            },
+            {
+              "title": "requires",
+              "description": null,
+              "lineNumber": 18,
+              "name": "callMe"
+            },
+            {
+              "title": "param",
+              "description": "The id of the call to retrieve the report on.",
+              "lineNumber": 19,
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              },
+              "name": "callId"
+            },
+            {
+              "title": "return",
+              "description": "An object containing all metrics and data tracked against this call.",
+              "lineNumber": 20,
+              "type": {
+                "type": "NameExpression",
+                "name": "Object"
+              }
+            }
+          ],
+          "loc": {
+            "start": {
+              "line": 367,
+              "column": 2
+            },
+            "end": {
+              "line": 388,
+              "column": 5
+            }
+          },
+          "context": {
+            "loc": {
+              "start": {
+                "line": 389,
+                "column": 2
+              },
+              "end": {
+                "line": 394,
+                "column": 3
+              }
+            },
+            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/call/interface/api/misc.js"
+          },
+          "augments": [],
+          "examples": [],
+          "implements": [],
+          "params": [
+            {
+              "title": "param",
+              "name": "callId",
+              "lineNumber": 19,
+              "description": {
+                "type": "root",
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "The id of the call to retrieve the report on."
+                      }
+                    ]
+                  }
+                ]
+              },
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              }
+            }
+          ],
+          "properties": [],
+          "returns": [
+            {
+              "description": {
+                "type": "root",
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "An object containing all metrics and data tracked against this call."
+                      }
+                    ]
+                  }
+                ]
+              },
+              "title": "returns",
+              "type": {
+                "type": "NameExpression",
+                "name": "Object"
+              }
+            }
+          ],
+          "sees": [],
+          "throws": [],
+          "todos": [],
+          "yields": [],
+          "kind": "function",
+          "name": "getReport",
+          "access": "public",
+          "memberof": "call",
+          "members": {
+            "global": [],
+            "inner": [],
+            "instance": [],
+            "events": [],
+            "static": []
+          },
+          "path": [
+            {
+              "name": "call",
+              "kind": "namespace"
+            },
+            {
+              "name": "getReport",
+              "kind": "function"
+            }
+          ],
+          "namespace": "callgetReport"
+        },
+        {
+          "description": {
+            "type": "root",
+            "children": [
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "type": "text",
                     "value": "Changes the camera and/or microphone used for a Call's media input."
                   }
                 ]
@@ -21193,22 +21428,22 @@
           ],
           "loc": {
             "start": {
-              "line": 410,
+              "line": 398,
               "column": 2
             },
             "end": {
-              "line": 447,
+              "line": 435,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 488,
+                "line": 476,
                 "column": 2
               },
               "end": {
-                "line": 498,
+                "line": 487,
                 "column": 3
               }
             },
@@ -21369,22 +21604,22 @@
           ],
           "loc": {
             "start": {
-              "line": 449,
+              "line": 437,
               "column": 2
             },
             "end": {
-              "line": 486,
+              "line": 474,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 488,
+                "line": 476,
                 "column": 2
               },
               "end": {
-                "line": 498,
+                "line": 487,
                 "column": 3
               }
             },
@@ -21661,22 +21896,22 @@
           ],
           "loc": {
             "start": {
-              "line": 11,
+              "line": 12,
               "column": 2
             },
             "end": {
-              "line": 55,
+              "line": 56,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 56,
+                "line": 57,
                 "column": 2
               },
               "end": {
-                "line": 56,
+                "line": 57,
                 "column": 28
               }
             },
@@ -22221,22 +22456,22 @@
           ],
           "loc": {
             "start": {
-              "line": 58,
+              "line": 59,
               "column": 2
             },
             "end": {
-              "line": 137,
+              "line": 138,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 138,
+                "line": 139,
                 "column": 2
               },
               "end": {
-                "line": 138,
+                "line": 139,
                 "column": 60
               }
             },
@@ -22510,6 +22745,2834 @@
             }
           ],
           "namespace": "call.mediaConnectionStates"
+        },
+        {
+          "description": {
+            "type": "root",
+            "children": [
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "type": "text",
+                    "value": "Events used in the SDK's call reports."
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "type": "text",
+                    "value": "As a call progresses, the operation(s)/function(s) being performed throughout\nthe duration of a call are recorded as events in a call report.\nThe call report can be retrieved via the "
+                  },
+                  {
+                    "type": "link",
+                    "url": "call.getReport",
+                    "title": null,
+                    "jsdoc": true,
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "call.getReport"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "text",
+                    "value": " API.\nAn application can use these event names to find the associated event(s)\nin the call report for more information on the event.\nSee "
+                  },
+                  {
+                    "type": "emphasis",
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "Call Reports"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "text",
+                    "value": " tutorial for more information on call reports and events."
+                  }
+                ]
+              }
+            ]
+          },
+          "tags": [
+            {
+              "title": "public",
+              "description": null,
+              "lineNumber": 10,
+              "type": null
+            },
+            {
+              "title": "static",
+              "description": null,
+              "lineNumber": 11
+            },
+            {
+              "title": "name",
+              "description": null,
+              "lineNumber": 12,
+              "name": "reportEvents"
+            },
+            {
+              "title": "memberof",
+              "description": "call",
+              "lineNumber": 13
+            },
+            {
+              "title": "requires",
+              "description": null,
+              "lineNumber": 14,
+              "name": "callMe"
+            },
+            {
+              "title": "requires",
+              "description": null,
+              "lineNumber": 15,
+              "name": "call"
+            },
+            {
+              "title": "type",
+              "description": null,
+              "lineNumber": 16,
+              "type": {
+                "type": "NameExpression",
+                "name": "Object"
+              }
+            },
+            {
+              "title": "property",
+              "description": "Starts when the make operation starts. Ends when the make operation finishes.",
+              "lineNumber": 17,
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              },
+              "name": "MAKE"
+            },
+            {
+              "title": "property",
+              "description": "Starts when the send ringing feedback operation starts. Ends when the ringing feedback operation finishes.",
+              "lineNumber": 18,
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              },
+              "name": "SEND_RINGING_FEEDBACK"
+            },
+            {
+              "title": "property",
+              "description": "Starts when the SDK receives a call and ends when the incoming call is setup.",
+              "lineNumber": 19,
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              },
+              "name": "RECEIVE_CALL"
+            },
+            {
+              "title": "property",
+              "description": null,
+              "lineNumber": 20,
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              },
+              "name": "REMOTE_RINGING"
+            },
+            {
+              "title": "property",
+              "description": "Starts when the answer operation starts. Ends when the answer operation finishes.",
+              "lineNumber": 21,
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              },
+              "name": "ANSWER"
+            },
+            {
+              "title": "property",
+              "description": "Starts when user media is requested from the browser and ends when the media is created.",
+              "lineNumber": 22,
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              },
+              "name": "GET_USER_MEDIA"
+            },
+            {
+              "title": "property",
+              "description": "Starts when the local description is to be set, and ends when the offer is set and ice collection completes.",
+              "lineNumber": 23,
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              },
+              "name": "SET_LOCAL_DESCRIPTION"
+            },
+            {
+              "title": "property",
+              "description": "Starts when the remote description is to be set, and ends when the remote description is set.",
+              "lineNumber": 24,
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              },
+              "name": "SET_REMOTE_DESCRIPTION"
+            },
+            {
+              "title": "property",
+              "description": "Starts when ice candidate collection starts and ends when collection is complete.",
+              "lineNumber": 25,
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              },
+              "name": "ICE_COLLECTION"
+            },
+            {
+              "title": "property",
+              "description": "Starts and ends when a relay candidate is collected. Event data contains info on the candidate.",
+              "lineNumber": 26,
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              },
+              "name": "RELAY_CANDIDATE_COLLECTED"
+            },
+            {
+              "title": "property",
+              "description": "Starts when the ignore operation starts. Ends when the ignore operation finishes.",
+              "lineNumber": 27,
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              },
+              "name": "IGNORE"
+            },
+            {
+              "title": "property",
+              "description": "Starts when the reject operation starts. Ends when the reject operation finishes.",
+              "lineNumber": 28,
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              },
+              "name": "REJECT"
+            },
+            {
+              "title": "property",
+              "description": "Starts when the forward call operation starts. Ends when the forward operation finishes.",
+              "lineNumber": 29,
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              },
+              "name": "FORWARD_CALL"
+            },
+            {
+              "title": "property",
+              "description": "Starts when the end operation starts. Ends when the end operation finishes.",
+              "lineNumber": 30,
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              },
+              "name": "END_LOCAL"
+            },
+            {
+              "title": "property",
+              "description": "Starts when the call status update ended operation starts. Ends when the call status update ended operation finishes.",
+              "lineNumber": 31,
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              },
+              "name": "END_REMOTE"
+            },
+            {
+              "title": "property",
+              "description": "Starts when the add basic media operation starts. Ends when the add basic media operation finishes.",
+              "lineNumber": 32,
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              },
+              "name": "ADD_BASIC_MEDIA"
+            },
+            {
+              "title": "property",
+              "description": "Starts when the add media operation starts. Ends when the add media operation finishes.",
+              "lineNumber": 33,
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              },
+              "name": "ADD_MEDIA_LOCAL"
+            },
+            {
+              "title": "property",
+              "description": "Starts when a remote add media notification is received and ends when the operation is handled.",
+              "lineNumber": 34,
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              },
+              "name": "ADD_MEDIA_REMOTE"
+            },
+            {
+              "title": "property",
+              "description": "Starts when the remove basic media operation starts. Ends when the remove basic operation finishes.",
+              "lineNumber": 35,
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              },
+              "name": "REMOVE_BASIC_MEDIA"
+            },
+            {
+              "title": "property",
+              "description": "Starts when the remove media operation starts. Ends when the remove media operation finishes.",
+              "lineNumber": 36,
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              },
+              "name": "REMOVE_MEDIA"
+            },
+            {
+              "title": "property",
+              "description": "Starts when a remote remove media notification is received and ends when the operation is handled.",
+              "lineNumber": 37,
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              },
+              "name": "REMOVE_MEDIA_REMOTE"
+            },
+            {
+              "title": "property",
+              "description": "Starts when the media restart operation starts. Ends when the media restart operation finishes.",
+              "lineNumber": 38,
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              },
+              "name": "MEDIA_RESTART"
+            },
+            {
+              "title": "property",
+              "description": "Starts when the replace track operation starts. Ends when the replace track operation finishes.",
+              "lineNumber": 39,
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              },
+              "name": "REPLACE_TRACK"
+            },
+            {
+              "title": "property",
+              "description": "Starts when the hold operation starts. Ends when the hold operation finishes.",
+              "lineNumber": 40,
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              },
+              "name": "HOLD_LOCAL"
+            },
+            {
+              "title": "property",
+              "description": "Starts when a remote hold notification is received and ends when the operation is handled.",
+              "lineNumber": 41,
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              },
+              "name": "HOLD_REMOTE"
+            },
+            {
+              "title": "property",
+              "description": "Starts when the unhold operation starts. Ends when the unhold operation finishes.",
+              "lineNumber": 42,
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              },
+              "name": "UNHOLD_LOCAL"
+            },
+            {
+              "title": "property",
+              "description": "Starts when a remote unhold notification is received and ends when the operation is handled.",
+              "lineNumber": 43,
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              },
+              "name": "UNHOLD_REMOTE"
+            },
+            {
+              "title": "property",
+              "description": "Starts when a REST request is to be made for an operation and ends when a response is received, or it times out.",
+              "lineNumber": 44,
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              },
+              "name": "REST_REQUEST"
+            },
+            {
+              "title": "property",
+              "description": "Starts when a notification is received to an update request and ends when the response is handled.",
+              "lineNumber": 45,
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              },
+              "name": "PROCESS_RESPONSE"
+            },
+            {
+              "title": "property",
+              "description": "Starts when the play audio operation starts. Ends when the play audio operation finishes.",
+              "lineNumber": 46,
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              },
+              "name": "PLAY_AUDIO"
+            },
+            {
+              "title": "property",
+              "description": "Starts when the start music on hold operation starts. Ends when the start music on hold operation finishes.",
+              "lineNumber": 47,
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              },
+              "name": "START_MOH"
+            },
+            {
+              "title": "property",
+              "description": "Starts when the stop music on hold operation starts. Ends when the stop music on hold operation finishes.",
+              "lineNumber": 48,
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              },
+              "name": "STOP_MOH"
+            },
+            {
+              "title": "property",
+              "description": "Starts when the send custom parameters operation starts. Ends send custom parameters operation finishes.",
+              "lineNumber": 49,
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              },
+              "name": "SEND_CUSTOM_PARAMETERS"
+            },
+            {
+              "title": "property",
+              "description": "Starts when the get stats operation starts. Ends when the get stats operation finishes.",
+              "lineNumber": 50,
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              },
+              "name": "GET_STATS"
+            },
+            {
+              "title": "property",
+              "description": "Starts when the send DTMF operation starts. Ends when the DTMF operation finishes.",
+              "lineNumber": 51,
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              },
+              "name": "SEND_DTMF"
+            },
+            {
+              "title": "property",
+              "description": "Starts when the resync operation starts. Ends when the resync operation finishes.",
+              "lineNumber": 52,
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              },
+              "name": "RESYNC"
+            },
+            {
+              "title": "property",
+              "description": "Starts when the direct transfer operation starts. Ends when the direct transfer operation finishes.",
+              "lineNumber": 53,
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              },
+              "name": "DIRECT_TRANSFER"
+            },
+            {
+              "title": "property",
+              "description": "Starts when the consultative transfer operation starts. Ends when the consultative transfer operation finishes.",
+              "lineNumber": 54,
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              },
+              "name": "CONSULTATIVE_TRANSFER"
+            },
+            {
+              "title": "property",
+              "description": "Starts when the join operation starts. Ends when the join operation finishes.",
+              "lineNumber": 55,
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              },
+              "name": "JOIN"
+            },
+            {
+              "title": "property",
+              "description": "Starts when the get available codecs operation starts. Ends when the get available codecs operation finishes.",
+              "lineNumber": 56,
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              },
+              "name": "GET_AVAILABLE_CODECS"
+            },
+            {
+              "title": "property",
+              "description": "Starts when the slow start operation starts. Ends when the slow stop operation finishes.",
+              "lineNumber": 57,
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              },
+              "name": "SLOW_START"
+            },
+            {
+              "title": "example",
+              "description": "const report = client.call.getReport('callId')\nconst getAvailableCodecsEvent = report.timeline.find(event => event.type === client.call.reportEvents.GET_AVAILABLE_CODECS)\nlog(`Took ${getAvailableCodecsEvent.end - getAvailableCodecsEvent.start}ms to get available codecs.`)",
+              "lineNumber": 58
+            }
+          ],
+          "loc": {
+            "start": {
+              "line": 1,
+              "column": 0
+            },
+            "end": {
+              "line": 63,
+              "column": 3
+            }
+          },
+          "context": {
+            "loc": {
+              "start": {
+                "line": 64,
+                "column": 0
+              },
+              "end": {
+                "line": 107,
+                "column": 1
+              }
+            },
+            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/call/callstack/reporter/constants.js"
+          },
+          "augments": [],
+          "examples": [
+            {
+              "description": "const report = client.call.getReport('callId')\nconst getAvailableCodecsEvent = report.timeline.find(event => event.type === client.call.reportEvents.GET_AVAILABLE_CODECS)\nlog(`Took ${getAvailableCodecsEvent.end - getAvailableCodecsEvent.start}ms to get available codecs.`)"
+            }
+          ],
+          "implements": [],
+          "params": [],
+          "properties": [
+            {
+              "title": "property",
+              "name": "MAKE",
+              "lineNumber": 17,
+              "description": {
+                "type": "root",
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "Starts when the make operation starts. Ends when the make operation finishes."
+                      }
+                    ]
+                  }
+                ]
+              },
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              }
+            },
+            {
+              "title": "property",
+              "name": "SEND_RINGING_FEEDBACK",
+              "lineNumber": 18,
+              "description": {
+                "type": "root",
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "Starts when the send ringing feedback operation starts. Ends when the ringing feedback operation finishes."
+                      }
+                    ]
+                  }
+                ]
+              },
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              }
+            },
+            {
+              "title": "property",
+              "name": "RECEIVE_CALL",
+              "lineNumber": 19,
+              "description": {
+                "type": "root",
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "Starts when the SDK receives a call and ends when the incoming call is setup."
+                      }
+                    ]
+                  }
+                ]
+              },
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              }
+            },
+            {
+              "title": "property",
+              "name": "REMOTE_RINGING",
+              "lineNumber": 20,
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              }
+            },
+            {
+              "title": "property",
+              "name": "ANSWER",
+              "lineNumber": 21,
+              "description": {
+                "type": "root",
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "Starts when the answer operation starts. Ends when the answer operation finishes."
+                      }
+                    ]
+                  }
+                ]
+              },
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              }
+            },
+            {
+              "title": "property",
+              "name": "GET_USER_MEDIA",
+              "lineNumber": 22,
+              "description": {
+                "type": "root",
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "Starts when user media is requested from the browser and ends when the media is created."
+                      }
+                    ]
+                  }
+                ]
+              },
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              }
+            },
+            {
+              "title": "property",
+              "name": "SET_LOCAL_DESCRIPTION",
+              "lineNumber": 23,
+              "description": {
+                "type": "root",
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "Starts when the local description is to be set, and ends when the offer is set and ice collection completes."
+                      }
+                    ]
+                  }
+                ]
+              },
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              }
+            },
+            {
+              "title": "property",
+              "name": "SET_REMOTE_DESCRIPTION",
+              "lineNumber": 24,
+              "description": {
+                "type": "root",
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "Starts when the remote description is to be set, and ends when the remote description is set."
+                      }
+                    ]
+                  }
+                ]
+              },
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              }
+            },
+            {
+              "title": "property",
+              "name": "ICE_COLLECTION",
+              "lineNumber": 25,
+              "description": {
+                "type": "root",
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "Starts when ice candidate collection starts and ends when collection is complete."
+                      }
+                    ]
+                  }
+                ]
+              },
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              }
+            },
+            {
+              "title": "property",
+              "name": "RELAY_CANDIDATE_COLLECTED",
+              "lineNumber": 26,
+              "description": {
+                "type": "root",
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "Starts and ends when a relay candidate is collected. Event data contains info on the candidate."
+                      }
+                    ]
+                  }
+                ]
+              },
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              }
+            },
+            {
+              "title": "property",
+              "name": "IGNORE",
+              "lineNumber": 27,
+              "description": {
+                "type": "root",
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "Starts when the ignore operation starts. Ends when the ignore operation finishes."
+                      }
+                    ]
+                  }
+                ]
+              },
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              }
+            },
+            {
+              "title": "property",
+              "name": "REJECT",
+              "lineNumber": 28,
+              "description": {
+                "type": "root",
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "Starts when the reject operation starts. Ends when the reject operation finishes."
+                      }
+                    ]
+                  }
+                ]
+              },
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              }
+            },
+            {
+              "title": "property",
+              "name": "FORWARD_CALL",
+              "lineNumber": 29,
+              "description": {
+                "type": "root",
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "Starts when the forward call operation starts. Ends when the forward operation finishes."
+                      }
+                    ]
+                  }
+                ]
+              },
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              }
+            },
+            {
+              "title": "property",
+              "name": "END_LOCAL",
+              "lineNumber": 30,
+              "description": {
+                "type": "root",
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "Starts when the end operation starts. Ends when the end operation finishes."
+                      }
+                    ]
+                  }
+                ]
+              },
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              }
+            },
+            {
+              "title": "property",
+              "name": "END_REMOTE",
+              "lineNumber": 31,
+              "description": {
+                "type": "root",
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "Starts when the call status update ended operation starts. Ends when the call status update ended operation finishes."
+                      }
+                    ]
+                  }
+                ]
+              },
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              }
+            },
+            {
+              "title": "property",
+              "name": "ADD_BASIC_MEDIA",
+              "lineNumber": 32,
+              "description": {
+                "type": "root",
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "Starts when the add basic media operation starts. Ends when the add basic media operation finishes."
+                      }
+                    ]
+                  }
+                ]
+              },
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              }
+            },
+            {
+              "title": "property",
+              "name": "ADD_MEDIA_LOCAL",
+              "lineNumber": 33,
+              "description": {
+                "type": "root",
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "Starts when the add media operation starts. Ends when the add media operation finishes."
+                      }
+                    ]
+                  }
+                ]
+              },
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              }
+            },
+            {
+              "title": "property",
+              "name": "ADD_MEDIA_REMOTE",
+              "lineNumber": 34,
+              "description": {
+                "type": "root",
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "Starts when a remote add media notification is received and ends when the operation is handled."
+                      }
+                    ]
+                  }
+                ]
+              },
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              }
+            },
+            {
+              "title": "property",
+              "name": "REMOVE_BASIC_MEDIA",
+              "lineNumber": 35,
+              "description": {
+                "type": "root",
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "Starts when the remove basic media operation starts. Ends when the remove basic operation finishes."
+                      }
+                    ]
+                  }
+                ]
+              },
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              }
+            },
+            {
+              "title": "property",
+              "name": "REMOVE_MEDIA",
+              "lineNumber": 36,
+              "description": {
+                "type": "root",
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "Starts when the remove media operation starts. Ends when the remove media operation finishes."
+                      }
+                    ]
+                  }
+                ]
+              },
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              }
+            },
+            {
+              "title": "property",
+              "name": "REMOVE_MEDIA_REMOTE",
+              "lineNumber": 37,
+              "description": {
+                "type": "root",
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "Starts when a remote remove media notification is received and ends when the operation is handled."
+                      }
+                    ]
+                  }
+                ]
+              },
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              }
+            },
+            {
+              "title": "property",
+              "name": "MEDIA_RESTART",
+              "lineNumber": 38,
+              "description": {
+                "type": "root",
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "Starts when the media restart operation starts. Ends when the media restart operation finishes."
+                      }
+                    ]
+                  }
+                ]
+              },
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              }
+            },
+            {
+              "title": "property",
+              "name": "REPLACE_TRACK",
+              "lineNumber": 39,
+              "description": {
+                "type": "root",
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "Starts when the replace track operation starts. Ends when the replace track operation finishes."
+                      }
+                    ]
+                  }
+                ]
+              },
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              }
+            },
+            {
+              "title": "property",
+              "name": "HOLD_LOCAL",
+              "lineNumber": 40,
+              "description": {
+                "type": "root",
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "Starts when the hold operation starts. Ends when the hold operation finishes."
+                      }
+                    ]
+                  }
+                ]
+              },
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              }
+            },
+            {
+              "title": "property",
+              "name": "HOLD_REMOTE",
+              "lineNumber": 41,
+              "description": {
+                "type": "root",
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "Starts when a remote hold notification is received and ends when the operation is handled."
+                      }
+                    ]
+                  }
+                ]
+              },
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              }
+            },
+            {
+              "title": "property",
+              "name": "UNHOLD_LOCAL",
+              "lineNumber": 42,
+              "description": {
+                "type": "root",
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "Starts when the unhold operation starts. Ends when the unhold operation finishes."
+                      }
+                    ]
+                  }
+                ]
+              },
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              }
+            },
+            {
+              "title": "property",
+              "name": "UNHOLD_REMOTE",
+              "lineNumber": 43,
+              "description": {
+                "type": "root",
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "Starts when a remote unhold notification is received and ends when the operation is handled."
+                      }
+                    ]
+                  }
+                ]
+              },
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              }
+            },
+            {
+              "title": "property",
+              "name": "REST_REQUEST",
+              "lineNumber": 44,
+              "description": {
+                "type": "root",
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "Starts when a REST request is to be made for an operation and ends when a response is received, or it times out."
+                      }
+                    ]
+                  }
+                ]
+              },
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              }
+            },
+            {
+              "title": "property",
+              "name": "PROCESS_RESPONSE",
+              "lineNumber": 45,
+              "description": {
+                "type": "root",
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "Starts when a notification is received to an update request and ends when the response is handled."
+                      }
+                    ]
+                  }
+                ]
+              },
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              }
+            },
+            {
+              "title": "property",
+              "name": "PLAY_AUDIO",
+              "lineNumber": 46,
+              "description": {
+                "type": "root",
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "Starts when the play audio operation starts. Ends when the play audio operation finishes."
+                      }
+                    ]
+                  }
+                ]
+              },
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              }
+            },
+            {
+              "title": "property",
+              "name": "START_MOH",
+              "lineNumber": 47,
+              "description": {
+                "type": "root",
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "Starts when the start music on hold operation starts. Ends when the start music on hold operation finishes."
+                      }
+                    ]
+                  }
+                ]
+              },
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              }
+            },
+            {
+              "title": "property",
+              "name": "STOP_MOH",
+              "lineNumber": 48,
+              "description": {
+                "type": "root",
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "Starts when the stop music on hold operation starts. Ends when the stop music on hold operation finishes."
+                      }
+                    ]
+                  }
+                ]
+              },
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              }
+            },
+            {
+              "title": "property",
+              "name": "SEND_CUSTOM_PARAMETERS",
+              "lineNumber": 49,
+              "description": {
+                "type": "root",
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "Starts when the send custom parameters operation starts. Ends send custom parameters operation finishes."
+                      }
+                    ]
+                  }
+                ]
+              },
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              }
+            },
+            {
+              "title": "property",
+              "name": "GET_STATS",
+              "lineNumber": 50,
+              "description": {
+                "type": "root",
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "Starts when the get stats operation starts. Ends when the get stats operation finishes."
+                      }
+                    ]
+                  }
+                ]
+              },
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              }
+            },
+            {
+              "title": "property",
+              "name": "SEND_DTMF",
+              "lineNumber": 51,
+              "description": {
+                "type": "root",
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "Starts when the send DTMF operation starts. Ends when the DTMF operation finishes."
+                      }
+                    ]
+                  }
+                ]
+              },
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              }
+            },
+            {
+              "title": "property",
+              "name": "RESYNC",
+              "lineNumber": 52,
+              "description": {
+                "type": "root",
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "Starts when the resync operation starts. Ends when the resync operation finishes."
+                      }
+                    ]
+                  }
+                ]
+              },
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              }
+            },
+            {
+              "title": "property",
+              "name": "DIRECT_TRANSFER",
+              "lineNumber": 53,
+              "description": {
+                "type": "root",
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "Starts when the direct transfer operation starts. Ends when the direct transfer operation finishes."
+                      }
+                    ]
+                  }
+                ]
+              },
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              }
+            },
+            {
+              "title": "property",
+              "name": "CONSULTATIVE_TRANSFER",
+              "lineNumber": 54,
+              "description": {
+                "type": "root",
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "Starts when the consultative transfer operation starts. Ends when the consultative transfer operation finishes."
+                      }
+                    ]
+                  }
+                ]
+              },
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              }
+            },
+            {
+              "title": "property",
+              "name": "JOIN",
+              "lineNumber": 55,
+              "description": {
+                "type": "root",
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "Starts when the join operation starts. Ends when the join operation finishes."
+                      }
+                    ]
+                  }
+                ]
+              },
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              }
+            },
+            {
+              "title": "property",
+              "name": "GET_AVAILABLE_CODECS",
+              "lineNumber": 56,
+              "description": {
+                "type": "root",
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "Starts when the get available codecs operation starts. Ends when the get available codecs operation finishes."
+                      }
+                    ]
+                  }
+                ]
+              },
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              }
+            },
+            {
+              "title": "property",
+              "name": "SLOW_START",
+              "lineNumber": 57,
+              "description": {
+                "type": "root",
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "Starts when the slow start operation starts. Ends when the slow stop operation finishes."
+                      }
+                    ]
+                  }
+                ]
+              },
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              }
+            }
+          ],
+          "returns": [],
+          "sees": [],
+          "throws": [],
+          "todos": [],
+          "yields": [],
+          "access": "public",
+          "scope": "static",
+          "name": "reportEvents",
+          "memberof": "call",
+          "type": {
+            "type": "NameExpression",
+            "name": "Object"
+          },
+          "members": {
+            "global": [],
+            "inner": [],
+            "instance": [],
+            "events": [],
+            "static": []
+          },
+          "path": [
+            {
+              "name": "call",
+              "kind": "namespace"
+            },
+            {
+              "name": "reportEvents",
+              "scope": "static"
+            }
+          ],
+          "namespace": "call.reportEvents"
+        },
+        {
+          "description": {
+            "type": "root",
+            "children": [
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "type": "text",
+                    "value": "List of metrics available as part of a Call Report."
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "type": "text",
+                    "value": "As a call progresses, timings are calculated for the duration of operations and\nother events. They are recorded in a call report that can be retrieved via\nthe "
+                  },
+                  {
+                    "type": "link",
+                    "url": "call.getReport",
+                    "title": null,
+                    "jsdoc": true,
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "call.getReport"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "text",
+                    "value": " API."
+                  }
+                ]
+              }
+            ]
+          },
+          "tags": [
+            {
+              "title": "public",
+              "description": null,
+              "lineNumber": 7,
+              "type": null
+            },
+            {
+              "title": "static",
+              "description": null,
+              "lineNumber": 8
+            },
+            {
+              "title": "name",
+              "description": null,
+              "lineNumber": 9,
+              "name": "metrics"
+            },
+            {
+              "title": "memberof",
+              "description": "call",
+              "lineNumber": 10
+            },
+            {
+              "title": "requires",
+              "description": null,
+              "lineNumber": 11,
+              "name": "callMe"
+            },
+            {
+              "title": "requires",
+              "description": null,
+              "lineNumber": 12,
+              "name": "call"
+            },
+            {
+              "title": "type",
+              "description": null,
+              "lineNumber": 13,
+              "type": {
+                "type": "NameExpression",
+                "name": "Object"
+              }
+            },
+            {
+              "title": "property",
+              "description": "The duration of a completed call starting from the make call API call or incoming call notification until the call ends.",
+              "lineNumber": 14,
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              },
+              "name": "CALL_DURATION"
+            },
+            {
+              "title": "property",
+              "description": "The amount of time it takes from when the `make call` operation starts up until right before we set local description.",
+              "lineNumber": 15,
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              },
+              "name": "MAKE_CALL_PRE_LOCAL_SETUP"
+            },
+            {
+              "title": "property",
+              "description": "The amount of time it takes from when a call is made until the call is setup locally. This does not include any remote session creation.",
+              "lineNumber": 16,
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              },
+              "name": "MAKE_CALL_LOCAL_SETUP"
+            },
+            {
+              "title": "property",
+              "description": "The amount of time it takes from when the create session request is sent until the SDK processes the response.",
+              "lineNumber": 17,
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              },
+              "name": "MAKE_CALL_REMOTE_SETUP"
+            },
+            {
+              "title": "property",
+              "description": "For outgoing calls, the time for the `make` operation to complete.",
+              "lineNumber": 18,
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              },
+              "name": "TIME_TO_MAKE"
+            },
+            {
+              "title": "property",
+              "description": "The amount of time it takes from when the `answer call` operation starts until it is setup locally.",
+              "lineNumber": 19,
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              },
+              "name": "ANSWER_CALL_LOCAL_SETUP"
+            },
+            {
+              "title": "property",
+              "description": "The amount of time it takes from when the `answer call` operation starts up until right before we set local description.",
+              "lineNumber": 20,
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              },
+              "name": "ANSWER_CALL_PRE_LOCAL_SETUP"
+            },
+            {
+              "title": "property",
+              "description": "For incoming calls, the time for the `answer` operation to complete.",
+              "lineNumber": 21,
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              },
+              "name": "TIME_TO_ANSWER"
+            },
+            {
+              "title": "property",
+              "description": "For incoming calls, the time from the call first being received until it has been answered. Includes call processing and setup, as well as time for the answer API to have been called.",
+              "lineNumber": 22,
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              },
+              "name": "TIME_FROM_RECEIVE_TO_ANSWER"
+            },
+            {
+              "title": "property",
+              "description": "The amount of time it takes from answering an incoming call until media is connected.",
+              "lineNumber": 23,
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              },
+              "name": "TIME_TO_MEDIA_DURATION"
+            },
+            {
+              "title": "property",
+              "description": "For incoming calls, the time from the call first being received until media is connected. Similar to `TIME_FROM_RECEIVE_TO_ANSWER`, but without the `answer` REST request.",
+              "lineNumber": 24,
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              },
+              "name": "TIME_TO_CALL_SETUP_DURATION"
+            },
+            {
+              "title": "property",
+              "description": "The amount of time it takes from when a call is made until the SDK recieves the remote ringing notification.",
+              "lineNumber": 25,
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              },
+              "name": "TIME_TO_RINGING"
+            },
+            {
+              "title": "property",
+              "description": "The amount of time it takes for the ignore call to complete.",
+              "lineNumber": 26,
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              },
+              "name": "TIME_TO_IGNORE"
+            },
+            {
+              "title": "property",
+              "description": "The amount of time it takes for the reject call to complete.",
+              "lineNumber": 27,
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              },
+              "name": "TIME_TO_REJECT"
+            },
+            {
+              "title": "property",
+              "description": "The amount of time it takes from when the local `add media` operation starts until it has finished.",
+              "lineNumber": 28,
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              },
+              "name": "TIME_TO_ADD_MEDIA"
+            },
+            {
+              "title": "property",
+              "description": "The amount of time it takes from when the SDK receives a remote `add media` notification until it is handled and operation completes.",
+              "lineNumber": 29,
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              },
+              "name": "TIME_TO_ADD_MEDIA_REMOTE"
+            },
+            {
+              "title": "property",
+              "description": "The amount of time it takes from when the local `remove media` operation starts until it has finished.",
+              "lineNumber": 30,
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              },
+              "name": "TIME_TO_REMOVE_MEDIA"
+            },
+            {
+              "title": "property",
+              "description": "The amount of time it takes from when the SDK receives a remote `remove media` notification until it is handled and operation completes.",
+              "lineNumber": 31,
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              },
+              "name": "TIME_TO_REMOVE_MEDIA_REMOTE"
+            },
+            {
+              "title": "property",
+              "description": "The amount of time it takes from when the `restart media` operation starts until it has finished.",
+              "lineNumber": 32,
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              },
+              "name": "TIME_TO_RESTART_MEDIA"
+            },
+            {
+              "title": "property",
+              "description": "The amount of time it takes from when the local `hold` operation starts until it has finished.",
+              "lineNumber": 33,
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              },
+              "name": "TIME_TO_HOLD_LOCAL"
+            },
+            {
+              "title": "property",
+              "description": "The amount of time it takes from when the SDK receives a remote `hold` notification until it is handled and operation completes.",
+              "lineNumber": 34,
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              },
+              "name": "TIME_TO_HOLD_REMOTE"
+            },
+            {
+              "title": "property",
+              "description": "The amount of time it takes from when the local `unhold` operation starts until it has finished.",
+              "lineNumber": 35,
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              },
+              "name": "TIME_TO_UNHOLD_LOCAL"
+            },
+            {
+              "title": "property",
+              "description": "The amount of time it takes from when the SDK receives a remote `unhold` notification until it is handled and operation completes.",
+              "lineNumber": 36,
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              },
+              "name": "TIME_TO_UNHOLD_REMOTE"
+            },
+            {
+              "title": "property",
+              "description": "The amount of time it takes from when the local description is set to when all ICE candidates have been collected.",
+              "lineNumber": 37,
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              },
+              "name": "TIME_TO_COLLECT_ICE_CANDIDATES"
+            },
+            {
+              "title": "property",
+              "description": "The amount of time it takes from when the `ice collection` operation starts until each relay candidate has been recieved.",
+              "lineNumber": 38,
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              },
+              "name": "TIME_TO_RELAY_CANDIDATES"
+            },
+            {
+              "title": "property",
+              "description": "The amount of time it takes from when the `send custom parameters` operation starts until it has finished.",
+              "lineNumber": 39,
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              },
+              "name": "TIME_TO_SEND_CUSTOM_PARAMETERS"
+            },
+            {
+              "title": "property",
+              "description": "The amount of time it takes from when the `forward call` operation starts until it has finished.",
+              "lineNumber": 40,
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              },
+              "name": "TIME_TO_FORWARD"
+            },
+            {
+              "title": "property",
+              "description": "The amount of time it takes from when the `direct transfer` operation starts until it has finished.",
+              "lineNumber": 41,
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              },
+              "name": "TIME_TO_DIRECT_TRANSFER"
+            },
+            {
+              "title": "property",
+              "description": "The amount of time it takes from when the `consultative transfer` operation starts until it has finished.",
+              "lineNumber": 42,
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              },
+              "name": "TIME_TO_CONSULTATIVE_TRANSFER"
+            },
+            {
+              "title": "property",
+              "description": "The amount of time it takes from when the `join call` operation starts until it has finished.",
+              "lineNumber": 43,
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              },
+              "name": "TIME_TO_JOIN"
+            },
+            {
+              "title": "example",
+              "description": "const report = client.call.getReport(callId)\nconst callDuration = report.metrics.find(metric => metric.type === client.call.metrics.CALL_DURATION)\nlog(`Call duration was ${callDuration.data}ms.`)",
+              "lineNumber": 44
+            }
+          ],
+          "loc": {
+            "start": {
+              "line": 121,
+              "column": 0
+            },
+            "end": {
+              "line": 169,
+              "column": 3
+            }
+          },
+          "context": {
+            "loc": {
+              "start": {
+                "line": 170,
+                "column": 0
+              },
+              "end": {
+                "line": 201,
+                "column": 1
+              }
+            },
+            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/call/callstack/reporter/constants.js"
+          },
+          "augments": [],
+          "examples": [
+            {
+              "description": "const report = client.call.getReport(callId)\nconst callDuration = report.metrics.find(metric => metric.type === client.call.metrics.CALL_DURATION)\nlog(`Call duration was ${callDuration.data}ms.`)"
+            }
+          ],
+          "implements": [],
+          "params": [],
+          "properties": [
+            {
+              "title": "property",
+              "name": "CALL_DURATION",
+              "lineNumber": 14,
+              "description": {
+                "type": "root",
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "The duration of a completed call starting from the make call API call or incoming call notification until the call ends."
+                      }
+                    ]
+                  }
+                ]
+              },
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              }
+            },
+            {
+              "title": "property",
+              "name": "MAKE_CALL_PRE_LOCAL_SETUP",
+              "lineNumber": 15,
+              "description": {
+                "type": "root",
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "The amount of time it takes from when the "
+                      },
+                      {
+                        "type": "inlineCode",
+                        "value": "make call"
+                      },
+                      {
+                        "type": "text",
+                        "value": " operation starts up until right before we set local description."
+                      }
+                    ]
+                  }
+                ]
+              },
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              }
+            },
+            {
+              "title": "property",
+              "name": "MAKE_CALL_LOCAL_SETUP",
+              "lineNumber": 16,
+              "description": {
+                "type": "root",
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "The amount of time it takes from when a call is made until the call is setup locally. This does not include any remote session creation."
+                      }
+                    ]
+                  }
+                ]
+              },
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              }
+            },
+            {
+              "title": "property",
+              "name": "MAKE_CALL_REMOTE_SETUP",
+              "lineNumber": 17,
+              "description": {
+                "type": "root",
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "The amount of time it takes from when the create session request is sent until the SDK processes the response."
+                      }
+                    ]
+                  }
+                ]
+              },
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              }
+            },
+            {
+              "title": "property",
+              "name": "TIME_TO_MAKE",
+              "lineNumber": 18,
+              "description": {
+                "type": "root",
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "For outgoing calls, the time for the "
+                      },
+                      {
+                        "type": "inlineCode",
+                        "value": "make"
+                      },
+                      {
+                        "type": "text",
+                        "value": " operation to complete."
+                      }
+                    ]
+                  }
+                ]
+              },
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              }
+            },
+            {
+              "title": "property",
+              "name": "ANSWER_CALL_LOCAL_SETUP",
+              "lineNumber": 19,
+              "description": {
+                "type": "root",
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "The amount of time it takes from when the "
+                      },
+                      {
+                        "type": "inlineCode",
+                        "value": "answer call"
+                      },
+                      {
+                        "type": "text",
+                        "value": " operation starts until it is setup locally."
+                      }
+                    ]
+                  }
+                ]
+              },
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              }
+            },
+            {
+              "title": "property",
+              "name": "ANSWER_CALL_PRE_LOCAL_SETUP",
+              "lineNumber": 20,
+              "description": {
+                "type": "root",
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "The amount of time it takes from when the "
+                      },
+                      {
+                        "type": "inlineCode",
+                        "value": "answer call"
+                      },
+                      {
+                        "type": "text",
+                        "value": " operation starts up until right before we set local description."
+                      }
+                    ]
+                  }
+                ]
+              },
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              }
+            },
+            {
+              "title": "property",
+              "name": "TIME_TO_ANSWER",
+              "lineNumber": 21,
+              "description": {
+                "type": "root",
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "For incoming calls, the time for the "
+                      },
+                      {
+                        "type": "inlineCode",
+                        "value": "answer"
+                      },
+                      {
+                        "type": "text",
+                        "value": " operation to complete."
+                      }
+                    ]
+                  }
+                ]
+              },
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              }
+            },
+            {
+              "title": "property",
+              "name": "TIME_FROM_RECEIVE_TO_ANSWER",
+              "lineNumber": 22,
+              "description": {
+                "type": "root",
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "For incoming calls, the time from the call first being received until it has been answered. Includes call processing and setup, as well as time for the answer API to have been called."
+                      }
+                    ]
+                  }
+                ]
+              },
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              }
+            },
+            {
+              "title": "property",
+              "name": "TIME_TO_MEDIA_DURATION",
+              "lineNumber": 23,
+              "description": {
+                "type": "root",
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "The amount of time it takes from answering an incoming call until media is connected."
+                      }
+                    ]
+                  }
+                ]
+              },
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              }
+            },
+            {
+              "title": "property",
+              "name": "TIME_TO_CALL_SETUP_DURATION",
+              "lineNumber": 24,
+              "description": {
+                "type": "root",
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "For incoming calls, the time from the call first being received until media is connected. Similar to "
+                      },
+                      {
+                        "type": "inlineCode",
+                        "value": "TIME_FROM_RECEIVE_TO_ANSWER"
+                      },
+                      {
+                        "type": "text",
+                        "value": ", but without the "
+                      },
+                      {
+                        "type": "inlineCode",
+                        "value": "answer"
+                      },
+                      {
+                        "type": "text",
+                        "value": " REST request."
+                      }
+                    ]
+                  }
+                ]
+              },
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              }
+            },
+            {
+              "title": "property",
+              "name": "TIME_TO_RINGING",
+              "lineNumber": 25,
+              "description": {
+                "type": "root",
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "The amount of time it takes from when a call is made until the SDK recieves the remote ringing notification."
+                      }
+                    ]
+                  }
+                ]
+              },
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              }
+            },
+            {
+              "title": "property",
+              "name": "TIME_TO_IGNORE",
+              "lineNumber": 26,
+              "description": {
+                "type": "root",
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "The amount of time it takes for the ignore call to complete."
+                      }
+                    ]
+                  }
+                ]
+              },
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              }
+            },
+            {
+              "title": "property",
+              "name": "TIME_TO_REJECT",
+              "lineNumber": 27,
+              "description": {
+                "type": "root",
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "The amount of time it takes for the reject call to complete."
+                      }
+                    ]
+                  }
+                ]
+              },
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              }
+            },
+            {
+              "title": "property",
+              "name": "TIME_TO_ADD_MEDIA",
+              "lineNumber": 28,
+              "description": {
+                "type": "root",
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "The amount of time it takes from when the local "
+                      },
+                      {
+                        "type": "inlineCode",
+                        "value": "add media"
+                      },
+                      {
+                        "type": "text",
+                        "value": " operation starts until it has finished."
+                      }
+                    ]
+                  }
+                ]
+              },
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              }
+            },
+            {
+              "title": "property",
+              "name": "TIME_TO_ADD_MEDIA_REMOTE",
+              "lineNumber": 29,
+              "description": {
+                "type": "root",
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "The amount of time it takes from when the SDK receives a remote "
+                      },
+                      {
+                        "type": "inlineCode",
+                        "value": "add media"
+                      },
+                      {
+                        "type": "text",
+                        "value": " notification until it is handled and operation completes."
+                      }
+                    ]
+                  }
+                ]
+              },
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              }
+            },
+            {
+              "title": "property",
+              "name": "TIME_TO_REMOVE_MEDIA",
+              "lineNumber": 30,
+              "description": {
+                "type": "root",
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "The amount of time it takes from when the local "
+                      },
+                      {
+                        "type": "inlineCode",
+                        "value": "remove media"
+                      },
+                      {
+                        "type": "text",
+                        "value": " operation starts until it has finished."
+                      }
+                    ]
+                  }
+                ]
+              },
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              }
+            },
+            {
+              "title": "property",
+              "name": "TIME_TO_REMOVE_MEDIA_REMOTE",
+              "lineNumber": 31,
+              "description": {
+                "type": "root",
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "The amount of time it takes from when the SDK receives a remote "
+                      },
+                      {
+                        "type": "inlineCode",
+                        "value": "remove media"
+                      },
+                      {
+                        "type": "text",
+                        "value": " notification until it is handled and operation completes."
+                      }
+                    ]
+                  }
+                ]
+              },
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              }
+            },
+            {
+              "title": "property",
+              "name": "TIME_TO_RESTART_MEDIA",
+              "lineNumber": 32,
+              "description": {
+                "type": "root",
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "The amount of time it takes from when the "
+                      },
+                      {
+                        "type": "inlineCode",
+                        "value": "restart media"
+                      },
+                      {
+                        "type": "text",
+                        "value": " operation starts until it has finished."
+                      }
+                    ]
+                  }
+                ]
+              },
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              }
+            },
+            {
+              "title": "property",
+              "name": "TIME_TO_HOLD_LOCAL",
+              "lineNumber": 33,
+              "description": {
+                "type": "root",
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "The amount of time it takes from when the local "
+                      },
+                      {
+                        "type": "inlineCode",
+                        "value": "hold"
+                      },
+                      {
+                        "type": "text",
+                        "value": " operation starts until it has finished."
+                      }
+                    ]
+                  }
+                ]
+              },
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              }
+            },
+            {
+              "title": "property",
+              "name": "TIME_TO_HOLD_REMOTE",
+              "lineNumber": 34,
+              "description": {
+                "type": "root",
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "The amount of time it takes from when the SDK receives a remote "
+                      },
+                      {
+                        "type": "inlineCode",
+                        "value": "hold"
+                      },
+                      {
+                        "type": "text",
+                        "value": " notification until it is handled and operation completes."
+                      }
+                    ]
+                  }
+                ]
+              },
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              }
+            },
+            {
+              "title": "property",
+              "name": "TIME_TO_UNHOLD_LOCAL",
+              "lineNumber": 35,
+              "description": {
+                "type": "root",
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "The amount of time it takes from when the local "
+                      },
+                      {
+                        "type": "inlineCode",
+                        "value": "unhold"
+                      },
+                      {
+                        "type": "text",
+                        "value": " operation starts until it has finished."
+                      }
+                    ]
+                  }
+                ]
+              },
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              }
+            },
+            {
+              "title": "property",
+              "name": "TIME_TO_UNHOLD_REMOTE",
+              "lineNumber": 36,
+              "description": {
+                "type": "root",
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "The amount of time it takes from when the SDK receives a remote "
+                      },
+                      {
+                        "type": "inlineCode",
+                        "value": "unhold"
+                      },
+                      {
+                        "type": "text",
+                        "value": " notification until it is handled and operation completes."
+                      }
+                    ]
+                  }
+                ]
+              },
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              }
+            },
+            {
+              "title": "property",
+              "name": "TIME_TO_COLLECT_ICE_CANDIDATES",
+              "lineNumber": 37,
+              "description": {
+                "type": "root",
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "The amount of time it takes from when the local description is set to when all ICE candidates have been collected."
+                      }
+                    ]
+                  }
+                ]
+              },
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              }
+            },
+            {
+              "title": "property",
+              "name": "TIME_TO_RELAY_CANDIDATES",
+              "lineNumber": 38,
+              "description": {
+                "type": "root",
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "The amount of time it takes from when the "
+                      },
+                      {
+                        "type": "inlineCode",
+                        "value": "ice collection"
+                      },
+                      {
+                        "type": "text",
+                        "value": " operation starts until each relay candidate has been recieved."
+                      }
+                    ]
+                  }
+                ]
+              },
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              }
+            },
+            {
+              "title": "property",
+              "name": "TIME_TO_SEND_CUSTOM_PARAMETERS",
+              "lineNumber": 39,
+              "description": {
+                "type": "root",
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "The amount of time it takes from when the "
+                      },
+                      {
+                        "type": "inlineCode",
+                        "value": "send custom parameters"
+                      },
+                      {
+                        "type": "text",
+                        "value": " operation starts until it has finished."
+                      }
+                    ]
+                  }
+                ]
+              },
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              }
+            },
+            {
+              "title": "property",
+              "name": "TIME_TO_FORWARD",
+              "lineNumber": 40,
+              "description": {
+                "type": "root",
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "The amount of time it takes from when the "
+                      },
+                      {
+                        "type": "inlineCode",
+                        "value": "forward call"
+                      },
+                      {
+                        "type": "text",
+                        "value": " operation starts until it has finished."
+                      }
+                    ]
+                  }
+                ]
+              },
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              }
+            },
+            {
+              "title": "property",
+              "name": "TIME_TO_DIRECT_TRANSFER",
+              "lineNumber": 41,
+              "description": {
+                "type": "root",
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "The amount of time it takes from when the "
+                      },
+                      {
+                        "type": "inlineCode",
+                        "value": "direct transfer"
+                      },
+                      {
+                        "type": "text",
+                        "value": " operation starts until it has finished."
+                      }
+                    ]
+                  }
+                ]
+              },
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              }
+            },
+            {
+              "title": "property",
+              "name": "TIME_TO_CONSULTATIVE_TRANSFER",
+              "lineNumber": 42,
+              "description": {
+                "type": "root",
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "The amount of time it takes from when the "
+                      },
+                      {
+                        "type": "inlineCode",
+                        "value": "consultative transfer"
+                      },
+                      {
+                        "type": "text",
+                        "value": " operation starts until it has finished."
+                      }
+                    ]
+                  }
+                ]
+              },
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              }
+            },
+            {
+              "title": "property",
+              "name": "TIME_TO_JOIN",
+              "lineNumber": 43,
+              "description": {
+                "type": "root",
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "The amount of time it takes from when the "
+                      },
+                      {
+                        "type": "inlineCode",
+                        "value": "join call"
+                      },
+                      {
+                        "type": "text",
+                        "value": " operation starts until it has finished."
+                      }
+                    ]
+                  }
+                ]
+              },
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              }
+            }
+          ],
+          "returns": [],
+          "sees": [],
+          "throws": [],
+          "todos": [],
+          "yields": [],
+          "access": "public",
+          "scope": "static",
+          "name": "metrics",
+          "memberof": "call",
+          "type": {
+            "type": "NameExpression",
+            "name": "Object"
+          },
+          "members": {
+            "global": [],
+            "inner": [],
+            "instance": [],
+            "events": [],
+            "static": []
+          },
+          "path": [
+            {
+              "name": "call",
+              "kind": "namespace"
+            },
+            {
+              "name": "metrics",
+              "scope": "static"
+            }
+          ],
+          "namespace": "call.metrics"
         }
       ]
     },
@@ -22601,7 +25664,16 @@
                 "children": [
                   {
                     "type": "text",
-                    "value": "The websocket to the server has changed state."
+                    "value": "The WebSocket to the server has changed state."
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "type": "text",
+                    "value": "This event is only emitted when the WebSocket is connected, or has lost connection."
                   }
                 ]
               }
@@ -22611,23 +25683,23 @@
             {
               "title": "public",
               "description": null,
-              "lineNumber": 3,
+              "lineNumber": 5,
               "type": null
             },
             {
               "title": "memberof",
               "description": "connection",
-              "lineNumber": 4
+              "lineNumber": 6
             },
             {
               "title": "event",
               "description": "ws:change",
-              "lineNumber": 5
+              "lineNumber": 7
             },
             {
               "title": "param",
               "description": null,
-              "lineNumber": 6,
+              "lineNumber": 8,
               "type": {
                 "type": "NameExpression",
                 "name": "Object"
@@ -22637,7 +25709,7 @@
             {
               "title": "param",
               "description": "The platform",
-              "lineNumber": 7,
+              "lineNumber": 9,
               "type": {
                 "type": "NameExpression",
                 "name": "string"
@@ -22651,18 +25723,18 @@
               "column": 0
             },
             "end": {
-              "line": 9,
+              "line": 11,
               "column": 3
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 10,
+                "line": 12,
                 "column": 0
               },
               "end": {
-                "line": 10,
+                "line": 12,
                 "column": 36
               }
             },
@@ -22675,7 +25747,7 @@
             {
               "title": "param",
               "name": "params",
-              "lineNumber": 6,
+              "lineNumber": 8,
               "type": {
                 "type": "NameExpression",
                 "name": "Object"
@@ -22684,7 +25756,7 @@
                 {
                   "title": "param",
                   "name": "params.platform",
-                  "lineNumber": 7,
+                  "lineNumber": 9,
                   "description": {
                     "type": "root",
                     "children": [

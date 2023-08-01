@@ -1,13 +1,4 @@
 [COPYRIGHT © 2023 RIBBON COMMUNICATIONS OPERATING COMPANY, INC. ALL RIGHTS RESERVED]: #
----
-layout: page
-categories: quickstarts-javascript
-title: Get Started
-permalink: /quickstarts/javascript/newCallMe/Get%20Started
-position: 0
-categories:
-  - getting_started
----
 
 # Get Started
 
@@ -168,5 +159,6 @@ This diagram shows the initial message interaction between the three entities in
 
 - WebRTC Gateway
 - Accepts anonymous calls from Client, forwards request to callee and replies back to Client with an SDP offer.
+
 [COPYRIGHT © 2023 RIBBON COMMUNICATIONS OPERATING COMPANY, INC. ALL RIGHTS RESERVED]: #
 
