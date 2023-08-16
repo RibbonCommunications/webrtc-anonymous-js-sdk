@@ -3,7 +3,7 @@
  *
  * WebRTC.js
  * webrtc.anonymous.js
- * Version: 6.2.0-beta.1120
+ * Version: 6.2.0-beta.1121
  */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
@@ -3377,346 +3377,6 @@ const logManager = exports.logManager = manager;
 
 /***/ }),
 /* 26 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _extends2 = __webpack_require__(3);
-
-var _extends3 = _interopRequireDefault(_extends2);
-
-exports.getLocalTracks = getLocalTracks;
-exports.getCallAction = getCallAction;
-exports.getLocalOpTrackEvents = getLocalOpTrackEvents;
-exports.generateEndParams = generateEndParams;
-exports.getTrackDscpMapping = getTrackDscpMapping;
-exports.checkBandwidthControls = checkBandwidthControls;
-
-var _selectors = __webpack_require__(1);
-
-var _actions = __webpack_require__(8);
-
-var _eventTypes = __webpack_require__(10);
-
-var eventTypes = _interopRequireWildcard(_eventTypes);
-
-var _constants = __webpack_require__(7);
-
-var _selectors2 = __webpack_require__(24);
-
-var _fp = __webpack_require__(4);
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/**
- * Helper function to get all local tracks of a certain type
- *
- * @param {Object} context The bottle context object.
- * @param {string} id The id of the call
- * @param {string} [kind] Kind must be of type 'audio' or 'video'
- * @return {Array<Object>} returns an array of tracks of the given type
- */
-
-
-// Other plugins
-// Call plugin
-function getLocalTracks(context, id, kind) {
-  // TODO: Why is `context` passed-in if only state is needed?
-  const call = (0, _selectors.getCallById)(context.getState(), id);
-  const localTracks = call ? call.localTracks : [];
-  const tracks = localTracks.map(id => (0, _selectors2.getTrackById)(context.getState(), id));
-  return kind ? tracks.filter(track => track.kind === kind) : tracks;
-}
-
-// Libraries
-
-
-function tracksRemoved(action, prevState, currentState) {
-  /*
-   * Special-case: If the call was previously on remote hold with a track, then that
-   *    track was MoH and is being removed as part of the unhold operation. Need to
-   *    also emit an event to notify that the track is gone.
-   * This is needed because "stop MoH" and "unhold" are done in a single renegotiation
-   *    instead of as two.
-   */
-  const prevCall = (0, _selectors.getCallById)(prevState, action.payload.id);
-  if (prevCall.localHold === false && prevCall.remoteHold === true && prevCall.remoteTracks.length > 0) {
-    // Get the tracks from prevCall that are not in newCall.
-    const newCall = (0, _selectors.getCallById)(currentState, action.payload.id);
-    const removedTracks = prevCall.remoteTracks.filter(id => !newCall.remoteTracks.includes(id));
-    return removedTracks;
-  }
-  return [];
-}
-
-function getNewRemoteTracks(action, prevState, currentState) {
-  // Get the list of remote tracks previously on the call.
-  const prevCall = (0, _selectors.getCallById)(prevState, action.payload.id);
-  const { remoteTracks: prevRemote } = prevCall;
-
-  // Get the list of NEW remote tracks actually added to the Call by the operation.
-  // In early media scenarios, there will be a duplicate remote track.
-  const { localTracks = [], remoteTracks = [] } = action.payload;
-  const newRemote = (0, _fp.without)(prevRemote, remoteTracks);
-
-  const trackIds = [...localTracks, ...newRemote];
-
-  // Don't emit the event if no tracks were actually added.
-  // For example, when entering dual hold.
-  if (!trackIds || trackIds.length === 0) {
-    return undefined;
-  }
-
-  return trackIds;
-}
-
-/**
- * @typedef {Object} ActionEventMap
- * @property {function} callAction A redux action creator
- * @property {Array} eventFns An array of event creator functions
- */
-/**
- * Helper function that returns a call action function and events based on the
- * remote operation being requested
- * TODO: Move this somewhere better.
- * TODO: Do this differently / better.
- * @method getCallAction
- * @param (string) remoteOp Remote operation being requested
- * @returns {ActionEventMap} Action and event creator functions.
- */
-function getCallAction(remoteOp) {
-  function event(type) {
-    return function (action, prevState, currentState) {
-      const call = (0, _selectors.getCallById)(currentState, action.payload.id);
-      const { localTracks = [], remoteTracks = [] } = action.payload;
-      const trackIds = [...localTracks, ...remoteTracks];
-
-      switch (type) {
-        case eventTypes.CALL_STATE_CHANGE:
-          return {
-            type,
-            args: {
-              callId: action.payload.id,
-              previous: {
-                state: call.state,
-                localHold: call.localHold,
-                remoteHold: call.remoteHold
-              },
-              error: action.payload.error
-            },
-            skip: false
-          };
-        case eventTypes.CALL_TRACKS_REMOVED:
-          {
-            const removedTracks = tracksRemoved(action, prevState, currentState);
-            return {
-              type,
-              args: {
-                callId: action.payload.id,
-                trackIds: remoteOp === _constants.OPERATIONS.UNHOLD ? removedTracks : trackIds
-              },
-              skip: trackIds.length === 0 || remoteOp === _constants.OPERATIONS.UNHOLD && (!removedTracks || removedTracks.length === 0)
-            };
-          }
-        case eventTypes.CALL_TRACKS_ADDED:
-          return {
-            type,
-            args: {
-              callId: action.payload.id,
-              trackIds: getNewRemoteTracks(action, prevState, currentState)
-            },
-            skip: !getNewRemoteTracks(action, prevState, currentState)
-          };
-      }
-    };
-  }
-
-  // Determine what redux action the operation represents.
-  switch (remoteOp) {
-    case _constants.OPERATIONS.HOLD:
-      return {
-        callAction: _actions.callActions.remoteHoldFinish,
-        eventFns: [event(eventTypes.CALL_STATE_CHANGE), event(eventTypes.CALL_TRACKS_REMOVED)]
-      };
-    case _constants.OPERATIONS.UNHOLD:
-      return {
-        callAction: _actions.callActions.remoteUnholdFinish,
-        eventFns: [event(eventTypes.CALL_STATE_CHANGE), event(eventTypes.CALL_TRACKS_ADDED),
-        // If MoH we need an event to notify that the MoH track was removed
-        event(eventTypes.CALL_TRACKS_REMOVED)]
-      };
-    case _constants.OPERATIONS.ADD_MEDIA:
-      return {
-        callAction: _actions.callActions.remoteAddMediaFinish,
-        eventFns: [event(eventTypes.CALL_TRACKS_ADDED)]
-      };
-    case _constants.OPERATIONS.REMOVE_MEDIA:
-      return {
-        callAction: _actions.callActions.remoteRemoveMediaFinish,
-        eventFns: [event(eventTypes.CALL_TRACKS_REMOVED)]
-      };
-    case _constants.OPERATIONS.START_MOH:
-      return {
-        callAction: _actions.callActions.remoteStartMohFinish,
-        eventFns: [event(eventTypes.CALL_TRACKS_ADDED)]
-      };
-    case _constants.OPERATIONS.STOP_MOH:
-      return {
-        callAction: _actions.callActions.remoteStopMohFinish,
-        eventFns: [event(eventTypes.CALL_TRACKS_REMOVED)]
-      };
-    case _constants.OPERATIONS.SLOW_START:
-      return {
-        callAction: _actions.callActions.remoteSlowStart,
-        eventFns: []
-      };
-  }
-
-  return {
-    callAction: _actions.callActions.updateCall,
-    eventFns: []
-  };
-}
-
-function getLocalOpTrackEvents(callId, operation, action, prevState, currState) {
-  switch (operation) {
-    case _constants.OPERATIONS.HOLD:
-    case _constants.OPERATIONS.REMOVE_MEDIA:
-    case _constants.OPERATIONS.REMOVE_BASIC_MEDIA:
-      {
-        const trackIds = [];
-        if (action.payload.localTracks) {
-          trackIds.push(...action.payload.localTracks);
-        }
-        if (action.payload.remoteTracks) {
-          trackIds.push(...action.payload.remoteTracks);
-        }
-        if (trackIds.length) {
-          return {
-            type: eventTypes.CALL_TRACKS_REMOVED,
-            args: { callId, trackIds }
-          };
-        }
-        return;
-      }
-    case _constants.OPERATIONS.UNHOLD:
-    case _constants.OPERATIONS.ADD_MEDIA:
-    case _constants.OPERATIONS.ADD_BASIC_MEDIA:
-      {
-        const trackIds = getNewRemoteTracks(action, prevState, currState);
-        if (trackIds) {
-          return {
-            type: eventTypes.CALL_TRACKS_ADDED,
-            args: { callId, trackIds }
-          };
-        }
-        return;
-      }
-    case _constants.OPERATIONS.MEDIA_RESTART:
-      {
-        return {
-          type: eventTypes.MEDIA_RESTART,
-          args: { callId }
-        };
-      }
-  }
-}
-
-/**
- * Generates extra informational parameters for ending a call.
- *
- * @method generateEndParams
- * @param {string}  currentCallState The state of the current call, before it was ended.
- * @param {boolean} isLocal Specifies if end operation was caused by the local side.
- * @param {Object}  params Extra context information related to the call.
- * @param {string}  [params.reasonText]  Human-readable explanation for the call change.
- * @param {string}  [params.statusCode] Code representing the reason for the call change.
- * @param {string}  params.remoteName   Name of the remote participant.
- * @param {string}  params.remoteNumber Number of the remote participant.
- */
-function generateEndParams(currentCallState, isLocal, params) {
-  const endParams = {
-    isLocal,
-    remoteParticipant: {
-      displayNumber: params.remoteNumber,
-      displayName: params.remoteName
-    },
-    transition: {
-      prevState: currentCallState
-    }
-  };
-  if (params.statusCode) {
-    endParams.transition.statusCode = params.statusCode;
-  }
-  if (params.reasonText) {
-    endParams.transition.reasonText = params.reasonText;
-  }
-  return endParams;
-}
-
-/**
- * Maps media tracks with the dscpControls provided to ensure the correct senders are set up with the
- * proper networkPriority
- * @param {Object} trackLists
- * @param {Array<Track>} trackLists.audio The list of audio tracks
- * @param {Array<Track>} trackLists.video The list of video tracks
- * @param {Array<Track>} trackLists.screen The list of screen tracks
- * @param {Object} dscpControls The DSCP controls provided
- * @return {Object} An object map of track: dscpSetting for all applicable tracks
- */
-function getTrackDscpMapping(trackLists, dscpControls) {
-  const { audio: audioTracks, video: videoTracks, screen: screenTracks } = trackLists;
-
-  const dscpTrackMapping = {};
-  if (dscpControls) {
-    if (dscpControls.screenNetworkPriority) {
-      for (const screenTrack of screenTracks) {
-        dscpTrackMapping[screenTrack.id] = dscpControls.screenNetworkPriority;
-      }
-    }
-    if (dscpControls.audioNetworkPriority) {
-      for (const audioTrack of audioTracks) {
-        dscpTrackMapping[audioTrack.id] = dscpControls.audioNetworkPriority;
-      }
-    }
-    if (dscpControls.videoNetworkPriority) {
-      for (const videoTrack of videoTracks) {
-        dscpTrackMapping[videoTrack.id] = dscpControls.videoNetworkPriority;
-      }
-    }
-  }
-
-  return dscpTrackMapping;
-}
-
-/**
- * Checks whether the bandwidth controls provided exist and are numbers.
- * @param {BandwidthControls} bandwidthControls The bandwidth controls to check.
- */
-function checkBandwidthControls(bandwidthControls) {
-  // TODO: Is this function needed for anything other than ensuring
-  //    the bandwidth object has the "right" format? Is that even needed?
-  const finalBandwidthControls = (0, _extends3.default)({}, bandwidthControls);
-
-  // If there are no bandwidth limits set or the bandwidth limits provided are not numbers, set them to undefined
-  if (!bandwidthControls || !(bandwidthControls.audio && typeof bandwidthControls.audio === 'number')) {
-    finalBandwidthControls.audio = null;
-  }
-  if (!bandwidthControls || !(bandwidthControls.video && typeof bandwidthControls.video === 'number')) {
-    finalBandwidthControls.video = null;
-  }
-  return finalBandwidthControls;
-}
-
-/***/ }),
-/* 27 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4235,13 +3895,353 @@ function handleActions(handlers, defaultState, options) {
 
 
 /***/ }),
-/* 28 */
+/* 27 */
 /***/ (function(module, exports) {
 
 module.exports = function (it) {
   return typeof it === 'object' ? it !== null : typeof it === 'function';
 };
 
+
+/***/ }),
+/* 28 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _extends2 = __webpack_require__(3);
+
+var _extends3 = _interopRequireDefault(_extends2);
+
+exports.getLocalTracks = getLocalTracks;
+exports.getCallAction = getCallAction;
+exports.getLocalOpTrackEvents = getLocalOpTrackEvents;
+exports.generateEndParams = generateEndParams;
+exports.getTrackDscpMapping = getTrackDscpMapping;
+exports.checkBandwidthControls = checkBandwidthControls;
+
+var _selectors = __webpack_require__(1);
+
+var _actions = __webpack_require__(8);
+
+var _eventTypes = __webpack_require__(10);
+
+var eventTypes = _interopRequireWildcard(_eventTypes);
+
+var _constants = __webpack_require__(7);
+
+var _selectors2 = __webpack_require__(24);
+
+var _fp = __webpack_require__(4);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+ * Helper function to get all local tracks of a certain type
+ *
+ * @param {Object} context The bottle context object.
+ * @param {string} id The id of the call
+ * @param {string} [kind] Kind must be of type 'audio' or 'video'
+ * @return {Array<Object>} returns an array of tracks of the given type
+ */
+
+
+// Other plugins
+// Call plugin
+function getLocalTracks(context, id, kind) {
+  // TODO: Why is `context` passed-in if only state is needed?
+  const call = (0, _selectors.getCallById)(context.getState(), id);
+  const localTracks = call ? call.localTracks : [];
+  const tracks = localTracks.map(id => (0, _selectors2.getTrackById)(context.getState(), id));
+  return kind ? tracks.filter(track => track.kind === kind) : tracks;
+}
+
+// Libraries
+
+
+function tracksRemoved(action, prevState, currentState) {
+  /*
+   * Special-case: If the call was previously on remote hold with a track, then that
+   *    track was MoH and is being removed as part of the unhold operation. Need to
+   *    also emit an event to notify that the track is gone.
+   * This is needed because "stop MoH" and "unhold" are done in a single renegotiation
+   *    instead of as two.
+   */
+  const prevCall = (0, _selectors.getCallById)(prevState, action.payload.id);
+  if (prevCall.localHold === false && prevCall.remoteHold === true && prevCall.remoteTracks.length > 0) {
+    // Get the tracks from prevCall that are not in newCall.
+    const newCall = (0, _selectors.getCallById)(currentState, action.payload.id);
+    const removedTracks = prevCall.remoteTracks.filter(id => !newCall.remoteTracks.includes(id));
+    return removedTracks;
+  }
+  return [];
+}
+
+function getNewRemoteTracks(action, prevState, currentState) {
+  // Get the list of remote tracks previously on the call.
+  const prevCall = (0, _selectors.getCallById)(prevState, action.payload.id);
+  const { remoteTracks: prevRemote } = prevCall;
+
+  // Get the list of NEW remote tracks actually added to the Call by the operation.
+  // In early media scenarios, there will be a duplicate remote track.
+  const { localTracks = [], remoteTracks = [] } = action.payload;
+  const newRemote = (0, _fp.without)(prevRemote, remoteTracks);
+
+  const trackIds = [...localTracks, ...newRemote];
+
+  // Don't emit the event if no tracks were actually added.
+  // For example, when entering dual hold.
+  if (!trackIds || trackIds.length === 0) {
+    return undefined;
+  }
+
+  return trackIds;
+}
+
+/**
+ * @typedef {Object} ActionEventMap
+ * @property {function} callAction A redux action creator
+ * @property {Array} eventFns An array of event creator functions
+ */
+/**
+ * Helper function that returns a call action function and events based on the
+ * remote operation being requested
+ * TODO: Move this somewhere better.
+ * TODO: Do this differently / better.
+ * @method getCallAction
+ * @param (string) remoteOp Remote operation being requested
+ * @returns {ActionEventMap} Action and event creator functions.
+ */
+function getCallAction(remoteOp) {
+  function event(type) {
+    return function (action, prevState, currentState) {
+      const call = (0, _selectors.getCallById)(currentState, action.payload.id);
+      const { localTracks = [], remoteTracks = [] } = action.payload;
+      const trackIds = [...localTracks, ...remoteTracks];
+
+      switch (type) {
+        case eventTypes.CALL_STATE_CHANGE:
+          return {
+            type,
+            args: {
+              callId: action.payload.id,
+              previous: {
+                state: call.state,
+                localHold: call.localHold,
+                remoteHold: call.remoteHold
+              },
+              error: action.payload.error
+            },
+            skip: false
+          };
+        case eventTypes.CALL_TRACKS_REMOVED:
+          {
+            const removedTracks = tracksRemoved(action, prevState, currentState);
+            return {
+              type,
+              args: {
+                callId: action.payload.id,
+                trackIds: remoteOp === _constants.OPERATIONS.UNHOLD ? removedTracks : trackIds
+              },
+              skip: trackIds.length === 0 || remoteOp === _constants.OPERATIONS.UNHOLD && (!removedTracks || removedTracks.length === 0)
+            };
+          }
+        case eventTypes.CALL_TRACKS_ADDED:
+          return {
+            type,
+            args: {
+              callId: action.payload.id,
+              trackIds: getNewRemoteTracks(action, prevState, currentState)
+            },
+            skip: !getNewRemoteTracks(action, prevState, currentState)
+          };
+      }
+    };
+  }
+
+  // Determine what redux action the operation represents.
+  switch (remoteOp) {
+    case _constants.OPERATIONS.HOLD:
+      return {
+        callAction: _actions.callActions.remoteHoldFinish,
+        eventFns: [event(eventTypes.CALL_STATE_CHANGE), event(eventTypes.CALL_TRACKS_REMOVED)]
+      };
+    case _constants.OPERATIONS.UNHOLD:
+      return {
+        callAction: _actions.callActions.remoteUnholdFinish,
+        eventFns: [event(eventTypes.CALL_STATE_CHANGE), event(eventTypes.CALL_TRACKS_ADDED),
+        // If MoH we need an event to notify that the MoH track was removed
+        event(eventTypes.CALL_TRACKS_REMOVED)]
+      };
+    case _constants.OPERATIONS.ADD_MEDIA:
+      return {
+        callAction: _actions.callActions.remoteAddMediaFinish,
+        eventFns: [event(eventTypes.CALL_TRACKS_ADDED)]
+      };
+    case _constants.OPERATIONS.REMOVE_MEDIA:
+      return {
+        callAction: _actions.callActions.remoteRemoveMediaFinish,
+        eventFns: [event(eventTypes.CALL_TRACKS_REMOVED)]
+      };
+    case _constants.OPERATIONS.START_MOH:
+      return {
+        callAction: _actions.callActions.remoteStartMohFinish,
+        eventFns: [event(eventTypes.CALL_TRACKS_ADDED)]
+      };
+    case _constants.OPERATIONS.STOP_MOH:
+      return {
+        callAction: _actions.callActions.remoteStopMohFinish,
+        eventFns: [event(eventTypes.CALL_TRACKS_REMOVED)]
+      };
+    case _constants.OPERATIONS.SLOW_START:
+      return {
+        callAction: _actions.callActions.remoteSlowStart,
+        eventFns: []
+      };
+  }
+
+  return {
+    callAction: _actions.callActions.updateCall,
+    eventFns: []
+  };
+}
+
+function getLocalOpTrackEvents(callId, operation, action, prevState, currState) {
+  switch (operation) {
+    case _constants.OPERATIONS.HOLD:
+    case _constants.OPERATIONS.REMOVE_MEDIA:
+    case _constants.OPERATIONS.REMOVE_BASIC_MEDIA:
+      {
+        const trackIds = [];
+        if (action.payload.localTracks) {
+          trackIds.push(...action.payload.localTracks);
+        }
+        if (action.payload.remoteTracks) {
+          trackIds.push(...action.payload.remoteTracks);
+        }
+        if (trackIds.length) {
+          return {
+            type: eventTypes.CALL_TRACKS_REMOVED,
+            args: { callId, trackIds }
+          };
+        }
+        return;
+      }
+    case _constants.OPERATIONS.UNHOLD:
+    case _constants.OPERATIONS.ADD_MEDIA:
+    case _constants.OPERATIONS.ADD_BASIC_MEDIA:
+      {
+        const trackIds = getNewRemoteTracks(action, prevState, currState);
+        if (trackIds) {
+          return {
+            type: eventTypes.CALL_TRACKS_ADDED,
+            args: { callId, trackIds }
+          };
+        }
+        return;
+      }
+    case _constants.OPERATIONS.MEDIA_RESTART:
+      {
+        return {
+          type: eventTypes.MEDIA_RESTART,
+          args: { callId }
+        };
+      }
+  }
+}
+
+/**
+ * Generates extra informational parameters for ending a call.
+ *
+ * @method generateEndParams
+ * @param {string}  currentCallState The state of the current call, before it was ended.
+ * @param {boolean} isLocal Specifies if end operation was caused by the local side.
+ * @param {Object}  params Extra context information related to the call.
+ * @param {string}  [params.reasonText]  Human-readable explanation for the call change.
+ * @param {string}  [params.statusCode] Code representing the reason for the call change.
+ * @param {string}  params.remoteName   Name of the remote participant.
+ * @param {string}  params.remoteNumber Number of the remote participant.
+ */
+function generateEndParams(currentCallState, isLocal, params) {
+  const endParams = {
+    isLocal,
+    remoteParticipant: {
+      displayNumber: params.remoteNumber,
+      displayName: params.remoteName
+    },
+    transition: {
+      prevState: currentCallState
+    }
+  };
+  if (params.statusCode) {
+    endParams.transition.statusCode = params.statusCode;
+  }
+  if (params.reasonText) {
+    endParams.transition.reasonText = params.reasonText;
+  }
+  return endParams;
+}
+
+/**
+ * Maps media tracks with the dscpControls provided to ensure the correct senders are set up with the
+ * proper networkPriority
+ * @param {Object} trackLists
+ * @param {Array<Track>} trackLists.audio The list of audio tracks
+ * @param {Array<Track>} trackLists.video The list of video tracks
+ * @param {Array<Track>} trackLists.screen The list of screen tracks
+ * @param {Object} dscpControls The DSCP controls provided
+ * @return {Object} An object map of track: dscpSetting for all applicable tracks
+ */
+function getTrackDscpMapping(trackLists, dscpControls) {
+  const { audio: audioTracks, video: videoTracks, screen: screenTracks } = trackLists;
+
+  const dscpTrackMapping = {};
+  if (dscpControls) {
+    if (dscpControls.screenNetworkPriority) {
+      for (const screenTrack of screenTracks) {
+        dscpTrackMapping[screenTrack.id] = dscpControls.screenNetworkPriority;
+      }
+    }
+    if (dscpControls.audioNetworkPriority) {
+      for (const audioTrack of audioTracks) {
+        dscpTrackMapping[audioTrack.id] = dscpControls.audioNetworkPriority;
+      }
+    }
+    if (dscpControls.videoNetworkPriority) {
+      for (const videoTrack of videoTracks) {
+        dscpTrackMapping[videoTrack.id] = dscpControls.videoNetworkPriority;
+      }
+    }
+  }
+
+  return dscpTrackMapping;
+}
+
+/**
+ * Checks whether the bandwidth controls provided exist and are numbers.
+ * @param {BandwidthControls} bandwidthControls The bandwidth controls to check.
+ */
+function checkBandwidthControls(bandwidthControls) {
+  // TODO: Is this function needed for anything other than ensuring
+  //    the bandwidth object has the "right" format? Is that even needed?
+  const finalBandwidthControls = (0, _extends3.default)({}, bandwidthControls);
+
+  // If there are no bandwidth limits set or the bandwidth limits provided are not numbers, set them to undefined
+  if (!bandwidthControls || !(bandwidthControls.audio && typeof bandwidthControls.audio === 'number')) {
+    finalBandwidthControls.audio = null;
+  }
+  if (!bandwidthControls || !(bandwidthControls.video && typeof bandwidthControls.video === 'number')) {
+    finalBandwidthControls.video = null;
+  }
+  return finalBandwidthControls;
+}
 
 /***/ }),
 /* 29 */
@@ -4492,7 +4492,7 @@ exports.parseSimulcastStreamList = parser.parseSimulcastStreamList;
 /* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var isObject = __webpack_require__(28);
+var isObject = __webpack_require__(27);
 module.exports = function (it) {
   if (!isObject(it)) throw TypeError(it + ' is not an object!');
   return it;
@@ -6313,7 +6313,7 @@ exports.getVersion = getVersion;
  * for the @@ tag below with actual version value.
  */
 function getVersion() {
-  return '6.2.0-beta.1120';
+  return '6.2.0-beta.1121';
 }
 
 /***/ }),
@@ -7520,7 +7520,7 @@ const logFormatter = exports.logFormatter = _logFormatter2.default;
 /***/ (function(module, exports, __webpack_require__) {
 
 var META = __webpack_require__(75)('meta');
-var isObject = __webpack_require__(28);
+var isObject = __webpack_require__(27);
 var has = __webpack_require__(42);
 var setDesc = __webpack_require__(30).f;
 var id = 0;
@@ -8996,7 +8996,7 @@ function applyMiddleware() {
 /* 92 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var isObject = __webpack_require__(28);
+var isObject = __webpack_require__(27);
 var document = __webpack_require__(21).document;
 // typeof document.createElement is 'object' in old IE
 var is = isObject(document) && isObject(document.createElement);
@@ -9010,7 +9010,7 @@ module.exports = function (it) {
 /***/ (function(module, exports, __webpack_require__) {
 
 // 7.1.1 ToPrimitive(input [, PreferredType])
-var isObject = __webpack_require__(28);
+var isObject = __webpack_require__(27);
 // instead of the ES6 spec version, we didn't implement @@toPrimitive case
 // and the second argument - flag - preferred type is a string
 module.exports = function (it, S) {
@@ -9490,7 +9490,7 @@ function handlersChanged(handlerMap) {
 /* 113 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var isObject = __webpack_require__(28);
+var isObject = __webpack_require__(27);
 module.exports = function (it, TYPE) {
   if (!isObject(it) || it._t !== TYPE) throw TypeError('Incompatible receiver, ' + TYPE + ' required!');
   return it;
@@ -12326,7 +12326,7 @@ module.exports = function (exec) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var anObject = __webpack_require__(34);
-var isObject = __webpack_require__(28);
+var isObject = __webpack_require__(27);
 var newPromiseCapability = __webpack_require__(108);
 
 module.exports = function (C, x) {
@@ -12832,7 +12832,7 @@ var hide = __webpack_require__(41);
 var redefineAll = __webpack_require__(109);
 var forOf = __webpack_require__(68);
 var anInstance = __webpack_require__(107);
-var isObject = __webpack_require__(28);
+var isObject = __webpack_require__(27);
 var setToStringTag = __webpack_require__(67);
 var dP = __webpack_require__(30).f;
 var each = __webpack_require__(255)(0);
@@ -22450,7 +22450,7 @@ var global = __webpack_require__(21);
 var ctx = __webpack_require__(40);
 var classof = __webpack_require__(106);
 var $export = __webpack_require__(18);
-var isObject = __webpack_require__(28);
+var isObject = __webpack_require__(27);
 var aFunction = __webpack_require__(62);
 var anInstance = __webpack_require__(107);
 var forOf = __webpack_require__(68);
@@ -23912,7 +23912,7 @@ var wksDefine = __webpack_require__(110);
 var enumKeys = __webpack_require__(235);
 var isArray = __webpack_require__(148);
 var anObject = __webpack_require__(34);
-var isObject = __webpack_require__(28);
+var isObject = __webpack_require__(27);
 var toObject = __webpack_require__(53);
 var toIObject = __webpack_require__(45);
 var toPrimitive = __webpack_require__(93);
@@ -25577,7 +25577,7 @@ var _actionTypes = __webpack_require__(81);
 
 var actionTypes = _interopRequireWildcard(_actionTypes);
 
-var _reduxActions = __webpack_require__(27);
+var _reduxActions = __webpack_require__(26);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -26002,7 +26002,7 @@ module.exports = function (original, length) {
 /* 257 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var isObject = __webpack_require__(28);
+var isObject = __webpack_require__(27);
 var isArray = __webpack_require__(148);
 var SPECIES = __webpack_require__(23)('species');
 
@@ -27137,7 +27137,7 @@ var _actionTypes = __webpack_require__(159);
 
 var actionTypes = _interopRequireWildcard(_actionTypes);
 
-var _reduxActions = __webpack_require__(27);
+var _reduxActions = __webpack_require__(26);
 
 var _utils = __webpack_require__(17);
 
@@ -28187,7 +28187,7 @@ var _actionTypes = __webpack_require__(20);
 
 var actionTypes = _interopRequireWildcard(_actionTypes);
 
-var _reduxActions = __webpack_require__(27);
+var _reduxActions = __webpack_require__(26);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -28243,7 +28243,7 @@ var _actionTypes = __webpack_require__(20);
 
 var actionTypes = _interopRequireWildcard(_actionTypes);
 
-var _reduxActions = __webpack_require__(27);
+var _reduxActions = __webpack_require__(26);
 
 var _fp = __webpack_require__(4);
 
@@ -28333,7 +28333,7 @@ var _actionTypes = __webpack_require__(20);
 
 var actionTypes = _interopRequireWildcard(_actionTypes);
 
-var _reduxActions = __webpack_require__(27);
+var _reduxActions = __webpack_require__(26);
 
 var _fp = __webpack_require__(4);
 
@@ -28504,7 +28504,7 @@ var _actionTypes = __webpack_require__(20);
 
 var actionTypes = _interopRequireWildcard(_actionTypes);
 
-var _reduxActions = __webpack_require__(27);
+var _reduxActions = __webpack_require__(26);
 
 var _fp = __webpack_require__(4);
 
@@ -28611,7 +28611,7 @@ var _actionTypes = __webpack_require__(20);
 
 var actionTypes = _interopRequireWildcard(_actionTypes);
 
-var _reduxActions = __webpack_require__(27);
+var _reduxActions = __webpack_require__(26);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -29986,7 +29986,7 @@ var has = __webpack_require__(42);
 var $export = __webpack_require__(18);
 var createDesc = __webpack_require__(51);
 var anObject = __webpack_require__(34);
-var isObject = __webpack_require__(28);
+var isObject = __webpack_require__(27);
 
 function set(target, propertyKey, V /* , receiver */) {
   var receiver = arguments.length < 4 ? target : arguments[3];
@@ -30608,7 +30608,7 @@ module.exports = __webpack_require__(15).Object.freeze;
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.2.5 Object.freeze(O)
-var isObject = __webpack_require__(28);
+var isObject = __webpack_require__(27);
 var meta = __webpack_require__(80).onFreeze;
 
 __webpack_require__(145)('freeze', function ($freeze) {
@@ -36815,6 +36815,95 @@ function Session(id, managers, config = {}) {
   }
 
   /**
+   * Special-case method that combines getUserMedia and adding the tracks to
+   *    the Session.
+   * The goal of combining these methods is for Proxy-mode, to reduce the number
+   *    of times messages need to cross the channel. This function reduces the
+   *    trips from 3 (createLocal, getTracks, addTracks) to 1 (addNewMedia).
+   * @method addNewMedia
+   * @param {Object} mediaConstraints
+   * @return {Promise}
+   */
+  function addNewMedia(constraints) {
+    /*
+     * Helper method that wraps the getUserMedia functions on the MediaManager.
+     *    The wrapper is to prevent them from rejecting, so even a failure will
+     *    resolve the promise returned by this function. This allows the calling
+     *    function to wait for all promises to settle, so that media can be
+     *    cleaned-up if need be. (For some reason Promise.allSettled was causing
+     *    errors...)
+     * @method getMedia
+     */
+    function getMedia(constraints) {
+      const { audio, video, screen } = constraints;
+
+      return new _promise2.default(resolve => {
+        if (audio || video) {
+          mediaManager.createLocal({ audio, video }).then(media => {
+            resolve({ status: 'fulfilled', value: media });
+          }).catch(err => {
+            resolve({ status: 'rejected', value: err });
+          });
+        } else if (screen) {
+          mediaManager.createLocalScreen({ screen }).then(media => {
+            resolve({ status: 'fulfilled', value: media });
+          }).catch(err => {
+            resolve({ status: 'rejected', value: err });
+          });
+        }
+      });
+    }
+
+    return new _promise2.default((resolve, reject) => {
+      const { audio, video, screen } = constraints;
+      let mediaProm, screenProm;
+
+      if (audio || video) {
+        mediaProm = getMedia({ audio, video });
+      }
+      if (screen) {
+        screenProm = getMedia({ screen });
+      }
+
+      _promise2.default.all([mediaProm, screenProm]).then(results => {
+        if (results.some(result => result && result.status === 'rejected')) {
+          // At least one promise rejected. Clean-up any successful media, then
+          //    reject the original promise.
+          const medias = results.filter(result => result && result.status === 'fulfilled').map(result => result.value);
+
+          _promise2.default.all(medias.map(media => media.stop)).then(() => {
+            const err = results.find(result => result.status === 'rejected').value;
+
+            let errMessage;
+            if (err.name === 'OverconstrainedError') {
+              errMessage = `Failed to get media due to constraint: ${err.constraint}.`;
+            } else {
+              errMessage = `Failed to get media => Name: ${err.name}; Error Message :${err.message}.`;
+            }
+            log.info(errMessage);
+
+            const newErr = new Error(errMessage);
+            newErr.name = err.name;
+            reject(newErr);
+          });
+        } else {
+          // All media was gathered successfully.
+          const tracks = results.reduce((acc, cur) => {
+            // Add the tracks from the current media object to the accumulator.
+            //    If cur is undefined, just return the accumulator.
+            return cur ? acc.concat(cur.value.getTracks()) : acc;
+          }, []);
+
+          addTracks(tracks).then(() => {
+            const medias = results.filter(result => result && result.value).map(result => result.value);
+            resolve(medias);
+          }).catch(reject);
+        }
+      });
+    });
+  }
+
+  /**
    * The exposed API.
    */
   return {
@@ -36864,6 +36953,7 @@ function Session(id, managers, config = {}) {
     getIncomingRemoteTrackIds,
     getActiveRemoteTrackIds,
     insertAudio,
+    addNewMedia,
     // Event APIs.
     on,
     once,
@@ -37719,7 +37809,7 @@ var _actionTypes = __webpack_require__(49);
 
 var actionTypes = _interopRequireWildcard(_actionTypes);
 
-var _reduxActions = __webpack_require__(27);
+var _reduxActions = __webpack_require__(26);
 
 var _fp = __webpack_require__(4);
 
@@ -41647,7 +41737,7 @@ var _operations = __webpack_require__(386);
 
 var _operations2 = _interopRequireDefault(_operations);
 
-var _reduxActions = __webpack_require__(27);
+var _reduxActions = __webpack_require__(26);
 
 var _fp = __webpack_require__(4);
 
@@ -42409,7 +42499,7 @@ var actionTypes = _interopRequireWildcard(_actionTypes);
 
 var _constants = __webpack_require__(7);
 
-var _reduxActions = __webpack_require__(27);
+var _reduxActions = __webpack_require__(26);
 
 var _fp = __webpack_require__(4);
 
@@ -42525,7 +42615,7 @@ var _actionTypes = __webpack_require__(32);
 
 var actionTypes = _interopRequireWildcard(_actionTypes);
 
-var _reduxActions = __webpack_require__(27);
+var _reduxActions = __webpack_require__(26);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -45921,7 +46011,7 @@ var _constants = __webpack_require__(6);
 
 var _actions = __webpack_require__(8);
 
-var _call = __webpack_require__(26);
+var _call = __webpack_require__(28);
 
 var _eventTypes = __webpack_require__(10);
 
@@ -46281,7 +46371,7 @@ var _eventTypes = __webpack_require__(10);
 
 var _selectors = __webpack_require__(1);
 
-var _call = __webpack_require__(26);
+var _call = __webpack_require__(28);
 
 var _constants = __webpack_require__(6);
 
@@ -46756,7 +46846,7 @@ var _selectors = __webpack_require__(1);
 
 var _media = __webpack_require__(178);
 
-var _call = __webpack_require__(26);
+var _call = __webpack_require__(28);
 
 var _errors = __webpack_require__(5);
 
@@ -47003,7 +47093,7 @@ var _selectors = __webpack_require__(1);
 
 var _constants = __webpack_require__(6);
 
-var _call = __webpack_require__(26);
+var _call = __webpack_require__(28);
 
 var _remoteTracks = __webpack_require__(50);
 
@@ -47216,7 +47306,7 @@ var _selectors = __webpack_require__(1);
 
 var _constants = __webpack_require__(6);
 
-var _call = __webpack_require__(26);
+var _call = __webpack_require__(28);
 
 var _errors = __webpack_require__(5);
 
@@ -47553,8 +47643,6 @@ var _selectors = __webpack_require__(1);
 
 var _constants = __webpack_require__(14);
 
-var _call = __webpack_require__(26);
-
 var _errors = __webpack_require__(5);
 
 var _errors2 = _interopRequireDefault(_errors);
@@ -47565,10 +47653,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * Bottle wrapper for "answer session" operation.
  * @return {Function}
  */
-
-
-// Utils
-// Call plugin.
 function answerWebrtcSessionOperation(container) {
   const { context, logManager, CallstackSDP, WebRTC } = container;
 
@@ -47588,8 +47672,8 @@ function answerWebrtcSessionOperation(container) {
    * @return {string} Object.mediaId an identifier for media
    */
   async function answerWebrtcSession(mediaConstraints, sessionOptions) {
-    const { CallstackWebrtc, CallReporter } = container;
-    const { sessionId, bandwidth, dscpControls, callId } = sessionOptions;
+    const { CallReporter } = container;
+    const { sessionId, bandwidth, callId } = sessionOptions;
 
     const log = logManager.getLogger('CALL', callId);
     log.info('Setting up local WebRTC portions of call.');
@@ -47607,38 +47691,20 @@ function answerWebrtcSessionOperation(container) {
     const report = CallReporter.getReport(callId);
     const answerEvent = report.getEvent(eventId);
 
+    const gumEvent = answerEvent.addEvent(_constants.REPORT_EVENTS.GET_USER_MEDIA);
+    gumEvent.addData('mediaConstraints', mediaConstraints);
     let medias;
     try {
-      medias = await CallstackWebrtc.createLocal(mediaConstraints, callId);
-    } catch (error) {
-      log.debug('Failed to get media requested for the call.');
-      throw error;
-    }
-
-    let screen = [];
-    let audio = [];
-    let video = [];
-    let allTracks = [];
-
-    for (const eachMedia of medias) {
-      const tracks = await eachMedia.media.getTracks();
-      if (eachMedia.type === 'screen') {
-        screen = [...screen, ...tracks];
-      } else if (eachMedia.type === 'audio') {
-        audio = [...audio, ...tracks];
-      } else if (eachMedia.type === 'video') {
-        video = [...video, ...tracks];
-      }
-      allTracks = [...allTracks, ...tracks];
-    }
-
-    const dscpTrackMapping = (0, _call.getTrackDscpMapping)({ audio, video, screen }, dscpControls);
-    // eslint-disable-next-line no-useless-catch
-    try {
-      await session.addTracks(allTracks, dscpTrackMapping);
-    } catch (error) {
-      // Follow-up / TODO
-      throw new _errors2.default(error);
+      medias = await session.addNewMedia(mediaConstraints);
+      gumEvent.endEvent();
+    } catch (err) {
+      log.debug('Failed to get and add new media to call.');
+      const errorObj = new _errors2.default({
+        message: err.message,
+        code: _errors.callCodes.USER_MEDIA_ERROR
+      });
+      gumEvent.endEvent(errorObj);
+      throw errorObj;
     }
 
     /*
@@ -47692,7 +47758,7 @@ function answerWebrtcSessionOperation(container) {
     return {
       error: false,
       answerSDP: newSdp,
-      mediaIds: medias.map(media => media.media.id)
+      mediaIds: medias.map(media => media.id)
     };
   }
 
@@ -47700,6 +47766,7 @@ function answerWebrtcSessionOperation(container) {
 }
 
 // Other plugins.
+// Call plugin.
 
 /***/ }),
 /* 438 */
@@ -47863,7 +47930,7 @@ var _constants2 = __webpack_require__(6);
 
 var _eventTypes = __webpack_require__(10);
 
-var _call = __webpack_require__(26);
+var _call = __webpack_require__(28);
 
 /**
  * Bottle wrapper for "call status ended" notification handler.
@@ -48448,7 +48515,7 @@ var _selectors = __webpack_require__(1);
 
 var _constants = __webpack_require__(14);
 
-var _call = __webpack_require__(26);
+var _call = __webpack_require__(28);
 
 var _media = __webpack_require__(178);
 
@@ -50222,7 +50289,7 @@ var _errors = __webpack_require__(5);
 
 var _errors2 = _interopRequireDefault(_errors);
 
-var _call = __webpack_require__(26);
+var _call = __webpack_require__(28);
 
 var _constants = __webpack_require__(6);
 
@@ -51139,7 +51206,7 @@ exports.default = iceRestartOperation;
 
 var _selectors = __webpack_require__(1);
 
-var _call = __webpack_require__(26);
+var _call = __webpack_require__(28);
 
 var _constants = __webpack_require__(6);
 
@@ -53947,7 +54014,7 @@ var _constants2 = __webpack_require__(7);
 
 var _eventTypes = __webpack_require__(10);
 
-var _call = __webpack_require__(26);
+var _call = __webpack_require__(28);
 
 /**
  * Bottle wrapper for "session status ended" notification handler.
@@ -54490,7 +54557,7 @@ var _hasMediaFlowing = __webpack_require__(123);
 
 var _hasMediaFlowing2 = _interopRequireDefault(_hasMediaFlowing);
 
-var _call = __webpack_require__(26);
+var _call = __webpack_require__(28);
 
 var _remoteOperation = __webpack_require__(180);
 
@@ -54681,7 +54748,7 @@ var _setMediaInactive = __webpack_require__(517);
 
 var _setMediaInactive2 = _interopRequireDefault(_setMediaInactive);
 
-var _call = __webpack_require__(26);
+var _call = __webpack_require__(28);
 
 var _webrtc = __webpack_require__(518);
 
@@ -59773,7 +59840,7 @@ var _actionTypes = __webpack_require__(39);
 
 var actionTypes = _interopRequireWildcard(_actionTypes);
 
-var _reduxActions = __webpack_require__(27);
+var _reduxActions = __webpack_require__(26);
 
 var _fp = __webpack_require__(4);
 
@@ -60793,7 +60860,7 @@ var actionTypes = _interopRequireWildcard(_actionTypes);
 
 var _actionTypes2 = __webpack_require__(39);
 
-var _reduxActions = __webpack_require__(27);
+var _reduxActions = __webpack_require__(26);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
