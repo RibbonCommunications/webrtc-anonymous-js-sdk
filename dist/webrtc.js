@@ -3,7 +3,7 @@
  *
  * WebRTC.js
  * webrtc.anonymous.js
- * Version: 6.2.0-beta.1121
+ * Version: 6.2.0-beta.1122
  */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
@@ -4322,7 +4322,7 @@ exports.f = __webpack_require__(31) ? Object.defineProperty : function definePro
 /***/ (function(module, exports, __webpack_require__) {
 
 // Thank's IE8 for his funny defineProperty
-module.exports = !__webpack_require__(44)(function () {
+module.exports = !__webpack_require__(45)(function () {
   return Object.defineProperty({}, 'a', { get: function () { return 7; } }).a != 7;
 });
 
@@ -5033,6 +5033,85 @@ module.exports = function (it, key) {
 
 /***/ }),
 /* 43 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.update = update;
+exports.setSdpHandlers = setSdpHandlers;
+
+var _actionTypes = __webpack_require__(159);
+
+var actionTypes = _interopRequireWildcard(_actionTypes);
+
+var _sanitizeSdesFromSdp = __webpack_require__(266);
+
+var _modifySdpBandwidth = __webpack_require__(267);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+/**
+ * Add or update a specific key within the store.config.
+ *
+ * @param {Object} values The values that will be placed in the store.
+ * @param {string} [pluginName] The plugin name of the config being set.
+ * @return {Action} action A redux action.
+ */
+function update(values, pluginName = '') {
+  var payload;
+  // Use the plugin name as a substate key, if present.
+  if (pluginName) {
+    payload = {
+      [pluginName]: values
+    };
+  } else {
+    payload = values;
+  }
+
+  return {
+    type: actionTypes.CONFIG_UPDATE,
+    payload: payload
+  };
+}
+
+/**
+ * Updates the SDP Handlers in the call plugin configs
+ *
+ * @method setSdpHandlers
+ * @param {Array<call.SdpHandlerFunction>} sdpHandlers The list of SDP handler to set in the config.
+ * @returns {Object} A flux standard action.
+ */
+function setSdpHandlers(sdpHandlers) {
+  /*
+   * Set SDP handlers to be used for every operation:
+   *
+   * 1. Application provided SDP handlers.
+   *
+   * 2. Disable DTLS-SDES crypto method (ie. delete the line) if there's a better
+   *    crypto method enabled. WebRTC only allows one method to be enabled.
+   *    This is needed for interoperability with non-browser endpoints that include
+   *    SDES as a fallback method.
+   *
+   *
+   * 3. Modify sdp and add bandwidth limits on it if bandwidth controls are provided.
+   */
+  sdpHandlers.push(_sanitizeSdesFromSdp.sanitizeSdesFromSdp);
+  sdpHandlers.push(_modifySdpBandwidth.modifySdpBandwidth);
+
+  return {
+    type: actionTypes.SET_SDP_HANDLERS,
+    payload: {
+      sdpHandlers
+    }
+  };
+}
+
+/***/ }),
+/* 44 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -5696,7 +5775,7 @@ function version_version(uuid) {
 
 
 /***/ }),
-/* 44 */
+/* 45 */
 /***/ (function(module, exports) {
 
 module.exports = function (exec) {
@@ -5709,7 +5788,7 @@ module.exports = function (exec) {
 
 
 /***/ }),
-/* 45 */
+/* 46 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // to indexed object, toObject with fallback for non-array-like ES3 strings
@@ -5719,85 +5798,6 @@ module.exports = function (it) {
   return IObject(defined(it));
 };
 
-
-/***/ }),
-/* 46 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.update = update;
-exports.setSdpHandlers = setSdpHandlers;
-
-var _actionTypes = __webpack_require__(159);
-
-var actionTypes = _interopRequireWildcard(_actionTypes);
-
-var _sanitizeSdesFromSdp = __webpack_require__(266);
-
-var _modifySdpBandwidth = __webpack_require__(267);
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-
-/**
- * Add or update a specific key within the store.config.
- *
- * @param {Object} values The values that will be placed in the store.
- * @param {string} [pluginName] The plugin name of the config being set.
- * @return {Action} action A redux action.
- */
-function update(values, pluginName = '') {
-  var payload;
-  // Use the plugin name as a substate key, if present.
-  if (pluginName) {
-    payload = {
-      [pluginName]: values
-    };
-  } else {
-    payload = values;
-  }
-
-  return {
-    type: actionTypes.CONFIG_UPDATE,
-    payload: payload
-  };
-}
-
-/**
- * Updates the SDP Handlers in the call plugin configs
- *
- * @method setSdpHandlers
- * @param {Array<call.SdpHandlerFunction>} sdpHandlers The list of SDP handler to set in the config.
- * @returns {Object} A flux standard action.
- */
-function setSdpHandlers(sdpHandlers) {
-  /*
-   * Set SDP handlers to be used for every operation:
-   *
-   * 1. Application provided SDP handlers.
-   *
-   * 2. Disable DTLS-SDES crypto method (ie. delete the line) if there's a better
-   *    crypto method enabled. WebRTC only allows one method to be enabled.
-   *    This is needed for interoperability with non-browser endpoints that include
-   *    SDES as a fallback method.
-   *
-   *
-   * 3. Modify sdp and add bandwidth limits on it if bandwidth controls are provided.
-   */
-  sdpHandlers.push(_sanitizeSdesFromSdp.sanitizeSdesFromSdp);
-  sdpHandlers.push(_modifySdpBandwidth.modifySdpBandwidth);
-
-  return {
-    type: actionTypes.SET_SDP_HANDLERS,
-    payload: {
-      sdpHandlers
-    }
-  };
-}
 
 /***/ }),
 /* 47 */
@@ -6313,7 +6313,7 @@ exports.getVersion = getVersion;
  * for the @@ tag below with actual version value.
  */
 function getVersion() {
-  return '6.2.0-beta.1121';
+  return '6.2.0-beta.1122';
 }
 
 /***/ }),
@@ -7527,7 +7527,7 @@ var id = 0;
 var isExtensible = Object.isExtensible || function () {
   return true;
 };
-var FREEZE = !__webpack_require__(44)(function () {
+var FREEZE = !__webpack_require__(45)(function () {
   return isExtensible(Object.preventExtensions({}));
 });
 var setMeta = function (it) {
@@ -12070,7 +12070,7 @@ module.exports = { "default": __webpack_require__(193), __esModule: true };
 /* 128 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = !__webpack_require__(31) && !__webpack_require__(44)(function () {
+module.exports = !__webpack_require__(31) && !__webpack_require__(45)(function () {
   return Object.defineProperty(__webpack_require__(92)('div'), 'a', { get: function () { return 7; } }).a != 7;
 });
 
@@ -12080,7 +12080,7 @@ module.exports = !__webpack_require__(31) && !__webpack_require__(44)(function (
 /***/ (function(module, exports, __webpack_require__) {
 
 var has = __webpack_require__(42);
-var toIObject = __webpack_require__(45);
+var toIObject = __webpack_require__(46);
 var arrayIndexOf = __webpack_require__(196)(false);
 var IE_PROTO = __webpack_require__(97)('IE_PROTO');
 
@@ -12395,7 +12395,7 @@ module.exports = function (exec, skipClosing) {
 // most Object methods by ES6 should accept primitives
 var $export = __webpack_require__(18);
 var core = __webpack_require__(15);
-var fails = __webpack_require__(44);
+var fails = __webpack_require__(45);
 module.exports = function (KEY, exec) {
   var fn = (core.Object || {})[KEY] || Object[KEY];
   var exp = {};
@@ -12410,7 +12410,7 @@ module.exports = function (KEY, exec) {
 
 var DESCRIPTORS = __webpack_require__(31);
 var getKeys = __webpack_require__(52);
-var toIObject = __webpack_require__(45);
+var toIObject = __webpack_require__(46);
 var isEnum = __webpack_require__(65).f;
 module.exports = function (isEntries) {
   return function (it) {
@@ -12468,7 +12468,7 @@ exports.f = Object.getOwnPropertyNames || function getOwnPropertyNames(O) {
 
 var pIE = __webpack_require__(65);
 var createDesc = __webpack_require__(51);
-var toIObject = __webpack_require__(45);
+var toIObject = __webpack_require__(46);
 var toPrimitive = __webpack_require__(93);
 var has = __webpack_require__(42);
 var IE8_DOM_DEFINE = __webpack_require__(128);
@@ -12827,7 +12827,7 @@ module.exports = {
 var global = __webpack_require__(21);
 var $export = __webpack_require__(18);
 var meta = __webpack_require__(80);
-var fails = __webpack_require__(44);
+var fails = __webpack_require__(45);
 var hide = __webpack_require__(41);
 var redefineAll = __webpack_require__(109);
 var forOf = __webpack_require__(68);
@@ -20194,7 +20194,7 @@ var IObject = __webpack_require__(94);
 var $assign = Object.assign;
 
 // should work with symbols and should have deterministic property order (V8 bug)
-module.exports = !$assign || __webpack_require__(44)(function () {
+module.exports = !$assign || __webpack_require__(45)(function () {
   var A = {};
   var B = {};
   // eslint-disable-next-line no-undef
@@ -20229,7 +20229,7 @@ module.exports = !$assign || __webpack_require__(44)(function () {
 
 // false -> Array#indexOf
 // true  -> Array#includes
-var toIObject = __webpack_require__(45);
+var toIObject = __webpack_require__(46);
 var toLength = __webpack_require__(74);
 var toAbsoluteIndex = __webpack_require__(197);
 module.exports = function (IS_INCLUDES) {
@@ -22400,7 +22400,7 @@ module.exports = __webpack_require__(31) ? Object.defineProperties : function de
 var addToUnscopables = __webpack_require__(215);
 var step = __webpack_require__(135);
 var Iterators = __webpack_require__(66);
-var toIObject = __webpack_require__(45);
+var toIObject = __webpack_require__(46);
 
 // 22.1.3.4 Array.prototype.entries()
 // 22.1.3.13 Array.prototype.keys()
@@ -23902,7 +23902,7 @@ var DESCRIPTORS = __webpack_require__(31);
 var $export = __webpack_require__(18);
 var redefine = __webpack_require__(132);
 var META = __webpack_require__(80).KEY;
-var $fails = __webpack_require__(44);
+var $fails = __webpack_require__(45);
 var shared = __webpack_require__(98);
 var setToStringTag = __webpack_require__(67);
 var uid = __webpack_require__(75);
@@ -23914,7 +23914,7 @@ var isArray = __webpack_require__(148);
 var anObject = __webpack_require__(34);
 var isObject = __webpack_require__(27);
 var toObject = __webpack_require__(53);
-var toIObject = __webpack_require__(45);
+var toIObject = __webpack_require__(46);
 var toPrimitive = __webpack_require__(93);
 var createDesc = __webpack_require__(51);
 var _create = __webpack_require__(78);
@@ -24168,7 +24168,7 @@ module.exports = function (it) {
 /***/ (function(module, exports, __webpack_require__) {
 
 // fallback for IE11 buggy Object.getOwnPropertyNames with iframe and window
-var toIObject = __webpack_require__(45);
+var toIObject = __webpack_require__(46);
 var gOPN = __webpack_require__(149).f;
 var toString = {}.toString;
 
@@ -25236,7 +25236,7 @@ var _actions2 = __webpack_require__(262);
 
 var _actions3 = _interopRequireDefault(_actions2);
 
-var _actions4 = __webpack_require__(46);
+var _actions4 = __webpack_require__(43);
 
 var _utils = __webpack_require__(17);
 
@@ -26545,7 +26545,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = api;
 
-var _actions = __webpack_require__(46);
+var _actions = __webpack_require__(43);
 
 var actions = _interopRequireWildcard(_actions);
 
@@ -35440,7 +35440,7 @@ var _Peer = __webpack_require__(167);
 
 var _Peer2 = _interopRequireDefault(_Peer);
 
-var _uuid = __webpack_require__(43);
+var _uuid = __webpack_require__(44);
 
 var _eventemitter = __webpack_require__(37);
 
@@ -35564,7 +35564,7 @@ var _session = __webpack_require__(357);
 
 var _session2 = _interopRequireDefault(_session);
 
-var _uuid = __webpack_require__(43);
+var _uuid = __webpack_require__(44);
 
 var _eventemitter = __webpack_require__(37);
 
@@ -37698,7 +37698,7 @@ exports.default = baseAuth;
 
 var _interface = __webpack_require__(366);
 
-var _actions = __webpack_require__(46);
+var _actions = __webpack_require__(43);
 
 var _utils = __webpack_require__(17);
 
@@ -39113,7 +39113,7 @@ var _callstack = __webpack_require__(419);
 
 var _callstack2 = _interopRequireDefault(_callstack);
 
-var _actions = __webpack_require__(46);
+var _actions = __webpack_require__(43);
 
 var _kandyWebrtc = __webpack_require__(47);
 
@@ -39260,7 +39260,7 @@ var _utils = __webpack_require__(120);
 
 var _normalization = __webpack_require__(88);
 
-var _uuid = __webpack_require__(43);
+var _uuid = __webpack_require__(44);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -40713,7 +40713,7 @@ var _selectors2 = __webpack_require__(12);
 
 var _normalization = __webpack_require__(88);
 
-var _uuid = __webpack_require__(43);
+var _uuid = __webpack_require__(44);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -41022,6 +41022,8 @@ var _eventTypes = __webpack_require__(10);
 
 var eventTypes = _interopRequireWildcard(_eventTypes);
 
+var _actions2 = __webpack_require__(43);
+
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -41033,6 +41035,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @param  {Object} container.context The factory context.
  * @return {Object} Misc API.
  */
+// Call plugin.
 function createAPI(container) {
   const { context, CallManager, CallReporter, emitEvent, logManager, API_LOG_TAG } = container;
   const log = logManager.getLogger('CALL');
@@ -41413,7 +41416,34 @@ function createAPI(container) {
     return report ? report.getSerializable() : report;
   }
 
-  async function setSdpHandlers() {}
+  /**
+   * Set {@link call.SdpHandlerFunction SDP Handler Functions} that will be run as part of a pipeline for all future calls.
+   *  This will replace any SDP Handlers that were previously set.
+   *
+   * SDP handlers can be used to make modifications to the SDP (e.g., removing certain codecs)
+   *  before they are processed or sent to the other side.
+   *
+   * This is an advanced feature, changing the SDP handlers mid-call may cause
+   *  unexpected behaviour in future call operations for that call.
+   *
+   * @method setSdpHandlers
+   * @public
+   * @static
+   * @memberof call
+   * @requires call
+   * @requires callMe
+   * @param {Array<call.SdpHandlerFunction>} sdpHandlers The list of SDP handler functions to modify SDP.
+   * @return {undefined}
+   */
+  function setSdpHandlers(sdpHandlers) {
+    log.debug(`${API_LOG_TAG}call.setSdpHandlers, sdpHandlers:`, sdpHandlers);
+
+    const config = (0, _selectors.getOptions)(context.getState());
+    const options = {
+      removeH264Codecs: config.removeH264Codecs
+    };
+    context.dispatch((0, _actions2.setSdpHandlers)(sdpHandlers, options));
+  }
 
   /**
    * Changes the camera and/or microphone used for a Call's media input.
@@ -41505,7 +41535,9 @@ function createAPI(container) {
     getAvailableCodecs,
     setSdpHandlers
   };
-} // Call plugin.
+}
+
+// Other plugins
 
 /***/ }),
 /* 383 */
@@ -42672,7 +42704,7 @@ var _actions = __webpack_require__(8);
 
 var _fp = __webpack_require__(4);
 
-var _uuid = __webpack_require__(43);
+var _uuid = __webpack_require__(44);
 
 var _utils = __webpack_require__(120);
 
@@ -52795,7 +52827,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _uuid = __webpack_require__(43);
+var _uuid = __webpack_require__(44);
 
 // Generate a unique SDK GUID for the running SDK instance.
 const sdkId = (0, _uuid.v4)();
@@ -57611,7 +57643,7 @@ var _negotiations = __webpack_require__(544);
 
 var _negotiations2 = _interopRequireDefault(_negotiations);
 
-var _uuid = __webpack_require__(43);
+var _uuid = __webpack_require__(44);
 
 var _sdpTransform = __webpack_require__(33);
 
@@ -59280,7 +59312,7 @@ exports.default = createTimelineEvent;
 
 var _fp = __webpack_require__(4);
 
-var _uuid = __webpack_require__(43);
+var _uuid = __webpack_require__(44);
 
 /**
  * Creates a TimelineEvent.
@@ -59620,7 +59652,7 @@ var _events2 = _interopRequireDefault(_events);
 
 var _sagas = __webpack_require__(558);
 
-var _actions = __webpack_require__(46);
+var _actions = __webpack_require__(43);
 
 var _actions2 = __webpack_require__(72);
 
@@ -60728,7 +60760,7 @@ var _middleware2 = _interopRequireDefault(_middleware);
 
 var _actions = __webpack_require__(72);
 
-var _actions2 = __webpack_require__(46);
+var _actions2 = __webpack_require__(43);
 
 var _effects = __webpack_require__(16);
 
@@ -68679,7 +68711,7 @@ var _requestModule2 = _interopRequireDefault(_requestModule);
 
 var _interface = __webpack_require__(575);
 
-var _actions = __webpack_require__(46);
+var _actions = __webpack_require__(43);
 
 var _actions2 = __webpack_require__(72);
 
