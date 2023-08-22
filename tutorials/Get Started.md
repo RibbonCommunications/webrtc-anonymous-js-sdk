@@ -151,14 +151,14 @@ This diagram shows the initial message interaction between the three entities in
 ![Basic flow sequence](call_me_interaction_diagram.png)
 
 - Client Application (which developer needs to write by making use of our 4.x CallMe SDK)
-- This application sends an initial request to an application server to obtain the tokens.
-- It then sends a REST request to the WebRTC Gateway to make an anonymous call.
+  - This application sends an initial request to an application server to obtain the tokens.
+  - It then sends a REST request to the WebRTC Gateway to make an anonymous call.
 
 - Application/Web server
-- Responsible for generating the tokens upon Client's request
+  - Responsible for generating the tokens upon Client's request
 
 - WebRTC Gateway
-- Accepts anonymous calls from Client, forwards request to callee and replies back to Client with an SDP offer.
+  - Accepts anonymous calls from Client, forwards request to callee and replies back to Client with an SDP offer.
 
 [COPYRIGHT © 2023 RIBBON COMMUNICATIONS OPERATING COMPANY, INC. ALL RIGHTS RESERVED]: #
 
