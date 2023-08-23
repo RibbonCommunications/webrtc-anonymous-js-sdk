@@ -6,6 +6,7 @@ export const configs = [
       RIBBONTURN1: 'turns:turn-blue.rbbn.com:443?transport=tcp',
       DEFAULTCONFIGURL: 'https://unpkg.com/@kandy-io/link-config-us@2.0.0/dist/index.umd.js',
       SUBSCRIPTIONFQDN: 'webrtc-blue.rbbn.com',
+      WEBSOCKETFQDN: 'webrtc-blue.rbbn.com',
       RIBBON: 'Ribbon WebRTC'
     }
   }

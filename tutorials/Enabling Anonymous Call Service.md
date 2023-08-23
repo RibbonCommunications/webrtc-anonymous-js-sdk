@@ -17,7 +17,7 @@ The administrator should go through the following steps:
 Then search for the address of the user you want to add Anonymous Call service to.
 One way to search is to search by 'External Provider ID' as shown above.
 
-- Once you get a search result, select the entry and click on Edit icon to edit the account profile. Select _Services_ tab and then select 'Call Me' service from the list on the left side.
+- Once you get a search result, select the entry and click on Edit icon to edit the account profile. Select _Services_ tab and then select 'Call Me' service from the list on the left side. (1)
 
 ![Adding CallMe Service](adding_callme_service.png)
 
@@ -25,6 +25,12 @@ Then check the appropriate checkboxes and click _Save_ button.
 
 This completes the process of adding Anonymous Call service for a user account.
 Repeat above steps for any account you wish to allow for receiving anonymous calls.
+
+(1) - If you can't see the 'Call Me' service in the above step, you may want to provision it first:
+
+- Select _Products_ tab and then from _Available Products_ list, select 'Call Me' entry and click _Add_ button to move this service into the _Assigned Producs_ list. Then resume with the above step.
+
+![Provisioninging CallMe Service](provisioning_callme_service.png)
 
 [COPYRIGHT © 2023 RIBBON COMMUNICATIONS OPERATING COMPANY, INC. ALL RIGHTS RESERVED]: #
 

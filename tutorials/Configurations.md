@@ -51,32 +51,6 @@ authentication: {
 }
 ```
 
-Examples of the WebRTC Gateway Systems include:
-
-NA:
-
-- RESTURL: webrtc-na.kandy.io port 443
-- WebSocketURL: webrtc-na.kandy.io port 443
-- iceServers:
-  - turn-na-1.kandy.io port 3478 for STUN and 443 for TURNS
-  - turn-na-2.kandy.io port 3478 for STUN and 443 for TURNS
-
-EMEA:
-
-- RESTURL: webrtc-em.kandy.io port 443
-- WebSocketURL: webrtc-em.kandy.io port 443
-- iceServers:
-  - turn-em-1.kandy.io port 3478 for STUN and 443 for TURNS
-  - turn-em-2.kandy.io port 3478 for STUN and 443 for TURNS
-
-APAC:
-
-- RESTURL: webrtc-ap.kandy.io port 443
-- WebSocketURL: webrtc-ap.kandy.io port 443
-- iceServers:
-  - turn-ap-1.kandy.io port 3478 for STUN and 443 for TURNS
-  - turn-ap-2.kandy.io port 3478 for STUN and 443 for TURNS
-
 ### Logs
 
 The Logs configs are used to change the SDK's internal logging behaviour. The SDK will generate logs that provide information about what it is doing, such as info and debug messages, warnings, and errors. These configurations allow an application to select which levels they would like to see logs for, and how those logs should be handled.

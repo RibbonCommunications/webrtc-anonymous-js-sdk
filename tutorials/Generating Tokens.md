@@ -19,6 +19,14 @@ The administrator should go through the following steps to generate them:
 
 ![Selecting Schemas](selecting_auth_schemas.png)
 
+- This will display the list of available authentication schemas, where one can create a new one by clicking on _New_ button.
+
+![Available Schemas](available_authentication_schemas.png)
+
+- In the pop-up dialog that is displayed, select the schema type, which should be one based on a _Time-Limited Token_
+
+![Selecting Time Limited Token](select_time_limited_token.png)
+
 - This will bring the following pop-up where administrator needs to fill in at least the mandatory fields seen below.
 
 ![Provide the key & token realm](provisioning_&_saving_key_and_realm.png)
@@ -47,12 +55,12 @@ const crypto = require('crypto')
 2. Define the addresses for caller & callee:
 
 ```javascript
-const account = 'mycaller@cpaasapi.nds.genband.com'
+const account = 'mycaller@mydomain.com'
 const caller = 'sip:' + account
-const callee = 'sip:mycallee@cpaasapi.nds.genband.com'
+const callee = 'sip:mycallee@mydomain.com'
 ```
 
-You will need to modify the full code example we provide and replace 'mycaller' & 'mycallee' with the actual user IDs involved in the anonymous call. These are the same user IDs used in [Anonymous Calls Quickstart](Anonymous%20Calls).
+You will need to modify the full code example we provide and replace 'mycaller' & 'mycallee' with the actual user IDs involved in the anonymous call. Also replace 'mydomain' with your actual domain value. The User Ids & domain can be obtained from the values used in [Anonymous Calls Quickstart](Anonymous%20Calls).
 
 3. Define the key you got from the previous section and generate a current timestamp:
 
