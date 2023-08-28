@@ -1,9 +1,8 @@
-<!-- COPYRIGHT © 2023 RIBBON COMMUNICATIONS OPERATING COMPANY, INC. ALL RIGHTS RESERVED -->
 <!doctype html>
 <html>
 <head>
   <meta charset='utf-8' />
-  <title>webrtc-anonymous-js-sdk 6.1.0 | Documentation</title>
+  <title>webrtc-anonymous-js-sdk 4.41.3 | Documentation</title>
   <meta name='viewport' content='width=device-width,initial-scale=1'>
   <link href='assets/bass.css' type='text/css' rel='stylesheet' />
   <link href='assets/style.css' type='text/css' rel='stylesheet' />
@@ -15,7 +14,7 @@
       <div id='split-left' class='overflow-auto fs0 height-viewport-100'>
         <div class='py1 px2'>
           <h3 class='mb0 no-anchor'>webrtc-anonymous-js-sdk</h3>
-          <div class='mb1'><code>6.1.0</code></div>
+          <div class='mb1'><code>4.41.3</code></div>
           <input
             placeholder='Filter'
             id='filter-input'
@@ -39,6 +38,12 @@
                             href='#configconfigauthentication'
                             class='regular pre-open'>
                             #config.authentication
+                          </a></li>
+                          
+                          <li><a
+                            href='#configconfigcall'
+                            class='regular pre-open'>
+                            #config.call
                           </a></li>
                           
                           <li><a
@@ -267,12 +272,6 @@
                             </a></li>
                           
                             <li><a
-                              href='#callend'
-                              class='regular pre-open'>
-                              <span style="color:green">ⓕ</span> .end
-                            </a></li>
-                          
-                            <li><a
                               href='#callhold'
                               class='regular pre-open'>
                               <span style="color:green">ⓕ</span> .hold
@@ -282,6 +281,36 @@
                               href='#callunhold'
                               class='regular pre-open'>
                               <span style="color:green">ⓕ</span> .unhold
+                            </a></li>
+                          
+                            <li><a
+                              href='#callsetcustomparameters'
+                              class='regular pre-open'>
+                              <span style="color:green">ⓕ</span> .setCustomParameters
+                            </a></li>
+                          
+                            <li><a
+                              href='#callsendcustomparameters'
+                              class='regular pre-open'>
+                              <span style="color:green">ⓕ</span> .sendCustomParameters
+                            </a></li>
+                          
+                            <li><a
+                              href='#callgetall'
+                              class='regular pre-open'>
+                              <span style="color:green">ⓕ</span> .getAll
+                            </a></li>
+                          
+                            <li><a
+                              href='#callgetbyid'
+                              class='regular pre-open'>
+                              <span style="color:green">ⓕ</span> .getById
+                            </a></li>
+                          
+                            <li><a
+                              href='#callend'
+                              class='regular pre-open'>
+                              <span style="color:green">ⓕ</span> .end
                             </a></li>
                           
                             <li><a
@@ -321,48 +350,6 @@
                             </a></li>
                           
                             <li><a
-                              href='#callreplacetrack'
-                              class='regular pre-open'>
-                              <span style="color:green">ⓕ</span> .replaceTrack
-                            </a></li>
-                          
-                            <li><a
-                              href='#callrestartmedia'
-                              class='regular pre-open'>
-                              <span style="color:green">ⓕ</span> .restartMedia
-                            </a></li>
-                          
-                            <li><a
-                              href='#callplayaudiofile'
-                              class='regular pre-open'>
-                              <span style="color:green">ⓕ</span> .playAudioFile
-                            </a></li>
-                          
-                            <li><a
-                              href='#callgetall'
-                              class='regular pre-open'>
-                              <span style="color:green">ⓕ</span> .getAll
-                            </a></li>
-                          
-                            <li><a
-                              href='#callgetbyid'
-                              class='regular pre-open'>
-                              <span style="color:green">ⓕ</span> .getById
-                            </a></li>
-                          
-                            <li><a
-                              href='#callsetcustomparameters'
-                              class='regular pre-open'>
-                              <span style="color:green">ⓕ</span> .setCustomParameters
-                            </a></li>
-                          
-                            <li><a
-                              href='#callsendcustomparameters'
-                              class='regular pre-open'>
-                              <span style="color:green">ⓕ</span> .sendCustomParameters
-                            </a></li>
-                          
-                            <li><a
                               href='#callsenddtmf'
                               class='regular pre-open'>
                               <span style="color:green">ⓕ</span> .sendDTMF
@@ -375,27 +362,21 @@
                             </a></li>
                           
                             <li><a
+                              href='#callreplacetrack'
+                              class='regular pre-open'>
+                              <span style="color:green">ⓕ</span> .replaceTrack
+                            </a></li>
+                          
+                            <li><a
                               href='#callgetavailablecodecs'
                               class='regular pre-open'>
                               <span style="color:green">ⓕ</span> .getAvailableCodecs
                             </a></li>
                           
                             <li><a
-                              href='#callgetreport'
+                              href='#callsetsdphandlers'
                               class='regular pre-open'>
-                              <span style="color:green">ⓕ</span> .getReport
-                            </a></li>
-                          
-                            <li><a
-                              href='#callchangeinputdevices'
-                              class='regular pre-open'>
-                              <span style="color:green">ⓕ</span> .changeInputDevices
-                            </a></li>
-                          
-                            <li><a
-                              href='#callchangespeaker'
-                              class='regular pre-open'>
-                              <span style="color:green">ⓕ</span> .changeSpeaker
+                              <span style="color:green">ⓕ</span> .setSdpHandlers
                             </a></li>
                           
                             <li><a
@@ -411,15 +392,27 @@
                             </a></li>
                           
                             <li><a
-                              href='#callreportevents'
+                              href='#callrestartmedia'
                               class='regular pre-open'>
-                              <span style="color:green">ⓕ</span> .reportEvents
+                              <span style="color:green">ⓕ</span> .restartMedia
                             </a></li>
                           
                             <li><a
-                              href='#callmetrics'
+                              href='#callsetdefaultdevices'
                               class='regular pre-open'>
-                              <span style="color:green">ⓕ</span> .metrics
+                              <span style="color:green">ⓕ</span> .setDefaultDevices
+                            </a></li>
+                          
+                            <li><a
+                              href='#callchangeinputdevices'
+                              class='regular pre-open'>
+                              <span style="color:green">ⓕ</span> .changeInputDevices
+                            </a></li>
+                          
+                            <li><a
+                              href='#callchangespeaker'
+                              class='regular pre-open'>
+                              <span style="color:green">ⓕ</span> .changeSpeaker
                             </a></li>
                           
                           </ul>
@@ -464,15 +457,15 @@
                             </a></li>
                           
                             <li><a
-                              href='#calleventcalltracksadded'
+                              href='#calleventcallnewtrack'
                               class='regular pre-open'>
-                              <span style="color:orange">ⓔ</span> call:tracksAdded
+                              <span style="color:orange">ⓔ</span> call:newTrack
                             </a></li>
                           
                             <li><a
-                              href='#calleventcalltracksremoved'
+                              href='#calleventcalltrackended'
                               class='regular pre-open'>
-                              <span style="color:orange">ⓔ</span> call:tracksRemoved
+                              <span style="color:orange">ⓔ</span> call:trackEnded
                             </a></li>
                           
                             <li><a
@@ -690,12 +683,6 @@
                               <span style="color:orange">ⓔ</span> media:trackRendered
                             </a></li>
                           
-                            <li><a
-                              href='#mediaeventmediatrackended'
-                              class='regular pre-open'>
-                              <span style="color:orange">ⓔ</span> media:trackEnded
-                            </a></li>
-                          
                         </ul>
                       
                     </div>
@@ -878,7 +865,7 @@ The SDK instance will be referred as 'api' throughout the rest of the documentat
     
       
       <pre class='p1 overflow-auto round fill-light'><span class="hljs-comment">// Instantiate the SDK.</span>
-<span class="hljs-keyword">import</span> { create } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;@rbbn/webrtc-js-sdk&#x27;</span>
+<span class="hljs-keyword">import</span> { create } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;kandy&#x27;</span>
 <span class="hljs-keyword">const</span> client = create({
     <span class="hljs-attr">authentication</span>: { ... },
     <span class="hljs-attr">logs</span>: { ... },
@@ -1019,6 +1006,18 @@ information, see the <a href="#logger">Logs feature</a> description.</p>
   <td class='break-word'><span>The function to receive log entries from the
 SDK. If not provided, a default handler will be used that logs entries
 to the console.
+</span></td>
+</tr>
+
+
+              
+                <tr>
+  <td class='break-word'><span class='code bold'>logs.enableFcsLogs</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></code>
+  
+    (default <code>true</code>)
+  </td>
+  <td class='break-word'><span>Enable the detailed call logger
+for v3.X. Requires log level debug.
 </span></td>
 </tr>
 
@@ -1194,18 +1193,6 @@ to be exposed in the logs, potentially displaying sensitive information.
 
   
     <tr>
-  <td class='break-word'><span class='code bold'>authentication.subscription.serviceUnavailableMaxRetries</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></code>
-  
-    (default <code>3</code>)
-  </td>
-  <td class='break-word'><span>The maximum number of times this client will retry in order to subscribe for a
-given service, while getting 'Service Unavailable' from backend.
-</span></td>
-</tr>
-
-
-  
-    <tr>
   <td class='break-word'><span class='code bold'>authentication.subscription.protocol</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>
   
     (default <code>&#39;https&#39;</code>)
@@ -1286,6 +1273,271 @@ given service, while getting 'Service Unavailable' from backend.
 
 
   
+
+
+              
+            </tbody>
+          </table>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
+    <div class='border-bottom' id='configconfigcall'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="py1 contain">
+            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
+            <span class='code strong strong truncate'>config.call</span>
+        </div>
+      </div>
+      <div class="clearfix display-none toggle-target">
+        <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+
+  <p>Configuration options for the call feature.</p>
+
+
+  <div class='pre p1 fill-light mt0'>config.call</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>call</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    The call configuration object.
+
+          </div>
+          
+          <table class='mt1 mb2 fixed-table h5 col-12'>
+            <colgroup>
+              <col width='30%' />
+              <col width='70%' />
+            </colgroup>
+            <thead>
+              <tr class='bold fill-light'>
+                <th>Name</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody class='mt1'>
+              
+                <tr>
+  <td class='break-word'><span class='code bold'>call.defaultPeerConfig</span> <code class='quiet'><a href="#callrtcpeerconnectionconfig">call.RTCPeerConnectionConfig</a>?</code>
+  </td>
+  <td class='break-word'><span>A key-value dictionary that corresponds
+to the available RTCPeerConfiguration which is normally passed when creating an RTCPeerConnection.
+See 
+<a href="https://developer.mozilla.org/en-US/docs/Web/API/RTCPeerConnection/RTCPeerConnection#parameters">RTCPeerConnection's configuration parameters</a>
+ for more information.
+This is the recommended way of setting ICE servers and other RTCPeerConnection-related configuration.
+</span></td>
+</tr>
+
+
+              
+                <tr>
+  <td class='break-word'><span class='code bold'>call.iceCollectionIdealTimeout</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></code>
+  
+    (default <code>1000</code>)
+  </td>
+  <td class='break-word'><span>The amount of time to wait for an ideal candidate in milliseconds.
+The default is 1000ms. An ideal list of candidates is a complete list of candidates considering the RTCPeerConnection configuration.
+Note that this values will not be considered if a custom function is passed through the 
+<code>iceCollectionCheckFunction</code>
+, and
+any timeouts must be handled by the custom function.
+</span></td>
+</tr>
+
+
+              
+                <tr>
+  <td class='break-word'><span class='code bold'>call.iceCollectionMaxTimeout</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></code>
+  
+    (default <code>3000</code>)
+  </td>
+  <td class='break-word'><span>The maximum amount of time to wait for ICE collection in milliseconds.
+The default is 3000ms. After this time has been reached, the call will proceed with the currently gathered candidates.
+Note that this values will not be considered if a custom function is passed through the 
+<code>iceCollectionCheckFunction</code>
+, and
+any timeouts must be handled by the custom function.
+</span></td>
+</tr>
+
+
+              
+                <tr>
+  <td class='break-word'><span class='code bold'>call.iceCollectionCheckFunction</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function">Function</a>?</code>
+  </td>
+  <td class='break-word'><span>Override the default IceCollectionCheckFunction to manually decide when
+to proceed with operations, error out, or wait for the appropriate states and candidates. The function will an object containing
+the ice collection info. See 
+<a href="#callicecollectioninfo">IceCollectionInfo</a>
+ for more details. The function must return
+a results object with details on how to proceed with the ICE collection check or operatiaon. See 
+<a href="#callicecollectioncheckresult">IceCollectionResult</a>
+
+object for details on the format of the return object. See 
+<a href="#callicecollectioncheckfunction">IceCollectionCheckFunction</a>
+ for
+more information on the form of the function, as well as information about the default IceCollectionCheckFunction that is used if nothing is provided.
+</span></td>
+</tr>
+
+
+              
+                <tr>
+  <td class='break-word'><span class='code bold'>call.serverTurnCredentials</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></code>
+  
+    (default <code>true</code>)
+  </td>
+  <td class='break-word'><span>Whether server-provided TURN credentials should be used.
+</span></td>
+</tr>
+
+
+              
+                <tr>
+  <td class='break-word'><span class='code bold'>call.sdpHandlers</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&#x3C;<a href="#callsdphandlerfunction">call.SdpHandlerFunction</a>>?</code>
+  </td>
+  <td class='break-word'><span>List of SDP handler functions to modify SDP. Advanced usage.
+</span></td>
+</tr>
+
+
+              
+                <tr>
+  <td class='break-word'><span class='code bold'>call.removeH264Codecs</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></code>
+  
+    (default <code>true</code>)
+  </td>
+  <td class='break-word'><span>Whether to remove "H264" codec lines from incoming and outgoing SDP messages.
+</span></td>
+</tr>
+
+
+              
+                <tr>
+  <td class='break-word'><span class='code bold'>call.earlyMedia</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></code>
+  
+    (default <code>false</code>)
+  </td>
+  <td class='break-word'><span>Whether early media should be supported for calls. Not supported on Firefox.
+</span></td>
+</tr>
+
+
+              
+                <tr>
+  <td class='break-word'><span class='code bold'>call.resyncOnConnect</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></code>
+  
+    (default <code>false</code>)
+  </td>
+  <td class='break-word'><span>Whether the SDK should re-sync all call states after connecting (requires WebRTC Gateway 4.7.1+).
+</span></td>
+</tr>
+
+
+              
+                <tr>
+  <td class='break-word'><span class='code bold'>call.mediaBrokerOnly</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></code>
+  
+    (default <code>false</code>)
+  </td>
+  <td class='break-word'><span>Whether all Calls will be anchored on the MediaBroker instead of being peer-to-peer. Set to true if the backend is configured for broker only mode.
+</span></td>
+</tr>
+
+
+              
+                <tr>
+  <td class='break-word'><span class='code bold'>call.removeBundling</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></code>
+  
+    (default <code>false</code>)
+  </td>
+  <td class='break-word'><span>Whether to remove a=group attributes to stop media bundling from incoming and outgoing SDP messages.
+</span></td>
+</tr>
+
+
+              
+                <tr>
+  <td class='break-word'><span class='code bold'>call.ringingFeedbackMode</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>
+  
+    (default <code>&#39;auto&#39;</code>)
+  </td>
+  <td class='break-word'><span>The mode for sending ringing feedback to the Caller ('auto', 'manual').
+By default, feedback will be automatically sent when a call has been received. In 'manual' mode, the application
+must initiate the feedback being sent. See the 
+<code>call.sendRingingFeedback</code>
+ API for more info.
+</span></td>
+</tr>
+
+
+              
+                <tr>
+  <td class='break-word'><span class='code bold'>call.callAuditTimer</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></code>
+  
+    (default <code>25000</code>)
+  </td>
+  <td class='break-word'><span>Time interval, in milliseconds between call audits.
+</span></td>
+</tr>
+
+
+              
+                <tr>
+  <td class='break-word'><span class='code bold'>call.mediaConnectionRetryDelay</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></code>
+  
+    (default <code>3000</code>)
+  </td>
+  <td class='break-word'><span>Delay, in milliseconds for the passive side of a call to wait before trying a media reconnection.
+</span></td>
+</tr>
+
+
+              
+                <tr>
+  <td class='break-word'><span class='code bold'>call.normalizeDestination</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></code>
+  
+    (default <code>true</code>)
+  </td>
+  <td class='break-word'><span>Specifies whether or not SIP address normalization will be applied.
+</span></td>
+</tr>
 
 
               
@@ -1874,7 +2126,7 @@ so as not to interfere with any ongoing events.</p>
     
       
       <pre class='p1 overflow-auto round fill-light'><span class="hljs-comment">// Instantiate the SDK.</span>
-<span class="hljs-keyword">import</span> { create } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;@rbbn/webrtc-js-sdk&#x27;</span>
+<span class="hljs-keyword">import</span> { create } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;kandy&#x27;</span>
 <span class="hljs-keyword">const</span> config = {
     <span class="hljs-attr">authentication</span>: { ... },
     <span class="hljs-attr">logs</span>: { ... },
@@ -1973,6 +2225,17 @@ client.on( ... )</pre>
 <p>This API will only modify the configurations provided, leaving other configurations
 as they were originally set, by performing a merge of the new values into the
 previous values.</p>
+<p>Please note that updating the <a href="#configconfigcall">call.removeH264Codecs</a> configuration will not immediately change the SDP handlers used for a call. If you want to add or remove the
+h264 codec remover sdp handler you should follow this procedure:</p>
+<ol>
+<li>
+<p>Update the config for removeH264Codecs using the <a href="#apiupdateconfig">updateConfig</a> API.</p>
+</li>
+<li>
+<p>Update the sdp handler list using the <a href="#callsetsdphandlers">setSdpHandlers</a> API and provide any client defined SDP handler functions.</p>
+<p>NOTE: You can get the currently defined SDP handler functions with the <a href="#apigetconfig">getConfig</a> API.</p>
+</li>
+</ol>
 <p>Please note that the object provided to the <code>updateConfig</code> API may be different
 than the object retrieved from the <a href="#apigetconfig">getConfig</a> API. This may happen when a format
 change has happened and the SDK modifies the provided format to alleviate
@@ -3538,8 +3801,6 @@ see
              : Either an array of URLs for reaching out several ICE servers or a single URL for reaching one ICE server. See 
 <a href="https://developer.mozilla.org/en-US/docs/Web/API/RTCIceServer/urls">RTCIceServers.urls documentation</a>
  to learn more about the actual url format.
-Starting with Chromium 110, TURN(S) urls must only contain a transport
-parameter in the query section and STUN urls must not specify any query section.
 
           
           
@@ -3888,7 +4149,7 @@ the call config.</p>
   </td>
   <td class='break-word'><span>The amount of time to wait for ideal candidates, in
 milliseconds.  See 
-<a href="config#config.call">config.call</a>
+<a href="#configconfigcall">config.call</a>
  for more information.
 </span></td>
 </tr>
@@ -3900,7 +4161,7 @@ milliseconds.  See
   </td>
   <td class='break-word'><span>The maximum amount of time to wait for ICE collection,
 in milliseconds. See 
-<a href="config#config.call">config.call</a>
+<a href="#configconfigcall">config.call</a>
  for more information.
 </span></td>
 </tr>
@@ -5310,77 +5571,6 @@ client.call.make(destination, mediaConstraints,
       </div>
     </div>
   
-    <div class='border-bottom' id='callend'>
-      <div class="clearfix small pointer toggle-sibling">
-        <div class="py1 contain">
-            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>end(callId)</span>
-        </div>
-      </div>
-      <div class="clearfix display-none toggle-target">
-        <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-
-  <p>Ends an ongoing call.</p>
-<p>The SDK will stop any/all local media associated with the call. Events
-will be emitted to indicate which media tracks were stopped. See the
-<a>call:trackEnded</a> event for more
-information.</p>
-<p>The progress of the operation will be tracked via the
-<a href="#calleventcalloperation">call:operation</a> event.</p>
-<p>The SDK will emit a <a href="#calleventcallstatechange">call:stateChange</a>
-event locally when the operation completes. The remote participant
-will be notified, through their own
-<a href="#calleventcallstatechange">call:stateChange</a> event, that the
-call was ended.</p>
-
-
-  <div class='pre p1 fill-light mt0'>end(callId: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</div>
-  
-  
-
-  
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>callId</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
-	    The ID of the call to end.
-
-          </div>
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-</section>
-
-      </div>
-    </div>
-  
     <div class='border-bottom' id='callhold'>
       <div class="clearfix small pointer toggle-sibling">
         <div class="py1 contain">
@@ -5522,6 +5712,355 @@ will be notified of the operation through a
       </div>
     </div>
   
+    <div class='border-bottom' id='callsetcustomparameters'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="py1 contain">
+            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
+            <span class='code strong strong truncate'>setCustomParameters(callId, customParameters)</span>
+        </div>
+      </div>
+      <div class="clearfix display-none toggle-target">
+        <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+
+  <p>Set the <a href="#callcustomparameter">Custom Parameters</a> of a Call, to be provided to the remote endpoint.</p>
+<p>The specified parameters will be saved as part of the call's information throughout the duration of the call.
+All subsequent call operations will include these custom parameters.
+Therefore, invalid parameters, or parameters not previously configured on the server, will cause subsequent call operations to fail.</p>
+<p>A Call's custom parameters are a property of the Call's <a href="#callcallobject">CallObject</a>,
+which can be retrieved using the <a href="#callgetbyid">call.getById</a> or
+<a href="#callgetall">call.getAll</a> APIs.</p>
+<p>The custom parameters set on a call can be sent directly with the <a href="#callsendcustomparameters">call.sendCustomParameters</a> API.</p>
+<p>Custom parameters can be removed from a call's information by setting them as undefined (e.g., <code>call.setCustomParameters(callId)</code>).
+Subsequent call operations will no longer send custom parameters.</p>
+
+
+  <div class='pre p1 fill-light mt0'>setCustomParameters(callId: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>, customParameters: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&#x3C;<a href="#callcustomparameter">call.CustomParameter</a>>)</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>callId</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
+	    The ID of the call.
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>customParameters</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&#x3C;<a href="#callcustomparameter">call.CustomParameter</a>>)</code>
+	    The custom parameters to set.
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
+    <div class='border-bottom' id='callsendcustomparameters'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="py1 contain">
+            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
+            <span class='code strong strong truncate'>sendCustomParameters(callId)</span>
+        </div>
+      </div>
+      <div class="clearfix display-none toggle-target">
+        <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+
+  <p>Send the custom parameters on an ongoing call to the server. The server may either consume the headers or relay them
+to another endpoint, depending on how the server is configured.</p>
+<p>A Call's custom parameters are a property of the Call's <a href="#callcallobject">CallObject</a>,
+which can be retrieved using the <a href="#callgetbyid">call.getById</a> or
+<a href="#callgetall">call.getAll</a> APIs.</p>
+<p>To change or remove the custom parameters on a call, use the <a href="#callsetcustomparameters">call.setCustomParameters</a> API.</p>
+
+
+  <div class='pre p1 fill-light mt0'>sendCustomParameters(callId: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>callId</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
+	    The ID of the call being acted on.
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
+    <div class='border-bottom' id='callgetall'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="py1 contain">
+            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
+            <span class='code strong strong truncate'>getAll()</span>
+        </div>
+      </div>
+      <div class="clearfix display-none toggle-target">
+        <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+
+  <p>Retrieves the information of all calls made during the current session.</p>
+
+
+  <div class='pre p1 fill-light mt0'>getAll(): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&#x3C;<a href="#callcallobject">call.CallObject</a>></div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Returns</div>
+    
+      <div>
+        <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&#x3C;<a href="#callcallobject">call.CallObject</a>></code>:
+          Call objects.
+
+        
+      </div>
+    
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">let</span> calls = client.call.getAll()
+<span class="hljs-keyword">let</span> currentCalls = calls.filter(<span class="hljs-function"><span class="hljs-params">call</span> =&gt;</span> {
+    <span class="hljs-keyword">return</span> call.state === client.call.states.CONNECTED
+})</pre>
+    
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
+    <div class='border-bottom' id='callgetbyid'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="py1 contain">
+            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
+            <span class='code strong strong truncate'>getById(callId)</span>
+        </div>
+      </div>
+      <div class="clearfix display-none toggle-target">
+        <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+
+  <p>Retrieves the information of a single call with a specific call ID.</p>
+
+
+  <div class='pre p1 fill-light mt0'>getById(callId: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>): <a href="#callcallobject">call.CallObject</a></div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>callId</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
+	    The ID of the call to retrieve.
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Returns</div>
+    
+      <div>
+        <code><a href="#callcallobject">call.CallObject</a></code>:
+          A call object.
+
+        
+      </div>
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
+    <div class='border-bottom' id='callend'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="py1 contain">
+            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
+            <span class='code strong strong truncate'>end(callId)</span>
+        </div>
+      </div>
+      <div class="clearfix display-none toggle-target">
+        <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+
+  <p>Ends an ongoing call.</p>
+<p>The SDK will stop any/all local media associated with the call. Events
+will be emitted to indicate which media tracks were stopped. See the
+<a href="#calleventcalltrackended">call:trackEnded</a> event for more
+information.</p>
+<p>The progress of the operation will be tracked via the
+<a href="#calleventcalloperation">call:operation</a> event.</p>
+<p>The SDK will emit a <a href="#calleventcallstatechange">call:stateChange</a>
+event locally when the operation completes. The remote participant
+will be notified, through their own
+<a href="#calleventcallstatechange">call:stateChange</a> event, that the
+call was ended.</p>
+
+
+  <div class='pre p1 fill-light mt0'>end(callId: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>callId</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
+	    The ID of the call to end.
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
     <div class='border-bottom' id='calladdmedia'>
       <div class="clearfix small pointer toggle-sibling">
         <div class="py1 contain">
@@ -5538,7 +6077,7 @@ will be notified of the operation through a
 Will get new media tracks from the specific sources to add to the call.</p>
 <p>The progress of the operation will be tracked via the
 <a href="#calleventcalloperation">call:operation</a> event.</p>
-<p>The SDK will emit a <a>call:newTrack</a> event
+<p>The SDK will emit a <a href="#calleventcallnewtrack">call:newTrack</a> event
 both for the local and remote users to indicate a track has been
 added to the Call.</p>
 
@@ -5810,7 +6349,7 @@ added to the Call.</p>
   <p>Remove tracks from an ongoing call.</p>
 <p>The progress of the operation will be tracked via the
 <a href="#calleventcalloperation">call:operation</a> event.</p>
-<p>The SDK will emit a <a>call:trackEnded</a>
+<p>The SDK will emit a <a href="#calleventcalltrackended">call:trackEnded</a>
 event for both the local and remote users to indicate that a track
 has been removed.</p>
 
@@ -5922,8 +6461,8 @@ already have video. For more advanced scenarios, the
 <a href="#calladdmedia">call.addMedia</a> API can be used.</p>
 <p>The progress of the operation will be tracked via the
 <a href="#calleventcalloperation">call:operation</a> event.</p>
-<p>The SDK will emit a <a href="#calleventcalltracksadded">call:tracksAdded</a>
-event both for the local and remote users to indicate a track has been
+<p>The SDK will emit a <a href="#calleventcallnewtrack">call:newTrack</a> event
+both for the local and remote users to indicate a track has been
 added to the Call.</p>
 
 
@@ -6094,7 +6633,7 @@ video track. For more advanced scenarios, the
 <a href="#callremovemedia">call.removeMedia</a> API can be used.</p>
 <p>The progress of the operation will be tracked via the
 <a href="#calleventcalloperation">call:operation</a> event.</p>
-<p>The SDK will emit a <a href="#calleventcalltracksremoved">call:tracksRemoved</a>
+<p>The SDK will emit a <a href="#calleventcalltrackended">call:trackEnded</a>
 event for both the local and remote users to indicate that a track
 has been removed.</p>
 
@@ -6282,6 +6821,208 @@ which track was the screen track in this scenario.</p>
 
 <span class="hljs-comment">// Remove screen from the call.</span>
 client.call.removeMedia(callId, [ screenTrack ])</pre>
+    
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
+    <div class='border-bottom' id='callsenddtmf'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="py1 contain">
+            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
+            <span class='code strong strong truncate'>sendDTMF(callId, tone, duration, intertoneGap)</span>
+        </div>
+      </div>
+      <div class="clearfix display-none toggle-target">
+        <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+
+  <p>Send DTMF tones to a call's audio.</p>
+<p>The provided tone can either be a single DTMF tone (eg. '1') or a
+sequence of DTMF tones (eg. '123') which will be played one after the
+other.</p>
+<p>The specified call must be either in Connected, Ringing, or Early Media
+state, otherwise invoking this API will have no effect.</p>
+<p>The tones will be sent as out-of-band tones if supported by the call,
+otherwise they will be added in-band to the call's audio.</p>
+<p>The progress of the operation will be tracked via the
+<a href="#calleventcalloperation">call:operation</a> event.</p>
+
+
+  <div class='pre p1 fill-light mt0'>sendDTMF(callId: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>, tone: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>, duration: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>, intertoneGap: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>)</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>callId</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
+	    ID of the call being acted on.
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>tone</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
+	    DTMF tone(s) to send. Valid characters are ['0','1','2','3','4','5','6','7','8','9','#','*' and ','].
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>duration</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>
+            = <code>100</code>)</code>
+	    The amount of time, in milliseconds, that each DTMF tone should last.
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>intertoneGap</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>
+            = <code>70</code>)</code>
+	    The length of time, in milliseconds, to wait between tones.
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
+    <div class='border-bottom' id='callgetstats'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="py1 contain">
+            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
+            <span class='code strong strong truncate'>getStats(callId, trackId?)</span>
+        </div>
+      </div>
+      <div class="clearfix display-none toggle-target">
+        <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+
+  <p>Retrieve a snapshot of the low-level information of the Call through statistical
+report.</p>
+<p>The data retrieved is a <a href="https://developer.mozilla.org/en-US/docs/Web/API/RTCStatsReport">RTCStatsReport</a>
+object, which contains many individual
+<a href="https://developer.mozilla.org/en-US/docs/Web/API/RTCStats">RTCStats</a>.
+These are advanced statistics gathered by the browser providing insights
+into the Call at a certain point in time. Aggregating reports over a
+period of time would allow a low-level analysis of the Call for that
+period. As an example, this could be done to determine the media quality
+during the Call.</p>
+<p>A Track ID can optionally be provided to get a report for a specific
+Track of the Call.</p>
+<p>This API will return a promise which, when resolved, will contain the report of the particular call.
+The progress of the operation will be tracked via the
+<a href="#calleventcalloperation">call:operation</a> event.</p>
+<p>The SDK will emit a
+<a href="#calleventcallstatsreceived">call:statsReceived</a> event, after
+the operation completes, that has the report.</p>
+
+
+  <div class='pre p1 fill-light mt0'>getStats(callId: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>, trackId: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>?)</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>callId</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
+	    The ID of the Call to retrieve the report.
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>trackId</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>?)</code>
+	    ID of a Track being used by the Call. If not
+provided, RTCStatsReport is generated for the Call itself.
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'>client.on(<span class="hljs-string">&#x27;call:statsReceived&#x27;</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">params</span>) </span>{
+   <span class="hljs-comment">// Iterate over each individual statistic inside the RTCPStatsReport.</span>
+   params.result.forEach(<span class="hljs-function"><span class="hljs-params">stats</span> =&gt;</span> {
+       <span class="hljs-comment">// Handle the data on its own or collate with previously gathered stats</span>
+       <span class="hljs-comment">//    for analysis.</span>
+       ...
+   })
+})
+
+<span class="hljs-comment">// Get a snapshot of the Call&#x27;s stats.</span>
+<span class="hljs-comment">//   This may be done on a regular interval to collect data over time.</span>
+client.call.getStats(callId)</pre>
     
   
 
@@ -6528,715 +7269,6 @@ client.call.replaceTrack(callId, videoTrack.id, {
       </div>
     </div>
   
-    <div class='border-bottom' id='callrestartmedia'>
-      <div class="clearfix small pointer toggle-sibling">
-        <div class="py1 contain">
-            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>restartMedia(callId)</span>
-        </div>
-      </div>
-      <div class="clearfix display-none toggle-target">
-        <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-
-  <p>Attempt to re-establish a media connection for a call.</p>
-<p>This API will perform a "refresh" operation on the call with the intention
-of resolving media issues that may have been encountered. This API is only
-necessary after the Call's <a href="#callmediaconnectionstates">mediaConnectionState</a>
-has entered the <code>failed</code> state, but may be used in other scenarios.</p>
-<p>After the operation completes successfully, the Call will be re-establishing
-its media connection. By this time, or shortly after, the Call's
-<a href="#callmediaconnectionstates">mediaConnectionState</a> should have
-transitioned to <code>checking</code> (via a
-{@link call.event:call:mediaConnectionChange call:mediaConnectionChange}
-event) to signify the re-establishment. It will then transition to either
-<code>connected</code> or <code>failed</code> state, similar to during the initial Call establishment.</p>
-<p>If this operation fails, then the Call will not attempt the re-establishment
-and will remain in the <code>failed</code> <a href="#callmediaconnectionstates">mediaConnectionState</a>.</p>
-<p>Behaviour during the operation may differ slightly based on the browser.
-Notably, Firefox will always transition to the <code>checking</code>
-<a href="#callmediaconnectionstates">mediaConnectionState</a> no matter what
-the previous state was. Whereas Chrome will skip the <code>checking</code> state,
-transitioning directly to either <code>connected</code> or <code>failed</code>. This has the
-implication for Chrome that if the state does not change (for example,
-the Call is in the <code>failed</code> state before the media restart operation,
-and media re-establishment fails), then there will be no
-<a href="#calleventcallmediaconnectionchange">call:mediaConnectionChange</a>
-event emitted. For this reason, Chrome-based applications may need a
-short delay after receiving the <a href="#calleventcallmediarestart">call:mediaRestart</a>
-event before checking the Call's updated
-<a href="#callmediaconnectionstates">mediaConnectionState</a> to ensure the
-application is acting on the "latest" state.</p>
-<p>The SDK will emit a <a href="#calleventcallmediarestart">call:mediaRestart</a>
-event when the operation completes.</p>
-<p>The progress of the operation will be tracked via the
-<a href="#calleventcalloperation">call:operation</a> event.</p>
-
-
-  <div class='pre p1 fill-light mt0'>restartMedia(callId: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</div>
-  
-  
-
-  
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>callId</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
-	    The ID of the call to act on.
-
-          </div>
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-</section>
-
-      </div>
-    </div>
-  
-    <div class='border-bottom' id='callplayaudiofile'>
-      <div class="clearfix small pointer toggle-sibling">
-        <div class="py1 contain">
-            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>playAudioFile(callId, filePath)</span>
-        </div>
-      </div>
-      <div class="clearfix display-none toggle-target">
-        <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-
-  <p>Plays an audio file to the remote side of the Call. This API will temporarily
-replace the Call's local audio track with an audio file for the duration
-of the audio file.</p>
-<p>The Call must be in <code>Connected</code> state and have a local audio track for this operation.</p>
-<p>This API will not affect media other than the local audio track. Other media on
-the Call, such as local video or remote audio, can be <a href="#mediamutetracks">muted</a>
-or <a href="#mediaremovetracks">unrendered</a> during this operation if desired.</p>
-<p>This operation will use the browser's
-<a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLAudioElement/Audio">Audio constructor</a>
-to read in the audio file. The <code>filePath</code> parameter will be used directly with <code>Audio</code>, so
-can be either a relative file path to your audio file or a URL pointing to a file.</p>
-<p>This API returns a promise that can be used to track the progress of the operation.
-The promise will resolve after the operation completes or reject if an error is
-encountered. Additionally, an extra <code>onPlaying</code> callback is provided on the Promise
-to indicate when the audio file actually begins to play. See the code example below
-for a sample.</p>
-<p>The SDK will emit <a href="#calleventcalloperation">call:operation</a> events locally
-as the operation progresses. The remote endpoint will not receive an event for
-this operation.</p>
-<p>If an error is encountered during the operation and the SDK is unable to replace
-the original local audio track, then that track will be forcibly ended and an
-<a href="#mediaeventmediatrackended">media:trackEnded</a> event will be emitted
-for it. This will release the microphone and avoid losing access to the track
-while it is active, allowing the application to resolve the scenario by using
-the <a href="#callreplacetrack">call.replaceTrack</a> API to revert the local audio track.</p>
-
-
-  <div class='pre p1 fill-light mt0'>playAudioFile(callId: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>, filePath: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a></div>
-  
-  
-
-  
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>callId</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
-	    The ID of the Call to act on.
-
-          </div>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>filePath</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
-	    The path to the audio file.
-
-          </div>
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Returns</div>
-    
-      <div>
-        <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a></code>:
-          Promise that resolves when the operation is complete.
-
-        
-      </div>
-    
-  
-
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Example</div>
-    
-      
-      <pre class='p1 overflow-auto round fill-light'><span class="hljs-comment">// The API returns a promise which will provide feedback about the operation.</span>
-client.call.playAudioFile(callId, filePath)
-   .then(<span class="hljs-function">() =&gt;</span> {
-     <span class="hljs-comment">// Audio file has finished playing; call has reverted to previous audio.</span>
-   })
-   .catch(<span class="hljs-function"><span class="hljs-params">err</span> =&gt;</span> {
-     <span class="hljs-comment">// An error has occurred during the operation.</span>
-   })
-
-<span class="hljs-comment">// The returned promise can optionally provide feedback midway through the</span>
-<span class="hljs-comment">//   operation. A chainable `onPlaying` method denotes when the audio file has</span>
-<span class="hljs-comment">//   started to play and the Call&#x27;s audio has been replaced.</span>
-client.call.playAudioFile(callId, filePath)
-   .onPlaying(<span class="hljs-function">(<span class="hljs-params">{ duration }</span>) =&gt;</span> {
-     <span class="hljs-comment">// Audio file has started playing; call audio is now the file.</span>
-     <span class="hljs-comment">// Note: Calling `onPlaying` must be done before `then` and `catch` for it</span>
-     <span class="hljs-comment">//    to be chainable.</span>
-   })
-   .then(<span class="hljs-function">() =&gt;</span> { ... })
-   .catch(<span class="hljs-function"><span class="hljs-params">err</span> =&gt;</span> { ... })</pre>
-    
-  
-
-  
-
-  
-
-  
-</section>
-
-      </div>
-    </div>
-  
-    <div class='border-bottom' id='callgetall'>
-      <div class="clearfix small pointer toggle-sibling">
-        <div class="py1 contain">
-            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>getAll()</span>
-        </div>
-      </div>
-      <div class="clearfix display-none toggle-target">
-        <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-
-  <p>Retrieves the information of all calls made during the current session.</p>
-
-
-  <div class='pre p1 fill-light mt0'>getAll(): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&#x3C;<a href="#callcallobject">call.CallObject</a>></div>
-  
-  
-
-  
-  
-  
-  
-  
-  
-
-  
-
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Returns</div>
-    
-      <div>
-        <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&#x3C;<a href="#callcallobject">call.CallObject</a>></code>:
-          Call objects.
-
-        
-      </div>
-    
-  
-
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Example</div>
-    
-      
-      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">let</span> calls = client.call.getAll()
-<span class="hljs-keyword">let</span> currentCalls = calls.filter(<span class="hljs-function"><span class="hljs-params">call</span> =&gt;</span> {
-    <span class="hljs-keyword">return</span> call.state === client.call.states.CONNECTED
-})</pre>
-    
-  
-
-  
-
-  
-
-  
-</section>
-
-      </div>
-    </div>
-  
-    <div class='border-bottom' id='callgetbyid'>
-      <div class="clearfix small pointer toggle-sibling">
-        <div class="py1 contain">
-            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>getById(callId)</span>
-        </div>
-      </div>
-      <div class="clearfix display-none toggle-target">
-        <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-
-  <p>Retrieves the information of a single call with a specific call ID.</p>
-
-
-  <div class='pre p1 fill-light mt0'>getById(callId: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>): <a href="#callcallobject">call.CallObject</a></div>
-  
-  
-
-  
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>callId</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
-	    The ID of the call to retrieve.
-
-          </div>
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Returns</div>
-    
-      <div>
-        <code><a href="#callcallobject">call.CallObject</a></code>:
-          A call object.
-
-        
-      </div>
-    
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-</section>
-
-      </div>
-    </div>
-  
-    <div class='border-bottom' id='callsetcustomparameters'>
-      <div class="clearfix small pointer toggle-sibling">
-        <div class="py1 contain">
-            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>setCustomParameters(callId, customParameters)</span>
-        </div>
-      </div>
-      <div class="clearfix display-none toggle-target">
-        <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-
-  <p>Set the <a href="#callcustomparameter">Custom Parameters</a> of a Call, to be provided to the remote endpoint.</p>
-<p>The specified parameters will be saved as part of the call's information throughout the duration of the call.
-All subsequent call operations will include these custom parameters.
-Therefore, invalid parameters, or parameters not previously configured on the server, will cause subsequent call operations to fail.</p>
-<p>A Call's custom parameters are a property of the Call's <a href="#callcallobject">CallObject</a>,
-which can be retrieved using the <a href="#callgetbyid">call.getById</a> or
-<a href="#callgetall">call.getAll</a> APIs.</p>
-<p>The custom parameters set on a call can be sent directly with the <a href="#callsendcustomparameters">call.sendCustomParameters</a> API.</p>
-<p>Custom parameters can be removed from a call's information by setting them as undefined (e.g., <code>call.setCustomParameters(callId)</code>).
-Subsequent call operations will no longer send custom parameters.</p>
-
-
-  <div class='pre p1 fill-light mt0'>setCustomParameters(callId: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>, customParameters: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&#x3C;<a href="#callcustomparameter">call.CustomParameter</a>>)</div>
-  
-  
-
-  
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>callId</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
-	    The ID of the call.
-
-          </div>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>customParameters</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&#x3C;<a href="#callcustomparameter">call.CustomParameter</a>>)</code>
-	    The custom parameters to set.
-
-          </div>
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-</section>
-
-      </div>
-    </div>
-  
-    <div class='border-bottom' id='callsendcustomparameters'>
-      <div class="clearfix small pointer toggle-sibling">
-        <div class="py1 contain">
-            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>sendCustomParameters(callId)</span>
-        </div>
-      </div>
-      <div class="clearfix display-none toggle-target">
-        <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-
-  <p>Send the custom parameters on an ongoing call to the server. The server may either consume the headers or relay them
-to another endpoint, depending on how the server is configured.</p>
-<p>A Call's custom parameters are a property of the Call's <a href="#callcallobject">CallObject</a>,
-which can be retrieved using the <a href="#callgetbyid">call.getById</a> or
-<a href="#callgetall">call.getAll</a> APIs.</p>
-<p>To change or remove the custom parameters on a call, use the <a href="#callsetcustomparameters">call.setCustomParameters</a> API.</p>
-
-
-  <div class='pre p1 fill-light mt0'>sendCustomParameters(callId: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</div>
-  
-  
-
-  
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>callId</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
-	    The ID of the call being acted on.
-
-          </div>
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-</section>
-
-      </div>
-    </div>
-  
-    <div class='border-bottom' id='callsenddtmf'>
-      <div class="clearfix small pointer toggle-sibling">
-        <div class="py1 contain">
-            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>sendDTMF(callId, tone, duration, intertoneGap)</span>
-        </div>
-      </div>
-      <div class="clearfix display-none toggle-target">
-        <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-
-  <p>Send DTMF tones to a call's audio.</p>
-<p>The provided tone can either be a single DTMF tone (eg. '1') or a
-sequence of DTMF tones (eg. '123') which will be played one after the
-other.</p>
-<p>The specified call must be either in Connected, Ringing, or Early Media
-state, otherwise invoking this API will have no effect.</p>
-<p>The tones will be sent as out-of-band tones if supported by the call,
-otherwise they will be added in-band to the call's audio.</p>
-<p>The progress of the operation will be tracked via the
-<a href="#calleventcalloperation">call:operation</a> event.</p>
-
-
-  <div class='pre p1 fill-light mt0'>sendDTMF(callId: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>, tone: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>, duration: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>, intertoneGap: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>)</div>
-  
-  
-
-  
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>callId</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
-	    ID of the call being acted on.
-
-          </div>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>tone</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
-	    DTMF tone(s) to send. Valid characters are ['0','1','2','3','4','5','6','7','8','9','#','*' and ','].
-
-          </div>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>duration</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>
-            = <code>100</code>)</code>
-	    The amount of time, in milliseconds, that each DTMF tone should last.
-
-          </div>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>intertoneGap</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>
-            = <code>70</code>)</code>
-	    The length of time, in milliseconds, to wait between tones.
-
-          </div>
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-</section>
-
-      </div>
-    </div>
-  
-    <div class='border-bottom' id='callgetstats'>
-      <div class="clearfix small pointer toggle-sibling">
-        <div class="py1 contain">
-            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>getStats(callId, trackId?)</span>
-        </div>
-      </div>
-      <div class="clearfix display-none toggle-target">
-        <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-
-  <p>Retrieve a snapshot of the low-level information of the Call through statistical
-report.</p>
-<p>The data retrieved is a <a href="https://developer.mozilla.org/en-US/docs/Web/API/RTCStatsReport">RTCStatsReport</a>
-object, which contains many individual
-<a href="https://developer.mozilla.org/en-US/docs/Web/API/RTCStats">RTCStats</a>.
-These are advanced statistics gathered by the browser providing insights
-into the Call at a certain point in time. Aggregating reports over a
-period of time would allow a low-level analysis of the Call for that
-period. As an example, this could be done to determine the media quality
-during the Call.</p>
-<p>A Track ID can optionally be provided to get a report for a specific
-Track of the Call.</p>
-<p>This API will return a promise which, when resolved, will contain the report of the particular call.
-The progress of the operation will be tracked via the
-<a href="#calleventcalloperation">call:operation</a> event.</p>
-<p>The SDK will emit a
-<a href="#calleventcallstatsreceived">call:statsReceived</a> event, after
-the operation completes, that has the report.</p>
-
-
-  <div class='pre p1 fill-light mt0'>getStats(callId: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>, trackId: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>?): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a></div>
-  
-  
-
-  
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>callId</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
-	    The ID of the Call to retrieve the report.
-
-          </div>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>trackId</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>?)</code>
-	    ID of a Track being used by the Call. If not
-provided, RTCStatsReport is generated for the Call itself.
-
-          </div>
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Returns</div>
-    
-      <div>
-        <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a></code>:
-          A promise that will resolve with the stats report or an error if it fails.
-
-        
-      </div>
-    
-  
-
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Example</div>
-    
-      
-      <pre class='p1 overflow-auto round fill-light'>client.on(<span class="hljs-string">&#x27;call:statsReceived&#x27;</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">params</span>) </span>{
-   <span class="hljs-comment">// Iterate over each individual statistic inside the RTCPStatsReport.</span>
-   params.result.forEach(<span class="hljs-function"><span class="hljs-params">stats</span> =&gt;</span> {
-       <span class="hljs-comment">// Handle the data on its own or collate with previously gathered stats</span>
-       <span class="hljs-comment">//    for analysis.</span>
-       ...
-   })
-})
-
-<span class="hljs-comment">// Get a snapshot of the Call&#x27;s stats.</span>
-<span class="hljs-comment">//   This may be done on a regular interval to collect data over time.</span>
-client.call.getStats(callId)</pre>
-    
-  
-
-  
-
-  
-
-  
-</section>
-
-      </div>
-    </div>
-  
     <div class='border-bottom' id='callgetavailablecodecs'>
       <div class="clearfix small pointer toggle-sibling">
         <div class="py1 contain">
@@ -7257,7 +7289,7 @@ upon retrieving that list of codecs.</p>
 Firefox browser does not currently support this method. Therefore, this API will not work on Firefox.</p>
 
 
-  <div class='pre p1 fill-light mt0'>getAvailableCodecs(kind: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></div>
+  <div class='pre p1 fill-light mt0'>getAvailableCodecs(kind: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</div>
   
   
 
@@ -7287,19 +7319,6 @@ Firefox browser does not currently support this method. Therefore, this API will
   
 
   
-    <div class='py1 quiet mt1 prose-big'>Returns</div>
-    
-      <div>
-        <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></code>:
-          An object containing the available codecs, along with the 
-<code>kind</code>
- parameter, that was supplied in the first place.
-If there was an error, it will return undefined.
-
-        
-      </div>
-    
-  
 
   
 
@@ -7315,11 +7334,11 @@ If there was an error, it will return undefined.
       </div>
     </div>
   
-    <div class='border-bottom' id='callgetreport'>
+    <div class='border-bottom' id='callsetsdphandlers'>
       <div class="clearfix small pointer toggle-sibling">
         <div class="py1 contain">
             <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>getReport(callId)</span>
+            <span class='code strong strong truncate'>setSdpHandlers(sdpHandlers)</span>
         </div>
       </div>
       <div class="clearfix display-none toggle-target">
@@ -7327,17 +7346,15 @@ If there was an error, it will return undefined.
 
   
 
-  <p>Retrieve the call metrics report for a call.</p>
-<p>The object returned from this API will be in JSON format. The top level object is the report and will include
-a timeline of events that were recorded during a call as well as a map object containing computed metrics.</p>
-<p>Any event in a timeline will have it's own timeline that may have recorded events. Events in a timeline are scoped
-to that timelines event or report.</p>
-<p>The report and some events may have additional data included in a data property.</p>
-<p>See event documentation <a href="#callreportevents">here</a>.
-See metrics documentation <a href="#callmetrics">here</a>.</p>
+  <p>Set <a href="#callsdphandlerfunction">SDP Handler Functions</a> that will be run as part of a pipeline for all future calls.
+This will replace any SDP Handlers that were previously set.</p>
+<p>SDP handlers can be used to make modifications to the SDP (e.g., removing certain codecs)
+before they are processed or sent to the other side.</p>
+<p>This is an advanced feature, changing the SDP handlers mid-call may cause
+unexpected behaviour in future call operations for that call.</p>
 
 
-  <div class='pre p1 fill-light mt0'>getReport(callId: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></div>
+  <div class='pre p1 fill-light mt0'>setSdpHandlers(sdpHandlers: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&#x3C;<a href="#callsdphandlerfunction">call.SdpHandlerFunction</a>>)</div>
   
   
 
@@ -7354,8 +7371,8 @@ See metrics documentation <a href="#callmetrics">here</a>.</p>
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>callId</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
-	    The id of the call to retrieve the report on.
+            <span class='code bold'>sdpHandlers</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&#x3C;<a href="#callsdphandlerfunction">call.SdpHandlerFunction</a>>)</code>
+	    The list of SDP handler functions to modify SDP.
 
           </div>
           
@@ -7367,173 +7384,9 @@ See metrics documentation <a href="#callmetrics">here</a>.</p>
   
 
   
-    <div class='py1 quiet mt1 prose-big'>Returns</div>
-    
-      <div>
-        <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></code>:
-          An object containing all metrics and data tracked against this call.
-
-        
-      </div>
-    
-  
 
   
 
-  
-
-  
-
-  
-
-  
-</section>
-
-      </div>
-    </div>
-  
-    <div class='border-bottom' id='callchangeinputdevices'>
-      <div class="clearfix small pointer toggle-sibling">
-        <div class="py1 contain">
-            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>changeInputDevices()</span>
-        </div>
-      </div>
-      <div class="clearfix display-none toggle-target">
-        <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-
-  <p>Changes the camera and/or microphone used for a Call's media input.</p>
-<p>The latest SDK release (v4.X+) has not yet implemented this API in the
-same way that it was available in previous releases (v3.X). In place
-of this API, the SDK has a more general API that can be used for this
-same behaviour.</p>
-<p>The same behaviour as the <code>changeInputDevices</code> API can be implemented
-using the general-purpose <a href="#callreplacetrack">call.replaceTrack</a> API. This API can
-be used to replace an existing media track with a new track of the
-same type, allowing an application to change certain aspects of the
-media, such as input device.</p>
-
-
-  <div class='pre p1 fill-light mt0'>changeInputDevices()</div>
-  
-  
-
-  
-  
-  
-  
-  
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Example</div>
-    
-      
-      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">const</span> call = client.call.getById(callId)
-<span class="hljs-comment">// Get the ID of the Call&#x27;s video track.</span>
-<span class="hljs-keyword">const</span> videoTrack = call.localTracks.find(<span class="hljs-function"><span class="hljs-params">trackId</span> =&gt;</span> {
-   <span class="hljs-keyword">const</span> track = client.media.getTrackById(trackId)
-   <span class="hljs-keyword">return</span> track.kind === <span class="hljs-string">&#x27;video&#x27;</span>
-})
-
-<span class="hljs-comment">// Select the new video options.</span>
-<span class="hljs-keyword">const</span> media = {
-   <span class="hljs-attr">video</span>: <span class="hljs-literal">true</span>,
-   <span class="hljs-attr">videoOptions</span>: {
-       <span class="hljs-attr">deviceId</span>: <span class="hljs-string">&#x27;cameraId&#x27;</span>
-   }
-}
-
-<span class="hljs-comment">// Change the call&#x27;s camera by replacing the video track.</span>
-client.call.replaceTrack(callId, videoTrack, media)</pre>
-    
-  
-
-  
-
-  
-
-  
-</section>
-
-      </div>
-    </div>
-  
-    <div class='border-bottom' id='callchangespeaker'>
-      <div class="clearfix small pointer toggle-sibling">
-        <div class="py1 contain">
-            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>changeSpeaker()</span>
-        </div>
-      </div>
-      <div class="clearfix display-none toggle-target">
-        <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-
-  <p>Changes the speaker used for a Call's audio output. Supported on
-browser's that support HTMLMediaElement.setSinkId().</p>
-<p>The latest SDK release (v4.X+) has not yet implemented this API in the
-same way that it was available in previous releases (v3.X). In place
-of this API, the SDK has a more general API that can be used for this
-same behaviour.</p>
-<p>The same behaviour as the <code>changeSpeaker</code> API can be implemented by
-re-rendering the Call's audio track.  A speaker can be selected when
-rendering an audio track, so changing a speaker can be simulated
-by unrendering the track with <a href="#mediaremovetracks">media.removeTracks</a>, then
-re-rendering it with a new speaker with <a href="#mediarendertracks">media.renderTracks</a>.</p>
-
-
-  <div class='pre p1 fill-light mt0'>changeSpeaker()</div>
-  
-  
-
-  
-  
-  
-  
-  
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Example</div>
-    
-      
-      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">const</span> call = client.call.getById(callId)
-<span class="hljs-comment">// Get the ID of the Call&#x27;s audio track.</span>
-<span class="hljs-keyword">const</span> audioTrack = call.localTracks.find(<span class="hljs-function"><span class="hljs-params">trackId</span> =&gt;</span> {
-   <span class="hljs-keyword">const</span> track = client.media.getTrackById(trackId)
-   <span class="hljs-keyword">return</span> track.kind === <span class="hljs-string">&#x27;audio&#x27;</span>
-})
-
-<span class="hljs-comment">// Where the audio track was previously rendered.</span>
-<span class="hljs-keyword">const</span> audioContainer = ...
-
-<span class="hljs-comment">// Unrender the audio track we want to change speaker for.</span>
-client.media.removeTrack([ audioTrack ], audioContainer)
-<span class="hljs-comment">// Re-render the audio track with a new speaker.</span>
-client.media.renderTrack([ audioTrack ], audioContainer, {
-   <span class="hljs-attr">speakerId</span>: <span class="hljs-string">&#x27;speakerId&#x27;</span>
-})</pre>
-    
   
 
   
@@ -7987,11 +7840,11 @@ client.on(<span class="hljs-string">&#x27;call:mediaConnectionChange&#x27;</span
       </div>
     </div>
   
-    <div class='border-bottom' id='callreportevents'>
+    <div class='border-bottom' id='callrestartmedia'>
       <div class="clearfix small pointer toggle-sibling">
         <div class="py1 contain">
             <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>reportEvents</span>
+            <span class='code strong strong truncate'>restartMedia(callId)</span>
         </div>
       </div>
       <div class="clearfix display-none toggle-target">
@@ -7999,22 +7852,42 @@ client.on(<span class="hljs-string">&#x27;call:mediaConnectionChange&#x27;</span
 
   
 
-  <p>Events used in the SDK's call reports.</p>
-<p>As a call progresses, the operation(s)/function(s) being performed throughout
-the duration of a call are recorded as events in a call report.
-The call report can be retrieved via the <a href="call.getReport">call.getReport</a> API.
-An application can use these event names to find the associated event(s)
-in the call report for more information on the event.
-See <em>Call Reports</em> tutorial for more information on call reports and events.</p>
+  <p>Attempt to re-establish a media connection for a call.</p>
+<p>This API will perform a "refresh" operation on the call with the intention
+of resolving media issues that may have been encountered. This API is only
+necessary after the Call's <a href="#callmediaconnectionstates">mediaConnectionState</a>
+has entered the <code>failed</code> state, but may be used in other scenarios.</p>
+<p>After the operation completes successfully, the Call will be re-establishing
+its media connection. By this time, or shortly after, the Call's
+<a href="#callmediaconnectionstates">mediaConnectionState</a> should have
+transitioned to <code>checking</code> (via a
+{@link call.event:call:mediaConnectionChange call:mediaConnectionChange}
+event) to signify the re-establishment. It will then transition to either
+<code>connected</code> or <code>failed</code> state, similar to during the initial Call establishment.</p>
+<p>If this operation fails, then the Call will not attempt the re-establishment
+and will remain in the <code>failed</code> <a href="#callmediaconnectionstates">mediaConnectionState</a>.</p>
+<p>Behaviour during the operation may differ slightly based on the browser.
+Notably, Firefox will always transition to the <code>checking</code>
+<a href="#callmediaconnectionstates">mediaConnectionState</a> no matter what
+the previous state was. Whereas Chrome will skip the <code>checking</code> state,
+transitioning directly to either <code>connected</code> or <code>failed</code>. This has the
+implication for Chrome that if the state does not change (for example,
+the Call is in the <code>failed</code> state before the media restart operation,
+and media re-establishment fails), then there will be no
+<a href="#calleventcallmediaconnectionchange">call:mediaConnectionChange</a>
+event emitted. For this reason, Chrome-based applications may need a
+short delay after receiving the <a href="#calleventcallmediarestart">call:mediaRestart</a>
+event before checking the Call's updated
+<a href="#callmediaconnectionstates">mediaConnectionState</a> to ensure the
+application is acting on the "latest" state.</p>
+<p>The SDK will emit a <a href="#calleventcallmediarestart">call:mediaRestart</a>
+event when the operation completes.</p>
+<p>The progress of the operation will be tracked via the
+<a href="#calleventcalloperation">call:operation</a> event.</p>
 
 
-  <div class='pre p1 fill-light mt0'>reportEvents</div>
+  <div class='pre p1 fill-light mt0'>restartMedia(callId: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</div>
   
-    <p>
-      Type:
-      <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>
-    </p>
-  
   
 
   
@@ -8025,620 +7898,15 @@ See <em>Call Reports</em> tutorial for more information on call reports and even
   
 
   
-
-  
-    <div class='py1 quiet mt1 prose-big'>Properties</div>
-    <div>
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
       
         <div class='space-bottom0'>
-          <span class='code bold'>MAKE</span> 
-          <code class='quiet'>
-            (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
-          </code>
-
-          
-
-          
-             : Starts when the make operation starts. Ends when the make operation finishes.
-
-          
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <span class='code bold'>SEND_RINGING_FEEDBACK</span> 
-          <code class='quiet'>
-            (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
-          </code>
-
-          
-
-          
-             : Starts when the send ringing feedback operation starts. Ends when the ringing feedback operation finishes.
-
-          
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <span class='code bold'>RECEIVE_CALL</span> 
-          <code class='quiet'>
-            (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
-          </code>
-
-          
-
-          
-             : Starts when the SDK receives a call and ends when the incoming call is setup.
-
-          
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <span class='code bold'>REMOTE_RINGING</span> 
-          <code class='quiet'>
-            (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
-          </code>
-
-          
-
-          
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <span class='code bold'>ANSWER</span> 
-          <code class='quiet'>
-            (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
-          </code>
-
-          
-
-          
-             : Starts when the answer operation starts. Ends when the answer operation finishes.
-
-          
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <span class='code bold'>GET_USER_MEDIA</span> 
-          <code class='quiet'>
-            (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
-          </code>
-
-          
-
-          
-             : Starts when user media is requested from the browser and ends when the media is created.
-
-          
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <span class='code bold'>SET_LOCAL_DESCRIPTION</span> 
-          <code class='quiet'>
-            (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
-          </code>
-
-          
-
-          
-             : Starts when the local description is to be set, and ends when the offer is set and ice collection completes.
-
-          
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <span class='code bold'>SET_REMOTE_DESCRIPTION</span> 
-          <code class='quiet'>
-            (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
-          </code>
-
-          
-
-          
-             : Starts when the remote description is to be set, and ends when the remote description is set.
-
-          
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <span class='code bold'>ICE_COLLECTION</span> 
-          <code class='quiet'>
-            (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
-          </code>
-
-          
-
-          
-             : Starts when ice candidate collection starts and ends when collection is complete.
-
-          
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <span class='code bold'>RELAY_CANDIDATE_COLLECTED</span> 
-          <code class='quiet'>
-            (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
-          </code>
-
-          
-
-          
-             : Starts and ends when a relay candidate is collected. Event data contains info on the candidate.
-
-          
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <span class='code bold'>IGNORE</span> 
-          <code class='quiet'>
-            (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
-          </code>
-
-          
-
-          
-             : Starts when the ignore operation starts. Ends when the ignore operation finishes.
-
-          
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <span class='code bold'>REJECT</span> 
-          <code class='quiet'>
-            (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
-          </code>
-
-          
-
-          
-             : Starts when the reject operation starts. Ends when the reject operation finishes.
-
-          
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <span class='code bold'>FORWARD_CALL</span> 
-          <code class='quiet'>
-            (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
-          </code>
-
-          
-
-          
-             : Starts when the forward call operation starts. Ends when the forward operation finishes.
-
-          
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <span class='code bold'>END_LOCAL</span> 
-          <code class='quiet'>
-            (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
-          </code>
-
-          
-
-          
-             : Starts when the end operation starts. Ends when the end operation finishes.
-
-          
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <span class='code bold'>END_REMOTE</span> 
-          <code class='quiet'>
-            (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
-          </code>
-
-          
-
-          
-             : Starts when the call status update ended operation starts. Ends when the call status update ended operation finishes.
-
-          
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <span class='code bold'>ADD_BASIC_MEDIA</span> 
-          <code class='quiet'>
-            (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
-          </code>
-
-          
-
-          
-             : Starts when the add basic media operation starts. Ends when the add basic media operation finishes.
-
-          
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <span class='code bold'>ADD_MEDIA_LOCAL</span> 
-          <code class='quiet'>
-            (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
-          </code>
-
-          
-
-          
-             : Starts when the add media operation starts. Ends when the add media operation finishes.
-
-          
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <span class='code bold'>ADD_MEDIA_REMOTE</span> 
-          <code class='quiet'>
-            (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
-          </code>
-
-          
-
-          
-             : Starts when a remote add media notification is received and ends when the operation is handled.
-
-          
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <span class='code bold'>REMOVE_BASIC_MEDIA</span> 
-          <code class='quiet'>
-            (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
-          </code>
-
-          
-
-          
-             : Starts when the remove basic media operation starts. Ends when the remove basic operation finishes.
-
-          
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <span class='code bold'>REMOVE_MEDIA</span> 
-          <code class='quiet'>
-            (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
-          </code>
-
-          
-
-          
-             : Starts when the remove media operation starts. Ends when the remove media operation finishes.
-
-          
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <span class='code bold'>REMOVE_MEDIA_REMOTE</span> 
-          <code class='quiet'>
-            (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
-          </code>
-
-          
-
-          
-             : Starts when a remote remove media notification is received and ends when the operation is handled.
-
-          
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <span class='code bold'>MEDIA_RESTART</span> 
-          <code class='quiet'>
-            (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
-          </code>
-
-          
-
-          
-             : Starts when the media restart operation starts. Ends when the media restart operation finishes.
-
-          
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <span class='code bold'>REPLACE_TRACK</span> 
-          <code class='quiet'>
-            (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
-          </code>
-
-          
-
-          
-             : Starts when the replace track operation starts. Ends when the replace track operation finishes.
-
-          
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <span class='code bold'>HOLD_LOCAL</span> 
-          <code class='quiet'>
-            (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
-          </code>
-
-          
-
-          
-             : Starts when the hold operation starts. Ends when the hold operation finishes.
-
-          
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <span class='code bold'>HOLD_REMOTE</span> 
-          <code class='quiet'>
-            (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
-          </code>
-
-          
-
-          
-             : Starts when a remote hold notification is received and ends when the operation is handled.
-
-          
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <span class='code bold'>UNHOLD_LOCAL</span> 
-          <code class='quiet'>
-            (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
-          </code>
-
-          
-
-          
-             : Starts when the unhold operation starts. Ends when the unhold operation finishes.
-
-          
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <span class='code bold'>UNHOLD_REMOTE</span> 
-          <code class='quiet'>
-            (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
-          </code>
-
-          
-
-          
-             : Starts when a remote unhold notification is received and ends when the operation is handled.
-
-          
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <span class='code bold'>REST_REQUEST</span> 
-          <code class='quiet'>
-            (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
-          </code>
-
-          
-
-          
-             : Starts when a REST request is to be made for an operation and ends when a response is received, or it times out.
-
-          
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <span class='code bold'>PROCESS_RESPONSE</span> 
-          <code class='quiet'>
-            (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
-          </code>
-
-          
-
-          
-             : Starts when a notification is received to an update request and ends when the response is handled.
-
-          
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <span class='code bold'>PLAY_AUDIO</span> 
-          <code class='quiet'>
-            (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
-          </code>
-
-          
-
-          
-             : Starts when the play audio operation starts. Ends when the play audio operation finishes.
-
-          
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <span class='code bold'>START_MOH</span> 
-          <code class='quiet'>
-            (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
-          </code>
-
-          
-
-          
-             : Starts when the start music on hold operation starts. Ends when the start music on hold operation finishes.
-
-          
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <span class='code bold'>STOP_MOH</span> 
-          <code class='quiet'>
-            (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
-          </code>
-
-          
-
-          
-             : Starts when the stop music on hold operation starts. Ends when the stop music on hold operation finishes.
-
-          
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <span class='code bold'>SEND_CUSTOM_PARAMETERS</span> 
-          <code class='quiet'>
-            (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
-          </code>
-
-          
-
-          
-             : Starts when the send custom parameters operation starts. Ends send custom parameters operation finishes.
-
-          
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <span class='code bold'>GET_STATS</span> 
-          <code class='quiet'>
-            (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
-          </code>
-
-          
-
-          
-             : Starts when the get stats operation starts. Ends when the get stats operation finishes.
-
-          
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <span class='code bold'>SEND_DTMF</span> 
-          <code class='quiet'>
-            (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
-          </code>
-
-          
-
-          
-             : Starts when the send DTMF operation starts. Ends when the DTMF operation finishes.
-
-          
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <span class='code bold'>RESYNC</span> 
-          <code class='quiet'>
-            (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
-          </code>
-
-          
-
-          
-             : Starts when the resync operation starts. Ends when the resync operation finishes.
-
-          
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <span class='code bold'>DIRECT_TRANSFER</span> 
-          <code class='quiet'>
-            (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
-          </code>
-
-          
-
-          
-             : Starts when the direct transfer operation starts. Ends when the direct transfer operation finishes.
-
-          
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <span class='code bold'>CONSULTATIVE_TRANSFER</span> 
-          <code class='quiet'>
-            (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
-          </code>
-
-          
-
-          
-             : Starts when the consultative transfer operation starts. Ends when the consultative transfer operation finishes.
-
-          
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <span class='code bold'>JOIN</span> 
-          <code class='quiet'>
-            (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
-          </code>
-
-          
-
-          
-             : Starts when the join operation starts. Ends when the join operation finishes.
-
-          
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <span class='code bold'>GET_AVAILABLE_CODECS</span> 
-          <code class='quiet'>
-            (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
-          </code>
-
-          
-
-          
-             : Starts when the get available codecs operation starts. Ends when the get available codecs operation finishes.
-
-          
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <span class='code bold'>SLOW_START</span> 
-          <code class='quiet'>
-            (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
-          </code>
-
-          
-
-          
-             : Starts when the slow start operation starts. Ends when the slow stop operation finishes.
-
-          
+          <div>
+            <span class='code bold'>callId</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
+	    The ID of the call to act on.
+
+          </div>
           
         </div>
       
@@ -8650,12 +7918,136 @@ See <em>Call Reports</em> tutorial for more information on call reports and even
   
 
   
+
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
+    <div class='border-bottom' id='callsetdefaultdevices'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="py1 contain">
+            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
+            <span class='code strong strong truncate'>setDefaultDevices()</span>
+        </div>
+      </div>
+      <div class="clearfix display-none toggle-target">
+        <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+
+  <p>The <code>setDefaultDevices</code> API from previous SDK releases (3.X) has been
+deprecated in the latest releases (4.X+). The SDK no longer keeps
+track of "default devices" on behalf of the application.</p>
+<p>The devices used for a call can be selected as part of the APIs for
+starting the call. Microphone and/or camera can be chosen in the
+<a href="call.make">call.make</a> and <a href="call.answer">call.answer</a> APIs, and speaker can be
+chosen when the audio track is rendered with the
+<a href="#mediarendertracks">media.renderTracks</a> API.</p>
+
+
+  <div class='pre p1 fill-light mt0'>setDefaultDevices()</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
+    <div class='border-bottom' id='callchangeinputdevices'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="py1 contain">
+            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
+            <span class='code strong strong truncate'>changeInputDevices()</span>
+        </div>
+      </div>
+      <div class="clearfix display-none toggle-target">
+        <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+
+  <p>Changes the camera and/or microphone used for a Call's media input.</p>
+<p>The latest SDK release (v4.X+) has not yet implemented this API in the
+same way that it was available in previous releases (v3.X). In place
+of this API, the SDK has a more general API that can be used for this
+same behaviour.</p>
+<p>The same behaviour as the <code>changeInputDevices</code> API can be implemented
+using the general-purpose <a href="#callreplacetrack">call.replaceTrack</a> API. This API can
+be used to replace an existing media track with a new track of the
+same type, allowing an application to change certain aspects of the
+media, such as input device.</p>
+
+
+  <div class='pre p1 fill-light mt0'>changeInputDevices()</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
     <div class='py1 quiet mt1 prose-big'>Example</div>
     
       
-      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">const</span> report = client.call.getReport(<span class="hljs-string">&#x27;callId&#x27;</span>)
-<span class="hljs-keyword">const</span> getAvailableCodecsEvent = report.timeline.find(<span class="hljs-function"><span class="hljs-params">event</span> =&gt;</span> event.type === client.call.reportEvents.GET_AVAILABLE_CODECS)
-log(<span class="hljs-string">`Took <span class="hljs-subst">${getAvailableCodecsEvent.end - getAvailableCodecsEvent.start}</span>ms to get available codecs.`</span>)</pre>
+      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">const</span> call = client.call.getById(callId)
+<span class="hljs-comment">// Get the ID of the Call&#x27;s video track.</span>
+<span class="hljs-keyword">const</span> videoTrack = call.localTracks.find(<span class="hljs-function"><span class="hljs-params">trackId</span> =&gt;</span> {
+   <span class="hljs-keyword">const</span> track = client.media.getTrackById(trackId)
+   <span class="hljs-keyword">return</span> track.kind === <span class="hljs-string">&#x27;video&#x27;</span>
+})
+
+<span class="hljs-comment">// Select the new video options.</span>
+<span class="hljs-keyword">const</span> media = {
+   <span class="hljs-attr">video</span>: <span class="hljs-literal">true</span>,
+   <span class="hljs-attr">videoOptions</span>: {
+       <span class="hljs-attr">deviceId</span>: <span class="hljs-string">&#x27;cameraId&#x27;</span>
+   }
+}
+
+<span class="hljs-comment">// Change the call&#x27;s camera by replacing the video track.</span>
+client.call.replaceTrack(callId, videoTrack, media)</pre>
     
   
 
@@ -8669,11 +8061,11 @@ log(<span class="hljs-string">`Took <span class="hljs-subst">${getAvailableCodec
       </div>
     </div>
   
-    <div class='border-bottom' id='callmetrics'>
+    <div class='border-bottom' id='callchangespeaker'>
       <div class="clearfix small pointer toggle-sibling">
         <div class="py1 contain">
             <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>metrics</span>
+            <span class='code strong strong truncate'>changeSpeaker()</span>
         </div>
       </div>
       <div class="clearfix display-none toggle-target">
@@ -8681,529 +8073,32 @@ log(<span class="hljs-string">`Took <span class="hljs-subst">${getAvailableCodec
 
   
 
-  <p>List of metrics available as part of a Call Report.</p>
-<p>As a call progresses, timings are calculated for the duration of operations and
-other events. They are recorded in a call report that can be retrieved via
-the <a href="call.getReport">call.getReport</a> API.</p>
+  <p>Changes the speaker used for a Call's audio output. Supported on
+browser's that support HTMLMediaElement.setSinkId().</p>
+<p>The latest SDK release (v4.X+) has not yet implemented this API in the
+same way that it was available in previous releases (v3.X). In place
+of this API, the SDK has a more general API that can be used for this
+same behaviour.</p>
+<p>The same behaviour as the <code>changeSpeaker</code> API can be implemented by
+re-rendering the Call's audio track.  A speaker can be selected when
+rendering an audio track, so changing a speaker can be simulated
+by unrendering the track with <a href="#mediaremovetracks">media.removeTracks</a>, then
+re-rendering it with a new speaker with <a href="#mediarendertracks">media.renderTracks</a>.</p>
 
 
-  <div class='pre p1 fill-light mt0'>metrics</div>
-  
-    <p>
-      Type:
-      <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>
-    </p>
-  
-  
-
-  
-  
-  
-  
+  <div class='pre p1 fill-light mt0'>changeSpeaker()</div>
   
   
 
   
+  
+  
+  
+  
+  
 
   
-    <div class='py1 quiet mt1 prose-big'>Properties</div>
-    <div>
-      
-        <div class='space-bottom0'>
-          <span class='code bold'>CALL_DURATION</span> 
-          <code class='quiet'>
-            (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
-          </code>
 
-          
-
-          
-             : The duration of a completed call starting from the make call API call or incoming call notification until the call ends.
-
-          
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <span class='code bold'>MAKE_CALL_PRE_LOCAL_SETUP</span> 
-          <code class='quiet'>
-            (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
-          </code>
-
-          
-
-          
-             : The amount of time it takes from when the 
-<code>make call</code>
- operation starts up until right before we set local description.
-
-          
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <span class='code bold'>MAKE_CALL_LOCAL_SETUP</span> 
-          <code class='quiet'>
-            (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
-          </code>
-
-          
-
-          
-             : The amount of time it takes from when a call is made until the call is setup locally. This does not include any remote session creation.
-
-          
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <span class='code bold'>MAKE_CALL_REMOTE_SETUP</span> 
-          <code class='quiet'>
-            (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
-          </code>
-
-          
-
-          
-             : The amount of time it takes from when the create session request is sent until the SDK processes the response.
-
-          
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <span class='code bold'>TIME_TO_MAKE</span> 
-          <code class='quiet'>
-            (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
-          </code>
-
-          
-
-          
-             : For outgoing calls, the time for the 
-<code>make</code>
- operation to complete.
-
-          
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <span class='code bold'>ANSWER_CALL_LOCAL_SETUP</span> 
-          <code class='quiet'>
-            (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
-          </code>
-
-          
-
-          
-             : The amount of time it takes from when the 
-<code>answer call</code>
- operation starts until it is setup locally.
-
-          
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <span class='code bold'>ANSWER_CALL_PRE_LOCAL_SETUP</span> 
-          <code class='quiet'>
-            (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
-          </code>
-
-          
-
-          
-             : The amount of time it takes from when the 
-<code>answer call</code>
- operation starts up until right before we set local description.
-
-          
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <span class='code bold'>TIME_TO_ANSWER</span> 
-          <code class='quiet'>
-            (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
-          </code>
-
-          
-
-          
-             : For incoming calls, the time for the 
-<code>answer</code>
- operation to complete.
-
-          
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <span class='code bold'>TIME_FROM_RECEIVE_TO_ANSWER</span> 
-          <code class='quiet'>
-            (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
-          </code>
-
-          
-
-          
-             : For incoming calls, the time from the call first being received until it has been answered. Includes call processing and setup, as well as time for the answer API to have been called.
-
-          
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <span class='code bold'>TIME_TO_MEDIA_DURATION</span> 
-          <code class='quiet'>
-            (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
-          </code>
-
-          
-
-          
-             : The amount of time it takes from answering an incoming call until media is connected.
-
-          
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <span class='code bold'>TIME_TO_CALL_SETUP_DURATION</span> 
-          <code class='quiet'>
-            (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
-          </code>
-
-          
-
-          
-             : For incoming calls, the time from the call first being received until media is connected. Similar to 
-<code>TIME_FROM_RECEIVE_TO_ANSWER</code>
-, but without the 
-<code>answer</code>
- REST request.
-
-          
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <span class='code bold'>TIME_TO_RINGING</span> 
-          <code class='quiet'>
-            (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
-          </code>
-
-          
-
-          
-             : The amount of time it takes from when a call is made until the SDK recieves the remote ringing notification.
-
-          
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <span class='code bold'>TIME_TO_IGNORE</span> 
-          <code class='quiet'>
-            (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
-          </code>
-
-          
-
-          
-             : The amount of time it takes for the ignore call to complete.
-
-          
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <span class='code bold'>TIME_TO_REJECT</span> 
-          <code class='quiet'>
-            (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
-          </code>
-
-          
-
-          
-             : The amount of time it takes for the reject call to complete.
-
-          
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <span class='code bold'>TIME_TO_ADD_MEDIA</span> 
-          <code class='quiet'>
-            (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
-          </code>
-
-          
-
-          
-             : The amount of time it takes from when the local 
-<code>add media</code>
- operation starts until it has finished.
-
-          
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <span class='code bold'>TIME_TO_ADD_MEDIA_REMOTE</span> 
-          <code class='quiet'>
-            (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
-          </code>
-
-          
-
-          
-             : The amount of time it takes from when the SDK receives a remote 
-<code>add media</code>
- notification until it is handled and operation completes.
-
-          
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <span class='code bold'>TIME_TO_REMOVE_MEDIA</span> 
-          <code class='quiet'>
-            (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
-          </code>
-
-          
-
-          
-             : The amount of time it takes from when the local 
-<code>remove media</code>
- operation starts until it has finished.
-
-          
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <span class='code bold'>TIME_TO_REMOVE_MEDIA_REMOTE</span> 
-          <code class='quiet'>
-            (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
-          </code>
-
-          
-
-          
-             : The amount of time it takes from when the SDK receives a remote 
-<code>remove media</code>
- notification until it is handled and operation completes.
-
-          
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <span class='code bold'>TIME_TO_RESTART_MEDIA</span> 
-          <code class='quiet'>
-            (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
-          </code>
-
-          
-
-          
-             : The amount of time it takes from when the 
-<code>restart media</code>
- operation starts until it has finished.
-
-          
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <span class='code bold'>TIME_TO_HOLD_LOCAL</span> 
-          <code class='quiet'>
-            (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
-          </code>
-
-          
-
-          
-             : The amount of time it takes from when the local 
-<code>hold</code>
- operation starts until it has finished.
-
-          
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <span class='code bold'>TIME_TO_HOLD_REMOTE</span> 
-          <code class='quiet'>
-            (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
-          </code>
-
-          
-
-          
-             : The amount of time it takes from when the SDK receives a remote 
-<code>hold</code>
- notification until it is handled and operation completes.
-
-          
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <span class='code bold'>TIME_TO_UNHOLD_LOCAL</span> 
-          <code class='quiet'>
-            (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
-          </code>
-
-          
-
-          
-             : The amount of time it takes from when the local 
-<code>unhold</code>
- operation starts until it has finished.
-
-          
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <span class='code bold'>TIME_TO_UNHOLD_REMOTE</span> 
-          <code class='quiet'>
-            (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
-          </code>
-
-          
-
-          
-             : The amount of time it takes from when the SDK receives a remote 
-<code>unhold</code>
- notification until it is handled and operation completes.
-
-          
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <span class='code bold'>TIME_TO_COLLECT_ICE_CANDIDATES</span> 
-          <code class='quiet'>
-            (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
-          </code>
-
-          
-
-          
-             : The amount of time it takes from when the local description is set to when all ICE candidates have been collected.
-
-          
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <span class='code bold'>TIME_TO_RELAY_CANDIDATES</span> 
-          <code class='quiet'>
-            (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
-          </code>
-
-          
-
-          
-             : The amount of time it takes from when the 
-<code>ice collection</code>
- operation starts until each relay candidate has been recieved.
-
-          
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <span class='code bold'>TIME_TO_SEND_CUSTOM_PARAMETERS</span> 
-          <code class='quiet'>
-            (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
-          </code>
-
-          
-
-          
-             : The amount of time it takes from when the 
-<code>send custom parameters</code>
- operation starts until it has finished.
-
-          
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <span class='code bold'>TIME_TO_FORWARD</span> 
-          <code class='quiet'>
-            (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
-          </code>
-
-          
-
-          
-             : The amount of time it takes from when the 
-<code>forward call</code>
- operation starts until it has finished.
-
-          
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <span class='code bold'>TIME_TO_DIRECT_TRANSFER</span> 
-          <code class='quiet'>
-            (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
-          </code>
-
-          
-
-          
-             : The amount of time it takes from when the 
-<code>direct transfer</code>
- operation starts until it has finished.
-
-          
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <span class='code bold'>TIME_TO_CONSULTATIVE_TRANSFER</span> 
-          <code class='quiet'>
-            (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
-          </code>
-
-          
-
-          
-             : The amount of time it takes from when the 
-<code>consultative transfer</code>
- operation starts until it has finished.
-
-          
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <span class='code bold'>TIME_TO_JOIN</span> 
-          <code class='quiet'>
-            (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
-          </code>
-
-          
-
-          
-             : The amount of time it takes from when the 
-<code>join call</code>
- operation starts until it has finished.
-
-          
-          
-        </div>
-      
-    </div>
   
 
   
@@ -9214,9 +8109,22 @@ the <a href="call.getReport">call.getReport</a> API.</p>
     <div class='py1 quiet mt1 prose-big'>Example</div>
     
       
-      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">const</span> report = client.call.getReport(callId)
-<span class="hljs-keyword">const</span> callDuration = report.metrics.find(<span class="hljs-function"><span class="hljs-params">metric</span> =&gt;</span> metric.type === client.call.metrics.CALL_DURATION)
-log(<span class="hljs-string">`Call duration was <span class="hljs-subst">${callDuration.data}</span>ms.`</span>)</pre>
+      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">const</span> call = client.call.getById(callId)
+<span class="hljs-comment">// Get the ID of the Call&#x27;s audio track.</span>
+<span class="hljs-keyword">const</span> audioTrack = call.localTracks.find(<span class="hljs-function"><span class="hljs-params">trackId</span> =&gt;</span> {
+   <span class="hljs-keyword">const</span> track = client.media.getTrackById(trackId)
+   <span class="hljs-keyword">return</span> track.kind === <span class="hljs-string">&#x27;audio&#x27;</span>
+})
+
+<span class="hljs-comment">// Where the audio track was previously rendered.</span>
+<span class="hljs-keyword">const</span> audioContainer = ...
+
+<span class="hljs-comment">// Unrender the audio track we want to change speaker for.</span>
+client.media.removeTrack([ audioTrack ], audioContainer)
+<span class="hljs-comment">// Re-render the audio track with a new speaker.</span>
+client.media.renderTrack([ audioTrack ], audioContainer, {
+   <span class="hljs-attr">speakerId</span>: <span class="hljs-string">&#x27;speakerId&#x27;</span>
+})</pre>
     
   
 
@@ -9984,11 +8892,11 @@ API.</p>
       </div>
     </div>
   
-    <div class='border-bottom' id='calleventcalltracksadded'>
+    <div class='border-bottom' id='calleventcallnewtrack'>
       <div class="clearfix small pointer toggle-sibling">
         <div class="py1 contain">
             <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>call:tracksAdded</span>
+            <span class='code strong strong truncate'>call:newTrack</span>
         </div>
       </div>
       <div class="clearfix display-none toggle-target">
@@ -9996,22 +8904,14 @@ API.</p>
 
   
 
-  <p>Tracks have been added to the Call after an SDK operation. Both sides of the Call
-are now able to render these tracks.</p>
-<p>Tracks are added to a Call when either the local or remote user adds new media
-to the Call, using the <a href="#calladdmedia">call.addMedia</a> API for example, or when the
-Call is unheld with the <a href="#callunhold">call.unhold</a> API.</p>
-<p>Remote tracks are similarly added to a Call when new tracks are added by the
-remote user or either user unholds the call.</p>
-<p>This event can indicate that multiple tracks have been removed by the same
-operation. For example, if the remote user added video to the call, this
-event would indicate a single, remote video track was added. If the local
-user unheld the call, this event would indicate that any tracks previously
-on the call have been re-added, both local and remote.</p>
-<p>Information about a Track can be retrieved using the <a href="#mediagettrackbyid">media.getTrackById</a> API.</p>
+  <p>A new Track has been added to the Call.</p>
+<p>The Track may have been added by either the local user or remote user using
+the <a href="#calladdmedia">call.addMedia</a> API.</p>
+<p>Information about the Track can be retrieved using the
+<a href="#mediagettrackbyid">media.getTrackById</a> API.</p>
 
 
-  <div class='pre p1 fill-light mt0'>call:tracksAdded</div>
+  <div class='pre p1 fill-light mt0'>call:newTrack</div>
   
   
 
@@ -10048,16 +8948,34 @@ on the call have been re-added, both local and remote.</p>
                 <tr>
   <td class='break-word'><span class='code bold'>params.callId</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>
   </td>
-  <td class='break-word'><span>The ID of the Call the tracks were added to.
+  <td class='break-word'><span>The ID of the call the track was added to.
 </span></td>
 </tr>
 
 
               
                 <tr>
-  <td class='break-word'><span class='code bold'>params.trackIds</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&#x3C;<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>></code>
+  <td class='break-word'><span class='code bold'>params.mediaId</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>
   </td>
-  <td class='break-word'><span>List of track IDs that have been added to the Call.
+  <td class='break-word'><span>The ID of the media the track was added to.
+</span></td>
+</tr>
+
+
+              
+                <tr>
+  <td class='break-word'><span class='code bold'>params.trackId</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>
+  </td>
+  <td class='break-word'><span>The ID of the newly added track.
+</span></td>
+</tr>
+
+
+              
+                <tr>
+  <td class='break-word'><span class='code bold'>params.local</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></code>
+  </td>
+  <td class='break-word'><span>Whether the track is local or not (remote)
 </span></td>
 </tr>
 
@@ -10077,20 +8995,6 @@ on the call have been re-added, both local and remote.</p>
 
   
 
-  
-    <div class='py1 quiet mt1 prose-big'>Example</div>
-    
-      
-      <pre class='p1 overflow-auto round fill-light'>client.on(<span class="hljs-string">&#x27;call:tracksAdded&#x27;</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">params</span>) </span>{
-   <span class="hljs-comment">// Get the information for each track.</span>
-   <span class="hljs-keyword">const</span> tracks = params.trackIds.map(client.media.getTrackById)
-   tracks.forEach(<span class="hljs-function"><span class="hljs-params">track</span> =&gt;</span> {
-     <span class="hljs-keyword">const</span> { id, kind, isLocal } = track
-     <span class="hljs-comment">// Handle the track depending whether it is audio vs. video and local vs. remote.</span>
-     ...
-   })
-})</pre>
-    
   
 
   
@@ -10103,11 +9007,11 @@ on the call have been re-added, both local and remote.</p>
       </div>
     </div>
   
-    <div class='border-bottom' id='calleventcalltracksremoved'>
+    <div class='border-bottom' id='calleventcalltrackended'>
       <div class="clearfix small pointer toggle-sibling">
         <div class="py1 contain">
             <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>call:tracksRemoved</span>
+            <span class='code strong strong truncate'>call:trackEnded</span>
         </div>
       </div>
       <div class="clearfix display-none toggle-target">
@@ -10115,20 +9019,17 @@ on the call have been re-added, both local and remote.</p>
 
   
 
-  <p>Tracks have been removed from the Call after an SDK operation. The tracks may still
-exist, but the media is not available to both sides of the Call any longer.</p>
-<p>Tracks are removed from a Call when either the local or remote user stops the
-tracks, by using the <a href="#callremovemedia">call.removeMedia</a> API for example, or when the
-Call is held with the <a href="#callhold">call.hold</a> API.</p>
-<p>This event can indicate that multiple tracks have been removed by the same
-operation. For example, if the remote user removed video from the call, this
-event would indicate a single, remote video track was removed. If the local
-user held the call, this event would indicate that all tracks on the call
-have been removed, both local and remote.</p>
-<p>Information about a Track can be retrieved using the <a href="#mediagettrackbyid">media.getTrackById</a> API.</p>
+  <p>A Track has been removed from a Call.</p>
+<p>The Track may have been removed by either the local user or remote user using
+the <a href="#callremovemedia">call.removeMedia</a> API. Tracks are also removed from Calls
+automatically while the Call is on hold.</p>
+<p>Note that receiving this event is not an indication that a media operation
+has completed. Therefore the application should not assume it is safe to
+perform a new operation at this time. To be notified when a call has had
+its media removed, see <a href="#calleventcallremovedmedia">call:removedMedia</a></p>
 
 
-  <div class='pre p1 fill-light mt0'>call:tracksRemoved</div>
+  <div class='pre p1 fill-light mt0'>call:trackEnded</div>
   
   
 
@@ -10165,16 +9066,34 @@ have been removed, both local and remote.</p>
                 <tr>
   <td class='break-word'><span class='code bold'>params.callId</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>
   </td>
-  <td class='break-word'><span>The ID of the Call the tracks were removed from.
+  <td class='break-word'><span>The ID of the call the track was removed from.
 </span></td>
 </tr>
 
 
               
                 <tr>
-  <td class='break-word'><span class='code bold'>params.trackIds</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&#x3C;<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>></code>
+  <td class='break-word'><span class='code bold'>params.mediaId</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>
   </td>
-  <td class='break-word'><span>List of track IDs that have been removed from the Call.
+  <td class='break-word'><span>The ID of the media the track was removed from.
+</span></td>
+</tr>
+
+
+              
+                <tr>
+  <td class='break-word'><span class='code bold'>params.trackId</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>
+  </td>
+  <td class='break-word'><span>The ID of the removed track.
+</span></td>
+</tr>
+
+
+              
+                <tr>
+  <td class='break-word'><span class='code bold'>params.local</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></code>
+  </td>
+  <td class='break-word'><span>Whether the track was local or not (remote)
 </span></td>
 </tr>
 
@@ -10194,20 +9113,6 @@ have been removed, both local and remote.</p>
 
   
 
-  
-    <div class='py1 quiet mt1 prose-big'>Example</div>
-    
-      
-      <pre class='p1 overflow-auto round fill-light'>client.on(<span class="hljs-string">&#x27;call:tracksRemoved&#x27;</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">params</span>) </span>{
-   <span class="hljs-comment">// Get the information for each track.</span>
-   <span class="hljs-keyword">const</span> tracks = params.trackIds.map(client.media.getTrackById)
-   tracks.forEach(<span class="hljs-function"><span class="hljs-params">track</span> =&gt;</span> {
-     <span class="hljs-keyword">const</span> { id, kind, isLocal } = track
-     <span class="hljs-comment">// Handle the track depending whether it is audio vs. video and local vs. remote.</span>
-     ...
-   })
-})</pre>
-    
   
 
   
@@ -10355,14 +9260,13 @@ have been removed, both local and remote.</p>
 
   
 
-  <p>A local Track has been replaced by the <a href="#callreplacetrack">call.replaceTrack</a> API.</p>
-<p>This event is a combination of a track being removed from the Call and a new
-track being added to the Call. The previous Track's media is no longer
-available, similar to the <a href="#calleventcalltracksremoved">call:tracksRemoved</a>
-event, and the new Track is available in its place, similar to the
-<a href="#calleventcalltracksadded">call:tracksAdded</a> event. The event
-includes information about the Track that was replaced to help an application
-replace it seamlessly.</p>
+  <p>A Track has been replaced on the Call.</p>
+<p>A Track is replaced by the local user using the <a href="#callreplacetrack">call.replaceTrack</a>
+API.</p>
+<p>This event is similar to the <a href="#calleventcallnewtrack">call:newTrack</a>
+event, where the call has a new Track, except that an existing Track has
+been removed at the same time. The event includes information about the
+Track that was replaced to help an application replace it seamlessly.</p>
 
 
   <div class='pre p1 fill-light mt0'>call:trackReplaced</div>
@@ -10449,21 +9353,6 @@ replace it seamlessly.</p>
 
   
 
-  
-    <div class='py1 quiet mt1 prose-big'>Example</div>
-    
-      
-      <pre class='p1 overflow-auto round fill-light'>client.on(<span class="hljs-string">&#x27;call:trackReplaced&#x27;</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">params</span>) </span>{
-  <span class="hljs-keyword">const</span> { callId, oldTrack, newTrackId } = params
-
-  <span class="hljs-comment">// Unrender the removed track.</span>
-  handleTrackGone(oldTrack, callId)
-
-  <span class="hljs-comment">// Render the added track.</span>
-  <span class="hljs-keyword">const</span> track = client.media.getTrackById(newTrackId)
-  handleTrackAdded(track, callId)
-})</pre>
-    
   
 
   
@@ -11374,8 +10263,7 @@ SDK and preventing proper operation.</p>
 
   
 
-  <p>The WebSocket to the server has changed state.</p>
-<p>This event is only emitted when the WebSocket is connected, or has lost connection.</p>
+  <p>The websocket to the server has changed state.</p>
 
 
   <div class='pre p1 fill-light mt0'>ws:change</div>
@@ -12464,14 +11352,12 @@ escaped.
     
       
       <pre class='p1 overflow-auto round fill-light'><span class="hljs-comment">// When a Call receives a new track, render it.</span>
-client.on(<span class="hljs-string">&#x27;call:tracksAdded&#x27;</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">params</span>) </span>{
-   params.trackIds.forEach(<span class="hljs-function"><span class="hljs-params">trackId</span> =&gt;</span> {
-     <span class="hljs-keyword">const</span> track = client.media.getTrackById(trackId)
-     <span class="hljs-keyword">const</span> container = track.isLocal ? localContainer : remoteContainer
+client.on(<span class="hljs-string">&#x27;call:newTrack&#x27;</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">params</span>) </span>{
+   <span class="hljs-keyword">const</span> track = client.media.getTrackById(params.trackId)
+   <span class="hljs-keyword">const</span> container = params.local ? localContainer : remoteContainer
 
-     <span class="hljs-comment">// Render the Call&#x27;s new track when it first becomes available.</span>
-     client.media.renderTracks([ trackId ], container)
-   }
+   <span class="hljs-comment">// Render the Call&#x27;s new track when it first becomes available.</span>
+   client.media.renderTracks([ track.trackId ], container)
 })</pre>
     
   
@@ -13040,10 +11926,14 @@ API.</p>
 track will be silent and a video track will be a black frame. It is
 possible for the track to start receiving media again (see the
 <a href="#mediaeventmediasourceunmuted">media:sourceUnmuted</a> event).</p>
-<p>This event is generated outside the control of the SDK. This will predominantely
-happen for a remote track during network issues, where media will lose frames
-and be "choppy". This may also happen for a local track if the browser or
-end-user stops allowing the SDK to access the media device, for example.</p>
+<p>This event is generated outside the control of the SDK. This may happen for a
+local track if the browser or end-user stops allowing the SDK to access
+the media device, for example. This may happen for a remote track during a
+call when the remote endpoint stops sending media during a hold operation,
+for example.</p>
+<p>Handling this event is only required if you are using <code>unified-plan</code> as the
+<code>sdpSemantics</code> setting in the SDK's configuration. This setting will become
+the default in an upcoming release.</p>
 
 
   <div class='pre p1 fill-light mt0'>media:sourceMuted</div>
@@ -13133,6 +12023,9 @@ end-user stops allowing the SDK to access the media device, for example.</p>
 be able to display video or play audio once again.</p>
 <p>This event is generated outside the control of the SDK, when the cause of the
 media source being muted had been undone.</p>
+<p>Handling this event is only required if you are using <code>unified-plan</code> as the
+<code>sdpSemantics</code> setting in the SDK's configuration. This setting will become
+the default in an upcoming release.</p>
 
 
   <div class='pre p1 fill-light mt0'>media:sourceUnmuted</div>
@@ -13275,111 +12168,6 @@ media source being muted had been undone.</p>
   <td class='break-word'><span class='code bold'>params.error</span> <code class='quiet'><a href="#apibasicerror">api.BasicError</a>?</code>
   </td>
   <td class='break-word'><span>An error object, if the operation was not successful.
-</span></td>
-</tr>
-
-
-              
-            </tbody>
-          </table>
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-</section>
-
-      </div>
-    </div>
-  
-    <div class='border-bottom' id='mediaeventmediatrackended'>
-      <div class="clearfix small pointer toggle-sibling">
-        <div class="py1 contain">
-            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>media:trackEnded</span>
-        </div>
-      </div>
-      <div class="clearfix display-none toggle-target">
-        <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-
-  <p>A local Track has ended unexpectedly. The Track may still be part of a Call but
-has become disconnected from its media source and is not recoverable.</p>
-<p>This event is emitted when an action other than an SDK operation stops the
-track. The most comon scenarios are when a device being used for a Call
-disconnects, any local tracks (such as audio from a bluetooth headset's
-microphone or video from a USB camera) from that device will be ended.
-Another scenario is for screensharing, where some browsers provide the
-ability to stop screensharing directly rather than through an SDK operation.</p>
-<p>When a local track ends this way, it will still be part of the Call but will
-not have any media. The track can be removed from the call with the
-<a href="#callremovemedia">call.removeMedia</a> API so the remote side of the Call knows the track
-has stopped, or the track can be replaced with a new track using the
-<a href="#callreplacetrack">call.replaceTrack</a> API to prevent any interruption.</p>
-
-
-  <div class='pre p1 fill-light mt0'>media:trackEnded</div>
-  
-  
-
-  
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>params</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
-	    
-          </div>
-          
-          <table class='mt1 mb2 fixed-table h5 col-12'>
-            <colgroup>
-              <col width='30%' />
-              <col width='70%' />
-            </colgroup>
-            <thead>
-              <tr class='bold fill-light'>
-                <th>Name</th>
-                <th>Description</th>
-              </tr>
-            </thead>
-            <tbody class='mt1'>
-              
-                <tr>
-  <td class='break-word'><span class='code bold'>params.trackId</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></code>
-  </td>
-  <td class='break-word'><span>The Track that has ended.
-</span></td>
-</tr>
-
-
-              
-                <tr>
-  <td class='break-word'><span class='code bold'>params.callId</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></code>
-  </td>
-  <td class='break-word'><span>The ID of the Call the Track is used in.
 </span></td>
 </tr>
 
@@ -14399,7 +13187,7 @@ environments and/or scenarios.</p>
 <p>Note that SDP handlers are exposed on the entry point of the SDK. They can be added during
 initialization of the SDK using the <a href="#configconfigcall">config.call.sdpHandlers</a> configuration
 parameter. They can also be set after the SDK's creation by using the
-<a href="call.setSdpHandlers">call.setSdpHandlers</a> function.</p>
+<a href="#callsetsdphandlers">call.setSdpHandlers</a> function.</p>
 
 
   <div class='pre p1 fill-light mt0'>sdpHandlers</div>
@@ -14425,7 +13213,7 @@ parameter. They can also be set after the SDK's creation by using the
     <div class='py1 quiet mt1 prose-big'>Example</div>
     
       
-      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">import</span> { create, sdpHandlers } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;@rbbn/webrtc-js-sdk&#x27;</span>;
+      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">import</span> { create, sdpHandlers } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;kandy&#x27;</span>;
 <span class="hljs-keyword">const</span> codecRemover = sdpHandlers.createCodecRemover([<span class="hljs-string">&#x27;VP8&#x27;</span>, <span class="hljs-string">&#x27;VP9&#x27;</span>])
 <span class="hljs-keyword">const</span> client = create({
   <span class="hljs-attr">call</span>: {
@@ -14607,7 +13395,7 @@ codec selectors that correspond to those names without any extra FMTP parameters
     <div class='py1 quiet mt1 prose-big'>Example</div>
     
       
-      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">import</span> { create, sdpHandlers } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;@rbbn/webrtc-js-sdk&#x27;</span>;
+      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">import</span> { create, sdpHandlers } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;kandy&#x27;</span>;
 
 <span class="hljs-keyword">const</span> codecRemover = sdpHandlers.createCodecRemover([
   <span class="hljs-comment">// Remove all VP8 and VP9 codecs.</span>
@@ -14617,7 +13405,7 @@ codec selectors that correspond to those names without any extra FMTP parameters
   <span class="hljs-comment">// Remove all H264 codecs with the specified FMTP parameters.</span>
   {
     <span class="hljs-attr">name</span>: <span class="hljs-string">&#x27;H264&#x27;</span>,
-    <span class="hljs-attr">fmtpParams</span>: [<span class="hljs-string">&#x27;packetization-mode=0&#x27;</span>]
+    <span class="hljs-attr">fmtpParams</span>: [<span class="hljs-string">&#x27;profile-level-id=4d0032&#x27;</span>, <span class="hljs-string">&#x27;packetization-mode=1&#x27;</span>]
   }
 ])
 
@@ -14658,4 +13446,3 @@ codec selectors that correspond to those names without any extra FMTP parameters
   <script src='assets/site.js'></script>
 </body>
 </html>
-<!-- COPYRIGHT © 2023 RIBBON COMMUNICATIONS OPERATING COMPANY, INC. ALL RIGHTS RESERVED -->
