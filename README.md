@@ -10,12 +10,12 @@
 
 To install a particular build branch or beta branch with the Github URL, run:
 
-`$ npm install https://github.com/Kandy-IO/webrtc-anonymous-js-sdk#<build number or "beta"> --save`
+`$ npm install https://github.com/RibbonCommunications/webrtc-anonymous-js-sdk#<build number or "beta"> --save`
 
 ### In the browser :
 ```html
 <script src="https://unpkg.com/@rbbn/webrtc-anonymous-js-sdk@4.41.3/dist/webrtc.js"
-  integrity="sha384-QbCzMgECD4HarO/XXMbnwmrERkgs9BXEgRR+/NwSJqheE12otG/grKKPLtV3AzAW"
+  integrity="sha384-seOQAY2feJ3Kioz9C+1+Gw8qiXbtFpkgsWXvnK+ibVrM6L2JhO7ok+ISpJWISHRA"
   crossorigin="anonymous">
 </script>
 ```
@@ -23,7 +23,7 @@ To install a particular build branch or beta branch with the Github URL, run:
 
 The information about tutorials and documents can be found in the links below
 
-* `Documents`: [docs](https://kandy-io.github.io/webrtc-anonymous-js-sdk/docs)
+* `Documents`: [docs](https://RibbonCommunications.github.io/webrtc-anonymous-js-sdk/docs)
 
 ## Compatibility
 
