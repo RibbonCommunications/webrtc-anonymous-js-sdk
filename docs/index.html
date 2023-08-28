@@ -865,7 +865,7 @@ The SDK instance will be referred as 'api' throughout the rest of the documentat
     
       
       <pre class='p1 overflow-auto round fill-light'><span class="hljs-comment">// Instantiate the SDK.</span>
-<span class="hljs-keyword">import</span> { create } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;kandy&#x27;</span>
+<span class="hljs-keyword">import</span> { create } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;WebRTC&#x27;</span>
 <span class="hljs-keyword">const</span> client = create({
     <span class="hljs-attr">authentication</span>: { ... },
     <span class="hljs-attr">logs</span>: { ... },
@@ -2126,7 +2126,7 @@ so as not to interfere with any ongoing events.</p>
     
       
       <pre class='p1 overflow-auto round fill-light'><span class="hljs-comment">// Instantiate the SDK.</span>
-<span class="hljs-keyword">import</span> { create } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;kandy&#x27;</span>
+<span class="hljs-keyword">import</span> { create } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;WebRTC&#x27;</span>
 <span class="hljs-keyword">const</span> config = {
     <span class="hljs-attr">authentication</span>: { ... },
     <span class="hljs-attr">logs</span>: { ... },
@@ -13213,7 +13213,7 @@ parameter. They can also be set after the SDK's creation by using the
     <div class='py1 quiet mt1 prose-big'>Example</div>
     
       
-      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">import</span> { create, sdpHandlers } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;kandy&#x27;</span>;
+      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">import</span> { create, sdpHandlers } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;WebRTC&#x27;</span>;
 <span class="hljs-keyword">const</span> codecRemover = sdpHandlers.createCodecRemover([<span class="hljs-string">&#x27;VP8&#x27;</span>, <span class="hljs-string">&#x27;VP9&#x27;</span>])
 <span class="hljs-keyword">const</span> client = create({
   <span class="hljs-attr">call</span>: {
@@ -13395,7 +13395,7 @@ codec selectors that correspond to those names without any extra FMTP parameters
     <div class='py1 quiet mt1 prose-big'>Example</div>
     
       
-      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">import</span> { create, sdpHandlers } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;kandy&#x27;</span>;
+      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">import</span> { create, sdpHandlers } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;WebRTC&#x27;</span>;
 
 <span class="hljs-keyword">const</span> codecRemover = sdpHandlers.createCodecRemover([
   <span class="hljs-comment">// Remove all VP8 and VP9 codecs.</span>
