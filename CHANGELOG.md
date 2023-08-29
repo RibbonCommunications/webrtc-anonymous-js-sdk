@@ -15,6 +15,7 @@ Ribbon WebRTC SDK change log.
   - The list of devices from the `media.getDevices` API is now correct when the `media:trackEnded` event is emitted.
 - Fixed a Call issue where the `call:operation` event was not always emitted for midcall operations.
 - Fixed an issue with the call reports where the `event` objects in the timeline were missing the `end` property.
+- Fixed the dual hold scenario where the other side of the call unholds the call second and is put into `On Hold (remote)` state when it should be in `Connected` state. `KJS-1646`
 
 ## 6.1.0 - 2023-08-01
 

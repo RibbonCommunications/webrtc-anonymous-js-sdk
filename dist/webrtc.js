@@ -12,7 +12,7 @@
  *
  * WebRTC.js
  * webrtc.anonymous.js
- * Version: 6.2.0-beta.1128
+ * Version: 6.2.0-beta.1129
  */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
@@ -6322,7 +6322,7 @@ exports.getVersion = getVersion;
  * for the @@ tag below with actual version value.
  */
 function getVersion() {
-  return '6.2.0-beta.1128';
+  return '6.2.0-beta.1129';
 }
 
 /***/ }),
@@ -49804,6 +49804,8 @@ function createUnholdResponse(container) {
     if (parsedSdp.media.every(media => media.direction === 'inactive' || media.direction === 'sendonly')) {
       // No active or send only media in sdp means we must be on remote hold, update call state.
       context.dispatch(_actions.callActions.updateCall(call.id, { remoteHold: true }));
+    } else if (call.remoteHold && parsedSdp.media.some(media => media.direction === 'sendrecv')) {
+      context.dispatch(_actions.callActions.updateCall(call.id, { remoteHold: false }));
     }
 
     log.info(`Finished processing remote response to local ${call.localOp.operation}. Changing state based on operation.`);
