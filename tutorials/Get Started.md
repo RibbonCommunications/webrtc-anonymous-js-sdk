@@ -148,17 +148,27 @@ Regular mode is more often used calls need to be made to well disclosed destinat
 For using the Anonymous Call SDK, you will need more components than just a client, so the diagram below shows what will be needed in the end.
 This diagram shows the initial message interaction between the three entities involved when making an anonymous call.
 
-![Basic flow sequence](call_me_interaction_diagram.png)
+```mermaid
+sequenceDiagram
+  participant Client App
+  participant Application Server
+  participant WebRTC Gateway
 
-- Client Application (which developer needs to write by making use of our 4.x CallMe SDK)
-- This application sends an initial request to an application server to obtain the tokens.
-- It then sends a REST request to the WebRTC Gateway to make an anonymous call.
+  Client App->>Application Server: 1: Request tokens
+  Application Server->>Client App: 2: Generate auth tokens
+  Client App->>WebRTC Gateway: 3: POST request to make call
+  WebRTC Gateway->>Client App: 4: Reply with answer
+```
+
+- Client Application (which developer needs to write by making use of our WebRTC Anonymous SDK)
+  - This application sends an initial request to an application server to obtain the tokens.
+  - It then sends a REST request to the WebRTC Gateway to make an anonymous call.
 
 - Application/Web server
-- Responsible for generating the tokens upon Client's request
+  - Responsible for generating the tokens upon Client's request
 
 - WebRTC Gateway
-- Accepts anonymous calls from Client, forwards request to callee and replies back to Client with an SDP offer.
+  - Accepts anonymous calls from Client, forwards request to callee and replies back to Client with an SDP offer.
 
 [COPYRIGHT © 2023 RIBBON COMMUNICATIONS OPERATING COMPANY, INC. ALL RIGHTS RESERVED]: #
 

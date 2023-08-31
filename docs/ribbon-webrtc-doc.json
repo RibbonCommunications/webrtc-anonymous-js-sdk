@@ -19434,22 +19434,22 @@
           ],
           "loc": {
             "start": {
-              "line": 17,
+              "line": 20,
               "column": 2
             },
             "end": {
-              "line": 31,
+              "line": 34,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 32,
+                "line": 35,
                 "column": 2
               },
               "end": {
-                "line": 35,
+                "line": 38,
                 "column": 3
               }
             },
@@ -19602,22 +19602,22 @@
           ],
           "loc": {
             "start": {
-              "line": 37,
+              "line": 40,
               "column": 2
             },
             "end": {
-              "line": 48,
+              "line": 51,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 49,
+                "line": 52,
                 "column": 2
               },
               "end": {
-                "line": 52,
+                "line": 55,
                 "column": 3
               }
             },
@@ -19910,22 +19910,22 @@
           ],
           "loc": {
             "start": {
-              "line": 105,
+              "line": 108,
               "column": 2
             },
             "end": {
-              "line": 128,
+              "line": 131,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 149,
+                "line": 152,
                 "column": 2
               },
               "end": {
-                "line": 152,
+                "line": 155,
                 "column": 3
               }
             },
@@ -20167,22 +20167,22 @@
           ],
           "loc": {
             "start": {
-              "line": 154,
+              "line": 157,
               "column": 2
             },
             "end": {
-              "line": 170,
+              "line": 173,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 171,
+                "line": 174,
                 "column": 2
               },
               "end": {
-                "line": 183,
+                "line": 186,
                 "column": 3
               }
             },
@@ -20400,22 +20400,22 @@
           ],
           "loc": {
             "start": {
-              "line": 185,
+              "line": 188,
               "column": 2
             },
             "end": {
-              "line": 212,
+              "line": 215,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 213,
+                "line": 216,
                 "column": 2
               },
               "end": {
-                "line": 233,
+                "line": 236,
                 "column": 3
               }
             },
@@ -20733,22 +20733,22 @@
           ],
           "loc": {
             "start": {
-              "line": 235,
+              "line": 238,
               "column": 2
             },
             "end": {
-              "line": 280,
+              "line": 283,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 281,
+                "line": 284,
                 "column": 2
               },
               "end": {
-                "line": 313,
+                "line": 316,
                 "column": 3
               }
             },
@@ -20982,22 +20982,22 @@
           ],
           "loc": {
             "start": {
-              "line": 315,
+              "line": 318,
               "column": 2
             },
             "end": {
-              "line": 333,
+              "line": 336,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 334,
+                "line": 337,
                 "column": 2
               },
               "end": {
-                "line": 365,
+                "line": 368,
                 "column": 3
               }
             },
@@ -21190,26 +21190,31 @@
               "type": null
             },
             {
-              "title": "memberof",
-              "description": "call",
+              "title": "static",
+              "description": null,
               "lineNumber": 16
             },
             {
-              "title": "requires",
-              "description": null,
-              "lineNumber": 17,
-              "name": "call"
+              "title": "memberof",
+              "description": "call",
+              "lineNumber": 17
             },
             {
               "title": "requires",
               "description": null,
               "lineNumber": 18,
+              "name": "call"
+            },
+            {
+              "title": "requires",
+              "description": null,
+              "lineNumber": 19,
               "name": "callMe"
             },
             {
               "title": "param",
               "description": "The id of the call to retrieve the report on.",
-              "lineNumber": 19,
+              "lineNumber": 20,
               "type": {
                 "type": "NameExpression",
                 "name": "string"
@@ -21219,7 +21224,7 @@
             {
               "title": "return",
               "description": "An object containing all metrics and data tracked against this call.",
-              "lineNumber": 20,
+              "lineNumber": 21,
               "type": {
                 "type": "NameExpression",
                 "name": "Object"
@@ -21228,22 +21233,22 @@
           ],
           "loc": {
             "start": {
-              "line": 367,
+              "line": 370,
               "column": 2
             },
             "end": {
-              "line": 388,
+              "line": 392,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 389,
+                "line": 393,
                 "column": 2
               },
               "end": {
-                "line": 394,
+                "line": 398,
                 "column": 3
               }
             },
@@ -21256,7 +21261,7 @@
             {
               "title": "param",
               "name": "callId",
-              "lineNumber": 19,
+              "lineNumber": 20,
               "description": {
                 "type": "root",
                 "children": [
@@ -21308,6 +21313,7 @@
           "kind": "function",
           "name": "getReport",
           "access": "public",
+          "scope": "static",
           "memberof": "call",
           "members": {
             "global": [],
@@ -21323,10 +21329,225 @@
             },
             {
               "name": "getReport",
-              "kind": "function"
+              "kind": "function",
+              "scope": "static"
             }
           ],
-          "namespace": "callgetReport"
+          "namespace": "call.getReport"
+        },
+        {
+          "description": {
+            "type": "root",
+            "children": [
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "type": "text",
+                    "value": "Set "
+                  },
+                  {
+                    "type": "link",
+                    "url": "#callsdphandlerfunction",
+                    "title": null,
+                    "jsdoc": true,
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "SDP Handler Functions"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "text",
+                    "value": " that will be run as part of a pipeline for all future calls.\nThis will replace any SDP Handlers that were previously set."
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "type": "text",
+                    "value": "SDP handlers can be used to make modifications to the SDP (e.g., removing certain codecs)\nbefore they are processed or sent to the other side."
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "type": "text",
+                    "value": "This is an advanced feature, changing the SDP handlers mid-call may cause\nunexpected behaviour in future call operations for that call."
+                  }
+                ]
+              }
+            ]
+          },
+          "tags": [
+            {
+              "title": "method",
+              "description": null,
+              "lineNumber": 10,
+              "name": "setSdpHandlers"
+            },
+            {
+              "title": "public",
+              "description": null,
+              "lineNumber": 11,
+              "type": null
+            },
+            {
+              "title": "static",
+              "description": null,
+              "lineNumber": 12
+            },
+            {
+              "title": "memberof",
+              "description": "call",
+              "lineNumber": 13
+            },
+            {
+              "title": "requires",
+              "description": null,
+              "lineNumber": 14,
+              "name": "call"
+            },
+            {
+              "title": "requires",
+              "description": null,
+              "lineNumber": 15,
+              "name": "callMe"
+            },
+            {
+              "title": "param",
+              "description": "The list of SDP handler functions to modify SDP.",
+              "lineNumber": 16,
+              "type": {
+                "type": "TypeApplication",
+                "expression": {
+                  "type": "NameExpression",
+                  "name": "Array"
+                },
+                "applications": [
+                  {
+                    "type": "NameExpression",
+                    "name": "call.SdpHandlerFunction"
+                  }
+                ]
+              },
+              "name": "sdpHandlers"
+            },
+            {
+              "title": "return",
+              "description": null,
+              "lineNumber": 17,
+              "type": {
+                "type": "UndefinedLiteral"
+              }
+            }
+          ],
+          "loc": {
+            "start": {
+              "line": 400,
+              "column": 2
+            },
+            "end": {
+              "line": 418,
+              "column": 5
+            }
+          },
+          "context": {
+            "loc": {
+              "start": {
+                "line": 419,
+                "column": 2
+              },
+              "end": {
+                "line": 427,
+                "column": 3
+              }
+            },
+            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/call/interface/api/misc.js"
+          },
+          "augments": [],
+          "examples": [],
+          "implements": [],
+          "params": [
+            {
+              "title": "param",
+              "name": "sdpHandlers",
+              "lineNumber": 16,
+              "description": {
+                "type": "root",
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "The list of SDP handler functions to modify SDP."
+                      }
+                    ]
+                  }
+                ]
+              },
+              "type": {
+                "type": "TypeApplication",
+                "expression": {
+                  "type": "NameExpression",
+                  "name": "Array"
+                },
+                "applications": [
+                  {
+                    "type": "NameExpression",
+                    "name": "call.SdpHandlerFunction"
+                  }
+                ]
+              }
+            }
+          ],
+          "properties": [],
+          "returns": [
+            {
+              "description": {
+                "type": "root",
+                "children": []
+              },
+              "title": "returns",
+              "type": {
+                "type": "UndefinedLiteral"
+              }
+            }
+          ],
+          "sees": [],
+          "throws": [],
+          "todos": [],
+          "yields": [],
+          "kind": "function",
+          "name": "setSdpHandlers",
+          "access": "public",
+          "scope": "static",
+          "memberof": "call",
+          "members": {
+            "global": [],
+            "inner": [],
+            "instance": [],
+            "events": [],
+            "static": []
+          },
+          "path": [
+            {
+              "name": "call",
+              "kind": "namespace"
+            },
+            {
+              "name": "setSdpHandlers",
+              "kind": "function",
+              "scope": "static"
+            }
+          ],
+          "namespace": "call.setSdpHandlers"
         },
         {
           "description": {
@@ -21428,22 +21649,22 @@
           ],
           "loc": {
             "start": {
-              "line": 398,
+              "line": 429,
               "column": 2
             },
             "end": {
-              "line": 435,
+              "line": 466,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 476,
+                "line": 507,
                 "column": 2
               },
               "end": {
-                "line": 487,
+                "line": 518,
                 "column": 3
               }
             },
@@ -21604,22 +21825,22 @@
           ],
           "loc": {
             "start": {
-              "line": 437,
+              "line": 468,
               "column": 2
             },
             "end": {
-              "line": 474,
+              "line": 505,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 476,
+                "line": 507,
                 "column": 2
               },
               "end": {
-                "line": 487,
+                "line": 518,
                 "column": 3
               }
             },
@@ -22768,7 +22989,7 @@
                   },
                   {
                     "type": "link",
-                    "url": "call.getReport",
+                    "url": "#callgetreport",
                     "title": null,
                     "jsdoc": true,
                     "children": [
@@ -24275,7 +24496,7 @@
                   },
                   {
                     "type": "link",
-                    "url": "call.getReport",
+                    "url": "#callgetreport",
                     "title": null,
                     "jsdoc": true,
                     "children": [
@@ -33725,7 +33946,7 @@
             },
             {
               "type": "link",
-              "url": "call.setSdpHandlers",
+              "url": "#callsetsdphandlers",
               "title": null,
               "jsdoc": true,
               "children": [
