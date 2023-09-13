@@ -12,7 +12,7 @@
  *
  * WebRTC.js
  * webrtc.anonymous.js
- * Version: 6.3.0-beta.1135
+ * Version: 6.3.0-beta.1137
  */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
@@ -6322,7 +6322,7 @@ exports.getVersion = getVersion;
  * for the @@ tag below with actual version value.
  */
 function getVersion() {
-  return '6.3.0-beta.1135';
+  return '6.3.0-beta.1137';
 }
 
 /***/ }),
@@ -16593,7 +16593,15 @@ function getAvailableCodecs(params, deferred) {
 }
 
 function availableCodecsRetrieved(params) {
-  return callActionHelper(actionTypes.AVAILABLE_CODECS_RETRIEVED, undefined, params);
+  const action = {
+    type: actionTypes.AVAILABLE_CODECS_RETRIEVED,
+    payload: (0, _extends3.default)({}, params)
+  };
+
+  if (params.error) {
+    action.error = true;
+  }
+  return action;
 }
 
 /*
@@ -41088,7 +41096,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  */
 // Call plugin.
 function createAPI(container) {
-  const { context, CallManager, CallReporter, emitEvent, logManager, API_LOG_TAG } = container;
+  const { context, CallManager, Callstack, CallReporter, emitEvent, logManager, API_LOG_TAG } = container;
   const log = logManager.getLogger('CALL');
 
   /**
@@ -41413,7 +41421,7 @@ function createAPI(container) {
     context.dispatch(_actions.callActions.getAvailableCodecs({ kind }, { promise: {} }));
     let codecs;
     try {
-      codecs = await CallManager.getAvailableCodecs(kind);
+      codecs = await Callstack.operations.getAvailableCodecs(kind);
 
       // Final action dispatched, for backwards compatibility
       context.dispatch(_actions.callActions.availableCodecsRetrieved({

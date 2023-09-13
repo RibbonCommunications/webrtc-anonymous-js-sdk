@@ -9,6 +9,10 @@ Ribbon WebRTC SDK change log.
 
 ## 6.3.0 - beta
 
+### Fixed
+
+- Fixed an issue with invoking `call.getAvailableCodecs` API after a call has been initiated. `KJS-1735`
+
 ## 6.2.0 - 2023-08-31
 
 ### Fixed
