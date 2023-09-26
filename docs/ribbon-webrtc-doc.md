@@ -1711,10 +1711,10 @@ Type: [Object][7]
 *   `MAKE_CALL_REMOTE_SETUP` **[string][8]** The amount of time it takes from when the create session request is sent until the SDK processes the response.
 *   `TIME_TO_MAKE` **[string][8]** For outgoing calls, the time for the `make` operation to complete.
 *   `ANSWER_CALL_LOCAL_SETUP` **[string][8]** The amount of time it takes from when the `answer call` operation starts until it is setup locally.
+    (i.e. from the time an incoming call is answered until media is connected)
 *   `ANSWER_CALL_PRE_LOCAL_SETUP` **[string][8]** The amount of time it takes from when the `answer call` operation starts up until right before we set local description.
 *   `TIME_TO_ANSWER` **[string][8]** For incoming calls, the time for the `answer` operation to complete.
 *   `TIME_FROM_RECEIVE_TO_ANSWER` **[string][8]** For incoming calls, the time from the call first being received until it has been answered. Includes call processing and setup, as well as time for the answer API to have been called.
-*   `TIME_TO_MEDIA_DURATION` **[string][8]** The amount of time it takes from answering an incoming call until media is connected.
 *   `TIME_TO_CALL_SETUP_DURATION` **[string][8]** For incoming calls, the time from the call first being received until media is connected. Similar to `TIME_FROM_RECEIVE_TO_ANSWER`, but without the `answer` REST request.
 *   `TIME_TO_RINGING` **[string][8]** The amount of time it takes from when a call is made until the SDK recieves the remote ringing notification.
 *   `TIME_TO_IGNORE` **[string][8]** The amount of time it takes for the ignore call to complete.

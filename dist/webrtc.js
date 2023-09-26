@@ -12,7 +12,7 @@
  *
  * WebRTC.js
  * webrtc.anonymous.js
- * Version: 6.3.0-beta.1138
+ * Version: 6.3.0-beta.1139
  */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
@@ -2263,10 +2263,10 @@ const REPORT_EVENTS = exports.REPORT_EVENTS = {
    * @property {string} MAKE_CALL_REMOTE_SETUP The amount of time it takes from when the create session request is sent until the SDK processes the response.
    * @property {string} TIME_TO_MAKE For outgoing calls, the time for the `make` operation to complete.
    * @property {string} ANSWER_CALL_LOCAL_SETUP The amount of time it takes from when the `answer call` operation starts until it is setup locally.
+   *   (i.e. from the time an incoming call is answered until media is connected)
    * @property {string} ANSWER_CALL_PRE_LOCAL_SETUP The amount of time it takes from when the `answer call` operation starts up until right before we set local description.
    * @property {string} TIME_TO_ANSWER For incoming calls, the time for the `answer` operation to complete.
    * @property {string} TIME_FROM_RECEIVE_TO_ANSWER For incoming calls, the time from the call first being received until it has been answered. Includes call processing and setup, as well as time for the answer API to have been called.
-   * @property {string} TIME_TO_MEDIA_DURATION The amount of time it takes from answering an incoming call until media is connected.
    * @property {string} TIME_TO_CALL_SETUP_DURATION For incoming calls, the time from the call first being received until media is connected. Similar to `TIME_FROM_RECEIVE_TO_ANSWER`, but without the `answer` REST request.
    * @property {string} TIME_TO_RINGING The amount of time it takes from when a call is made until the SDK recieves the remote ringing notification.
    * @property {string} TIME_TO_IGNORE The amount of time it takes for the ignore call to complete.
@@ -2302,7 +2302,6 @@ const REPORT_EVENTS = exports.REPORT_EVENTS = {
   ANSWER_CALL_LOCAL_SETUP: 'ANSWER_CALL_LOCAL_SETUP',
   TIME_TO_ANSWER: 'TIME_TO_ANSWER',
   TIME_FROM_RECEIVE_TO_ANSWER: 'TIME_FROM_RECEIVE_TO_ANSWER',
-  TIME_TO_MEDIA_DURATION: 'TIME_TO_MEDIA_DURATION',
   TIME_TO_CALL_SETUP_DURATION: 'TIME_TO_CALL_SETUP_DURATION',
   TIME_TO_RINGING: 'TIME_TO_RINGING',
   TIME_TO_IGNORE: 'TIME_TO_IGNORE',
@@ -6322,7 +6321,7 @@ exports.getVersion = getVersion;
  * for the @@ tag below with actual version value.
  */
 function getVersion() {
-  return '6.3.0-beta.1138';
+  return '6.3.0-beta.1139';
 }
 
 /***/ }),
@@ -58814,9 +58813,6 @@ function registerAllMetricHandlers(callReport) {
    * This is the sum of TIME_TO_CALL_SETUP_DURATION and the answer REST request duration.
    */
   callReport.registerMetricHandler(_constants.REPORT_METRICS.TIME_FROM_RECEIVE_TO_ANSWER, _constants.REPORT_EVENTS.ANSWER, durationHandler(_constants.REPORT_METRICS.TIME_FROM_RECEIVE_TO_ANSWER, [_constants.REPORT_EVENTS.RECEIVE_CALL]));
-
-  // Call time to media duration (answer operation starts until media is connected)
-  callReport.registerMetricHandler(_constants.REPORT_METRICS.TIME_TO_MEDIA_DURATION, _constants.REPORT_EVENTS.SET_LOCAL_DESCRIPTION, durationHandler(_constants.REPORT_METRICS.TIME_TO_MEDIA_DURATION, [_constants.REPORT_EVENTS.ANSWER]));
 
   // Time to setup incoming call (incoming call notification until media is connected)
   callReport.registerMetricHandler(_constants.REPORT_METRICS.TIME_TO_CALL_SETUP_DURATION, _constants.REPORT_EVENTS.SET_LOCAL_DESCRIPTION, durationHandler(_constants.REPORT_METRICS.TIME_TO_CALL_SETUP_DURATION, [_constants.REPORT_EVENTS.RECEIVE_CALL]));

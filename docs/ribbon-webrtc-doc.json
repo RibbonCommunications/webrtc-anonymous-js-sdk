@@ -24610,7 +24610,7 @@
             },
             {
               "title": "property",
-              "description": "The amount of time it takes from when the `answer call` operation starts until it is setup locally.",
+              "description": "The amount of time it takes from when the `answer call` operation starts until it is setup locally.\n  (i.e. from the time an incoming call is answered until media is connected)",
               "lineNumber": 19,
               "type": {
                 "type": "NameExpression",
@@ -24621,7 +24621,7 @@
             {
               "title": "property",
               "description": "The amount of time it takes from when the `answer call` operation starts up until right before we set local description.",
-              "lineNumber": 20,
+              "lineNumber": 21,
               "type": {
                 "type": "NameExpression",
                 "name": "string"
@@ -24631,7 +24631,7 @@
             {
               "title": "property",
               "description": "For incoming calls, the time for the `answer` operation to complete.",
-              "lineNumber": 21,
+              "lineNumber": 22,
               "type": {
                 "type": "NameExpression",
                 "name": "string"
@@ -24641,22 +24641,12 @@
             {
               "title": "property",
               "description": "For incoming calls, the time from the call first being received until it has been answered. Includes call processing and setup, as well as time for the answer API to have been called.",
-              "lineNumber": 22,
-              "type": {
-                "type": "NameExpression",
-                "name": "string"
-              },
-              "name": "TIME_FROM_RECEIVE_TO_ANSWER"
-            },
-            {
-              "title": "property",
-              "description": "The amount of time it takes from answering an incoming call until media is connected.",
               "lineNumber": 23,
               "type": {
                 "type": "NameExpression",
                 "name": "string"
               },
-              "name": "TIME_TO_MEDIA_DURATION"
+              "name": "TIME_FROM_RECEIVE_TO_ANSWER"
             },
             {
               "title": "property",
@@ -24881,7 +24871,7 @@
                 "column": 0
               },
               "end": {
-                "line": 201,
+                "line": 200,
                 "column": 1
               }
             },
@@ -25047,7 +25037,7 @@
                       },
                       {
                         "type": "text",
-                        "value": " operation starts until it is setup locally."
+                        "value": " operation starts until it is setup locally.\n(i.e. from the time an incoming call is answered until media is connected)"
                       }
                     ]
                   }
@@ -25061,7 +25051,7 @@
             {
               "title": "property",
               "name": "ANSWER_CALL_PRE_LOCAL_SETUP",
-              "lineNumber": 20,
+              "lineNumber": 21,
               "description": {
                 "type": "root",
                 "children": [
@@ -25092,7 +25082,7 @@
             {
               "title": "property",
               "name": "TIME_TO_ANSWER",
-              "lineNumber": 21,
+              "lineNumber": 22,
               "description": {
                 "type": "root",
                 "children": [
@@ -25123,29 +25113,6 @@
             {
               "title": "property",
               "name": "TIME_FROM_RECEIVE_TO_ANSWER",
-              "lineNumber": 22,
-              "description": {
-                "type": "root",
-                "children": [
-                  {
-                    "type": "paragraph",
-                    "children": [
-                      {
-                        "type": "text",
-                        "value": "For incoming calls, the time from the call first being received until it has been answered. Includes call processing and setup, as well as time for the answer API to have been called."
-                      }
-                    ]
-                  }
-                ]
-              },
-              "type": {
-                "type": "NameExpression",
-                "name": "string"
-              }
-            },
-            {
-              "title": "property",
-              "name": "TIME_TO_MEDIA_DURATION",
               "lineNumber": 23,
               "description": {
                 "type": "root",
@@ -25155,7 +25122,7 @@
                     "children": [
                       {
                         "type": "text",
-                        "value": "The amount of time it takes from answering an incoming call until media is connected."
+                        "value": "For incoming calls, the time from the call first being received until it has been answered. Includes call processing and setup, as well as time for the answer API to have been called."
                       }
                     ]
                   }

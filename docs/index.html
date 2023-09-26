@@ -8880,6 +8880,7 @@ the <a href="#callgetreport">call.getReport</a> API.</p>
              : The amount of time it takes from when the 
 <code>answer call</code>
  operation starts until it is setup locally.
+(i.e. from the time an incoming call is answered until media is connected)
 
           
           
@@ -8929,21 +8930,6 @@ the <a href="#callgetreport">call.getReport</a> API.</p>
 
           
              : For incoming calls, the time from the call first being received until it has been answered. Includes call processing and setup, as well as time for the answer API to have been called.
-
-          
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <span class='code bold'>TIME_TO_MEDIA_DURATION</span> 
-          <code class='quiet'>
-            (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
-          </code>
-
-          
-
-          
-             : The amount of time it takes from answering an incoming call until media is connected.
 
           
           
