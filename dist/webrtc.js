@@ -12,7 +12,7 @@
  *
  * WebRTC.js
  * webrtc.anonymous.js
- * Version: 6.3.0-beta.1140
+ * Version: 6.3.0-beta.1141
  */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
@@ -177,7 +177,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* unused harmony export x */
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "gb", function() { return shouldCancel; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "hb", function() { return shouldTerminate; });
-/* harmony import */ var _redux_saga_symbols__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(9);
+/* harmony import */ var _redux_saga_symbols__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(10);
 /* harmony import */ var _babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(61);
 /* harmony import */ var _redux_saga_is__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(2);
 /* harmony import */ var _redux_saga_delay_p__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(90);
@@ -914,7 +914,7 @@ function getTurnInfo(state) {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "m", function() { return symbol; });
 /* unused harmony export task */
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "n", function() { return undef; });
-/* harmony import */ var _redux_saga_symbols__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(9);
+/* harmony import */ var _redux_saga_symbols__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(10);
 
 
 var undef = function undef(v) {
@@ -1010,14 +1010,6 @@ exports.default = _assign2.default || function (target) {
 
 /***/ }),
 /* 4 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var _ = __webpack_require__(199).runInContext();
-module.exports = __webpack_require__(200)(_, _);
-
-
-/***/ }),
-/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1127,6 +1119,14 @@ class BasicError {
   }
 }
 exports.default = BasicError;
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var _ = __webpack_require__(199).runInContext();
+module.exports = __webpack_require__(200)(_, _);
+
 
 /***/ }),
 /* 6 */
@@ -1388,63 +1388,6 @@ const turnActions = exports.turnActions = turnActionsImport;
 
 /***/ }),
 /* 9 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CANCEL; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return CHANNEL_END_TYPE; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return IO; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return MATCH; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return MULTICAST; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return SAGA_ACTION; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "g", function() { return SAGA_LOCATION; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "h", function() { return SELF_CANCELLATION; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "i", function() { return TASK; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "j", function() { return TASK_CANCEL; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "k", function() { return TERMINATE; });
-var createSymbol = function createSymbol(name) {
-  return "@@redux-saga/" + name;
-};
-
-var CANCEL =
-/*#__PURE__*/
-createSymbol('CANCEL_PROMISE');
-var CHANNEL_END_TYPE =
-/*#__PURE__*/
-createSymbol('CHANNEL_END');
-var IO =
-/*#__PURE__*/
-createSymbol('IO');
-var MATCH =
-/*#__PURE__*/
-createSymbol('MATCH');
-var MULTICAST =
-/*#__PURE__*/
-createSymbol('MULTICAST');
-var SAGA_ACTION =
-/*#__PURE__*/
-createSymbol('SAGA_ACTION');
-var SELF_CANCELLATION =
-/*#__PURE__*/
-createSymbol('SELF_CANCELLATION');
-var TASK =
-/*#__PURE__*/
-createSymbol('TASK');
-var TASK_CANCEL =
-/*#__PURE__*/
-createSymbol('TASK_CANCEL');
-var TERMINATE =
-/*#__PURE__*/
-createSymbol('TERMINATE');
-var SAGA_LOCATION =
-/*#__PURE__*/
-createSymbol('LOCATION');
-
-
-
-
-/***/ }),
-/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1804,6 +1747,63 @@ const MEDIA_CONNECTION_CHANGE = exports.MEDIA_CONNECTION_CHANGE = 'call:mediaCon
 const MEDIA_RESTART = exports.MEDIA_RESTART = 'call:mediaRestart';
 
 /***/ }),
+/* 10 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CANCEL; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return CHANNEL_END_TYPE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return IO; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return MATCH; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return MULTICAST; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return SAGA_ACTION; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "g", function() { return SAGA_LOCATION; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "h", function() { return SELF_CANCELLATION; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "i", function() { return TASK; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "j", function() { return TASK_CANCEL; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "k", function() { return TERMINATE; });
+var createSymbol = function createSymbol(name) {
+  return "@@redux-saga/" + name;
+};
+
+var CANCEL =
+/*#__PURE__*/
+createSymbol('CANCEL_PROMISE');
+var CHANNEL_END_TYPE =
+/*#__PURE__*/
+createSymbol('CHANNEL_END');
+var IO =
+/*#__PURE__*/
+createSymbol('IO');
+var MATCH =
+/*#__PURE__*/
+createSymbol('MATCH');
+var MULTICAST =
+/*#__PURE__*/
+createSymbol('MULTICAST');
+var SAGA_ACTION =
+/*#__PURE__*/
+createSymbol('SAGA_ACTION');
+var SELF_CANCELLATION =
+/*#__PURE__*/
+createSymbol('SELF_CANCELLATION');
+var TASK =
+/*#__PURE__*/
+createSymbol('TASK');
+var TASK_CANCEL =
+/*#__PURE__*/
+createSymbol('TASK_CANCEL');
+var TERMINATE =
+/*#__PURE__*/
+createSymbol('TERMINATE');
+var SAGA_LOCATION =
+/*#__PURE__*/
+createSymbol('LOCATION');
+
+
+
+
+/***/ }),
 /* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1863,7 +1863,7 @@ exports.getServices = getServices;
 exports.getPlatform = getPlatform;
 exports.getRequestInfo = getRequestInfo;
 
-var _fp = __webpack_require__(4);
+var _fp = __webpack_require__(5);
 
 var _constants = __webpack_require__(85);
 
@@ -2432,7 +2432,7 @@ __webpack_require__.d(__webpack_exports__, "takeLeading", function() { return /*
 __webpack_require__.d(__webpack_exports__, "throttle", function() { return /* reexport */ throttle$1; });
 
 // EXTERNAL MODULE: /var/jenkins_home/workspace/Kandy.js_beta/node_modules/@redux-saga/symbols/dist/redux-saga-symbols.esm.js
-var redux_saga_symbols_esm = __webpack_require__(9);
+var redux_saga_symbols_esm = __webpack_require__(10);
 
 // EXTERNAL MODULE: /var/jenkins_home/workspace/Kandy.js_beta/node_modules/@babel/runtime/helpers/esm/extends.js
 var esm_extends = __webpack_require__(61);
@@ -2922,7 +2922,7 @@ exports.normalizeServices = normalizeServices;
 exports.defer = defer;
 exports.delay = delay;
 
-var _fp = __webpack_require__(4);
+var _fp = __webpack_require__(5);
 
 var _queryString = __webpack_require__(224);
 
@@ -3937,7 +3937,7 @@ var _selectors = __webpack_require__(1);
 
 var _actions = __webpack_require__(8);
 
-var _eventTypes = __webpack_require__(10);
+var _eventTypes = __webpack_require__(9);
 
 var eventTypes = _interopRequireWildcard(_eventTypes);
 
@@ -3945,7 +3945,7 @@ var _constants = __webpack_require__(7);
 
 var _selectors2 = __webpack_require__(24);
 
-var _fp = __webpack_require__(4);
+var _fp = __webpack_require__(5);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -6321,7 +6321,7 @@ exports.getVersion = getVersion;
  * for the @@ tag below with actual version value.
  */
 function getVersion() {
-  return '6.3.0-beta.1140';
+  return '6.3.0-beta.1141';
 }
 
 /***/ }),
@@ -6340,7 +6340,7 @@ var _stringify = __webpack_require__(35);
 
 var _stringify2 = _interopRequireDefault(_stringify);
 
-var _fp = __webpack_require__(4);
+var _fp = __webpack_require__(5);
 
 var _logs = __webpack_require__(11);
 
@@ -6467,7 +6467,7 @@ exports.getConnectivityConfig = getConnectivityConfig;
 exports.getPingInterval = getPingInterval;
 exports.getCheckConnectivity = getCheckConnectivity;
 
-var _fp = __webpack_require__(4);
+var _fp = __webpack_require__(5);
 
 var _name = __webpack_require__(173);
 
@@ -7621,7 +7621,7 @@ var _sdpTransform = __webpack_require__(33);
 
 var _sdpTransform2 = _interopRequireDefault(_sdpTransform);
 
-var _fp = __webpack_require__(4);
+var _fp = __webpack_require__(5);
 
 var _logs = __webpack_require__(25);
 
@@ -7743,7 +7743,7 @@ var _adapter = __webpack_require__(348);
 
 var _adapter2 = _interopRequireDefault(_adapter);
 
-var _fp = __webpack_require__(4);
+var _fp = __webpack_require__(5);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -7848,7 +7848,7 @@ var actionTypes = _interopRequireWildcard(_actionTypes);
 
 var _constants = __webpack_require__(19);
 
-var _errors = __webpack_require__(5);
+var _errors = __webpack_require__(4);
 
 var _errors2 = _interopRequireDefault(_errors);
 
@@ -8079,7 +8079,7 @@ exports.linkCallRequest = linkCallRequest;
 exports.handleLinkCallRequestError = handleLinkCallRequestError;
 exports.generateCallUrl = generateCallUrl;
 
-var _errors = __webpack_require__(5);
+var _errors = __webpack_require__(4);
 
 var _errors2 = _interopRequireDefault(_errors);
 
@@ -8194,7 +8194,7 @@ function generateCallUrl(requestInfo, options) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var _redux_saga_symbols__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(9);
+/* harmony import */ var _redux_saga_symbols__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(10);
 
 
 var MAX_SIGNED_INT = 2147483647;
@@ -9925,7 +9925,7 @@ var _constants = __webpack_require__(19);
 
 var _effects = __webpack_require__(16);
 
-var _fp = __webpack_require__(4);
+var _fp = __webpack_require__(5);
 
 // Libraries.
 // Request plugin.
@@ -10115,7 +10115,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.formatMediaConstraints = formatMediaConstraints;
 
-var _fp = __webpack_require__(4);
+var _fp = __webpack_require__(5);
 
 /**
  * Helper function for Call APIs.
@@ -10157,7 +10157,7 @@ exports.default = createMakeResponse;
 
 var _actions = __webpack_require__(8);
 
-var _eventTypes = __webpack_require__(10);
+var _eventTypes = __webpack_require__(9);
 
 var eventTypes = _interopRequireWildcard(_eventTypes);
 
@@ -10594,7 +10594,7 @@ __webpack_require__.d(__webpack_exports__, "runSaga", function() { return /* ree
 __webpack_require__.d(__webpack_exports__, "stdChannel", function() { return /* reexport */ stdChannel; });
 
 // EXTERNAL MODULE: /var/jenkins_home/workspace/Kandy.js_beta/node_modules/@redux-saga/symbols/dist/redux-saga-symbols.esm.js
-var redux_saga_symbols_esm = __webpack_require__(9);
+var redux_saga_symbols_esm = __webpack_require__(10);
 
 // EXTERNAL MODULE: /var/jenkins_home/workspace/Kandy.js_beta/node_modules/@babel/runtime/helpers/esm/extends.js
 var esm_extends = __webpack_require__(61);
@@ -12647,7 +12647,7 @@ var _keys2 = _interopRequireDefault(_keys);
 exports.getLevel = getLevel;
 exports.getTypes = getTypes;
 
-var _fp = __webpack_require__(4);
+var _fp = __webpack_require__(5);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -13771,7 +13771,7 @@ var _actionTypes = __webpack_require__(20);
 
 var actionTypes = _interopRequireWildcard(_actionTypes);
 
-var _fp = __webpack_require__(4);
+var _fp = __webpack_require__(5);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -14744,7 +14744,7 @@ var _effects = __webpack_require__(170);
 
 var _effects2 = _interopRequireDefault(_effects);
 
-var _errors = __webpack_require__(5);
+var _errors = __webpack_require__(4);
 
 var _errors2 = _interopRequireDefault(_errors);
 
@@ -15052,7 +15052,7 @@ var _utils = __webpack_require__(118);
 
 var _utils2 = __webpack_require__(17);
 
-var _fp = __webpack_require__(4);
+var _fp = __webpack_require__(5);
 
 var _effects = __webpack_require__(16);
 
@@ -15146,7 +15146,7 @@ var _selectors = __webpack_require__(12);
 
 var _constants2 = __webpack_require__(19);
 
-var _errors = __webpack_require__(5);
+var _errors = __webpack_require__(4);
 
 var _errors2 = _interopRequireDefault(_errors);
 
@@ -16290,7 +16290,7 @@ var _actionTypes = __webpack_require__(32);
 
 var actionTypes = _interopRequireWildcard(_actionTypes);
 
-var _fp = __webpack_require__(4);
+var _fp = __webpack_require__(5);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -16745,7 +16745,7 @@ exports.getWebsocketConfig = getWebsocketConfig;
 exports.getWebsocketId = getWebsocketId;
 exports.getPendingOperation = getPendingOperation;
 
-var _fp = __webpack_require__(4);
+var _fp = __webpack_require__(5);
 
 var _selectors = __webpack_require__(12);
 
@@ -17707,11 +17707,11 @@ var _constants = __webpack_require__(6);
 
 var _actions = __webpack_require__(8);
 
-var _eventTypes = __webpack_require__(10);
+var _eventTypes = __webpack_require__(9);
 
 var _selectors = __webpack_require__(1);
 
-var _errors = __webpack_require__(5);
+var _errors = __webpack_require__(4);
 
 var _errors2 = _interopRequireDefault(_errors);
 
@@ -18030,7 +18030,7 @@ var _sdpTransform = __webpack_require__(33);
 
 var _sdpTransform2 = _interopRequireDefault(_sdpTransform);
 
-var _fp = __webpack_require__(4);
+var _fp = __webpack_require__(5);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -19000,7 +19000,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.getNotificationsInfo = getNotificationsInfo;
 exports.getNotificationConfig = getNotificationConfig;
 
-var _fp = __webpack_require__(4);
+var _fp = __webpack_require__(5);
 
 /**
  * Retrieves the notifications state.
@@ -19366,7 +19366,7 @@ exports.linkAuthorization = linkAuthorization;
 exports.ucAuthorization = ucAuthorization;
 exports.cpaasAuthorization = cpaasAuthorization;
 
-var _errors = __webpack_require__(5);
+var _errors = __webpack_require__(4);
 
 var _errors2 = _interopRequireDefault(_errors);
 
@@ -19659,7 +19659,7 @@ exports.default = commonIndex;
 
 var _factory = __webpack_require__(192);
 
-var _fp = __webpack_require__(4);
+var _fp = __webpack_require__(5);
 
 // This is a hack to fix an issue where Lodash will add itself to
 // the window scope even if it's loaded via ES6. You can remove this when
@@ -19820,7 +19820,7 @@ var _reduxSaga = __webpack_require__(125);
 
 var _reduxSaga2 = _interopRequireDefault(_reduxSaga);
 
-var _fp = __webpack_require__(4);
+var _fp = __webpack_require__(5);
 
 var _effects = __webpack_require__(16);
 
@@ -26187,7 +26187,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = setupTransformers;
 
-var _fp = __webpack_require__(4);
+var _fp = __webpack_require__(5);
 
 /**
  * Determines which redux-logger transformers we need based on options.
@@ -26573,7 +26573,7 @@ var _configs = __webpack_require__(160);
 
 var _configs2 = _interopRequireDefault(_configs);
 
-var _fp = __webpack_require__(4);
+var _fp = __webpack_require__(5);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -26668,7 +26668,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.getConfiguration = getConfiguration;
 
-var _fp = __webpack_require__(4);
+var _fp = __webpack_require__(5);
 
 /**
  * Retrieves configuration Object stored in state
@@ -27496,7 +27496,7 @@ var _actionTypes = __webpack_require__(114);
 
 var actionTypes = _interopRequireWildcard(_actionTypes);
 
-var _fp = __webpack_require__(4);
+var _fp = __webpack_require__(5);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -28261,7 +28261,7 @@ var actionTypes = _interopRequireWildcard(_actionTypes);
 
 var _reduxActions = __webpack_require__(26);
 
-var _fp = __webpack_require__(4);
+var _fp = __webpack_require__(5);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -28351,7 +28351,7 @@ var actionTypes = _interopRequireWildcard(_actionTypes);
 
 var _reduxActions = __webpack_require__(26);
 
-var _fp = __webpack_require__(4);
+var _fp = __webpack_require__(5);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -28522,7 +28522,7 @@ var actionTypes = _interopRequireWildcard(_actionTypes);
 
 var _reduxActions = __webpack_require__(26);
 
-var _fp = __webpack_require__(4);
+var _fp = __webpack_require__(5);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -28673,9 +28673,9 @@ exports.default = createMediaOperations;
 
 var _actions = __webpack_require__(36);
 
-var _fp = __webpack_require__(4);
+var _fp = __webpack_require__(5);
 
-var _errors = __webpack_require__(5);
+var _errors = __webpack_require__(4);
 
 var _errors2 = _interopRequireDefault(_errors);
 
@@ -29123,7 +29123,7 @@ var _actionTypes = __webpack_require__(20);
 
 var actionTypes = _interopRequireWildcard(_actionTypes);
 
-var _fp = __webpack_require__(4);
+var _fp = __webpack_require__(5);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -29835,7 +29835,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = getAssociatedCallEvent;
 
-var _eventTypes = __webpack_require__(10);
+var _eventTypes = __webpack_require__(9);
 
 var _selectors = __webpack_require__(1);
 
@@ -35741,7 +35741,7 @@ var _eventemitter = __webpack_require__(37);
 
 var _eventemitter2 = _interopRequireDefault(_eventemitter);
 
-var _fp = __webpack_require__(4);
+var _fp = __webpack_require__(5);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -37017,7 +37017,7 @@ exports.setTransceiverDirection = setTransceiverDirection;
 
 var _constants = __webpack_require__(38);
 
-var _fp = __webpack_require__(4);
+var _fp = __webpack_require__(5);
 
 var _logs = __webpack_require__(25);
 
@@ -37760,7 +37760,7 @@ var _actions = __webpack_require__(43);
 
 var _utils = __webpack_require__(17);
 
-var _fp = __webpack_require__(4);
+var _fp = __webpack_require__(5);
 
 var _effects = __webpack_require__(16);
 
@@ -37869,7 +37869,7 @@ var actionTypes = _interopRequireWildcard(_actionTypes);
 
 var _reduxActions = __webpack_require__(26);
 
-var _fp = __webpack_require__(4);
+var _fp = __webpack_require__(5);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -38490,7 +38490,7 @@ var _sagas = __webpack_require__(171);
 
 var _effects = __webpack_require__(172);
 
-var _errors = __webpack_require__(5);
+var _errors = __webpack_require__(4);
 
 var _errors2 = _interopRequireDefault(_errors);
 
@@ -39306,7 +39306,7 @@ var _actions = __webpack_require__(8);
 
 var _selectors = __webpack_require__(1);
 
-var _eventTypes = __webpack_require__(10);
+var _eventTypes = __webpack_require__(9);
 
 var eventTypes = _interopRequireWildcard(_eventTypes);
 
@@ -39990,7 +39990,7 @@ exports.default = createAPI;
 
 var _actions = __webpack_require__(8);
 
-var _eventTypes = __webpack_require__(10);
+var _eventTypes = __webpack_require__(9);
 
 var eventTypes = _interopRequireWildcard(_eventTypes);
 
@@ -39998,7 +39998,7 @@ var _selectors = __webpack_require__(1);
 
 var _utils = __webpack_require__(120);
 
-var _fp = __webpack_require__(4);
+var _fp = __webpack_require__(5);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -40763,7 +40763,7 @@ var _actions = __webpack_require__(8);
 
 var _selectors = __webpack_require__(1);
 
-var _eventTypes = __webpack_require__(10);
+var _eventTypes = __webpack_require__(9);
 
 var eventTypes = _interopRequireWildcard(_eventTypes);
 
@@ -41076,7 +41076,7 @@ var _selectors = __webpack_require__(1);
 
 var _actions = __webpack_require__(8);
 
-var _eventTypes = __webpack_require__(10);
+var _eventTypes = __webpack_require__(9);
 
 var eventTypes = _interopRequireWildcard(_eventTypes);
 
@@ -41830,7 +41830,7 @@ var _operations2 = _interopRequireDefault(_operations);
 
 var _reduxActions = __webpack_require__(26);
 
-var _fp = __webpack_require__(4);
+var _fp = __webpack_require__(5);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -42592,7 +42592,7 @@ var _constants = __webpack_require__(7);
 
 var _reduxActions = __webpack_require__(26);
 
-var _fp = __webpack_require__(4);
+var _fp = __webpack_require__(5);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -42761,7 +42761,7 @@ var _index2 = _interopRequireDefault(_index);
 
 var _actions = __webpack_require__(8);
 
-var _fp = __webpack_require__(4);
+var _fp = __webpack_require__(5);
 
 var _uuid = __webpack_require__(44);
 
@@ -44248,7 +44248,7 @@ var _utils = __webpack_require__(89);
 
 var requestUtils = _interopRequireWildcard(_utils);
 
-var _errors = __webpack_require__(5);
+var _errors = __webpack_require__(4);
 
 var _errors2 = _interopRequireDefault(_errors);
 
@@ -44645,7 +44645,7 @@ var requestUtils = _interopRequireWildcard(_utils);
 
 var _constants = __webpack_require__(19);
 
-var _errors = __webpack_require__(5);
+var _errors = __webpack_require__(4);
 
 var _errors2 = _interopRequireDefault(_errors);
 
@@ -45227,7 +45227,7 @@ var _actionTypes = __webpack_require__(32);
 
 var actionTypes = _interopRequireWildcard(_actionTypes);
 
-var _eventTypes = __webpack_require__(10);
+var _eventTypes = __webpack_require__(9);
 
 var eventTypes = _interopRequireWildcard(_eventTypes);
 
@@ -45235,7 +45235,7 @@ var _normalization = __webpack_require__(88);
 
 var _constants = __webpack_require__(7);
 
-var _errors = __webpack_require__(5);
+var _errors = __webpack_require__(4);
 
 var _errors2 = _interopRequireDefault(_errors);
 
@@ -45817,7 +45817,7 @@ var _selectors = __webpack_require__(1);
 
 var _constants = __webpack_require__(6);
 
-var _errors = __webpack_require__(5);
+var _errors = __webpack_require__(4);
 
 var _errors2 = _interopRequireDefault(_errors);
 
@@ -45965,7 +45965,7 @@ var _selectors = __webpack_require__(1);
 
 var _constants = __webpack_require__(6);
 
-var _errors = __webpack_require__(5);
+var _errors = __webpack_require__(4);
 
 var _errors2 = _interopRequireDefault(_errors);
 
@@ -46104,7 +46104,7 @@ var _actions = __webpack_require__(8);
 
 var _call = __webpack_require__(28);
 
-var _eventTypes = __webpack_require__(10);
+var _eventTypes = __webpack_require__(9);
 
 var eventTypes = _interopRequireWildcard(_eventTypes);
 
@@ -46114,7 +46114,7 @@ var _constants2 = __webpack_require__(7);
 
 var _constants3 = __webpack_require__(14);
 
-var _errors = __webpack_require__(5);
+var _errors = __webpack_require__(4);
 
 var _errors2 = _interopRequireDefault(_errors);
 
@@ -46458,7 +46458,7 @@ exports.default = createMakeOperation;
 
 var _actions = __webpack_require__(8);
 
-var _eventTypes = __webpack_require__(10);
+var _eventTypes = __webpack_require__(9);
 
 var _selectors = __webpack_require__(1);
 
@@ -46647,7 +46647,7 @@ var _actions = __webpack_require__(8);
 
 var _selectors = __webpack_require__(1);
 
-var _eventTypes = __webpack_require__(10);
+var _eventTypes = __webpack_require__(9);
 
 var _constants = __webpack_require__(7);
 
@@ -46827,7 +46827,7 @@ var _actions = __webpack_require__(8);
 
 var _selectors = __webpack_require__(1);
 
-var _errors = __webpack_require__(5);
+var _errors = __webpack_require__(4);
 
 var _errors2 = _interopRequireDefault(_errors);
 
@@ -46939,7 +46939,7 @@ var _media = __webpack_require__(178);
 
 var _call = __webpack_require__(28);
 
-var _errors = __webpack_require__(5);
+var _errors = __webpack_require__(4);
 
 var _errors2 = _interopRequireDefault(_errors);
 
@@ -47179,7 +47179,7 @@ exports.default = answerOperation;
 
 var _actions = __webpack_require__(8);
 
-var _eventTypes = __webpack_require__(10);
+var _eventTypes = __webpack_require__(9);
 
 var _selectors = __webpack_require__(1);
 
@@ -47189,7 +47189,7 @@ var _call = __webpack_require__(28);
 
 var _remoteTracks = __webpack_require__(50);
 
-var _errors = __webpack_require__(5);
+var _errors = __webpack_require__(4);
 
 var _errors2 = _interopRequireDefault(_errors);
 
@@ -47400,7 +47400,7 @@ var _constants = __webpack_require__(6);
 
 var _call = __webpack_require__(28);
 
-var _errors = __webpack_require__(5);
+var _errors = __webpack_require__(4);
 
 var _errors2 = _interopRequireDefault(_errors);
 
@@ -47592,7 +47592,7 @@ exports.default = createSlowAnswerResponse;
 
 var _actions = __webpack_require__(8);
 
-var _eventTypes = __webpack_require__(10);
+var _eventTypes = __webpack_require__(9);
 
 var eventTypes = _interopRequireWildcard(_eventTypes);
 
@@ -47735,7 +47735,7 @@ var _selectors = __webpack_require__(1);
 
 var _constants = __webpack_require__(14);
 
-var _errors = __webpack_require__(5);
+var _errors = __webpack_require__(4);
 
 var _errors2 = _interopRequireDefault(_errors);
 
@@ -47911,11 +47911,11 @@ var _selectors = __webpack_require__(1);
 
 var _constants = __webpack_require__(6);
 
-var _errors = __webpack_require__(5);
+var _errors = __webpack_require__(4);
 
 var _errors2 = _interopRequireDefault(_errors);
 
-var _eventTypes = __webpack_require__(10);
+var _eventTypes = __webpack_require__(9);
 
 var eventTypes = _interopRequireWildcard(_eventTypes);
 
@@ -48016,7 +48016,7 @@ var _constants = __webpack_require__(7);
 
 var _constants2 = __webpack_require__(6);
 
-var _eventTypes = __webpack_require__(10);
+var _eventTypes = __webpack_require__(9);
 
 var _call = __webpack_require__(28);
 
@@ -48154,7 +48154,7 @@ var _selectors = __webpack_require__(1);
 
 var _constants = __webpack_require__(6);
 
-var _errors = __webpack_require__(5);
+var _errors = __webpack_require__(4);
 
 var _errors2 = _interopRequireDefault(_errors);
 
@@ -48301,7 +48301,7 @@ var _constants = __webpack_require__(6);
 
 var _selectors = __webpack_require__(1);
 
-var _errors = __webpack_require__(5);
+var _errors = __webpack_require__(4);
 
 var _errors2 = _interopRequireDefault(_errors);
 
@@ -48430,7 +48430,7 @@ var _selectors = __webpack_require__(1);
 
 var _constants = __webpack_require__(6);
 
-var _errors = __webpack_require__(5);
+var _errors = __webpack_require__(4);
 
 var _errors2 = _interopRequireDefault(_errors);
 
@@ -48607,7 +48607,7 @@ var _call = __webpack_require__(28);
 
 var _media = __webpack_require__(178);
 
-var _errors = __webpack_require__(5);
+var _errors = __webpack_require__(4);
 
 var _errors2 = _interopRequireDefault(_errors);
 
@@ -48739,11 +48739,11 @@ var _promise2 = _interopRequireDefault(_promise);
 
 exports.default = rollbackAddMediaOperation;
 
-var _errors = __webpack_require__(5);
+var _errors = __webpack_require__(4);
 
 var _errors2 = _interopRequireDefault(_errors);
 
-var _fp = __webpack_require__(4);
+var _fp = __webpack_require__(5);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -48838,7 +48838,7 @@ var _addMedia = __webpack_require__(179);
 
 var _selectors = __webpack_require__(1);
 
-var _errors = __webpack_require__(5);
+var _errors = __webpack_require__(4);
 
 var _errors2 = _interopRequireDefault(_errors);
 
@@ -48930,7 +48930,7 @@ exports.default = createAddMediaResponse;
 
 var _actions = __webpack_require__(8);
 
-var _eventTypes = __webpack_require__(10);
+var _eventTypes = __webpack_require__(9);
 
 var eventTypes = _interopRequireWildcard(_eventTypes);
 
@@ -49111,7 +49111,7 @@ var _selectors = __webpack_require__(1);
 
 var _kandyWebrtc = __webpack_require__(47);
 
-var _errors = __webpack_require__(5);
+var _errors = __webpack_require__(4);
 
 var _errors2 = _interopRequireDefault(_errors);
 
@@ -49256,7 +49256,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = rollbackHoldOperation;
 
-var _errors = __webpack_require__(5);
+var _errors = __webpack_require__(4);
 
 var _errors2 = _interopRequireDefault(_errors);
 
@@ -49334,7 +49334,7 @@ exports.default = createHoldResponse;
 
 var _actions = __webpack_require__(8);
 
-var _eventTypes = __webpack_require__(10);
+var _eventTypes = __webpack_require__(9);
 
 var eventTypes = _interopRequireWildcard(_eventTypes);
 
@@ -49508,7 +49508,7 @@ var _selectors = __webpack_require__(1);
 
 var _kandyWebrtc = __webpack_require__(47);
 
-var _errors = __webpack_require__(5);
+var _errors = __webpack_require__(4);
 
 var _errors2 = _interopRequireDefault(_errors);
 
@@ -49661,7 +49661,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = rollbackUnholdOperation;
 
-var _errors = __webpack_require__(5);
+var _errors = __webpack_require__(4);
 
 var _errors2 = _interopRequireDefault(_errors);
 
@@ -49740,7 +49740,7 @@ exports.default = createUnholdResponse;
 
 var _actions = __webpack_require__(8);
 
-var _eventTypes = __webpack_require__(10);
+var _eventTypes = __webpack_require__(9);
 
 var eventTypes = _interopRequireWildcard(_eventTypes);
 
@@ -49979,17 +49979,17 @@ exports.default = removeMediaOperation;
 
 var _constants = __webpack_require__(6);
 
-var _eventTypes = __webpack_require__(10);
+var _eventTypes = __webpack_require__(9);
 
 var _actions = __webpack_require__(8);
 
 var _selectors = __webpack_require__(1);
 
-var _fp = __webpack_require__(4);
+var _fp = __webpack_require__(5);
 
 var _kandyWebrtc = __webpack_require__(47);
 
-var _errors = __webpack_require__(5);
+var _errors = __webpack_require__(4);
 
 var _errors2 = _interopRequireDefault(_errors);
 
@@ -50175,9 +50175,9 @@ var _selectors = __webpack_require__(1);
 
 var _constants = __webpack_require__(14);
 
-var _fp = __webpack_require__(4);
+var _fp = __webpack_require__(5);
 
-var _errors = __webpack_require__(5);
+var _errors = __webpack_require__(4);
 
 var _errors2 = _interopRequireDefault(_errors);
 
@@ -50309,7 +50309,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = rollbackRemoveMediaOperation;
 
-var _errors = __webpack_require__(5);
+var _errors = __webpack_require__(4);
 
 var _errors2 = _interopRequireDefault(_errors);
 
@@ -50375,7 +50375,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.validate = validate;
 exports.default = removeBasicMediaOperation;
 
-var _errors = __webpack_require__(5);
+var _errors = __webpack_require__(4);
 
 var _errors2 = _interopRequireDefault(_errors);
 
@@ -50475,7 +50475,7 @@ exports.default = createRemoveMediaResponse;
 
 var _actions = __webpack_require__(8);
 
-var _eventTypes = __webpack_require__(10);
+var _eventTypes = __webpack_require__(9);
 
 var eventTypes = _interopRequireWildcard(_eventTypes);
 
@@ -50639,7 +50639,7 @@ var _selectors = __webpack_require__(1);
 
 var _constants = __webpack_require__(6);
 
-var _errors = __webpack_require__(5);
+var _errors = __webpack_require__(4);
 
 var _errors2 = _interopRequireDefault(_errors);
 
@@ -50754,7 +50754,7 @@ exports.default = webrtcReplaceTrackOperation;
 
 var _selectors = __webpack_require__(1);
 
-var _errors = __webpack_require__(5);
+var _errors = __webpack_require__(4);
 
 var _errors2 = _interopRequireDefault(_errors);
 
@@ -50981,7 +50981,7 @@ var _actions = __webpack_require__(8);
 
 var _selectors = __webpack_require__(1);
 
-var _eventTypes = __webpack_require__(10);
+var _eventTypes = __webpack_require__(9);
 
 var eventTypes = _interopRequireWildcard(_eventTypes);
 
@@ -50989,7 +50989,7 @@ var _constants = __webpack_require__(7);
 
 var _constants2 = __webpack_require__(6);
 
-var _errors = __webpack_require__(5);
+var _errors = __webpack_require__(4);
 
 var _errors2 = _interopRequireDefault(_errors);
 
@@ -51197,7 +51197,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = getAvailableCodecsOperation;
 
-var _errors = __webpack_require__(5);
+var _errors = __webpack_require__(4);
 
 var _errors2 = _interopRequireDefault(_errors);
 
@@ -51306,7 +51306,7 @@ var _selectors3 = __webpack_require__(58);
 
 var _utils = __webpack_require__(478);
 
-var _errors = __webpack_require__(5);
+var _errors = __webpack_require__(4);
 
 var _errors2 = _interopRequireDefault(_errors);
 
@@ -51549,7 +51549,7 @@ var _state = __webpack_require__(60);
 
 var _actions = __webpack_require__(8);
 
-var _eventTypes = __webpack_require__(10);
+var _eventTypes = __webpack_require__(9);
 
 var eventTypes = _interopRequireWildcard(_eventTypes);
 
@@ -51699,7 +51699,7 @@ var _selectors = __webpack_require__(1);
 
 var _constants = __webpack_require__(6);
 
-var _errors = __webpack_require__(5);
+var _errors = __webpack_require__(4);
 
 var _errors2 = _interopRequireDefault(_errors);
 
@@ -52183,7 +52183,7 @@ var _selectors = __webpack_require__(1);
 
 var _constants = __webpack_require__(6);
 
-var _eventTypes = __webpack_require__(10);
+var _eventTypes = __webpack_require__(9);
 
 var eventTypes = _interopRequireWildcard(_eventTypes);
 
@@ -52374,11 +52374,11 @@ var _selectors = __webpack_require__(1);
 
 var _constants = __webpack_require__(6);
 
-var _eventTypes = __webpack_require__(10);
+var _eventTypes = __webpack_require__(9);
 
 var eventTypes = _interopRequireWildcard(_eventTypes);
 
-var _errors = __webpack_require__(5);
+var _errors = __webpack_require__(4);
 
 var _errors2 = _interopRequireDefault(_errors);
 
@@ -52558,6 +52558,12 @@ var _constants = __webpack_require__(6);
 
 var _constants2 = __webpack_require__(14);
 
+var _eventTypes = __webpack_require__(9);
+
+var _errors = __webpack_require__(4);
+
+var _errors2 = _interopRequireDefault(_errors);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
@@ -52566,7 +52572,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  */
 // Call plugin.
 function callIceCollectionCheckOperation(container) {
-  const { CallReporter, context, logManager, WebRTC } = container;
+  const { CallReporter, context, emitEvent, logManager, WebRTC } = container;
 
   /**
    * Add the necessary information to the ice collection info object and call the
@@ -52653,15 +52659,30 @@ function callIceCollectionCheckOperation(container) {
     // If the result is neither 'StartCall' or 'Wait', then it is either an error or an undefined result type.
     //   In either case, the session will cleanup the WebRTC portions of the call so just cleanup the state here.
     if (result.type !== _constants.ICE_COLLECTION_RESULT_TYPES.START_CALL && result.type !== _constants.ICE_COLLECTION_RESULT_TYPES.WAIT) {
+      const error = new _errors2.default({
+        message: result.error && result.error.message || result.error || `Unexpected result type returned from ice collection check function: ${result.type}`
+      });
       context.dispatch(_actions.callActions.endCallFinish(currentCall.id, {
         isLocal: true,
-        error: result.error || true
+        error
       }));
+
+      emitEvent(_eventTypes.CALL_STATE_CHANGE, {
+        callId: currentCall.id,
+        previous: {
+          state: currentCall.state,
+          localHold: currentCall.localHold,
+          remoteHold: currentCall.remoteHold
+        },
+        error
+      });
     }
   }
 
   return callIceCollectionCheck;
 }
+
+// Other plugins.
 
 /***/ }),
 /* 491 */
@@ -52720,7 +52741,7 @@ var _constants = __webpack_require__(6);
 
 var _selectors2 = __webpack_require__(12);
 
-var _errors = __webpack_require__(5);
+var _errors = __webpack_require__(4);
 
 var _errors2 = _interopRequireDefault(_errors);
 
@@ -52940,7 +52961,7 @@ var _sessions = __webpack_require__(163);
 
 var sessionActions = _interopRequireWildcard(_sessions);
 
-var _eventTypes = __webpack_require__(10);
+var _eventTypes = __webpack_require__(9);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -53084,7 +53105,7 @@ var _constants = __webpack_require__(6);
 
 var _actions = __webpack_require__(8);
 
-var _eventTypes = __webpack_require__(10);
+var _eventTypes = __webpack_require__(9);
 
 var eventTypes = _interopRequireWildcard(_eventTypes);
 
@@ -53387,7 +53408,7 @@ var _selectors = __webpack_require__(1);
 
 var _constants = __webpack_require__(6);
 
-var _errors = __webpack_require__(5);
+var _errors = __webpack_require__(4);
 
 var _errors2 = _interopRequireDefault(_errors);
 
@@ -53515,7 +53536,7 @@ var _selectors = __webpack_require__(1);
 
 var _constants = __webpack_require__(6);
 
-var _errors = __webpack_require__(5);
+var _errors = __webpack_require__(4);
 
 var _errors2 = _interopRequireDefault(_errors);
 
@@ -53708,7 +53729,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = callCancelOperation;
 
-var _eventTypes = __webpack_require__(10);
+var _eventTypes = __webpack_require__(9);
 
 var _constants = __webpack_require__(6);
 
@@ -53810,7 +53831,7 @@ exports.default = callStatusRingingOperation;
 
 var _actions = __webpack_require__(8);
 
-var _eventTypes = __webpack_require__(10);
+var _eventTypes = __webpack_require__(9);
 
 var _selectors = __webpack_require__(1);
 
@@ -53942,11 +53963,11 @@ var _constants2 = __webpack_require__(6);
 
 var _selectors = __webpack_require__(1);
 
-var _eventTypes = __webpack_require__(10);
+var _eventTypes = __webpack_require__(9);
 
 var eventTypes = _interopRequireWildcard(_eventTypes);
 
-var _errors = __webpack_require__(5);
+var _errors = __webpack_require__(4);
 
 var _errors2 = _interopRequireDefault(_errors);
 
@@ -54102,7 +54123,7 @@ var _constants = __webpack_require__(6);
 
 var _constants2 = __webpack_require__(7);
 
-var _eventTypes = __webpack_require__(10);
+var _eventTypes = __webpack_require__(9);
 
 var _call = __webpack_require__(28);
 
@@ -54315,7 +54336,7 @@ var _selectors = __webpack_require__(1);
 
 var _remoteTracks = __webpack_require__(50);
 
-var _eventTypes = __webpack_require__(10);
+var _eventTypes = __webpack_require__(9);
 
 var _constants = __webpack_require__(6);
 
@@ -55773,7 +55794,7 @@ var _sdpTransform = __webpack_require__(33);
 
 var _sdpTransform2 = _interopRequireDefault(_sdpTransform);
 
-var _fp = __webpack_require__(4);
+var _fp = __webpack_require__(5);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -55839,7 +55860,7 @@ var _sdpTransform = __webpack_require__(33);
 
 var _sdpTransform2 = _interopRequireDefault(_sdpTransform);
 
-var _fp = __webpack_require__(4);
+var _fp = __webpack_require__(5);
 
 var _variableDiff = __webpack_require__(527);
 
@@ -57123,7 +57144,7 @@ exports.default = createLocalOperation;
 
 var _selectors = __webpack_require__(1);
 
-var _errors = __webpack_require__(5);
+var _errors = __webpack_require__(4);
 
 var _errors2 = _interopRequireDefault(_errors);
 
@@ -57247,7 +57268,7 @@ exports.default = generateOfferOperation;
 
 var _selectors = __webpack_require__(1);
 
-var _errors = __webpack_require__(5);
+var _errors = __webpack_require__(4);
 
 var _errors2 = _interopRequireDefault(_errors);
 
@@ -57369,7 +57390,7 @@ var _selectors = __webpack_require__(1);
 
 var _constants = __webpack_require__(14);
 
-var _errors = __webpack_require__(5);
+var _errors = __webpack_require__(4);
 
 var _errors2 = _interopRequireDefault(_errors);
 
@@ -57513,7 +57534,7 @@ var _changeDtlsRoleTo = __webpack_require__(542);
 
 var _changeDtlsRoleTo2 = _interopRequireDefault(_changeDtlsRoleTo);
 
-var _errors = __webpack_require__(5);
+var _errors = __webpack_require__(4);
 
 var _errors2 = _interopRequireDefault(_errors);
 
@@ -57687,7 +57708,7 @@ var _constants2 = __webpack_require__(6);
 
 var _actions = __webpack_require__(8);
 
-var _eventTypes = __webpack_require__(10);
+var _eventTypes = __webpack_require__(9);
 
 var eventTypes = _interopRequireWildcard(_eventTypes);
 
@@ -58240,7 +58261,7 @@ var _actionTypes = __webpack_require__(32);
 
 var actionTypes = _interopRequireWildcard(_actionTypes);
 
-var _eventTypes = __webpack_require__(10);
+var _eventTypes = __webpack_require__(9);
 
 var eventTypes = _interopRequireWildcard(_eventTypes);
 
@@ -58975,7 +58996,7 @@ var _report = __webpack_require__(549);
 
 var _report2 = _interopRequireDefault(_report);
 
-var _fp = __webpack_require__(4);
+var _fp = __webpack_require__(5);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -59075,7 +59096,7 @@ var _timelineEvent = __webpack_require__(550);
 
 var _timelineEvent2 = _interopRequireDefault(_timelineEvent);
 
-var _fp = __webpack_require__(4);
+var _fp = __webpack_require__(5);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -59365,7 +59386,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = createTimelineEvent;
 
-var _fp = __webpack_require__(4);
+var _fp = __webpack_require__(5);
 
 var _uuid = __webpack_require__(44);
 
@@ -59620,7 +59641,7 @@ var _base2 = _interopRequireDefault(_base);
 
 var _constants = __webpack_require__(19);
 
-var _fp = __webpack_require__(4);
+var _fp = __webpack_require__(5);
 
 var _validation = __webpack_require__(56);
 
@@ -59928,7 +59949,7 @@ var actionTypes = _interopRequireWildcard(_actionTypes);
 
 var _reduxActions = __webpack_require__(26);
 
-var _fp = __webpack_require__(4);
+var _fp = __webpack_require__(5);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -60178,7 +60199,7 @@ var _effects = __webpack_require__(16);
 
 var _constants = __webpack_require__(19);
 
-var _errors = __webpack_require__(5);
+var _errors = __webpack_require__(4);
 
 var _errors2 = _interopRequireDefault(_errors);
 
@@ -60818,7 +60839,7 @@ var _actions2 = __webpack_require__(43);
 
 var _effects = __webpack_require__(16);
 
-var _fp = __webpack_require__(4);
+var _fp = __webpack_require__(5);
 
 var _validation = __webpack_require__(56);
 
@@ -61335,7 +61356,7 @@ exports.androidPushRegistrationEntry = androidPushRegistrationEntry;
 exports.applePushUnregisterEntry = applePushUnregisterEntry;
 exports.androidPushUnregisterEntry = androidPushUnregisterEntry;
 
-var _fp = __webpack_require__(4);
+var _fp = __webpack_require__(5);
 
 var _effects = __webpack_require__(16);
 
@@ -61480,7 +61501,7 @@ exports.enableWebsocketChannelEntry = enableWebsocketChannelEntry;
 exports.processNotification = processNotification;
 exports.normalizeSDP = normalizeSDP;
 
-var _fp = __webpack_require__(4);
+var _fp = __webpack_require__(5);
 
 var _reduxSaga = __webpack_require__(125);
 
@@ -69245,7 +69266,7 @@ var _version = __webpack_require__(55);
 
 var _utils = __webpack_require__(17);
 
-var _fp = __webpack_require__(4);
+var _fp = __webpack_require__(5);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -69432,7 +69453,7 @@ var _logs = __webpack_require__(11);
 
 var _selectors = __webpack_require__(12);
 
-var _fp = __webpack_require__(4);
+var _fp = __webpack_require__(5);
 
 // Other plugins.
 const log = _logs.logManager.getLogger('REQUEST');
