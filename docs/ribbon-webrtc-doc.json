@@ -19910,22 +19910,22 @@
           ],
           "loc": {
             "start": {
-              "line": 108,
+              "line": 109,
               "column": 2
             },
             "end": {
-              "line": 131,
+              "line": 132,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 152,
+                "line": 153,
                 "column": 2
               },
               "end": {
-                "line": 155,
+                "line": 156,
                 "column": 3
               }
             },
@@ -20167,22 +20167,22 @@
           ],
           "loc": {
             "start": {
-              "line": 157,
+              "line": 158,
               "column": 2
             },
             "end": {
-              "line": 173,
+              "line": 174,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 174,
+                "line": 175,
                 "column": 2
               },
               "end": {
-                "line": 186,
+                "line": 187,
                 "column": 3
               }
             },
@@ -20400,22 +20400,22 @@
           ],
           "loc": {
             "start": {
-              "line": 188,
+              "line": 189,
               "column": 2
             },
             "end": {
-              "line": 215,
+              "line": 216,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 216,
+                "line": 217,
                 "column": 2
               },
               "end": {
-                "line": 236,
+                "line": 237,
                 "column": 3
               }
             },
@@ -20733,22 +20733,22 @@
           ],
           "loc": {
             "start": {
-              "line": 238,
+              "line": 239,
               "column": 2
             },
             "end": {
-              "line": 283,
+              "line": 284,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 284,
+                "line": 285,
                 "column": 2
               },
               "end": {
-                "line": 316,
+                "line": 317,
                 "column": 3
               }
             },
@@ -20982,22 +20982,22 @@
           ],
           "loc": {
             "start": {
-              "line": 318,
+              "line": 319,
               "column": 2
             },
             "end": {
-              "line": 336,
+              "line": 337,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 337,
+                "line": 338,
                 "column": 2
               },
               "end": {
-                "line": 368,
+                "line": 369,
                 "column": 3
               }
             },
@@ -21233,22 +21233,22 @@
           ],
           "loc": {
             "start": {
-              "line": 370,
+              "line": 371,
               "column": 2
             },
             "end": {
-              "line": 392,
+              "line": 393,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 393,
+                "line": 394,
                 "column": 2
               },
               "end": {
-                "line": 398,
+                "line": 399,
                 "column": 3
               }
             },
@@ -21449,22 +21449,22 @@
           ],
           "loc": {
             "start": {
-              "line": 400,
+              "line": 401,
               "column": 2
             },
             "end": {
-              "line": 418,
+              "line": 419,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 419,
+                "line": 420,
                 "column": 2
               },
               "end": {
-                "line": 427,
+                "line": 428,
                 "column": 3
               }
             },
@@ -21649,22 +21649,22 @@
           ],
           "loc": {
             "start": {
-              "line": 429,
+              "line": 430,
               "column": 2
             },
             "end": {
-              "line": 466,
+              "line": 467,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 507,
+                "line": 508,
                 "column": 2
               },
               "end": {
-                "line": 518,
+                "line": 519,
                 "column": 3
               }
             },
@@ -21825,22 +21825,22 @@
           ],
           "loc": {
             "start": {
-              "line": 468,
+              "line": 469,
               "column": 2
             },
             "end": {
-              "line": 505,
+              "line": 506,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 507,
+                "line": 508,
                 "column": 2
               },
               "end": {
-                "line": 518,
+                "line": 519,
                 "column": 3
               }
             },
@@ -24610,7 +24610,7 @@
             },
             {
               "title": "property",
-              "description": "The amount of time it takes from when the `answer call` operation starts until it is setup locally.",
+              "description": "The amount of time it takes from when the `answer call` operation starts until it is setup locally.\n  (i.e. from the time an incoming call is answered until media is connected)",
               "lineNumber": 19,
               "type": {
                 "type": "NameExpression",
@@ -24621,7 +24621,7 @@
             {
               "title": "property",
               "description": "The amount of time it takes from when the `answer call` operation starts up until right before we set local description.",
-              "lineNumber": 20,
+              "lineNumber": 21,
               "type": {
                 "type": "NameExpression",
                 "name": "string"
@@ -24631,7 +24631,7 @@
             {
               "title": "property",
               "description": "For incoming calls, the time for the `answer` operation to complete.",
-              "lineNumber": 21,
+              "lineNumber": 22,
               "type": {
                 "type": "NameExpression",
                 "name": "string"
@@ -24641,22 +24641,12 @@
             {
               "title": "property",
               "description": "For incoming calls, the time from the call first being received until it has been answered. Includes call processing and setup, as well as time for the answer API to have been called.",
-              "lineNumber": 22,
-              "type": {
-                "type": "NameExpression",
-                "name": "string"
-              },
-              "name": "TIME_FROM_RECEIVE_TO_ANSWER"
-            },
-            {
-              "title": "property",
-              "description": "The amount of time it takes from answering an incoming call until media is connected.",
               "lineNumber": 23,
               "type": {
                 "type": "NameExpression",
                 "name": "string"
               },
-              "name": "TIME_TO_MEDIA_DURATION"
+              "name": "TIME_FROM_RECEIVE_TO_ANSWER"
             },
             {
               "title": "property",
@@ -24881,7 +24871,7 @@
                 "column": 0
               },
               "end": {
-                "line": 201,
+                "line": 200,
                 "column": 1
               }
             },
@@ -25047,7 +25037,7 @@
                       },
                       {
                         "type": "text",
-                        "value": " operation starts until it is setup locally."
+                        "value": " operation starts until it is setup locally.\n(i.e. from the time an incoming call is answered until media is connected)"
                       }
                     ]
                   }
@@ -25061,7 +25051,7 @@
             {
               "title": "property",
               "name": "ANSWER_CALL_PRE_LOCAL_SETUP",
-              "lineNumber": 20,
+              "lineNumber": 21,
               "description": {
                 "type": "root",
                 "children": [
@@ -25092,7 +25082,7 @@
             {
               "title": "property",
               "name": "TIME_TO_ANSWER",
-              "lineNumber": 21,
+              "lineNumber": 22,
               "description": {
                 "type": "root",
                 "children": [
@@ -25123,29 +25113,6 @@
             {
               "title": "property",
               "name": "TIME_FROM_RECEIVE_TO_ANSWER",
-              "lineNumber": 22,
-              "description": {
-                "type": "root",
-                "children": [
-                  {
-                    "type": "paragraph",
-                    "children": [
-                      {
-                        "type": "text",
-                        "value": "For incoming calls, the time from the call first being received until it has been answered. Includes call processing and setup, as well as time for the answer API to have been called."
-                      }
-                    ]
-                  }
-                ]
-              },
-              "type": {
-                "type": "NameExpression",
-                "name": "string"
-              }
-            },
-            {
-              "title": "property",
-              "name": "TIME_TO_MEDIA_DURATION",
               "lineNumber": 23,
               "description": {
                 "type": "root",
@@ -25155,7 +25122,7 @@
                     "children": [
                       {
                         "type": "text",
-                        "value": "The amount of time it takes from answering an incoming call until media is connected."
+                        "value": "For incoming calls, the time from the call first being received until it has been answered. Includes call processing and setup, as well as time for the answer API to have been called."
                       }
                     ]
                   }

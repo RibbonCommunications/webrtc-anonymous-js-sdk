@@ -12,7 +12,7 @@
  *
  * WebRTC.js
  * webrtc.anonymous.js
- * Version: 6.2.0
+ * Version: 6.3.0
  */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
@@ -177,7 +177,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* unused harmony export x */
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "gb", function() { return shouldCancel; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "hb", function() { return shouldTerminate; });
-/* harmony import */ var _redux_saga_symbols__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(9);
+/* harmony import */ var _redux_saga_symbols__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(10);
 /* harmony import */ var _babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(61);
 /* harmony import */ var _redux_saga_is__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(2);
 /* harmony import */ var _redux_saga_delay_p__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(90);
@@ -914,7 +914,7 @@ function getTurnInfo(state) {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "m", function() { return symbol; });
 /* unused harmony export task */
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "n", function() { return undef; });
-/* harmony import */ var _redux_saga_symbols__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(9);
+/* harmony import */ var _redux_saga_symbols__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(10);
 
 
 var undef = function undef(v) {
@@ -1010,14 +1010,6 @@ exports.default = _assign2.default || function (target) {
 
 /***/ }),
 /* 4 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var _ = __webpack_require__(199).runInContext();
-module.exports = __webpack_require__(200)(_, _);
-
-
-/***/ }),
-/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1127,6 +1119,14 @@ class BasicError {
   }
 }
 exports.default = BasicError;
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var _ = __webpack_require__(199).runInContext();
+module.exports = __webpack_require__(200)(_, _);
+
 
 /***/ }),
 /* 6 */
@@ -1388,63 +1388,6 @@ const turnActions = exports.turnActions = turnActionsImport;
 
 /***/ }),
 /* 9 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CANCEL; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return CHANNEL_END_TYPE; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return IO; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return MATCH; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return MULTICAST; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return SAGA_ACTION; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "g", function() { return SAGA_LOCATION; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "h", function() { return SELF_CANCELLATION; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "i", function() { return TASK; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "j", function() { return TASK_CANCEL; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "k", function() { return TERMINATE; });
-var createSymbol = function createSymbol(name) {
-  return "@@redux-saga/" + name;
-};
-
-var CANCEL =
-/*#__PURE__*/
-createSymbol('CANCEL_PROMISE');
-var CHANNEL_END_TYPE =
-/*#__PURE__*/
-createSymbol('CHANNEL_END');
-var IO =
-/*#__PURE__*/
-createSymbol('IO');
-var MATCH =
-/*#__PURE__*/
-createSymbol('MATCH');
-var MULTICAST =
-/*#__PURE__*/
-createSymbol('MULTICAST');
-var SAGA_ACTION =
-/*#__PURE__*/
-createSymbol('SAGA_ACTION');
-var SELF_CANCELLATION =
-/*#__PURE__*/
-createSymbol('SELF_CANCELLATION');
-var TASK =
-/*#__PURE__*/
-createSymbol('TASK');
-var TASK_CANCEL =
-/*#__PURE__*/
-createSymbol('TASK_CANCEL');
-var TERMINATE =
-/*#__PURE__*/
-createSymbol('TERMINATE');
-var SAGA_LOCATION =
-/*#__PURE__*/
-createSymbol('LOCATION');
-
-
-
-
-/***/ }),
-/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1804,6 +1747,63 @@ const MEDIA_CONNECTION_CHANGE = exports.MEDIA_CONNECTION_CHANGE = 'call:mediaCon
 const MEDIA_RESTART = exports.MEDIA_RESTART = 'call:mediaRestart';
 
 /***/ }),
+/* 10 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CANCEL; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return CHANNEL_END_TYPE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return IO; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return MATCH; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return MULTICAST; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return SAGA_ACTION; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "g", function() { return SAGA_LOCATION; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "h", function() { return SELF_CANCELLATION; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "i", function() { return TASK; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "j", function() { return TASK_CANCEL; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "k", function() { return TERMINATE; });
+var createSymbol = function createSymbol(name) {
+  return "@@redux-saga/" + name;
+};
+
+var CANCEL =
+/*#__PURE__*/
+createSymbol('CANCEL_PROMISE');
+var CHANNEL_END_TYPE =
+/*#__PURE__*/
+createSymbol('CHANNEL_END');
+var IO =
+/*#__PURE__*/
+createSymbol('IO');
+var MATCH =
+/*#__PURE__*/
+createSymbol('MATCH');
+var MULTICAST =
+/*#__PURE__*/
+createSymbol('MULTICAST');
+var SAGA_ACTION =
+/*#__PURE__*/
+createSymbol('SAGA_ACTION');
+var SELF_CANCELLATION =
+/*#__PURE__*/
+createSymbol('SELF_CANCELLATION');
+var TASK =
+/*#__PURE__*/
+createSymbol('TASK');
+var TASK_CANCEL =
+/*#__PURE__*/
+createSymbol('TASK_CANCEL');
+var TERMINATE =
+/*#__PURE__*/
+createSymbol('TERMINATE');
+var SAGA_LOCATION =
+/*#__PURE__*/
+createSymbol('LOCATION');
+
+
+
+
+/***/ }),
 /* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1863,7 +1863,7 @@ exports.getServices = getServices;
 exports.getPlatform = getPlatform;
 exports.getRequestInfo = getRequestInfo;
 
-var _fp = __webpack_require__(4);
+var _fp = __webpack_require__(5);
 
 var _constants = __webpack_require__(85);
 
@@ -2263,10 +2263,10 @@ const REPORT_EVENTS = exports.REPORT_EVENTS = {
    * @property {string} MAKE_CALL_REMOTE_SETUP The amount of time it takes from when the create session request is sent until the SDK processes the response.
    * @property {string} TIME_TO_MAKE For outgoing calls, the time for the `make` operation to complete.
    * @property {string} ANSWER_CALL_LOCAL_SETUP The amount of time it takes from when the `answer call` operation starts until it is setup locally.
+   *   (i.e. from the time an incoming call is answered until media is connected)
    * @property {string} ANSWER_CALL_PRE_LOCAL_SETUP The amount of time it takes from when the `answer call` operation starts up until right before we set local description.
    * @property {string} TIME_TO_ANSWER For incoming calls, the time for the `answer` operation to complete.
    * @property {string} TIME_FROM_RECEIVE_TO_ANSWER For incoming calls, the time from the call first being received until it has been answered. Includes call processing and setup, as well as time for the answer API to have been called.
-   * @property {string} TIME_TO_MEDIA_DURATION The amount of time it takes from answering an incoming call until media is connected.
    * @property {string} TIME_TO_CALL_SETUP_DURATION For incoming calls, the time from the call first being received until media is connected. Similar to `TIME_FROM_RECEIVE_TO_ANSWER`, but without the `answer` REST request.
    * @property {string} TIME_TO_RINGING The amount of time it takes from when a call is made until the SDK recieves the remote ringing notification.
    * @property {string} TIME_TO_IGNORE The amount of time it takes for the ignore call to complete.
@@ -2302,7 +2302,6 @@ const REPORT_EVENTS = exports.REPORT_EVENTS = {
   ANSWER_CALL_LOCAL_SETUP: 'ANSWER_CALL_LOCAL_SETUP',
   TIME_TO_ANSWER: 'TIME_TO_ANSWER',
   TIME_FROM_RECEIVE_TO_ANSWER: 'TIME_FROM_RECEIVE_TO_ANSWER',
-  TIME_TO_MEDIA_DURATION: 'TIME_TO_MEDIA_DURATION',
   TIME_TO_CALL_SETUP_DURATION: 'TIME_TO_CALL_SETUP_DURATION',
   TIME_TO_RINGING: 'TIME_TO_RINGING',
   TIME_TO_IGNORE: 'TIME_TO_IGNORE',
@@ -2433,7 +2432,7 @@ __webpack_require__.d(__webpack_exports__, "takeLeading", function() { return /*
 __webpack_require__.d(__webpack_exports__, "throttle", function() { return /* reexport */ throttle$1; });
 
 // EXTERNAL MODULE: /var/jenkins_home/workspace/Kandy.js_master/node_modules/@redux-saga/symbols/dist/redux-saga-symbols.esm.js
-var redux_saga_symbols_esm = __webpack_require__(9);
+var redux_saga_symbols_esm = __webpack_require__(10);
 
 // EXTERNAL MODULE: /var/jenkins_home/workspace/Kandy.js_master/node_modules/@babel/runtime/helpers/esm/extends.js
 var esm_extends = __webpack_require__(61);
@@ -2923,7 +2922,7 @@ exports.normalizeServices = normalizeServices;
 exports.defer = defer;
 exports.delay = delay;
 
-var _fp = __webpack_require__(4);
+var _fp = __webpack_require__(5);
 
 var _queryString = __webpack_require__(224);
 
@@ -3938,7 +3937,7 @@ var _selectors = __webpack_require__(1);
 
 var _actions = __webpack_require__(8);
 
-var _eventTypes = __webpack_require__(10);
+var _eventTypes = __webpack_require__(9);
 
 var eventTypes = _interopRequireWildcard(_eventTypes);
 
@@ -3946,7 +3945,7 @@ var _constants = __webpack_require__(7);
 
 var _selectors2 = __webpack_require__(24);
 
-var _fp = __webpack_require__(4);
+var _fp = __webpack_require__(5);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -6322,7 +6321,7 @@ exports.getVersion = getVersion;
  * for the @@ tag below with actual version value.
  */
 function getVersion() {
-  return '6.2.0';
+  return '6.3.0';
 }
 
 /***/ }),
@@ -6341,7 +6340,7 @@ var _stringify = __webpack_require__(35);
 
 var _stringify2 = _interopRequireDefault(_stringify);
 
-var _fp = __webpack_require__(4);
+var _fp = __webpack_require__(5);
 
 var _logs = __webpack_require__(11);
 
@@ -6468,7 +6467,7 @@ exports.getConnectivityConfig = getConnectivityConfig;
 exports.getPingInterval = getPingInterval;
 exports.getCheckConnectivity = getCheckConnectivity;
 
-var _fp = __webpack_require__(4);
+var _fp = __webpack_require__(5);
 
 var _name = __webpack_require__(173);
 
@@ -7622,7 +7621,7 @@ var _sdpTransform = __webpack_require__(33);
 
 var _sdpTransform2 = _interopRequireDefault(_sdpTransform);
 
-var _fp = __webpack_require__(4);
+var _fp = __webpack_require__(5);
 
 var _logs = __webpack_require__(25);
 
@@ -7744,7 +7743,7 @@ var _adapter = __webpack_require__(348);
 
 var _adapter2 = _interopRequireDefault(_adapter);
 
-var _fp = __webpack_require__(4);
+var _fp = __webpack_require__(5);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -7849,7 +7848,7 @@ var actionTypes = _interopRequireWildcard(_actionTypes);
 
 var _constants = __webpack_require__(19);
 
-var _errors = __webpack_require__(5);
+var _errors = __webpack_require__(4);
 
 var _errors2 = _interopRequireDefault(_errors);
 
@@ -8080,7 +8079,7 @@ exports.linkCallRequest = linkCallRequest;
 exports.handleLinkCallRequestError = handleLinkCallRequestError;
 exports.generateCallUrl = generateCallUrl;
 
-var _errors = __webpack_require__(5);
+var _errors = __webpack_require__(4);
 
 var _errors2 = _interopRequireDefault(_errors);
 
@@ -8195,7 +8194,7 @@ function generateCallUrl(requestInfo, options) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var _redux_saga_symbols__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(9);
+/* harmony import */ var _redux_saga_symbols__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(10);
 
 
 var MAX_SIGNED_INT = 2147483647;
@@ -9926,7 +9925,7 @@ var _constants = __webpack_require__(19);
 
 var _effects = __webpack_require__(16);
 
-var _fp = __webpack_require__(4);
+var _fp = __webpack_require__(5);
 
 // Libraries.
 // Request plugin.
@@ -10116,7 +10115,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.formatMediaConstraints = formatMediaConstraints;
 
-var _fp = __webpack_require__(4);
+var _fp = __webpack_require__(5);
 
 /**
  * Helper function for Call APIs.
@@ -10158,7 +10157,7 @@ exports.default = createMakeResponse;
 
 var _actions = __webpack_require__(8);
 
-var _eventTypes = __webpack_require__(10);
+var _eventTypes = __webpack_require__(9);
 
 var eventTypes = _interopRequireWildcard(_eventTypes);
 
@@ -10595,7 +10594,7 @@ __webpack_require__.d(__webpack_exports__, "runSaga", function() { return /* ree
 __webpack_require__.d(__webpack_exports__, "stdChannel", function() { return /* reexport */ stdChannel; });
 
 // EXTERNAL MODULE: /var/jenkins_home/workspace/Kandy.js_master/node_modules/@redux-saga/symbols/dist/redux-saga-symbols.esm.js
-var redux_saga_symbols_esm = __webpack_require__(9);
+var redux_saga_symbols_esm = __webpack_require__(10);
 
 // EXTERNAL MODULE: /var/jenkins_home/workspace/Kandy.js_master/node_modules/@babel/runtime/helpers/esm/extends.js
 var esm_extends = __webpack_require__(61);
@@ -12648,7 +12647,7 @@ var _keys2 = _interopRequireDefault(_keys);
 exports.getLevel = getLevel;
 exports.getTypes = getTypes;
 
-var _fp = __webpack_require__(4);
+var _fp = __webpack_require__(5);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -13772,7 +13771,7 @@ var _actionTypes = __webpack_require__(20);
 
 var actionTypes = _interopRequireWildcard(_actionTypes);
 
-var _fp = __webpack_require__(4);
+var _fp = __webpack_require__(5);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -14745,7 +14744,7 @@ var _effects = __webpack_require__(170);
 
 var _effects2 = _interopRequireDefault(_effects);
 
-var _errors = __webpack_require__(5);
+var _errors = __webpack_require__(4);
 
 var _errors2 = _interopRequireDefault(_errors);
 
@@ -15053,7 +15052,7 @@ var _utils = __webpack_require__(118);
 
 var _utils2 = __webpack_require__(17);
 
-var _fp = __webpack_require__(4);
+var _fp = __webpack_require__(5);
 
 var _effects = __webpack_require__(16);
 
@@ -15147,7 +15146,7 @@ var _selectors = __webpack_require__(12);
 
 var _constants2 = __webpack_require__(19);
 
-var _errors = __webpack_require__(5);
+var _errors = __webpack_require__(4);
 
 var _errors2 = _interopRequireDefault(_errors);
 
@@ -16291,7 +16290,7 @@ var _actionTypes = __webpack_require__(32);
 
 var actionTypes = _interopRequireWildcard(_actionTypes);
 
-var _fp = __webpack_require__(4);
+var _fp = __webpack_require__(5);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -16593,7 +16592,15 @@ function getAvailableCodecs(params, deferred) {
 }
 
 function availableCodecsRetrieved(params) {
-  return callActionHelper(actionTypes.AVAILABLE_CODECS_RETRIEVED, undefined, params);
+  const action = {
+    type: actionTypes.AVAILABLE_CODECS_RETRIEVED,
+    payload: (0, _extends3.default)({}, params)
+  };
+
+  if (params.error) {
+    action.error = true;
+  }
+  return action;
 }
 
 /*
@@ -16738,7 +16745,7 @@ exports.getWebsocketConfig = getWebsocketConfig;
 exports.getWebsocketId = getWebsocketId;
 exports.getPendingOperation = getPendingOperation;
 
-var _fp = __webpack_require__(4);
+var _fp = __webpack_require__(5);
 
 var _selectors = __webpack_require__(12);
 
@@ -17700,11 +17707,11 @@ var _constants = __webpack_require__(6);
 
 var _actions = __webpack_require__(8);
 
-var _eventTypes = __webpack_require__(10);
+var _eventTypes = __webpack_require__(9);
 
 var _selectors = __webpack_require__(1);
 
-var _errors = __webpack_require__(5);
+var _errors = __webpack_require__(4);
 
 var _errors2 = _interopRequireDefault(_errors);
 
@@ -18023,7 +18030,7 @@ var _sdpTransform = __webpack_require__(33);
 
 var _sdpTransform2 = _interopRequireDefault(_sdpTransform);
 
-var _fp = __webpack_require__(4);
+var _fp = __webpack_require__(5);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -18993,7 +19000,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.getNotificationsInfo = getNotificationsInfo;
 exports.getNotificationConfig = getNotificationConfig;
 
-var _fp = __webpack_require__(4);
+var _fp = __webpack_require__(5);
 
 /**
  * Retrieves the notifications state.
@@ -19359,7 +19366,7 @@ exports.linkAuthorization = linkAuthorization;
 exports.ucAuthorization = ucAuthorization;
 exports.cpaasAuthorization = cpaasAuthorization;
 
-var _errors = __webpack_require__(5);
+var _errors = __webpack_require__(4);
 
 var _errors2 = _interopRequireDefault(_errors);
 
@@ -19652,7 +19659,7 @@ exports.default = commonIndex;
 
 var _factory = __webpack_require__(192);
 
-var _fp = __webpack_require__(4);
+var _fp = __webpack_require__(5);
 
 // This is a hack to fix an issue where Lodash will add itself to
 // the window scope even if it's loaded via ES6. You can remove this when
@@ -19813,7 +19820,7 @@ var _reduxSaga = __webpack_require__(125);
 
 var _reduxSaga2 = _interopRequireDefault(_reduxSaga);
 
-var _fp = __webpack_require__(4);
+var _fp = __webpack_require__(5);
 
 var _effects = __webpack_require__(16);
 
@@ -26180,7 +26187,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = setupTransformers;
 
-var _fp = __webpack_require__(4);
+var _fp = __webpack_require__(5);
 
 /**
  * Determines which redux-logger transformers we need based on options.
@@ -26566,7 +26573,7 @@ var _configs = __webpack_require__(160);
 
 var _configs2 = _interopRequireDefault(_configs);
 
-var _fp = __webpack_require__(4);
+var _fp = __webpack_require__(5);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -26661,7 +26668,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.getConfiguration = getConfiguration;
 
-var _fp = __webpack_require__(4);
+var _fp = __webpack_require__(5);
 
 /**
  * Retrieves configuration Object stored in state
@@ -27489,7 +27496,7 @@ var _actionTypes = __webpack_require__(114);
 
 var actionTypes = _interopRequireWildcard(_actionTypes);
 
-var _fp = __webpack_require__(4);
+var _fp = __webpack_require__(5);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -28254,7 +28261,7 @@ var actionTypes = _interopRequireWildcard(_actionTypes);
 
 var _reduxActions = __webpack_require__(26);
 
-var _fp = __webpack_require__(4);
+var _fp = __webpack_require__(5);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -28344,7 +28351,7 @@ var actionTypes = _interopRequireWildcard(_actionTypes);
 
 var _reduxActions = __webpack_require__(26);
 
-var _fp = __webpack_require__(4);
+var _fp = __webpack_require__(5);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -28515,7 +28522,7 @@ var actionTypes = _interopRequireWildcard(_actionTypes);
 
 var _reduxActions = __webpack_require__(26);
 
-var _fp = __webpack_require__(4);
+var _fp = __webpack_require__(5);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -28666,9 +28673,9 @@ exports.default = createMediaOperations;
 
 var _actions = __webpack_require__(36);
 
-var _fp = __webpack_require__(4);
+var _fp = __webpack_require__(5);
 
-var _errors = __webpack_require__(5);
+var _errors = __webpack_require__(4);
 
 var _errors2 = _interopRequireDefault(_errors);
 
@@ -29116,7 +29123,7 @@ var _actionTypes = __webpack_require__(20);
 
 var actionTypes = _interopRequireWildcard(_actionTypes);
 
-var _fp = __webpack_require__(4);
+var _fp = __webpack_require__(5);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -29828,7 +29835,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = getAssociatedCallEvent;
 
-var _eventTypes = __webpack_require__(10);
+var _eventTypes = __webpack_require__(9);
 
 var _selectors = __webpack_require__(1);
 
@@ -35557,6 +35564,10 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _promise = __webpack_require__(13);
+
+var _promise2 = _interopRequireDefault(_promise);
+
 var _from = __webpack_require__(57);
 
 var _from2 = _interopRequireDefault(_from);
@@ -35636,6 +35647,27 @@ function SessionManager(managers) {
     return (0, _from2.default)(sessions.values());
   }
 
+  /**
+   * Get an existing Session object, and add media to it before returning.
+   *    This method is an optimization. It combines `sessionManager.get` and
+   *    `session.addWithMedia` into a single method instead of two.
+   * @method getWithMedia
+   * @return {Promise} Resolves with the Session and Media objects.
+   */
+  function getWithMedia(sessionId, mediaConstrants) {
+    const session = sessions.get(sessionId);
+    if (!session) {
+      log.debug(`No session found with ID: ${sessionId}.`);
+      return;
+    }
+
+    return new _promise2.default((resolve, reject) => {
+      session.addNewMedia(mediaConstrants).then(medias => {
+        resolve({ session, medias });
+      }).catch(reject);
+    });
+  }
+
   function on(...args) {
     return emitter.on(...args);
   }
@@ -35655,6 +35687,7 @@ function SessionManager(managers) {
     create,
     get,
     getAll,
+    getWithMedia,
     on,
     once,
     off
@@ -35708,7 +35741,7 @@ var _eventemitter = __webpack_require__(37);
 
 var _eventemitter2 = _interopRequireDefault(_eventemitter);
 
-var _fp = __webpack_require__(4);
+var _fp = __webpack_require__(5);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -36984,7 +37017,7 @@ exports.setTransceiverDirection = setTransceiverDirection;
 
 var _constants = __webpack_require__(38);
 
-var _fp = __webpack_require__(4);
+var _fp = __webpack_require__(5);
 
 var _logs = __webpack_require__(25);
 
@@ -37727,7 +37760,7 @@ var _actions = __webpack_require__(43);
 
 var _utils = __webpack_require__(17);
 
-var _fp = __webpack_require__(4);
+var _fp = __webpack_require__(5);
 
 var _effects = __webpack_require__(16);
 
@@ -37836,7 +37869,7 @@ var actionTypes = _interopRequireWildcard(_actionTypes);
 
 var _reduxActions = __webpack_require__(26);
 
-var _fp = __webpack_require__(4);
+var _fp = __webpack_require__(5);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -38457,7 +38490,7 @@ var _sagas = __webpack_require__(171);
 
 var _effects = __webpack_require__(172);
 
-var _errors = __webpack_require__(5);
+var _errors = __webpack_require__(4);
 
 var _errors2 = _interopRequireDefault(_errors);
 
@@ -39273,7 +39306,7 @@ var _actions = __webpack_require__(8);
 
 var _selectors = __webpack_require__(1);
 
-var _eventTypes = __webpack_require__(10);
+var _eventTypes = __webpack_require__(9);
 
 var eventTypes = _interopRequireWildcard(_eventTypes);
 
@@ -39957,7 +39990,7 @@ exports.default = createAPI;
 
 var _actions = __webpack_require__(8);
 
-var _eventTypes = __webpack_require__(10);
+var _eventTypes = __webpack_require__(9);
 
 var eventTypes = _interopRequireWildcard(_eventTypes);
 
@@ -39965,7 +39998,7 @@ var _selectors = __webpack_require__(1);
 
 var _utils = __webpack_require__(120);
 
-var _fp = __webpack_require__(4);
+var _fp = __webpack_require__(5);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -40730,7 +40763,7 @@ var _actions = __webpack_require__(8);
 
 var _selectors = __webpack_require__(1);
 
-var _eventTypes = __webpack_require__(10);
+var _eventTypes = __webpack_require__(9);
 
 var eventTypes = _interopRequireWildcard(_eventTypes);
 
@@ -41043,7 +41076,7 @@ var _selectors = __webpack_require__(1);
 
 var _actions = __webpack_require__(8);
 
-var _eventTypes = __webpack_require__(10);
+var _eventTypes = __webpack_require__(9);
 
 var eventTypes = _interopRequireWildcard(_eventTypes);
 
@@ -41062,7 +41095,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  */
 // Call plugin.
 function createAPI(container) {
-  const { context, CallManager, CallReporter, emitEvent, logManager, API_LOG_TAG } = container;
+  const { context, CallManager, Callstack, CallReporter, emitEvent, logManager, API_LOG_TAG } = container;
   const log = logManager.getLogger('CALL');
 
   /**
@@ -41131,6 +41164,8 @@ function createAPI(container) {
 
     // Dispatch this action for backwards compatibility
     context.dispatch(_actions.callActions.sendRingingFeedback(callId));
+    // Get the call state now for the call state change event previous state
+    const call = (0, _selectors.getCallById)(context.getState(), callId);
 
     let error;
     try {
@@ -41141,7 +41176,6 @@ function createAPI(container) {
 
     context.dispatch(_actions.callActions.sendRingingFeedbackFinish(callId, { error }));
 
-    const call = (0, _selectors.getCallById)(context.getState(), callId);
     emitEvent(eventTypes.CALL_STATE_CHANGE, {
       callId,
       previous: {
@@ -41387,7 +41421,7 @@ function createAPI(container) {
     context.dispatch(_actions.callActions.getAvailableCodecs({ kind }, { promise: {} }));
     let codecs;
     try {
-      codecs = await CallManager.getAvailableCodecs(kind);
+      codecs = await Callstack.operations.getAvailableCodecs(kind);
 
       // Final action dispatched, for backwards compatibility
       context.dispatch(_actions.callActions.availableCodecsRetrieved({
@@ -41796,7 +41830,7 @@ var _operations2 = _interopRequireDefault(_operations);
 
 var _reduxActions = __webpack_require__(26);
 
-var _fp = __webpack_require__(4);
+var _fp = __webpack_require__(5);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -42558,7 +42592,7 @@ var _constants = __webpack_require__(7);
 
 var _reduxActions = __webpack_require__(26);
 
-var _fp = __webpack_require__(4);
+var _fp = __webpack_require__(5);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -42727,7 +42761,7 @@ var _index2 = _interopRequireDefault(_index);
 
 var _actions = __webpack_require__(8);
 
-var _fp = __webpack_require__(4);
+var _fp = __webpack_require__(5);
 
 var _uuid = __webpack_require__(44);
 
@@ -44214,7 +44248,7 @@ var _utils = __webpack_require__(89);
 
 var requestUtils = _interopRequireWildcard(_utils);
 
-var _errors = __webpack_require__(5);
+var _errors = __webpack_require__(4);
 
 var _errors2 = _interopRequireDefault(_errors);
 
@@ -44611,7 +44645,7 @@ var requestUtils = _interopRequireWildcard(_utils);
 
 var _constants = __webpack_require__(19);
 
-var _errors = __webpack_require__(5);
+var _errors = __webpack_require__(4);
 
 var _errors2 = _interopRequireDefault(_errors);
 
@@ -45193,7 +45227,7 @@ var _actionTypes = __webpack_require__(32);
 
 var actionTypes = _interopRequireWildcard(_actionTypes);
 
-var _eventTypes = __webpack_require__(10);
+var _eventTypes = __webpack_require__(9);
 
 var eventTypes = _interopRequireWildcard(_eventTypes);
 
@@ -45201,7 +45235,7 @@ var _normalization = __webpack_require__(88);
 
 var _constants = __webpack_require__(7);
 
-var _errors = __webpack_require__(5);
+var _errors = __webpack_require__(4);
 
 var _errors2 = _interopRequireDefault(_errors);
 
@@ -45783,7 +45817,7 @@ var _selectors = __webpack_require__(1);
 
 var _constants = __webpack_require__(6);
 
-var _errors = __webpack_require__(5);
+var _errors = __webpack_require__(4);
 
 var _errors2 = _interopRequireDefault(_errors);
 
@@ -45931,7 +45965,7 @@ var _selectors = __webpack_require__(1);
 
 var _constants = __webpack_require__(6);
 
-var _errors = __webpack_require__(5);
+var _errors = __webpack_require__(4);
 
 var _errors2 = _interopRequireDefault(_errors);
 
@@ -46070,7 +46104,7 @@ var _actions = __webpack_require__(8);
 
 var _call = __webpack_require__(28);
 
-var _eventTypes = __webpack_require__(10);
+var _eventTypes = __webpack_require__(9);
 
 var eventTypes = _interopRequireWildcard(_eventTypes);
 
@@ -46080,7 +46114,7 @@ var _constants2 = __webpack_require__(7);
 
 var _constants3 = __webpack_require__(14);
 
-var _errors = __webpack_require__(5);
+var _errors = __webpack_require__(4);
 
 var _errors2 = _interopRequireDefault(_errors);
 
@@ -46424,7 +46458,7 @@ exports.default = createMakeOperation;
 
 var _actions = __webpack_require__(8);
 
-var _eventTypes = __webpack_require__(10);
+var _eventTypes = __webpack_require__(9);
 
 var _selectors = __webpack_require__(1);
 
@@ -46613,7 +46647,7 @@ var _actions = __webpack_require__(8);
 
 var _selectors = __webpack_require__(1);
 
-var _eventTypes = __webpack_require__(10);
+var _eventTypes = __webpack_require__(9);
 
 var _constants = __webpack_require__(7);
 
@@ -46793,7 +46827,7 @@ var _actions = __webpack_require__(8);
 
 var _selectors = __webpack_require__(1);
 
-var _errors = __webpack_require__(5);
+var _errors = __webpack_require__(4);
 
 var _errors2 = _interopRequireDefault(_errors);
 
@@ -46905,7 +46939,7 @@ var _media = __webpack_require__(178);
 
 var _call = __webpack_require__(28);
 
-var _errors = __webpack_require__(5);
+var _errors = __webpack_require__(4);
 
 var _errors2 = _interopRequireDefault(_errors);
 
@@ -47024,7 +47058,8 @@ function setupOutgoingSessionOperation(container) {
      *    then set it as the Session's local description.
      */
     const setLocalDescriptionEvent = operationEvent.addEvent(_constants.REPORT_EVENTS.SET_LOCAL_DESCRIPTION);
-    setLocalDescriptionEvent.addData('operation', _constants.REPORTER_OPERATION_EVENTS_MAP.MAKE);
+    const slowAnswer = call.isSlowStart && call.localOp.operation === _constants.REPORTER_OPERATION_EVENTS_MAP.ANSWER;
+    setLocalDescriptionEvent.addData('operation', slowAnswer ? _constants.REPORTER_OPERATION_EVENTS_MAP.ANSWER : _constants.REPORTER_OPERATION_EVENTS_MAP.MAKE);
     try {
       let offer = await session.createOffer();
       // Run the SDP through the Pipeline before we set it locally.
@@ -47144,7 +47179,7 @@ exports.default = answerOperation;
 
 var _actions = __webpack_require__(8);
 
-var _eventTypes = __webpack_require__(10);
+var _eventTypes = __webpack_require__(9);
 
 var _selectors = __webpack_require__(1);
 
@@ -47154,7 +47189,7 @@ var _call = __webpack_require__(28);
 
 var _remoteTracks = __webpack_require__(50);
 
-var _errors = __webpack_require__(5);
+var _errors = __webpack_require__(4);
 
 var _errors2 = _interopRequireDefault(_errors);
 
@@ -47365,7 +47400,7 @@ var _constants = __webpack_require__(6);
 
 var _call = __webpack_require__(28);
 
-var _errors = __webpack_require__(5);
+var _errors = __webpack_require__(4);
 
 var _errors2 = _interopRequireDefault(_errors);
 
@@ -47557,7 +47592,7 @@ exports.default = createSlowAnswerResponse;
 
 var _actions = __webpack_require__(8);
 
-var _eventTypes = __webpack_require__(10);
+var _eventTypes = __webpack_require__(9);
 
 var eventTypes = _interopRequireWildcard(_eventTypes);
 
@@ -47700,7 +47735,7 @@ var _selectors = __webpack_require__(1);
 
 var _constants = __webpack_require__(14);
 
-var _errors = __webpack_require__(5);
+var _errors = __webpack_require__(4);
 
 var _errors2 = _interopRequireDefault(_errors);
 
@@ -47735,13 +47770,6 @@ function answerWebrtcSessionOperation(container) {
     const log = logManager.getLogger('CALL', callId);
     log.info('Setting up local WebRTC portions of call.');
 
-    // Get the webRTC session that represents this call.
-    const session = await WebRTC.sessionManager.get(sessionId);
-    if (!session) {
-      const message = `Error: webRTC session ${sessionId} not found.`;
-      log.error(message);
-      throw new _errors2.default({ message });
-    }
     const incomingCall = (0, _selectors.getCallById)(context.getState(), callId);
     const eventId = incomingCall.localOp.eventId;
 
@@ -47750,9 +47778,12 @@ function answerWebrtcSessionOperation(container) {
 
     const gumEvent = answerEvent.addEvent(_constants.REPORT_EVENTS.GET_USER_MEDIA);
     gumEvent.addData('mediaConstraints', mediaConstraints);
-    let medias;
+
+    let session, medias;
     try {
-      medias = await session.addNewMedia(mediaConstraints);
+      const result = await WebRTC.sessionManager.getWithMedia(sessionId, mediaConstraints);
+      session = result.session;
+      medias = result.medias;
       gumEvent.endEvent();
     } catch (err) {
       log.debug('Failed to get and add new media to call.');
@@ -47880,11 +47911,11 @@ var _selectors = __webpack_require__(1);
 
 var _constants = __webpack_require__(6);
 
-var _errors = __webpack_require__(5);
+var _errors = __webpack_require__(4);
 
 var _errors2 = _interopRequireDefault(_errors);
 
-var _eventTypes = __webpack_require__(10);
+var _eventTypes = __webpack_require__(9);
 
 var eventTypes = _interopRequireWildcard(_eventTypes);
 
@@ -47985,7 +48016,7 @@ var _constants = __webpack_require__(7);
 
 var _constants2 = __webpack_require__(6);
 
-var _eventTypes = __webpack_require__(10);
+var _eventTypes = __webpack_require__(9);
 
 var _call = __webpack_require__(28);
 
@@ -48123,7 +48154,7 @@ var _selectors = __webpack_require__(1);
 
 var _constants = __webpack_require__(6);
 
-var _errors = __webpack_require__(5);
+var _errors = __webpack_require__(4);
 
 var _errors2 = _interopRequireDefault(_errors);
 
@@ -48270,7 +48301,7 @@ var _constants = __webpack_require__(6);
 
 var _selectors = __webpack_require__(1);
 
-var _errors = __webpack_require__(5);
+var _errors = __webpack_require__(4);
 
 var _errors2 = _interopRequireDefault(_errors);
 
@@ -48399,7 +48430,7 @@ var _selectors = __webpack_require__(1);
 
 var _constants = __webpack_require__(6);
 
-var _errors = __webpack_require__(5);
+var _errors = __webpack_require__(4);
 
 var _errors2 = _interopRequireDefault(_errors);
 
@@ -48576,7 +48607,7 @@ var _call = __webpack_require__(28);
 
 var _media = __webpack_require__(178);
 
-var _errors = __webpack_require__(5);
+var _errors = __webpack_require__(4);
 
 var _errors2 = _interopRequireDefault(_errors);
 
@@ -48708,11 +48739,11 @@ var _promise2 = _interopRequireDefault(_promise);
 
 exports.default = rollbackAddMediaOperation;
 
-var _errors = __webpack_require__(5);
+var _errors = __webpack_require__(4);
 
 var _errors2 = _interopRequireDefault(_errors);
 
-var _fp = __webpack_require__(4);
+var _fp = __webpack_require__(5);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -48807,7 +48838,7 @@ var _addMedia = __webpack_require__(179);
 
 var _selectors = __webpack_require__(1);
 
-var _errors = __webpack_require__(5);
+var _errors = __webpack_require__(4);
 
 var _errors2 = _interopRequireDefault(_errors);
 
@@ -48899,7 +48930,7 @@ exports.default = createAddMediaResponse;
 
 var _actions = __webpack_require__(8);
 
-var _eventTypes = __webpack_require__(10);
+var _eventTypes = __webpack_require__(9);
 
 var eventTypes = _interopRequireWildcard(_eventTypes);
 
@@ -49080,7 +49111,7 @@ var _selectors = __webpack_require__(1);
 
 var _kandyWebrtc = __webpack_require__(47);
 
-var _errors = __webpack_require__(5);
+var _errors = __webpack_require__(4);
 
 var _errors2 = _interopRequireDefault(_errors);
 
@@ -49225,7 +49256,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = rollbackHoldOperation;
 
-var _errors = __webpack_require__(5);
+var _errors = __webpack_require__(4);
 
 var _errors2 = _interopRequireDefault(_errors);
 
@@ -49303,7 +49334,7 @@ exports.default = createHoldResponse;
 
 var _actions = __webpack_require__(8);
 
-var _eventTypes = __webpack_require__(10);
+var _eventTypes = __webpack_require__(9);
 
 var eventTypes = _interopRequireWildcard(_eventTypes);
 
@@ -49477,7 +49508,7 @@ var _selectors = __webpack_require__(1);
 
 var _kandyWebrtc = __webpack_require__(47);
 
-var _errors = __webpack_require__(5);
+var _errors = __webpack_require__(4);
 
 var _errors2 = _interopRequireDefault(_errors);
 
@@ -49630,7 +49661,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = rollbackUnholdOperation;
 
-var _errors = __webpack_require__(5);
+var _errors = __webpack_require__(4);
 
 var _errors2 = _interopRequireDefault(_errors);
 
@@ -49709,7 +49740,7 @@ exports.default = createUnholdResponse;
 
 var _actions = __webpack_require__(8);
 
-var _eventTypes = __webpack_require__(10);
+var _eventTypes = __webpack_require__(9);
 
 var eventTypes = _interopRequireWildcard(_eventTypes);
 
@@ -49948,17 +49979,17 @@ exports.default = removeMediaOperation;
 
 var _constants = __webpack_require__(6);
 
-var _eventTypes = __webpack_require__(10);
+var _eventTypes = __webpack_require__(9);
 
 var _actions = __webpack_require__(8);
 
 var _selectors = __webpack_require__(1);
 
-var _fp = __webpack_require__(4);
+var _fp = __webpack_require__(5);
 
 var _kandyWebrtc = __webpack_require__(47);
 
-var _errors = __webpack_require__(5);
+var _errors = __webpack_require__(4);
 
 var _errors2 = _interopRequireDefault(_errors);
 
@@ -50144,9 +50175,9 @@ var _selectors = __webpack_require__(1);
 
 var _constants = __webpack_require__(14);
 
-var _fp = __webpack_require__(4);
+var _fp = __webpack_require__(5);
 
-var _errors = __webpack_require__(5);
+var _errors = __webpack_require__(4);
 
 var _errors2 = _interopRequireDefault(_errors);
 
@@ -50278,7 +50309,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = rollbackRemoveMediaOperation;
 
-var _errors = __webpack_require__(5);
+var _errors = __webpack_require__(4);
 
 var _errors2 = _interopRequireDefault(_errors);
 
@@ -50344,7 +50375,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.validate = validate;
 exports.default = removeBasicMediaOperation;
 
-var _errors = __webpack_require__(5);
+var _errors = __webpack_require__(4);
 
 var _errors2 = _interopRequireDefault(_errors);
 
@@ -50444,7 +50475,7 @@ exports.default = createRemoveMediaResponse;
 
 var _actions = __webpack_require__(8);
 
-var _eventTypes = __webpack_require__(10);
+var _eventTypes = __webpack_require__(9);
 
 var eventTypes = _interopRequireWildcard(_eventTypes);
 
@@ -50608,7 +50639,7 @@ var _selectors = __webpack_require__(1);
 
 var _constants = __webpack_require__(6);
 
-var _errors = __webpack_require__(5);
+var _errors = __webpack_require__(4);
 
 var _errors2 = _interopRequireDefault(_errors);
 
@@ -50723,7 +50754,7 @@ exports.default = webrtcReplaceTrackOperation;
 
 var _selectors = __webpack_require__(1);
 
-var _errors = __webpack_require__(5);
+var _errors = __webpack_require__(4);
 
 var _errors2 = _interopRequireDefault(_errors);
 
@@ -50950,7 +50981,7 @@ var _actions = __webpack_require__(8);
 
 var _selectors = __webpack_require__(1);
 
-var _eventTypes = __webpack_require__(10);
+var _eventTypes = __webpack_require__(9);
 
 var eventTypes = _interopRequireWildcard(_eventTypes);
 
@@ -50958,7 +50989,7 @@ var _constants = __webpack_require__(7);
 
 var _constants2 = __webpack_require__(6);
 
-var _errors = __webpack_require__(5);
+var _errors = __webpack_require__(4);
 
 var _errors2 = _interopRequireDefault(_errors);
 
@@ -51166,7 +51197,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = getAvailableCodecsOperation;
 
-var _errors = __webpack_require__(5);
+var _errors = __webpack_require__(4);
 
 var _errors2 = _interopRequireDefault(_errors);
 
@@ -51275,7 +51306,7 @@ var _selectors3 = __webpack_require__(58);
 
 var _utils = __webpack_require__(478);
 
-var _errors = __webpack_require__(5);
+var _errors = __webpack_require__(4);
 
 var _errors2 = _interopRequireDefault(_errors);
 
@@ -51518,7 +51549,7 @@ var _state = __webpack_require__(60);
 
 var _actions = __webpack_require__(8);
 
-var _eventTypes = __webpack_require__(10);
+var _eventTypes = __webpack_require__(9);
 
 var eventTypes = _interopRequireWildcard(_eventTypes);
 
@@ -51668,7 +51699,7 @@ var _selectors = __webpack_require__(1);
 
 var _constants = __webpack_require__(6);
 
-var _errors = __webpack_require__(5);
+var _errors = __webpack_require__(4);
 
 var _errors2 = _interopRequireDefault(_errors);
 
@@ -52152,7 +52183,7 @@ var _selectors = __webpack_require__(1);
 
 var _constants = __webpack_require__(6);
 
-var _eventTypes = __webpack_require__(10);
+var _eventTypes = __webpack_require__(9);
 
 var eventTypes = _interopRequireWildcard(_eventTypes);
 
@@ -52343,11 +52374,11 @@ var _selectors = __webpack_require__(1);
 
 var _constants = __webpack_require__(6);
 
-var _eventTypes = __webpack_require__(10);
+var _eventTypes = __webpack_require__(9);
 
 var eventTypes = _interopRequireWildcard(_eventTypes);
 
-var _errors = __webpack_require__(5);
+var _errors = __webpack_require__(4);
 
 var _errors2 = _interopRequireDefault(_errors);
 
@@ -52527,6 +52558,12 @@ var _constants = __webpack_require__(6);
 
 var _constants2 = __webpack_require__(14);
 
+var _eventTypes = __webpack_require__(9);
+
+var _errors = __webpack_require__(4);
+
+var _errors2 = _interopRequireDefault(_errors);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
@@ -52535,7 +52572,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  */
 // Call plugin.
 function callIceCollectionCheckOperation(container) {
-  const { CallReporter, context, logManager, WebRTC } = container;
+  const { CallReporter, context, emitEvent, logManager, WebRTC } = container;
 
   /**
    * Add the necessary information to the ice collection info object and call the
@@ -52622,15 +52659,30 @@ function callIceCollectionCheckOperation(container) {
     // If the result is neither 'StartCall' or 'Wait', then it is either an error or an undefined result type.
     //   In either case, the session will cleanup the WebRTC portions of the call so just cleanup the state here.
     if (result.type !== _constants.ICE_COLLECTION_RESULT_TYPES.START_CALL && result.type !== _constants.ICE_COLLECTION_RESULT_TYPES.WAIT) {
+      const error = new _errors2.default({
+        message: result.error && result.error.message || result.error || `Unexpected result type returned from ice collection check function: ${result.type}`
+      });
       context.dispatch(_actions.callActions.endCallFinish(currentCall.id, {
         isLocal: true,
-        error: result.error || true
+        error
       }));
+
+      emitEvent(_eventTypes.CALL_STATE_CHANGE, {
+        callId: currentCall.id,
+        previous: {
+          state: currentCall.state,
+          localHold: currentCall.localHold,
+          remoteHold: currentCall.remoteHold
+        },
+        error
+      });
     }
   }
 
   return callIceCollectionCheck;
 }
+
+// Other plugins.
 
 /***/ }),
 /* 491 */
@@ -52689,7 +52741,7 @@ var _constants = __webpack_require__(6);
 
 var _selectors2 = __webpack_require__(12);
 
-var _errors = __webpack_require__(5);
+var _errors = __webpack_require__(4);
 
 var _errors2 = _interopRequireDefault(_errors);
 
@@ -52909,7 +52961,7 @@ var _sessions = __webpack_require__(163);
 
 var sessionActions = _interopRequireWildcard(_sessions);
 
-var _eventTypes = __webpack_require__(10);
+var _eventTypes = __webpack_require__(9);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -53053,7 +53105,7 @@ var _constants = __webpack_require__(6);
 
 var _actions = __webpack_require__(8);
 
-var _eventTypes = __webpack_require__(10);
+var _eventTypes = __webpack_require__(9);
 
 var eventTypes = _interopRequireWildcard(_eventTypes);
 
@@ -53356,7 +53408,7 @@ var _selectors = __webpack_require__(1);
 
 var _constants = __webpack_require__(6);
 
-var _errors = __webpack_require__(5);
+var _errors = __webpack_require__(4);
 
 var _errors2 = _interopRequireDefault(_errors);
 
@@ -53484,7 +53536,7 @@ var _selectors = __webpack_require__(1);
 
 var _constants = __webpack_require__(6);
 
-var _errors = __webpack_require__(5);
+var _errors = __webpack_require__(4);
 
 var _errors2 = _interopRequireDefault(_errors);
 
@@ -53677,7 +53729,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = callCancelOperation;
 
-var _eventTypes = __webpack_require__(10);
+var _eventTypes = __webpack_require__(9);
 
 var _constants = __webpack_require__(6);
 
@@ -53779,7 +53831,7 @@ exports.default = callStatusRingingOperation;
 
 var _actions = __webpack_require__(8);
 
-var _eventTypes = __webpack_require__(10);
+var _eventTypes = __webpack_require__(9);
 
 var _selectors = __webpack_require__(1);
 
@@ -53911,11 +53963,11 @@ var _constants2 = __webpack_require__(6);
 
 var _selectors = __webpack_require__(1);
 
-var _eventTypes = __webpack_require__(10);
+var _eventTypes = __webpack_require__(9);
 
 var eventTypes = _interopRequireWildcard(_eventTypes);
 
-var _errors = __webpack_require__(5);
+var _errors = __webpack_require__(4);
 
 var _errors2 = _interopRequireDefault(_errors);
 
@@ -54071,7 +54123,7 @@ var _constants = __webpack_require__(6);
 
 var _constants2 = __webpack_require__(7);
 
-var _eventTypes = __webpack_require__(10);
+var _eventTypes = __webpack_require__(9);
 
 var _call = __webpack_require__(28);
 
@@ -54284,7 +54336,7 @@ var _selectors = __webpack_require__(1);
 
 var _remoteTracks = __webpack_require__(50);
 
-var _eventTypes = __webpack_require__(10);
+var _eventTypes = __webpack_require__(9);
 
 var _constants = __webpack_require__(6);
 
@@ -55742,7 +55794,7 @@ var _sdpTransform = __webpack_require__(33);
 
 var _sdpTransform2 = _interopRequireDefault(_sdpTransform);
 
-var _fp = __webpack_require__(4);
+var _fp = __webpack_require__(5);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -55808,7 +55860,7 @@ var _sdpTransform = __webpack_require__(33);
 
 var _sdpTransform2 = _interopRequireDefault(_sdpTransform);
 
-var _fp = __webpack_require__(4);
+var _fp = __webpack_require__(5);
 
 var _variableDiff = __webpack_require__(527);
 
@@ -57092,7 +57144,7 @@ exports.default = createLocalOperation;
 
 var _selectors = __webpack_require__(1);
 
-var _errors = __webpack_require__(5);
+var _errors = __webpack_require__(4);
 
 var _errors2 = _interopRequireDefault(_errors);
 
@@ -57216,7 +57268,7 @@ exports.default = generateOfferOperation;
 
 var _selectors = __webpack_require__(1);
 
-var _errors = __webpack_require__(5);
+var _errors = __webpack_require__(4);
 
 var _errors2 = _interopRequireDefault(_errors);
 
@@ -57338,7 +57390,7 @@ var _selectors = __webpack_require__(1);
 
 var _constants = __webpack_require__(14);
 
-var _errors = __webpack_require__(5);
+var _errors = __webpack_require__(4);
 
 var _errors2 = _interopRequireDefault(_errors);
 
@@ -57482,7 +57534,7 @@ var _changeDtlsRoleTo = __webpack_require__(542);
 
 var _changeDtlsRoleTo2 = _interopRequireDefault(_changeDtlsRoleTo);
 
-var _errors = __webpack_require__(5);
+var _errors = __webpack_require__(4);
 
 var _errors2 = _interopRequireDefault(_errors);
 
@@ -57656,7 +57708,7 @@ var _constants2 = __webpack_require__(6);
 
 var _actions = __webpack_require__(8);
 
-var _eventTypes = __webpack_require__(10);
+var _eventTypes = __webpack_require__(9);
 
 var eventTypes = _interopRequireWildcard(_eventTypes);
 
@@ -58209,7 +58261,7 @@ var _actionTypes = __webpack_require__(32);
 
 var actionTypes = _interopRequireWildcard(_actionTypes);
 
-var _eventTypes = __webpack_require__(10);
+var _eventTypes = __webpack_require__(9);
 
 var eventTypes = _interopRequireWildcard(_eventTypes);
 
@@ -58784,9 +58836,6 @@ function registerAllMetricHandlers(callReport) {
    */
   callReport.registerMetricHandler(_constants.REPORT_METRICS.TIME_FROM_RECEIVE_TO_ANSWER, _constants.REPORT_EVENTS.ANSWER, durationHandler(_constants.REPORT_METRICS.TIME_FROM_RECEIVE_TO_ANSWER, [_constants.REPORT_EVENTS.RECEIVE_CALL]));
 
-  // Call time to media duration (answer operation starts until media is connected)
-  callReport.registerMetricHandler(_constants.REPORT_METRICS.TIME_TO_MEDIA_DURATION, _constants.REPORT_EVENTS.SET_LOCAL_DESCRIPTION, durationHandler(_constants.REPORT_METRICS.TIME_TO_MEDIA_DURATION, [_constants.REPORT_EVENTS.ANSWER]));
-
   // Time to setup incoming call (incoming call notification until media is connected)
   callReport.registerMetricHandler(_constants.REPORT_METRICS.TIME_TO_CALL_SETUP_DURATION, _constants.REPORT_EVENTS.SET_LOCAL_DESCRIPTION, durationHandler(_constants.REPORT_METRICS.TIME_TO_CALL_SETUP_DURATION, [_constants.REPORT_EVENTS.RECEIVE_CALL]));
 
@@ -58947,7 +58996,7 @@ var _report = __webpack_require__(549);
 
 var _report2 = _interopRequireDefault(_report);
 
-var _fp = __webpack_require__(4);
+var _fp = __webpack_require__(5);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -59047,7 +59096,7 @@ var _timelineEvent = __webpack_require__(550);
 
 var _timelineEvent2 = _interopRequireDefault(_timelineEvent);
 
-var _fp = __webpack_require__(4);
+var _fp = __webpack_require__(5);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -59337,7 +59386,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = createTimelineEvent;
 
-var _fp = __webpack_require__(4);
+var _fp = __webpack_require__(5);
 
 var _uuid = __webpack_require__(44);
 
@@ -59592,7 +59641,7 @@ var _base2 = _interopRequireDefault(_base);
 
 var _constants = __webpack_require__(19);
 
-var _fp = __webpack_require__(4);
+var _fp = __webpack_require__(5);
 
 var _validation = __webpack_require__(56);
 
@@ -59900,7 +59949,7 @@ var actionTypes = _interopRequireWildcard(_actionTypes);
 
 var _reduxActions = __webpack_require__(26);
 
-var _fp = __webpack_require__(4);
+var _fp = __webpack_require__(5);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -60150,7 +60199,7 @@ var _effects = __webpack_require__(16);
 
 var _constants = __webpack_require__(19);
 
-var _errors = __webpack_require__(5);
+var _errors = __webpack_require__(4);
 
 var _errors2 = _interopRequireDefault(_errors);
 
@@ -60790,7 +60839,7 @@ var _actions2 = __webpack_require__(43);
 
 var _effects = __webpack_require__(16);
 
-var _fp = __webpack_require__(4);
+var _fp = __webpack_require__(5);
 
 var _validation = __webpack_require__(56);
 
@@ -61307,7 +61356,7 @@ exports.androidPushRegistrationEntry = androidPushRegistrationEntry;
 exports.applePushUnregisterEntry = applePushUnregisterEntry;
 exports.androidPushUnregisterEntry = androidPushUnregisterEntry;
 
-var _fp = __webpack_require__(4);
+var _fp = __webpack_require__(5);
 
 var _effects = __webpack_require__(16);
 
@@ -61452,7 +61501,7 @@ exports.enableWebsocketChannelEntry = enableWebsocketChannelEntry;
 exports.processNotification = processNotification;
 exports.normalizeSDP = normalizeSDP;
 
-var _fp = __webpack_require__(4);
+var _fp = __webpack_require__(5);
 
 var _reduxSaga = __webpack_require__(125);
 
@@ -69217,7 +69266,7 @@ var _version = __webpack_require__(55);
 
 var _utils = __webpack_require__(17);
 
-var _fp = __webpack_require__(4);
+var _fp = __webpack_require__(5);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -69404,7 +69453,7 @@ var _logs = __webpack_require__(11);
 
 var _selectors = __webpack_require__(12);
 
-var _fp = __webpack_require__(4);
+var _fp = __webpack_require__(5);
 
 // Other plugins.
 const log = _logs.logManager.getLogger('REQUEST');

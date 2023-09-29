@@ -7,6 +7,18 @@ Ribbon WebRTC SDK change log.
 - This project adheres to [Semantic Versioning](http://semver.org/).
 - This change log follows [keepachangelog.com](http://keepachangelog.com/) recommendations.
 
+## 6.3.0 - 2023-09-29
+
+### Fixed
+
+- Fixed an issue where we were incorrectly setting the call operation to `MAKE` instead of `ANSWER` for call metrics `TIME_TO_COLLECT_ICE_CANDIDATES` and `TIME_TO_RELAY_CANDIDATES` when answering a slow start call. `KJS-1737`
+- Fixed an issue with invoking `call.getAvailableCodecs` API after a call has been initiated. `KJS-1735`
+- Fixed a Call issue where if the ICE collection check failed, the SDK would not emit a `call:stateChange` event after ending the call. `KJS-1767`
+
+### Removed
+
+- Removed a duplicate call metric (TIME_TO_MEDIA_DURATION) from the call report, since its value is already captured under the ANSWER_CALL_LOCAL_SETUP metric. `KJS-1755`
+
 ## 6.2.0 - 2023-08-31
 
 ### Fixed
