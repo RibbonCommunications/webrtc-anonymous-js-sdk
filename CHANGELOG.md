@@ -7,6 +7,15 @@ Ribbon WebRTC SDK change log.
 - This project adheres to [Semantic Versioning](http://semver.org/).
 - This change log follows [keepachangelog.com](http://keepachangelog.com/) recommendations.
 
+## 6.3.1 - 2023-10-03
+
+### Fixed
+
+- Fixed a Call issue where the `media:trackEnded` event was not being emitted to the application. `KJS-1776`
+  - This issue was introduced in the v6.0.0 release.
+- Fixed a Proxy issue where an error is encountered on SDK initialization in environments without WebRTC support. `KJS-1777`
+  - This issue was introduced in the v6.0.0 release.
+
 ## 6.3.0 - 2023-09-29
 
 ### Fixed
