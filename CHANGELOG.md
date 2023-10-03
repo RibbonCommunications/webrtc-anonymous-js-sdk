@@ -15,6 +15,15 @@ This release also includes changes to a few other parts of the SDK. These change
 
 The following features have been updated internally: Notifications, Messaging, Logs, and Configs. They do not require any application changes as part of the release, as the changes are backwards-compatible. As always, if you encounter an issue with a release change, please report the issue to us.
 
+## 6.3.1 - 2023-10-03
+
+### Fixed
+
+- Fixed a Call issue where the `media:trackEnded` event was not being emitted to the application. `KJS-1776`
+  - This issue was introduced in the v6.0.0 release.
+- Fixed a Proxy issue where an error is encountered on SDK initialization in environments without WebRTC support. `KJS-1777`
+  - This issue was introduced in the v6.0.0 release.
+
 ## 6.3.0 - 2023-09-29
 
 ### Fixed
