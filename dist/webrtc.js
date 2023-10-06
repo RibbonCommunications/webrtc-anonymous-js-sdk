@@ -12,7 +12,7 @@
  *
  * WebRTC.js
  * webrtc.anonymous.js
- * Version: 6.4.0-beta.1150
+ * Version: 6.4.0-beta.1151
  */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
@@ -6287,7 +6287,7 @@ exports.getVersion = getVersion;
  * for the @@ tag below with actual version value.
  */
 function getVersion() {
-  return '6.4.0-beta.1150';
+  return '6.4.0-beta.1151';
 }
 
 /***/ }),
@@ -61740,9 +61740,9 @@ function createMiddleware(bottle) {
   const middleware = context => next => action => {
     const operations = context.container.NotificationsOperations;
 
-    // Only need to act on PROCESS_NOTIFICATION
-    if (action.type === _actionTypes.PROCESS_NOTIFICATION) {
-      operations.processNotification(action.meta.channel, action.meta.platform, action.payload);
+    // Only need to act on PROCESS_NOTIFICATION that come from the Connectivity plugin.
+    if (action.type === _actionTypes.PROCESS_NOTIFICATION && action.meta.channel === 'WEBSOCKET') {
+      operations.processNotification(action.payload, action.meta.channel, action.meta.platform);
     }
 
     // Act after the action has gone through the reducers.
@@ -62055,7 +62055,7 @@ function createOperation(container) {
 
   var queue = [];
 
-  async function processNotification(notificationChannel, platform, notification) {
+  async function processNotification(notification, notificationChannel, platform) {
     const config = (0, _selectors.getNotificationConfig)(context.getState());
     log.info(`Received notification on channel ${notificationChannel} for platform: ${platform}; Handling...`);
 
