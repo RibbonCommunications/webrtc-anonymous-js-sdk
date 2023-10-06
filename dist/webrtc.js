@@ -12,7 +12,7 @@
  *
  * WebRTC.js
  * webrtc.anonymous.js
- * Version: 6.4.0-beta.1152
+ * Version: 6.4.0-beta.1153
  */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
@@ -6287,7 +6287,7 @@ exports.getVersion = getVersion;
  * for the @@ tag below with actual version value.
  */
 function getVersion() {
-  return '6.4.0-beta.1152';
+  return '6.4.0-beta.1153';
 }
 
 /***/ }),
@@ -36773,10 +36773,13 @@ function WebRTCManager(managers) {
    * Retrieve the list of available and supported codecs based on the browser's capabilities for sending media.
    * @method getAvailableCodecs
    * @param {string} kind The kind of media of which to get the supported codecs of.
-   * @return {Array}
+   * @return {Array|undefined}
    */
   function getAvailableCodecs(kind) {
-    return RTCRtpSender.getCapabilities(kind).codecs;
+    const capabilities = RTCRtpSender.getCapabilities(kind);
+    if (capabilities && capabilities.codecs) {
+      return capabilities.codecs;
+    }
   }
   /**
    * The exposed API.
