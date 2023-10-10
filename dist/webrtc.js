@@ -12,7 +12,7 @@
  *
  * WebRTC.js
  * webrtc.anonymous.js
- * Version: 6.4.0-beta.1154
+ * Version: 6.4.0-beta.1155
  */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
@@ -6287,7 +6287,7 @@ exports.getVersion = getVersion;
  * for the @@ tag below with actual version value.
  */
 function getVersion() {
-  return '6.4.0-beta.1154';
+  return '6.4.0-beta.1155';
 }
 
 /***/ }),
@@ -52644,6 +52644,18 @@ function callIceCollectionCheckOperation(container) {
 
     log.debug('Calling ICE collection check function for reason:', iceCollectionInfo.reason);
     let result;
+    /*
+     * Scenarios expected after calling `iceCollectionCheckFunction`:
+     *    1. Returns a 'Start' or 'Wait' result.
+     *    2. Returns an 'Error' result (with a string error message).
+     *    3. Returns in invalid result object (eg. not expected type).
+     *    4. Throws an error.
+     *
+     * In error scenarios (2, 3, 4), the result will be formatted as:
+     *    { type: 'Error', error: BasicError }
+     * In success scenario, the result will be formatted as `IceCollectionCheckResult`
+     *    is documented.
+     */
     try {
       result = config.iceCollectionCheckFunction((0, _extends3.default)({
         callId: currentCall.id,
@@ -52655,20 +52667,40 @@ function callIceCollectionCheckOperation(container) {
         iceCollectionIdealTimeout: config.iceCollectionIdealTimeout,
         iceCollectionMaxTimeout: config.iceCollectionMaxTimeout
       });
+
+      if (typeof result !== 'object' || !(0, _values2.default)(_constants.ICE_COLLECTION_RESULT_TYPES).includes(result.type)) {
+        // Scenario 3:
+        //  If the result is not an IceCollectionCheckResult object, convert it to an Error result.
+        log.error('Configured IceCollectionCheckFunction returned an invalid result type. Ending call.', result);
+        result = {
+          type: _constants.ICE_COLLECTION_RESULT_TYPES.ERROR,
+          error: new _errors2.default({
+            code: _errors.callCodes.INVALID_PARAM,
+            message: 'Malformed IceCollectionCheckResult provided by configured IceCollectionCheckFunction.'
+          })
+        };
+      } else if (result.type === _constants.ICE_COLLECTION_RESULT_TYPES.ERROR) {
+        // Scenario 2:
+        //  If the result was an Error result, format it to match other error scenarios.
+        result = {
+          type: _constants.ICE_COLLECTION_RESULT_TYPES.ERROR,
+          error: new _errors2.default({
+            message: result.error,
+            code: _errors.callCodes.GENERIC_ERROR
+          })
+        };
+      }
     } catch (e) {
+      // Scenario 4:
+      //  If the function threw an error, format it to match other error scenarios.
       log.info('Error thrown by the iceCollectionCheckFunction. Ending call.', e);
       result = {
-        type: 'Error',
-        error: e
+        type: _constants.ICE_COLLECTION_RESULT_TYPES.ERROR,
+        error: new _errors2.default({
+          code: _errors.callCodes.UNKNOWN_ERROR,
+          message: 'Configured IceCollectionCheckFunction threw an error during ICE collection.'
+        })
       };
-
-      if (iceCollectionEvent) {
-        iceCollectionEvent.setError(result);
-      }
-    }
-
-    if (iceCollectionEvent && (result.type === _constants.ICE_COLLECTION_RESULT_TYPES.START_CALL || result.type === _constants.ICE_COLLECTION_RESULT_TYPES.ERROR)) {
-      iceCollectionEvent.endEvent();
     }
 
     // Get the webrtc Session for the call.
@@ -52677,15 +52709,22 @@ function callIceCollectionCheckOperation(container) {
     log.debug('Handling ICE collection check result:', result.type);
     await session.iceCollectionCheckResult(result);
 
-    // If the result is neither 'StartCall' or 'Wait', then it is either an error or an undefined result type.
-    //   In either case, the session will cleanup the WebRTC portions of the call so just cleanup the state here.
-    if (result.type !== _constants.ICE_COLLECTION_RESULT_TYPES.START_CALL && result.type !== _constants.ICE_COLLECTION_RESULT_TYPES.WAIT) {
-      const error = new _errors2.default({
-        message: result.error && result.error.message || result.error || `Unexpected result type returned from ice collection check function: ${result.type}`
-      });
+    // ICE collection is complete if we are not waiting any longer.
+    // TODO: Is iceCollectionEvent ever not defined here? Why check for it?
+    if (iceCollectionEvent && result.type !== _constants.ICE_COLLECTION_RESULT_TYPES.WAIT) {
+      if (result.type === _constants.ICE_COLLECTION_RESULT_TYPES.ERROR) {
+        iceCollectionEvent.setError(result);
+      }
+      iceCollectionEvent.endEvent();
+    }
+
+    // If the result is an error, the call should be ended. The Session should have
+    //     cleaned-up the WebRTC resources (in `session.iceCollectionCheckResult`),
+    //     so update the call state here.
+    if (result.type === _constants.ICE_COLLECTION_RESULT_TYPES.ERROR) {
       context.dispatch(_actions.callActions.endCallFinish(currentCall.id, {
         isLocal: true,
-        error
+        error: result.error
       }));
 
       emitEvent(_eventTypes.CALL_STATE_CHANGE, {
@@ -52695,7 +52734,7 @@ function callIceCollectionCheckOperation(container) {
           localHold: currentCall.localHold,
           remoteHold: currentCall.remoteHold
         },
-        error
+        error: result.error
       });
     }
   }
