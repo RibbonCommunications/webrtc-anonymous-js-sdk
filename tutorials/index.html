@@ -15,8 +15,6 @@
     <script src="https://unpkg.com/docute-mermaid@1.1.0/dist/index.min.js"></script>
     <script src="//cdn.jsdelivr.net/remarkable/1.7.1/remarkable.min.js"></script>
     <script type="module">
-      import { configs } from './config.js'
-
       const sidebar = [{
         title: "Tutorials",
         links: [
@@ -74,117 +72,11 @@
         ]
       }]
 
-      // Get all query params (i.e. params that are provided as part of the URL address of a given Tutorial)
-      // These params come after '/?' in that URL.
-      const queryParams = new URLSearchParams(window.location.search);
-      const configName = queryParams.get('config')
-      let configIdx
-
-      // Try to determine the index for the configuration we need to use
-      // for replacing all the templated variables in any of the Tutorial pages.
-      if (!configName) {
-        // If there was no 'config' query parameter, then by default we'll access
-        // the first configuration element in our 'configs' array.
-        configIdx = 0
-      } else {
-        let element = configs.find(x => x.name === configName)
-        if (!element) {
-          configIdx = 0
-        } else {
-          configIdx = configs.indexOf(element);
-        }
-      }
-
-      let useDefault = !configs || !configs[configIdx] || !configs[configIdx].data
       new Docute({
         target: '#docute',
         sidebar,
         plugins: [
           docuteMermaid(),
-          {
-            name: 'Convert RIBBONFQDN',
-            extend(api) {
-              const ribbonFQDN = useDefault ? '$RIBBONFQDN$' : configs[configIdx].data.RIBBONFQDN
-              api.processMarkdown(md => md.replace(/\$RIBBONFQDN\$/gm, ribbonFQDN))
-            }
-          },
-          {
-            name: 'Convert RIBBONTURN1',
-            extend(api) {
-              const ribbonTURN1 = useDefault ? '$RIBBONTURN1$' : configs[configIdx].data.RIBBONTURN1
-              api.processMarkdown(md => md.replace(/\$RIBBONTURN1\$/gm, ribbonTURN1))
-            }
-          },
-          {
-            name: 'Convert RIBBONTURN2',
-            extend(api) {
-              const ribbonTURN2 = useDefault ? '$RIBBONTURN2$' : configs[configIdx].data.RIBBONTURN2
-              api.processMarkdown(md => md.replace(/\$RIBBONTURN2\$/gm, ribbonTURN2))
-            }
-          },
-          {
-            name: 'Convert RIBBONSTUN1',
-            extend(api) {
-              const ribbonSTUN1 = useDefault ? '$RIBBONSTUN1$' : configs[configIdx].data.RIBBONSTUN1
-              api.processMarkdown(md => md.replace(/\$RIBBONSTUN1\$/gm, ribbonSTUN1))
-            }
-          },
-          {
-            name: 'Convert RIBBONSTUN2',
-            extend(api) {
-              const ribbonSTUN2 = useDefault ? '$RIBBONSTUN2$' : configs[configIdx].data.RIBBONSTUN2
-              api.processMarkdown(md => md.replace(/\$RIBBONSTUN2\$/gm, ribbonSTUN2))
-            }
-          },
-          {
-            name: 'Convert RIBBON',
-            extend(api) {
-              const ribbon = useDefault ? '$RIBBON$' : configs[configIdx].data.RIBBON
-              api.processMarkdown(md => md.replace(/\$RIBBON\$/gm, ribbon))
-            }
-          },
-          {
-            name: 'Convert DEFAULTCONFIGNAME',
-            extend(api) {
-              const defaultConfigName = useDefault ? '$DEFAULTCONFIGNAME$' : configs[configIdx].data.DEFAULTCONFIGNAME
-              api.processMarkdown(md => md.replace(/\$DEFAULTCONFIGNAME\$/gm, defaultConfigName))
-            }
-          },
-          {
-            name: 'Convert DEFAULTCONFIGURL',
-            extend(api) {
-              const defaultConfigURL = useDefault ? '$DEFAULTCONFIGURL$' : configs[configIdx].data.DEFAULTCONFIGURL
-              api.processMarkdown(md => md.replace(/\$DEFAULTCONFIGURL\$/gm, defaultConfigURL))
-            }
-          },
-          {
-            name: 'Convert DEFAULTCONFIGACCESS',
-            extend(api) {
-              const defaultConfigAccess = useDefault ? '$DEFAULTCONFIGACCESS$' : configs[configIdx].data.DEFAULTCONFIGACCESS
-              api.processMarkdown(md => md.replace(/\$DEFAULTCONFIGACCESS\$/gm, defaultConfigAccess))
-            }
-          },
-          {
-            name: 'Convert SERVERBASE',
-            extend(api) {
-              const serverBase = useDefault ? '$SERVERBASE$' : configs[configIdx].data.SERVERBASE
-              api.processMarkdown(md => md.replace(/\$SERVERBASE\$/gm, serverBase))
-            }
-          },
-          {
-            name: 'Convert SUBSCRIPTIONFQDN',
-            extend(api) {
-              const subscriptionFQDN = useDefault ? '$SUBSCRIPTIONFQDN$' : configs[configIdx].data.SUBSCRIPTIONFQDN
-              api.processMarkdown(md => md.replace(/\$SUBSCRIPTIONFQDN\$/gm, subscriptionFQDN))
-            }
-          },
-          {
-            name: 'Convert WEBSOCKETFQDN',
-            extend(api) {
-              const webSocketFQDN = useDefault ? '$WEBSOCKETFQDN$' : configs[configIdx].data.WEBSOCKETFQDN
-              api.processMarkdown(md => md.replace(/\$WEBSOCKETFQDN\$/gm, webSocketFQDN))
-            }
-          },
           {
             // This is required so that docute/vue don't mangle
             // the codepen form.

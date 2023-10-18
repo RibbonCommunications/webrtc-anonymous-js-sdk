@@ -19,8 +19,8 @@ call: {
     // Note that starting with Chromium 110, TURN(S) urls must only contain a transport
     // parameter in the query section and STUN urls must not specify any query section.
     iceServers: [
-      { urls: '$RIBBONTURN1$' },
-      { urls: '$RIBBONSTUN1$' }
+      { urls: 'turns:turn-blue.rbbn.com:443?transport=tcp' },
+      { urls: 'stun:turn-blue.rbbn.com:3478' }
     ]
   },
   // Other feature configs.
@@ -43,10 +43,10 @@ Note: It is important to always include these configurations.
 ```javascript
 authentication: {
   subscription: {
-    server: '$SUBSCRIPTIONFQDN$'
+    server: 'webrtc-blue.rbbn.com'
   },
   websocket: {
-    server: '$WEBSOCKETFQDN$'
+    server: 'webrtc-blue.rbbn.com'
   }
 }
 ```
