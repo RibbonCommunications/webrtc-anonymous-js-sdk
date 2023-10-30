@@ -836,7 +836,7 @@
                 "children": [
                   {
                     "type": "text",
-                    "value": "Configuration options for the CallMe Authentication feature."
+                    "value": "Configuration options for the anonymous Authentication feature."
                   }
                 ]
               }
@@ -1001,26 +1001,26 @@
           ],
           "loc": {
             "start": {
-              "line": 11,
-              "column": 0
+              "line": 34,
+              "column": 2
             },
             "end": {
-              "line": 29,
-              "column": 3
+              "line": 52,
+              "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 31,
-                "column": 0
+                "line": 54,
+                "column": 2
               },
               "end": {
-                "line": 45,
-                "column": 1
+                "line": 69,
+                "column": 3
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_beta/packages/kandy/src/auth/callMe/index.js"
+            "file": "/var/jenkins_home/workspace/Kandy.js_beta/packages/kandy/src/auth/anonymous/index.js"
           },
           "augments": [],
           "examples": [],
@@ -2282,6 +2282,123 @@
                 "children": [
                   {
                     "type": "text",
+                    "value": "The authentication credentials have been set. You can check the set user details with the "
+                  },
+                  {
+                    "type": "inlineCode",
+                    "value": "getUserInfo"
+                  },
+                  {
+                    "type": "text",
+                    "value": " API."
+                  }
+                ]
+              }
+            ]
+          },
+          "tags": [
+            {
+              "title": "public",
+              "description": null,
+              "lineNumber": 3,
+              "type": null
+            },
+            {
+              "title": "memberof",
+              "description": "api",
+              "lineNumber": 4
+            },
+            {
+              "title": "event",
+              "description": "auth:change",
+              "lineNumber": 5
+            },
+            {
+              "title": "param",
+              "description": null,
+              "lineNumber": 6,
+              "type": {
+                "type": "NameExpression",
+                "name": "Object"
+              },
+              "name": "params"
+            }
+          ],
+          "loc": {
+            "start": {
+              "line": 1,
+              "column": 0
+            },
+            "end": {
+              "line": 8,
+              "column": 3
+            }
+          },
+          "context": {
+            "loc": {
+              "start": {
+                "line": 9,
+                "column": 0
+              },
+              "end": {
+                "line": 9,
+                "column": 40
+              }
+            },
+            "file": "/var/jenkins_home/workspace/Kandy.js_beta/packages/kandy/src/auth/interface/eventTypes.js"
+          },
+          "augments": [],
+          "examples": [],
+          "implements": [],
+          "params": [
+            {
+              "title": "param",
+              "name": "params",
+              "lineNumber": 6,
+              "type": {
+                "type": "NameExpression",
+                "name": "Object"
+              }
+            }
+          ],
+          "properties": [],
+          "returns": [],
+          "sees": [],
+          "throws": [],
+          "todos": [],
+          "yields": [],
+          "access": "public",
+          "memberof": "api",
+          "kind": "event",
+          "name": "auth:change",
+          "members": {
+            "global": [],
+            "inner": [],
+            "instance": [],
+            "events": [],
+            "static": []
+          },
+          "path": [
+            {
+              "name": "api",
+              "kind": "module"
+            },
+            {
+              "name": "auth:change",
+              "kind": "event"
+            }
+          ],
+          "namespace": "api.event:auth:change"
+        },
+        {
+          "description": {
+            "type": "root",
+            "children": [
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "type": "text",
                     "value": "An error occurred with server authorization."
                   }
                 ]
@@ -2470,22 +2587,22 @@
           ],
           "loc": {
             "start": {
-              "line": 257,
+              "line": 236,
               "column": 4
             },
             "end": {
-              "line": 263,
+              "line": 242,
               "column": 7
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 264,
+                "line": 243,
                 "column": 4
               },
               "end": {
-                "line": 266,
+                "line": 245,
                 "column": 5
               }
             },
@@ -2565,22 +2682,22 @@
           ],
           "loc": {
             "start": {
-              "line": 269,
+              "line": 248,
               "column": 4
             },
             "end": {
-              "line": 295,
+              "line": 274,
               "column": 7
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 296,
+                "line": 275,
                 "column": 4
               },
               "end": {
-                "line": 322,
+                "line": 301,
                 "column": 5
               }
             },
@@ -4058,22 +4175,22 @@
           ],
           "loc": {
             "start": {
-              "line": 88,
+              "line": 70,
               "column": 4
             },
             "end": {
-              "line": 98,
+              "line": 80,
               "column": 7
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 99,
+                "line": 81,
                 "column": 4
               },
               "end": {
-                "line": 102,
+                "line": 84,
                 "column": 5
               }
             },
@@ -21464,7 +21581,7 @@
                 "column": 2
               },
               "end": {
-                "line": 428,
+                "line": 424,
                 "column": 3
               }
             },
@@ -21649,22 +21766,22 @@
           ],
           "loc": {
             "start": {
-              "line": 430,
+              "line": 426,
               "column": 2
             },
             "end": {
-              "line": 467,
+              "line": 463,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 508,
+                "line": 504,
                 "column": 2
               },
               "end": {
-                "line": 519,
+                "line": 515,
                 "column": 3
               }
             },
@@ -21825,22 +21942,22 @@
           ],
           "loc": {
             "start": {
-              "line": 469,
+              "line": 465,
               "column": 2
             },
             "end": {
-              "line": 506,
+              "line": 502,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 508,
+                "line": 504,
                 "column": 2
               },
               "end": {
-                "line": 519,
+                "line": 515,
                 "column": 3
               }
             },
@@ -32203,22 +32320,22 @@
           ],
           "loc": {
             "start": {
-              "line": 26,
+              "line": 25,
               "column": 4
             },
             "end": {
-              "line": 35,
+              "line": 34,
               "column": 7
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 36,
+                "line": 35,
                 "column": 4
               },
               "end": {
-                "line": 42,
+                "line": 41,
                 "column": 5
               }
             },
@@ -32449,22 +32566,22 @@
           ],
           "loc": {
             "start": {
-              "line": 44,
+              "line": 43,
               "column": 4
             },
             "end": {
-              "line": 67,
+              "line": 66,
               "column": 7
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 68,
+                "line": 67,
                 "column": 4
               },
               "end": {
-                "line": 101,
+                "line": 100,
                 "column": 5
               }
             },
@@ -32843,22 +32960,22 @@
           ],
           "loc": {
             "start": {
-              "line": 103,
+              "line": 102,
               "column": 4
             },
             "end": {
-              "line": 122,
+              "line": 121,
               "column": 7
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 123,
+                "line": 122,
                 "column": 4
               },
               "end": {
-                "line": 144,
+                "line": 143,
                 "column": 5
               }
             },
@@ -33116,22 +33233,22 @@
           ],
           "loc": {
             "start": {
-              "line": 146,
+              "line": 145,
               "column": 4
             },
             "end": {
-              "line": 156,
+              "line": 155,
               "column": 7
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 157,
+                "line": 156,
                 "column": 4
               },
               "end": {
-                "line": 163,
+                "line": 162,
                 "column": 5
               }
             },
@@ -33277,22 +33394,22 @@
           ],
           "loc": {
             "start": {
-              "line": 165,
+              "line": 164,
               "column": 4
             },
             "end": {
-              "line": 175,
+              "line": 174,
               "column": 7
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 176,
+                "line": 175,
                 "column": 4
               },
               "end": {
-                "line": 182,
+                "line": 181,
                 "column": 5
               }
             },
@@ -33429,22 +33546,22 @@
           ],
           "loc": {
             "start": {
-              "line": 184,
+              "line": 183,
               "column": 4
             },
             "end": {
-              "line": 192,
+              "line": 191,
               "column": 7
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 193,
+                "line": 192,
                 "column": 4
               },
               "end": {
-                "line": 213,
+                "line": 212,
                 "column": 5
               }
             },

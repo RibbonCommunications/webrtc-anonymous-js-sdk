@@ -71,7 +71,7 @@ information, see the [Logs feature][6] description.
 
 ### config.authentication
 
-Configuration options for the CallMe Authentication feature.
+Configuration options for the anonymous Authentication feature.
 
 #### Parameters
 
@@ -307,6 +307,14 @@ Returns **[string][8]** user.username The username of the current user. Note tha
 It's not meant to be displayed to a user.
 
 Returns **[string][8]** user.token The current access token.
+
+### auth:change
+
+The authentication credentials have been set. You can check the set user details with the `getUserInfo` API.
+
+#### Parameters
+
+*   `params` **[Object][7]** 
 
 ### request:error
 
