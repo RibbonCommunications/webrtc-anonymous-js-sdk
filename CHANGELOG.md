@@ -7,6 +7,14 @@ Ribbon WebRTC SDK change log.
 - This project adheres to [Semantic Versioning](http://semver.org/).
 - This change log follows [keepachangelog.com](http://keepachangelog.com/) recommendations.
 
+## 6.4.0 - 2023-10-27
+
+### Other Changes
+
+This release also includes changes to a few other parts of the SDK. These changes should not be noticeable to an application, but are worth mentioning for awareness. A number of features of the SDK have had their codebase renewed to better support the direction of the SDK going forward. This will translate to a better developer experience in the future.
+
+The following features have been updated internally: Notifications, Messaging, Logs, and Configs. They do not require any application changes as part of the release, as the changes are backwards-compatible. As always, if you encounter an issue with a release change, please report the issue to us.
+
 ## 6.3.1 - 2023-10-03
 
 ### Fixed

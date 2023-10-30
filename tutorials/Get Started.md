@@ -76,7 +76,7 @@ const client = create({
   // Required: Server connection configs.
   authentication: {
     subscription: {
-      server: '$SUBSCRIPTIONFQDN$'
+      server: 'webrtc-blue.rbbn.com'
     }
   },
   logs: {
