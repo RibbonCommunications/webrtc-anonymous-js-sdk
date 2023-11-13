@@ -12,7 +12,7 @@
  *
  * WebRTC.js
  * webrtc.anonymous.js
- * Version: 6.5.0-beta.1177
+ * Version: 6.5.0-beta.1178
  */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
@@ -2335,7 +2335,7 @@ root.sdpHandlers = {
 
 /***/ }),
 
-/***/ 32505:
+/***/ 27294:
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -2353,7 +2353,7 @@ exports.getVersion = getVersion;
  * for the @@ tag below with actual version value.
  */
 function getVersion() {
-  return '6.5.0-beta.1177';
+  return '6.5.0-beta.1178';
 }
 
 /***/ }),
@@ -2641,7 +2641,7 @@ function createInterval(container) {
         await AuthenticationRequests.resubscribe(conn, subscription);
         context.dispatch(actions.resubscribeFinished({ attemptNum }, _constants.platforms.LINK));
 
-        emitEvent(_eventTypes.RESUBSCRIPTION_FINISHED, {
+        emitEvent(_eventTypes.AUTH_RESUB, {
           attemptNum,
           isFailure: false
         });
@@ -2651,7 +2651,7 @@ function createInterval(container) {
           attemptNum
         }, _constants.platforms.LINK));
 
-        emitEvent(_eventTypes.RESUBSCRIPTION_FINISHED, {
+        emitEvent(_eventTypes.AUTH_RESUB, {
           attemptNum,
           isFailure: true
         });
@@ -4414,19 +4414,6 @@ reducers[actionTypes.REFRESH_TOKENS_FINISHED] = {
       userInfo: (0, _extends3.default)({}, state.userInfo, {
         accessToken: action.payload.connection.accessToken,
         refreshToken: action.payload.connection.refreshToken
-      })
-    });
-  }
-};
-
-/*
- * Updates the subscription information for a specified platform.
- */
-reducers[actionTypes.UPDATE_SUBSCRIPTION_FINISH] = {
-  next(state, action) {
-    return (0, _extends3.default)({}, state, {
-      subscription: (0, _extends3.default)({}, state.subscription, {
-        [action.meta.platform]: (0, _extends3.default)({}, state.subscription[action.meta.platform], action.payload)
       })
     });
   }
@@ -10010,7 +9997,7 @@ var _errors2 = _interopRequireDefault(_errors);
 
 var _kandyWebrtc = __webpack_require__(25865);
 
-var _version = __webpack_require__(32505);
+var _version = __webpack_require__(27294);
 
 var _sdkId = __webpack_require__(59026);
 
@@ -21584,7 +21571,7 @@ var _logs = __webpack_require__(89839);
 
 var _utils = __webpack_require__(84980);
 
-var _version = __webpack_require__(32505);
+var _version = __webpack_require__(27294);
 
 var _defaults = __webpack_require__(82914);
 
@@ -32920,7 +32907,7 @@ var _bottlejs2 = _interopRequireDefault(_bottlejs);
 
 var _utils = __webpack_require__(84980);
 
-var _version = __webpack_require__(32505);
+var _version = __webpack_require__(27294);
 
 var _intervalFactory = __webpack_require__(3614);
 
@@ -33722,8 +33709,6 @@ var _kandyLogger2 = _interopRequireDefault(_kandyLogger);
 
 var _config = __webpack_require__(46467);
 
-var _config2 = _interopRequireDefault(_config);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // Logs generated as a result of invoking the public API will contain this tag
@@ -33739,7 +33724,7 @@ const API_LOG_TAG = exports.API_LOG_TAG = 'API invoked: ';
  * loggers created at the global scope. Multiple instances of the SDK would end up sharing
  * the log manager and therefore loggers.
  */
-const manager = (0, _kandyLogger2.default)(_config2.default);
+const manager = (0, _kandyLogger2.default)(_config.defaultOptions);
 const logManager = exports.logManager = manager;
 
 /***/ }),
@@ -37072,7 +37057,7 @@ var _sagas = __webpack_require__(89869);
 
 var _selectors = __webpack_require__(53960);
 
-var _version = __webpack_require__(32505);
+var _version = __webpack_require__(27294);
 
 var _utils = __webpack_require__(84980);
 
@@ -37236,7 +37221,7 @@ var _utils = __webpack_require__(86128);
 
 var _logs = __webpack_require__(89839);
 
-var _version = __webpack_require__(32505);
+var _version = __webpack_require__(27294);
 
 var _effects = __webpack_require__(27422);
 
@@ -37338,7 +37323,7 @@ var _selectors2 = __webpack_require__(53960);
 
 var _logs = __webpack_require__(89839);
 
-var _version = __webpack_require__(32505);
+var _version = __webpack_require__(27294);
 
 var _utils = __webpack_require__(84980);
 
@@ -64215,7 +64200,7 @@ module.exports = str => encodeURIComponent(str).replace(/[!'()*]/g, x => `%${x.c
 
 /***/ }),
 
-/***/ 38719:
+/***/ 46339:
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -64447,7 +64432,7 @@ var _v4 = _interopRequireDefault(__webpack_require__(13940));
 
 var _nil = _interopRequireDefault(__webpack_require__(15384));
 
-var _version = _interopRequireDefault(__webpack_require__(38719));
+var _version = _interopRequireDefault(__webpack_require__(46339));
 
 var _validate = _interopRequireDefault(__webpack_require__(77888));
 
