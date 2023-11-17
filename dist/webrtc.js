@@ -12,7 +12,7 @@
  *
  * WebRTC.js
  * webrtc.anonymous.js
- * Version: 6.5.0-beta.1178
+ * Version: 6.5.0-beta.1179
  */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
@@ -2335,7 +2335,7 @@ root.sdpHandlers = {
 
 /***/ }),
 
-/***/ 27294:
+/***/ 69591:
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -2353,7 +2353,7 @@ exports.getVersion = getVersion;
  * for the @@ tag below with actual version value.
  */
 function getVersion() {
-  return '6.5.0-beta.1178';
+  return '6.5.0-beta.1179';
 }
 
 /***/ }),
@@ -9997,7 +9997,7 @@ var _errors2 = _interopRequireDefault(_errors);
 
 var _kandyWebrtc = __webpack_require__(25865);
 
-var _version = __webpack_require__(27294);
+var _version = __webpack_require__(69591);
 
 var _sdkId = __webpack_require__(59026);
 
@@ -21571,7 +21571,7 @@ var _logs = __webpack_require__(89839);
 
 var _utils = __webpack_require__(84980);
 
-var _version = __webpack_require__(27294);
+var _version = __webpack_require__(69591);
 
 var _defaults = __webpack_require__(82914);
 
@@ -32907,7 +32907,7 @@ var _bottlejs2 = _interopRequireDefault(_bottlejs);
 
 var _utils = __webpack_require__(84980);
 
-var _version = __webpack_require__(27294);
+var _version = __webpack_require__(69591);
 
 var _intervalFactory = __webpack_require__(3614);
 
@@ -34823,10 +34823,11 @@ function createAPI(container) {
      * @requires externalNotifications
      * @memberof notification
      * @method process
-     * @param {Object} notification
-     * @param {string} [channel] - The channel that the notification came from.
+     * @param {Object} notification The notification object from which to extract relevant data.
+     * @param {string} [channel='PUSH'] The channel that the notification came from.
+     *    If no channel provided, then by default it will be a PUSH notification.
      */
-    process: function (notification, channel) {
+    process: function (notification, channel = 'PUSH') {
       log.debug(API_LOG_TAG + 'notification.process: ', notification, channel);
 
       context.dispatch(actions.externalNotification(notification, channel));
@@ -37057,7 +37058,7 @@ var _sagas = __webpack_require__(89869);
 
 var _selectors = __webpack_require__(53960);
 
-var _version = __webpack_require__(27294);
+var _version = __webpack_require__(69591);
 
 var _utils = __webpack_require__(84980);
 
@@ -37221,7 +37222,7 @@ var _utils = __webpack_require__(86128);
 
 var _logs = __webpack_require__(89839);
 
-var _version = __webpack_require__(27294);
+var _version = __webpack_require__(69591);
 
 var _effects = __webpack_require__(27422);
 
@@ -37323,7 +37324,7 @@ var _selectors2 = __webpack_require__(53960);
 
 var _logs = __webpack_require__(89839);
 
-var _version = __webpack_require__(27294);
+var _version = __webpack_require__(69591);
 
 var _utils = __webpack_require__(84980);
 
@@ -64200,7 +64201,7 @@ module.exports = str => encodeURIComponent(str).replace(/[!'()*]/g, x => `%${x.c
 
 /***/ }),
 
-/***/ 46339:
+/***/ 93562:
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -64432,7 +64433,7 @@ var _v4 = _interopRequireDefault(__webpack_require__(13940));
 
 var _nil = _interopRequireDefault(__webpack_require__(15384));
 
-var _version = _interopRequireDefault(__webpack_require__(46339));
+var _version = _interopRequireDefault(__webpack_require__(93562));
 
 var _validate = _interopRequireDefault(__webpack_require__(77888));
 

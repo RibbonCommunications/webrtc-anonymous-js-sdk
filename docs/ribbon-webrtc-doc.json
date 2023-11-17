@@ -32296,7 +32296,7 @@
             },
             {
               "title": "param",
-              "description": null,
+              "description": "The notification object from which to extract relevant data.",
               "lineNumber": 7,
               "type": {
                 "type": "NameExpression",
@@ -32306,7 +32306,7 @@
             },
             {
               "title": "param",
-              "description": "The channel that the notification came from.",
+              "description": "The channel that the notification came from.\n   If no channel provided, then by default it will be a PUSH notification.",
               "lineNumber": 8,
               "type": {
                 "type": "OptionalType",
@@ -32315,7 +32315,8 @@
                   "name": "string"
                 }
               },
-              "name": "channel"
+              "name": "channel",
+              "default": "'PUSH'"
             }
           ],
           "loc": {
@@ -32324,18 +32325,18 @@
               "column": 4
             },
             "end": {
-              "line": 34,
+              "line": 35,
               "column": 7
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 35,
+                "line": 36,
                 "column": 4
               },
               "end": {
-                "line": 41,
+                "line": 42,
                 "column": 5
               }
             },
@@ -32349,6 +32350,20 @@
               "title": "param",
               "name": "notification",
               "lineNumber": 7,
+              "description": {
+                "type": "root",
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "The notification object from which to extract relevant data."
+                      }
+                    ]
+                  }
+                ]
+              },
               "type": {
                 "type": "NameExpression",
                 "name": "Object"
@@ -32366,19 +32381,17 @@
                     "children": [
                       {
                         "type": "text",
-                        "value": "The channel that the notification came from."
+                        "value": "The channel that the notification came from.\nIf no channel provided, then by default it will be a PUSH notification."
                       }
                     ]
                   }
                 ]
               },
               "type": {
-                "type": "OptionalType",
-                "expression": {
-                  "type": "NameExpression",
-                  "name": "string"
-                }
-              }
+                "type": "NameExpression",
+                "name": "string"
+              },
+              "default": "'PUSH'"
             }
           ],
           "properties": [],
@@ -32566,22 +32579,22 @@
           ],
           "loc": {
             "start": {
-              "line": 43,
+              "line": 44,
               "column": 4
             },
             "end": {
-              "line": 66,
+              "line": 67,
               "column": 7
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 67,
+                "line": 68,
                 "column": 4
               },
               "end": {
-                "line": 100,
+                "line": 101,
                 "column": 5
               }
             },
@@ -32960,22 +32973,22 @@
           ],
           "loc": {
             "start": {
-              "line": 102,
+              "line": 103,
               "column": 4
             },
             "end": {
-              "line": 121,
+              "line": 122,
               "column": 7
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 122,
+                "line": 123,
                 "column": 4
               },
               "end": {
-                "line": 143,
+                "line": 144,
                 "column": 5
               }
             },
@@ -33233,22 +33246,22 @@
           ],
           "loc": {
             "start": {
-              "line": 145,
+              "line": 146,
               "column": 4
             },
             "end": {
-              "line": 155,
+              "line": 156,
               "column": 7
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 156,
+                "line": 157,
                 "column": 4
               },
               "end": {
-                "line": 162,
+                "line": 163,
                 "column": 5
               }
             },
@@ -33394,22 +33407,22 @@
           ],
           "loc": {
             "start": {
-              "line": 164,
+              "line": 165,
               "column": 4
             },
             "end": {
-              "line": 174,
+              "line": 175,
               "column": 7
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 175,
+                "line": 176,
                 "column": 4
               },
               "end": {
-                "line": 181,
+                "line": 182,
                 "column": 5
               }
             },
@@ -33546,22 +33559,22 @@
           ],
           "loc": {
             "start": {
-              "line": 183,
+              "line": 184,
               "column": 4
             },
             "end": {
-              "line": 191,
+              "line": 192,
               "column": 7
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 192,
+                "line": 193,
                 "column": 4
               },
               "end": {
-                "line": 212,
+                "line": 213,
                 "column": 5
               }
             },

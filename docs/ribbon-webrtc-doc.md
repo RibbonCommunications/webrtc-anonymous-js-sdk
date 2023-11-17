@@ -2659,8 +2659,9 @@ Provides an external notification to the system for processing.
 
 #### Parameters
 
-*   `notification` **[Object][7]** 
-*   `channel` **[string][8]?** The channel that the notification came from.
+*   `notification` **[Object][7]** The notification object from which to extract relevant data.
+*   `channel` **[string][8]** The channel that the notification came from.
+    If no channel provided, then by default it will be a PUSH notification. (optional, default `'PUSH'`)
 
 ### registerApplePush
 

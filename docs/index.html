@@ -13598,7 +13598,7 @@ enabling/disabling the processing of websocket notifications.</p>
       <div class="clearfix small pointer toggle-sibling">
         <div class="py1 contain">
             <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>process(notification, channel?)</span>
+            <span class='code strong strong truncate'>process(notification, channel)</span>
         </div>
       </div>
       <div class="clearfix display-none toggle-target">
@@ -13609,7 +13609,7 @@ enabling/disabling the processing of websocket notifications.</p>
   <p>Provides an external notification to the system for processing.</p>
 
 
-  <div class='pre p1 fill-light mt0'>process(notification: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>, channel: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>?)</div>
+  <div class='pre p1 fill-light mt0'>process(notification: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>, channel: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</div>
   
   
 
@@ -13627,15 +13627,18 @@ enabling/disabling the processing of websocket notifications.</p>
         <div class='space-bottom0'>
           <div>
             <span class='code bold'>notification</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
-	    
+	    The notification object from which to extract relevant data.
+
           </div>
           
         </div>
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>channel</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>?)</code>
+            <span class='code bold'>channel</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>
+            = <code>&#39;PUSH&#39;</code>)</code>
 	    The channel that the notification came from.
+If no channel provided, then by default it will be a PUSH notification.
 
           </div>
           
