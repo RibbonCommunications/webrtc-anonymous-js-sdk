@@ -5318,7 +5318,7 @@
             },
             {
               "title": "param",
-              "description": null,
+              "description": "Contains more detailed information about the state change.",
               "lineNumber": 11,
               "type": {
                 "type": "OptionalType",
@@ -5567,6 +5567,20 @@
                   "title": "param",
                   "name": "params.transition",
                   "lineNumber": 11,
+                  "description": {
+                    "type": "root",
+                    "children": [
+                      {
+                        "type": "paragraph",
+                        "children": [
+                          {
+                            "type": "text",
+                            "value": "Contains more detailed information about the state change."
+                          }
+                        ]
+                      }
+                    ]
+                  },
                   "type": {
                     "type": "OptionalType",
                     "expression": {

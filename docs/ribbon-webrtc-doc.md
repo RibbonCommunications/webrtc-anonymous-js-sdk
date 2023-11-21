@@ -1835,7 +1835,7 @@ See [call.states][24] for information about call states.
         *   `params.previous.state` **[string][8]** The previous state of the call.
         *   `params.previous.localHold` **[boolean][11]?** The previous local hold state. Present when the state change was a hold/unhold operation.
         *   `params.previous.remoteHold` **[boolean][11]?** The previous remote hold state. Present when the state change was a hold/unhold operation.
-    *   `params.transition` **[Object][7]?** 
+    *   `params.transition` **[Object][7]?** Contains more detailed information about the state change.
 
         *   `params.transition.statusCode` **[number][12]?** The status code associated with the particular state change's reason.
         *   `params.transition.reasonText` **[string][8]?** The reason for the state change.

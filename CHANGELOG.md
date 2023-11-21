@@ -9,6 +9,12 @@ Ribbon WebRTC SDK change log.
 
 ## 6.5.0 - beta
 
+### Fixed
+
+- Fixed two issues with `call:stateChange` event:
+  - during local hold, when the event payload contained wrong 'previous' call state parameters.
+  - during call hang up, when the event did not contain a reason text & status code. This applies to the peer that got notified for the call that ended. `KJS-1844`
+
 ### Other Changes
 
 This release also includes changes to a few other parts of the SDK. These changes should not be noticeable to an application, but are worth mentioning for awareness. A number of features of the SDK have had their codebase renewed to better support the direction of the SDK going forward. This will translate to a better developer experience in the future.
