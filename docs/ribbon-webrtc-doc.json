@@ -836,7 +836,7 @@
                 "children": [
                   {
                     "type": "text",
-                    "value": "Configuration options for the CallMe Authentication feature."
+                    "value": "Configuration options for the anonymous Authentication feature."
                   }
                 ]
               }
@@ -1001,26 +1001,26 @@
           ],
           "loc": {
             "start": {
-              "line": 11,
-              "column": 0
+              "line": 30,
+              "column": 2
             },
             "end": {
-              "line": 29,
-              "column": 3
+              "line": 48,
+              "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 31,
-                "column": 0
+                "line": 50,
+                "column": 2
               },
               "end": {
-                "line": 45,
-                "column": 1
+                "line": 65,
+                "column": 3
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/auth/callMe/index.js"
+            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/auth/anonymous/index.js"
           },
           "augments": [],
           "examples": [],
@@ -2282,6 +2282,123 @@
                 "children": [
                   {
                     "type": "text",
+                    "value": "The authentication credentials have been set. You can check the set user details with the "
+                  },
+                  {
+                    "type": "inlineCode",
+                    "value": "getUserInfo"
+                  },
+                  {
+                    "type": "text",
+                    "value": " API."
+                  }
+                ]
+              }
+            ]
+          },
+          "tags": [
+            {
+              "title": "public",
+              "description": null,
+              "lineNumber": 3,
+              "type": null
+            },
+            {
+              "title": "memberof",
+              "description": "api",
+              "lineNumber": 4
+            },
+            {
+              "title": "event",
+              "description": "auth:change",
+              "lineNumber": 5
+            },
+            {
+              "title": "param",
+              "description": null,
+              "lineNumber": 6,
+              "type": {
+                "type": "NameExpression",
+                "name": "Object"
+              },
+              "name": "params"
+            }
+          ],
+          "loc": {
+            "start": {
+              "line": 1,
+              "column": 0
+            },
+            "end": {
+              "line": 8,
+              "column": 3
+            }
+          },
+          "context": {
+            "loc": {
+              "start": {
+                "line": 9,
+                "column": 0
+              },
+              "end": {
+                "line": 9,
+                "column": 40
+              }
+            },
+            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/auth/interface/eventTypes.js"
+          },
+          "augments": [],
+          "examples": [],
+          "implements": [],
+          "params": [
+            {
+              "title": "param",
+              "name": "params",
+              "lineNumber": 6,
+              "type": {
+                "type": "NameExpression",
+                "name": "Object"
+              }
+            }
+          ],
+          "properties": [],
+          "returns": [],
+          "sees": [],
+          "throws": [],
+          "todos": [],
+          "yields": [],
+          "access": "public",
+          "memberof": "api",
+          "kind": "event",
+          "name": "auth:change",
+          "members": {
+            "global": [],
+            "inner": [],
+            "instance": [],
+            "events": [],
+            "static": []
+          },
+          "path": [
+            {
+              "name": "api",
+              "kind": "module"
+            },
+            {
+              "name": "auth:change",
+              "kind": "event"
+            }
+          ],
+          "namespace": "api.event:auth:change"
+        },
+        {
+          "description": {
+            "type": "root",
+            "children": [
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "type": "text",
                     "value": "An error occurred with server authorization."
                   }
                 ]
@@ -2470,22 +2587,22 @@
           ],
           "loc": {
             "start": {
-              "line": 257,
+              "line": 240,
               "column": 4
             },
             "end": {
-              "line": 263,
+              "line": 246,
               "column": 7
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 264,
+                "line": 247,
                 "column": 4
               },
               "end": {
-                "line": 266,
+                "line": 249,
                 "column": 5
               }
             },
@@ -2565,22 +2682,22 @@
           ],
           "loc": {
             "start": {
-              "line": 269,
+              "line": 252,
               "column": 4
             },
             "end": {
-              "line": 295,
+              "line": 278,
               "column": 7
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 296,
+                "line": 279,
                 "column": 4
               },
               "end": {
-                "line": 322,
+                "line": 305,
                 "column": 5
               }
             },
@@ -4058,22 +4175,22 @@
           ],
           "loc": {
             "start": {
-              "line": 88,
+              "line": 70,
               "column": 4
             },
             "end": {
-              "line": 98,
+              "line": 80,
               "column": 7
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 99,
+                "line": 81,
                 "column": 4
               },
               "end": {
-                "line": 102,
+                "line": 84,
                 "column": 5
               }
             },
@@ -5201,7 +5318,7 @@
             },
             {
               "title": "param",
-              "description": null,
+              "description": "Contains more detailed information about the state change.",
               "lineNumber": 11,
               "type": {
                 "type": "OptionalType",
@@ -5450,6 +5567,20 @@
                   "title": "param",
                   "name": "params.transition",
                   "lineNumber": 11,
+                  "description": {
+                    "type": "root",
+                    "children": [
+                      {
+                        "type": "paragraph",
+                        "children": [
+                          {
+                            "type": "text",
+                            "value": "Contains more detailed information about the state change."
+                          }
+                        ]
+                      }
+                    ]
+                  },
                   "type": {
                     "type": "OptionalType",
                     "expression": {
@@ -32179,7 +32310,7 @@
             },
             {
               "title": "param",
-              "description": null,
+              "description": "The notification object from which to extract relevant data.",
               "lineNumber": 7,
               "type": {
                 "type": "NameExpression",
@@ -32189,7 +32320,7 @@
             },
             {
               "title": "param",
-              "description": "The channel that the notification came from.",
+              "description": "The channel that the notification came from.\n   If no channel provided, then by default it will be a PUSH notification.",
               "lineNumber": 8,
               "type": {
                 "type": "OptionalType",
@@ -32198,12 +32329,13 @@
                   "name": "string"
                 }
               },
-              "name": "channel"
+              "name": "channel",
+              "default": "'PUSH'"
             }
           ],
           "loc": {
             "start": {
-              "line": 26,
+              "line": 25,
               "column": 4
             },
             "end": {
@@ -32232,6 +32364,20 @@
               "title": "param",
               "name": "notification",
               "lineNumber": 7,
+              "description": {
+                "type": "root",
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "The notification object from which to extract relevant data."
+                      }
+                    ]
+                  }
+                ]
+              },
               "type": {
                 "type": "NameExpression",
                 "name": "Object"
@@ -32249,19 +32395,17 @@
                     "children": [
                       {
                         "type": "text",
-                        "value": "The channel that the notification came from."
+                        "value": "The channel that the notification came from.\nIf no channel provided, then by default it will be a PUSH notification."
                       }
                     ]
                   }
                 ]
               },
               "type": {
-                "type": "OptionalType",
-                "expression": {
-                  "type": "NameExpression",
-                  "name": "string"
-                }
-              }
+                "type": "NameExpression",
+                "name": "string"
+              },
+              "default": "'PUSH'"
             }
           ],
           "properties": [],
