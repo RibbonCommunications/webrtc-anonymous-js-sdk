@@ -1322,7 +1322,18 @@
                 "children": [
                   {
                     "type": "text",
-                    "value": "For more information on keepalive see here: https://en.wikipedia.org/wiki/Keepalive"
+                    "value": "For more information on keepalive see here: "
+                  },
+                  {
+                    "type": "link",
+                    "title": null,
+                    "url": "https://en.wikipedia.org/wiki/Keepalive",
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "https://en.wikipedia.org/wiki/Keepalive"
+                      }
+                    ]
                   }
                 ]
               }
@@ -7608,7 +7619,23 @@
                   },
                   {
                     "type": "text",
-                    "value": " property of the call.\nSee {@link call.mediaConnectionStates} for the list of possible values and descriptions."
+                    "value": " property of the call.\nSee "
+                  },
+                  {
+                    "type": "link",
+                    "url": "#callmediaconnectionstates",
+                    "title": null,
+                    "jsdoc": true,
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "call.mediaConnectionStates"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "text",
+                    "value": " for the list of possible values and descriptions."
                   }
                 ]
               }
@@ -17692,7 +17719,23 @@
                   },
                   {
                     "type": "text",
-                    "value": ". {@link call.addMedia} is a general-purpose API\nfor adding media to a call, which covers the same functionality as\n"
+                    "value": ". "
+                  },
+                  {
+                    "type": "link",
+                    "url": "#calladdmedia",
+                    "title": null,
+                    "jsdoc": true,
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "call.addMedia"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "text",
+                    "value": " is a general-purpose API\nfor adding media to a call, which covers the same functionality as\n"
                   },
                   {
                     "type": "inlineCode",
@@ -17884,7 +17927,23 @@
                   },
                   {
                     "type": "text",
-                    "value": ". {@link call.removeMedia} is a\ngeneral-purpose API for removing media from a call, which covers the\nsame functionality as "
+                    "value": ". "
+                  },
+                  {
+                    "type": "link",
+                    "url": "#callremovemedia",
+                    "title": null,
+                    "jsdoc": true,
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "call.removeMedia"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "text",
+                    "value": " is a\ngeneral-purpose API for removing media from a call, which covers the\nsame functionality as "
                   },
                   {
                     "type": "inlineCode",
@@ -18758,7 +18817,23 @@
                   },
                   {
                     "type": "text",
-                    "value": " (via a\n{@link call.event:call:mediaConnectionChange call:mediaConnectionChange}\nevent) to signify the re-establishment. It will then transition to either\n"
+                    "value": " (via a\n"
+                  },
+                  {
+                    "type": "link",
+                    "url": "#calleventcallmediaconnectionchange",
+                    "title": null,
+                    "jsdoc": true,
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "call:mediaConnectionChange"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "text",
+                    "value": "\nevent) to signify the re-establishment. It will then transition to either\n"
                   },
                   {
                     "type": "inlineCode",
