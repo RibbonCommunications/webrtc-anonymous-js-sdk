@@ -12,6 +12,7 @@ Ribbon WebRTC SDK change log.
 ### Fixed
 
 - Fixed a Call issue where the `call.mediaBrokerOnly` configuration was ignored when being taken off remote hold after receiving music-on-hold. `KJS-1742`
+- Fixed an issue where the we weren't ending remote events in the call report that were using regular signalling flow (not slow-start) as wel as checking for remote unhold operations when checking for ice collection. `KJS-1880`
 
 ## 6.5.0 - 2023-11-24
 
