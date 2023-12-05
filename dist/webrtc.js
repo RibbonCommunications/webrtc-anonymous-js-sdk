@@ -12,7 +12,7 @@
  *
  * WebRTC.js
  * webrtc.anonymous.js
- * Version: 6.6.0-beta.1189
+ * Version: 6.6.0-beta.1190
  */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
@@ -2324,7 +2324,7 @@ module.exports = root;
 
 /***/ }),
 
-/***/ 6462:
+/***/ 9219:
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -2342,7 +2342,7 @@ exports.getVersion = getVersion;
  * for the @@ tag below with actual version value.
  */
 function getVersion() {
-  return '6.6.0-beta.1189';
+  return '6.6.0-beta.1190';
 }
 
 /***/ }),
@@ -9855,7 +9855,7 @@ var _selectors = __webpack_require__(1430);
 var _constants = __webpack_require__(683);
 var _errors = _interopRequireWildcard(__webpack_require__(3437));
 var _kandyWebrtc = __webpack_require__(5203);
-var _version = __webpack_require__(6462);
+var _version = __webpack_require__(9219);
 var _sdkId = _interopRequireDefault(__webpack_require__(5878));
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
 function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
@@ -20899,7 +20899,7 @@ exports.fixIceServerUrls = fixIceServerUrls;
 exports.mergeDefaults = mergeDefaults;
 var _logs = __webpack_require__(3862);
 var _utils = __webpack_require__(5189);
-var _version = __webpack_require__(6462);
+var _version = __webpack_require__(9219);
 var _defaults = __webpack_require__(7241);
 var _validation = __webpack_require__(2850);
 // Other plugins.
@@ -25417,37 +25417,45 @@ callReducers[actionTypes.CALL_CANCELLED] = {
   }
 };
 
-// Handle success and error scenarios the same for ignore finish. The call is
-//    always ended.
-callReducers[actionTypes.IGNORE_CALL_FINISH] = (state, action) => {
-  // The call being ignored means it was not completed. Ensure there are times
-  //    in state, and they reflect that the call was not completed.
-  // TODO: Better call times.
-  const now = Date.now();
-  return _objectSpread(_objectSpread({}, state), {}, {
-    startTime: now,
-    endTime: now,
-    state: _constants.CALL_STATES.ENDED
-  });
+// End the call if the ignore operation was successful, otherwise ignore this request.
+callReducers[actionTypes.IGNORE_CALL_FINISH] = {
+  next: (state, action) => {
+    // The call being ignored means it was not completed. Ensure there are times
+    //    in state, and they reflect that the call was not completed.
+    // TODO: Better call times.
+    const now = Date.now();
+    return _objectSpread(_objectSpread({}, state), {}, {
+      startTime: now,
+      endTime: now,
+      state: _constants.CALL_STATES.ENDED
+    });
+  },
+  throw: (state, action) => {
+    return state;
+  }
 };
 
-// Handle success and error scenarios the same for reject finish. The call is
-//    always ended.
-callReducers[actionTypes.REJECT_CALL_FINISH] = (state, action) => {
-  // The call being rejected means it was not completed. Ensure there are
-  //    times in state, and they reflect that the call was not completed.
-  // TODO: Better call times.
-  const now = Date.now();
-  const newState = _objectSpread(_objectSpread({}, state), {}, {
-    startTime: now,
-    endTime: now,
-    state: _constants.CALL_STATES.ENDED
-  });
+// End the call if the reject operation was successful, otherwise ignore this request.
+callReducers[actionTypes.REJECT_CALL_FINISH] = {
+  next: (state, action) => {
+    // The call being rejected means it was not completed. Ensure there are
+    //    times in state, and they reflect that the call was not completed.
+    // TODO: Better call times.
+    const now = Date.now();
+    const newState = _objectSpread(_objectSpread({}, state), {}, {
+      startTime: now,
+      endTime: now,
+      state: _constants.CALL_STATES.ENDED
+    });
 
-  // After the reject operation finishes, remove the flag that indicates we
-  //    were handling the call.
-  delete newState.isHandling;
-  return newState;
+    // After the reject operation finishes, remove the flag that indicates we
+    //    were handling the call.
+    delete newState.isHandling;
+    return newState;
+  },
+  throw: (state, action) => {
+    return state;
+  }
 };
 callReducers[actionTypes.SESSION_CREATED] = {
   next(state, action) {
@@ -31348,7 +31356,7 @@ var _fp = __webpack_require__(193);
 var _effects = __webpack_require__(7422);
 var _bottlejs = _interopRequireDefault(__webpack_require__(9146));
 var _utils = __webpack_require__(5189);
-var _version = __webpack_require__(6462);
+var _version = __webpack_require__(9219);
 var _intervalFactory = _interopRequireDefault(__webpack_require__(3725));
 var _logs = __webpack_require__(3862);
 var _validation = __webpack_require__(2850);
@@ -35241,7 +35249,7 @@ var eventTypes = _interopRequireWildcard(__webpack_require__(714));
 var authorizations = _interopRequireWildcard(__webpack_require__(5689));
 var _sagas = __webpack_require__(2939);
 var _selectors = __webpack_require__(6942);
-var _version = __webpack_require__(6462);
+var _version = __webpack_require__(9219);
 var _utils = __webpack_require__(5189);
 var _fp = __webpack_require__(193);
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
@@ -35395,7 +35403,7 @@ var _makeRequest = _interopRequireDefault(__webpack_require__(7569));
 var authorizations = _interopRequireWildcard(__webpack_require__(5689));
 var _utils = __webpack_require__(720);
 var _logs = __webpack_require__(3862);
-var _version = __webpack_require__(6462);
+var _version = __webpack_require__(9219);
 var _effects = __webpack_require__(7422);
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
 function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
@@ -35483,7 +35491,7 @@ exports.sanitizeRequest = sanitizeRequest;
 var _selectors = __webpack_require__(647);
 var _selectors2 = __webpack_require__(6942);
 var _logs = __webpack_require__(3862);
-var _version = __webpack_require__(6462);
+var _version = __webpack_require__(9219);
 var _utils = __webpack_require__(5189);
 var _effects = __webpack_require__(7422);
 var _fp = __webpack_require__(193);
@@ -59289,7 +59297,7 @@ module.exports = str => encodeURIComponent(str).replace(/[!'()*]/g, x => `%${x.c
 
 /***/ }),
 
-/***/ 4311:
+/***/ 366:
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -59521,7 +59529,7 @@ var _v4 = _interopRequireDefault(__webpack_require__(3940));
 
 var _nil = _interopRequireDefault(__webpack_require__(5384));
 
-var _version = _interopRequireDefault(__webpack_require__(4311));
+var _version = _interopRequireDefault(__webpack_require__(366));
 
 var _validate = _interopRequireDefault(__webpack_require__(7888));
 
