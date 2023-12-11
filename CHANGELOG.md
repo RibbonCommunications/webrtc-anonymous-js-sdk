@@ -7,6 +7,19 @@ Ribbon WebRTC SDK change log.
 - This project adheres to [Semantic Versioning](http://semver.org/).
 - This change log follows [keepachangelog.com](http://keepachangelog.com/) recommendations.
 
+## 6.5.1 - 2023-12-07
+
+This is a hotfix release.
+
+### Changed
+
+- Changed the way SDK searches backwards through an array of content by replacing the use of `Array.findLast` API with the more supported alternative: using `Array.reverse` & `Array.find` APIs.
+  This is because `Array.findLast` API is only supported in Chrome browsers starting with version 97 (released on 2022-01-04) and so previous browser versions (on which current SDK may run) do not have a polyfill implementation for this API. `KJS-1898`
+
+### Fixed
+
+- Fixed an issue where we weren't including an object in the `auth:change` event. In certain cases this object contains properties relevent to the event that could if missing could break a client. `KJS-1897`
+
 ## 6.5.0 - 2023-11-24
 
 ### Fixed

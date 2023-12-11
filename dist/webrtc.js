@@ -12,7 +12,7 @@
  *
  * WebRTC.js
  * webrtc.anonymous.js
- * Version: 6.5.0
+ * Version: 6.5.1
  */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
@@ -2335,7 +2335,7 @@ root.sdpHandlers = {
 
 /***/ }),
 
-/***/ 1136:
+/***/ 22970:
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -2353,7 +2353,7 @@ exports.getVersion = getVersion;
  * for the @@ tag below with actual version value.
  */
 function getVersion() {
-  return '6.5.0';
+  return '6.5.1';
 }
 
 /***/ }),
@@ -2374,6 +2374,12 @@ var _interface = __webpack_require__(98061);
 var _actions = __webpack_require__(25456);
 
 var _utils = __webpack_require__(84980);
+
+var _actionTypes = __webpack_require__(55938);
+
+var connectivityActionTypes = _interopRequireWildcard(_actionTypes);
+
+var _actionTypes2 = __webpack_require__(84783);
 
 var _operations = __webpack_require__(97440);
 
@@ -2469,6 +2475,26 @@ function authFactory(options = {}, bottle) {
     // Send the provided options to the store.
     // This will be `state.config[name]`.
     context.dispatch((0, _actions.update)(options, _interface.name));
+
+    // Take connectivity.WS_RECONNECT_FAILED actions
+    function receiveConnectionLostPattern(action) {
+      return action.type === connectivityActionTypes.WS_RECONNECT_FAILED;
+    }
+
+    container.Notifications.takeEveryAction(receiveConnectionLostPattern, action => {
+      const { AuthenticationOperations: operations } = container;
+      operations.onConnectionLost();
+    });
+
+    // Take subscription gone notifications
+    function receiveGoneNotificationPattern(action) {
+      return action.type === _actionTypes2.NOTIFICATION_RECEIVED && action.payload.notificationMessage && action.payload.notificationMessage.eventType === 'gone';
+    }
+
+    container.Notifications.takeEveryAction(receiveGoneNotificationPattern, action => {
+      const { AuthenticationOperations: operations } = container;
+      operations.onSubscriptionGone();
+    });
   }
 
   // Register the component factory functions to the bottle.
@@ -2479,8 +2505,6 @@ function authFactory(options = {}, bottle) {
     const apiGetters = ['getUserInfo', 'getConnection', 'getServices'];
     return (0, _fp.pick)(apiGetters, fullAPI);
   });
-
-  bottle.defer(initPlugin);
 
   // Initialize operations
   for (const name in initOperations) {
@@ -2496,6 +2520,8 @@ function authFactory(options = {}, bottle) {
   for (const name in initRequests) {
     initRequests[name](bottle);
   }
+
+  bottle.defer(initPlugin);
 
   return {
     name: _interface.name,
@@ -2556,6 +2582,8 @@ Object.defineProperty(exports, "__esModule", ({
 }));
 exports["default"] = createInterval;
 
+var _constants = __webpack_require__(86418);
+
 var _actions = __webpack_require__(90357);
 
 var actions = _interopRequireWildcard(_actions);
@@ -2563,8 +2591,6 @@ var actions = _interopRequireWildcard(_actions);
 var _selectors = __webpack_require__(53960);
 
 var _eventTypes = __webpack_require__(30915);
-
-var _constants = __webpack_require__(86418);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -2574,9 +2600,9 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
  * @param {Object} container The bottle container.
  * @return {Object} Available interval for authentication resubscription.
  */
-// Auth plugin
+// Constants
 function createInterval(container) {
-  const { context, createInterval, AuthenticationRequests, emitEvent } = container;
+  const { context, createInterval, AuthenticationRequests, AuthenticationOperations, emitEvent } = container;
 
   // Interval function for resubscription
   let resubInterval;
@@ -2646,18 +2672,36 @@ function createInterval(container) {
           isFailure: false
         });
       } catch (error) {
-        context.dispatch(actions.resubscribeFinished({
-          error,
-          attemptNum
-        }, _constants.platforms.LINK));
+        // Check the error a specific status code that indicates "resource does not exist" and disconnect the websocket
+        if (error && error.payload && error.payload.code === 39) {
+          // Dispatch a resubscribe finished action for backwards compatability
+          context.dispatch(actions.resubscribeFinished({ error, attemptNum }, _constants.platforms.LINK));
 
-        emitEvent(_eventTypes.AUTH_RESUB, {
-          attemptNum,
-          isFailure: true
-        });
+          // Emit an `auth:resub` event indicating a failure
+          emitEvent(_eventTypes.AUTH_RESUB, {
+            attemptNum,
+            isFailure: true
+          });
 
-        // Increment our attempts
-        attemptNum++;
+          // Disconnect the websocket when our subscription is gone.
+          await AuthenticationOperations.onSubscriptionGone();
+
+          // Stop the resub interval since we aren't going to get the subscription
+          resubInterval.stop();
+        } else {
+          context.dispatch(actions.resubscribeFinished({
+            error,
+            attemptNum
+          }, _constants.platforms.LINK));
+
+          emitEvent(_eventTypes.AUTH_RESUB, {
+            attemptNum,
+            isFailure: true
+          });
+
+          // Increment our attempts
+          attemptNum++;
+        }
       }
     }
 
@@ -2682,7 +2726,7 @@ function createInterval(container) {
   };
 }
 
-// Constants
+// Auth plugin
 
 /***/ }),
 
@@ -2894,7 +2938,7 @@ function createOperation(container) {
     AuthenticationIntervals.resubInterval.startResubInterval(connection);
 
     // Emit an auth changed event
-    emitEvent(eventTypes.AUTH_CHANGE);
+    emitEvent(eventTypes.AUTH_CHANGE, {});
   }
 
   return anonymousConnect;
@@ -2950,7 +2994,7 @@ function createOperation(container) {
     log.info('Unsubscribing from callMe services.');
 
     // Emit an auth changed event
-    emitEvent(eventTypes.AUTH_CHANGE);
+    emitEvent(eventTypes.AUTH_CHANGE, {});
 
     // Stop the resubscribe interval
     AuthenticationIntervals.resubInterval.stopResubInterval();
@@ -2986,7 +3030,7 @@ function createOperation(container) {
     context.dispatch(actions.disconnectFinished());
 
     // Emit an auth changed event
-    emitEvent(eventTypes.AUTH_CHANGE);
+    emitEvent(eventTypes.AUTH_CHANGE, {});
   }
 
   return anonymousDisconnect;
@@ -3016,6 +3060,14 @@ var _anonymousDisconnect = __webpack_require__(3660);
 
 var _anonymousDisconnect2 = _interopRequireDefault(_anonymousDisconnect);
 
+var _onConnectionLost = __webpack_require__(22085);
+
+var _onConnectionLost2 = _interopRequireDefault(_onConnectionLost);
+
+var _onSubscriptionGone = __webpack_require__(25690);
+
+var _onSubscriptionGone2 = _interopRequireDefault(_onSubscriptionGone);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /*
@@ -3029,7 +3081,123 @@ function registerOperations(bottle) {
   bottle.factory('AuthenticationOperations.anonymousDisconnect', () => {
     return (0, _anonymousDisconnect2.default)(bottle.container);
   });
+  bottle.factory('AuthenticationOperations.onConnectionLost', () => {
+    return (0, _onConnectionLost2.default)(bottle.container);
+  });
+  bottle.factory('AuthenticationOperations.onSubscriptionGone', () => {
+    return (0, _onSubscriptionGone2.default)(bottle.container);
+  });
 }
+
+/***/ }),
+
+/***/ 22085:
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports["default"] = createOperation;
+
+var _actions = __webpack_require__(90357);
+
+var actions = _interopRequireWildcard(_actions);
+
+var _eventTypes = __webpack_require__(30915);
+
+var eventTypes = _interopRequireWildcard(_eventTypes);
+
+var _constants = __webpack_require__(11747);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+/**
+ * Operation factory function responsible for handling the 'connection lost' notification.
+ * @method createOperation
+ * @param  {Object} container The bottle container.
+ * @return {Function} The 'handling of loss of connection' operation.
+ */
+function createOperation(container) {
+  const { context, emitEvent } = container;
+
+  async function onConnectionLost() {
+    context.dispatch(actions.disconnectFinished({
+      reason: _constants.DISCONNECT_REASONS.LOST_CONNECTION
+    }));
+
+    // Dispatch an event with same payload, for backwards compatibility.
+    emitEvent(eventTypes.AUTH_CHANGE, { reason: _constants.DISCONNECT_REASONS.LOST_CONNECTION });
+  }
+
+  return onConnectionLost;
+}
+
+/***/ }),
+
+/***/ 25690:
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports["default"] = createOperation;
+
+var _constants = __webpack_require__(86418);
+
+var _actions = __webpack_require__(90357);
+
+var actions = _interopRequireWildcard(_actions);
+
+var _eventTypes = __webpack_require__(30915);
+
+var eventTypes = _interopRequireWildcard(_eventTypes);
+
+var _constants2 = __webpack_require__(11747);
+
+var _selectors = __webpack_require__(18741);
+
+var _effects = __webpack_require__(1046);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+/**
+ * Operation factory function responsible for handling the 'subscription gone' notification.
+ * @method createOperation
+ * @param  {Object} container The bottle container.
+ * @return {Function} The 'handling of loss of subscription' operation.
+ */
+
+
+// Other plugins
+// Constants
+function createOperation(container) {
+  const { context, emitEvent } = container;
+
+  async function onSubscriptionGone() {
+    // Dispatch an action to disconnect the websocket (and let the connectivity
+    //      plugin know we expect it to be disconnected).
+    const wsState = (0, _selectors.getConnectionState)(context.getState(), _constants.platforms.LINK);
+    if (wsState.connected) {
+      (0, _effects.disconnectWebsocket)(undefined, _constants.platforms.LINK);
+    }
+
+    // Dispatch a disconnect finished action to trigger "user disconnected" logic.
+    context.dispatch(actions.disconnectFinished({ reason: _constants2.DISCONNECT_REASONS.GONE }));
+
+    // Dispatch an event with same payload, for backwards compatibility.
+    emitEvent(eventTypes.AUTH_CHANGE, { reason: _constants2.DISCONNECT_REASONS.GONE });
+  }
+
+  return onSubscriptionGone;
+}
+
+// Auth plugin
 
 /***/ }),
 
@@ -9997,7 +10165,7 @@ var _errors2 = _interopRequireDefault(_errors);
 
 var _kandyWebrtc = __webpack_require__(25865);
 
-var _version = __webpack_require__(1136);
+var _version = __webpack_require__(22970);
 
 var _sdkId = __webpack_require__(59026);
 
@@ -21571,7 +21739,7 @@ var _logs = __webpack_require__(89839);
 
 var _utils = __webpack_require__(84980);
 
-var _version = __webpack_require__(1136);
+var _version = __webpack_require__(22970);
 
 var _defaults = __webpack_require__(82914);
 
@@ -31359,6 +31527,114 @@ function api({ dispatch, getState }) {
 
 /***/ }),
 
+/***/ 1046:
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports.connectWebsocket = connectWebsocket;
+exports.disconnectWebsocket = disconnectWebsocket;
+exports.waitForReconnect = waitForReconnect;
+
+var _actions = __webpack_require__(76088);
+
+var _actionTypes = __webpack_require__(55938);
+
+var _selectors = __webpack_require__(18741);
+
+var _selectors2 = __webpack_require__(53960);
+
+var _actionTypes2 = __webpack_require__(8773);
+
+var _effects = __webpack_require__(27422);
+
+/**
+ * Custom redux-saga effect.
+ * Wraps "communication" between the connectivity plugin and another plugin
+ *     for connecting to a websocket.
+ * @method connectWebsocket
+ * @param {Object} websocketInfo Information needed to create the websocket.
+ * @param {string} websocketInfo.protocol
+ * @param {string} websocketInfo.server
+ * @param {string} websocketInfo.port
+ * @param {string} websocketInfo.url
+ * @param {Object} [websocketInfo.params]
+ * @param {string} platform The backend platform being connected to.
+ * @return {Object} The response action of type `WS_CONNECT_FINISHED`.
+ */
+// Connectivity.
+function* connectWebsocket(websocketInfo, platform) {
+  // Dispatch the action that triggers a saga to connect to a websocket.
+  yield (0, _effects.put)((0, _actions.wsAttemptConnect)(websocketInfo, platform));
+
+  // Wait for the action that signifies the result of the above action.
+  const responseAction = yield (0, _effects.take)(action => {
+    return action.type === _actionTypes.WS_CONNECT_FINISHED && action.meta.platform === platform;
+  });
+
+  // Return the response.
+  return responseAction;
+}
+
+/**
+ * Effect for disconnecting a websocket to a platform.
+ * @method disconnectWebsocket
+ * @param  {Object} payload
+ * @param  {string} platform The backend platform being disconnected from.
+ * @return {Object} The response action of type `WS_DISCONNECT_FINISHED`.
+ */
+
+
+// Libraries.
+
+
+// Other plugins.
+function* disconnectWebsocket(payload, platform) {
+  // Dispatch the action that triggers a saga to disconnect the websocket.
+  yield (0, _effects.put)((0, _actions.wsDisconnect)(payload, platform));
+
+  // Wait for the action that signifies the result of the above action.
+  const responseAction = yield (0, _effects.take)(action => {
+    return (action.type === _actionTypes.WS_DISCONNECT_FINISHED || action.type === _actionTypes.WS_ERROR) && action.meta.platform === platform;
+  });
+
+  // Return the response.
+  return responseAction;
+}
+
+/**
+ * Effect for waiting for the websocket / subscription to reconnect.
+ * Assumption is that the websocket is in the middle of reconnect attempts. This
+ *    is why the timeout is so long; one of the two scenarios should be guaranteed
+ *    to happen before then.
+ * @param {number} timeout The time, in milliseconds, to wait before timing out.
+ * @return {boolean} Whether the websocket has reconnected or not.
+ */
+function* waitForReconnect(timeout = 60000) {
+  const platform = yield (0, _effects.select)(_selectors2.getPlatform);
+  const { connected: isConnected } = yield (0, _effects.select)(_selectors.getConnectionState, platform);
+
+  if (isConnected) {
+    return true;
+  }
+
+  const { reconnected } = yield (0, _effects.race)({
+    // If websocket reconnects, then we're reconnected (...duh).
+    reconnected: (0, _effects.take)(action => action.type === _actionTypes.WS_CONNECT_FINISHED && !action.error),
+    // If the user unsubscribes (ie. ws reconnect fails), then we're disconnected.
+    disconnected: (0, _effects.take)(action => action.type === _actionTypes2.UNSUBSCRIBE_FINISHED && !action.error),
+    timeout: (0, _effects.delay)(timeout)
+  });
+
+  return Boolean(reconnected);
+}
+
+/***/ }),
+
 /***/ 1897:
 /***/ ((__unused_webpack_module, exports) => {
 
@@ -32907,7 +33183,7 @@ var _bottlejs2 = _interopRequireDefault(_bottlejs);
 
 var _utils = __webpack_require__(84980);
 
-var _version = __webpack_require__(1136);
+var _version = __webpack_require__(22970);
 
 var _intervalFactory = __webpack_require__(3614);
 
@@ -37058,7 +37334,7 @@ var _sagas = __webpack_require__(89869);
 
 var _selectors = __webpack_require__(53960);
 
-var _version = __webpack_require__(1136);
+var _version = __webpack_require__(22970);
 
 var _utils = __webpack_require__(84980);
 
@@ -37222,7 +37498,7 @@ var _utils = __webpack_require__(86128);
 
 var _logs = __webpack_require__(89839);
 
-var _version = __webpack_require__(1136);
+var _version = __webpack_require__(22970);
 
 var _effects = __webpack_require__(27422);
 
@@ -37324,7 +37600,7 @@ var _selectors2 = __webpack_require__(53960);
 
 var _logs = __webpack_require__(89839);
 
-var _version = __webpack_require__(1136);
+var _version = __webpack_require__(22970);
 
 var _utils = __webpack_require__(84980);
 
@@ -41578,7 +41854,13 @@ function reportFactory(type, id) {
    * @return {TimelineEvent} The last event matching the provided type.
    */
   function findLastOngoingEvent(type) {
-    return timeline.findLast(event => {
+    // KJS-1898: Using an alternative way for `findLast` as that prototype method is not supported in Chrome versions prior to M97.
+    // TODO: Revert back to using `findLast` once our babel strategy is finalized.
+
+    // Make a copy first, since `reverse()` will do a mutation on original array, which we don't want
+    // for the rest of operatins within this report.
+    const copiedTimeline = [...timeline];
+    return copiedTimeline.reverse().find(event => {
       // If no type is provided return the latest ongoing event
       // If an array is provided, find the last ongoing event that is part of the array
       // If a string is provided, find that particular last ongoing event
@@ -41881,7 +42163,13 @@ function createTimelineEvent(type, onEventEnded) {
    * @return {TimelineEvent} The last event matching the provided type.
    */
   function findLastOngoingEvent(type) {
-    return timeline.findLast(event => {
+    // KJS-1898: Using an alternative way for `findLast` as that prototype method is not supported in Chrome versions prior to M97.
+    // TODO: Revert back to using `findLast` once our babel strategy is finalized.
+
+    // Make a copy first, since `reverse()` will do a mutation on original array, which we don't want
+    // for the rest of operatins within this report.
+    const copiedTimeline = [...timeline];
+    return copiedTimeline.reverse().find(event => {
       if (event.type === type && !event.isEnded()) {
         return event;
       }
@@ -64201,7 +64489,7 @@ module.exports = str => encodeURIComponent(str).replace(/[!'()*]/g, x => `%${x.c
 
 /***/ }),
 
-/***/ 74410:
+/***/ 64566:
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -64433,7 +64721,7 @@ var _v4 = _interopRequireDefault(__webpack_require__(13940));
 
 var _nil = _interopRequireDefault(__webpack_require__(15384));
 
-var _version = _interopRequireDefault(__webpack_require__(74410));
+var _version = _interopRequireDefault(__webpack_require__(64566));
 
 var _validate = _interopRequireDefault(__webpack_require__(77888));
 
