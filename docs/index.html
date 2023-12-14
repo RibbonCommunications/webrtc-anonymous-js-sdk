@@ -8263,7 +8263,7 @@ See <em>Call Reports</em> tutorial for more information on call reports and even
         </div>
       
         <div class='space-bottom0'>
-          <span class='code bold'>SET_LOCAL_DESCRIPTION</span> 
+          <span class='code bold'>PROCESS_MEDIA_LOCAL</span> 
           <code class='quiet'>
             (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
           </code>
@@ -8271,14 +8271,14 @@ See <em>Call Reports</em> tutorial for more information on call reports and even
           
 
           
-             : Starts when the local description is to be set, and ends when the offer is set and ice collection completes.
+             : Starts when the local media begins processing, and ends when the offer is set and ice collection completes.
 
           
           
         </div>
       
         <div class='space-bottom0'>
-          <span class='code bold'>SET_REMOTE_DESCRIPTION</span> 
+          <span class='code bold'>PROCESS_MEDIA_REMOTE</span> 
           <code class='quiet'>
             (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
           </code>
@@ -8286,7 +8286,7 @@ See <em>Call Reports</em> tutorial for more information on call reports and even
           
 
           
-             : Starts when the remote description is to be set, and ends when the remote description is set.
+             : Starts when the remote response is received, and ends when the remote media is set.
 
           
           
@@ -8587,21 +8587,6 @@ See <em>Call Reports</em> tutorial for more information on call reports and even
 
           
              : Starts when a REST request is to be made for an operation and ends when a response is received, or it times out.
-
-          
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <span class='code bold'>PROCESS_RESPONSE</span> 
-          <code class='quiet'>
-            (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
-          </code>
-
-          
-
-          
-             : Starts when a notification is received to an update request and ends when the response is handled.
 
           
           

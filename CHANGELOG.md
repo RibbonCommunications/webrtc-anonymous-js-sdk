@@ -17,6 +17,13 @@ Ribbon WebRTC SDK change log.
 - Fixed issue where anonymous calls were trying to make a call even if they failed subscription. `KJS-1903`
 - Fixed the way SDK searches for data (within a given call report) by making use of an API that is supported by a wider range of Chrome browsers. `KJS-1898`
 
+### Changed
+
+- Renamed call report event names to be more consistent and clear. `KJS-1647`
+  - `SET_LOCAL_DESCRIPTION` renamed to `PROCESS_MEDIA_LOCAL`
+  - `SET_REMOTE_DESCRIPTION` renamed to `PROCESS_MEDIA_REMOTE`
+  - `PROCESS_RESPONSE` replaced by `PROCESS_MEDIA_REMOTE`
+
 ## 6.5.0 - 2023-11-24
 
 ### Fixed

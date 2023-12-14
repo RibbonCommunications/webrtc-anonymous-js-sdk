@@ -1657,8 +1657,8 @@ Type: [Object][7]
 *   `REMOTE_RINGING` **[string][8]** 
 *   `ANSWER` **[string][8]** Starts when the answer operation starts. Ends when the answer operation finishes.
 *   `GET_USER_MEDIA` **[string][8]** Starts when user media is requested from the browser and ends when the media is created.
-*   `SET_LOCAL_DESCRIPTION` **[string][8]** Starts when the local description is to be set, and ends when the offer is set and ice collection completes.
-*   `SET_REMOTE_DESCRIPTION` **[string][8]** Starts when the remote description is to be set, and ends when the remote description is set.
+*   `PROCESS_MEDIA_LOCAL` **[string][8]** Starts when the local media begins processing, and ends when the offer is set and ice collection completes.
+*   `PROCESS_MEDIA_REMOTE` **[string][8]** Starts when the remote response is received, and ends when the remote media is set.
 *   `ICE_COLLECTION` **[string][8]** Starts when ice candidate collection starts and ends when collection is complete.
 *   `RELAY_CANDIDATE_COLLECTED` **[string][8]** Starts and ends when a relay candidate is collected. Event data contains info on the candidate.
 *   `IGNORE` **[string][8]** Starts when the ignore operation starts. Ends when the ignore operation finishes.
@@ -1679,7 +1679,6 @@ Type: [Object][7]
 *   `UNHOLD_LOCAL` **[string][8]** Starts when the unhold operation starts. Ends when the unhold operation finishes.
 *   `UNHOLD_REMOTE` **[string][8]** Starts when a remote unhold notification is received and ends when the operation is handled.
 *   `REST_REQUEST` **[string][8]** Starts when a REST request is to be made for an operation and ends when a response is received, or it times out.
-*   `PROCESS_RESPONSE` **[string][8]** Starts when a notification is received to an update request and ends when the response is handled.
 *   `PLAY_AUDIO` **[string][8]** Starts when the play audio operation starts. Ends when the play audio operation finishes.
 *   `START_MOH` **[string][8]** Starts when the start music on hold operation starts. Ends when the start music on hold operation finishes.
 *   `STOP_MOH` **[string][8]** Starts when the stop music on hold operation starts. Ends when the stop music on hold operation finishes.
