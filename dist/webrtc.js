@@ -12,7 +12,7 @@
  *
  * WebRTC.js
  * webrtc.anonymous.js
- * Version: 6.6.0-beta.1199
+ * Version: 6.6.0-beta.1200
  */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
@@ -2324,7 +2324,7 @@ module.exports = root;
 
 /***/ }),
 
-/***/ 1210:
+/***/ 3115:
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -2342,7 +2342,7 @@ exports.getVersion = getVersion;
  * for the @@ tag below with actual version value.
  */
 function getVersion() {
-  return '6.6.0-beta.1199';
+  return '6.6.0-beta.1200';
 }
 
 /***/ }),
@@ -7495,6 +7495,7 @@ function addMediaOperation(container) {
     });
     const callInfo = {
       wrtcsSessionId,
+      id: callId,
       offer: sdp,
       isAnonymous,
       account,
@@ -8970,6 +8971,7 @@ function consultativeTransferOperation(container) {
 
     // Collect the information needed to make the request.
     const callInfo = {
+      id: callId,
       wrtcsSessionId: currentCall.wrtcsSessionId,
       otherWrtcsSessionId: otherCall.wrtcsSessionId,
       destination: otherCall.direction === 'outgoing' ? otherCall.to : otherCall.from
@@ -9097,7 +9099,8 @@ function directTransferOperation(container) {
     // Collect the information needed to make the request.
     const callInfo = {
       wrtcsSessionId: currentCall.wrtcsSessionId,
-      address: destination
+      address: destination,
+      id: callId
     };
     try {
       await CallRequests.directTransferSession(callInfo);
@@ -9271,6 +9274,8 @@ var _errors = _interopRequireWildcard(__webpack_require__(3437));
 var eventTypes = _interopRequireWildcard(__webpack_require__(5166));
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
 function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
+// Call plugin.
+
 // Helpers
 
 /*
@@ -9859,7 +9864,7 @@ var _selectors = __webpack_require__(1430);
 var _constants = __webpack_require__(683);
 var _errors = _interopRequireWildcard(__webpack_require__(3437));
 var _kandyWebrtc = __webpack_require__(5203);
-var _version = __webpack_require__(1210);
+var _version = __webpack_require__(3115);
 var _sdkId = _interopRequireDefault(__webpack_require__(5878));
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
 function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
@@ -10120,6 +10125,7 @@ function holdOperation(container) {
     }
     const callInfo = {
       wrtcsSessionId,
+      id: callId,
       offer: offer.sdp,
       isAnonymous,
       account,
@@ -10952,6 +10958,7 @@ function iceRestartOperation(container) {
     }
     const callInfo = {
       wrtcsSessionId,
+      id: callId,
       isAnonymous,
       account,
       customParameters,
@@ -11707,6 +11714,7 @@ function joinOperation(container) {
 
     // Collect the information needed to make the request.
     const callInfo = {
+      id: callId,
       wrtcsSessionId: currentCall.wrtcsSessionId,
       otherWrtcsSessionId: otherCall.wrtcsSessionId,
       sdp: offerSdp,
@@ -14074,6 +14082,7 @@ function removeMediaOperation(container) {
     }
     const callInfo = {
       wrtcsSessionId,
+      id: callId,
       offer: sdp,
       isAnonymous,
       account,
@@ -14756,7 +14765,8 @@ function resyncCallStateOperation(container) {
     const currentCall = (0, _selectors.getCallById)(context.getState(), callId);
     try {
       const sessionStatusResponse = await CallRequests.getSession({
-        wrtcsSessionId: currentCall.wrtcsSessionId
+        wrtcsSessionId: currentCall.wrtcsSessionId,
+        id: callId
       });
       if (sessionStatusResponse.state === 'ANSWERED' && currentCall.state !== _constants.CALL_STATES.CONNECTED && currentCall.state !== _constants.CALL_STATES.ON_HOLD) {
         log.info('Call re-sync found that call is cancelled. Cancelling call.');
@@ -14911,7 +14921,8 @@ function sendCallAuditOperation(container) {
       CallRequests.auditCall({
         wrtcsSessionId: wrtcsSessionIdToUse,
         isAnonymous: currentCall.isAnonymous,
-        account: currentCall.account
+        account: currentCall.account,
+        id: currentCall.id
       }).then(result => {
         resolve({
           audit: {
@@ -15223,7 +15234,8 @@ function sendCustomParametersOperation(container) {
       wrtcsSessionId,
       isAnonymous,
       account,
-      customParameters
+      customParameters,
+      id: callId
     };
     try {
       await CallRequests.updateCustomParameters(callInfo);
@@ -16989,6 +17001,7 @@ function unholdOperation(container) {
     }
     const callInfo = {
       wrtcsSessionId,
+      id: callId,
       offer: offer.sdp,
       isAnonymous,
       account,
@@ -17114,7 +17127,8 @@ function updateCallStateOperation(container) {
     if (!activeCall.localOp && !activeCall.remoteOp) {
       try {
         const sessionStatusResponse = await CallRequests.getSession({
-          wrtcsSessionId: activeCall.wrtcsSessionId
+          wrtcsSessionId: activeCall.wrtcsSessionId,
+          id: activeCall.id
         });
 
         // Get state of the call again before evaluating the response as an operation request and response
@@ -17326,7 +17340,8 @@ const REPORT_EVENTS = exports.REPORT_EVENTS = {
   SLOW_START: 'SLOW_START',
   RECEIVE_CALL: 'RECEIVE_CALL',
   REMOTE_RINGING: 'REMOTE_RINGING',
-  REST_REQUEST: 'REST_REQUEST'
+  REST_REQUEST: 'REST_REQUEST',
+  AUDIT_CALL: 'AUDIT_CALL'
 };
 
 /*
@@ -17338,6 +17353,9 @@ const REPORTER_REQUESTS = exports.REPORTER_REQUESTS = {
   REJECT_SESSION: 'REJECT_SESSION',
   FORWARD_SESSION: 'FORWARD_SESSION',
   UPDATE_SESSION: 'UPDATE_SESSION',
+  GET_SESSION: 'GET_SESSION',
+  CALL_RINGING_UPDATE_SESSION: 'CALL_RINGING_UPDATE_SESSION',
+  UPDATE_CUSTOM_PARAMETERS_ON_SESSION: 'UPDATE_CUSTOM_PARAMETERS_ON_SESSION',
   END_SESSION: 'END_SESSION'
 };
 
@@ -20901,7 +20919,7 @@ exports.fixIceServerUrls = fixIceServerUrls;
 exports.mergeDefaults = mergeDefaults;
 var _logs = __webpack_require__(3862);
 var _utils = __webpack_require__(5189);
-var _version = __webpack_require__(1210);
+var _version = __webpack_require__(3115);
 var _defaults = __webpack_require__(7241);
 var _validation = __webpack_require__(2850);
 // Other plugins.
@@ -27052,12 +27070,15 @@ Object.defineProperty(exports, "__esModule", ({
 }));
 exports["default"] = complexRequests;
 var _defineProperty2 = _interopRequireDefault(__webpack_require__(6290));
-var _selectors = __webpack_require__(6942);
+var _selectors = __webpack_require__(1430);
+var _constants = __webpack_require__(2750);
+var _selectors2 = __webpack_require__(6942);
 var requestUtils = _interopRequireWildcard(__webpack_require__(9790));
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
 function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
 function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { (0, _defineProperty2.default)(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; } // Other plugins.
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { (0, _defineProperty2.default)(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; } // Call plugin
+// Other plugins.
 // Helpers.
 /**
  * Bottle wrapper for Link "complex" call requests.
@@ -27066,7 +27087,8 @@ function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t =
 function complexRequests(container) {
   const {
     context,
-    sendRequest
+    sendRequest,
+    CallReporter
   } = container;
 
   /**
@@ -27082,6 +27104,7 @@ function complexRequests(container) {
    *    3. Return the response, formatted.
    * @method directTransferSession
    * @param  {Object} callInfo
+   * @param  {string} callInfo.id The ID of the call.
    * @param  {string} callInfo.wrtcsSessionId The ID the backend uses to track the session.
    * @param  {string} callInfo.address The address to forward the session to.
    * @return {undefined}
@@ -27089,7 +27112,7 @@ function complexRequests(container) {
    */
   async function directTransferSession(callInfo) {
     // Collect the information needed to make the request.
-    const requestInfo = (0, _selectors.getRequestInfo)(context.getState());
+    const requestInfo = (0, _selectors2.getRequestInfo)(context.getState());
     const options = {
       method: 'PUT'
     };
@@ -27099,10 +27122,24 @@ function complexRequests(container) {
         address: callInfo.address
       }
     });
+
+    // Get the report for this call id
+    const report = CallReporter.getReport(callInfo.id);
+    // Get the main operational event that is ongoing
+    const call = (0, _selectors.getCallById)(context.getState(), callInfo.id);
+    const operationEvent = report.getEvent(call.localOp.eventId);
+
+    // Create main event representing the request we're about to make
+    const requestEvent = operationEvent.addEvent(_constants.REPORT_EVENTS.REST_REQUEST);
     const response = await requestUtils.linkCallRequest(sendRequest, requestInfo, _objectSpread(_objectSpread({}, options), callInfo));
     if (response.error) {
+      requestEvent.setError(response.error);
+      requestEvent.endEvent();
       throw response.error;
     }
+    // No need to add any extra metadata since `response` only contains status code
+    // Just end sub-event.
+    requestEvent.endEvent();
   }
 
   /**
@@ -27118,6 +27155,7 @@ function complexRequests(container) {
    *    3. Return the response, formatted.
    * @method consultativeTransferSessions
    * @param  {Object} callInfo
+   * @param  {string} callInfo.id The ID of the call.
    * @param  {string} callInfo.wrtcsSessionId The ID the backend uses to track the session.
    * @param  {string} callInfo.otherWrtcsSessionId The ID the backend uses to track the other session.
    * @param  {string} callInfo.destination The address of the other session to transfer to.
@@ -27125,7 +27163,7 @@ function complexRequests(container) {
    * @throws {BasicError} Throws an error if the REST request fails.
    */
   async function consultativeTransferSessions(callInfo) {
-    const requestInfo = (0, _selectors.getRequestInfo)(context.getState());
+    const requestInfo = (0, _selectors2.getRequestInfo)(context.getState());
     const options = {
       method: 'PUT'
     };
@@ -27136,10 +27174,21 @@ function complexRequests(container) {
         address: callInfo.destination
       }
     });
+    // Get the report for this call id
+    const report = CallReporter.getReport(callInfo.id);
+    // Get the main operational event that is ongoing
+    const call = (0, _selectors.getCallById)(context.getState(), callInfo.id);
+    const operationEvent = report.getEvent(call.localOp.eventId);
+
+    // Create main event representing the request we're about to make
+    const requestEvent = operationEvent.addEvent(_constants.REPORT_EVENTS.REST_REQUEST);
     const response = await requestUtils.linkCallRequest(sendRequest, requestInfo, _objectSpread(_objectSpread({}, options), callInfo));
     if (response.error) {
+      requestEvent.setError(response.error);
+      requestEvent.endEvent();
       throw response.error;
     }
+    requestEvent.endEvent();
   }
 
   /**
@@ -27155,6 +27204,7 @@ function complexRequests(container) {
    *    3. Return the response, formatted.
    * @method joinSessions
    * @param  {Object} callInfo
+   * @param  {string} callInfo.id The ID of the call.
    * @param  {string} callInfo.wrtcsSessionId The ID the backend uses to track the session.
    * @param  {string} callInfo.otherWrtcsSessionId
    * @param  {string} callInfo.sdp The new sdp to use.
@@ -27164,7 +27214,7 @@ function complexRequests(container) {
    * @throws {BasicError} Throws an error if the REST request fails.
    */
   async function joinSessions(callInfo) {
-    const requestInfo = (0, _selectors.getRequestInfo)(context.getState());
+    const requestInfo = (0, _selectors2.getRequestInfo)(context.getState());
     const options = {
       method: 'POST'
     };
@@ -27179,10 +27229,21 @@ function complexRequests(container) {
       }
     });
 
+    // Get the report for this call id
+    const report = CallReporter.getReport(callInfo.id);
+    // Get the main operational event that is ongoing
+    const call = (0, _selectors.getCallById)(context.getState(), callInfo.id);
+    const operationEvent = report.getEvent(call.localOp.eventId);
+
+    // Create main event representing the request we're about to make
+    const requestEvent = operationEvent.addEvent(_constants.REPORT_EVENTS.REST_REQUEST);
     const response = await requestUtils.linkCallRequest(sendRequest, requestInfo, options);
     if (response.error) {
+      requestEvent.setError(response.error);
+      requestEvent.endEvent();
       throw response.error;
     }
+    requestEvent.endEvent();
     return response.callControlResponse.sessionData;
   }
   return {
@@ -27605,13 +27666,16 @@ Object.defineProperty(exports, "__esModule", ({
 }));
 exports["default"] = miscRequests;
 var _defineProperty2 = _interopRequireDefault(__webpack_require__(6290));
-var _selectors = __webpack_require__(6942);
+var _selectors = __webpack_require__(1430);
+var _constants = __webpack_require__(2750);
+var _selectors2 = __webpack_require__(6942);
 var requestUtils = _interopRequireWildcard(__webpack_require__(9790));
 var _errors = _interopRequireDefault(__webpack_require__(3437));
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
 function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
 function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { (0, _defineProperty2.default)(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; } // Other plugins
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { (0, _defineProperty2.default)(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; } // Call plugin
+// Other plugins
 // Helpers
 /**
  * Bottle wrapper for Link "misc" call requests.
@@ -27621,7 +27685,8 @@ function miscRequests(container) {
   const {
     context,
     sendRequest,
-    logManager
+    logManager,
+    CallReporter
   } = container;
 
   // eslint-disable-next-line no-warning-comments
@@ -27638,6 +27703,7 @@ function miscRequests(container) {
    *    3. Return the response, formatted.
    * @method getSession
    * @param  {Object} callInfo
+   * @param  {string} callInfo.id The ID of the call.
    * @param  {Object} callInfo.wrtcsSessionId The ID the backend uses to track the session.
    * @param  {boolean} [callInfo.isAnonymous] Flag indicating whether the call is anonymous or not.
    * @param  {string} [callInfo.account] An account token used by the request if it is an anonymous call.
@@ -27646,14 +27712,39 @@ function miscRequests(container) {
    */
   async function getSession(callInfo) {
     // Collect the information needed to make the request.
-    const requestInfo = (0, _selectors.getRequestInfo)(context.getState());
+    const requestInfo = (0, _selectors2.getRequestInfo)(context.getState());
     const options = {
       method: 'GET'
     };
+
+    // Get the report for this call id
+    const report = CallReporter.getReport(callInfo.id);
+    // Get the main operational event that is ongoing
+    const call = (0, _selectors.getCallById)(context.getState(), callInfo.id);
+    let requestEvent;
+    if (call.localOp) {
+      const operationEvent = report.getEvent(call.localOp.eventId);
+
+      // Create main event representing the request we're about to make
+      requestEvent = operationEvent.addEvent(_constants.REPORT_EVENTS.REST_REQUEST);
+      // Add some metadata to it
+      requestEvent.addData('requestType', _constants.REPORTER_REQUESTS.GET_SESSION);
+    } else {
+      // If there is no ongoing local operation, then we look for last 'receive call' main event,
+      // which should always be present in case of calling this function.
+      const lastEvent = report.findLastOngoingEvent(_constants.REPORT_EVENTS.RECEIVE_CALL);
+      requestEvent = lastEvent.addEvent(_constants.REPORT_EVENTS.REST_REQUEST);
+      // Add some metadata to it
+      requestEvent.addData('requestType', _constants.REPORTER_REQUESTS.GET_SESSION);
+    }
     const response = await requestUtils.linkCallRequest(sendRequest, requestInfo, _objectSpread(_objectSpread({}, options), callInfo));
     if (response.error) {
+      requestEvent.setError(response.error);
+      requestEvent.endEvent();
       throw response.error;
     } else {
+      requestEvent.addData('state', response.callControlResponse.state);
+      requestEvent.endEvent();
       return {
         error: false,
         state: response.callControlResponse.state
@@ -27674,7 +27765,7 @@ function miscRequests(container) {
    *    3. Return the response, formatted.
    * @method updateCallRinging
    * @param  {Object} callInfo
-   * @param  {Object} callInfo.id The SDK's ID for the Call.
+   * @param  {string} callInfo.id The ID of the call.
    * @param  {string} callInfo.wrtcsSessionId ID that the server uses to identify the session.
    * @param  {string} callInfo.isAnonymous    Whether the call is an anonymous call.
    * @return {Object} response Signalling response.
@@ -27685,7 +27776,7 @@ function miscRequests(container) {
     log.info('Updating call session as ringing on server-side.');
 
     // Collect the information needed to make the request.
-    const requestInfo = (0, _selectors.getRequestInfo)(context.getState());
+    const requestInfo = (0, _selectors2.getRequestInfo)(context.getState());
     const options = {
       method: 'PUT'
     };
@@ -27694,8 +27785,20 @@ function miscRequests(container) {
         type: 'ringing'
       }
     });
+
+    // Get the report for this call id
+    const report = CallReporter.getReport(callInfo.id);
+    // Get the RECEIVE_CALL event from the report
+    const receiveCallEvent = report.findLastOngoingEvent(_constants.REPORT_EVENTS.RECEIVE_CALL);
+
+    // Create main event representing the request we're about to make
+    const requestEvent = receiveCallEvent.addEvent(_constants.REPORT_EVENTS.REST_REQUEST);
+    // Add some metadata to it
+    requestEvent.addData('requestType', _constants.REPORTER_REQUESTS.CALL_RINGING_UPDATE_SESSION);
     const response = await requestUtils.linkCallRequest(sendRequest, requestInfo, _objectSpread(_objectSpread({}, options), callInfo));
     if (response.error) {
+      requestEvent.setError(response.error);
+      requestEvent.endEvent();
       log.debug('Failed to update call session as ringing server-side.', response.error);
       // Need a linter exception here because we need to throw more data than what we can include in an instance of BasicError
       // eslint-disable-next-line no-throw-literal
@@ -27706,6 +27809,8 @@ function miscRequests(container) {
       log.debug('Call session updated as ringing server-side.', {
         wrtcsSessionId: callInfo.wrtcsSessionId
       });
+      requestEvent.addData('wrtcsSessionId', callInfo.wrtcsSessionId);
+      requestEvent.endEvent();
       return {
         error: false
       };
@@ -27715,6 +27820,7 @@ function miscRequests(container) {
    * Sends the (new?) custom parameters of the call to the webRTC session on the server.
    * @method updateCustomParameters
    * @param {Object} callInfo
+   * @param {string} callInfo.id The ID of the call.
    * @param {string} callInfo.wrtcsSessionId    ID that the server uses to identify the session.
    * @param {string} callInfo.isAnonymous       Whether the call is an anonymous call
    * @param {Array<CustomParameter>} callInfo.customParameters  The custom parameters
@@ -27722,7 +27828,7 @@ function miscRequests(container) {
    */
   async function updateCustomParameters(callInfo) {
     // Collect the information needed to make the request.
-    const requestInfo = (0, _selectors.getRequestInfo)(context.getState());
+    const requestInfo = (0, _selectors2.getRequestInfo)(context.getState());
     const options = {
       method: 'PUT'
     };
@@ -27733,14 +27839,28 @@ function miscRequests(container) {
         customParameters: callInfo.customParameters
       }
     });
+
+    // Get the report for this call id
+    const report = CallReporter.getReport(callInfo.id);
+    // Get the main operational event that is ongoing
+    const call = (0, _selectors.getCallById)(context.getState(), callInfo.id);
+    const operationEvent = report.getEvent(call.localOp.eventId);
+
+    // Create main event representing the request we're about to make
+    const requestEvent = operationEvent.addEvent(_constants.REPORT_EVENTS.REST_REQUEST);
+    // Add some metadata to it
+    requestEvent.addData('requestType', _constants.REPORTER_REQUESTS.UPDATE_CUSTOM_PARAMETERS_ON_SESSION);
     const response = await requestUtils.linkCallRequest(sendRequest, requestInfo, _objectSpread(_objectSpread({}, options), callInfo));
     if (response.error) {
+      requestEvent.setError(response.error);
+      requestEvent.endEvent();
       // Need a linter exception here because we need to throw more data than what we can include in an instance of BasicError
       // eslint-disable-next-line no-throw-literal
       throw {
         error: response.error
       };
     } else {
+      requestEvent.endEvent();
       return {
         error: false
       };
@@ -27762,6 +27882,7 @@ function miscRequests(container) {
    *    3. Return the response, formatted.
    * @method auditCall
    * @param  {Object} callInfo
+   * @param  {string} callInfo.id The ID of the call.
    * @param  {string} callInfo.wrtcsSessionId ID that the server uses to identify the session.
    * @param  {boolean} [callInfo.isAnonymous] Flag indicating whether the call is anonymous or not.
    * @param  {string} [callInfo.account] An account token used by the request if it is an anonymous call.
@@ -27769,7 +27890,7 @@ function miscRequests(container) {
    * @throws {BasicError} Throws an error if the REST request fails.
    */
   async function auditCall(callInfo) {
-    const requestInfo = (0, _selectors.getRequestInfo)(context.getState());
+    const requestInfo = (0, _selectors2.getRequestInfo)(context.getState());
     const options = {
       method: 'PUT'
     };
@@ -27779,14 +27900,22 @@ function miscRequests(container) {
         type: 'audit'
       }
     });
+
+    // Get the report for this call id
+    const report = CallReporter.getReport(callInfo.id);
+    // Add an AUDIT_CALL main event from the report
+    const auditCallEvent = report.addEvent(_constants.REPORT_EVENTS.AUDIT_CALL);
     const response = await requestUtils.linkCallRequest(sendRequest, requestInfo, _objectSpread(_objectSpread({}, options), callInfo));
     if (response.error) {
+      auditCallEvent.setError(response.error);
+      auditCallEvent.endEvent();
       // Wrap the info in a BasicError because that is what sendCallAudit operation expects to receive.
       throw new _errors.default({
         code: response.error.code,
         message: response.error.message
       });
     } else {
+      auditCallEvent.endEvent();
       return {
         status: 'Connected',
         error: false
@@ -27847,6 +27976,7 @@ function negotiationRequests(container) {
    *    3. Return the response, formatted.
    * @method updateSession
    * @param  {Object} info
+   * @param  {string} info.id The ID of the call.
    * @param  {string} info.wrtcsSessionId The ID the backend uses to track the session.
    * @param  {string} info.offer The local SDP offer to begin negotiation.
    * @param  {boolean} [info.isAnonymous] Flag indicating whether the call is anonymous or not.
@@ -27871,10 +28001,22 @@ function negotiationRequests(container) {
         customBodies: info.customBodies
       }
     });
+    const targetCall = (0, _selectors2.getCallById)(context.getState(), info.id);
+    const eventId = targetCall.localOp && targetCall.localOp.eventId;
+
+    // Get the report for this call id
+    const report = CallReporter.getReport(targetCall.id);
+
+    // Get the main operational event that is ongoing
+    const operationEvent = report.getEvent(eventId);
+    const requestEvent = operationEvent.addEvent(_constants.REPORT_EVENTS.REST_REQUEST);
+    requestEvent.addData('requestType', _constants.REPORTER_REQUESTS.UPDATE_SESSION);
     const response = await requestUtils.linkCallRequest(sendRequest, requestInfo, _objectSpread(_objectSpread({}, options), info));
     if (response.error) {
+      requestEvent.endEvent(response.error);
       throw response.error;
     }
+    requestEvent.endEvent();
   }
 
   /**
@@ -31358,7 +31500,7 @@ var _fp = __webpack_require__(193);
 var _effects = __webpack_require__(7422);
 var _bottlejs = _interopRequireDefault(__webpack_require__(9146));
 var _utils = __webpack_require__(5189);
-var _version = __webpack_require__(1210);
+var _version = __webpack_require__(3115);
 var _intervalFactory = _interopRequireDefault(__webpack_require__(3725));
 var _logs = __webpack_require__(3862);
 var _validation = __webpack_require__(2850);
@@ -35256,7 +35398,7 @@ var eventTypes = _interopRequireWildcard(__webpack_require__(714));
 var authorizations = _interopRequireWildcard(__webpack_require__(5689));
 var _sagas = __webpack_require__(2939);
 var _selectors = __webpack_require__(6942);
-var _version = __webpack_require__(1210);
+var _version = __webpack_require__(3115);
 var _utils = __webpack_require__(5189);
 var _fp = __webpack_require__(193);
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
@@ -35410,7 +35552,7 @@ var _makeRequest = _interopRequireDefault(__webpack_require__(7569));
 var authorizations = _interopRequireWildcard(__webpack_require__(5689));
 var _utils = __webpack_require__(720);
 var _logs = __webpack_require__(3862);
-var _version = __webpack_require__(1210);
+var _version = __webpack_require__(3115);
 var _effects = __webpack_require__(7422);
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
 function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
@@ -35498,7 +35640,7 @@ exports.sanitizeRequest = sanitizeRequest;
 var _selectors = __webpack_require__(647);
 var _selectors2 = __webpack_require__(6942);
 var _logs = __webpack_require__(3862);
-var _version = __webpack_require__(1210);
+var _version = __webpack_require__(3115);
 var _utils = __webpack_require__(5189);
 var _effects = __webpack_require__(7422);
 var _fp = __webpack_require__(193);
@@ -59325,7 +59467,7 @@ module.exports = str => encodeURIComponent(str).replace(/[!'()*]/g, x => `%${x.c
 
 /***/ }),
 
-/***/ 8836:
+/***/ 39:
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -59557,7 +59699,7 @@ var _v4 = _interopRequireDefault(__webpack_require__(3940));
 
 var _nil = _interopRequireDefault(__webpack_require__(5384));
 
-var _version = _interopRequireDefault(__webpack_require__(8836));
+var _version = _interopRequireDefault(__webpack_require__(39));
 
 var _validate = _interopRequireDefault(__webpack_require__(7888));
 
