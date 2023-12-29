@@ -7,18 +7,36 @@ Ribbon WebRTC SDK change log.
 - This project adheres to [Semantic Versioning](http://semver.org/).
 - This change log follows [keepachangelog.com](http://keepachangelog.com/) recommendations.
 
+## 6.6.0 - 2023-12-29
+
+### Added
+
+- Added `REST_REQUEST` sub-event to the main operation event in the generated call report, for all the complex operations (join, direct/consultative transfer) as well as for any other miscelaneous requests that did not record such sub-event. Also added this sub-event to the `update session` main event, triggered when a Peer performs a local operation (e.g. hold, unholds, restart ice collection). `KJS-1514`
+
+### Fixed
+
+- Fixed a Call issue where the `call.mediaBrokerOnly` configuration was ignored when being taken off remote hold after receiving music-on-hold. `KJS-1742`
+- Fixed an issue where if the ignore or reject call api's are called against a call in `Connected` state, it will change the state of the call to `Ended` even though the operation failed and the call is still actually `Connected`. `KJS-1888`
+- Fixed an issue where the we weren't ending remote events in the call report that were using regular signalling flow (not slow-start), as well as checking for remote unhold operations when checking for ice collection. `KJS-1880`
+- Fixed issue where anonymous calls were trying to make a call even if they failed subscription. `KJS-1903`
+- Fixed the way SDK searches for data (within a given call report) by making use of an API that is supported by a wider range of Chrome browsers. `KJS-1898`
+- Fixed an issue where the SDK was trying to process a midcall operation notification on a call in the incorrect state. `KJS-1857`
+
+### Changed
+
+- Renamed call report event names to be more consistent and clear. `KJS-1647`
+  - `SET_LOCAL_DESCRIPTION` renamed to `PROCESS_MEDIA_LOCAL`
+  - `SET_REMOTE_DESCRIPTION` renamed to `PROCESS_MEDIA_REMOTE`
+  - `PROCESS_RESPONSE` replaced by `PROCESS_MEDIA_REMOTE`
+
 ## 6.5.1 - 2023-12-07
 
 This is a hotfix release.
 
-### Changed
-
-- Changed the way SDK searches backwards through an array of content by replacing the use of `Array.findLast` API with the more supported alternative: using `Array.reverse` & `Array.find` APIs.
-  This is because `Array.findLast` API is only supported in Chrome browsers starting with version 97 (released on 2022-01-04) and so previous browser versions (on which current SDK may run) do not have a polyfill implementation for this API. `KJS-1898`
-
 ### Fixed
 
 - Fixed an issue where we weren't including an object in the `auth:change` event. In certain cases this object contains properties relevent to the event that could if missing could break a client. `KJS-1897`
+- Fixed a Call issue related to the new Call Reports feature where calls would fail on earlier versions of Chrome browsers. `KJS-1898`
 
 ## 6.5.0 - 2023-11-24
 
