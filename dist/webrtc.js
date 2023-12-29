@@ -12,7 +12,7 @@
  *
  * WebRTC.js
  * webrtc.anonymous.js
- * Version: 6.6.0-beta.1205
+ * Version: 6.6.0-beta.1206
  */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
@@ -2324,7 +2324,7 @@ module.exports = root;
 
 /***/ }),
 
-/***/ 5055:
+/***/ 6709:
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -2342,7 +2342,7 @@ exports.getVersion = getVersion;
  * for the @@ tag below with actual version value.
  */
 function getVersion() {
-  return '6.6.0-beta.1205';
+  return '6.6.0-beta.1206';
 }
 
 /***/ }),
@@ -2360,6 +2360,8 @@ exports["default"] = authFactory;
 var _interface = __webpack_require__(1168);
 var _actions = __webpack_require__(3424);
 var _utils = __webpack_require__(5189);
+var connectivityActionTypes = _interopRequireWildcard(__webpack_require__(3202));
+var _actionTypes2 = __webpack_require__(9148);
 var initOperations = _interopRequireWildcard(__webpack_require__(2272));
 var initIntervals = _interopRequireWildcard(__webpack_require__(527));
 var initRequests = _interopRequireWildcard(__webpack_require__(9564));
@@ -2453,6 +2455,28 @@ function authFactory(options = {}, bottle) {
     // Send the provided options to the store.
     // This will be `state.config[name]`.
     context.dispatch((0, _actions.update)(options, _interface.name));
+
+    // Take connectivity.WS_RECONNECT_FAILED actions
+    function receiveConnectionLostPattern(action) {
+      return action.type === connectivityActionTypes.WS_RECONNECT_FAILED;
+    }
+    container.Notifications.takeEveryAction(receiveConnectionLostPattern, action => {
+      const {
+        AuthenticationOperations: operations
+      } = container;
+      operations.onConnectionLost();
+    });
+
+    // Take subscription gone notifications
+    function receiveGoneNotificationPattern(action) {
+      return action.type === _actionTypes2.NOTIFICATION_RECEIVED && action.payload.notificationMessage && action.payload.notificationMessage.eventType === 'gone';
+    }
+    container.Notifications.takeEveryAction(receiveGoneNotificationPattern, action => {
+      const {
+        AuthenticationOperations: operations
+      } = container;
+      operations.onSubscriptionGone();
+    });
   }
 
   // Register the component factory functions to the bottle.
@@ -2463,7 +2487,6 @@ function authFactory(options = {}, bottle) {
     const apiGetters = ['getUserInfo', 'getConnection', 'getServices'];
     return (0, _fp.pick)(apiGetters, fullAPI);
   });
-  bottle.defer(initPlugin);
 
   // Initialize operations
   for (const name in initOperations) {
@@ -2479,6 +2502,7 @@ function authFactory(options = {}, bottle) {
   for (const name in initRequests) {
     initRequests[name](bottle);
   }
+  bottle.defer(initPlugin);
   return {
     name: _interface.name,
     reducer: _interface.reducer
@@ -2521,15 +2545,15 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = createInterval;
+var _constants = __webpack_require__(9833);
 var actions = _interopRequireWildcard(__webpack_require__(5770));
 var _selectors = __webpack_require__(6942);
 var _eventTypes = __webpack_require__(7327);
-var _constants = __webpack_require__(9833);
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
 function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
-// Auth plugin
-
 // Constants
+
+// Auth plugin
 
 /**
  * Authentication resubscription interval factory function.
@@ -2542,6 +2566,7 @@ function createInterval(container) {
     context,
     createInterval,
     AuthenticationRequests,
+    AuthenticationOperations,
     emitEvent
   } = container;
 
@@ -2612,17 +2637,38 @@ function createInterval(container) {
           isFailure: false
         });
       } catch (error) {
-        context.dispatch(actions.resubscribeFinished({
-          error,
-          attemptNum
-        }, _constants.platforms.LINK));
-        emitEvent(_eventTypes.AUTH_RESUB, {
-          attemptNum,
-          isFailure: true
-        });
+        // Check the error a specific status code that indicates "resource does not exist" and disconnect the websocket
+        if (error && error.payload && error.payload.code === 39) {
+          // Dispatch a resubscribe finished action for backwards compatability
+          context.dispatch(actions.resubscribeFinished({
+            error,
+            attemptNum
+          }, _constants.platforms.LINK));
 
-        // Increment our attempts
-        attemptNum++;
+          // Emit an `auth:resub` event indicating a failure
+          emitEvent(_eventTypes.AUTH_RESUB, {
+            attemptNum,
+            isFailure: true
+          });
+
+          // Disconnect the websocket when our subscription is gone.
+          await AuthenticationOperations.onSubscriptionGone();
+
+          // Stop the resub interval since we aren't going to get the subscription
+          resubInterval.stop();
+        } else {
+          context.dispatch(actions.resubscribeFinished({
+            error,
+            attemptNum
+          }, _constants.platforms.LINK));
+          emitEvent(_eventTypes.AUTH_RESUB, {
+            attemptNum,
+            isFailure: true
+          });
+
+          // Increment our attempts
+          attemptNum++;
+        }
       }
     }
 
@@ -2838,7 +2884,7 @@ function createOperation(container) {
     AuthenticationIntervals.resubInterval.startResubInterval(connection);
 
     // Emit an auth changed event
-    emitEvent(eventTypes.AUTH_CHANGE);
+    emitEvent(eventTypes.AUTH_CHANGE, {});
   }
   return anonymousConnect;
 }
@@ -2890,7 +2936,7 @@ function createOperation(container) {
     log.info('Unsubscribing from callMe services.');
 
     // Emit an auth changed event
-    emitEvent(eventTypes.AUTH_CHANGE);
+    emitEvent(eventTypes.AUTH_CHANGE, {});
 
     // Stop the resubscribe interval
     AuthenticationIntervals.resubInterval.stopResubInterval();
@@ -2924,7 +2970,7 @@ function createOperation(container) {
     context.dispatch(actions.disconnectFinished());
 
     // Emit an auth changed event
-    emitEvent(eventTypes.AUTH_CHANGE);
+    emitEvent(eventTypes.AUTH_CHANGE, {});
   }
   return anonymousDisconnect;
 }
@@ -2944,6 +2990,8 @@ Object.defineProperty(exports, "__esModule", ({
 exports["default"] = registerOperations;
 var _anonymousConnect = _interopRequireDefault(__webpack_require__(4029));
 var _anonymousDisconnect = _interopRequireDefault(__webpack_require__(1502));
+var _onConnectionLost = _interopRequireDefault(__webpack_require__(78));
+var _onSubscriptionGone = _interopRequireDefault(__webpack_require__(659));
 /*
  * Register the operation with the bottle. This will make it available on the
  *    top-level container under its namespace.
@@ -2955,6 +3003,111 @@ function registerOperations(bottle) {
   bottle.factory('AuthenticationOperations.anonymousDisconnect', () => {
     return (0, _anonymousDisconnect.default)(bottle.container);
   });
+  bottle.factory('AuthenticationOperations.onConnectionLost', () => {
+    return (0, _onConnectionLost.default)(bottle.container);
+  });
+  bottle.factory('AuthenticationOperations.onSubscriptionGone', () => {
+    return (0, _onSubscriptionGone.default)(bottle.container);
+  });
+}
+
+/***/ }),
+
+/***/ 78:
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports["default"] = createOperation;
+var actions = _interopRequireWildcard(__webpack_require__(5770));
+var eventTypes = _interopRequireWildcard(__webpack_require__(7327));
+var _constants = __webpack_require__(2916);
+function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
+function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
+/**
+ * Operation factory function responsible for handling the 'connection lost' notification.
+ * @method createOperation
+ * @param  {Object} container The bottle container.
+ * @return {Function} The 'handling of loss of connection' operation.
+ */
+function createOperation(container) {
+  const {
+    context,
+    emitEvent
+  } = container;
+  async function onConnectionLost() {
+    context.dispatch(actions.disconnectFinished({
+      reason: _constants.DISCONNECT_REASONS.LOST_CONNECTION
+    }));
+
+    // Dispatch an event with same payload, for backwards compatibility.
+    emitEvent(eventTypes.AUTH_CHANGE, {
+      reason: _constants.DISCONNECT_REASONS.LOST_CONNECTION
+    });
+  }
+  return onConnectionLost;
+}
+
+/***/ }),
+
+/***/ 659:
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports["default"] = createOperation;
+var _constants = __webpack_require__(9833);
+var actions = _interopRequireWildcard(__webpack_require__(5770));
+var eventTypes = _interopRequireWildcard(__webpack_require__(7327));
+var _constants2 = __webpack_require__(2916);
+var _selectors = __webpack_require__(3951);
+var _effects = __webpack_require__(8037);
+function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
+function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
+// Constants
+
+// Auth plugin
+
+// Other plugins
+
+/**
+ * Operation factory function responsible for handling the 'subscription gone' notification.
+ * @method createOperation
+ * @param  {Object} container The bottle container.
+ * @return {Function} The 'handling of loss of subscription' operation.
+ */
+function createOperation(container) {
+  const {
+    context,
+    emitEvent
+  } = container;
+  async function onSubscriptionGone() {
+    // Dispatch an action to disconnect the websocket (and let the connectivity
+    //      plugin know we expect it to be disconnected).
+    const wsState = (0, _selectors.getConnectionState)(context.getState(), _constants.platforms.LINK);
+    if (wsState.connected) {
+      (0, _effects.disconnectWebsocket)(undefined, _constants.platforms.LINK);
+    }
+
+    // Dispatch a disconnect finished action to trigger "user disconnected" logic.
+    context.dispatch(actions.disconnectFinished({
+      reason: _constants2.DISCONNECT_REASONS.GONE
+    }));
+
+    // Dispatch an event with same payload, for backwards compatibility.
+    emitEvent(eventTypes.AUTH_CHANGE, {
+      reason: _constants2.DISCONNECT_REASONS.GONE
+    });
+  }
+  return onSubscriptionGone;
 }
 
 /***/ }),
@@ -9918,7 +10071,7 @@ var _selectors = __webpack_require__(1430);
 var _constants = __webpack_require__(683);
 var _errors = _interopRequireWildcard(__webpack_require__(3437));
 var _kandyWebrtc = __webpack_require__(5203);
-var _version = __webpack_require__(5055);
+var _version = __webpack_require__(6709);
 var _sdkId = _interopRequireDefault(__webpack_require__(5878));
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
 function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
@@ -20973,7 +21126,7 @@ exports.fixIceServerUrls = fixIceServerUrls;
 exports.mergeDefaults = mergeDefaults;
 var _logs = __webpack_require__(3862);
 var _utils = __webpack_require__(5189);
-var _version = __webpack_require__(5055);
+var _version = __webpack_require__(6709);
 var _defaults = __webpack_require__(7241);
 var _validation = __webpack_require__(2850);
 // Other plugins.
@@ -30122,6 +30275,107 @@ function api({
 
 /***/ }),
 
+/***/ 8037:
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports.connectWebsocket = connectWebsocket;
+exports.disconnectWebsocket = disconnectWebsocket;
+exports.waitForReconnect = waitForReconnect;
+var _actions = __webpack_require__(9897);
+var _actionTypes = __webpack_require__(3202);
+var _selectors = __webpack_require__(3951);
+var _selectors2 = __webpack_require__(6942);
+var _actionTypes2 = __webpack_require__(7190);
+var _effects = __webpack_require__(7422);
+// Connectivity.
+
+// Other plugins.
+
+// Libraries.
+
+/**
+ * Custom redux-saga effect.
+ * Wraps "communication" between the connectivity plugin and another plugin
+ *     for connecting to a websocket.
+ * @method connectWebsocket
+ * @param {Object} websocketInfo Information needed to create the websocket.
+ * @param {string} websocketInfo.protocol
+ * @param {string} websocketInfo.server
+ * @param {string} websocketInfo.port
+ * @param {string} websocketInfo.url
+ * @param {Object} [websocketInfo.params]
+ * @param {string} platform The backend platform being connected to.
+ * @return {Object} The response action of type `WS_CONNECT_FINISHED`.
+ */
+function* connectWebsocket(websocketInfo, platform) {
+  // Dispatch the action that triggers a saga to connect to a websocket.
+  yield (0, _effects.put)((0, _actions.wsAttemptConnect)(websocketInfo, platform));
+
+  // Wait for the action that signifies the result of the above action.
+  const responseAction = yield (0, _effects.take)(action => {
+    return action.type === _actionTypes.WS_CONNECT_FINISHED && action.meta.platform === platform;
+  });
+
+  // Return the response.
+  return responseAction;
+}
+
+/**
+ * Effect for disconnecting a websocket to a platform.
+ * @method disconnectWebsocket
+ * @param  {Object} payload
+ * @param  {string} platform The backend platform being disconnected from.
+ * @return {Object} The response action of type `WS_DISCONNECT_FINISHED`.
+ */
+function* disconnectWebsocket(payload, platform) {
+  // Dispatch the action that triggers a saga to disconnect the websocket.
+  yield (0, _effects.put)((0, _actions.wsDisconnect)(payload, platform));
+
+  // Wait for the action that signifies the result of the above action.
+  const responseAction = yield (0, _effects.take)(action => {
+    return (action.type === _actionTypes.WS_DISCONNECT_FINISHED || action.type === _actionTypes.WS_ERROR) && action.meta.platform === platform;
+  });
+
+  // Return the response.
+  return responseAction;
+}
+
+/**
+ * Effect for waiting for the websocket / subscription to reconnect.
+ * Assumption is that the websocket is in the middle of reconnect attempts. This
+ *    is why the timeout is so long; one of the two scenarios should be guaranteed
+ *    to happen before then.
+ * @param {number} timeout The time, in milliseconds, to wait before timing out.
+ * @return {boolean} Whether the websocket has reconnected or not.
+ */
+function* waitForReconnect(timeout = 60000) {
+  const platform = yield (0, _effects.select)(_selectors2.getPlatform);
+  const {
+    connected: isConnected
+  } = yield (0, _effects.select)(_selectors.getConnectionState, platform);
+  if (isConnected) {
+    return true;
+  }
+  const {
+    reconnected
+  } = yield (0, _effects.race)({
+    // If websocket reconnects, then we're reconnected (...duh).
+    reconnected: (0, _effects.take)(action => action.type === _actionTypes.WS_CONNECT_FINISHED && !action.error),
+    // If the user unsubscribes (ie. ws reconnect fails), then we're disconnected.
+    disconnected: (0, _effects.take)(action => action.type === _actionTypes2.UNSUBSCRIBE_FINISHED && !action.error),
+    timeout: (0, _effects.delay)(timeout)
+  });
+  return Boolean(reconnected);
+}
+
+/***/ }),
+
 /***/ 287:
 /***/ ((__unused_webpack_module, exports) => {
 
@@ -31561,7 +31815,7 @@ var _fp = __webpack_require__(193);
 var _effects = __webpack_require__(7422);
 var _bottlejs = _interopRequireDefault(__webpack_require__(9146));
 var _utils = __webpack_require__(5189);
-var _version = __webpack_require__(5055);
+var _version = __webpack_require__(6709);
 var _intervalFactory = _interopRequireDefault(__webpack_require__(3725));
 var _logs = __webpack_require__(3862);
 var _validation = __webpack_require__(2850);
@@ -35459,7 +35713,7 @@ var eventTypes = _interopRequireWildcard(__webpack_require__(714));
 var authorizations = _interopRequireWildcard(__webpack_require__(5689));
 var _sagas = __webpack_require__(2939);
 var _selectors = __webpack_require__(6942);
-var _version = __webpack_require__(5055);
+var _version = __webpack_require__(6709);
 var _utils = __webpack_require__(5189);
 var _fp = __webpack_require__(193);
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
@@ -35613,7 +35867,7 @@ var _makeRequest = _interopRequireDefault(__webpack_require__(7569));
 var authorizations = _interopRequireWildcard(__webpack_require__(5689));
 var _utils = __webpack_require__(720);
 var _logs = __webpack_require__(3862);
-var _version = __webpack_require__(5055);
+var _version = __webpack_require__(6709);
 var _effects = __webpack_require__(7422);
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
 function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
@@ -35701,7 +35955,7 @@ exports.sanitizeRequest = sanitizeRequest;
 var _selectors = __webpack_require__(647);
 var _selectors2 = __webpack_require__(6942);
 var _logs = __webpack_require__(3862);
-var _version = __webpack_require__(5055);
+var _version = __webpack_require__(6709);
 var _utils = __webpack_require__(5189);
 var _effects = __webpack_require__(7422);
 var _fp = __webpack_require__(193);
@@ -59528,7 +59782,7 @@ module.exports = str => encodeURIComponent(str).replace(/[!'()*]/g, x => `%${x.c
 
 /***/ }),
 
-/***/ 6645:
+/***/ 4420:
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -59760,7 +60014,7 @@ var _v4 = _interopRequireDefault(__webpack_require__(3940));
 
 var _nil = _interopRequireDefault(__webpack_require__(5384));
 
-var _version = _interopRequireDefault(__webpack_require__(6645));
+var _version = _interopRequireDefault(__webpack_require__(4420));
 
 var _validate = _interopRequireDefault(__webpack_require__(7888));
 
