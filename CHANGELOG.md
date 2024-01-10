@@ -9,6 +9,10 @@ Ribbon WebRTC SDK change log.
 
 ## 6.7.0 - beta
 
+### Fixed
+
+- Added missing documentation for call config parameters. `KJS-1917`
+
 ## 6.6.0 - 2023-12-29
 
 ### Added

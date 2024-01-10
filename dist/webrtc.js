@@ -12,7 +12,7 @@
  *
  * WebRTC.js
  * webrtc.anonymous.js
- * Version: 6.7.0-beta.1209
+ * Version: 6.7.0-beta.1210
  */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
@@ -2324,7 +2324,7 @@ module.exports = root;
 
 /***/ }),
 
-/***/ 6252:
+/***/ 1638:
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -2342,7 +2342,7 @@ exports.getVersion = getVersion;
  * for the @@ tag below with actual version value.
  */
 function getVersion() {
-  return '6.7.0-beta.1209';
+  return '6.7.0-beta.1210';
 }
 
 /***/ }),
@@ -2522,7 +2522,7 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = registerIntervals;
-var _resubscribe = _interopRequireDefault(__webpack_require__(8425));
+var _resubscribe = _interopRequireDefault(__webpack_require__(6341));
 /**
  * Register intervals with the bottle. This will make it available on the
  *    top-level container under its namespace.
@@ -2535,7 +2535,7 @@ function registerIntervals(bottle) {
 
 /***/ }),
 
-/***/ 8425:
+/***/ 6341:
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -4820,6 +4820,52 @@ function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; 
 
 // Libraries.
 
+/**
+ * Configuration options for the call feature.
+ * @public
+ * @name config.call
+ * @memberof config
+ * @instance
+ * @param {Object} call The call configuration object.
+ * @param {call.RTCPeerConnectionConfig} [call.defaultPeerConfig] A key-value dictionary that corresponds
+ *    to the available RTCPeerConfiguration which is normally passed when creating an RTCPeerConnection.
+ *    See {@link https://developer.mozilla.org/en-US/docs/Web/API/RTCPeerConnection/RTCPeerConnection#parameters RTCPeerConnection's configuration parameters} for more information.
+ *    This is the recommended way of setting ICE servers and other RTCPeerConnection-related configuration.
+ * @param {number} [call.iceCollectionIdealTimeout=1000] The amount of time to wait for an ideal candidate in milliseconds.
+ *    The default is 1000ms. An ideal list of candidates is a complete list of candidates considering the RTCPeerConnection configuration.
+ *    Note that this values will not be considered if a custom function is passed through the `iceCollectionCheckFunction`, and
+ *    any timeouts must be handled by the custom function.
+ * @param {number} [call.iceCollectionMaxTimeout=3000] The maximum amount of time to wait for ICE collection in milliseconds.
+ *    The default is 3000ms. After this time has been reached, the call will proceed with the currently gathered candidates.
+ *    Note that this values will not be considered if a custom function is passed through the `iceCollectionCheckFunction`, and
+ *    any timeouts must be handled by the custom function.
+ * @param {Function} [call.iceCollectionCheckFunction] Override the default IceCollectionCheckFunction to manually decide when
+ *    to proceed with operations, error out, or wait for the appropriate states and candidates. The function will receive an object containing
+ *    the ice collection info. See {@link call.IceCollectionInfo IceCollectionInfo} for more details. The function must return
+ *    a results object with details on how to proceed with the ICE collection check or operatiaon. See {@link call.IceCollectionCheckResult IceCollectionResult}
+ *    object for details on the format of the return object. See {@link call.IceCollectionCheckFunction IceCollectionCheckFunction} for
+ *    more information on the form of the function, as well as information about the default IceCollectionCheckFunction that is used if nothing is provided.
+ * @param {boolean} [call.serverTurnCredentials=true] Whether server-provided TURN credentials should be used.
+ * @param {Array<call.SdpHandlerFunction>} [call.sdpHandlers] List of SDP handler functions to modify SDP. Advanced usage.
+ * @param {boolean} [call.earlyMedia=false] Whether early media should be supported for calls. Not supported on Firefox.
+ * @param {boolean} [call.resyncOnConnect=false] Whether the SDK should re-sync all call states after connecting (requires WebRTC Gateway 4.7.1+).
+ * @param {boolean} [call.mediaBrokerOnly=false] Whether all Calls will be anchored on the MediaBroker instead of being peer-to-peer. Set to true if the backend is configured for broker only mode.
+ * @param {boolean} [call.removeBundling=false] Whether to remove a=group attributes to stop media bundling from incoming and outgoing SDP messages.
+ * @param {string} [call.ringingFeedbackMode='auto'] The mode for sending ringing feedback to the Caller ('auto', 'manual').
+ *    By default, feedback will be automatically sent when a call has been received. In 'manual' mode, the application
+ *    must initiate the feedback being sent. See the `call.sendRingingFeedback` API for more info.
+ * @param {number} [call.callAuditTimer=25000] Time interval, in milliseconds between call audits.
+ * @param {number} [call.mediaConnectionRetryDelay=3000] Delay, in milliseconds for the passive side of a call to wait before trying a media reconnection.
+ * @param {boolean} [call.normalizeDestination=true] Specifies whether or not SIP address normalization will be applied.
+ */
+
+/**
+ * @private
+ * @name config.call
+ * @memberof config
+ * @instance
+ * @param {string} [trickleIceMode='NONE'] The Trickle ICE method to use for calls. Currently, no mode is supported.
+ */
 /**
  * Anonymous Call plugin factory.
  */
@@ -10071,7 +10117,7 @@ var _selectors = __webpack_require__(1430);
 var _constants = __webpack_require__(683);
 var _errors = _interopRequireWildcard(__webpack_require__(3437));
 var _kandyWebrtc = __webpack_require__(5203);
-var _version = __webpack_require__(6252);
+var _version = __webpack_require__(1638);
 var _sdkId = _interopRequireDefault(__webpack_require__(5878));
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
 function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
@@ -21126,7 +21172,7 @@ exports.fixIceServerUrls = fixIceServerUrls;
 exports.mergeDefaults = mergeDefaults;
 var _logs = __webpack_require__(3862);
 var _utils = __webpack_require__(5189);
-var _version = __webpack_require__(6252);
+var _version = __webpack_require__(1638);
 var _defaults = __webpack_require__(7241);
 var _validation = __webpack_require__(2850);
 // Other plugins.
@@ -31825,7 +31871,7 @@ var _fp = __webpack_require__(193);
 var _effects = __webpack_require__(7422);
 var _bottlejs = _interopRequireDefault(__webpack_require__(9146));
 var _utils = __webpack_require__(5189);
-var _version = __webpack_require__(6252);
+var _version = __webpack_require__(1638);
 var _intervalFactory = _interopRequireDefault(__webpack_require__(3725));
 var _logs = __webpack_require__(3862);
 var _validation = __webpack_require__(2850);
@@ -35723,7 +35769,7 @@ var eventTypes = _interopRequireWildcard(__webpack_require__(714));
 var authorizations = _interopRequireWildcard(__webpack_require__(5689));
 var _sagas = __webpack_require__(2939);
 var _selectors = __webpack_require__(6942);
-var _version = __webpack_require__(6252);
+var _version = __webpack_require__(1638);
 var _utils = __webpack_require__(5189);
 var _fp = __webpack_require__(193);
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
@@ -35877,7 +35923,7 @@ var _makeRequest = _interopRequireDefault(__webpack_require__(7569));
 var authorizations = _interopRequireWildcard(__webpack_require__(5689));
 var _utils = __webpack_require__(720);
 var _logs = __webpack_require__(3862);
-var _version = __webpack_require__(6252);
+var _version = __webpack_require__(1638);
 var _effects = __webpack_require__(7422);
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
 function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
@@ -35965,7 +36011,7 @@ exports.sanitizeRequest = sanitizeRequest;
 var _selectors = __webpack_require__(647);
 var _selectors2 = __webpack_require__(6942);
 var _logs = __webpack_require__(3862);
-var _version = __webpack_require__(6252);
+var _version = __webpack_require__(1638);
 var _utils = __webpack_require__(5189);
 var _effects = __webpack_require__(7422);
 var _fp = __webpack_require__(193);
@@ -59833,7 +59879,7 @@ module.exports = str => encodeURIComponent(str).replace(/[!'()*]/g, x => `%${x.c
 
 /***/ }),
 
-/***/ 296:
+/***/ 8425:
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -60065,7 +60111,7 @@ var _v4 = _interopRequireDefault(__webpack_require__(3940));
 
 var _nil = _interopRequireDefault(__webpack_require__(5384));
 
-var _version = _interopRequireDefault(__webpack_require__(296));
+var _version = _interopRequireDefault(__webpack_require__(8425));
 
 var _validate = _interopRequireDefault(__webpack_require__(7888));
 
