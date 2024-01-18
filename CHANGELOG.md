@@ -14,6 +14,7 @@ Ribbon WebRTC SDK change log.
 - Added missing documentation for call config parameters. `KJS-1917`
 - Fixed a Call issue where `devices:change` events were emitted when a call ended even though no device changed. `KJS-1953`
 - Fixed a Call issue where two `devices:change` events were emitted when a media device was disconnected instead of only one. `KJS-1953`
+- Fixed the configuration sample used in video calling for the `Anonymous Calls` tutorial trail, since video call was failing. `KJS-1957`
 
 ## 6.6.0 - 2023-12-29
 
