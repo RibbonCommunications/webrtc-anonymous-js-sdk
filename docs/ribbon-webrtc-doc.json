@@ -1304,6 +1304,778 @@
                 "children": [
                   {
                     "type": "text",
+                    "value": "Configuration options for the call feature."
+                  }
+                ]
+              }
+            ]
+          },
+          "tags": [
+            {
+              "title": "public",
+              "description": null,
+              "lineNumber": 2,
+              "type": null
+            },
+            {
+              "title": "name",
+              "description": null,
+              "lineNumber": 3,
+              "name": "config.call"
+            },
+            {
+              "title": "memberof",
+              "description": "config",
+              "lineNumber": 4
+            },
+            {
+              "title": "instance",
+              "description": null,
+              "lineNumber": 5
+            },
+            {
+              "title": "param",
+              "description": "The call configuration object.",
+              "lineNumber": 6,
+              "type": {
+                "type": "NameExpression",
+                "name": "Object"
+              },
+              "name": "call"
+            },
+            {
+              "title": "param",
+              "description": "A key-value dictionary that corresponds\n   to the available RTCPeerConfiguration which is normally passed when creating an RTCPeerConnection.\n   See {@link https://developer.mozilla.org/en-US/docs/Web/API/RTCPeerConnection/RTCPeerConnection#parameters RTCPeerConnection's configuration parameters} for more information.\n   This is the recommended way of setting ICE servers and other RTCPeerConnection-related configuration.",
+              "lineNumber": 7,
+              "type": {
+                "type": "OptionalType",
+                "expression": {
+                  "type": "NameExpression",
+                  "name": "call.RTCPeerConnectionConfig"
+                }
+              },
+              "name": "call.defaultPeerConfig"
+            },
+            {
+              "title": "param",
+              "description": "The amount of time to wait for an ideal candidate in milliseconds.\n   The default is 1000ms. An ideal list of candidates is a complete list of candidates considering the RTCPeerConnection configuration.\n   Note that this values will not be considered if a custom function is passed through the `iceCollectionCheckFunction`, and\n   any timeouts must be handled by the custom function.",
+              "lineNumber": 11,
+              "type": {
+                "type": "OptionalType",
+                "expression": {
+                  "type": "NameExpression",
+                  "name": "number"
+                }
+              },
+              "name": "call.iceCollectionIdealTimeout",
+              "default": "1000"
+            },
+            {
+              "title": "param",
+              "description": "The maximum amount of time to wait for ICE collection in milliseconds.\n   The default is 3000ms. After this time has been reached, the call will proceed with the currently gathered candidates.\n   Note that this values will not be considered if a custom function is passed through the `iceCollectionCheckFunction`, and\n   any timeouts must be handled by the custom function.",
+              "lineNumber": 15,
+              "type": {
+                "type": "OptionalType",
+                "expression": {
+                  "type": "NameExpression",
+                  "name": "number"
+                }
+              },
+              "name": "call.iceCollectionMaxTimeout",
+              "default": "3000"
+            },
+            {
+              "title": "param",
+              "description": "Override the default IceCollectionCheckFunction to manually decide when\n   to proceed with operations, error out, or wait for the appropriate states and candidates. The function will receive an object containing\n   the ice collection info. See {@link call.IceCollectionInfo IceCollectionInfo} for more details. The function must return\n   a results object with details on how to proceed with the ICE collection check or operatiaon. See {@link call.IceCollectionCheckResult IceCollectionResult}\n   object for details on the format of the return object. See {@link call.IceCollectionCheckFunction IceCollectionCheckFunction} for\n   more information on the form of the function, as well as information about the default IceCollectionCheckFunction that is used if nothing is provided.",
+              "lineNumber": 19,
+              "type": {
+                "type": "OptionalType",
+                "expression": {
+                  "type": "NameExpression",
+                  "name": "Function"
+                }
+              },
+              "name": "call.iceCollectionCheckFunction"
+            },
+            {
+              "title": "param",
+              "description": "Whether server-provided TURN credentials should be used.",
+              "lineNumber": 25,
+              "type": {
+                "type": "OptionalType",
+                "expression": {
+                  "type": "NameExpression",
+                  "name": "boolean"
+                }
+              },
+              "name": "call.serverTurnCredentials",
+              "default": "true"
+            },
+            {
+              "title": "param",
+              "description": "List of SDP handler functions to modify SDP. Advanced usage.",
+              "lineNumber": 26,
+              "type": {
+                "type": "OptionalType",
+                "expression": {
+                  "type": "TypeApplication",
+                  "expression": {
+                    "type": "NameExpression",
+                    "name": "Array"
+                  },
+                  "applications": [
+                    {
+                      "type": "NameExpression",
+                      "name": "call.SdpHandlerFunction"
+                    }
+                  ]
+                }
+              },
+              "name": "call.sdpHandlers"
+            },
+            {
+              "title": "param",
+              "description": "Whether early media should be supported for calls. Not supported on Firefox.",
+              "lineNumber": 27,
+              "type": {
+                "type": "OptionalType",
+                "expression": {
+                  "type": "NameExpression",
+                  "name": "boolean"
+                }
+              },
+              "name": "call.earlyMedia",
+              "default": "false"
+            },
+            {
+              "title": "param",
+              "description": "Whether the SDK should re-sync all call states after connecting (requires WebRTC Gateway 4.7.1+).",
+              "lineNumber": 28,
+              "type": {
+                "type": "OptionalType",
+                "expression": {
+                  "type": "NameExpression",
+                  "name": "boolean"
+                }
+              },
+              "name": "call.resyncOnConnect",
+              "default": "false"
+            },
+            {
+              "title": "param",
+              "description": "Whether all Calls will be anchored on the MediaBroker instead of being peer-to-peer. Set to true if the backend is configured for broker only mode.",
+              "lineNumber": 29,
+              "type": {
+                "type": "OptionalType",
+                "expression": {
+                  "type": "NameExpression",
+                  "name": "boolean"
+                }
+              },
+              "name": "call.mediaBrokerOnly",
+              "default": "false"
+            },
+            {
+              "title": "param",
+              "description": "Whether to remove a=group attributes to stop media bundling from incoming and outgoing SDP messages.",
+              "lineNumber": 30,
+              "type": {
+                "type": "OptionalType",
+                "expression": {
+                  "type": "NameExpression",
+                  "name": "boolean"
+                }
+              },
+              "name": "call.removeBundling",
+              "default": "false"
+            },
+            {
+              "title": "param",
+              "description": "The mode for sending ringing feedback to the Caller ('auto', 'manual').\n   By default, feedback will be automatically sent when a call has been received. In 'manual' mode, the application\n   must initiate the feedback being sent. See the `call.sendRingingFeedback` API for more info.",
+              "lineNumber": 31,
+              "type": {
+                "type": "OptionalType",
+                "expression": {
+                  "type": "NameExpression",
+                  "name": "string"
+                }
+              },
+              "name": "call.ringingFeedbackMode",
+              "default": "'auto'"
+            },
+            {
+              "title": "param",
+              "description": "Time interval, in milliseconds between call audits.",
+              "lineNumber": 34,
+              "type": {
+                "type": "OptionalType",
+                "expression": {
+                  "type": "NameExpression",
+                  "name": "number"
+                }
+              },
+              "name": "call.callAuditTimer",
+              "default": "25000"
+            },
+            {
+              "title": "param",
+              "description": "Delay, in milliseconds for the passive side of a call to wait before trying a media reconnection.",
+              "lineNumber": 35,
+              "type": {
+                "type": "OptionalType",
+                "expression": {
+                  "type": "NameExpression",
+                  "name": "number"
+                }
+              },
+              "name": "call.mediaConnectionRetryDelay",
+              "default": "3000"
+            },
+            {
+              "title": "param",
+              "description": "Specifies whether or not SIP address normalization will be applied.",
+              "lineNumber": 36,
+              "type": {
+                "type": "OptionalType",
+                "expression": {
+                  "type": "NameExpression",
+                  "name": "boolean"
+                }
+              },
+              "name": "call.normalizeDestination",
+              "default": "true"
+            }
+          ],
+          "loc": {
+            "start": {
+              "line": 21,
+              "column": 0
+            },
+            "end": {
+              "line": 58,
+              "column": 3
+            }
+          },
+          "context": {
+            "loc": {
+              "start": {
+                "line": 71,
+                "column": 0
+              },
+              "end": {
+                "line": 135,
+                "column": 1
+              }
+            },
+            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/call/anonymous/index.js"
+          },
+          "augments": [],
+          "examples": [],
+          "implements": [],
+          "params": [
+            {
+              "title": "param",
+              "name": "call",
+              "lineNumber": 6,
+              "description": {
+                "type": "root",
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "The call configuration object."
+                      }
+                    ]
+                  }
+                ]
+              },
+              "type": {
+                "type": "NameExpression",
+                "name": "Object"
+              },
+              "properties": [
+                {
+                  "title": "param",
+                  "name": "call.defaultPeerConfig",
+                  "lineNumber": 7,
+                  "description": {
+                    "type": "root",
+                    "children": [
+                      {
+                        "type": "paragraph",
+                        "children": [
+                          {
+                            "type": "text",
+                            "value": "A key-value dictionary that corresponds\nto the available RTCPeerConfiguration which is normally passed when creating an RTCPeerConnection.\nSee "
+                          },
+                          {
+                            "type": "link",
+                            "url": "https://developer.mozilla.org/en-US/docs/Web/API/RTCPeerConnection/RTCPeerConnection#parameters",
+                            "title": null,
+                            "jsdoc": true,
+                            "children": [
+                              {
+                                "type": "text",
+                                "value": "RTCPeerConnection's configuration parameters"
+                              }
+                            ]
+                          },
+                          {
+                            "type": "text",
+                            "value": " for more information.\nThis is the recommended way of setting ICE servers and other RTCPeerConnection-related configuration."
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "type": {
+                    "type": "OptionalType",
+                    "expression": {
+                      "type": "NameExpression",
+                      "name": "call.RTCPeerConnectionConfig"
+                    }
+                  }
+                },
+                {
+                  "title": "param",
+                  "name": "call.iceCollectionIdealTimeout",
+                  "lineNumber": 11,
+                  "description": {
+                    "type": "root",
+                    "children": [
+                      {
+                        "type": "paragraph",
+                        "children": [
+                          {
+                            "type": "text",
+                            "value": "The amount of time to wait for an ideal candidate in milliseconds.\nThe default is 1000ms. An ideal list of candidates is a complete list of candidates considering the RTCPeerConnection configuration.\nNote that this values will not be considered if a custom function is passed through the "
+                          },
+                          {
+                            "type": "inlineCode",
+                            "value": "iceCollectionCheckFunction"
+                          },
+                          {
+                            "type": "text",
+                            "value": ", and\nany timeouts must be handled by the custom function."
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "type": {
+                    "type": "NameExpression",
+                    "name": "number"
+                  },
+                  "default": "1000"
+                },
+                {
+                  "title": "param",
+                  "name": "call.iceCollectionMaxTimeout",
+                  "lineNumber": 15,
+                  "description": {
+                    "type": "root",
+                    "children": [
+                      {
+                        "type": "paragraph",
+                        "children": [
+                          {
+                            "type": "text",
+                            "value": "The maximum amount of time to wait for ICE collection in milliseconds.\nThe default is 3000ms. After this time has been reached, the call will proceed with the currently gathered candidates.\nNote that this values will not be considered if a custom function is passed through the "
+                          },
+                          {
+                            "type": "inlineCode",
+                            "value": "iceCollectionCheckFunction"
+                          },
+                          {
+                            "type": "text",
+                            "value": ", and\nany timeouts must be handled by the custom function."
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "type": {
+                    "type": "NameExpression",
+                    "name": "number"
+                  },
+                  "default": "3000"
+                },
+                {
+                  "title": "param",
+                  "name": "call.iceCollectionCheckFunction",
+                  "lineNumber": 19,
+                  "description": {
+                    "type": "root",
+                    "children": [
+                      {
+                        "type": "paragraph",
+                        "children": [
+                          {
+                            "type": "text",
+                            "value": "Override the default IceCollectionCheckFunction to manually decide when\nto proceed with operations, error out, or wait for the appropriate states and candidates. The function will receive an object containing\nthe ice collection info. See "
+                          },
+                          {
+                            "type": "link",
+                            "url": "#callicecollectioninfo",
+                            "title": null,
+                            "jsdoc": true,
+                            "children": [
+                              {
+                                "type": "text",
+                                "value": "IceCollectionInfo"
+                              }
+                            ]
+                          },
+                          {
+                            "type": "text",
+                            "value": " for more details. The function must return\na results object with details on how to proceed with the ICE collection check or operatiaon. See "
+                          },
+                          {
+                            "type": "link",
+                            "url": "#callicecollectioncheckresult",
+                            "title": null,
+                            "jsdoc": true,
+                            "children": [
+                              {
+                                "type": "text",
+                                "value": "IceCollectionResult"
+                              }
+                            ]
+                          },
+                          {
+                            "type": "text",
+                            "value": "\nobject for details on the format of the return object. See "
+                          },
+                          {
+                            "type": "link",
+                            "url": "#callicecollectioncheckfunction",
+                            "title": null,
+                            "jsdoc": true,
+                            "children": [
+                              {
+                                "type": "text",
+                                "value": "IceCollectionCheckFunction"
+                              }
+                            ]
+                          },
+                          {
+                            "type": "text",
+                            "value": " for\nmore information on the form of the function, as well as information about the default IceCollectionCheckFunction that is used if nothing is provided."
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "type": {
+                    "type": "OptionalType",
+                    "expression": {
+                      "type": "NameExpression",
+                      "name": "Function"
+                    }
+                  }
+                },
+                {
+                  "title": "param",
+                  "name": "call.serverTurnCredentials",
+                  "lineNumber": 25,
+                  "description": {
+                    "type": "root",
+                    "children": [
+                      {
+                        "type": "paragraph",
+                        "children": [
+                          {
+                            "type": "text",
+                            "value": "Whether server-provided TURN credentials should be used."
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "type": {
+                    "type": "NameExpression",
+                    "name": "boolean"
+                  },
+                  "default": "true"
+                },
+                {
+                  "title": "param",
+                  "name": "call.sdpHandlers",
+                  "lineNumber": 26,
+                  "description": {
+                    "type": "root",
+                    "children": [
+                      {
+                        "type": "paragraph",
+                        "children": [
+                          {
+                            "type": "text",
+                            "value": "List of SDP handler functions to modify SDP. Advanced usage."
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "type": {
+                    "type": "OptionalType",
+                    "expression": {
+                      "type": "TypeApplication",
+                      "expression": {
+                        "type": "NameExpression",
+                        "name": "Array"
+                      },
+                      "applications": [
+                        {
+                          "type": "NameExpression",
+                          "name": "call.SdpHandlerFunction"
+                        }
+                      ]
+                    }
+                  }
+                },
+                {
+                  "title": "param",
+                  "name": "call.earlyMedia",
+                  "lineNumber": 27,
+                  "description": {
+                    "type": "root",
+                    "children": [
+                      {
+                        "type": "paragraph",
+                        "children": [
+                          {
+                            "type": "text",
+                            "value": "Whether early media should be supported for calls. Not supported on Firefox."
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "type": {
+                    "type": "NameExpression",
+                    "name": "boolean"
+                  },
+                  "default": "false"
+                },
+                {
+                  "title": "param",
+                  "name": "call.resyncOnConnect",
+                  "lineNumber": 28,
+                  "description": {
+                    "type": "root",
+                    "children": [
+                      {
+                        "type": "paragraph",
+                        "children": [
+                          {
+                            "type": "text",
+                            "value": "Whether the SDK should re-sync all call states after connecting (requires WebRTC Gateway 4.7.1+)."
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "type": {
+                    "type": "NameExpression",
+                    "name": "boolean"
+                  },
+                  "default": "false"
+                },
+                {
+                  "title": "param",
+                  "name": "call.mediaBrokerOnly",
+                  "lineNumber": 29,
+                  "description": {
+                    "type": "root",
+                    "children": [
+                      {
+                        "type": "paragraph",
+                        "children": [
+                          {
+                            "type": "text",
+                            "value": "Whether all Calls will be anchored on the MediaBroker instead of being peer-to-peer. Set to true if the backend is configured for broker only mode."
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "type": {
+                    "type": "NameExpression",
+                    "name": "boolean"
+                  },
+                  "default": "false"
+                },
+                {
+                  "title": "param",
+                  "name": "call.removeBundling",
+                  "lineNumber": 30,
+                  "description": {
+                    "type": "root",
+                    "children": [
+                      {
+                        "type": "paragraph",
+                        "children": [
+                          {
+                            "type": "text",
+                            "value": "Whether to remove a=group attributes to stop media bundling from incoming and outgoing SDP messages."
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "type": {
+                    "type": "NameExpression",
+                    "name": "boolean"
+                  },
+                  "default": "false"
+                },
+                {
+                  "title": "param",
+                  "name": "call.ringingFeedbackMode",
+                  "lineNumber": 31,
+                  "description": {
+                    "type": "root",
+                    "children": [
+                      {
+                        "type": "paragraph",
+                        "children": [
+                          {
+                            "type": "text",
+                            "value": "The mode for sending ringing feedback to the Caller ('auto', 'manual').\nBy default, feedback will be automatically sent when a call has been received. In 'manual' mode, the application\nmust initiate the feedback being sent. See the "
+                          },
+                          {
+                            "type": "inlineCode",
+                            "value": "call.sendRingingFeedback"
+                          },
+                          {
+                            "type": "text",
+                            "value": " API for more info."
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "type": {
+                    "type": "NameExpression",
+                    "name": "string"
+                  },
+                  "default": "'auto'"
+                },
+                {
+                  "title": "param",
+                  "name": "call.callAuditTimer",
+                  "lineNumber": 34,
+                  "description": {
+                    "type": "root",
+                    "children": [
+                      {
+                        "type": "paragraph",
+                        "children": [
+                          {
+                            "type": "text",
+                            "value": "Time interval, in milliseconds between call audits."
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "type": {
+                    "type": "NameExpression",
+                    "name": "number"
+                  },
+                  "default": "25000"
+                },
+                {
+                  "title": "param",
+                  "name": "call.mediaConnectionRetryDelay",
+                  "lineNumber": 35,
+                  "description": {
+                    "type": "root",
+                    "children": [
+                      {
+                        "type": "paragraph",
+                        "children": [
+                          {
+                            "type": "text",
+                            "value": "Delay, in milliseconds for the passive side of a call to wait before trying a media reconnection."
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "type": {
+                    "type": "NameExpression",
+                    "name": "number"
+                  },
+                  "default": "3000"
+                },
+                {
+                  "title": "param",
+                  "name": "call.normalizeDestination",
+                  "lineNumber": 36,
+                  "description": {
+                    "type": "root",
+                    "children": [
+                      {
+                        "type": "paragraph",
+                        "children": [
+                          {
+                            "type": "text",
+                            "value": "Specifies whether or not SIP address normalization will be applied."
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "type": {
+                    "type": "NameExpression",
+                    "name": "boolean"
+                  },
+                  "default": "true"
+                }
+              ]
+            }
+          ],
+          "properties": [],
+          "returns": [],
+          "sees": [],
+          "throws": [],
+          "todos": [],
+          "yields": [],
+          "access": "public",
+          "name": "config.call",
+          "memberof": "config",
+          "scope": "instance",
+          "members": {
+            "global": [],
+            "inner": [],
+            "instance": [],
+            "events": [],
+            "static": []
+          },
+          "path": [
+            {
+              "name": "config",
+              "kind": "module"
+            },
+            {
+              "name": "config.call",
+              "scope": "instance"
+            }
+          ],
+          "namespace": "config#config.call"
+        },
+        {
+          "description": {
+            "type": "root",
+            "children": [
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "type": "text",
                     "value": "Configuration options for the Connectivity feature.\nThe SDK can only use keepalive as the connectivity check."
                   }
                 ]
@@ -4031,7 +4803,7 @@
                 "column": 0
               },
               "end": {
-                "line": 27,
+                "line": 28,
                 "column": 16
               }
             },
@@ -12675,7 +13447,7 @@
                           },
                           {
                             "type": "link",
-                            "url": "config#config.call",
+                            "url": "#configconfigcall",
                             "title": null,
                             "jsdoc": true,
                             "children": [
@@ -12714,7 +13486,7 @@
                           },
                           {
                             "type": "link",
-                            "url": "config#config.call",
+                            "url": "#configconfigcall",
                             "title": null,
                             "jsdoc": true,
                             "children": [

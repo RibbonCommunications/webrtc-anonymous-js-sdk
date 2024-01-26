@@ -7,6 +7,15 @@ Ribbon WebRTC SDK change log.
 - This project adheres to [Semantic Versioning](http://semver.org/).
 - This change log follows [keepachangelog.com](http://keepachangelog.com/) recommendations.
 
+## 6.7.0 - 2024-01-26
+
+### Fixed
+
+- Added missing documentation for call config parameters. `KJS-1917`
+- Fixed a Call issue where `devices:change` events were emitted when a call ended even though no device changed. `KJS-1953`
+- Fixed a Call issue where two `devices:change` events were emitted when a media device was disconnected instead of only one. `KJS-1953`
+- Fixed the configuration sample used in video calling for the `Anonymous Calls` tutorial trail, since video call was failing. `KJS-1957`
+
 ## 6.6.0 - 2023-12-29
 
 ### Added

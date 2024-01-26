@@ -12,7 +12,7 @@
  *
  * WebRTC.js
  * webrtc.anonymous.js
- * Version: 6.6.0
+ * Version: 6.7.0
  */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
@@ -2324,7 +2324,7 @@ module.exports = root;
 
 /***/ }),
 
-/***/ 2759:
+/***/ 3743:
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -2342,7 +2342,7 @@ exports.getVersion = getVersion;
  * for the @@ tag below with actual version value.
  */
 function getVersion() {
-  return '6.6.0';
+  return '6.7.0';
 }
 
 /***/ }),
@@ -4820,6 +4820,52 @@ function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; 
 
 // Libraries.
 
+/**
+ * Configuration options for the call feature.
+ * @public
+ * @name config.call
+ * @memberof config
+ * @instance
+ * @param {Object} call The call configuration object.
+ * @param {call.RTCPeerConnectionConfig} [call.defaultPeerConfig] A key-value dictionary that corresponds
+ *    to the available RTCPeerConfiguration which is normally passed when creating an RTCPeerConnection.
+ *    See {@link https://developer.mozilla.org/en-US/docs/Web/API/RTCPeerConnection/RTCPeerConnection#parameters RTCPeerConnection's configuration parameters} for more information.
+ *    This is the recommended way of setting ICE servers and other RTCPeerConnection-related configuration.
+ * @param {number} [call.iceCollectionIdealTimeout=1000] The amount of time to wait for an ideal candidate in milliseconds.
+ *    The default is 1000ms. An ideal list of candidates is a complete list of candidates considering the RTCPeerConnection configuration.
+ *    Note that this values will not be considered if a custom function is passed through the `iceCollectionCheckFunction`, and
+ *    any timeouts must be handled by the custom function.
+ * @param {number} [call.iceCollectionMaxTimeout=3000] The maximum amount of time to wait for ICE collection in milliseconds.
+ *    The default is 3000ms. After this time has been reached, the call will proceed with the currently gathered candidates.
+ *    Note that this values will not be considered if a custom function is passed through the `iceCollectionCheckFunction`, and
+ *    any timeouts must be handled by the custom function.
+ * @param {Function} [call.iceCollectionCheckFunction] Override the default IceCollectionCheckFunction to manually decide when
+ *    to proceed with operations, error out, or wait for the appropriate states and candidates. The function will receive an object containing
+ *    the ice collection info. See {@link call.IceCollectionInfo IceCollectionInfo} for more details. The function must return
+ *    a results object with details on how to proceed with the ICE collection check or operatiaon. See {@link call.IceCollectionCheckResult IceCollectionResult}
+ *    object for details on the format of the return object. See {@link call.IceCollectionCheckFunction IceCollectionCheckFunction} for
+ *    more information on the form of the function, as well as information about the default IceCollectionCheckFunction that is used if nothing is provided.
+ * @param {boolean} [call.serverTurnCredentials=true] Whether server-provided TURN credentials should be used.
+ * @param {Array<call.SdpHandlerFunction>} [call.sdpHandlers] List of SDP handler functions to modify SDP. Advanced usage.
+ * @param {boolean} [call.earlyMedia=false] Whether early media should be supported for calls. Not supported on Firefox.
+ * @param {boolean} [call.resyncOnConnect=false] Whether the SDK should re-sync all call states after connecting (requires WebRTC Gateway 4.7.1+).
+ * @param {boolean} [call.mediaBrokerOnly=false] Whether all Calls will be anchored on the MediaBroker instead of being peer-to-peer. Set to true if the backend is configured for broker only mode.
+ * @param {boolean} [call.removeBundling=false] Whether to remove a=group attributes to stop media bundling from incoming and outgoing SDP messages.
+ * @param {string} [call.ringingFeedbackMode='auto'] The mode for sending ringing feedback to the Caller ('auto', 'manual').
+ *    By default, feedback will be automatically sent when a call has been received. In 'manual' mode, the application
+ *    must initiate the feedback being sent. See the `call.sendRingingFeedback` API for more info.
+ * @param {number} [call.callAuditTimer=25000] Time interval, in milliseconds between call audits.
+ * @param {number} [call.mediaConnectionRetryDelay=3000] Delay, in milliseconds for the passive side of a call to wait before trying a media reconnection.
+ * @param {boolean} [call.normalizeDestination=true] Specifies whether or not SIP address normalization will be applied.
+ */
+
+/**
+ * @private
+ * @name config.call
+ * @memberof config
+ * @instance
+ * @param {string} [trickleIceMode='NONE'] The Trickle ICE method to use for calls. Currently, no mode is supported.
+ */
 /**
  * Anonymous Call plugin factory.
  */
@@ -10071,7 +10117,7 @@ var _selectors = __webpack_require__(1430);
 var _constants = __webpack_require__(683);
 var _errors = _interopRequireWildcard(__webpack_require__(3437));
 var _kandyWebrtc = __webpack_require__(5203);
-var _version = __webpack_require__(2759);
+var _version = __webpack_require__(3743);
 var _sdkId = _interopRequireDefault(__webpack_require__(5878));
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
 function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
@@ -11729,6 +11775,7 @@ var _selectors = __webpack_require__(1430);
 var _constants2 = __webpack_require__(7409);
 var _constants3 = __webpack_require__(2750);
 var _errors = _interopRequireWildcard(__webpack_require__(3437));
+var _selectors2 = __webpack_require__(105);
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
 function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
 // Call plugin.
@@ -11959,6 +12006,10 @@ function joinOperation(container) {
       throw error;
     }
     log.info('Finished local portion of join. Waiting on remote response.');
+
+    // Get the list of all local tracks on the Session. Add the local tracks
+    //    to call state now so they are available while the call rings.
+    const sessionState = (0, _selectors2.getSessionById)(context.getState(), sessionId);
     // Dispatch an action to do the following:
     //  - create a new "joined" call in state
     //  - update calls used in the join to have isPending property
@@ -11971,11 +12022,18 @@ function joinOperation(container) {
       mediaIds,
       // The ids of the calls that were used for joining.
       usedCallIds: [currentCall.id, otherCall.id],
+      localTracks: sessionState.localTracks,
       // Set the state of the joined call to Initiated.
       state: _constants.CALL_STATES.INITIATED
     }));
     emitEvent(eventTypes.CALL_JOIN, {
       callId: newCallId
+    });
+
+    // Tell the application that local tracks are available on the call now.
+    emitEvent(eventTypes.CALL_TRACKS_ADDED, {
+      callId: newCallId,
+      trackIds: sessionState.localTracks
     });
   }
   return join;
@@ -17705,6 +17763,7 @@ const ICE_COLLECTION_OPERATIONS = exports.ICE_COLLECTION_OPERATIONS = {
   UNHOLD_REMOTE: 'UNHOLD_REMOTE',
   ADD_MEDIA: 'ADD_MEDIA_LOCAL',
   ADD_BASIC_MEDIA: 'ADD_BASIC_MEDIA_LOCAL',
+  ADD_MEDIA_REMOTE: 'ADD_MEDIA_REMOTE',
   REMOVE_MEDIA: 'REMOVE_MEDIA_LOCAL',
   REMOVE_BASIC_MEDIA: 'REMOVE_BASIC_MEDIA_LOCAL',
   MEDIA_RESTART: 'MEDIA_RESTART',
@@ -21126,7 +21185,7 @@ exports.fixIceServerUrls = fixIceServerUrls;
 exports.mergeDefaults = mergeDefaults;
 var _logs = __webpack_require__(3862);
 var _utils = __webpack_require__(5189);
-var _version = __webpack_require__(2759);
+var _version = __webpack_require__(3743);
 var _defaults = __webpack_require__(7241);
 var _validation = __webpack_require__(2850);
 // Other plugins.
@@ -26041,6 +26100,7 @@ reducers[actionTypes.PENDING_JOIN] = {
         return _objectSpread(_objectSpread({}, call), {}, {
           wrtcsSessionId: action.payload.wrtcsSessionId,
           webrtcSessionId: action.payload.webrtcSessionId,
+          localTracks: action.payload.localTracks,
           state: action.payload.state
         });
       } else {
@@ -28003,7 +28063,7 @@ function miscRequests(container) {
     // Get the report for this call id
     const report = CallReporter.getReport(callInfo.id);
     // Get the RECEIVE_CALL event from the report
-    const receiveCallEvent = report.findLastOngoingEvent(_constants.REPORT_EVENTS.RECEIVE_CALL);
+    const receiveCallEvent = report.findLastOngoingEvent([_constants.REPORT_EVENTS.RECEIVE_CALL, _constants.REPORT_EVENTS.SEND_RINGING_FEEDBACK]);
 
     // Create main event representing the request we're about to make
     const requestEvent = receiveCallEvent.addEvent(_constants.REPORT_EVENTS.REST_REQUEST);
@@ -31037,7 +31097,11 @@ const webrtcCodes = exports.webrtcCodes = {
 const proxyCodes = exports.proxyCodes = {
   INVALID_PARAM: 'proxy:1',
   SET_PROXY_CHANNEL_FAIL: 'proxy:2',
-  IN_ACTIVE_CALL: 'proxy:3'
+  IN_ACTIVE_CALL: 'proxy:3',
+  VERSION_MISMATCH: 'proxy:4',
+  INVALID_STATE: 'proxy:5',
+  TIMEOUT: 'proxy:6',
+  UNKNOWN: 'proxy:7'
 };
 
 /***/ }),
@@ -31105,6 +31169,12 @@ Object.defineProperty(exports, "presenceCodes", ({
   enumerable: true,
   get: function () {
     return _codes.presenceCodes;
+  }
+}));
+Object.defineProperty(exports, "proxyCodes", ({
+  enumerable: true,
+  get: function () {
+    return _codes.proxyCodes;
   }
 }));
 Object.defineProperty(exports, "sipEventCodes", ({
@@ -31815,7 +31885,7 @@ var _fp = __webpack_require__(193);
 var _effects = __webpack_require__(7422);
 var _bottlejs = _interopRequireDefault(__webpack_require__(9146));
 var _utils = __webpack_require__(5189);
-var _version = __webpack_require__(2759);
+var _version = __webpack_require__(3743);
 var _intervalFactory = _interopRequireDefault(__webpack_require__(3725));
 var _logs = __webpack_require__(3862);
 var _validation = __webpack_require__(2850);
@@ -35713,7 +35783,7 @@ var eventTypes = _interopRequireWildcard(__webpack_require__(714));
 var authorizations = _interopRequireWildcard(__webpack_require__(5689));
 var _sagas = __webpack_require__(2939);
 var _selectors = __webpack_require__(6942);
-var _version = __webpack_require__(2759);
+var _version = __webpack_require__(3743);
 var _utils = __webpack_require__(5189);
 var _fp = __webpack_require__(193);
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
@@ -35867,7 +35937,7 @@ var _makeRequest = _interopRequireDefault(__webpack_require__(7569));
 var authorizations = _interopRequireWildcard(__webpack_require__(5689));
 var _utils = __webpack_require__(720);
 var _logs = __webpack_require__(3862);
-var _version = __webpack_require__(2759);
+var _version = __webpack_require__(3743);
 var _effects = __webpack_require__(7422);
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
 function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
@@ -35955,7 +36025,7 @@ exports.sanitizeRequest = sanitizeRequest;
 var _selectors = __webpack_require__(647);
 var _selectors2 = __webpack_require__(6942);
 var _logs = __webpack_require__(3862);
-var _version = __webpack_require__(2759);
+var _version = __webpack_require__(3743);
 var _utils = __webpack_require__(5189);
 var _effects = __webpack_require__(7422);
 var _fp = __webpack_require__(193);
@@ -36355,12 +36425,16 @@ function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; 
  */
 function watchDeviceEvents(manager, handler) {
   // Manager event handlers.
-  const change = () => {
+  /**
+   * @method change
+   * @param {boolean} [actionOnly] True if this event should not be emitted to the application.
+   */
+  const change = actionOnly => {
     // Get the latest devices after they changed, then emit the device list
     //  upwards.
     manager.checkDevices().then(devices => {
       const devicesChangedAction = _actions.deviceActions.devicesChanged(devices);
-      const devicesChangedEvent = {
+      const devicesChangedEvent = actionOnly ? undefined : {
         type: eventTypes.DEVICES_CHANGED,
         args: {}
       };
@@ -40661,6 +40735,7 @@ exports["default"] = ontrack;
  */
 function ontrack(listener) {
   const {
+    proxyPeer,
     nativePeer,
     trackManager,
     log
@@ -40675,9 +40750,14 @@ function ontrack(listener) {
     // event object contains transceiver which already has track attached to its receiver
     const {
       track: nativeTrack,
-      streams
+      streams,
+      transceiver
     } = event;
     log.debug(`Peer received ${nativeTrack.kind} Track ${nativeTrack.id}.`);
+    if (!proxyPeer.transceivers.find(tran => tran.mid === transceiver.mid)) {
+      // If we are not already tracking this Transceiver in the Peer model, then add it.
+      proxyPeer.transceivers.push(transceiver);
+    }
 
     /*
      * When the remote side adds a track, it should have an associated MediaStream
@@ -40775,6 +40855,7 @@ function peer(id, config = {}, trackManager) {
    * @property {EventEmitter}      emitter
    * @property {Array<RTCIceCandidate>} iceCandidates Gathered candidates.
    * @property {timeoutID} [iceLoop] Reference to the on-going ICE collection loop.
+   * @property {Array<RTCRtpTransceiver>} transceivers List of transceivers on the peer.
    */
   const base = {
     nativePeer,
@@ -40787,7 +40868,8 @@ function peer(id, config = {}, trackManager) {
     iceTimer,
     emitter,
     iceCandidates: [],
-    iceLoop: undefined
+    iceLoop: undefined,
+    transceivers: []
   };
 
   /**
@@ -40956,6 +41038,7 @@ exports["default"] = addTransceiver;
  */
 function addTransceiver(track) {
   const {
+    proxyPeer,
     nativePeer,
     log
   } = this;
@@ -40966,6 +41049,8 @@ function addTransceiver(track) {
       direction: 'sendrecv',
       streams: [track.getStream()]
     });
+    // Store the reference to the Transceiver on our Peer as well.
+    proxyPeer.transceivers.push(transceiver);
   } catch (err) {
     // TODO: Better error handling.
     log.info(`Failed to add track: ${err.message}`);
@@ -41258,6 +41343,34 @@ function getStats(trackId) {
 
 /***/ }),
 
+/***/ 5667:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports["default"] = getTransceivers;
+/**
+ * Retrieve the list of Transceivers on the Peer.
+ * @method getTransceivers
+ * @return {Array<RTCRtpTransceiver>}
+ */
+function getTransceivers() {
+  const {
+    proxyPeer
+  } = this;
+
+  // Return our Peer's saved list of transceivers instead of using the native
+  //    getTransceivers API. This is for "proxied webrtc" mode, where a native
+  //    API call causes delays.
+  return proxyPeer.transceivers;
+}
+
+/***/ }),
+
 /***/ 424:
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
@@ -41277,6 +41390,7 @@ var _createOffer = _interopRequireDefault(__webpack_require__(8978));
 var _findReusableTransceiver = _interopRequireDefault(__webpack_require__(6040));
 var _getState = _interopRequireDefault(__webpack_require__(9964));
 var _getStats = _interopRequireDefault(__webpack_require__(3326));
+var _getTransceivers = _interopRequireDefault(__webpack_require__(5667));
 var _removeTrack = _interopRequireDefault(__webpack_require__(6045));
 var _replaceTrack = _interopRequireDefault(__webpack_require__(6956));
 var _sendDTMF = _interopRequireDefault(__webpack_require__(4869));
@@ -41291,6 +41405,7 @@ const methods = {
   findReusableTransceiver: _findReusableTransceiver.default,
   getState: _getState.default,
   getStats: _getStats.default,
+  getTransceivers: _getTransceivers.default,
   removeTrack: _removeTrack.default,
   replaceTrack: _replaceTrack.default,
   sendDTMF: _sendDTMF.default,
@@ -42264,13 +42379,12 @@ function DeviceManager() {
   let isListening = true;
   let recentDeviceChange = false;
   navigator.mediaDevices.addEventListener('devicechange', () => {
-    log.info('Media device change detected.');
-
     // A physical device change results in one event per
     //    device "kind". Group the events together.
     // Only emit an event if the Manager is supposed to
     //    be listening for changes.
     if (!recentDeviceChange && isListening) {
+      log.info('Media device change detected.');
       recentDeviceChange = true;
       setTimeout(() => {
         recentDeviceChange = false;
@@ -42279,6 +42393,8 @@ function DeviceManager() {
           emitter.emit('change');
         });
       }, 50);
+    } else {
+      log.info(`Media device change detected, but ${!isListening ? 'ignoring' : 'throttling'}.`);
     }
   });
 
@@ -43654,13 +43770,21 @@ function Session(id, managers, config = {}) {
                 //    immediately. Otherwise another operation will remove it.
                 if (!isUnsolicited) {
                   peer.removeTrack(track.id);
-                }
 
-                // In the event this track ending was due to a device change
-                // we should update our device list before notifying the client that
-                // the track ended so they don't try to use a removed device
-                deviceManager.checkDevices().then(() => {
-                  deviceManager.emit('change');
+                  // Bubble the event upwards to event listeners.
+                  emitter.emit('track:ended', {
+                    local: true,
+                    trackId: track.id,
+                    isUnsolicited
+                  });
+                } else {
+                  // In the event this track ending was due to a device change
+                  // we should update our device list before notifying the client that
+                  // the track ended so they don't try to use a removed device
+                  // `true` --> Tell the SDK to _not_ bubble this event to the
+                  //    application; only update state. The device disconnection
+                  //    will trigger it's own "device change" event.
+                  deviceManager.emit('change', true);
 
                   // Wait 50ms before emitting `track:ended` to allow the SDK
                   // a chance to update the device list in state
@@ -43671,7 +43795,7 @@ function Session(id, managers, config = {}) {
                       isUnsolicited
                     });
                   }, 50);
-                });
+                }
 
                 // Remove track from session dscp settings
                 if (settings.dscpControls.hasOwnProperty(track.id)) {
@@ -59782,7 +59906,7 @@ module.exports = str => encodeURIComponent(str).replace(/[!'()*]/g, x => `%${x.c
 
 /***/ }),
 
-/***/ 8000:
+/***/ 960:
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -60014,7 +60138,7 @@ var _v4 = _interopRequireDefault(__webpack_require__(3940));
 
 var _nil = _interopRequireDefault(__webpack_require__(5384));
 
-var _version = _interopRequireDefault(__webpack_require__(8000));
+var _version = _interopRequireDefault(__webpack_require__(960));
 
 var _validate = _interopRequireDefault(__webpack_require__(7888));
 

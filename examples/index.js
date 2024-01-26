@@ -64,7 +64,7 @@ https
   .createServer(options, app)
   .listen(port, () => console.log(`CallMe Token app is live at https://localhost:${port}`))
 
-function generateParams (res, account, caller, callee) {
+function generateParams(res, account, caller, callee) {
   // We'll generate a timestamp at this time
   // (i.e. when this server receives a request for tokens to be generated)
   // because tokens are only valid for a certain period of time and we
@@ -105,7 +105,7 @@ function generateParams (res, account, caller, callee) {
  * Generates a random Initialization Vector.
  * @param length - The initialization vector's required length.
  */
-function generateRandomIv (length) {
+function generateRandomIv(length) {
   let result = ''
   const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
   const charactersLength = characters.length
@@ -130,7 +130,7 @@ function generateRandomIv (length) {
  *         AES stands for 'Advanced Encryption Standard' specification.
  *         For more info on this specification, see https://en.wikipedia.org/wiki/Advanced_Encryption_Standard
  */
-function createEcbToken (user, key, timestamp, iv) {
+function createEcbToken(user, key, timestamp, iv) {
   const keyBuffer = Buffer.from(key)
   const textBuffer = Buffer.from(`${user};${timestamp}`)
   const ivBuffer = Buffer.from(iv)
@@ -153,7 +153,7 @@ function createEcbToken (user, key, timestamp, iv) {
 //                    use beyond a certain duration.
 // @param iv - The initialization vector used by the 'AES-256-cbc' algorithm.
 // @return A CMAC token encrypted based on 'AES-256-cbc' algorithm.
-function createCbcToken (user, key, timestamp, iv) {
+function createCbcToken(user, key, timestamp, iv) {
   const keyBuffer = Buffer.from(key)
 
   // According to KL 4.8 Spec, if key is 32 chars, then an extra x-ts is inserted
