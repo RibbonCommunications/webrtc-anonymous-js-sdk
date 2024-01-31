@@ -20,6 +20,7 @@ Ribbon WebRTC SDK change log.
 ### Fixed
 
 - Fixed a Call issue where multiple, unrelated call operations occurring at the same time would conflict with each other in some scenarios. `KJS-1682`, `KJS-1975`
+- Fixed a Subscription issue where user subscriptions would not be automatically extended when nearing expiration. `KJS-1983`
 
 ### Deprecated
 
