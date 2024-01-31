@@ -27,6 +27,8 @@ Ribbon WebRTC SDK change log.
 - The previous CallObject properties for operation tracking, `call.localOp` and `call.remoteOp`, are being deprecated and will be removed in a future major release. `KJS-1853`
   - If you were using either of these call properties, please use the new `call.currentOperations` property instead.
 
+## 6.7.1 - 2024-01-31
+
 ## 6.7.0 - 2024-01-26
 
 ### Fixed
