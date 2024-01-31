@@ -1,6 +1,6 @@
 {
     "name": "@rbbn/webrtc-anonymous-js-sdk",
-    "version": "6.7.0",
+    "version": "6.7.1",
     "license": "SEE LICENSE IN LICENSE.md",
     "main":"./dist/webrtc.js",
     "repository": {
