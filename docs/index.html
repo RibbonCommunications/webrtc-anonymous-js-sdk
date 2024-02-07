@@ -7558,16 +7558,7 @@ provided, RTCStatsReport is generated for the Call itself.
     <div class='py1 quiet mt1 prose-big'>Example</div>
     
       
-      <pre class='p1 overflow-auto round fill-light'>client.on(<span class="hljs-string">&#x27;call:statsReceived&#x27;</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">params</span>) </span>{
-   <span class="hljs-comment">// Iterate over each individual statistic inside the RTCPStatsReport.</span>
-   params.result.forEach(<span class="hljs-function"><span class="hljs-params">stats</span> =&gt;</span> {
-       <span class="hljs-comment">// Handle the data on its own or collate with previously gathered stats</span>
-       <span class="hljs-comment">//    for analysis.</span>
-       ...
-   })
-})
-
-<span class="hljs-comment">// Get a snapshot of the Call&#x27;s stats.</span>
+      <pre class='p1 overflow-auto round fill-light'><span class="hljs-comment">// Get a snapshot of the Call&#x27;s stats.</span>
 <span class="hljs-comment">//   This may be done on a regular interval to collect data over time.</span>
 <span class="hljs-keyword">try</span> {
    <span class="hljs-comment">// The API will return a promise that resolves with the stats.</span>
@@ -7611,11 +7602,10 @@ provided, RTCStatsReport is generated for the Call itself.
 <p>This API will return a promise which, when resolved, it will contain the list of available and supported codecs.
 In addition, the SDK emits a <a href="#calleventcallavailablecodecs">call:availableCodecs</a> event
 upon retrieving that list of codecs.</p>
-<p>This API is a wrapper for the static method <a href="https://w3c.github.io/webrtc-pc/#dom-rtcrtpsender-getcapabilities">RTCRtpSender.getCapabilities()</a>.
-Firefox browser does not currently support this method. Therefore, this API will not work on Firefox.</p>
+<p>This API is a wrapper for the static method <a href="https://w3c.github.io/webrtc-pc/#dom-rtcrtpsender-getcapabilities">RTCRtpSender.getCapabilities()</a>.</p>
 
 
-  <div class='pre p1 fill-light mt0'>getAvailableCodecs(kind: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></div>
+  <div class='pre p1 fill-light mt0'>getAvailableCodecs(kind: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a></div>
   
   
 
@@ -7648,8 +7638,8 @@ Firefox browser does not currently support this method. Therefore, this API will
     <div class='py1 quiet mt1 prose-big'>Returns</div>
     
       <div>
-        <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></code>:
-          An object containing the available codecs, along with the 
+        <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a></code>:
+          A promise that will resolve with an object containing the available codecs, along with the 
 <code>kind</code>
  parameter, that was supplied in the first place.
 If there was an error, it will return undefined.
@@ -7661,6 +7651,23 @@ If there was an error, it will return undefined.
 
   
 
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">try</span> {
+   <span class="hljs-comment">// The API will return a promise that resolves with the codecs.</span>
+   <span class="hljs-keyword">const</span> result = <span class="hljs-keyword">await</span> client.call.getAvailableCodecs(<span class="hljs-string">&#x27;audio&#x27;</span>)
+   result.forEach(<span class="hljs-function"><span class="hljs-params">codec</span> =&gt;</span> {
+       <span class="hljs-comment">// Inspect the codec supported by browser by looking at its properties.</span>
+       ...
+   })
+} <span class="hljs-keyword">catch</span> (err) {
+   <span class="hljs-comment">// Handle the error.</span>
+   <span class="hljs-keyword">const</span> { code, message } = err
+   ...
+}</pre>
+    
   
 
   
@@ -10762,6 +10769,8 @@ have been removed, both local and remote.</p>
       
       <pre class='p1 overflow-auto round fill-light'>client.on(<span class="hljs-string">&#x27;call:statsReceived&#x27;</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">params</span>) </span>{
    <span class="hljs-comment">// Iterate over each individual statistic inside the RTCPStatsReport Map.</span>
+   <span class="hljs-comment">// Handle the data on its own or collate with previously gathered stats</span>
+   <span class="hljs-comment">//    for analysis.</span>
    params.result.forEach(<span class="hljs-function"><span class="hljs-params">stat</span> =&gt;</span> {
      ...
    })
@@ -10995,6 +11004,20 @@ information.</p>
 
   
 
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'>client.on(<span class="hljs-string">&#x27;call:availableCodecs&#x27;</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">codecs</span>) </span>{
+   <span class="hljs-comment">// Iterate over each codec.</span>
+   codecs.forEach(<span class="hljs-function"><span class="hljs-params">codec</span> =&gt;</span> {
+       <span class="hljs-comment">// Handle the data by analysing its properties.</span>
+       <span class="hljs-comment">// Some codec instances may have the same name, but different characteristics.</span>
+       <span class="hljs-comment">// (i.e. for a given audio codec, the number of suported channels may differ (e.g. mono versus stereo))</span>
+       ...
+   })
+})</pre>
+    
   
 
   
