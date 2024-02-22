@@ -7665,8 +7665,11 @@
               "description": "The RTCStatsReport.",
               "lineNumber": 11,
               "type": {
-                "type": "NameExpression",
-                "name": "Map"
+                "type": "OptionalType",
+                "expression": {
+                  "type": "NameExpression",
+                  "name": "Map"
+                }
               },
               "name": "params.result"
             },
@@ -7685,7 +7688,7 @@
             },
             {
               "title": "example",
-              "description": "client.on('call:statsReceived', function (params) {\n   // Iterate over each individual statistic inside the RTCPStatsReport Map.\n   // Handle the data on its own or collate with previously gathered stats\n   //    for analysis.\n   params.result.forEach(stat => {\n     ...\n   })\n})",
+              "description": "client.on('call:statsReceived', function (params) {\n   if (params.error) {\n     // Handle the error from the operation.\n     const { code, message } = params.error\n     ...\n   } else {\n     // Iterate over each individual statistic inside the RTCPStatsReport Map.\n     // Handle the data on its own or collate with previously gathered stats\n     //    for analysis.\n     params.result.forEach(stat => {\n       ...\n     })\n   }\n})",
               "lineNumber": 13
             }
           ],
@@ -7695,18 +7698,18 @@
               "column": 0
             },
             "end": {
-              "line": 247,
+              "line": 253,
               "column": 3
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 248,
+                "line": 254,
                 "column": 0
               },
               "end": {
-                "line": 248,
+                "line": 254,
                 "column": 50
               }
             },
@@ -7715,7 +7718,7 @@
           "augments": [],
           "examples": [
             {
-              "description": "client.on('call:statsReceived', function (params) {\n   // Iterate over each individual statistic inside the RTCPStatsReport Map.\n   // Handle the data on its own or collate with previously gathered stats\n   //    for analysis.\n   params.result.forEach(stat => {\n     ...\n   })\n})"
+              "description": "client.on('call:statsReceived', function (params) {\n   if (params.error) {\n     // Handle the error from the operation.\n     const { code, message } = params.error\n     ...\n   } else {\n     // Iterate over each individual statistic inside the RTCPStatsReport Map.\n     // Handle the data on its own or collate with previously gathered stats\n     //    for analysis.\n     params.result.forEach(stat => {\n       ...\n     })\n   }\n})"
             }
           ],
           "implements": [],
@@ -7797,8 +7800,11 @@
                     ]
                   },
                   "type": {
-                    "type": "NameExpression",
-                    "name": "Map"
+                    "type": "OptionalType",
+                    "expression": {
+                      "type": "NameExpression",
+                      "name": "Map"
+                    }
                   }
                 },
                 {
@@ -8015,22 +8021,22 @@
           ],
           "loc": {
             "start": {
-              "line": 250,
+              "line": 256,
               "column": 0
             },
             "end": {
-              "line": 279,
+              "line": 285,
               "column": 3
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 280,
+                "line": 286,
                 "column": 0
               },
               "end": {
-                "line": 280,
+                "line": 286,
                 "column": 55
               }
             },
@@ -8290,22 +8296,22 @@
           ],
           "loc": {
             "start": {
-              "line": 297,
+              "line": 303,
               "column": 0
             },
             "end": {
-              "line": 318,
+              "line": 324,
               "column": 3
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 319,
+                "line": 325,
                 "column": 0
               },
               "end": {
-                "line": 319,
+                "line": 325,
                 "column": 54
               }
             },
@@ -8548,22 +8554,22 @@
           ],
           "loc": {
             "start": {
-              "line": 321,
+              "line": 327,
               "column": 0
             },
             "end": {
-              "line": 337,
+              "line": 343,
               "column": 3
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 338,
+                "line": 344,
                 "column": 0
               },
               "end": {
-                "line": 338,
+                "line": 344,
                 "column": 67
               }
             },
@@ -8829,22 +8835,22 @@
           ],
           "loc": {
             "start": {
-              "line": 340,
+              "line": 346,
               "column": 0
             },
             "end": {
-              "line": 371,
+              "line": 377,
               "column": 3
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 372,
+                "line": 378,
                 "column": 0
               },
               "end": {
-                "line": 372,
+                "line": 378,
                 "column": 48
               }
             },

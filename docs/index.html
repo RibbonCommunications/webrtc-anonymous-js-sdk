@@ -10732,7 +10732,7 @@ have been removed, both local and remote.</p>
 
               
                 <tr>
-  <td class='break-word'><span class='code bold'>params.result</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Map">Map</a></code>
+  <td class='break-word'><span class='code bold'>params.result</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Map">Map</a>?</code>
   </td>
   <td class='break-word'><span>The RTCStatsReport.
 </span></td>
@@ -10768,12 +10768,18 @@ have been removed, both local and remote.</p>
     
       
       <pre class='p1 overflow-auto round fill-light'>client.on(<span class="hljs-string">&#x27;call:statsReceived&#x27;</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">params</span>) </span>{
-   <span class="hljs-comment">// Iterate over each individual statistic inside the RTCPStatsReport Map.</span>
-   <span class="hljs-comment">// Handle the data on its own or collate with previously gathered stats</span>
-   <span class="hljs-comment">//    for analysis.</span>
-   params.result.forEach(<span class="hljs-function"><span class="hljs-params">stat</span> =&gt;</span> {
+   <span class="hljs-keyword">if</span> (params.error) {
+     <span class="hljs-comment">// Handle the error from the operation.</span>
+     <span class="hljs-keyword">const</span> { code, message } = params.error
      ...
-   })
+   } <span class="hljs-keyword">else</span> {
+     <span class="hljs-comment">// Iterate over each individual statistic inside the RTCPStatsReport Map.</span>
+     <span class="hljs-comment">// Handle the data on its own or collate with previously gathered stats</span>
+     <span class="hljs-comment">//    for analysis.</span>
+     params.result.forEach(<span class="hljs-function"><span class="hljs-params">stat</span> =&gt;</span> {
+       ...
+     })
+   }
 })</pre>
     
   

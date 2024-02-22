@@ -2051,19 +2051,25 @@ See the [call.getStats][86] API for more information.
 
     *   `params.callId` **[string][8]** The ID of the Call to retrieve stats for.
     *   `params.trackId` **[string][8]?** The ID of the Track to retrieve stats for.
-    *   `params.result` **[Map][87]** The RTCStatsReport.
+    *   `params.result` **[Map][87]?** The RTCStatsReport.
     *   `params.error` **[api.BasicError][25]?** An error object, if the operation was not successful.
 
 #### Examples
 
 ```javascript
 client.on('call:statsReceived', function (params) {
-   // Iterate over each individual statistic inside the RTCPStatsReport Map.
-   // Handle the data on its own or collate with previously gathered stats
-   //    for analysis.
-   params.result.forEach(stat => {
+   if (params.error) {
+     // Handle the error from the operation.
+     const { code, message } = params.error
      ...
-   })
+   } else {
+     // Iterate over each individual statistic inside the RTCPStatsReport Map.
+     // Handle the data on its own or collate with previously gathered stats
+     //    for analysis.
+     params.result.forEach(stat => {
+       ...
+     })
+   }
 })
 ```
 

@@ -22,6 +22,7 @@ Ribbon WebRTC SDK change log.
 - Fixed a Call issue where multiple, unrelated call operations occurring at the same time would conflict with each other in some scenarios. `KJS-1682`, `KJS-1975`
 - Fixed a Subscription issue where user subscriptions would not be automatically extended when nearing expiration. `KJS-1983`
 - Fixed the API documentation for `call.getAvailableCodecs` to contain up-to-date information, as this API is currently supported in the latest Firefox browser.
+- Fixed the Call documentation for the `call:statsReceived` event not indicating that the `result` parameter is present only on success. `KJS-1999`
 - Fixed issue with call reports that was blocking several call establishment operations while making an anonymous call. `KJS-2000`
 
 ### Deprecated
