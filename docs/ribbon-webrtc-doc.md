@@ -481,6 +481,7 @@ Type: [Object][7]
 *   `customParameters` **[Array][13]<[call.CustomParameter][28]>** The locally set Custom Parameters for the call.
 *   `startTime` **[number][12]** The start time of the call in milliseconds since the epoch.
 *   `endTime` **[number][12]?** The end time of the call in milliseconds since the epoch.
+*   `currentOperations` **[Array][13]<[Object][7]>** The list of operations curently on-going for the call.
 
 ### MediaConstraint
 
@@ -1378,7 +1379,7 @@ period of time would allow a low-level analysis of the Call for that
 period. As an example, this could be done to determine the media quality
 during the Call.
 
-A Track ID can optionally be provided to get a report for a specific
+A Track ID can optionally be provided to get a report for a specific local
 Track of the Call.
 
 This API will return a promise which, when resolved, will contain the report of the particular call.
@@ -1392,24 +1393,27 @@ the operation completes, that has the report.
 #### Parameters
 
 *   `callId` **[string][8]** The ID of the Call to retrieve the report.
-*   `trackId` **[string][8]?** ID of a Track being used by the Call. If not
+*   `trackId` **[string][8]?** ID of a local Track being used by the Call. If not
     provided, RTCStatsReport is generated for the Call itself.
 
 #### Examples
 
 ```javascript
-client.on('call:statsReceived', function (params) {
-   // Iterate over each individual statistic inside the RTCPStatsReport.
-   params.result.forEach(stats => {
+// Get a snapshot of the Call's stats.
+//   This may be done on a regular interval to collect data over time.
+try {
+   // The API will return a promise that resolves with the stats.
+   const result = await client.call.getStats(callId)
+   result.forEach(stats => {
        // Handle the data on its own or collate with previously gathered stats
        //    for analysis.
        ...
    })
-})
-
-// Get a snapshot of the Call's stats.
-//   This may be done on a regular interval to collect data over time.
-client.call.getStats(callId)
+} catch (err) {
+   // Handle the error.
+   const { code, message } = err
+   ...
+}
 ```
 
 Returns **[Promise][68]** A promise that will resolve with the stats report or an error if it fails.
@@ -1423,13 +1427,29 @@ In addition, the SDK emits a [call:availableCodecs][74] event
 upon retrieving that list of codecs.
 
 This API is a wrapper for the static method [RTCRtpSender.getCapabilities()][75].
-Firefox browser does not currently support this method. Therefore, this API will not work on Firefox.
 
 #### Parameters
 
 *   `kind` **[string][8]** The kind of media, i.e., 'audio' or 'video', to get the list of available codecs of.
 
-Returns **[Object][7]** An object containing the available codecs, along with the `kind` parameter, that was supplied in the first place.
+#### Examples
+
+```javascript
+try {
+   // The API will return a promise that resolves with the codecs.
+   const result = await client.call.getAvailableCodecs('audio')
+   result.forEach(codec => {
+       // Inspect the codec supported by browser by looking at its properties.
+       ...
+   })
+} catch (err) {
+   // Handle the error.
+   const { code, message } = err
+   ...
+}
+```
+
+Returns **[Promise][68]** A promise that will resolve with an object containing the available codecs, along with the `kind` parameter, that was supplied in the first place.
 If there was an error, it will return undefined.
 
 ### getReport
@@ -1794,23 +1814,25 @@ log(`Call duration was ${callDuration.data}ms.`)
 
 A call operation has either started, been updated, or finished.
 
-Information about ongoing call operations are stored with the call
-information (see the [call.getById][30] API). This event indicates that
-an operation's information has been changed.
+Information about ongoing call operations are stored on the
+[CallObject][49]. This event indicates that an operation's
+information has changed.
 
-Local call operations will be tracked from start to finish. An operation may
-be updated as it progresses, based on the status of the operation. The
-operation status may be ongoing or pending, depending if the operation is
-waiting on activity on the local or remote end of the call, respectively.
-
-Except in the case of slow-start operations, remote operations will only be
-tracked as a "finish", to indicate that it occurred.
+The status of an operation indicates whether the local or remote side of the
+call is currently processing it, with values being 'ONGOING' or 'PENDING',
+respectively. All operations will begin as 'ONGOING' status with an event
+indicating the 'START' transition. Operations that require a response from
+the remote side will have an 'UPDATE' transition to the 'PENDING' status once
+it starts to wait for the response. Once complete, an event will indicate
+a 'FINISH' transition and the operation will be removed from the call state.
 
 #### Parameters
 
 *   `params` **[Object][7]** 
 
-    *   `params.operation` **[string][8]** The call operation causing this event.
+    *   `params.callId` **[string][8]** The ID for the call being operated on.
+    *   `params.operation` **[string][8]** The type of operation causing this event.
+    *   `params.operationId` **[string][8]** The unique ID of the call operation.
     *   `params.transition` **[string][8]** The transition reason for the operation change.
     *   `params.isLocal` **[boolean][11]** Flag indicating whether the operation was local or not.
     *   `params.previous` **[Object][7]?** The operation information before this change.
@@ -1819,6 +1841,19 @@ tracked as a "finish", to indicate that it occurred.
         *   `params.previous.operation` **[string][8]?** The operation that was ongoing.
         *   `params.previous.status` **[string][8]?** The operation status before this change.
     *   `params.error` **[api.BasicError][25]?** An error object, if the operation was not successful.
+
+#### Examples
+
+```javascript
+client.on('call:operation', (params) => {
+   const { callId, operationId } = params
+
+   // Get the operation from the call's state that this event is about.
+   const call = client.call.getById(callId)
+   const operation = call.currentOperations.find(op => op.id === operationId)
+   log(`${operation.type} operation is now ${operation.status} for call ${callId}.`)
+})
+```
 
 ### call:start
 
@@ -2016,17 +2051,25 @@ See the [call.getStats][86] API for more information.
 
     *   `params.callId` **[string][8]** The ID of the Call to retrieve stats for.
     *   `params.trackId` **[string][8]?** The ID of the Track to retrieve stats for.
-    *   `params.result` **[Map][87]** The RTCStatsReport.
+    *   `params.result` **[Map][87]?** The RTCStatsReport.
     *   `params.error` **[api.BasicError][25]?** An error object, if the operation was not successful.
 
 #### Examples
 
 ```javascript
 client.on('call:statsReceived', function (params) {
-   // Iterate over each individual statistic inside the RTCPStatsReport Map.
-   params.result.forEach(stat => {
+   if (params.error) {
+     // Handle the error from the operation.
+     const { code, message } = params.error
      ...
-   })
+   } else {
+     // Iterate over each individual statistic inside the RTCPStatsReport Map.
+     // Handle the data on its own or collate with previously gathered stats
+     //    for analysis.
+     params.result.forEach(stat => {
+       ...
+     })
+   }
 })
 ```
 
@@ -2079,6 +2122,20 @@ information.
 
     *   `params.kind` **[string][8]** The kind of media the codecs are for.
     *   `params.codecs` **[Array][13]<[Object][7]>** The list of codecs.
+
+#### Examples
+
+```javascript
+client.on('call:availableCodecs', function (codecs) {
+   // Iterate over each codec.
+   codecs.forEach(codec => {
+       // Handle the data by analysing its properties.
+       // Some codec instances may have the same name, but different characteristics.
+       // (i.e. for a given audio codec, the number of suported channels may differ (e.g. mono versus stereo))
+       ...
+   })
+})
+```
 
 ### call:mediaConnectionChange
 

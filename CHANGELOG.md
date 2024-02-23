@@ -7,6 +7,29 @@ Ribbon WebRTC SDK change log.
 - This project adheres to [Semantic Versioning](http://semver.org/).
 - This change log follows [keepachangelog.com](http://keepachangelog.com/) recommendations.
 
+## 6.8.0 - 2024-02-23
+
+### Added
+
+- Added a new property to the CallObject: `call.currentOperations`. `KJS-1853`
+  - This property lists all of the on-going operations, initiated either locally and remotely, for the call.
+  - The `call:operation` event indicates when an operation on this property has been updated.
+- Added a new parameter to the `call:operation` event: `operationId`. KJS-1853
+  - This parameter is a unique ID for the operation triggering the event. It matches the ID of the operation object stored in the `call.currentOperations` property.
+
+### Fixed
+
+- Fixed a Call issue where multiple, unrelated call operations occurring at the same time would conflict with each other in some scenarios. `KJS-1682`, `KJS-1975`
+- Fixed a Subscription issue where user subscriptions would not be automatically extended when nearing expiration. `KJS-1983`
+- Fixed the API documentation for `call.getAvailableCodecs` to contain up-to-date information, as this API is currently supported in the latest Firefox browser. `KJS-1984`
+- Fixed the Call documentation for the `call:statsReceived` event not indicating that the `result` parameter is present only on success. `KJS-1999`
+- Fixed issue with call reports that was blocking several call establishment operations while making an anonymous call. `KJS-2000`
+
+### Deprecated
+
+- The previous CallObject properties for operation tracking, `call.localOp` and `call.remoteOp`, are being deprecated and will be removed in a future major release. `KJS-1853`
+  - If you were using either of these call properties, please use the new `call.currentOperations` property instead.
+
 ## 6.7.1 - 2024-01-31
 
 ## 6.7.0 - 2024-01-26

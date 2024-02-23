@@ -3,7 +3,7 @@
 <html>
 <head>
   <meta charset='utf-8' />
-  <title>webrtc-anonymous-js-sdk 6.7.1 | Documentation</title>
+  <title>webrtc-anonymous-js-sdk 6.8.0 | Documentation</title>
   <meta name='viewport' content='width=device-width,initial-scale=1'>
   <link href='assets/bass.css' type='text/css' rel='stylesheet' />
   <link href='assets/style.css' type='text/css' rel='stylesheet' />
@@ -15,7 +15,7 @@
       <div id='split-left' class='overflow-auto fs0 height-viewport-100'>
         <div class='py1 px2'>
           <h3 class='mb0 no-anchor'>webrtc-anonymous-js-sdk</h3>
-          <div class='mb1'><code>6.7.1</code></div>
+          <div class='mb1'><code>6.8.0</code></div>
           <input
             placeholder='Filter'
             id='filter-input'
@@ -3258,6 +3258,21 @@ SIP users and PSTN phones.</p>
 
           
              : The end time of the call in milliseconds since the epoch.
+
+          
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <span class='code bold'>currentOperations</span> 
+          <code class='quiet'>
+            (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&#x3C;<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>>)
+          </code>
+
+          
+
+          
+             : The list of operations curently on-going for the call.
 
           
           
@@ -7476,7 +7491,7 @@ into the Call at a certain point in time. Aggregating reports over a
 period of time would allow a low-level analysis of the Call for that
 period. As an example, this could be done to determine the media quality
 during the Call.</p>
-<p>A Track ID can optionally be provided to get a report for a specific
+<p>A Track ID can optionally be provided to get a report for a specific local
 Track of the Call.</p>
 <p>This API will return a promise which, when resolved, will contain the report of the particular call.
 The progress of the operation will be tracked via the
@@ -7513,7 +7528,7 @@ the operation completes, that has the report.</p>
         <div class='space-bottom0'>
           <div>
             <span class='code bold'>trackId</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>?)</code>
-	    ID of a Track being used by the Call. If not
+	    ID of a local Track being used by the Call. If not
 provided, RTCStatsReport is generated for the Call itself.
 
           </div>
@@ -7543,18 +7558,21 @@ provided, RTCStatsReport is generated for the Call itself.
     <div class='py1 quiet mt1 prose-big'>Example</div>
     
       
-      <pre class='p1 overflow-auto round fill-light'>client.on(<span class="hljs-string">&#x27;call:statsReceived&#x27;</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">params</span>) </span>{
-   <span class="hljs-comment">// Iterate over each individual statistic inside the RTCPStatsReport.</span>
-   params.result.forEach(<span class="hljs-function"><span class="hljs-params">stats</span> =&gt;</span> {
+      <pre class='p1 overflow-auto round fill-light'><span class="hljs-comment">// Get a snapshot of the Call&#x27;s stats.</span>
+<span class="hljs-comment">//   This may be done on a regular interval to collect data over time.</span>
+<span class="hljs-keyword">try</span> {
+   <span class="hljs-comment">// The API will return a promise that resolves with the stats.</span>
+   <span class="hljs-keyword">const</span> result = <span class="hljs-keyword">await</span> client.call.getStats(callId)
+   result.forEach(<span class="hljs-function"><span class="hljs-params">stats</span> =&gt;</span> {
        <span class="hljs-comment">// Handle the data on its own or collate with previously gathered stats</span>
        <span class="hljs-comment">//    for analysis.</span>
        ...
    })
-})
-
-<span class="hljs-comment">// Get a snapshot of the Call&#x27;s stats.</span>
-<span class="hljs-comment">//   This may be done on a regular interval to collect data over time.</span>
-client.call.getStats(callId)</pre>
+} <span class="hljs-keyword">catch</span> (err) {
+   <span class="hljs-comment">// Handle the error.</span>
+   <span class="hljs-keyword">const</span> { code, message } = err
+   ...
+}</pre>
     
   
 
@@ -7584,11 +7602,10 @@ client.call.getStats(callId)</pre>
 <p>This API will return a promise which, when resolved, it will contain the list of available and supported codecs.
 In addition, the SDK emits a <a href="#calleventcallavailablecodecs">call:availableCodecs</a> event
 upon retrieving that list of codecs.</p>
-<p>This API is a wrapper for the static method <a href="https://w3c.github.io/webrtc-pc/#dom-rtcrtpsender-getcapabilities">RTCRtpSender.getCapabilities()</a>.
-Firefox browser does not currently support this method. Therefore, this API will not work on Firefox.</p>
+<p>This API is a wrapper for the static method <a href="https://w3c.github.io/webrtc-pc/#dom-rtcrtpsender-getcapabilities">RTCRtpSender.getCapabilities()</a>.</p>
 
 
-  <div class='pre p1 fill-light mt0'>getAvailableCodecs(kind: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></div>
+  <div class='pre p1 fill-light mt0'>getAvailableCodecs(kind: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a></div>
   
   
 
@@ -7621,8 +7638,8 @@ Firefox browser does not currently support this method. Therefore, this API will
     <div class='py1 quiet mt1 prose-big'>Returns</div>
     
       <div>
-        <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></code>:
-          An object containing the available codecs, along with the 
+        <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a></code>:
+          A promise that will resolve with an object containing the available codecs, along with the 
 <code>kind</code>
  parameter, that was supplied in the first place.
 If there was an error, it will return undefined.
@@ -7634,6 +7651,23 @@ If there was an error, it will return undefined.
 
   
 
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">try</span> {
+   <span class="hljs-comment">// The API will return a promise that resolves with the codecs.</span>
+   <span class="hljs-keyword">const</span> result = <span class="hljs-keyword">await</span> client.call.getAvailableCodecs(<span class="hljs-string">&#x27;audio&#x27;</span>)
+   result.forEach(<span class="hljs-function"><span class="hljs-params">codec</span> =&gt;</span> {
+       <span class="hljs-comment">// Inspect the codec supported by browser by looking at its properties.</span>
+       ...
+   })
+} <span class="hljs-keyword">catch</span> (err) {
+   <span class="hljs-comment">// Handle the error.</span>
+   <span class="hljs-keyword">const</span> { code, message } = err
+   ...
+}</pre>
+    
   
 
   
@@ -9630,15 +9664,16 @@ log(<span class="hljs-string">`Call duration was <span class="hljs-subst">${call
   
 
   <p>A call operation has either started, been updated, or finished.</p>
-<p>Information about ongoing call operations are stored with the call
-information (see the <a href="#callgetbyid">call.getById</a> API). This event indicates that
-an operation's information has been changed.</p>
-<p>Local call operations will be tracked from start to finish. An operation may
-be updated as it progresses, based on the status of the operation. The
-operation status may be ongoing or pending, depending if the operation is
-waiting on activity on the local or remote end of the call, respectively.</p>
-<p>Except in the case of slow-start operations, remote operations will only be
-tracked as a "finish", to indicate that it occurred.</p>
+<p>Information about ongoing call operations are stored on the
+<a href="#callcallobject">CallObject</a>. This event indicates that an operation's
+information has changed.</p>
+<p>The status of an operation indicates whether the local or remote side of the
+call is currently processing it, with values being 'ONGOING' or 'PENDING',
+respectively. All operations will begin as 'ONGOING' status with an event
+indicating the 'START' transition. Operations that require a response from
+the remote side will have an 'UPDATE' transition to the 'PENDING' status once
+it starts to wait for the response. Once complete, an event will indicate
+a 'FINISH' transition and the operation will be removed from the call state.</p>
 
 
   <div class='pre p1 fill-light mt0'>call:operation</div>
@@ -9676,9 +9711,27 @@ tracked as a "finish", to indicate that it occurred.</p>
             <tbody class='mt1'>
               
                 <tr>
+  <td class='break-word'><span class='code bold'>params.callId</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>
+  </td>
+  <td class='break-word'><span>The ID for the call being operated on.
+</span></td>
+</tr>
+
+
+              
+                <tr>
   <td class='break-word'><span class='code bold'>params.operation</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>
   </td>
-  <td class='break-word'><span>The call operation causing this event.
+  <td class='break-word'><span>The type of operation causing this event.
+</span></td>
+</tr>
+
+
+              
+                <tr>
+  <td class='break-word'><span class='code bold'>params.operationId</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>
+  </td>
+  <td class='break-word'><span>The unique ID of the call operation.
 </span></td>
 </tr>
 
@@ -9755,6 +9808,19 @@ If the transition is to "start" the operation, there will be no previous informa
 
   
 
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'>client.on(<span class="hljs-string">&#x27;call:operation&#x27;</span>, <span class="hljs-function">(<span class="hljs-params">params</span>) =&gt;</span> {
+   <span class="hljs-keyword">const</span> { callId, operationId } = params
+
+   <span class="hljs-comment">// Get the operation from the call&#x27;s state that this event is about.</span>
+   <span class="hljs-keyword">const</span> call = client.call.getById(callId)
+   <span class="hljs-keyword">const</span> operation = call.currentOperations.find(<span class="hljs-function"><span class="hljs-params">op</span> =&gt;</span> op.id === operationId)
+   log(<span class="hljs-string">`<span class="hljs-subst">${operation.type}</span> operation is now <span class="hljs-subst">${operation.status}</span> for call <span class="hljs-subst">${callId}</span>.`</span>)
+})</pre>
+    
   
 
   
@@ -10666,7 +10732,7 @@ have been removed, both local and remote.</p>
 
               
                 <tr>
-  <td class='break-word'><span class='code bold'>params.result</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Map">Map</a></code>
+  <td class='break-word'><span class='code bold'>params.result</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Map">Map</a>?</code>
   </td>
   <td class='break-word'><span>The RTCStatsReport.
 </span></td>
@@ -10702,10 +10768,18 @@ have been removed, both local and remote.</p>
     
       
       <pre class='p1 overflow-auto round fill-light'>client.on(<span class="hljs-string">&#x27;call:statsReceived&#x27;</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">params</span>) </span>{
-   <span class="hljs-comment">// Iterate over each individual statistic inside the RTCPStatsReport Map.</span>
-   params.result.forEach(<span class="hljs-function"><span class="hljs-params">stat</span> =&gt;</span> {
+   <span class="hljs-keyword">if</span> (params.error) {
+     <span class="hljs-comment">// Handle the error from the operation.</span>
+     <span class="hljs-keyword">const</span> { code, message } = params.error
      ...
-   })
+   } <span class="hljs-keyword">else</span> {
+     <span class="hljs-comment">// Iterate over each individual statistic inside the RTCPStatsReport Map.</span>
+     <span class="hljs-comment">// Handle the data on its own or collate with previously gathered stats</span>
+     <span class="hljs-comment">//    for analysis.</span>
+     params.result.forEach(<span class="hljs-function"><span class="hljs-params">stat</span> =&gt;</span> {
+       ...
+     })
+   }
 })</pre>
     
   
@@ -10936,6 +11010,20 @@ information.</p>
 
   
 
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'>client.on(<span class="hljs-string">&#x27;call:availableCodecs&#x27;</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">codecs</span>) </span>{
+   <span class="hljs-comment">// Iterate over each codec.</span>
+   codecs.forEach(<span class="hljs-function"><span class="hljs-params">codec</span> =&gt;</span> {
+       <span class="hljs-comment">// Handle the data by analysing its properties.</span>
+       <span class="hljs-comment">// Some codec instances may have the same name, but different characteristics.</span>
+       <span class="hljs-comment">// (i.e. for a given audio codec, the number of suported channels may differ (e.g. mono versus stereo))</span>
+       ...
+   })
+})</pre>
+    
   
 
   
