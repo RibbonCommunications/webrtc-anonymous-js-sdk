@@ -1762,6 +1762,7 @@ log(`Took ${getAvailableCodecsEvent.end - getAvailableCodecsEvent.start}ms to ge
 ### metrics
 
 List of metrics available as part of a Call Report.
+Metrics are calculated only for the successful scenarios.
 
 As a call progresses, timings are calculated for the duration of operations and
 other events. They are recorded in a call report that can be retrieved via

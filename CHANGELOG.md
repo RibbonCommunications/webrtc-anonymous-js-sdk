@@ -9,6 +9,10 @@ Ribbon WebRTC SDK change log.
 
 ## 6.9.0 - beta
 
+### Changed
+
+- Changed call metrics logic so that call metrics are only added into the report as part of a successful call event. This way, the metric value will only measure the duration of a successful operation. `KJS-1972`
+
 ## 6.8.0 - 2024-02-23
 
 ### Added
