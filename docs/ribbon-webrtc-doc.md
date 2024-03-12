@@ -1335,7 +1335,8 @@ A Call's custom parameters are a property of the Call's [CallObject][49],
 which can be retrieved using the [call.getById][30] or
 [call.getAll][29] APIs.
 
-To change or remove the custom parameters on a call, use the [call.setCustomParameters][46] API.
+Before sending custom parameters, they need to be first set on the existing Call.
+To set, change or remove the custom parameters on a call, use the [call.setCustomParameters][46] API.
 
 #### Parameters
 

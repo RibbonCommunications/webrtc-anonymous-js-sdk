@@ -9,6 +9,10 @@ Ribbon WebRTC SDK change log.
 
 ## 6.9.0 - beta
 
+### Added
+
+- Added extra validation on `sendCustomParameters` API to ensure parameters are set on the Call, before calling this API. `KJS-2047`
+
 ### Changed
 
 - Changed call metrics logic so that call metrics are only added into the report as part of a successful call event. This way, the metric value will only measure the duration of a successful operation. `KJS-1972`

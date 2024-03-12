@@ -7323,7 +7323,8 @@ to another endpoint, depending on how the server is configured.</p>
 <p>A Call's custom parameters are a property of the Call's <a href="#callcallobject">CallObject</a>,
 which can be retrieved using the <a href="#callgetbyid">call.getById</a> or
 <a href="#callgetall">call.getAll</a> APIs.</p>
-<p>To change or remove the custom parameters on a call, use the <a href="#callsetcustomparameters">call.setCustomParameters</a> API.</p>
+<p>Before sending custom parameters, they need to be first set on the existing Call.
+To set, change or remove the custom parameters on a call, use the <a href="#callsetcustomparameters">call.setCustomParameters</a> API.</p>
 
 
   <div class='pre p1 fill-light mt0'>sendCustomParameters(callId: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</div>
