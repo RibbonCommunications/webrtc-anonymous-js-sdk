@@ -1,4 +1,4 @@
-[COPYRIGHT © 2023 RIBBON COMMUNICATIONS OPERATING COMPANY, INC. ALL RIGHTS RESERVED]: #
+[COPYRIGHT © 2024 RIBBON COMMUNICATIONS OPERATING COMPANY, INC. ALL RIGHTS RESERVED]: #
 
 # SDK Logs
 
@@ -176,5 +176,5 @@ When saving Log Entries, we recommend saving them in NDJSON format and retaining
 
 **N.B.:** If you require support about an issue with the SDK itself, we will ask you to provide a log file with the raw JSON Log Entries and the SDK configured at the 'DEBUG' `logLevel`.
 
-[COPYRIGHT © 2023 RIBBON COMMUNICATIONS OPERATING COMPANY, INC. ALL RIGHTS RESERVED]: #
+[COPYRIGHT © 2024 RIBBON COMMUNICATIONS OPERATING COMPANY, INC. ALL RIGHTS RESERVED]: #
 

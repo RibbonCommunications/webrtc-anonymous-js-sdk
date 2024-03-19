@@ -1,4 +1,4 @@
-[copyright © 2023 ribbon communications operating company, inc. all rights reserved]: #
+[copyright © 2024 ribbon communications operating company, inc. all rights reserved]: #
 
 # Change Log
 
@@ -1073,4 +1073,4 @@ Choose the configuration that applies to you:
 
 - Initial release of 4.x callMe SDK. It supports making anonymous calls using the new 4.x call stack.
 
-[copyright © 2023 ribbon communications operating company, inc. all rights reserved]: #
+[copyright © 2024 ribbon communications operating company, inc. all rights reserved]: #
