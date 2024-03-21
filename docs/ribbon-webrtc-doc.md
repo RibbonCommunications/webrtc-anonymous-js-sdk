@@ -355,6 +355,16 @@ The authentication credentials have been set. You can check the set user details
 
 *   `params` **[Object][7]** 
 
+### auth:error
+
+There was an error with authentication.
+
+#### Parameters
+
+*   `params` **[Object][7]** 
+
+    *   `params.error` **[api.BasicError][25]** The Basic error object.
+
 ### request:error
 
 An error occurred with server authorization.

@@ -3087,19 +3087,24 @@
               "type": null
             },
             {
+              "title": "static",
+              "description": null,
+              "lineNumber": 4
+            },
+            {
               "title": "memberof",
               "description": "api",
-              "lineNumber": 4
+              "lineNumber": 5
             },
             {
               "title": "event",
               "description": "auth:change",
-              "lineNumber": 5
+              "lineNumber": 6
             },
             {
               "title": "param",
               "description": null,
-              "lineNumber": 6,
+              "lineNumber": 7,
               "type": {
                 "type": "NameExpression",
                 "name": "Object"
@@ -3113,18 +3118,18 @@
               "column": 0
             },
             "end": {
-              "line": 8,
+              "line": 9,
               "column": 3
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 9,
+                "line": 10,
                 "column": 0
               },
               "end": {
-                "line": 9,
+                "line": 10,
                 "column": 40
               }
             },
@@ -3137,7 +3142,7 @@
             {
               "title": "param",
               "name": "params",
-              "lineNumber": 6,
+              "lineNumber": 7,
               "type": {
                 "type": "NameExpression",
                 "name": "Object"
@@ -3151,6 +3156,7 @@
           "todos": [],
           "yields": [],
           "access": "public",
+          "scope": "static",
           "memberof": "api",
           "kind": "event",
           "name": "auth:change",
@@ -3168,10 +3174,162 @@
             },
             {
               "name": "auth:change",
-              "kind": "event"
+              "kind": "event",
+              "scope": "static"
             }
           ],
           "namespace": "api.event:auth:change"
+        },
+        {
+          "description": {
+            "type": "root",
+            "children": [
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "type": "text",
+                    "value": "There was an error with authentication."
+                  }
+                ]
+              }
+            ]
+          },
+          "tags": [
+            {
+              "title": "public",
+              "description": null,
+              "lineNumber": 3,
+              "type": null
+            },
+            {
+              "title": "static",
+              "description": null,
+              "lineNumber": 4
+            },
+            {
+              "title": "memberof",
+              "description": "api",
+              "lineNumber": 5
+            },
+            {
+              "title": "event",
+              "description": "auth:error",
+              "lineNumber": 6
+            },
+            {
+              "title": "param",
+              "description": null,
+              "lineNumber": 7,
+              "type": {
+                "type": "NameExpression",
+                "name": "Object"
+              },
+              "name": "params"
+            },
+            {
+              "title": "param",
+              "description": "The Basic error object.",
+              "lineNumber": 8,
+              "type": {
+                "type": "NameExpression",
+                "name": "api.BasicError"
+              },
+              "name": "params.error"
+            }
+          ],
+          "loc": {
+            "start": {
+              "line": 12,
+              "column": 0
+            },
+            "end": {
+              "line": 22,
+              "column": 3
+            }
+          },
+          "context": {
+            "loc": {
+              "start": {
+                "line": 23,
+                "column": 0
+              },
+              "end": {
+                "line": 23,
+                "column": 38
+              }
+            },
+            "file": "/var/jenkins_home/workspace/Kandy.js_beta/packages/kandy/src/auth/interface/eventTypes.js"
+          },
+          "augments": [],
+          "examples": [],
+          "implements": [],
+          "params": [
+            {
+              "title": "param",
+              "name": "params",
+              "lineNumber": 7,
+              "type": {
+                "type": "NameExpression",
+                "name": "Object"
+              },
+              "properties": [
+                {
+                  "title": "param",
+                  "name": "params.error",
+                  "lineNumber": 8,
+                  "description": {
+                    "type": "root",
+                    "children": [
+                      {
+                        "type": "paragraph",
+                        "children": [
+                          {
+                            "type": "text",
+                            "value": "The Basic error object."
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "type": {
+                    "type": "NameExpression",
+                    "name": "api.BasicError"
+                  }
+                }
+              ]
+            }
+          ],
+          "properties": [],
+          "returns": [],
+          "sees": [],
+          "throws": [],
+          "todos": [],
+          "yields": [],
+          "access": "public",
+          "scope": "static",
+          "memberof": "api",
+          "kind": "event",
+          "name": "auth:error",
+          "members": {
+            "global": [],
+            "inner": [],
+            "instance": [],
+            "events": [],
+            "static": []
+          },
+          "path": [
+            {
+              "name": "api",
+              "kind": "module"
+            },
+            {
+              "name": "auth:error",
+              "kind": "event",
+              "scope": "static"
+            }
+          ],
+          "namespace": "api.event:auth:error"
         },
         {
           "description": {
