@@ -12,7 +12,7 @@
  *
  * WebRTC.js
  * webrtc.anonymous.js
- * Version: 6.9.0-beta.1278
+ * Version: 6.9.0-beta.1279
  */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
@@ -2322,7 +2322,7 @@ module.exports = root;
 
 /***/ }),
 
-/***/ 39591:
+/***/ 58298:
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -2340,7 +2340,7 @@ exports.getVersion = getVersion;
  * for the @@ tag below with actual version value.
  */
 function getVersion() {
-  return '6.9.0-beta.1278';
+  return '6.9.0-beta.1279';
 }
 
 /***/ }),
@@ -5161,7 +5161,8 @@ function createAnonOperations(container) {
       realm,
       accountToken,
       toToken,
-      fromToken
+      fromToken,
+      authAccount
     } = credentials;
     if (
     // If any of them exist, but any other does not exist, then error.
@@ -5192,7 +5193,7 @@ function createAnonOperations(container) {
       isTokenBased = true;
     } else {
       log.debug('Performing anonymous call.');
-      account = participants.to;
+      account = authAccount ? authAccount : participants.to;
       anonParticipants = {
         to: (0, _normalization.normalizeSipUri)(participants.to),
         from: (0, _normalization.normalizeSipUri)(participants.from)
@@ -10937,7 +10938,7 @@ exports["default"] = getStatsOperation;
 var _selectors = __webpack_require__(11430);
 var _kandyWebrtc = __webpack_require__(15203);
 var _errors = _interopRequireWildcard(__webpack_require__(83437));
-var _version = __webpack_require__(39591);
+var _version = __webpack_require__(58298);
 var _sdkId = _interopRequireDefault(__webpack_require__(15878));
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
 function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
@@ -22735,7 +22736,7 @@ exports.fixIceServerUrls = fixIceServerUrls;
 exports.mergeDefaults = mergeDefaults;
 var _logs = __webpack_require__(43862);
 var _utils = __webpack_require__(25189);
-var _version = __webpack_require__(39591);
+var _version = __webpack_require__(58298);
 var _defaults = __webpack_require__(27241);
 var _validation = __webpack_require__(42850);
 // Other plugins.
@@ -23724,12 +23725,16 @@ var _objectWithoutProperties2 = _interopRequireDefault(__webpack_require__(24923
 var _pick2 = _interopRequireDefault(__webpack_require__(13337));
 var _index = _interopRequireDefault(__webpack_require__(25535));
 var _actions = __webpack_require__(6313);
+var eventTypes = _interopRequireWildcard(__webpack_require__(55166));
+var _constants = __webpack_require__(60683);
 var _uuid = __webpack_require__(60130);
 var _utils = __webpack_require__(27842);
 const _excluded = ["audio", "audioOptions", "video", "videoOptions", "screen", "screenOptions"]; // Regular Call API.
 // Call plugin.
 // Libraries.
 // Helpers.
+function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
+function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
 function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
 function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { (0, _defineProperty2.default)(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
 function createAnonApi(container) {
@@ -23737,7 +23742,8 @@ function createAnonApi(container) {
     CallManager,
     context,
     logManager,
-    API_LOG_TAG
+    API_LOG_TAG,
+    emitEvent
   } = container;
   const log = logManager.getLogger('CALL');
 
@@ -23770,6 +23776,7 @@ function createAnonApi(container) {
    * @param {Object} [credentials.accountToken] The encrypted account token of the account making the call.
    * @param {Object} [credentials.fromToken] The encrypted SIP address of the account/caller.
    * @param {Object} [credentials.toToken] The encrypted SIP address of the callee.
+   * @param {Object} [credentials.authAccount] The account used to authenticate if no token is provided.
    * @param {Object} callOptions Call options.
    * @param {string} callOptions.from The URI of the user making the call.
    * @param {Boolean} [callOptions.audio=true] Whether the call should have audio on start. Currently, audio-less calls are not supported.
@@ -23868,7 +23875,8 @@ function createAnonApi(container) {
       realm,
       accountToken,
       toToken,
-      fromToken
+      fromToken,
+      authAccount
     } = credentials;
     let account;
     let isTokenBased;
@@ -23879,7 +23887,7 @@ function createAnonApi(container) {
       isTokenBased = true;
     } else {
       log.debug('Performing anonymous call.');
-      account = callee;
+      account = authAccount ? authAccount : callee;
       isTokenBased = false;
     }
     const anonOptions = _objectSpread(_objectSpread({}, options), {}, {
@@ -23907,6 +23915,16 @@ function createAnonApi(container) {
           from: options.from
         };
         await CallManager.makeAnonymousCall(callId, participants, credentials, mediaConstraints, options);
+
+        // Tell the application that the call has finished "initiating".
+        emitEvent(eventTypes.CALL_STATE_CHANGE, {
+          callId,
+          previous: {
+            state: _constants.CALL_STATES.INITIATING,
+            localHold: false,
+            remoteHold: false
+          }
+        });
       } catch (err) {
         // Errors are handled by the operation.
       }
@@ -33677,7 +33695,7 @@ var _reduxSaga = _interopRequireDefault(__webpack_require__(7));
 var _effects = __webpack_require__(27422);
 var _bottlejs = _interopRequireDefault(__webpack_require__(39146));
 var _utils = __webpack_require__(25189);
-var _version = __webpack_require__(39591);
+var _version = __webpack_require__(58298);
 var _intervalFactory = _interopRequireDefault(__webpack_require__(93725));
 var _logs = __webpack_require__(43862);
 var _validation = __webpack_require__(42850);
@@ -37603,7 +37621,7 @@ var eventTypes = _interopRequireWildcard(__webpack_require__(10714));
 var authorizations = _interopRequireWildcard(__webpack_require__(55689));
 var _sagas = __webpack_require__(22939);
 var _selectors = __webpack_require__(46942);
-var _version = __webpack_require__(39591);
+var _version = __webpack_require__(58298);
 var _utils = __webpack_require__(25189);
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
 function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
@@ -37757,7 +37775,7 @@ var _makeRequest = _interopRequireDefault(__webpack_require__(87569));
 var authorizations = _interopRequireWildcard(__webpack_require__(55689));
 var _utils = __webpack_require__(70720);
 var _logs = __webpack_require__(43862);
-var _version = __webpack_require__(39591);
+var _version = __webpack_require__(58298);
 var _effects = __webpack_require__(27422);
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
 function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
@@ -37847,7 +37865,7 @@ var _cloneDeep2 = _interopRequireDefault(__webpack_require__(33904));
 var _selectors = __webpack_require__(50647);
 var _selectors2 = __webpack_require__(46942);
 var _logs = __webpack_require__(43862);
-var _version = __webpack_require__(39591);
+var _version = __webpack_require__(58298);
 var _utils = __webpack_require__(25189);
 var _effects = __webpack_require__(27422);
 // Request plugin.
@@ -72478,7 +72496,7 @@ module.exports = str => encodeURIComponent(str).replace(/[!'()*]/g, x => `%${x.c
 
 /***/ }),
 
-/***/ 94913:
+/***/ 93154:
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -72710,7 +72728,7 @@ var _v4 = _interopRequireDefault(__webpack_require__(95899));
 
 var _nil = _interopRequireDefault(__webpack_require__(15384));
 
-var _version = _interopRequireDefault(__webpack_require__(94913));
+var _version = _interopRequireDefault(__webpack_require__(93154));
 
 var _validate = _interopRequireDefault(__webpack_require__(77888));
 

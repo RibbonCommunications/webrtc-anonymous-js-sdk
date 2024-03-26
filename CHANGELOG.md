@@ -17,6 +17,10 @@ Ribbon WebRTC SDK change log.
 
 - Changed call metrics logic so that call metrics are only added into the report as part of a successful call event. This way, the metric value will only measure the duration of a successful operation. `KJS-1972`
 
+### Added
+
+- Added a new parameter `authAccount` to the `credentials` object that is passed in the `makeAnonymous` call API. The value for this parameter should be the account with the `callMe` service enabled and can be used to authenticate token-less calls instead of the value for `call destination`. This is an optional parameter and is only required if you intend for the `Caller` to use the subscribed account with `callMe` service enabled. `KJS-2049`
+
 ## 6.8.0 - 2024-02-23
 
 ### Added

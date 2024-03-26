@@ -9226,8 +9226,21 @@
             },
             {
               "title": "param",
-              "description": "Call options.",
+              "description": "The account used to authenticate if no token is provided.",
               "lineNumber": 12,
+              "type": {
+                "type": "OptionalType",
+                "expression": {
+                  "type": "NameExpression",
+                  "name": "Object"
+                }
+              },
+              "name": "credentials.authAccount"
+            },
+            {
+              "title": "param",
+              "description": "Call options.",
+              "lineNumber": 13,
               "type": {
                 "type": "NameExpression",
                 "name": "Object"
@@ -9237,7 +9250,7 @@
             {
               "title": "param",
               "description": "The URI of the user making the call.",
-              "lineNumber": 13,
+              "lineNumber": 14,
               "type": {
                 "type": "NameExpression",
                 "name": "string"
@@ -9247,7 +9260,7 @@
             {
               "title": "param",
               "description": "Whether the call should have audio on start. Currently, audio-less calls are not supported.",
-              "lineNumber": 14,
+              "lineNumber": 15,
               "type": {
                 "type": "OptionalType",
                 "expression": {
@@ -9261,7 +9274,7 @@
             {
               "title": "param",
               "description": "Options for configuring the call's audio.",
-              "lineNumber": 15,
+              "lineNumber": 16,
               "type": {
                 "type": "OptionalType",
                 "expression": {
@@ -9274,7 +9287,7 @@
             {
               "title": "param",
               "description": "Options for configuring media's bandwidth.",
-              "lineNumber": 16,
+              "lineNumber": 17,
               "type": {
                 "type": "OptionalType",
                 "expression": {
@@ -9287,7 +9300,7 @@
             {
               "title": "param",
               "description": "ID of the microphone to receive audio from.",
-              "lineNumber": 17,
+              "lineNumber": 18,
               "type": {
                 "type": "OptionalType",
                 "expression": {
@@ -9300,7 +9313,7 @@
             {
               "title": "param",
               "description": "Whether the call should have video on start.",
-              "lineNumber": 18,
+              "lineNumber": 19,
               "type": {
                 "type": "OptionalType",
                 "expression": {
@@ -9314,7 +9327,7 @@
             {
               "title": "param",
               "description": "Options for configuring the call's video.",
-              "lineNumber": 19,
+              "lineNumber": 20,
               "type": {
                 "type": "OptionalType",
                 "expression": {
@@ -9327,7 +9340,7 @@
             {
               "title": "param",
               "description": "ID of the camera to receive video from.",
-              "lineNumber": 20,
+              "lineNumber": 21,
               "type": {
                 "type": "OptionalType",
                 "expression": {
@@ -9340,7 +9353,7 @@
             {
               "title": "param",
               "description": "The height of the video.",
-              "lineNumber": 21,
+              "lineNumber": 22,
               "type": {
                 "type": "OptionalType",
                 "expression": {
@@ -9353,7 +9366,7 @@
             {
               "title": "param",
               "description": "The width of the video.",
-              "lineNumber": 22,
+              "lineNumber": 23,
               "type": {
                 "type": "OptionalType",
                 "expression": {
@@ -9366,7 +9379,7 @@
             {
               "title": "param",
               "description": "The frame rate of the video.",
-              "lineNumber": 23,
+              "lineNumber": 24,
               "type": {
                 "type": "OptionalType",
                 "expression": {
@@ -9379,7 +9392,7 @@
             {
               "title": "param",
               "description": "Whether the call should have screenshare on start.",
-              "lineNumber": 24,
+              "lineNumber": 25,
               "type": {
                 "type": "OptionalType",
                 "expression": {
@@ -9393,7 +9406,7 @@
             {
               "title": "param",
               "description": "Options for configuring the call's screenShare.",
-              "lineNumber": 25,
+              "lineNumber": 26,
               "type": {
                 "type": "OptionalType",
                 "expression": {
@@ -9406,7 +9419,7 @@
             {
               "title": "param",
               "description": "The height of the screenShare.",
-              "lineNumber": 26,
+              "lineNumber": 27,
               "type": {
                 "type": "OptionalType",
                 "expression": {
@@ -9419,7 +9432,7 @@
             {
               "title": "param",
               "description": "The width of the screenShare.",
-              "lineNumber": 27,
+              "lineNumber": 28,
               "type": {
                 "type": "OptionalType",
                 "expression": {
@@ -9432,7 +9445,7 @@
             {
               "title": "param",
               "description": "The frame rate of the screenShare.",
-              "lineNumber": 28,
+              "lineNumber": 29,
               "type": {
                 "type": "OptionalType",
                 "expression": {
@@ -9445,7 +9458,7 @@
             {
               "title": "param",
               "description": "Custom display name to be provided to the destination. Only used with token-less anonymous calls. Not supported in all environments and may use default display name.",
-              "lineNumber": 29,
+              "lineNumber": 30,
               "type": {
                 "type": "OptionalType",
                 "expression": {
@@ -9458,7 +9471,7 @@
             {
               "title": "param",
               "description": "Custom SIP header parameters for the SIP backend.",
-              "lineNumber": 30,
+              "lineNumber": 31,
               "type": {
                 "type": "OptionalType",
                 "expression": {
@@ -9480,7 +9493,7 @@
             {
               "title": "return",
               "description": "Id of the outgoing call.",
-              "lineNumber": 31,
+              "lineNumber": 32,
               "type": {
                 "type": "NameExpression",
                 "name": "string"
@@ -9489,32 +9502,32 @@
             {
               "title": "example",
               "description": "// Make a basic anonymous call.\nlet callee = 'user1@example.com';\nlet callOptions = { ... };\n\nlet callId = client.call.makeAnonymous(callee, {}, callOptions);",
-              "lineNumber": 32
+              "lineNumber": 33
             },
             {
               "title": "example",
               "description": "// Make a time-limited token anonymous call.\nlet callee = 'user1@example.com';\nlet account = 'user2@example.com';\nlet callOptions = { ...\n    customParameters: [\n      {\n        \"name\": \"X-GPS\",\n        \"value\": \"42.686032,23.344565\"\n      }\n    ],\n    ...\n  };\n\n// Generate / Retrieve the encrypted tokens.\nconst key = 'abc123...';\nconst credentials = {\n     accountToken: createToken(account, key),\n     fromToken: createToken('sip:' + account, key),\n     toToken: createToken('sip:' + callee, key),\n     realm: 'realmAbc123...'\n};\n\nlet callId = client.call.makeAnonymous(callee, credentials, callOptions);",
-              "lineNumber": 38
+              "lineNumber": 39
             }
           ],
           "loc": {
             "start": {
-              "line": 53,
+              "line": 55,
               "column": 2
             },
             "end": {
-              "line": 115,
+              "line": 118,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 125,
+                "line": 128,
                 "column": 2
               },
               "end": {
-                "line": 195,
+                "line": 208,
                 "column": 3
               }
             },
@@ -9677,13 +9690,39 @@
                       "name": "Object"
                     }
                   }
+                },
+                {
+                  "title": "param",
+                  "name": "credentials.authAccount",
+                  "lineNumber": 12,
+                  "description": {
+                    "type": "root",
+                    "children": [
+                      {
+                        "type": "paragraph",
+                        "children": [
+                          {
+                            "type": "text",
+                            "value": "The account used to authenticate if no token is provided."
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "type": {
+                    "type": "OptionalType",
+                    "expression": {
+                      "type": "NameExpression",
+                      "name": "Object"
+                    }
+                  }
                 }
               ]
             },
             {
               "title": "param",
               "name": "callOptions",
-              "lineNumber": 12,
+              "lineNumber": 13,
               "description": {
                 "type": "root",
                 "children": [
@@ -9706,7 +9745,7 @@
                 {
                   "title": "param",
                   "name": "callOptions.from",
-                  "lineNumber": 13,
+                  "lineNumber": 14,
                   "description": {
                     "type": "root",
                     "children": [
@@ -9729,7 +9768,7 @@
                 {
                   "title": "param",
                   "name": "callOptions.audio",
-                  "lineNumber": 14,
+                  "lineNumber": 15,
                   "description": {
                     "type": "root",
                     "children": [
@@ -9753,7 +9792,7 @@
                 {
                   "title": "param",
                   "name": "callOptions.audioOptions",
-                  "lineNumber": 15,
+                  "lineNumber": 16,
                   "description": {
                     "type": "root",
                     "children": [
@@ -9779,7 +9818,7 @@
                     {
                       "title": "param",
                       "name": "callOptions.audioOptions.deviceId",
-                      "lineNumber": 17,
+                      "lineNumber": 18,
                       "description": {
                         "type": "root",
                         "children": [
@@ -9807,7 +9846,7 @@
                 {
                   "title": "param",
                   "name": "callOptions.bandwidth",
-                  "lineNumber": 16,
+                  "lineNumber": 17,
                   "description": {
                     "type": "root",
                     "children": [
@@ -9833,7 +9872,7 @@
                 {
                   "title": "param",
                   "name": "callOptions.video",
-                  "lineNumber": 18,
+                  "lineNumber": 19,
                   "description": {
                     "type": "root",
                     "children": [
@@ -9857,7 +9896,7 @@
                 {
                   "title": "param",
                   "name": "callOptions.videoOptions",
-                  "lineNumber": 19,
+                  "lineNumber": 20,
                   "description": {
                     "type": "root",
                     "children": [
@@ -9883,7 +9922,7 @@
                     {
                       "title": "param",
                       "name": "callOptions.videoOptions.deviceId",
-                      "lineNumber": 20,
+                      "lineNumber": 21,
                       "description": {
                         "type": "root",
                         "children": [
@@ -9909,7 +9948,7 @@
                     {
                       "title": "param",
                       "name": "callOptions.videoOptions.height",
-                      "lineNumber": 21,
+                      "lineNumber": 22,
                       "description": {
                         "type": "root",
                         "children": [
@@ -9935,7 +9974,7 @@
                     {
                       "title": "param",
                       "name": "callOptions.videoOptions.width",
-                      "lineNumber": 22,
+                      "lineNumber": 23,
                       "description": {
                         "type": "root",
                         "children": [
@@ -9961,7 +10000,7 @@
                     {
                       "title": "param",
                       "name": "callOptions.videoOptions.frameRate",
-                      "lineNumber": 23,
+                      "lineNumber": 24,
                       "description": {
                         "type": "root",
                         "children": [
@@ -9989,7 +10028,7 @@
                 {
                   "title": "param",
                   "name": "callOptions.screen",
-                  "lineNumber": 24,
+                  "lineNumber": 25,
                   "description": {
                     "type": "root",
                     "children": [
@@ -10013,7 +10052,7 @@
                 {
                   "title": "param",
                   "name": "callOptions.screenOptions",
-                  "lineNumber": 25,
+                  "lineNumber": 26,
                   "description": {
                     "type": "root",
                     "children": [
@@ -10039,7 +10078,7 @@
                     {
                       "title": "param",
                       "name": "callOptions.screenOptions.height",
-                      "lineNumber": 26,
+                      "lineNumber": 27,
                       "description": {
                         "type": "root",
                         "children": [
@@ -10065,7 +10104,7 @@
                     {
                       "title": "param",
                       "name": "callOptions.screenOptions.width",
-                      "lineNumber": 27,
+                      "lineNumber": 28,
                       "description": {
                         "type": "root",
                         "children": [
@@ -10091,7 +10130,7 @@
                     {
                       "title": "param",
                       "name": "callOptions.screenOptions.frameRate",
-                      "lineNumber": 28,
+                      "lineNumber": 29,
                       "description": {
                         "type": "root",
                         "children": [
@@ -10119,7 +10158,7 @@
                 {
                   "title": "param",
                   "name": "callOptions.displayName",
-                  "lineNumber": 29,
+                  "lineNumber": 30,
                   "description": {
                     "type": "root",
                     "children": [
@@ -10145,7 +10184,7 @@
                 {
                   "title": "param",
                   "name": "callOptions.customParameters",
-                  "lineNumber": 30,
+                  "lineNumber": 31,
                   "description": {
                     "type": "root",
                     "children": [

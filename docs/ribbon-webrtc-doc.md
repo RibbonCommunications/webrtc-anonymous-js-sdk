@@ -400,6 +400,7 @@ Starts an outgoing call as an anonymous user.
     *   `credentials.accountToken` **[Object][7]?** The encrypted account token of the account making the call.
     *   `credentials.fromToken` **[Object][7]?** The encrypted SIP address of the account/caller.
     *   `credentials.toToken` **[Object][7]?** The encrypted SIP address of the callee.
+    *   `credentials.authAccount` **[Object][7]?** The account used to authenticate if no token is provided.
 *   `callOptions` **[Object][7]** Call options.
 
     *   `callOptions.from` **[string][8]** The URI of the user making the call.
