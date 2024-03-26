@@ -12,7 +12,7 @@
  *
  * WebRTC.js
  * webrtc.anonymous.js
- * Version: 6.9.0-beta.1280
+ * Version: 6.9.0-beta.1281
  */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
@@ -2322,7 +2322,7 @@ module.exports = root;
 
 /***/ }),
 
-/***/ 40127:
+/***/ 86209:
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -2340,7 +2340,7 @@ exports.getVersion = getVersion;
  * for the @@ tag below with actual version value.
  */
 function getVersion() {
-  return '6.9.0-beta.1280';
+  return '6.9.0-beta.1281';
 }
 
 /***/ }),
@@ -10940,7 +10940,7 @@ exports["default"] = getStatsOperation;
 var _selectors = __webpack_require__(11430);
 var _kandyWebrtc = __webpack_require__(15203);
 var _errors = _interopRequireWildcard(__webpack_require__(83437));
-var _version = __webpack_require__(40127);
+var _version = __webpack_require__(86209);
 var _sdkId = _interopRequireDefault(__webpack_require__(15878));
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
 function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
@@ -13892,11 +13892,22 @@ function setupOutgoingSessionOperation(container) {
     }
     let session;
     try {
+      let iceServers = options.defaultPeerConfig.iceServers;
+      // Merge the ICE server information together with their credentials.
+      if (options.turnInfo) {
+        iceServers = iceServers.map(iceInfo => {
+          return _objectSpread(_objectSpread({}, iceInfo), {}, {
+            username: options.turnInfo.username,
+            credential: options.turnInfo.password
+          });
+        });
+      }
+
       // Create a WebRTC-Stack Session object.
       session = await WebRTC.sessionManager.create({
         peer: {
           rtcConfig: _objectSpread(_objectSpread({}, options.defaultPeerConfig), {}, {
-            iceServers: options.turnInfo ? options.turnInfo.servers : []
+            iceServers
           }),
           // Follow-up / TODO: Remove `trickleIceMode` option; not used.
           trickleIceMode: options.trickleIceMode,
@@ -22738,7 +22749,7 @@ exports.fixIceServerUrls = fixIceServerUrls;
 exports.mergeDefaults = mergeDefaults;
 var _logs = __webpack_require__(43862);
 var _utils = __webpack_require__(25189);
-var _version = __webpack_require__(40127);
+var _version = __webpack_require__(86209);
 var _defaults = __webpack_require__(27241);
 var _validation = __webpack_require__(42850);
 // Other plugins.
@@ -23697,13 +23708,11 @@ function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; 
  */
 function turnChanged(_ref) {
   let {
-    servers,
     credentials
   } = _ref;
   return {
     type: actionTypes.TURN_CHANGED,
     payload: {
-      servers,
       credentials
     }
   };
@@ -28098,10 +28107,7 @@ const reducers = {};
 // Replace any previous information with the new information.
 reducers[actionTypes.TURN_CHANGED] = {
   next(state, action) {
-    return _objectSpread(_objectSpread({}, state), {}, {
-      servers: action.payload.servers || state.servers,
-      credentials: _objectSpread(_objectSpread({}, state.credentials), action.payload.credentials)
-    });
+    return _objectSpread(_objectSpread({}, state), action.payload.credentials);
   }
 };
 
@@ -28983,18 +28989,17 @@ function registerOperation(bottle) {
 "use strict";
 
 
-var _interopRequireDefault = __webpack_require__(71600);
 Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = createOperation;
-var _defineProperty2 = _interopRequireDefault(__webpack_require__(26290));
 var _actions = __webpack_require__(6313);
 var _selectors = __webpack_require__(11430);
 var _actionTypes = __webpack_require__(10530);
-function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { (0, _defineProperty2.default)(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; } // Call plugin.
+// Call plugin.
+
 // Other plugins.
+
 /**
  * Link-specific "set turn credentials" operation factory.
  * @method createOperation
@@ -29030,17 +29035,9 @@ function createOperation(container) {
 
     // TURN credentials received from the server.
     const turnCredentials = action.type === _actionTypes.CONNECT_FINISHED ? action.payload.subscription.turnCredentials : action.payload.subscriptions[0].turnCredentials;
-    const turnInfo = {
-      credentials: turnCredentials,
-      // Map the server-provided credentials to the ICE server list.
-      servers: defaultPeerConfig.iceServers.map(iceInfo => {
-        return _objectSpread(_objectSpread({}, iceInfo), {}, {
-          username: turnCredentials.username,
-          credential: turnCredentials.password
-        });
-      })
-    };
-    context.dispatch(_actions.turnActions.turnChanged(turnInfo));
+    context.dispatch(_actions.turnActions.turnChanged({
+      credentials: turnCredentials
+    }));
   }
   return setTurnCredentials;
 }
@@ -33697,7 +33694,7 @@ var _reduxSaga = _interopRequireDefault(__webpack_require__(7));
 var _effects = __webpack_require__(27422);
 var _bottlejs = _interopRequireDefault(__webpack_require__(39146));
 var _utils = __webpack_require__(25189);
-var _version = __webpack_require__(40127);
+var _version = __webpack_require__(86209);
 var _intervalFactory = _interopRequireDefault(__webpack_require__(93725));
 var _logs = __webpack_require__(43862);
 var _validation = __webpack_require__(42850);
@@ -37623,7 +37620,7 @@ var eventTypes = _interopRequireWildcard(__webpack_require__(10714));
 var authorizations = _interopRequireWildcard(__webpack_require__(55689));
 var _sagas = __webpack_require__(22939);
 var _selectors = __webpack_require__(46942);
-var _version = __webpack_require__(40127);
+var _version = __webpack_require__(86209);
 var _utils = __webpack_require__(25189);
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
 function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
@@ -37777,7 +37774,7 @@ var _makeRequest = _interopRequireDefault(__webpack_require__(87569));
 var authorizations = _interopRequireWildcard(__webpack_require__(55689));
 var _utils = __webpack_require__(70720);
 var _logs = __webpack_require__(43862);
-var _version = __webpack_require__(40127);
+var _version = __webpack_require__(86209);
 var _effects = __webpack_require__(27422);
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
 function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
@@ -37867,7 +37864,7 @@ var _cloneDeep2 = _interopRequireDefault(__webpack_require__(33904));
 var _selectors = __webpack_require__(50647);
 var _selectors2 = __webpack_require__(46942);
 var _logs = __webpack_require__(43862);
-var _version = __webpack_require__(40127);
+var _version = __webpack_require__(86209);
 var _utils = __webpack_require__(25189);
 var _effects = __webpack_require__(27422);
 // Request plugin.
@@ -72498,7 +72495,7 @@ module.exports = str => encodeURIComponent(str).replace(/[!'()*]/g, x => `%${x.c
 
 /***/ }),
 
-/***/ 9984:
+/***/ 27645:
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -72730,7 +72727,7 @@ var _v4 = _interopRequireDefault(__webpack_require__(95899));
 
 var _nil = _interopRequireDefault(__webpack_require__(15384));
 
-var _version = _interopRequireDefault(__webpack_require__(9984));
+var _version = _interopRequireDefault(__webpack_require__(27645));
 
 var _validate = _interopRequireDefault(__webpack_require__(77888));
 
