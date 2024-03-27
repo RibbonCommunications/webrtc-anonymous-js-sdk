@@ -13,6 +13,10 @@ Ribbon WebRTC SDK change log.
 
 - Added extra validation on `sendCustomParameters` API to ensure parameters are set on the Call, before calling this API. `KJS-2047`
 
+### Fixed
+
+- Fixed an issue where the SDK was incorrectly reporting previous call state `Ended` when a call is ended locally. It now correctly reports previous call state as `Connected`. `KJS-2099`
+
 ### Changed
 
 - Changed call metrics logic so that call metrics are only added into the report as part of a successful call event. This way, the metric value will only measure the duration of a successful operation. `KJS-1972`
