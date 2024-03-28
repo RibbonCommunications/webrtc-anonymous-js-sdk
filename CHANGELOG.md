@@ -7,6 +7,17 @@ Ribbon WebRTC SDK change log.
 - This project adheres to [Semantic Versioning](http://semver.org/).
 - This change log follows [keepachangelog.com](http://keepachangelog.com/) recommendations.
 
+## 6.10.0 - beta
+
+### Added
+
+- Added more specific error messages in response to various error codes that SDK can receive from backend, as part of a Call Control Response. `KJS-2056`
+
+### Fixed
+
+- Fixed a Call issue where two conflicting operations could be performed on a call simultaneously in some scenarios. `KJS-1799`, `KJS-2002`
+  - The second operation will now fail with error code `call:12` rather than being attempted.
+
 ## 6.9.0 - 2024-03-28
 
 ### Added
