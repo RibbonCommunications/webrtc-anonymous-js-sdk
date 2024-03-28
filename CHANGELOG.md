@@ -1,4 +1,4 @@
-[copyright © 2023 ribbon communications operating company, inc. all rights reserved]: #
+[copyright © 2024 ribbon communications operating company, inc. all rights reserved]: #
 
 # Change Log
 
@@ -6,6 +6,24 @@ Ribbon WebRTC SDK change log.
 
 - This project adheres to [Semantic Versioning](http://semver.org/).
 - This change log follows [keepachangelog.com](http://keepachangelog.com/) recommendations.
+
+## 6.9.0 - 2024-03-28
+
+### Added
+
+- Added extra validation on `sendCustomParameters` API to ensure parameters are set on the Call, before calling this API. `KJS-2047`
+
+### Fixed
+
+- Fixed an issue where the SDK was incorrectly reporting previous call state `Ended` when a call is ended locally. It now correctly reports previous call state as `Connected`. `KJS-2099`
+
+### Changed
+
+- Changed call metrics logic so that call metrics are only added into the report as part of a successful call event. This way, the metric value will only measure the duration of a successful operation. `KJS-1972`
+
+### Added
+
+- Added a new parameter `authAccount` to the `credentials` object that is passed in the `makeAnonymous` call API. The value for this parameter should be the account with the `callMe` service enabled and can be used to authenticate token-less calls instead of the value for `call destination`. This is an optional parameter and is only required if you intend for the `Caller` to use the subscribed account with `callMe` service enabled. `KJS-2049`
 
 ## 6.8.0 - 2024-02-23
 
@@ -1063,4 +1081,4 @@ Choose the configuration that applies to you:
 
 - Initial release of 4.x callMe SDK. It supports making anonymous calls using the new 4.x call stack.
 
-[copyright © 2023 ribbon communications operating company, inc. all rights reserved]: #
+[copyright © 2024 ribbon communications operating company, inc. all rights reserved]: #

@@ -355,6 +355,16 @@ The authentication credentials have been set. You can check the set user details
 
 *   `params` **[Object][7]** 
 
+### auth:error
+
+There was an error with authentication.
+
+#### Parameters
+
+*   `params` **[Object][7]** 
+
+    *   `params.error` **[api.BasicError][25]** The Basic error object.
+
 ### request:error
 
 An error occurred with server authorization.
@@ -390,6 +400,7 @@ Starts an outgoing call as an anonymous user.
     *   `credentials.accountToken` **[Object][7]?** The encrypted account token of the account making the call.
     *   `credentials.fromToken` **[Object][7]?** The encrypted SIP address of the account/caller.
     *   `credentials.toToken` **[Object][7]?** The encrypted SIP address of the callee.
+    *   `credentials.authAccount` **[Object][7]?** The account used to authenticate if no token is provided.
 *   `callOptions` **[Object][7]** Call options.
 
     *   `callOptions.from` **[string][8]** The URI of the user making the call.
@@ -1335,7 +1346,8 @@ A Call's custom parameters are a property of the Call's [CallObject][49],
 which can be retrieved using the [call.getById][30] or
 [call.getAll][29] APIs.
 
-To change or remove the custom parameters on a call, use the [call.setCustomParameters][46] API.
+Before sending custom parameters, they need to be first set on the existing Call.
+To set, change or remove the custom parameters on a call, use the [call.setCustomParameters][46] API.
 
 #### Parameters
 
@@ -1762,6 +1774,7 @@ log(`Took ${getAvailableCodecsEvent.end - getAvailableCodecsEvent.start}ms to ge
 ### metrics
 
 List of metrics available as part of a Call Report.
+Metrics are calculated only for the successful scenarios.
 
 As a call progresses, timings are calculated for the duration of operations and
 other events. They are recorded in a call report that can be retrieved via

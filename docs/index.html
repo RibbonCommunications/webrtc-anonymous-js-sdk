@@ -1,9 +1,9 @@
-<!-- COPYRIGHT © 2023 RIBBON COMMUNICATIONS OPERATING COMPANY, INC. ALL RIGHTS RESERVED -->
+<!-- COPYRIGHT © 2024 RIBBON COMMUNICATIONS OPERATING COMPANY, INC. ALL RIGHTS RESERVED -->
 <!doctype html>
 <html>
 <head>
   <meta charset='utf-8' />
-  <title>webrtc-anonymous-js-sdk 6.8.0 | Documentation</title>
+  <title>webrtc-anonymous-js-sdk 6.9.0 | Documentation</title>
   <meta name='viewport' content='width=device-width,initial-scale=1'>
   <link href='assets/bass.css' type='text/css' rel='stylesheet' />
   <link href='assets/style.css' type='text/css' rel='stylesheet' />
@@ -15,7 +15,7 @@
       <div id='split-left' class='overflow-auto fs0 height-viewport-100'>
         <div class='py1 px2'>
           <h3 class='mb0 no-anchor'>webrtc-anonymous-js-sdk</h3>
-          <div class='mb1'><code>6.8.0</code></div>
+          <div class='mb1'><code>6.9.0</code></div>
           <input
             placeholder='Filter'
             id='filter-input'
@@ -148,6 +148,12 @@
                               href='#apieventauthchange'
                               class='regular pre-open'>
                               <span style="color:orange">ⓔ</span> auth:change
+                            </a></li>
+                          
+                            <li><a
+                              href='#apieventautherror'
+                              class='regular pre-open'>
+                              <span style="color:orange">ⓔ</span> auth:error
                             </a></li>
                           
                             <li><a
@@ -2828,6 +2834,90 @@ It's not meant to be displayed to a user.
       </div>
     </div>
   
+    <div class='border-bottom' id='apieventautherror'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="py1 contain">
+            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
+            <span class='code strong strong truncate'>auth:error</span>
+        </div>
+      </div>
+      <div class="clearfix display-none toggle-target">
+        <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+
+  <p>There was an error with authentication.</p>
+
+
+  <div class='pre p1 fill-light mt0'>auth:error</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>params</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    
+          </div>
+          
+          <table class='mt1 mb2 fixed-table h5 col-12'>
+            <colgroup>
+              <col width='30%' />
+              <col width='70%' />
+            </colgroup>
+            <thead>
+              <tr class='bold fill-light'>
+                <th>Name</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody class='mt1'>
+              
+                <tr>
+  <td class='break-word'><span class='code bold'>params.error</span> <code class='quiet'><a href="#apibasicerror">api.BasicError</a></code>
+  </td>
+  <td class='break-word'><span>The Basic error object.
+</span></td>
+</tr>
+
+
+              
+            </tbody>
+          </table>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
     <div class='border-bottom' id='apieventrequesterror'>
       <div class="clearfix small pointer toggle-sibling">
         <div class="py1 contain">
@@ -5386,6 +5476,15 @@ client.call.make(destination, mediaConstraints,
 
 
               
+                <tr>
+  <td class='break-word'><span class='code bold'>credentials.authAccount</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>?</code>
+  </td>
+  <td class='break-word'><span>The account used to authenticate if no token is provided.
+</span></td>
+</tr>
+
+
+              
             </tbody>
           </table>
           
@@ -7323,7 +7422,8 @@ to another endpoint, depending on how the server is configured.</p>
 <p>A Call's custom parameters are a property of the Call's <a href="#callcallobject">CallObject</a>,
 which can be retrieved using the <a href="#callgetbyid">call.getById</a> or
 <a href="#callgetall">call.getAll</a> APIs.</p>
-<p>To change or remove the custom parameters on a call, use the <a href="#callsetcustomparameters">call.setCustomParameters</a> API.</p>
+<p>Before sending custom parameters, they need to be first set on the existing Call.
+To set, change or remove the custom parameters on a call, use the <a href="#callsetcustomparameters">call.setCustomParameters</a> API.</p>
 
 
   <div class='pre p1 fill-light mt0'>sendCustomParameters(callId: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</div>
@@ -9105,7 +9205,8 @@ log(<span class="hljs-string">`Took <span class="hljs-subst">${getAvailableCodec
 
   
 
-  <p>List of metrics available as part of a Call Report.</p>
+  <p>List of metrics available as part of a Call Report.
+Metrics are calculated only for the successful scenarios.</p>
 <p>As a call progresses, timings are calculated for the duration of operations and
 other events. They are recorded in a call report that can be retrieved via
 the <a href="#callgetreport">call.getReport</a> API.</p>
@@ -15126,4 +15227,4 @@ codec selectors that correspond to those names without any extra FMTP parameters
   <script src='assets/site.js'></script>
 </body>
 </html>
-<!-- COPYRIGHT © 2023 RIBBON COMMUNICATIONS OPERATING COMPANY, INC. ALL RIGHTS RESERVED -->
+<!-- COPYRIGHT © 2024 RIBBON COMMUNICATIONS OPERATING COMPANY, INC. ALL RIGHTS RESERVED -->
