@@ -17,6 +17,7 @@ Ribbon WebRTC SDK change log.
 
 - Fixed a Call issue where two conflicting operations could be performed on a call simultaneously in some scenarios. `KJS-1799`, `KJS-2002`
   - The second operation will now fail with error code `call:12` rather than being attempted.
+- Fixed an issue where restarting media on a call was failing. `KJS-2096`
 - Fixed an issue where the SDK would incorrectly store duplicate track ids when a call is taken off hold. `KJS-2019`
 
 ## 6.9.0 - 2024-03-28
