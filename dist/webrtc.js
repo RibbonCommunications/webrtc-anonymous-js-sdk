@@ -12,7 +12,7 @@
  *
  * WebRTC.js
  * webrtc.anonymous.js
- * Version: 6.10.0-beta.1295
+ * Version: 6.10.0-beta.1296
  */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
@@ -2322,7 +2322,7 @@ module.exports = root;
 
 /***/ }),
 
-/***/ 28809:
+/***/ 38743:
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -2340,7 +2340,7 @@ exports.getVersion = getVersion;
  * for the @@ tag below with actual version value.
  */
 function getVersion() {
-  return '6.10.0-beta.1295';
+  return '6.10.0-beta.1296';
 }
 
 /***/ }),
@@ -10979,7 +10979,7 @@ Object.defineProperty(exports, "__esModule", ({
 exports["default"] = getStatsOperation;
 var _selectors = __webpack_require__(11430);
 var _kandyWebrtc = __webpack_require__(15203);
-var _version = __webpack_require__(28809);
+var _version = __webpack_require__(38743);
 var _sdkId = _interopRequireDefault(__webpack_require__(15878));
 // Call plugin.
 
@@ -22811,7 +22811,7 @@ exports.fixIceServerUrls = fixIceServerUrls;
 exports.mergeDefaults = mergeDefaults;
 var _logs = __webpack_require__(43862);
 var _utils = __webpack_require__(25189);
-var _version = __webpack_require__(28809);
+var _version = __webpack_require__(38743);
 var _defaults = __webpack_require__(27241);
 var _validation = __webpack_require__(42850);
 // Other plugins.
@@ -33777,7 +33777,7 @@ var _reduxSaga = _interopRequireDefault(__webpack_require__(7));
 var _effects = __webpack_require__(27422);
 var _bottlejs = _interopRequireDefault(__webpack_require__(39146));
 var _utils = __webpack_require__(25189);
-var _version = __webpack_require__(28809);
+var _version = __webpack_require__(38743);
 var _intervalFactory = _interopRequireDefault(__webpack_require__(93725));
 var _logs = __webpack_require__(43862);
 var _validation = __webpack_require__(42850);
@@ -37674,7 +37674,7 @@ var authorizations = _interopRequireWildcard(__webpack_require__(55689));
 var _makeRequest = _interopRequireDefault(__webpack_require__(87569));
 var _utils = __webpack_require__(70720);
 var _selectors = __webpack_require__(46942);
-var _version = __webpack_require__(28809);
+var _version = __webpack_require__(38743);
 var _utils2 = __webpack_require__(25189);
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
 function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
@@ -37825,7 +37825,7 @@ var _cloneDeep2 = _interopRequireDefault(__webpack_require__(33904));
 var _selectors = __webpack_require__(50647);
 var _selectors2 = __webpack_require__(46942);
 var _logs = __webpack_require__(43862);
-var _version = __webpack_require__(28809);
+var _version = __webpack_require__(38743);
 var _utils = __webpack_require__(25189);
 var _effects = __webpack_require__(27422);
 // Request plugin.
@@ -39450,9 +39450,9 @@ function createAPI(container) {
    * @private
    * @method teardownProxy
    */
-  function teardownProxy() {
+  async function teardownProxy() {
     log.debug(API_LOG_TAG + 'webrtc.setupProxy');
-    operations.teardownProxies();
+    await operations.teardownProxies();
   }
   return {
     media: mediaApi,
@@ -40846,7 +40846,7 @@ function createMediaOperations(container) {
 /***/ }),
 
 /***/ 992:
-/***/ ((__unused_webpack_module, exports) => {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
@@ -40855,6 +40855,8 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = createWebRTCOperations;
+var _devices = __webpack_require__(61547);
+var _eventTypes = __webpack_require__(46215);
 /**
  * WebRTC Operations factory function.
  * @method createWebRTCOperations
@@ -40864,7 +40866,9 @@ exports["default"] = createWebRTCOperations;
 function createWebRTCOperations(container) {
   const {
     logManager,
-    WebRTC
+    WebRTC,
+    emitEvent,
+    context
   } = container;
   const log = logManager.getLogger('WEBRTC');
   const replacedManagers = {};
@@ -40912,7 +40916,7 @@ function createWebRTCOperations(container) {
    * @method teardownProxies
    * @throws {Error} An error if the operation fails.
    */
-  function teardownProxies() {
+  async function teardownProxies() {
     log.info('Tearing down all external proxies in WebRTC.');
 
     // Pass in empty proxies to the following function so that it will set empty proxies
@@ -40938,6 +40942,11 @@ function createWebRTCOperations(container) {
       delete addedManagerEventHandlers[manager];
     });
     log.info('Successfully tore down proxies in WebRTC.');
+    log.info('Updating devices after teardown.');
+    const devices = await WebRTC.devices.checkDevices();
+    context.dispatch((0, _devices.devicesChanged)(devices));
+    // Emit the event so the application knows that devices have changed.
+    emitEvent(_eventTypes.DEVICES_CHANGED, {});
   }
   return {
     setupProxies,
@@ -72630,7 +72639,7 @@ module.exports = str => encodeURIComponent(str).replace(/[!'()*]/g, x => `%${x.c
 
 /***/ }),
 
-/***/ 66242:
+/***/ 42929:
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -72862,7 +72871,7 @@ var _v4 = _interopRequireDefault(__webpack_require__(95899));
 
 var _nil = _interopRequireDefault(__webpack_require__(15384));
 
-var _version = _interopRequireDefault(__webpack_require__(66242));
+var _version = _interopRequireDefault(__webpack_require__(42929));
 
 var _validate = _interopRequireDefault(__webpack_require__(77888));
 
