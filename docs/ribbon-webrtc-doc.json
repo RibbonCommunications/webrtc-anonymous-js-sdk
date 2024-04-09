@@ -30424,7 +30424,7 @@
                 "children": [
                   {
                     "type": "text",
-                    "value": "This event is generated outside the control of the SDK. This will predominantely\nhappen for a remote track during network issues, where media will lose frames\nand be \"choppy\". This may also happen for a local track if the browser or\nend-user stops allowing the SDK to access the media device, for example."
+                    "value": "This event is generated outside the control of the SDK. This will predominantly\nhappen for a remote track during network issues, where media will lose frames\nand be \"choppy\". This may also happen for a local track if the browser or\nend-user stops allowing the SDK to access the media device, for example."
                   }
                 ]
               }
