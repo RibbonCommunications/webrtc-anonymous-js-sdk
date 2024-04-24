@@ -21,6 +21,7 @@ Ribbon WebRTC SDK change log.
 - Fixed an issue where the SDK would incorrectly store duplicate track ids when a call is taken off hold. `KJS-2019`
 - Fixed a Call issue where the error for performing an operation on a non-existent call was unclear. `KJS-2097`
 - Fixed a Call issue where `call:stateChange` events were not being emitted when Consultative Transfer & Join operations failed.
+- Fixed a Call issue where a local call operation can fail to complete in scenarios when network delays cause replies to be received out of order. `KJS-2150`
 
 ## 6.9.0 - 2024-03-28
 

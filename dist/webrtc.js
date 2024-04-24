@@ -12,7 +12,7 @@
  *
  * WebRTC.js
  * webrtc.anonymous.js
- * Version: 6.10.0-beta.1317
+ * Version: 6.10.0-beta.1318
  */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
@@ -2322,7 +2322,7 @@ module.exports = root;
 
 /***/ }),
 
-/***/ 40841:
+/***/ 83010:
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -2340,7 +2340,7 @@ exports.getVersion = getVersion;
  * for the @@ tag below with actual version value.
  */
 function getVersion() {
-  return '6.10.0-beta.1317';
+  return '6.10.0-beta.1318';
 }
 
 /***/ }),
@@ -6572,6 +6572,53 @@ function callManager(container) {
   async function exiLocalNegotiation(wrtcsSessionId, params) {
     const call = (0, _selectors.getCallByWrtcsSessionId)(context.getState(), wrtcsSessionId);
     const log = logManager.getLogger('CALL', call ? call.id : undefined);
+
+    /**
+     * Helper to find the local operation that the received notification is a response for.
+     * If the assumed local operation is not ready yet (ie. not PENDING), will delay a
+     *    short time before re-finding the operation. Will attempt every 25ms, for a max of
+     *    500ms, before eventually ignoring the notification.
+     */
+    async function getExistingNegotiation(callId) {
+      let timeDelayed = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+      const call = (0, _selectors.getCallById)(context.getState(), callId);
+      const opState = call.currentOperations.find((op, ind, arr) => {
+        return op.isLocal && op.status === _constants2.OP_STATUS.PENDING && op.isBlocking ||
+        // Local pending operation.
+        !op.isLocal && op.type === _constants2.OPERATIONS.SLOW_START && op.isBlocking ||
+        // Remote slow-start operation.
+        op.isLocal && op.type === _constants2.OPERATIONS.JOIN && arr.length === 1 // Local pending join, as the only op.
+        ;
+      });
+
+      /*
+       * Scenarios:
+       *    1. local PENDING negotiation found: this response is for that operation.
+       *    2. still no PENDING after max delay: error scenario; can't delay forever.
+       *    3. local ONGOING negotiation found: response was receive too early, delay then re-process.
+       *    4. nether negotiation found: error scenario
+       */
+      if (opState) {
+        return opState;
+      } else if (timeDelayed >= 500) {
+        // Local negotiation is not PENDING even after 500ms delay; can't process this notification.
+        log.debug(`Received negotiation answer still cannot be processed; ignoring.`);
+        return undefined;
+      } else {
+        const ongoingOp = call.currentOperations.find(op => {
+          return op.isLocal && op.status === _constants2.OP_STATUS.ONGOING && op.isBlocking;
+        });
+        if (ongoingOp) {
+          log.debug(`Received negotiation answer for local ${ongoingOp.type} too early; delaying processing.`);
+          await new Promise(resolve => setTimeout(resolve, 25));
+          // Re-get the operation after a delay, but indicate it was already delayed.
+          return await getExistingNegotiation(callId, timeDelayed + 25);
+        } else {
+          // No PENDING or ONGOING local negotiation; can't process this notification.
+          return undefined;
+        }
+      }
+    }
     if (!call) {
       // Scenario: The notification is about a call that state does not know about.
       //    Ignore the notification.
@@ -6585,16 +6632,8 @@ function callManager(container) {
     });
 
     // Find which operation this "remote answer" could be for.
-    const opState = call.currentOperations.find((op, ind, arr) => {
-      return op.isLocal && op.status === _constants2.OP_STATUS.PENDING && op.isBlocking ||
-      // Local pending operation.
-      !op.isLocal && op.type === _constants2.OPERATIONS.SLOW_START && op.isBlocking ||
-      // Remote slow-start operation.
-      op.isLocal && op.type === _constants2.OPERATIONS.JOIN && arr.length === 1 // Local pending join, as the only op.
-      ;
-    });
-    const operation = ongoing[call.id].getByType(opState.type);
-    if (!operation) {
+    const opState = await getExistingNegotiation(call.id);
+    if (!opState) {
       /*
        * Scenario #1: A remote (non slow-start) operation is on-going.
        * Scenario #2: No local or remote operation is on-going.
@@ -6604,6 +6643,7 @@ function callManager(container) {
       log.warn('Received negotiation answer without a matching offer; ignoring.');
       return;
     }
+    const operation = ongoing[call.id].getByType(opState.type);
     try {
       await callFlows.remoteAnswer(call, operation, params);
     } finally {
@@ -10999,7 +11039,7 @@ Object.defineProperty(exports, "__esModule", ({
 exports["default"] = getStatsOperation;
 var _selectors = __webpack_require__(11430);
 var _kandyWebrtc = __webpack_require__(15203);
-var _version = __webpack_require__(40841);
+var _version = __webpack_require__(83010);
 var _sdkId = _interopRequireDefault(__webpack_require__(15878));
 // Call plugin.
 
@@ -22831,7 +22871,7 @@ exports.fixIceServerUrls = fixIceServerUrls;
 exports.mergeDefaults = mergeDefaults;
 var _logs = __webpack_require__(43862);
 var _utils = __webpack_require__(25189);
-var _version = __webpack_require__(40841);
+var _version = __webpack_require__(83010);
 var _defaults = __webpack_require__(27241);
 var _validation = __webpack_require__(42850);
 // Other plugins.
@@ -33915,7 +33955,7 @@ var _reduxSaga = _interopRequireDefault(__webpack_require__(7));
 var _effects = __webpack_require__(27422);
 var _bottlejs = _interopRequireDefault(__webpack_require__(39146));
 var _utils = __webpack_require__(25189);
-var _version = __webpack_require__(40841);
+var _version = __webpack_require__(83010);
 var _intervalFactory = _interopRequireDefault(__webpack_require__(93725));
 var _logs = __webpack_require__(43862);
 var _validation = __webpack_require__(42850);
@@ -37815,7 +37855,7 @@ var authorizations = _interopRequireWildcard(__webpack_require__(55689));
 var _makeRequest = _interopRequireDefault(__webpack_require__(87569));
 var _utils = __webpack_require__(70720);
 var _selectors = __webpack_require__(46942);
-var _version = __webpack_require__(40841);
+var _version = __webpack_require__(83010);
 var _utils2 = __webpack_require__(25189);
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
 function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
@@ -37966,7 +38006,7 @@ var _cloneDeep2 = _interopRequireDefault(__webpack_require__(33904));
 var _selectors = __webpack_require__(50647);
 var _selectors2 = __webpack_require__(46942);
 var _logs = __webpack_require__(43862);
-var _version = __webpack_require__(40841);
+var _version = __webpack_require__(83010);
 var _utils = __webpack_require__(25189);
 var _effects = __webpack_require__(27422);
 // Request plugin.
@@ -72772,7 +72812,7 @@ module.exports = str => encodeURIComponent(str).replace(/[!'()*]/g, x => `%${x.c
 
 /***/ }),
 
-/***/ 5344:
+/***/ 4876:
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -73004,7 +73044,7 @@ var _v4 = _interopRequireDefault(__webpack_require__(95899));
 
 var _nil = _interopRequireDefault(__webpack_require__(15384));
 
-var _version = _interopRequireDefault(__webpack_require__(5344));
+var _version = _interopRequireDefault(__webpack_require__(4876));
 
 var _validate = _interopRequireDefault(__webpack_require__(77888));
 
