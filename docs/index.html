@@ -3,7 +3,7 @@
 <html>
 <head>
   <meta charset='utf-8' />
-  <title>webrtc-anonymous-js-sdk 6.9.0 | Documentation</title>
+  <title>webrtc-anonymous-js-sdk 6.10.0 | Documentation</title>
   <meta name='viewport' content='width=device-width,initial-scale=1'>
   <link href='assets/bass.css' type='text/css' rel='stylesheet' />
   <link href='assets/style.css' type='text/css' rel='stylesheet' />
@@ -15,7 +15,7 @@
       <div id='split-left' class='overflow-auto fs0 height-viewport-100'>
         <div class='py1 px2'>
           <h3 class='mb0 no-anchor'>webrtc-anonymous-js-sdk</h3>
-          <div class='mb1'><code>6.9.0</code></div>
+          <div class='mb1'><code>6.10.0</code></div>
           <input
             placeholder='Filter'
             id='filter-input'
@@ -2380,14 +2380,6 @@ client.updateConfig({
   
 
   
-    <div class='py1 quiet mt1 prose-big'>Throws</div>
-    <ul>
-      
-        <li><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Error">Error</a>: Invalid event type
-</li>
-      
-    </ul>
-  
 
   
     <div class='py1 quiet mt1 prose-big'>Example</div>
@@ -2466,14 +2458,6 @@ client.on(<span class="hljs-string">&#x27;dummy:event&#x27;</span>, <span class=
   
 
   
-    <div class='py1 quiet mt1 prose-big'>Throws</div>
-    <ul>
-      
-        <li><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Error">Error</a>: Invalid event type
-</li>
-      
-    </ul>
-  
 
   
 
@@ -2534,14 +2518,6 @@ client.on(<span class="hljs-string">&#x27;dummy:event&#x27;</span>, <span class=
   
 
   
-    <div class='py1 quiet mt1 prose-big'>Throws</div>
-    <ul>
-      
-        <li><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Error">Error</a>: Listener not a function
-</li>
-      
-    </ul>
-  
 
   
 
@@ -2601,14 +2577,6 @@ client.on(<span class="hljs-string">&#x27;dummy:event&#x27;</span>, <span class=
 
   
 
-  
-    <div class='py1 quiet mt1 prose-big'>Throws</div>
-    <ul>
-      
-        <li><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Error">Error</a>: Listener not a function
-</li>
-      
-    </ul>
   
 
   
@@ -13606,7 +13574,7 @@ API.</p>
 track will be silent and a video track will be a black frame. It is
 possible for the track to start receiving media again (see the
 <a href="#mediaeventmediasourceunmuted">media:sourceUnmuted</a> event).</p>
-<p>This event is generated outside the control of the SDK. This will predominantely
+<p>This event is generated outside the control of the SDK. This will predominantly
 happen for a remote track during network issues, where media will lose frames
 and be "choppy". This may also happen for a local track if the browser or
 end-user stops allowing the SDK to access the media device, for example.</p>

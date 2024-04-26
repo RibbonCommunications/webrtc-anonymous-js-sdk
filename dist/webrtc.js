@@ -12,7 +12,7 @@
  *
  * WebRTC.js
  * webrtc.anonymous.js
- * Version: 6.9.0
+ * Version: 6.10.0
  */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
@@ -2284,7 +2284,7 @@ var _link = _interopRequireDefault(__webpack_require__(76712));
 var _link2 = _interopRequireDefault(__webpack_require__(83668));
 var _request = __webpack_require__(38048);
 __webpack_require__(71308);
-var _sdpHandlers = __webpack_require__(80139);
+var _codecRemover = __webpack_require__(87056);
 const defaultPlugins = [..._basePlugins.default, {
   name: 'authentication',
   fn: _anonymous.default
@@ -2313,7 +2313,7 @@ function root() {
 // Alias 'create' to be equal to the root function
 root.create = root;
 root.sdpHandlers = {
-  createCodecRemover: _sdpHandlers.createCodecRemover
+  createCodecRemover: _codecRemover.createCodecRemover
 };
 
 // Export this way as a work-around, so it can be used as `<export>();`.
@@ -2322,7 +2322,7 @@ module.exports = root;
 
 /***/ }),
 
-/***/ 29197:
+/***/ 47333:
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -2340,7 +2340,7 @@ exports.getVersion = getVersion;
  * for the @@ tag below with actual version value.
  */
 function getVersion() {
-  return '6.9.0';
+  return '6.10.0';
 }
 
 /***/ }),
@@ -5280,7 +5280,7 @@ function createAnonOperations(container) {
 /***/ }),
 
 /***/ 99392:
-/***/ ((__unused_webpack_module, exports) => {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
@@ -5289,6 +5289,7 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = createTracker;
+var _constants = __webpack_require__(37409);
 /**
  * Factory for an "on-going operation" tracker.
  * An "operation tracker" is a utility object for managing the list of on-going
@@ -5299,6 +5300,16 @@ exports["default"] = createTracker;
 function createTracker(log) {
   // List of on-going operations.
   const operations = [];
+
+  // State getters.
+  const isBlocked = () => {
+    // TODO: Make sure finished operations are removed?
+    return operations.some(op => {
+      return op.isNegotiation && op.tracker.status !== _constants.OP_STATUS.FINISHED ||
+      // Prevent new operations if the call is ending.
+      op.type === _constants.OPERATIONS.END;
+    });
+  };
 
   /*
    * Methods.
@@ -5311,9 +5322,22 @@ function createTracker(log) {
    */
   function add(operation) {
     const opString = `${operation.isLocal ? 'local' : 'remote'} ${operation.type}`;
-    log.info(`Operations: Tracking ${opString} operation with ${operations.length} other on-going operations.`);
-    if (getBy('id', operation.id)) {
+    log.debug(`Operations: Tracking ${opString} operation with ${operations.length} other on-going operations.`);
+
+    // TODO: operation.isBlocking instead?
+    if (operation.isNegotiation && isBlocked()) {
+      // Avoid glare scenarios with two "blocking" operations at the same time.
+      const ongoing = getBy('isNegotiation', true);
+      log.info(`Cannot track new negotiation because of ${ongoing.status} ${ongoing.type} operation.`);
+      throw new Error('Cannot track two blocking operations!');
+    } else if (getBy('id', operation.id)) {
+      // Operations should only be 'added' once. This error indicates a bug.
+      log.warn('Cannot track operation that was previously tracked.');
       throw new Error('Operation is already being tracked!');
+    } else if (operation.tracker.status !== _constants.OP_STATUS.NOT_STARTED) {
+      // Operations should be 'added' before they are started. This error indicates a bug.
+      log.warn('Cannot track operation that was previously started.');
+      throw new Error('Operation was already started!');
     }
     operations.push(operation);
   }
@@ -5325,9 +5349,21 @@ function createTracker(log) {
    */
   function remove(operation) {
     const opString = `${operation.isLocal ? 'local' : 'remote'} ${operation.type}`;
-    log.info(`Operations: Done tracking ${opString} operation with ${operations.length - 1} other on-going operations.`);
+    log.debug(`Operations: Done tracking ${opString} operation with ${operations.length - 1} other on-going operations.`);
     if (!getBy('id', operation.id)) {
+      // This error indicates a bug.
+      log.warn('Cannot stop tracking operation that was not previously tracked.');
       throw new Error('Operation is not being tracked!');
+    } else if (operation.tracker.status !== _constants.OP_STATUS.FINISHED) {
+      if (operation.isLocal && [_constants.OPERATIONS.JOIN, _constants.OPERATIONS.DIRECT_TRANSFER, _constants.OPERATIONS.CONSULTATIVE_TRANSFER].includes(operation.type)) {
+        // TODO: Fix complex operation flows to properly handle the response notification.
+        // Complex operations are never "finished" because the remoteOnly flow does not have
+        //    access to the Operation object, so don't error here.
+      } else {
+        // Operations follow a consistent "flow" before being 'removed'. This error indicates a bug.
+        log.warn('Cannot stop tracking operation that has not finished.');
+        throw new Error(`Cannot remove on-going ${opString} operation! (${operation.tracker.status})`);
+      }
     }
     const index = operations.findIndex(op => op.id === operation.id);
     operations.splice(index, 1);
@@ -5340,6 +5376,11 @@ function createTracker(log) {
   // Get an operation based on a property.
   function getBy(prop, val) {
     return operations.find(op => op[prop] === val);
+  }
+
+  // Get the list of operations in "pending" status"
+  function getPending() {
+    return operations.filter(op => op.tracker.status === _constants.OP_STATUS.PENDING);
   }
 
   // Get the list of all operations.
@@ -5357,7 +5398,12 @@ function createTracker(log) {
     // TODO: Does it make sense to have multiple operations of the same type?
     getByType: type => getBy('type', type),
     getNegotiation: () => getBy('isNegotiation', true),
-    getAll
+    getPending,
+    getAll,
+    // Getter properties.
+    get isBlocked() {
+      return isBlocked();
+    }
   };
 }
 
@@ -5685,6 +5731,7 @@ function createFlow(container) {
       operation.tracker.finish(err);
       secTracker.finish(err);
       joinTracker && joinTracker.finish(err);
+      throw err;
     }
   };
 }
@@ -5759,6 +5806,9 @@ function createFlow(container) {
      * ...
      */
 
+    // Start tracking this operation in state.
+    operation.tracker.start();
+
     /*
      * Validate the operation before starting it. If the operation deems that it
      *    can't be done right now, avoid doing any state tracking, etc. for the
@@ -5769,12 +5819,10 @@ function createFlow(container) {
       if (validationError) {
         // Update the Call Report to indicate the operation ended with an error.
         operation.reportEvent.endEvent(validationError);
+        operation.tracker.finish(validationError);
         throw validationError;
       }
     }
-
-    // Start tracking this operation in state.
-    operation.tracker.start();
 
     /*
      * Perform the local portions of the negotiation.
@@ -6100,10 +6148,8 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = createFlow;
-var _constants = __webpack_require__(60683);
-var _constants2 = __webpack_require__(37409);
+var _constants = __webpack_require__(37409);
 var eventTypes = _interopRequireWildcard(__webpack_require__(55166));
-var actionTypes = _interopRequireWildcard(__webpack_require__(39100));
 var _actions = __webpack_require__(6313);
 var _selectors = __webpack_require__(11430);
 var _state = __webpack_require__(65794);
@@ -6121,7 +6167,6 @@ function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; 
 function createFlow(container) {
   const {
     context,
-    Notifications,
     emitEvent,
     logManager
   } = container;
@@ -6158,82 +6203,11 @@ function createFlow(container) {
     }
 
     // Regular operations are finished now, but slow-start are not.
-    if (operation.type === _constants2.OPERATIONS.SLOW_START) {
+    if (operation.type === _constants.OPERATIONS.SLOW_START) {
       operation.tracker.update();
     } else {
       operation.reportEvent.endEvent();
       operation.tracker.finish();
-    }
-  }
-
-  /**
-   * @method existingLocalOperation
-   * @async
-   * @param {Object} call
-   * @param {Operation} operation
-   * @param {Object} opInfo
-   * @param {Object} params
-   * @return {undefined}
-   */
-  async function existingLocalOperation(call, operation, opInfo, params) {
-    const log = logManager.getLogger('CALL', call.id);
-    /*
-     * There is an on-going local operation. Possible glare scenario.
-     */
-    const isPreEstablish = [_constants.CALL_STATES.RINGING, _constants.CALL_STATES.INITIATED, _constants.CALL_STATES.EARLY_MEDIA].includes(call.state);
-    const hasPendingMake = call.currentOperations.some(op => {
-      return op.type === _constants2.OPERATIONS.MAKE && op.status === _constants2.OP_STATUS.PENDING;
-    });
-    if (isPreEstablish && hasPendingMake) {
-      /*
-       * Special-case Scenario: We have received a remote offer for a midcall operation
-       *    before the call has been established. This can happen when the remote
-       *    endpoint performs an operation immediately after they answer the call,
-       *    and the notifications are received in the wrong order.
-       *
-       * The call is waiting for the call answer, so delay the new request until
-       *    that is processed. This is a timing issue where the update is received
-       *    too early.
-       *
-       * Reference: KJS-1152
-       */
-      delayMidCall(call, operation, opInfo, params);
-    } else {
-      // Receive offer SDP when there is already an on-going negotiation (glare scenario).
-      log.warn('Received offer SDP with an on-going negotiation; ignoring.');
-      // KJS-288 TODO: Report glare scenario to Gateway.
-    }
-  }
-
-  /**
-   * Workaround for existingLocalOperation:
-   *    If a midcall negotiation is received before the call answer, this method
-   *    will delay the midcall negotiation until after the call is established.
-   *    On a time-out of 3 seconds.
-   * @method delayMidCall
-   * @param {Object} call
-   * @param {Operation} operation
-   * @param {Object} opInfo
-   * @param {Object} params Params that were provided to `remoteOffer`.
-   */
-  async function delayMidCall(call, operation, opInfo, params) {
-    const log = logManager.getLogger('CALL', call.id);
-    function callStartPattern(action) {
-      // Wait for the call to be established or ended.
-      return [actionTypes.MAKE_CALL_FINISH, actionTypes.END_CALL_FINISH].includes(action.type) && action.payload.id === call.id;
-    }
-    try {
-      await Notifications.takeAction(callStartPattern, 3000);
-      log.info('Replaying delayed update request.', {
-        wrtcsSessionId: params.wrtcsSessionId
-      });
-      // Call back into remoteOffer to start again.
-      return await remoteOffer(call.wrtcsSessionId, operation, opInfo, params);
-    } catch (err) {
-      log.info('Timed-out delayed update request. Ignoring.', {
-        wrtcsSessionId: params.wrtcsSessionId
-      });
-      // TODO: Send 491 response.
     }
   }
 
@@ -6266,15 +6240,7 @@ function createFlow(container) {
         customParameters
       });
     }
-    if (call.currentOperations.every(op => !op.isBlocking)) {
-      // If there are no on-going, blocking operations, then handle it normally as a remote negotiation.
-      return await newRemoteOperation(call, operation, opInfo, params);
-    } else if (call.currentOperations.some(op => op.isLocal && op.isBlocking)) {
-      // If there is a local, blocking operation, do some special handling before failing as glare.
-      return await existingLocalOperation(call, operation, opInfo, params);
-    } else {
-      log.warn('Receive new remote operation during on-going remote opration.');
-    }
+    return await newRemoteOperation(call, operation, opInfo, params);
   }
   return remoteOffer;
 }
@@ -6410,16 +6376,35 @@ var _operationMap = __webpack_require__(81739);
 var _flows = _interopRequireDefault(__webpack_require__(13583));
 var _OperationTracker = _interopRequireDefault(__webpack_require__(99392));
 var _Operation = _interopRequireDefault(__webpack_require__(9988));
+var _errors = _interopRequireWildcard(__webpack_require__(83437));
 var _uuid = __webpack_require__(60130);
+function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
+function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
 // Call plugin.
 
 // Call Manager.
+
+// Other plugins.
 
 // Libraries.
 
 function createManager(bottle) {
   (0, _Operation.default)(bottle);
   bottle.factory('CallManager', () => callManager(bottle.container));
+}
+
+/**
+ * @method checkCallExistence
+ * @returns {undefined} Returns undefined if the call exists.
+ * @throws {BasicError} Throws if the call does not exist.
+ */
+function checkCallExistence(state, callId) {
+  if (!(0, _selectors.getCallById)(state, callId)) {
+    throw new _errors.default({
+      code: _errors.callCodes.INVALID_PARAM,
+      message: `Call does not exist: ${callId}`
+    });
+  }
 }
 function callManager(container) {
   const {
@@ -6434,7 +6419,11 @@ function callManager(container) {
   const ongoing = {};
 
   // APIs exposed by the CallManager.
-  const manager = {};
+  const manager = {
+    getTracker(callId) {
+      return ongoing[callId];
+    }
+  };
 
   /**
    * Wrapper for the two "make outgoing call" APIs.
@@ -6493,7 +6482,29 @@ function callManager(container) {
    * @return {undefined}
    */
   async function newRemoteNegotiation(wrtcsSessionId, params) {
-    const call = (0, _selectors.getCallByWrtcsSessionId)(context.getState(), wrtcsSessionId);
+    /**
+     * Utility: If the call is blocked, wait a short time then check again.
+     * In some scenarios, the next negotiation is received before the previous
+     *    negotiation finishes.
+     * Reference: KJS-1152, KJS-1918
+     * @return {boolean}
+     */
+    async function isGlare(call) {
+      if (!ongoing[call.id].isBlocked) {
+        return false;
+      }
+      const {
+        isLocal,
+        type
+      } = ongoing[call.id].getNegotiation();
+      log.debug(`Received new remote operation during ${isLocal ? 'local' : 'remote'} ${type} operation. Delaying handling.`);
+
+      // TODO: Check to see if the blocking operation is PENDING / almost done?
+      // TODO: Don't wait the full timeout if not necessary.
+      await new Promise(resolve => setTimeout(() => resolve(), 1000));
+      return ongoing[call.id].isBlocked;
+    }
+    let call = (0, _selectors.getCallByWrtcsSessionId)(context.getState(), wrtcsSessionId);
     const log = logManager.getLogger('CALL', call ? call.id : undefined);
     log.info('Received new update call request; handling.', {
       wrtcsSessionId
@@ -6523,9 +6534,20 @@ function callManager(container) {
     }
     const stackMethod = _operationMap.operationMap[opInfo.remoteOp];
     const operation = Callstack.operations[stackMethod].remote(call.id);
-    // Start tracking this operation.
-    ongoing[call.id].add(operation);
+    if (await isGlare(call)) {
+      log.warn('Received new remote operation during on-going remote operation; cannot process.');
+      // Call is "blocked"; starting a new negotiation is a glare scenario.
+      throw new _errors.default({
+        code: _errors.callCodes.GLARE,
+        message: `Cannot process new remote ${opInfo.remoteOp} negotiation due to glare scenario.`
+      });
+    } else {
+      // Start tracking this operation.
+      ongoing[call.id].add(operation);
+    }
     try {
+      // Get the latest call state, in case there was a delay due to glare.
+      call = (0, _selectors.getCallByWrtcsSessionId)(context.getState(), wrtcsSessionId);
       await callFlows.remoteOffer(call, operation, opInfo, params);
     } catch (err) {
       ongoing[call.id].remove(operation);
@@ -6550,6 +6572,53 @@ function callManager(container) {
   async function exiLocalNegotiation(wrtcsSessionId, params) {
     const call = (0, _selectors.getCallByWrtcsSessionId)(context.getState(), wrtcsSessionId);
     const log = logManager.getLogger('CALL', call ? call.id : undefined);
+
+    /**
+     * Helper to find the local operation that the received notification is a response for.
+     * If the assumed local operation is not ready yet (ie. not PENDING), will delay a
+     *    short time before re-finding the operation. Will attempt every 25ms, for a max of
+     *    500ms, before eventually ignoring the notification.
+     */
+    async function getExistingNegotiation(callId) {
+      let timeDelayed = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+      const call = (0, _selectors.getCallById)(context.getState(), callId);
+      const opState = call.currentOperations.find((op, ind, arr) => {
+        return op.isLocal && op.status === _constants2.OP_STATUS.PENDING && op.isBlocking ||
+        // Local pending operation.
+        !op.isLocal && op.type === _constants2.OPERATIONS.SLOW_START && op.isBlocking ||
+        // Remote slow-start operation.
+        op.isLocal && op.type === _constants2.OPERATIONS.JOIN && arr.length === 1 // Local pending join, as the only op.
+        ;
+      });
+
+      /*
+       * Scenarios:
+       *    1. local PENDING negotiation found: this response is for that operation.
+       *    2. still no PENDING after max delay: error scenario; can't delay forever.
+       *    3. local ONGOING negotiation found: response was receive too early, delay then re-process.
+       *    4. nether negotiation found: error scenario
+       */
+      if (opState) {
+        return opState;
+      } else if (timeDelayed >= 500) {
+        // Local negotiation is not PENDING even after 500ms delay; can't process this notification.
+        log.debug(`Received negotiation answer still cannot be processed; ignoring.`);
+        return undefined;
+      } else {
+        const ongoingOp = call.currentOperations.find(op => {
+          return op.isLocal && op.status === _constants2.OP_STATUS.ONGOING && op.isBlocking;
+        });
+        if (ongoingOp) {
+          log.debug(`Received negotiation answer for local ${ongoingOp.type} too early; delaying processing.`);
+          await new Promise(resolve => setTimeout(resolve, 25));
+          // Re-get the operation after a delay, but indicate it was already delayed.
+          return await getExistingNegotiation(callId, timeDelayed + 25);
+        } else {
+          // No PENDING or ONGOING local negotiation; can't process this notification.
+          return undefined;
+        }
+      }
+    }
     if (!call) {
       // Scenario: The notification is about a call that state does not know about.
       //    Ignore the notification.
@@ -6563,14 +6632,8 @@ function callManager(container) {
     });
 
     // Find which operation this "remote answer" could be for.
-    const opState = call.currentOperations.find(op => {
-      return op.isLocal && op.status === _constants2.OP_STATUS.PENDING ||
-      // Local pending operation.
-      !op.isLocal && op.type === _constants2.OPERATIONS.SLOW_START // Remote slow-start operation.
-      ;
-    });
-    const operation = ongoing[call.id].getByType(opState.type);
-    if (!operation) {
+    const opState = await getExistingNegotiation(call.id);
+    if (!opState) {
       /*
        * Scenario #1: A remote (non slow-start) operation is on-going.
        * Scenario #2: No local or remote operation is on-going.
@@ -6580,6 +6643,7 @@ function callManager(container) {
       log.warn('Received negotiation answer without a matching offer; ignoring.');
       return;
     }
+    const operation = ongoing[call.id].getByType(opState.type);
     try {
       await callFlows.remoteAnswer(call, operation, params);
     } finally {
@@ -6605,9 +6669,24 @@ function callManager(container) {
      * @return {Object|undefined}
      */
     return async function localOperation(callId) {
+      checkCallExistence(context.getState(), callId);
       const operation = Callstack.operations[stackMethod].local(callId);
-      // Track this operation as on-going.
-      ongoing[callId].add(operation);
+      if (ongoing[callId].getByType(_constants2.OPERATIONS.END)) {
+        // Prevent new operations when the call is ending.
+        throw new _errors.default({
+          code: _errors.callCodes.GLARE,
+          message: `Cannot start new local ${operation.type} operation while call is ending.`
+        });
+      } else if (operation.isNegotiation && ongoing[callId].isBlocked) {
+        // Call is "blocked"; starting a new negotiation is a glare scenario.
+        throw new _errors.default({
+          code: _errors.callCodes.GLARE,
+          message: `Cannot start new local ${operation.type} negotiation due to glare scenario.`
+        });
+      } else {
+        // Track this operation as on-going.
+        ongoing[callId].add(operation);
+      }
       let result;
       try {
         for (var _len2 = arguments.length, params = new Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
@@ -6657,8 +6736,16 @@ function callManager(container) {
 
       // Remove the operation from the on-going lists.
       ongoing[priCall.id].remove(operation);
-      if (secCall && operation.type !== _constants2.OPERATIONS.JOIN) {
+      if (operation.type !== _constants2.OPERATIONS.JOIN) {
+        // If a transfer, stop tracking the operation for every call involved.
         ongoing[secCall.id].remove(operation);
+      } else if (priCall.id === operation.data.priCallId) {
+        // If join AND the notification was for the primary call, also stop tracking
+        //    the operation for the new, joined call.
+        if (ongoing[operation.data.joinedCallId].getById(operation.id)) {
+          // TODO: Why is this not tracked?
+          ongoing[operation.data.joinedCallId].remove(operation);
+        }
       }
     };
   }
@@ -6684,20 +6771,34 @@ function callManager(container) {
       }
       // The ID of the secondary call is provided as a parameter.
       const secCallId = params[0];
+      // For a JOIN, the ID for the new, joined call is provided as well.
+      const joinedCallId = params[1];
+      checkCallExistence(context.getState(), priCallId);
+      checkCallExistence(context.getState(), secCallId);
       const operation = Callstack.operations[stackMethod].local(priCallId, {
         priCallId,
-        secCallId
+        secCallId,
+        joinedCallId
       });
-      // Track this operation as on-going for both calls.
-      ongoing[priCallId].add(operation);
-      ongoing[secCallId].add(operation);
-      await callFlows.dualCall(priCallId, operation, params);
-      if (operation.type === _constants2.OPERATIONS.JOIN) {
-        // Have the CallManager track the new call for the join operation.
-        const joinedCallId = params[1];
-        ongoing[joinedCallId] = (0, _OperationTracker.default)(logManager.getLogger('CALL', joinedCallId));
-        ongoing[joinedCallId].add(operation);
+      if (ongoing[priCallId].isBlocked || ongoing[secCallId].isBlocked) {
+        const blockedId = ongoing[priCallId].isBlocked ? priCallId : secCallId;
+        // Call is "blocked"; starting a new negotiation is a glare scenario.
+        throw new _errors.default({
+          code: _errors.callCodes.GLARE,
+          message: `Cannot start new local ${operation.type} operation due to glare scenario for call ${blockedId}.`
+        });
+      } else {
+        // Track this operation as on-going for both calls.
+        ongoing[priCallId].add(operation);
+        ongoing[secCallId].add(operation);
+        if (operation.type === _constants2.OPERATIONS.JOIN) {
+          // Have the CallManager track the new call for the join operation.
+          const track = (0, _OperationTracker.default)(logManager.getLogger('CALL', joinedCallId));
+          ongoing[joinedCallId] = track;
+          ongoing[joinedCallId].add(operation);
+        }
       }
+      await callFlows.dualCall(priCallId, operation, params);
     };
   }
 
@@ -9048,7 +9149,8 @@ function answerWebrtcSessionOperation(container) {
     return {
       error: false,
       answerSDP: newSdp,
-      mediaIds: medias.map(media => media.id)
+      mediaIds: medias.map(media => media.id),
+      session
     };
   }
   return answerWebrtcSession;
@@ -9175,8 +9277,7 @@ function answerOperation(container) {
     CallRequests,
     CallReporter,
     emitEvent,
-    logManager,
-    WebRTC
+    logManager
   } = container;
   const {
     answerWebrtcSession
@@ -9263,8 +9364,7 @@ function answerOperation(container) {
 
       // Get the list of all remote tracks being offered in this call. This is a
       //    new call, so this should be the full list of remote tracks available.
-      const session = await WebRTC.sessionManager.get(incomingCall.webrtcSessionId);
-      const remoteTracks = await (0, _remoteTracks.getIncomingRemoteTracks)(session);
+      const remoteTracks = await (0, _remoteTracks.getIncomingRemoteTracks)(webrtcInfo.session);
       context.dispatch(_actions.callActions.answerCallFinish(callId, {
         state: _constants2.CALL_STATES.CONNECTED,
         startTime: Date.now(),
@@ -10352,7 +10452,7 @@ function endOperation(container) {
     } catch (error) {
       // Even if there is an error at the webrtc callstack layer,
       // don't abort, but rather still attempt to send REST request to backend.
-      log.warn(`Could not succesfully complete closing webrtc call: ${error}`);
+      log.warn(`Could not successfully complete closing webrtc call: ${error}`);
     }
     call = (0, _selectors.getCallById)(context.getState(), callId);
     try {
@@ -10939,11 +11039,8 @@ Object.defineProperty(exports, "__esModule", ({
 exports["default"] = getStatsOperation;
 var _selectors = __webpack_require__(11430);
 var _kandyWebrtc = __webpack_require__(15203);
-var _errors = _interopRequireWildcard(__webpack_require__(83437));
-var _version = __webpack_require__(29197);
+var _version = __webpack_require__(47333);
 var _sdkId = _interopRequireDefault(__webpack_require__(15878));
-function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
-function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
 // Call plugin.
 
 // Libraries.
@@ -10992,21 +11089,6 @@ function getStatsOperation(container) {
     const result = new Map();
     // Get the local Session for the call.
     const session = await WebRTC.sessionManager.get(targetCall.webrtcSessionId);
-
-    /*
-     * TechDebt TODO: The CallManager should prevent ANY operation from starting when there is an
-     *    on-going "end call".
-     * This scenario is a race-condition with the call ending. This operation's validation prevents
-     *    it from being performed on an Ended call (ie. a call with no WebRTC session), but Proxy
-     *    mode introduces a timing issue where getStats can be called while "end call" is in-progress.
-     * Ref: KJS-1999
-     */
-    if (!session) {
-      throw new _errors.default({
-        code: _errors.callCodes.STATE_DESYNC,
-        message: 'Failed to getStats for call that no longer has a session.'
-      });
-    }
 
     // Retrieve the RTCStatsReport from the session.
     const rtcStatsReport = await session.getStats(trackId);
@@ -12137,11 +12219,15 @@ function iceRestartOperation(container) {
       } = (0, _selectors.getOptions)(context.getState());
       await (0, _utils2.delay)(mediaConnectionRetryDelay);
     }
+    const log = logManager.getLogger('CALL', callId);
 
     // Tell the RTCPeerConnection to restart the ICE connection as part of the
     //    next negotiation.
-    await session.restartIce();
-    const log = logManager.getLogger('CALL', callId);
+    try {
+      await session.restartIce();
+    } catch (error) {
+      log.debug('Peer restartIce function not available. Restarting ICE with createOffer instead.');
+    }
 
     // Before doing the negotiation for ICE Restart, make sure we have network.
     const platform = (0, _selectors2.getPlatform)(context.getState());
@@ -12150,7 +12236,7 @@ function iceRestartOperation(container) {
     } = (0, _selectors3.getConnectionState)(context.getState(), platform);
     if (!isConnected) {
       log.debug('Websocket not connected; waiting for reconnect before performing media restart.');
-      const isConnected = await (0, _utils.waitForReconnect)();
+      const isConnected = await (0, _utils.waitForReconnect)(container);
       if (!isConnected) {
         log.info('Subscription lost; stopping media restart attempt.');
         throw new _errors.default({
@@ -12184,10 +12270,15 @@ function iceRestartOperation(container) {
       customBodies
     };
 
+    // Backwards compatibility - can remove after KJS-2044
+    const otherOptions = {
+      iceRestart: true
+    };
+
     // Generate the offer
     let offer;
     try {
-      offer = await CallstackWebrtc.generateOffer(webrtcSessionId, mediaDirections, bandwidth);
+      offer = await CallstackWebrtc.generateOffer(webrtcSessionId, mediaDirections, bandwidth, otherOptions);
       callInfo.offer = offer.sdp;
     } catch (err) {
       log.debug('Failed to generate offer.');
@@ -12774,7 +12865,18 @@ function initOperation(bottle) {
       return opFactory.instance({
         // Operation meta-data.
         type: _constants.OPERATIONS.JOIN,
-        isNegotiation: true,
+        /*
+         * TechDebt TODO: The join operation should be a blocking negotiation,
+         *    but there are so many failure edge-cases that cause more issues
+         *    with the framework. Allow other operations to happen with a join
+         *    to avoid getting stuck in permanent-glare when a join fails in a`
+         *    bad way.
+         * The main edge-case for this is that `remoteOnly` does not track the
+         *    operations. A join can fail where only the new joined call gets a
+         *    'call end' notification to indicate failure, so that notification
+         *    needs to "clean-up" the operation for all 3 calls.
+         */
+        isNegotiation: false,
         isLocal: true,
         // Operation methods.
         stages: {
@@ -13324,10 +13426,21 @@ var _constants = __webpack_require__(37409);
 // Helpers
 
 function initOperation(bottle) {
-  // Provide the top-level container to the factory functions.
-  //    Otherwise they would get the `operations` sub-container.
+  // Register the individual stages for the operation.
+  bottle.factory('Callstack.stages.make', () => {
+    return {
+      local: {
+        // Note: No `validate` stage; can always start a new call.
+        localOffer: (0, _make.default)(bottle.container),
+        remoteAnswer: (0, _remoteAnswer.default)(bottle.container)
+      }
+    };
+  });
+
+  // Register the Operation as a whole entity.
   bottle.factory('Callstack.operations.make', () => {
-    const opFactory = bottle.container.Callstack.models.Operation;
+    const Callstack = bottle.container.Callstack;
+    const opFactory = Callstack.models.Operation;
 
     /**
      * Factory function for a LocalMake operation.
@@ -13342,11 +13455,7 @@ function initOperation(bottle) {
         isNegotiation: true,
         isLocal: true,
         // Operation methods.
-        stages: {
-          // Note: No `validate` stage; can always start a new call.
-          localOffer: (0, _make.default)(bottle.container),
-          remoteAnswer: (0, _remoteAnswer.default)(bottle.container)
-        }
+        stages: Callstack.stages.make.local
       }, {
         callId
       });
@@ -13756,10 +13865,20 @@ function setupIncomingCallOperation(container) {
     log.info('Setting up remote WebRTC portions of call.');
     let session;
     try {
+      let iceServers = defaultPeerConfig.iceServers;
+      // Merge the ICE server information together with their credentials.
+      if (turnInfo) {
+        iceServers = iceServers.map(iceInfo => {
+          return _objectSpread(_objectSpread({}, iceInfo), {}, {
+            username: turnInfo.username,
+            credential: turnInfo.password
+          });
+        });
+      }
       session = await WebRTC.sessionManager.create({
         peer: {
           rtcConfig: _objectSpread(_objectSpread({}, defaultPeerConfig), {}, {
-            iceServers: turnInfo.servers
+            iceServers
           }),
           trickleIceMode,
           removeBundling
@@ -22341,20 +22460,21 @@ function createLocalOperation(container) {
 "use strict";
 
 
+var _interopRequireDefault = __webpack_require__(71600);
 Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = generateOfferOperation;
+var _defineProperty2 = _interopRequireDefault(__webpack_require__(26290));
 var _selectors = __webpack_require__(11430);
 var _constants = __webpack_require__(37409);
 var _errors = _interopRequireWildcard(__webpack_require__(83437));
 var _constants2 = __webpack_require__(42750);
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
 function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
-// Call plugin
-
+function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { (0, _defineProperty2.default)(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; } // Call plugin
 // Other plugins
-
 /**
  * Bottle wrapper for "generate offer" operation.
  * @return {Function}
@@ -22377,9 +22497,11 @@ function generateOfferOperation(container) {
    * @param {string} mediaDirections.audio mode of audio add to the sdp offer
    * @param {string} mediaDirections.video mode of video add to the sdp offer
    * @param {BandwidthControls} [bandwidth] bandwidth configurations to use
+   * @param {Object} otherOptions Other options to pass to createOffer
    * @return {Object} offer object containing a Session Description Protocol
    */
   async function generateOffer(sessionId, mediaDirections, bandwidth) {
+    let otherOptions = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
     const log = logManager.getLogger('CALLSTACK');
     const session = await WebRTC.sessionManager.get(sessionId);
     if (!session) {
@@ -22408,9 +22530,9 @@ function generateOfferOperation(container) {
     //    renegotiation operation.
     let offer, callConfigOptions;
     try {
-      offer = await session.createOffer({
+      offer = await session.createOffer(_objectSpread({
         mediaDirections
-      });
+      }, otherOptions));
       callConfigOptions = (0, _selectors.getOptions)(context.getState());
       // This is the "pre set local" stage.
       offer.sdp = CallstackSDP.runPipeline(callConfigOptions.sdpHandlers, offer.sdp, {
@@ -22749,7 +22871,7 @@ exports.fixIceServerUrls = fixIceServerUrls;
 exports.mergeDefaults = mergeDefaults;
 var _logs = __webpack_require__(43862);
 var _utils = __webpack_require__(25189);
-var _version = __webpack_require__(29197);
+var _version = __webpack_require__(47333);
 var _defaults = __webpack_require__(27241);
 var _validation = __webpack_require__(42850);
 // Other plugins.
@@ -24104,9 +24226,7 @@ function createAPI(container) {
           localHold: call ? call.localHold : undefined,
           remoteHold: call ? call.remoteHold : undefined
         },
-        error: {
-          error
-        }
+        error
       });
     }
   }
@@ -30157,6 +30277,20 @@ function handleLinkCallRequestError(response) {
         return 'Request failed: Invalid or missing request body';
       case 26:
         return 'Request failed: Internal Server Error';
+      case 27:
+        return 'Request failed: Authorization failure';
+      case 35:
+        return 'Request failed: Service is not authorized due to Call Control resources on the server being not enabled';
+      case 37:
+        return 'Request failed: Detected invalid parameter value. Check Request content';
+      case 42:
+        return 'Request failed: Resource does not exist';
+      case 61:
+        return 'Request failed: Authentication failure due to credentials not provided or incorrect';
+      case 62:
+        return 'Request failed: Authentication failure due to account being disabled';
+      case 63:
+        return 'Request failed: Authentication failure due to account being locked';
       case 1004:
         return 'Request failed: Bad request';
       default:
@@ -30299,6 +30433,125 @@ function getRemoteParticipant(targetCall, notification, domain) {
   return {
     remoteName: remoteInfo.remoteName || targetCall.remoteParticipant.displayName,
     remoteNumber: remoteInfo.remoteNumber || targetCall.remoteParticipant.displayNumber
+  };
+}
+
+/***/ }),
+
+/***/ 87056:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports.createCodecRemover = createCodecRemover;
+/**
+ * Creates and returns an SDP Handler function that will remove the desired codecs
+ *  from the SDP when passed to the pipeline.
+ *
+ * @method createCodecRemover
+ * @param  {string[]|Object[]} codecs An array of strings or objects representing the desired codecs to be removed.
+ * @example
+ * // `codecs` paramters can be an array of strings (i.e., ['VP8', 'VP9']) or as objects with the following signature:
+ * const codecsToBeRemoved = [{
+ *   name: 'codecname',
+ *   fmtpParams: 'specific ftmp parameter target'
+ * }]
+ * const codecRemover = createCodecRemover(codecsToBeRemoved)
+ * @return {Function} returns an SDP handler function
+ */
+function createCodecRemover() {
+  let codecs = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+  // We allow the user to pass in a codecs of objects or strings, so here we format the strings into objects for uniformity.
+  codecs = codecs.map(item => typeof item === 'string' ? {
+    name: item
+  } : item);
+  return function (newSdp, info, originalSdp) {
+    // This is an array of strings representing codec names we want to remove.
+    const codecStringsToRemove = codecs.map(codec => codec.name);
+    newSdp.media.forEach(media => {
+      // This is an array of just the codes (codec payloads) that we FOR SURE want to remove.
+      const finalRemoveList = [];
+      // This is an array of RTP objects who have codecs that are the same as strings passed in via codecs.
+      let filteredRtp = [];
+
+      // If the current rtp.codec is in the codecStringsToRemove list, add the rtp to filteredRtp
+      filteredRtp = media.rtp.filter(rtp => codecStringsToRemove.includes(rtp.codec));
+      filteredRtp.forEach(rtp => {
+        // We grab the relevantCodec codecs object from the passed in codecs, based on the name string.
+        const relevantCodecs = codecs.filter(codec => codec.name === rtp.codec);
+
+        // We check the relevantCodec. If it is not present, then we have no codecs info for this specific rtp.
+        relevantCodecs.forEach(relevantCodec => {
+          // If fmtpParams doesnt exist or is of length 0 then we assume we can remove all instances of this codec
+          if (!relevantCodec.fmtpParams || relevantCodec.fmtpParams && relevantCodec.fmtpParams.length === 0) {
+            // We want to delete this codec no matter what, since no fmtp params were included.
+            finalRemoveList.push(rtp.payload);
+          } else {
+            // There are fmtp values for this codec. Therefore we have to check each media.fmtp object to see if it is the right one.
+            // Then when we find the right fmtp object, we check its config to see if it has the parameters specified in the input.
+            media.fmtp.forEach(fmtp => {
+              // We check each iteration to see if we found the right fmtp object.
+              if (fmtp.payload === rtp.payload) {
+                // If we found the right fmtp object, we have to make sure each config param is in the fmtp.config.
+                if (relevantCodec.fmtpParams.every(c => fmtp.config.includes(c))) {
+                  finalRemoveList.push(rtp.payload);
+                }
+              }
+            });
+          }
+        });
+      });
+
+      // At this point we should have an array (finalRemoveList) that contains all ORIGINAL codec payloads that we need to remove.
+      // We now need to check fmtp for all rtx payloads ASSOCIATED with the original codec payload.
+      media.fmtp.forEach(fmtp => {
+        // Check if the config contains apt=, which indicates this fmtp is associated with another.
+        if (fmtp.config.includes('apt=')) {
+          // If so, lets grab the whole string WITHOUT the apt= part, and convet it into an integer. This should be a payload number.
+          var payload = parseInt(fmtp.config.replace('apt=', ''));
+
+          // Check if the finalRemoveList contains the payload that this fmtp is associated with.
+          if (finalRemoveList.includes(payload)) {
+            // If so, then we need to add this fmtp.payload to the finalRemoveList
+            finalRemoveList.push(fmtp.payload);
+          }
+        }
+      });
+
+      // We assume past this point that the finalRemoveList is all powerful.
+      // For each codec in the media.payloads string, if it is in our finalRemoveList list, we remove it.
+      let isNumber = false;
+      if (typeof media.payloads === 'number') {
+        media.payloads = media.payloads.toString();
+        isNumber = true;
+      }
+      if (media.payloads) {
+        // If our final list of codecs to remove is greater than or equal to
+        // the actual number of codecs in the SDP, remove codecs from the final list
+        // such that it is exactly one fewer codecs than in the SDP. This way we
+        // will never remove all codecs and always leave at least one.
+        const payloadCount = media.payloads.split(' ').length;
+        if (finalRemoveList.length >= payloadCount) {
+          finalRemoveList.splice(payloadCount - 1, finalRemoveList.length - payloadCount + 1);
+        }
+        media.payloads = media.payloads.split(' ').filter(payload => !finalRemoveList.includes(parseInt(payload))).join(' ');
+      }
+      if (media.payloads && isNumber) {
+        media.payloads = parseInt(media.payloads);
+      }
+
+      // For each codec object, if the payload is in our filteredCodes list, we remove the object.
+      media.rtp = media.rtp.filter(rtp => !finalRemoveList.includes(rtp.payload));
+      media.fmtp = media.fmtp.filter(fmtp => !finalRemoveList.includes(fmtp.payload));
+      if (media.rtcpFb) {
+        media.rtcpFb = media.rtcpFb.filter(rtcpFb => !finalRemoveList.includes(rtcpFb.payload));
+      }
+    });
+    return newSdp;
   };
 }
 
@@ -30872,6 +31125,7 @@ function autoRestart(saga) {
         // Importing the LogManager in this file breaks tests for an unknown
         //    reason. Should find out why so that we can log in our utils.
         // log.error(`Unhandled error in saga ${saga.name}.`, e)
+        // eslint-disable-next-line no-console
         console.log(`Unhandled error in saga ${saga.name}.`, e);
         shouldRestart = true;
       }
@@ -32563,7 +32817,7 @@ async function waitForReconnect(container) {
     return true;
   }
   const result = await Promise.race([Notifications.takeAction(_actionTypes.WS_CONNECT_FINISHED), Notifications.takeAction(_actionTypes2.UNSUBSCRIBE_FINISHED), (0, _utils.delay)(timeout)]);
-  if (result && result.actionType && result.actionType === _actionTypes.WS_CONNECT_FINISHED) {
+  if (result && result.type && result.type === _actionTypes.WS_CONNECT_FINISHED) {
     return true;
   }
   return false;
@@ -32759,7 +33013,8 @@ const callCodes = exports.callCodes = {
   // No ICE candidates found
   NO_ICE_CANDIDATES: 'call:10',
   // Failed to recieve answer due to media mismatch
-  SESSION_MISMATCH: 'call:11'
+  SESSION_MISMATCH: 'call:11',
+  GLARE: 'call:12'
 };
 
 /**
@@ -33218,10 +33473,29 @@ function eventsImplementation() {
     log.info(`Emitting event: ${type}`, args);
     emitter.emit(type, args);
   });
+  const Events = {
+    on: (eventType, listener) => {
+      emitter.on(eventType, listener);
+    },
+    off: (eventType, listener) => {
+      emitter.off(eventType, listener);
+    },
+    subscribe: listener => {
+      emitter.subscribe(listener);
+    },
+    unsubscribe: listener => {
+      emitter.unsubscribe(listener);
+    }
+  };
+
+  // Provide the Events functions bottle container.
+  bottle.value('Events', Events);
+
+  // Register the component factory functions to the bottle.
+  bottle.factory('EventsAPI', _interface.default.createAPI);
   return {
     name: _interface.default.name,
     middleware: middleware,
-    api: _interface.default.api,
     reducer: _interface.default.reducer
   };
 }
@@ -33246,18 +33520,6 @@ function setupMiddleware(emitter) {
      */
     return next => action => {
       switch (action.type) {
-        case actionTypes.EVENTS_ON:
-          emitter.on(action.payload.eventType, action.payload.listener);
-          break;
-        case actionTypes.EVENTS_OFF:
-          emitter.off(action.payload.eventType, action.payload.listener);
-          break;
-        case actionTypes.EVENTS_SUBSCRIBE:
-          emitter.subscribe(action.payload);
-          break;
-        case actionTypes.EVENTS_UNSUBSCRIBE:
-          emitter.unsubscribe(action.payload);
-          break;
         case actionTypes.EVENTS_ALIAS:
           emitter.alias(action.payload.eventType, action.payload.alias);
           break;
@@ -33496,88 +33758,87 @@ function aliasEvent(type, alias) {
 Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
-exports["default"] = api;
+exports["default"] = createAPI;
 var _actions = __webpack_require__(60279);
-var _logs = __webpack_require__(43862);
 // Actions the interface uses.
 
-const log = _logs.logManager.getLogger('EVENTS');
-
 /**
- * API for Event Emitter plugin.
- * Defines the public end-points exposed by event plugins.
- * @param  {Object} context The sdk instance context.
- * @returns {Object} api     The interface object.
+ * Events APIs factory function.
+ * @method createAPI
+ * @param  {Object} container The bottle container.
+ * @param  {Object} container.context The factory context.
+ * @return {Object} Events API.
  */
-function api(_ref) {
-  let {
-    dispatch
-  } = _ref;
-  var api = {};
-
-  /**
-   * Add an event listener for the specified event type. The event is emitted by the SDK instance.
-   *
-   * @public
-   * @memberof api
-   * @method on
-   * @param {string} type The event type for which to add the listener.
-   * @param {Function} listener The listener for the event type. The parameters of the listener depend on the event type.
-   * @throws {Error} Invalid event type
-   * @example
-   * // Listen for events of a specific type emitted by the SDK.
-   * client.on('dummy:event', function (params) {
-   *    // Handle the event.
-   * })
-   */
-  api.on = function (type, listener) {
-    log.debug(_logs.API_LOG_TAG + 'on: ', type);
-    dispatch((0, _actions.on)(type, listener));
+function createAPI(container) {
+  const {
+    logManager,
+    context,
+    Events,
+    API_LOG_TAG
+  } = container;
+  const log = logManager.getLogger('EVENTS');
+  const eventsApi = {
+    /**
+     * Add an event listener for the specified event type. The event is emitted by the SDK instance.
+     *
+     * @public
+     * @memberof api
+     * @method on
+     * @param {string} type The event type for which to add the listener.
+     * @param {Function} listener The listener for the event type. The parameters of the listener depend on the event type.
+     * @example
+     * // Listen for events of a specific type emitted by the SDK.
+     * client.on('dummy:event', function (params) {
+     *    // Handle the event.
+     * })
+     */
+    on: function (type, listener) {
+      log.debug(API_LOG_TAG + 'on: ', type);
+      context.dispatch((0, _actions.on)(type, listener));
+      Events.on(type, listener);
+    },
+    /**
+     * Removes an event listener for the specified event type. The event is emitted by the SDK instance.
+     *
+     * @public
+     * @memberof api
+     * @method off
+     * @param {string} type The event type for which to remote the listener.
+     * @param {Function} listener The listener to remove.
+     */
+    off: function (type, listener) {
+      log.debug(API_LOG_TAG + 'off: ', type);
+      context.dispatch((0, _actions.off)(type, listener));
+      Events.off(type, listener);
+    },
+    /**
+     * Adds a global event listener to SDK instance.
+     *
+     * @public
+     * @memberof api
+     * @method subscribe
+     * @param {Function} listener The event listener to add. The parameters are (type, ...args), where args depend on the event type.
+     */
+    subscribe: function (listener) {
+      log.debug(API_LOG_TAG + 'subscribe');
+      context.dispatch((0, _actions.subscribe)(listener));
+      Events.subscribe(listener);
+    },
+    /**
+     * Removes a global event listener from SDK instance.
+     *
+     * @public
+     * @memberof api
+     * @method unsubscribe
+     * @param {Function} listener The event listener to remove.
+     */
+    unsubscribe: function (listener) {
+      log.debug(API_LOG_TAG + 'unsubscribe');
+      context.dispatch((0, _actions.unsubscribe)(listener));
+      Events.unsubscribe(listener);
+    }
   };
-
-  /**
-   * Removes an event listener for the specified event type. The event is emitted by the SDK instance.
-   *
-   * @public
-   * @memberof api
-   * @method off
-   * @param {string} type The event type for which to remote the listener.
-   * @param {Function} listener The listener to remove.
-   * @throws {Error} Invalid event type
-   */
-  api.off = function (type, listener) {
-    log.debug(_logs.API_LOG_TAG + 'off: ', type);
-    dispatch((0, _actions.off)(type, listener));
-  };
-
-  /**
-   * Adds a global event listener to SDK instance.
-   *
-   * @public
-   * @memberof api
-   * @method subscribe
-   * @param {Function} listener The event listener to add. The parameters are (type, ...args), where args depend on the event type.
-   * @throws {Error} Listener not a function
-   */
-  api.subscribe = function (listener) {
-    log.debug(_logs.API_LOG_TAG + 'subscribe');
-    dispatch((0, _actions.subscribe)(listener));
-  };
-
-  /**
-   * Removes a global event listener from SDK instance.
-   *
-   * @public
-   * @memberof api
-   * @method unsubscribe
-   * @param {Function} listener The event listener to remove.
-   * @throws {Error} Listener not a function
-   */
-  api.unsubscribe = function (listener) {
-    log.debug(_logs.API_LOG_TAG + 'unsubscribe');
-    dispatch((0, _actions.unsubscribe)(listener));
-  };
-  return api;
+  return eventsApi;
 }
 
 /***/ }),
@@ -33604,7 +33865,7 @@ var _reducers = _interopRequireDefault(__webpack_require__(62319));
 const name = 'events';
 var _default = exports["default"] = {
   name,
-  api: _api.default,
+  createAPI: _api.default,
   reducer: _reducers.default
 };
 
@@ -33694,7 +33955,7 @@ var _reduxSaga = _interopRequireDefault(__webpack_require__(7));
 var _effects = __webpack_require__(27422);
 var _bottlejs = _interopRequireDefault(__webpack_require__(39146));
 var _utils = __webpack_require__(25189);
-var _version = __webpack_require__(29197);
+var _version = __webpack_require__(47333);
 var _intervalFactory = _interopRequireDefault(__webpack_require__(93725));
 var _logs = __webpack_require__(43862);
 var _validation = __webpack_require__(42850);
@@ -34055,9 +34316,11 @@ function styleLog(entry) {
 function defaultActionHandler(entry) {
   // Handle the "start" and "stop" action log entries specifically.
   if (['group', 'groupCollapsed'].includes(entry.method)) {
+    // eslint-disable-next-line no-console
     console[entry.method](...entry.messages);
     return;
   } else if (entry.method === 'groupEnd') {
+    // eslint-disable-next-line no-console
     console.groupEnd();
     return;
   }
@@ -34066,6 +34329,7 @@ function defaultActionHandler(entry) {
     style,
     payload
   } = styleLog(entry);
+  // eslint-disable-next-line no-console
   console[entry.method](prefix, style, payload);
 }
 
@@ -36907,20 +37171,16 @@ Object.defineProperty(exports, "__esModule", ({
 }));
 exports.linkRequest = exports["default"] = void 0;
 var _configs = __webpack_require__(2853);
-var _sagas = _interopRequireDefault(__webpack_require__(22939));
-var _events = _interopRequireDefault(__webpack_require__(29583));
 var _requestModule = _interopRequireDefault(__webpack_require__(35669));
-var _interface = __webpack_require__(65696);
+var _interface = _interopRequireDefault(__webpack_require__(65696));
 var _actions = __webpack_require__(43424);
-var _actions2 = __webpack_require__(60279);
 var _utils = __webpack_require__(25189);
-var _effects = __webpack_require__(27422);
 // Request plugin.
 // Other plugins.
 // Utils.
-// Libraries.
 /*
  * HTTP request plugin.
+ *
  */
 var _default = exports["default"] = pluginFactory();
 /*
@@ -36938,24 +37198,33 @@ const linkRequest = exports.linkRequest = pluginFactory('link');
  * @return {Function} The actual Plugin creator function.
  */
 function pluginFactory(platform) {
-  // Generate the saga for this platform, or a generic saga if platform is undefined.
-  const saga = (0, _sagas.default)(platform);
   return function request() {
     let options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
     let bottle = arguments.length > 1 ? arguments[1] : undefined;
     options = (0, _utils.mergeValues)(_configs.defaultOptions, options);
     (0, _configs.parseOptions)(options);
-    function* init() {
-      yield (0, _effects.put)((0, _actions.update)(options, _interface.name));
-      yield (0, _effects.put)((0, _actions2.mapEvents)(_events.default));
+
+    /*
+     * Init function to setup the Request plugin.
+     * @param {Object} container The bottle container.
+     */
+    function initPlugin(container) {
+      const {
+        context
+      } = container;
+
+      // Send the provided options to the store.
+      // This will be `state.config[name]`.
+      context.dispatch((0, _actions.update)(options, _interface.default.name));
     }
+
+    // Register the component factory functions to the bottle.
+    bottle.factory('RequestAPI', _interface.default.createAPI);
     bottle.factory('sendRequest', _requestModule.default);
+    bottle.defer(initPlugin);
     return {
-      sagas: [saga],
-      init,
       capabilities: platform ? ['restAuthorization'] : [],
-      api: _interface.api,
-      name: _interface.name
+      name: _interface.default.name
     };
   };
 }
@@ -37057,78 +37326,77 @@ var _interopRequireDefault = __webpack_require__(71600);
 Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
-exports["default"] = api;
+exports["default"] = createAPI;
 var _merge2 = _interopRequireDefault(__webpack_require__(9612));
 var _utils = __webpack_require__(70720);
-var _logs = __webpack_require__(43862);
 var _selectors = __webpack_require__(46942);
 // Other plugins.
 
-const log = _logs.logManager.getLogger('REQUEST');
-
 /**
- * Request API.
- * @method api
- * @param  {Function} $0
- * @param  {Function} $0.dispatch - The redux store's dispatch function.
- * @param  {Function} $0.getState - The redux store's getState function.
- * @return {Object} api - The request API object.
+ * Request API factory function.
+ * @method createAPI
+ * @param  {Object} container The bottle container.
+ * @param  {Object} container.context - The factory context.
+ * @return {Object} Request API.
  */
-function api(_ref) {
-  let {
-    dispatch,
-    getState
-  } = _ref;
-  return {
-    request: {
-      /**
-       * The 'request' namespace (within the 'api' type) is used to make network requests to the server.
-       *
-       * @public
-       * @namespace request
-       */
+function createAPI(container) {
+  const {
+    logManager,
+    context,
+    API_LOG_TAG
+  } = container;
+  const log = logManager.getLogger('REQUEST');
+  const requestApi = {
+    /**
+     * The 'request' namespace (within the 'api' type) is used to make network requests to the server.
+     *
+     * @public
+     * @namespace request
+     */
 
-      /**
-       * Send a request to the underlying REST service with the appropriate configuration and authentication.
-       * This is a wrapper on top of the browser's [fetch API](https://developer.mozilla.org/en-US/docs/Web/API/fetch)
-       * and behaves very similarly but using SDK configuration for the base URL and authentication as well
-       * as SDK logging.
-       *
-       * @public
-       * @memberof request
-       * @method fetch
-       * @param {string} resource The full path of the resource to fetch from the underlying service. This should include any REST version
-       *                          or user information. This path will be appended to the base URL according to SDK configuration.
-       * @param {RequestInit} init An object containing any custom settings that you want to apply to the request. See [fetch API](https://developer.mozilla.org/en-US/docs/Web/API/fetch)
-       *                           for a full description and defaults.
-       * @return {Promise<Response>} A promise for a [Response](https://developer.mozilla.org/en-US/docs/Web/API/Response) object.
-       * @example
-       * // Send a REST request to the server
-       * // Create a request options object following [fetch API](https://developer.mozilla.org/en-US/docs/Web/API/fetch)
-       * const requestOptions = {
-       *   method: 'POST',
-       *   body: JSON.stringify({
-       *     test: 123
-       *   })
-       * }
-       *
-       * // Note that you will need to subscribe for the `custom` service in order to
-       * // receive notifications from the `externalnotification` service.
-       * const response = await client.request.fetch('/rest/version/1/user/xyz@test.com/externalnotification', requestOptions)
-       */
-      async fetch(resource) {
-        let init = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-        log.debug(_logs.API_LOG_TAG + 'fetch: ', resource);
-        const state = getState();
-        const platform = (0, _selectors.getPlatform)(state);
-        const requestInfo = (0, _selectors.getRequestInfo)(state, platform);
-        const options = requestInfo.requestOptions;
-        requestInfo.requestOptions = (0, _merge2.default)(init, options);
-        requestInfo.platform = platform;
-        // Do request
-        return await (0, _utils.fetchResource)(resource, requestInfo);
-      }
+    /**
+     * Send a request to the underlying REST service with the appropriate configuration and authentication.
+     * This is a wrapper on top of the browser's [fetch API](https://developer.mozilla.org/en-US/docs/Web/API/fetch)
+     * and behaves very similarly but using SDK configuration for the base URL and authentication as well
+     * as SDK logging.
+     *
+     * @public
+     * @memberof request
+     * @method fetch
+     * @param {string} resource The full path of the resource to fetch from the underlying service. This should include any REST version
+     *                          or user information. This path will be appended to the base URL according to SDK configuration.
+     * @param {RequestInit} init An object containing any custom settings that you want to apply to the request. See [fetch API](https://developer.mozilla.org/en-US/docs/Web/API/fetch)
+     *                           for a full description and defaults.
+     * @return {Promise<Response>} A promise for a [Response](https://developer.mozilla.org/en-US/docs/Web/API/Response) object.
+     * @example
+     * // Send a REST request to the server
+     * // Create a request options object following [fetch API](https://developer.mozilla.org/en-US/docs/Web/API/fetch)
+     * const requestOptions = {
+     *   method: 'POST',
+     *   body: JSON.stringify({
+     *     test: 123
+     *   })
+     * }
+     *
+     * // Note that you will need to subscribe for the `custom` service in order to
+     * // receive notifications from the `externalnotification` service.
+     * const response = await client.request.fetch('/rest/version/1/user/xyz@test.com/externalnotification', requestOptions)
+     */
+    fetch: async function (resource) {
+      let init = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+      log.debug(API_LOG_TAG + 'fetch: ', resource);
+      const state = context.getState();
+      const platform = (0, _selectors.getPlatform)(state);
+      const requestInfo = (0, _selectors.getRequestInfo)(state, platform);
+      const options = requestInfo.requestOptions;
+      requestInfo.requestOptions = (0, _merge2.default)(init, options);
+      requestInfo.platform = platform;
+      // Do request
+      return await (0, _utils.fetchResource)(resource, requestInfo);
     }
+  };
+  return {
+    request: requestApi
   };
 }
 
@@ -37162,33 +37430,6 @@ const REQUEST_ERROR = exports.REQUEST_ERROR = 'request:error';
 
 /***/ }),
 
-/***/ 29583:
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = void 0;
-var eventTypes = _interopRequireWildcard(__webpack_require__(10714));
-var actionTypes = _interopRequireWildcard(__webpack_require__(42165));
-function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
-function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
-const eventsMap = {};
-eventsMap[actionTypes.AUTHORIZATION_ERROR] = function (action) {
-  return {
-    type: eventTypes.REQUEST_ERROR,
-    args: {
-      error: action.payload
-    }
-  };
-};
-var _default = exports["default"] = eventsMap;
-
-/***/ }),
-
 /***/ 65696:
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
@@ -37199,20 +37440,13 @@ var _interopRequireDefault = __webpack_require__(71600);
 Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
-Object.defineProperty(exports, "api", ({
-  enumerable: true,
-  get: function () {
-    return _api.default;
-  }
-}));
-Object.defineProperty(exports, "name", ({
-  enumerable: true,
-  get: function () {
-    return _name.default;
-  }
-}));
+exports["default"] = void 0;
 var _name = _interopRequireDefault(__webpack_require__(3205));
 var _api = _interopRequireDefault(__webpack_require__(6249));
+var _default = exports["default"] = {
+  name: _name.default,
+  createAPI: _api.default
+};
 
 /***/ }),
 
@@ -37308,8 +37542,8 @@ const responseTypes = Object.freeze({
  *      - If no body, then use an empty object in its place.
  * - If the fetch succeeded, the response "results" will always be forwarded on,
  *      even if the response is outside of the 200-299 range.
- *      - Because some backends provide more detailed error info (that a saga
- *        may need) as part of the body, rather than just the response status.
+ *      - Because some backends provide more detailed error info as part of the body,
+ *        rather than just the response status.
  * - If the fetch fails, return with the fetch failure information.
  *
  * @param {Object} options Options to make the request with.
@@ -37618,10 +37852,11 @@ var _omit2 = _interopRequireDefault(__webpack_require__(81053));
 var actions = _interopRequireWildcard(__webpack_require__(55839));
 var eventTypes = _interopRequireWildcard(__webpack_require__(10714));
 var authorizations = _interopRequireWildcard(__webpack_require__(55689));
-var _sagas = __webpack_require__(22939);
+var _makeRequest = _interopRequireDefault(__webpack_require__(87569));
+var _utils = __webpack_require__(70720);
 var _selectors = __webpack_require__(46942);
-var _version = __webpack_require__(29197);
-var _utils = __webpack_require__(25189);
+var _version = __webpack_require__(47333);
+var _utils2 = __webpack_require__(25189);
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
 function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
 // Request plugin.
@@ -37641,7 +37876,8 @@ function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; 
 function createRequestHelper(container) {
   const {
     emitEvent,
-    context
+    context,
+    logManager
   } = container;
   return async function doRequest(options) {
     const requestInfo = (0, _selectors.getRequestInfo)(context.getState());
@@ -37650,21 +37886,17 @@ function createRequestHelper(container) {
     // Merge the default request options from state into the provided options.
     //    The provided options take priority.
     const defaultOptions = requestInfo.requestOptions;
-    options = (0, _utils.mergeValues)(defaultOptions, options);
+    options = (0, _utils2.mergeValues)(defaultOptions, options);
+    const action = actions.request(options);
+    // Dispatch a request action for backwards compatability
+    context.dispatch(action);
+    const log = logManager.getLogger('REQUEST', action.meta.requestId);
+    const logOptions = (0, _utils.sanitizeRequest)(action.payload);
+    log.debug(`Making REST request ${action.meta.requestId}.`, logOptions);
 
-    // Create an action to both pass in and to get a requestId.
-    const requestAction = actions.request(options);
-
-    // Workaround: For backwards-compatibility, we need to log the request action
-    //    for the LogHandler, but we don't want to actually dispatch the action
-    //    (otherwise it'll be processed...). So we manually log the fake action
-    //    to imitate how the logger would log an action.
-    logFakeAction(context, requestAction);
-
-    // handleRequest is a generator (so that it can be used as a saga by
-    //    redux-saga). So we need the "setup" the generator and then invoke it.
-    const gen = (0, _sagas.handleRequest)(platform, requestAction);
-    const result = await gen.next().value;
+    // Make the request based on the action
+    const result = await (0, _makeRequest.default)(action.payload, action.meta.requestId);
+    log.debug(`Received REST response ${action.meta.requestId}.`, result);
 
     // If the platform was specified and this is not a 3.X build, perform the
     //    authorization check side-effect.
@@ -37678,8 +37910,9 @@ function createRequestHelper(container) {
         });
       }
     }
-    const responseAction = actions.response(requestAction.meta.requestId, result, !!result.error);
-    logFakeAction(context, responseAction);
+
+    // Dispatch a response action for backwards compatability
+    context.dispatch(actions.response(action.meta.requestId, result, !!result.error));
     return result;
   };
 }
@@ -37755,97 +37988,6 @@ function getTime() {
 
 /***/ }),
 
-/***/ 22939:
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-"use strict";
-
-
-var _interopRequireDefault = __webpack_require__(71600);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports.__testonly__ = void 0;
-exports["default"] = watchRequests;
-exports.handleRequest = handleRequest;
-var actionTypes = _interopRequireWildcard(__webpack_require__(42165));
-var actions = _interopRequireWildcard(__webpack_require__(55839));
-var _makeRequest = _interopRequireDefault(__webpack_require__(87569));
-var authorizations = _interopRequireWildcard(__webpack_require__(55689));
-var _utils = __webpack_require__(70720);
-var _logs = __webpack_require__(43862);
-var _version = __webpack_require__(29197);
-var _effects = __webpack_require__(27422);
-function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
-function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
-// Request plugin.
-
-// Other plugins.
-
-// Helpers.
-
-// Libraries.
-
-/*
- * Saga-factory for creating the `watchRequests` saga.
- *    If `platform` is undefined, then no extra, platform-specific handling is done.
- */
-function watchRequests(platform) {
-  // Only allow our known platforms or undefined (for base).
-  if (!['link', undefined].includes(platform)) {
-    throw Error('Invalid platform specific for requests.');
-  }
-  return function* watchRequests() {
-    yield (0, _effects.takeEvery)(actionTypes.REQUEST, handleRequestSaga, platform);
-  };
-}
-
-/*
- * Saga that handles the request when it is triggered by an action.
- */
-function* handleRequestSaga(platform, action) {
-  const result = yield (0, _effects.call)(handleRequest, platform, action);
-
-  // If the platform was specified and this is not a 3.X build, perform the
-  //    authorization check side-effect.
-  if (platform && !(0, _version.getVersion)().startsWith('3')) {
-    // Call the 'authorization' function specific for this platform.
-    //    They're all named ${platform}Authorization so it's easier to call them.
-    const error = authorizations[`${platform}Authorization`](result);
-    if (error) {
-      yield (0, _effects.put)(actions.authorizationError(error));
-    }
-  }
-  yield (0, _effects.put)(actions.response(action.meta.requestId, result, !!result.error));
-}
-
-/*
- * Generator that handles a request action with standard HTTP handling features.
- *
- * @param {string} [platform] The platform being used.
- * @param {FluxStandardAction} action The action to handle.
- * @return {Object} The results object.
- */
-function* handleRequest(platform, action) {
-  const log = _logs.logManager.getLogger('REQUEST', action.meta.requestId);
-  const logOptions = (0, _utils.sanitizeRequest)(action.payload);
-  log.debug(`Making REST request ${action.meta.requestId}.`, logOptions);
-
-  // Make the request based on the action
-  const result = yield (0, _makeRequest.default)(action.payload, action.meta.requestId);
-  log.debug(`Received REST response ${action.meta.requestId}.`, result);
-  return result;
-}
-
-// begin-test-code
-const __testonly__ = exports.__testonly__ = {
-  watchRequests,
-  handleRequestSaga
-};
-// end-test-code
-
-/***/ }),
-
 /***/ 70720:
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
@@ -37864,7 +38006,7 @@ var _cloneDeep2 = _interopRequireDefault(__webpack_require__(33904));
 var _selectors = __webpack_require__(50647);
 var _selectors2 = __webpack_require__(46942);
 var _logs = __webpack_require__(43862);
-var _version = __webpack_require__(29197);
+var _version = __webpack_require__(47333);
 var _utils = __webpack_require__(25189);
 var _effects = __webpack_require__(27422);
 // Request plugin.
@@ -38882,6 +39024,7 @@ var _interface = _interopRequireDefault(__webpack_require__(63982));
 var _index = _interopRequireDefault(__webpack_require__(2233));
 var _media = _interopRequireDefault(__webpack_require__(89695));
 var _logs = _interopRequireDefault(__webpack_require__(84318));
+var _webrtc = _interopRequireDefault(__webpack_require__(992));
 var _actions = __webpack_require__(37992);
 var _channels = _interopRequireDefault(__webpack_require__(59720));
 var _middleware = _interopRequireDefault(__webpack_require__(40017));
@@ -38921,6 +39064,7 @@ function webrtcPlugin() {
   bottle.factory('WebRTCAPI', _index.default);
   bottle.factory('WebRTCMediaOperations', _media.default);
   bottle.factory('WebRTCLogOperations', _logs.default);
+  bottle.factory('WebRTCOperations', _webrtc.default);
 
   // Register the WebRTC stack to the bottle. This lets other component access it.
   bottle.factory('WebRTC', () => webRTC.managers);
@@ -39445,7 +39589,8 @@ function createAPI(container) {
   const {
     context,
     logManager,
-    API_LOG_TAG
+    API_LOG_TAG,
+    WebRTCOperations: operations
   } = container;
   const log = logManager.getLogger('WEBRTC');
   const mediaApi = (0, _media.default)(container);
@@ -39468,9 +39613,35 @@ function createAPI(container) {
     log.debug(API_LOG_TAG + 'getBrowserDetails');
     return (0, _selectors.getBrowserDetails)(context.getState());
   }
+
+  /**
+   * Set up provided WebRTC functionality proxies on top of WebRTC to enable
+   * WebRTC call features on platforms that would otherwise not support them.
+   * @private
+   * @method setupProxy
+   * @param {Object} proxies The WebRTC proxies.
+   */
+  function setupProxy(proxies) {
+    log.debug(API_LOG_TAG + 'webrtc.setupProxy');
+    operations.setupProxies(proxies);
+  }
+
+  /**
+   * Teardown all WebRTC functionality proxies that were set on top of WebRTC.
+   * @private
+   * @method teardownProxy
+   */
+  async function teardownProxy() {
+    log.debug(API_LOG_TAG + 'webrtc.setupProxy');
+    await operations.teardownProxies();
+  }
   return {
     media: mediaApi,
-    getBrowserDetails
+    getBrowserDetails,
+    webrtc: {
+      setupProxy,
+      teardownProxy
+    }
   };
 }
 
@@ -39837,7 +40008,7 @@ const TRACKS_UNMUTED = exports.TRACKS_UNMUTED = 'media:unmuted';
  *    possible for the track to start receiving media again (see the
  *    {@link media.event:media:sourceUnmuted media:sourceUnmuted} event).
  *
- * This event is generated outside the control of the SDK. This will predominantely
+ * This event is generated outside the control of the SDK. This will predominantly
  *    happen for a remote track during network issues, where media will lose frames
  *    and be "choppy". This may also happen for a local track if the browser or
  *    end-user stops allowing the SDK to access the media device, for example.
@@ -40167,11 +40338,11 @@ sessionReducers[actionTypes.SESSION_NEW_TRACK] = {
   next(state, action) {
     if (action.payload.local) {
       return _objectSpread(_objectSpread({}, state), {}, {
-        localTracks: (0, _concat2.default)(state.localTracks, [action.payload.trackId])
+        localTracks: state.localTracks.includes(action.payload.trackId) ? state.localTracks : (0, _concat2.default)(state.localTracks, [action.payload.trackId])
       });
     } else {
       return _objectSpread(_objectSpread({}, state), {}, {
-        remoteTracks: (0, _concat2.default)(state.remoteTracks, [action.payload.trackId])
+        remoteTracks: state.remoteTracks.includes(action.payload.trackId) ? state.remoteTracks : (0, _concat2.default)(state.remoteTracks, [action.payload.trackId])
       });
     }
   }
@@ -40855,6 +41026,120 @@ function createMediaOperations(container) {
 
 /***/ }),
 
+/***/ 992:
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports["default"] = createWebRTCOperations;
+var _devices = __webpack_require__(61547);
+var _eventTypes = __webpack_require__(46215);
+/**
+ * WebRTC Operations factory function.
+ * @method createWebRTCOperations
+ * @param  {Object} container The bottle container.
+ * @return {Object} Available operations for WebRTC Media.
+ */
+function createWebRTCOperations(container) {
+  const {
+    logManager,
+    WebRTC,
+    emitEvent,
+    context
+  } = container;
+  const log = logManager.getLogger('WEBRTC');
+  const replacedManagers = {};
+  const addedManagerEventHandlers = {};
+
+  /**
+   * Operation to setup provided proxies on the WebRTC Stack.
+   * @method setupProxies
+   * @param {Object} proxies The provided WebRTC functionality proxies.
+   * @throws {Error} An error if the operation fails.
+   */
+  function setupProxies(proxies) {
+    log.info('Setting up external proxies in WebRTC.');
+
+    // Set proxy methods in WebRTC
+    WebRTC.webrtcManager.setProxies(proxies);
+
+    // Replace managers with any provided managers
+    Object.keys(proxies.managers).forEach(manager => {
+      // Store the original manager in order to be able to revert later.
+      // Make sure we don't rid of the original manager if the manager is already in replacedManagers.
+      if (!(manager in replacedManagers)) {
+        replacedManagers[manager] = WebRTC[manager];
+      }
+      // Replace the original manager with the new one.
+      WebRTC[manager] = proxies.managers[manager];
+      log.debug(`Replaced WebRTC ${manager} manager with proxy version.`);
+    });
+
+    // Setup additional event handlers for any managers
+    Object.keys(proxies.managerEventHandlers).forEach(manager => {
+      if (manager in WebRTC) {
+        proxies.managerEventHandlers[manager].forEach(handler => {
+          WebRTC[manager].on(handler.eventName, handler.eventFn);
+          log.debug(`Added new '${handler.eventName}' event handler on ${manager} manager.`);
+        });
+        // Store these as added event handlers in order to be able to revert later.
+        addedManagerEventHandlers[manager] = proxies.managerEventHandlers[manager];
+      } else {
+        log.debug(`Provided '${manager}' manager is not a WebRTC manager, skipping event handler proxies.`);
+      }
+    });
+    log.info('Successfully set up external proxies in WebRTC.');
+  }
+
+  /**
+   * Operation to teardown proxies set on the WebRTC Stack.
+   * @method teardownProxies
+   * @throws {Error} An error if the operation fails.
+   */
+  async function teardownProxies() {
+    log.info('Tearing down all external proxies in WebRTC.');
+
+    // Pass in empty proxies to the following function so that it will set empty proxies
+    // in WebRTC causing current WebRTC functionality not to be overriden anymore.
+    WebRTC.webrtcManager.setProxies({
+      peer: {}
+    });
+
+    // Revert any previously replaced managers to the original ones.
+    Object.keys(replacedManagers).forEach(manager => {
+      WebRTC[manager] = replacedManagers[manager];
+      // Delete the manager from the replacedManagers since it has now been reverted.
+      delete replacedManagers[manager];
+      log.debug(`Reverted WebRTC ${manager} manager to original version.`);
+    });
+
+    // Remove all additional event handlers set on the managers.
+    Object.keys(addedManagerEventHandlers).forEach(manager => {
+      addedManagerEventHandlers[manager].forEach(handler => {
+        WebRTC[manager].off(handler.eventName, handler.eventFn);
+        log.debug(`Removed added '${handler.eventName}' event handler from ${manager} manager.`);
+      });
+      delete addedManagerEventHandlers[manager];
+    });
+    log.info('Successfully tore down proxies in WebRTC.');
+    log.info('Updating devices after teardown.');
+    const devices = await WebRTC.devices.checkDevices();
+    context.dispatch((0, _devices.devicesChanged)(devices));
+    // Emit the event so the application knows that devices have changed.
+    emitEvent(_eventTypes.DEVICES_CHANGED, {});
+  }
+  return {
+    setupProxies,
+    teardownProxies
+  };
+}
+
+/***/ }),
+
 /***/ 8599:
 /***/ ((__unused_webpack_module, exports) => {
 
@@ -41013,6 +41298,7 @@ function defaultLogHandler(entry) {
   }
   const formattedString = (0, _logFormatter.default)(entry);
   const tail = entry.messages.slice(1);
+  // eslint-disable-next-line no-console
   console[method](formattedString, ...tail);
 }
 
@@ -41708,10 +41994,10 @@ function reportFactory(type, id) {
     if (!type || !(0, _isString2.default)(type)) {
       throw new Error(`${API_TAG}report.addData: Invalid type (${typeof type}), must be of type string.`);
     }
-    reportData[type] = data;
     if (data === undefined) {
-      console.debug(`${API_TAG}report.addData: No actual data provided. Only ${type} key was saved.`);
+      throw new Error(`${API_TAG}report.addData: No data provided.`);
     }
+    reportData[type] = data;
   }
 
   /**
@@ -41740,13 +42026,13 @@ function reportFactory(type, id) {
     if (!type || !(0, _isString2.default)(type)) {
       throw new Error(`${API_TAG}report.addMetric: Invalid type (${typeof type}), must be of type string.`);
     }
+    if (data === undefined) {
+      throw new Error(`${API_TAG}report.addMetric: No data provided.`);
+    }
     metrics.push({
       type,
       data
     });
-    if (!data) {
-      console.debug(`${API_TAG}report.addMetric: No actual data provided. Only ${type} key was saved.`);
-    }
   }
 
   /**
@@ -41773,7 +42059,6 @@ function reportFactory(type, id) {
     }
     const metric = metrics.find(metric => metric.type === type);
     if (!metric) {
-      console.info(`${API_TAG}report.addEventIdToMetric: No metric found for type: ${type}`);
       return;
     }
     if (!metric.eventIds) {
@@ -42006,10 +42291,6 @@ function createReporter() {
    * @return {Report|undefined} The report object or undefined if no report was found for that id (or the id was invalid).
    */
   function getReport(id) {
-    if (!id || !(0, _isString2.default)(id)) {
-      console.info(`${API_TAG}reporter.getReport: Invalid id ${typeof id} (must be of type string).`);
-      return undefined;
-    }
     return reports[id];
   }
 
@@ -42023,10 +42304,6 @@ function createReporter() {
   function deleteReport(id) {
     if (!id || !(0, _isString2.default)(id)) {
       throw new Error(`${API_TAG}reporter.deleteReport: Invalid id ${typeof id} (must be of type string).`);
-    }
-    if (!reports.hasOwnProperty(id)) {
-      console.info(`No report was found for id: ${id}`);
-      return;
     }
     delete reports[id];
   }
@@ -42106,11 +42383,11 @@ function createTimelineEvent(type, onEventEnded, pId) {
     if (!type || !(0, _isString2.default)(type)) {
       throw new Error(`${API_TAG}timelineEvent.addData: Invalid type (${typeof type}), must be of type string.`);
     }
+    if (data === undefined) {
+      throw new Error(`${API_TAG}timelineEvent.addData: No data provided.`);
+    }
     // Add data to parent event (event if parent event has been marked as ended)
     eventData[type] = data;
-    if (data === undefined) {
-      console.debug(`${API_TAG}eventTimeline.addData: No actual data provided. Only ${type} key was saved.`);
-    }
   }
 
   /**
@@ -42139,13 +42416,13 @@ function createTimelineEvent(type, onEventEnded, pId) {
     if (!type || !(0, _isString2.default)(type)) {
       throw new Error(`${API_TAG}timelineEvent.addMetric: Invalid type (${typeof type}), must be of type string.`);
     }
+    if (data === undefined) {
+      throw new Error(`${API_TAG}timelineEvent.addMetric: No data provided.`);
+    }
     metrics.push({
       type,
       data
     });
-    if (!data) {
-      console.debug(`${API_TAG}timelineEvent.addMetric: No actual data provided. Only ${type} key was saved.`);
-    }
   }
 
   /**
@@ -42619,7 +42896,7 @@ function ontrack(listener) {
     trackManager,
     log
   } = this;
-  nativePeer.ontrack = event => {
+  nativePeer.ontrack = async event => {
     /**
      * transceiver: The RTCRtpTransceiver for this remote track. (Available in unified-plan)
      * receiver: The RTCRtpReceiver for this remote track.
@@ -42649,7 +42926,7 @@ function ontrack(listener) {
      */
     let targetStream;
     if (streams.length === 0) {
-      targetStream = new MediaStream([nativeTrack]);
+      targetStream = await new MediaStream([nativeTrack]);
       log.debug('New Track is not associated with remote Stream.');
     } else {
       targetStream = streams[0];
@@ -42677,6 +42954,7 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = peer;
+exports.setPeerProxies = setPeerProxies;
 var _defineProperty2 = _interopRequireDefault(__webpack_require__(26290));
 var _events = _interopRequireDefault(__webpack_require__(43255));
 var _methods = _interopRequireDefault(__webpack_require__(60424));
@@ -42691,6 +42969,16 @@ function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t =
  * Wrapper imports.
  * Events, methods, and properties that we want to wrap/add to the native Peer.
  */ // Libraries.
+// EXTERNAL PROXY CODE
+let proxies;
+/**
+ * Function used to apply proxied functionality on top of the peer. Typically triggered by an
+ * external proxy SDK.
+ */
+function setPeerProxies(peerProxies) {
+  proxies = peerProxies;
+}
+
 /**
  * Create a Proxied Peer.
  * This Peer is a native PeerConnection that has had some new functionality
@@ -42718,7 +43006,8 @@ function peer(id) {
   });
 
   // Add the event emitter methods to the wrapped methods as well.
-  const customMethods = _objectSpread(_objectSpread({}, _methods.default), {}, {
+  const customMethods = _objectSpread(_objectSpread(_objectSpread({}, _methods.default), proxies), {}, {
+    // EXTERNAL PROXY CODE
     on: emitter.on.bind(emitter),
     off: emitter.off.bind(emitter),
     once: emitter.once.bind(emitter)
@@ -44805,6 +45094,12 @@ Object.defineProperty(exports, "__esModule", ({
 exports["default"] = Renderer;
 var _logs = __webpack_require__(88915);
 var _utils = __webpack_require__(30791);
+/*
+ * IMPORTANT NOTE: This file is largely duplicated in other packages (search filename in project).
+ * Ideally, once we complete KJS-174, we can avoid this duplication, but for now ensure changes here
+ * are reflected in the duplicates as necessary.
+ */
+
 /**
  * Renderer for managing where Tracks are rendered.
  */
@@ -45223,7 +45518,7 @@ function TrackManager() {
 /***/ }),
 
 /***/ 50535:
-/***/ ((__unused_webpack_module, exports) => {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
@@ -45232,11 +45527,15 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = WebRTCManager;
+var _Peer = __webpack_require__(89531);
+var _logs = __webpack_require__(88915);
 /**
  * "Manager" for general WebRTC functions.
  * @class WebRTCManager
  */
 function WebRTCManager(managers) {
+  const log = _logs.logManager.getLogger('Manager', 'WebRTC');
+
   /**
    * Retrieve the list of available and supported codecs based on the browser's capabilities for sending media.
    * @method getAvailableCodecs
@@ -45249,11 +45548,31 @@ function WebRTCManager(managers) {
       return capabilities.codecs;
     }
   }
+
+  /**
+   * Set provided proxies using the "set proxies" functions per WebRTC functionality
+   * @param {Object} proxies An object of proxied WebRTC functionality
+   * @param {Object} proxies.peerProxies An object containing WebRTC Peer functionality proxies
+   */
+  function setProxies(proxies) {
+    // Set the provided peer proxies
+    if (proxies.peer) {
+      (0, _Peer.setPeerProxies)(proxies.peer);
+      if (Object.keys(proxies.peer).length) {
+        log.debug('Peer functionality has been updated with proxies.');
+      } else {
+        log.debug('Peer functionality has been updated to remove proxies.');
+      }
+    }
+
+    // TODO: Set any other proxies (media? track?) as necessary
+  }
   /**
    * The exposed API.
    */
   return {
-    getAvailableCodecs
+    getAvailableCodecs,
+    setProxies
   };
 }
 
@@ -45320,8 +45639,11 @@ function Media(nativeStream, isLocal) {
       return;
     }
 
-    // Add the native MediaStreamTrack to the MediaStream.
-    stream.addTrack(track.track);
+    // Add the native MediaStreamTrack to the MediaStream, if not already a part of the stream.
+    if (!stream.getTracks().find(streamTrack => streamTrack.id === track.id)) {
+      stream.addTrack(track.track);
+    }
+
     // Add the Track to the Media object.
     tracks.set(track.id, track);
 
@@ -45607,100 +45929,99 @@ function Session(id, managers) {
     const peer = peerManager.get(peerId);
     // TODO: Better error handling?
     if (peer) {
-      const addTrackOrReuseTransceiverPromises = tracks.map(track => {
-        return new Promise((resolve, reject) => {
-          // We try to find a reusable transceiver that we can attach the track to achieve the following:
-          // - Avoid transceiver pollution and needing to create a brand new transceiver to attach the track to.
-          // - Allow re-adding of the same track type that has been previously removed.
-          //   (This is so that we can still have re-adding of tracks when using the "basic" media API which imposes a 1-audio & 1-video limit)
-          const reusableTransceiver = peer.findReusableTransceiver(track.track.kind);
+      const addTrackOrReuseTransceiverPromises = tracks.map(async track => {
+        // We try to find a reusable transceiver that we can attach the track to achieve the following:
+        // - Avoid transceiver pollution and needing to create a brand new transceiver to attach the track to.
+        // - Allow re-adding of the same track type that has been previously removed.
+        //   (This is so that we can still have re-adding of tracks when using the "basic" media API which imposes a 1-audio & 1-video limit)
+        const reusableTransceiver = peer.findReusableTransceiver(track.track.kind);
 
-          // If we can find a reusable transceiver, reuse it.
-          if (reusableTransceiver) {
-            reusableTransceiver.sender
-            // Replace the dummy track on the Sender with the actual track we want to send.
-            .replaceTrack(track.track).then(() => {
-              /*
-               * Set the correct direction on the Transceiver to include that we now want to send:
-               *   - sendrecv --> sendrecv
-               *   - sendonly --> sendonly
-               *   - recvonly --> sendrecv
-               *   - inactive --> sendonly
-               */
-              reusableTransceiver.direction = ['sendrecv', 'recvonly'].includes(reusableTransceiver.direction) ? 'sendrecv' : 'sendonly';
-              resolve(`Track (${track.track.kind} : ${track.id}) reused transceiver (mid: ${reusableTransceiver.mid}).`);
-            }).catch(err => {
-              log.error(err);
-              reject(err);
-            });
-          } else {
-            // To get around the current limitation described above, we use peerConnection's `addTrack` when we can't find a reusable transceiver.
-            // `addTrack` does one of the following when called:
-            // - Create a new transceiver and attaches the track and stream to the sender
-            // - Find and use an existing transceiver that has never been used to send data before and attach the track and stream to the sender.
-            peer.addTransceiver(track);
-            resolve(`Added track (${track.track.kind} : ${track.id}).`);
+        // If we can find a reusable transceiver, reuse it.
+        if (reusableTransceiver) {
+          // Replace the dummy track on the Sender with the actual track we want to send.
+          try {
+            await reusableTransceiver.sender.replaceTrack(track.track);
+          } catch (err) {
+            log.error(err);
+            throw err;
           }
-        }).then(message => {
-          // Set event emitters and handlers
-          log.info(message);
+          /*
+           * Set the correct direction on the Transceiver to include that we now want to send:
+           *   - sendrecv --> sendrecv
+           *   - sendonly --> sendonly
+           *   - recvonly --> sendrecv
+           *   - inactive --> sendonly
+           */
+          reusableTransceiver.direction = ['sendrecv', 'recvonly'].includes(reusableTransceiver.direction) ? 'sendrecv' : 'sendonly';
+          log.info(`Track (${track.track.kind} : ${track.id}) reused transceiver (mid: ${reusableTransceiver.mid}).`);
+        } else {
+          // To get around the current limitation described above, we use peerConnection's `addTrack` when we can't find a reusable transceiver.
+          // `addTrack` does one of the following when called:
+          // - Create a new transceiver and attaches the track and stream to the sender
+          // - Find and use an existing transceiver that has never been used to send data before and attach the track and stream to the sender.
+          await peer.addTransceiver(track);
+          log.info(`Added track (${track.track.kind} : ${track.id}).`);
+        }
 
-          // Indicate that the Session has a new Track.
-          emitter.emit('new:track', {
-            local: true,
-            trackId: track.id
-          });
-          settings.dscpControls = (0, _utils.mergeValues)(settings.dscpControls, dscpTrackMapping);
-          track.once('ended', _ref => {
-            let {
-              isUnsolicited
-            } = _ref;
-            const peer = peerManager.get(peerId);
-            if (peer) {
-              // If the PeerConnection is closed, we don't need to worry about
-              //    removing the track (and it would throw an error anyway).
-              if (peer.signalingState !== 'closed') {
-                // If this track ending was expected, remove it from the Peer
-                //    immediately. Otherwise another operation will remove it.
-                if (!isUnsolicited) {
-                  peer.removeTrack(track.id);
+        // Indicate that the Session has a new Track.
+        emitter.emit('new:track', {
+          local: true,
+          trackId: track.id
+        });
 
-                  // Bubble the event upwards to event listeners.
+        // Add the dscpControls to the session's settings map
+        settings.dscpControls = (0, _utils.mergeValues)(settings.dscpControls, dscpTrackMapping);
+
+        // Setup event handler for once the track ends
+        track.once('ended', _ref => {
+          let {
+            isUnsolicited
+          } = _ref;
+          const peer = peerManager.get(peerId);
+          if (peer) {
+            // If the PeerConnection is closed, we don't need to worry about
+            //    removing the track (and it would throw an error anyway).
+            if (peer.signalingState !== 'closed') {
+              // If this track ending was expected, remove it from the Peer
+              //    immediately. Otherwise another operation will remove it.
+              if (!isUnsolicited) {
+                peer.removeTrack(track.id);
+
+                // Bubble the event upwards to event listeners.
+                emitter.emit('track:ended', {
+                  local: true,
+                  trackId: track.id,
+                  isUnsolicited
+                });
+              } else {
+                // In the event this track ending was due to a device change
+                // we should update our device list before notifying the client that
+                // the track ended so they don't try to use a removed device
+                // `true` --> Tell the SDK to _not_ bubble this event to the
+                //    application; only update state. The device disconnection
+                //    will trigger it's own "device change" event.
+                deviceManager.emit('change', true);
+
+                // Wait 50ms before emitting `track:ended` to allow the SDK
+                // a chance to update the device list in state
+                setTimeout(() => {
                   emitter.emit('track:ended', {
                     local: true,
                     trackId: track.id,
                     isUnsolicited
                   });
-                } else {
-                  // In the event this track ending was due to a device change
-                  // we should update our device list before notifying the client that
-                  // the track ended so they don't try to use a removed device
-                  // `true` --> Tell the SDK to _not_ bubble this event to the
-                  //    application; only update state. The device disconnection
-                  //    will trigger it's own "device change" event.
-                  deviceManager.emit('change', true);
-
-                  // Wait 50ms before emitting `track:ended` to allow the SDK
-                  // a chance to update the device list in state
-                  setTimeout(() => {
-                    emitter.emit('track:ended', {
-                      local: true,
-                      trackId: track.id,
-                      isUnsolicited
-                    });
-                  }, 50);
-                }
-
-                // Remove track from session dscp settings
-                if (settings.dscpControls.hasOwnProperty(track.id)) {
-                  log.debug(`Removing track ${track.id} from session dscp settings`);
-                  delete settings.dscpControls[track.id];
-                }
-              } else {
-                log.debug(`Received ended event for track ${track.id}, but its associated Peer ${peer.id} is closed. Ignoring this event...`);
+                }, 50);
               }
+
+              // Remove track from session dscp settings
+              if (settings.dscpControls.hasOwnProperty(track.id)) {
+                log.debug(`Removing track ${track.id} from session dscp settings`);
+                delete settings.dscpControls[track.id];
+              }
+            } else {
+              log.debug(`Received ended event for track ${track.id}, but its associated Peer ${peer.id} is closed. Ignoring this event...`);
             }
-          });
+          }
         });
       });
       return Promise.all(addTrackOrReuseTransceiverPromises);
@@ -45798,7 +46119,6 @@ function Session(id, managers) {
    * @param {Object} result The result of ice collection check function.
    * @param {string} result.type The action to take.
    * @param {number} result.wait How many ms to wait for the next scheduled check.
-   * @return {Promise} Resolves with the rollbacked description or error.
    */
   function iceCollectionCheckResult(result) {
     const peer = peerManager.get(peerId);
@@ -46331,7 +46651,7 @@ function Session(id, managers) {
    *     This will close the previous Peer, stopping any media being sent/received on it.
    * @method recreatePeer
    */
-  function recreatePeer() {
+  async function recreatePeer() {
     const oldPeer = peer;
     const newPeer = peerManager.create(config.peer);
     if (newPeer) {
@@ -46341,9 +46661,9 @@ function Session(id, managers) {
       peer = newPeer;
 
       // Copy tracks
-      oldPeer.localTracks.forEach(oldLocalTrack => {
-        newPeer.addTransceiver(oldLocalTrack);
-      });
+      await Promise.all(oldPeer.localTracks.map(async oldLocalTrack => {
+        await newPeer.addTransceiver(oldLocalTrack);
+      }));
 
       // Set event handlers
       setupPeerEventHandlers(newPeer);
@@ -72495,7 +72815,7 @@ module.exports = str => encodeURIComponent(str).replace(/[!'()*]/g, x => `%${x.c
 
 /***/ }),
 
-/***/ 5295:
+/***/ 14847:
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -72727,7 +73047,7 @@ var _v4 = _interopRequireDefault(__webpack_require__(95899));
 
 var _nil = _interopRequireDefault(__webpack_require__(15384));
 
-var _version = _interopRequireDefault(__webpack_require__(5295));
+var _version = _interopRequireDefault(__webpack_require__(14847));
 
 var _validate = _interopRequireDefault(__webpack_require__(77888));
 
@@ -77767,127 +78087,6 @@ function _typeof(o) {
   }, module.exports.__esModule = true, module.exports["default"] = module.exports), _typeof(o);
 }
 module.exports = _typeof, module.exports.__esModule = true, module.exports["default"] = module.exports;
-
-/***/ }),
-
-/***/ 80139:
-/***/ (function(__unused_webpack_module, exports) {
-
-(function (global, factory) {
-   true ? factory(exports) :
-  0;
-}(this, (function (exports) { 'use strict';
-
-  /**
-   * Creates and returns an SDP Handler function that will remove the desired codecs
-   *  from the SDP when passed to the pipeline.
-   *
-   * @method createCodecRemover
-   * @param  {Array<string|Object} codecs An array of strings or objects representing the desired codecs to be removed.
-   * @example
-   * // `codecs` paramters can be an array of strings (i.e., ['VP8', 'VP9']) or as objects with the following signature:
-   * const codecsToBeRemoved = [{
-   *   name: 'codecname',
-   *   fmtpParams: 'specific ftmp parameter target'
-   * }]
-   * const codecRemover = createCodecRemover(codecsToBeRemoved)
-   * @return {Function} returns an SDP handler function
-   */
-  function createCodecRemover (codecs = []) {
-    // We allow the user to pass in a codecs of objects or strings, so here we format the strings into objects for uniformity.
-    codecs = codecs.map(item => (typeof item === 'string' ? { name: item } : item));
-
-    return function (newSdp, info, originalSdp) {
-      // This is an array of strings representing codec names we want to remove.
-      const codecStringsToRemove = codecs.map(codec => codec.name);
-
-      newSdp.media.forEach(media => {
-        // This is an array of just the codes (codec payloads) that we FOR SURE want to remove.
-        const finalRemoveList = [];
-        // This is an array of RTP objects who have codecs that are the same as strings passed in via codecs.
-        let filteredRtp = [];
-
-        // If the current rtp.codec is in the codecStringsToRemove list, add the rtp to filteredRtp
-        filteredRtp = media.rtp.filter(rtp => codecStringsToRemove.includes(rtp.codec));
-
-        filteredRtp.forEach(rtp => {
-          // We grab the relevantCodec codecs object from the passed in codecs, based on the name string.
-          const relevantCodecs = codecs.filter(codec => codec.name === rtp.codec);
-
-          // We check the relevantCodec. If it is not present, then we have no codecs info for this specific rtp.
-          relevantCodecs.forEach(relevantCodec => {
-            // If fmtpParams doesnt exist or is of length 0 then we assume we can remove all instances of this codec
-            if (!relevantCodec.fmtpParams || (relevantCodec.fmtpParams && relevantCodec.fmtpParams.length === 0)) {
-              // We want to delete this codec no matter what, since no fmtp params were included.
-              finalRemoveList.push(rtp.payload);
-            } else {
-              // There are fmtp values for this codec. Therefore we have to check each media.fmtp object to see if it is the right one.
-              // Then when we find the right fmtp object, we check its config to see if it has the parameters specified in the input.
-              media.fmtp.forEach(fmtp => {
-                // We check each iteration to see if we found the right fmtp object.
-                if (fmtp.payload === rtp.payload) {
-                  // If we found the right fmtp object, we have to make sure each config param is in the fmtp.config.
-                  if (relevantCodec.fmtpParams.every(c => fmtp.config.includes(c))) {
-                    finalRemoveList.push(rtp.payload);
-                  }
-                }
-              });
-            }
-          });
-        });
-
-        // At this point we should have an array (finalRemoveList) that contains all ORIGINAL codec payloads that we need to remove.
-        // We now need to check fmtp for all rtx payloads ASSOCIATED with the original codec payload.
-        media.fmtp.forEach(fmtp => {
-          // Check if the config contains apt=, which indicates this fmtp is associated with another.
-          if (fmtp.config.includes('apt=')) {
-            // If so, lets grab the whole string WITHOUT the apt= part, and convet it into an integer. This should be a payload number.
-            var payload = parseInt(fmtp.config.replace('apt=', ''));
-
-            // Check if the finalRemoveList contains the payload that this fmtp is associated with.
-            if (finalRemoveList.includes(payload)) {
-              // If so, then we need to add this fmtp.payload to the finalRemoveList
-              finalRemoveList.push(fmtp.payload);
-            }
-          }
-        });
-
-        // We assume past this point that the finalRemoveList is all powerful.
-        // For each codec in the media.payloads string, if it is in our finalRemoveList list, we remove it.
-        let isNumber = false;
-        if (typeof media.payloads === 'number') {
-          media.payloads = media.payloads.toString();
-          isNumber = true;
-        }
-        if (media.payloads) {
-          media.payloads = media.payloads
-            .split(' ')
-            .filter(payload => !finalRemoveList.includes(parseInt(payload)))
-            .join(' ');
-        }
-        if (media.payloads && isNumber) {
-          media.payloads = parseInt(media.payloads);
-        }
-
-        // For each codec object, if the payload is in our filteredCodes list, we remove the object.
-        media.rtp = media.rtp.filter(rtp => !finalRemoveList.includes(rtp.payload));
-        media.fmtp = media.fmtp.filter(fmtp => !finalRemoveList.includes(fmtp.payload));
-
-        if (media.rtcpFb) {
-          media.rtcpFb = media.rtcpFb.filter(rtcpFb => !finalRemoveList.includes(rtcpFb.payload));
-        }
-      });
-
-      return newSdp
-    }
-  }
-
-  exports.createCodecRemover = createCodecRemover;
-
-  Object.defineProperty(exports, '__esModule', { value: true });
-
-})));
-
 
 /***/ }),
 
