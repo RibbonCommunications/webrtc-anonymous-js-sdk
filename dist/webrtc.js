@@ -12,7 +12,7 @@
  *
  * WebRTC.js
  * webrtc.anonymous.js
- * Version: 6.10.0-beta.1324
+ * Version: 6.11.0-beta.1325
  */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
@@ -2322,7 +2322,7 @@ module.exports = root;
 
 /***/ }),
 
-/***/ 33274:
+/***/ 53492:
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -2340,7 +2340,7 @@ exports.getVersion = getVersion;
  * for the @@ tag below with actual version value.
  */
 function getVersion() {
-  return '6.10.0-beta.1324';
+  return '6.11.0-beta.1325';
 }
 
 /***/ }),
@@ -2358,6 +2358,7 @@ Object.defineProperty(exports, "__esModule", ({
 exports["default"] = authFactory;
 var _pick2 = _interopRequireDefault(__webpack_require__(13337));
 var _interface = __webpack_require__(71168);
+var _constants = __webpack_require__(43265);
 var _actions = __webpack_require__(43424);
 var _utils = __webpack_require__(25189);
 var connectivityActionTypes = _interopRequireWildcard(__webpack_require__(53202));
@@ -2391,6 +2392,8 @@ function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; 
 function authFactory() {
   let options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
   let bottle = arguments.length > 1 ? arguments[1] : undefined;
+  const minExpiryInSec = _constants.MINIMUM_EXPIRY_SUBSCRIPTION_INTERVAL / 1000;
+
   /**
    * Configuration options for the anonymous Authentication feature.
    * @public
@@ -2399,6 +2402,7 @@ function authFactory() {
    * @instance
    * @param {Object}  authentication Authentication configs.
    * @param {Object}  authentication.subscription
+   * @param {number}  authentication.subscription.expires - The time (in seconds) until subscription expiry. Cannot be less than minimum threshold of 60 seconds.
    * @param {number} [authentication.subscription.serviceUnavailableMaxRetries=3] The maximum number of times this client will retry in order to subscribe for a
    * given service, while getting 'Service Unavailable' from backend.
    * @param {string} [authentication.subscription.protocol='https'] Protocol to be used for subscription requests.
@@ -2432,6 +2436,7 @@ function authFactory() {
   // config validation
   const v8nValidation = _validation.validation.schema({
     subscription: _validation.validation.schema({
+      expires: _validation.validation.positive().greaterThanOrEqual(minExpiryInSec),
       serviceUnavailableMaxRetries: _validation.validation.positive(),
       protocol: (0, _validation.enums)(['http', 'https']),
       server: _validation.validation.string(),
@@ -2453,6 +2458,11 @@ function authFactory() {
     const {
       context
     } = container;
+    if (options.subscription.expires < minExpiryInSec) {
+      // Update the config to use correct value
+      options.subscription.expires = minExpiryInSec;
+    }
+
     // Send the provided options to the store.
     // This will be `state.config[name]`.
     context.dispatch((0, _actions.update)(options, _interface.name));
@@ -2550,11 +2560,14 @@ var _constants = __webpack_require__(49833);
 var actions = _interopRequireWildcard(__webpack_require__(35770));
 var _selectors = __webpack_require__(46942);
 var _eventTypes = __webpack_require__(71430);
+var _constants2 = __webpack_require__(43265);
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
 function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
 // Constants
 
 // Auth plugin
+
+// Subscription plugin
 
 /**
  * Authentication resubscription interval factory function.
@@ -2588,13 +2601,16 @@ function createInterval(container) {
 
   /**
    * Start the interval.
+   * @param { function } update The update function to be called at regular interval of time.
+   * @param { number }   expires The subscription expiry value (in seconds), as provided from SDK configuration.
    * @method start
    */
   function start(update, expires) {
     // Set the delay to be halfway between now and when the subscription expires.
     let resubDelay = expires * 1000 / Math.pow(2, attemptNum);
-    // Don't try to resub more often than every 5 minutes.
-    resubDelay = resubDelay > 30000 ? resubDelay : 30000;
+    const halfwayInterval = _constants2.MINIMUM_EXPIRY_SUBSCRIPTION_INTERVAL / 2;
+    // Don't try to resub more often than every halfwayInterval seconds.
+    resubDelay = resubDelay > halfwayInterval ? resubDelay : halfwayInterval;
     resubInterval = createInterval(update, resubDelay);
     resubInterval.start();
   }
@@ -3181,7 +3197,7 @@ function createRequests(container) {
    * @param  {string}    connection.server Server information for generating the URL.
    * @param  {string}    connection.requestOptions Common request options to be added.
    * @param  {Object}    subscription Information about the subscription instance.
-   * @param  {string}    subscription.expires - The time (in seconds) until subscription expiry.
+   * @param  {number}    subscription.expires - The time (in seconds) until subscription expiry.
    * @param  {Array}     subscription.service - The SPiDR services to resubscribe to.
    * @param  {Array}     subscription.url - The URL of the user's subscription instance.
    * @return {Object}    Resubscription response.
@@ -6422,6 +6438,9 @@ function callManager(container) {
   const manager = {
     getTracker(callId) {
       return ongoing[callId];
+    },
+    getCallIds() {
+      return Object.keys(ongoing);
     }
   };
 
@@ -6644,6 +6663,10 @@ function callManager(container) {
       return;
     }
     const operation = ongoing[call.id].getByType(opState.type);
+    if (!operation) {
+      log.warn('Received negotiation answer without a matching offer; ignoring.');
+      return;
+    }
     try {
       await callFlows.remoteAnswer(call, operation, params);
     } finally {
@@ -8141,11 +8164,28 @@ var _constants = __webpack_require__(37409);
 // Operations.
 
 function initOperation(bottle) {
+  // Register the individual stages for the operation.
+  bottle.factory('Callstack.stages.addMedia', () => {
+    return {
+      local: {
+        // Stages of local operation.
+        validate: _validate.default,
+        localOffer: (0, _addMedia.default)(bottle.container),
+        remoteAnswer: (0, _remoteAnswer.default)(bottle.container)
+      },
+      remote: {
+        // Stages of remote operation.
+        remoteOffer: (0, _remoteOffer.default)(bottle.container)
+      }
+    };
+  });
+
   // Provide the top-level container to the factory functions.
   //    Otherwise they would get the `operations` sub-container.
   bottle.factory('Callstack.operations.addMedia', () => {
-    const opFactory = bottle.container.Callstack.models.Operation;
-    function addMedia(isLocal, stages) {
+    const Callstack = bottle.container.Callstack;
+    const opFactory = Callstack.models.Operation;
+    function addMedia(isLocal) {
       /**
        * Factory function for AddMedia operation.
        * @method addMedia
@@ -8153,6 +8193,7 @@ function initOperation(bottle) {
        * @return {Operation} An instance of an addMedia operation.
        */
       return callId => {
+        const stages = Callstack.stages.addMedia[isLocal ? 'local' : 'remote'];
         return opFactory.instance({
           // Operation meta-data.
           type: _constants.OPERATIONS.ADD_MEDIA,
@@ -8166,16 +8207,8 @@ function initOperation(bottle) {
       };
     }
     return {
-      local: addMedia(true, {
-        // Stages of local operation.
-        validate: _validate.default,
-        localOffer: (0, _addMedia.default)(bottle.container),
-        remoteAnswer: (0, _remoteAnswer.default)(bottle.container)
-      }),
-      remote: addMedia(false, {
-        // Stages of remote operation.
-        remoteOffer: (0, _remoteOffer.default)(bottle.container)
-      })
+      local: addMedia(true),
+      remote: addMedia(false)
     };
   });
   bottle.factory('Callstack.operations.addBasicMedia', () => {
@@ -9181,10 +9214,32 @@ var _constants = __webpack_require__(37409);
 // Helpers
 
 function initOperation(bottle) {
+  // Register the individual stages for the operation.
+  bottle.factory('Callstack.stages.answer', () => {
+    return {
+      local: {
+        validate: _validate.default,
+        // TODO: This is `localOffer` because the "localOperation" flow uses that
+        //    function. Eventually this should be "fixed" to properly reflect the answer.
+        localOffer: (0, _answer.default)(bottle.container)
+      }
+    };
+  });
+  bottle.factory('Callstack.stages.answerSlow', () => {
+    return {
+      local: {
+        validate: _validate2.default,
+        localOffer: (0, _slowAnswer.default)(bottle.container),
+        remoteAnswer: (0, _remoteSlowAnswer.default)(bottle.container)
+      }
+    };
+  });
+
   // Provide the top-level container to the factory functions.
   //    Otherwise they would get the `operations` sub-container.
   bottle.factory('Callstack.operations.answer', () => {
-    const opFactory = bottle.container.Callstack.models.Operation;
+    const Callstack = bottle.container.Callstack;
+    const opFactory = Callstack.models.Operation;
 
     /**
      * Factory function for a LocalAnswer operation.
@@ -9197,12 +9252,7 @@ function initOperation(bottle) {
         type: _constants.OPERATIONS.ANSWER,
         isNegotiation: false,
         isLocal: true,
-        stages: {
-          validate: _validate.default,
-          // TODO: This is `localOffer` because the "localOperation" flow uses that
-          //    function. Eventually this should be "fixed" to properly reflect the answer.
-          localOffer: (0, _answer.default)(bottle.container)
-        }
+        stages: Callstack.stages.answer.local
       }, {
         callId
       });
@@ -9212,7 +9262,8 @@ function initOperation(bottle) {
     };
   });
   bottle.factory('Callstack.operations.answerSlow', () => {
-    const opFactory = bottle.container.Callstack.models.Operation;
+    const Callstack = bottle.container.Callstack;
+    const opFactory = Callstack.models.Operation;
 
     /**
      * Factory function for a SlowAnswer operation.
@@ -9225,11 +9276,7 @@ function initOperation(bottle) {
         type: _constants.OPERATIONS.ANSWER,
         isNegotiation: true,
         isLocal: true,
-        stages: {
-          validate: _validate2.default,
-          localOffer: (0, _slowAnswer.default)(bottle.container),
-          remoteAnswer: (0, _remoteSlowAnswer.default)(bottle.container)
-        }
+        stages: Callstack.stages.answerSlow.local
       }, {
         callId
       });
@@ -10357,6 +10404,19 @@ var _validate = _interopRequireDefault(__webpack_require__(84725));
 var _callStatusUpdateEnded = _interopRequireDefault(__webpack_require__(71005));
 var _constants = __webpack_require__(37409);
 function initOperation(bottle) {
+  // Register the individual stages for the operation.
+  bottle.factory('Callstack.stages.end', () => {
+    return {
+      local: {
+        validate: _validate.default,
+        // TODO: This operation isn't a negotiation, so we shouldn't be naming
+        //    a stage with WebRTC negotiation terms. But this is the method
+        //    name the `localOperation` flow uses.
+        localOffer: (0, _end.default)(bottle.container)
+      }
+    };
+  });
+
   // Provide the top-level container to the factory functions.
   //    Otherwise they would get the `operations` sub-container.
   bottle.factory('Callstack.operations.end', () => {
@@ -10375,13 +10435,7 @@ function initOperation(bottle) {
         isNegotiation: false,
         isLocal: true,
         // Operation methods.
-        stages: {
-          validate: _validate.default,
-          // TODO: This operation isn't a negotiation, so we shouldn't be naming
-          //    a stage with WebRTC negotiation terms. But this is the method
-          //    name the `localOperation` flow uses.
-          localOffer: (0, _end.default)(bottle.container)
-        }
+        stages: bottle.container.Callstack.stages.end.local
       }, {
         callId
       });
@@ -10607,6 +10661,19 @@ var _forward = _interopRequireDefault(__webpack_require__(85314));
 var _validate = _interopRequireDefault(__webpack_require__(98067));
 var _constants = __webpack_require__(37409);
 function initOperation(bottle) {
+  // Register the individual stages for the operation.
+  bottle.factory('Callstack.stages.forward', () => {
+    return {
+      local: {
+        validate: _validate.default,
+        // TODO: This operation isn't a negotiation, so we shouldn't be naming
+        //    a stage with WebRTC negotiation terms. But this is the method
+        //    name the `localOperation` flow uses.
+        localOffer: (0, _forward.default)(bottle.container)
+      }
+    };
+  });
+
   // Provide the top-level container to the factory functions.
   //    Otherwise they would get the `operations` sub-container.
   bottle.factory('Callstack.operations.forward', () => {
@@ -10625,13 +10692,7 @@ function initOperation(bottle) {
         isNegotiation: false,
         isLocal: true,
         // Operation methods.
-        stages: {
-          validate: _validate.default,
-          // TODO: This operation isn't a negotiation, so we shouldn't be naming
-          //    a stage with WebRTC negotiation terms. But this is the method
-          //    name the `localOperation` flow uses.
-          localOffer: (0, _forward.default)(bottle.container)
-        }
+        stages: bottle.container.Callstack.stages.forward.local
       }, {
         callId
       });
@@ -11039,7 +11100,7 @@ Object.defineProperty(exports, "__esModule", ({
 exports["default"] = getStatsOperation;
 var _selectors = __webpack_require__(11430);
 var _kandyWebrtc = __webpack_require__(15203);
-var _version = __webpack_require__(33274);
+var _version = __webpack_require__(53492);
 var _sdkId = _interopRequireDefault(__webpack_require__(15878));
 // Call plugin.
 
@@ -11263,11 +11324,28 @@ var _constants = __webpack_require__(37409);
 // Operations.
 
 function initOperation(bottle) {
+  // Register the individual stages for the operation.
+  bottle.factory('Callstack.stages.hold', () => {
+    return {
+      local: {
+        // Stages of local operation.
+        validate: _validate.default,
+        localOffer: (0, _hold.default)(bottle.container),
+        remoteAnswer: (0, _remoteAnswer.default)(bottle.container)
+      },
+      remote: {
+        // Stages of remote operation.
+        remoteOffer: (0, _remoteOffer.default)(bottle.container)
+      }
+    };
+  });
+
   // Provide the top-level container to the factory functions.
   //    Otherwise they would get the `operations` sub-container.
   bottle.factory('Callstack.operations.hold', () => {
-    const opFactory = bottle.container.Callstack.models.Operation;
-    function hold(isLocal, stages) {
+    const Callstack = bottle.container.Callstack;
+    const opFactory = Callstack.models.Operation;
+    function hold(isLocal) {
       /**
        * Factory function for a Hold operation.
        * @method hold
@@ -11275,6 +11353,7 @@ function initOperation(bottle) {
        * @return {Operation} An instance of the hold operation.
        */
       return callId => {
+        const stages = Callstack.stages.hold[isLocal ? 'local' : 'remote'];
         return opFactory.instance({
           // Operation meta-data.
           type: _constants.OPERATIONS.HOLD,
@@ -11288,16 +11367,8 @@ function initOperation(bottle) {
       };
     }
     return {
-      local: hold(true, {
-        // Stages of local operation.
-        validate: _validate.default,
-        localOffer: (0, _hold.default)(bottle.container),
-        remoteAnswer: (0, _remoteAnswer.default)(bottle.container)
-      }),
-      remote: hold(false, {
-        // Stages of remote operation.
-        remoteOffer: (0, _remoteOffer.default)(bottle.container)
-      })
+      local: hold(true),
+      remote: hold(false)
     };
   });
   bottle.factory('Callstack.utils.rollbackHold', () => (0, _rollbackHold.default)(bottle.container));
@@ -12526,6 +12597,19 @@ var _ignore = _interopRequireDefault(__webpack_require__(96123));
 var _validate = _interopRequireDefault(__webpack_require__(83628));
 var _constants = __webpack_require__(37409);
 function initOperation(bottle) {
+  // Register the individual stages for the operation.
+  bottle.factory('Callstack.stages.ignore', () => {
+    return {
+      local: {
+        validate: _validate.default,
+        // TODO: This operation isn't a negotiation, so we shouldn't be naming
+        //    a stage with WebRTC negotiation terms. But this is the method
+        //    name the `localOperation` flow uses.
+        localOffer: (0, _ignore.default)(bottle.container)
+      }
+    };
+  });
+
   // Provide the top-level container to the factory functions.
   //    Otherwise they would get the `operations` sub-container.
   bottle.factory('Callstack.operations.ignore', () => {
@@ -12544,13 +12628,7 @@ function initOperation(bottle) {
         isNegotiation: false,
         isLocal: true,
         // Operation methods.
-        stages: {
-          validate: _validate.default,
-          // TODO: This operation isn't a negotiation, so we shouldn't be naming
-          //    a stage with WebRTC negotiation terms. But this is the method
-          //    name the `localOperation` flow uses.
-          localOffer: (0, _ignore.default)(bottle.container)
-        }
+        stages: bottle.container.Callstack.stages.ignore.local
       }, {
         callId
       });
@@ -14955,6 +15033,19 @@ var _reject = _interopRequireDefault(__webpack_require__(62923));
 var _validate = _interopRequireDefault(__webpack_require__(70688));
 var _constants = __webpack_require__(37409);
 function initOperation(bottle) {
+  // Register the individual stages for the operation.
+  bottle.factory('Callstack.stages.reject', () => {
+    return {
+      local: {
+        validate: _validate.default,
+        // TODO: This operation isn't a negotiation, so we shouldn't be naming
+        //    a stage with WebRTC negotiation terms. But this is the method
+        //    name the `localOperation` flow uses.
+        localOffer: (0, _reject.default)(bottle.container)
+      }
+    };
+  });
+
   // Provide the top-level container to the factory functions.
   //    Otherwise they would get the `operations` sub-container.
   bottle.factory('Callstack.operations.reject', () => {
@@ -14973,13 +15064,7 @@ function initOperation(bottle) {
         isNegotiation: false,
         isLocal: true,
         // Operation methods.
-        stages: {
-          validate: _validate.default,
-          // TODO: This operation isn't a negotiation, so we shouldn't be naming
-          //    a stage with WebRTC negotiation terms. But this is the method
-          //    name the `localOperation` flow uses.
-          localOffer: (0, _reject.default)(bottle.container)
-        }
+        stages: bottle.container.Callstack.stages.reject.local
       }, {
         callId
       });
@@ -22871,7 +22956,7 @@ exports.fixIceServerUrls = fixIceServerUrls;
 exports.mergeDefaults = mergeDefaults;
 var _logs = __webpack_require__(43862);
 var _utils = __webpack_require__(25189);
-var _version = __webpack_require__(33274);
+var _version = __webpack_require__(53492);
 var _defaults = __webpack_require__(27241);
 var _validation = __webpack_require__(42850);
 // Other plugins.
@@ -33955,7 +34040,7 @@ var _reduxSaga = _interopRequireDefault(__webpack_require__(7));
 var _effects = __webpack_require__(27422);
 var _bottlejs = _interopRequireDefault(__webpack_require__(39146));
 var _utils = __webpack_require__(25189);
-var _version = __webpack_require__(33274);
+var _version = __webpack_require__(53492);
 var _intervalFactory = _interopRequireDefault(__webpack_require__(93725));
 var _logs = __webpack_require__(43862);
 var _validation = __webpack_require__(42850);
@@ -37855,7 +37940,7 @@ var authorizations = _interopRequireWildcard(__webpack_require__(55689));
 var _makeRequest = _interopRequireDefault(__webpack_require__(87569));
 var _utils = __webpack_require__(70720);
 var _selectors = __webpack_require__(46942);
-var _version = __webpack_require__(33274);
+var _version = __webpack_require__(53492);
 var _utils2 = __webpack_require__(25189);
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
 function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
@@ -38006,7 +38091,7 @@ var _cloneDeep2 = _interopRequireDefault(__webpack_require__(33904));
 var _selectors = __webpack_require__(50647);
 var _selectors2 = __webpack_require__(46942);
 var _logs = __webpack_require__(43862);
-var _version = __webpack_require__(33274);
+var _version = __webpack_require__(53492);
 var _utils = __webpack_require__(25189);
 var _effects = __webpack_require__(27422);
 // Request plugin.
@@ -38137,6 +38222,57 @@ async function fetchResource(resource, requestInfo, module) {
   log.debug('Received REST response', response);
   return response;
 }
+
+/***/ }),
+
+/***/ 43265:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports.SUBSCRIPTION_STATE = exports.OPERATIONS = exports.MINIMUM_EXPIRY_SUBSCRIPTION_INTERVAL = exports.DISCONNECT_REASONS = void 0;
+/**
+ * Possible subscription states.
+ * @name SUBSCRIPTION_STATE
+ * @type {Object}
+ */
+const SUBSCRIPTION_STATE = exports.SUBSCRIPTION_STATE = {
+  FULL: 'FULL',
+  PARTIAL: 'PARTIAL',
+  NONE: 'NONE'
+};
+
+/**
+ * Possible disconnect reasons.
+ * @name DISCONNECT_REASONS
+ * @type {Object}
+ */
+const DISCONNECT_REASONS = exports.DISCONNECT_REASONS = {
+  GONE: 'GONE',
+  LOST_CONNECTION: 'LOST_CONNECTION',
+  WS_OVERRIDDEN: 'WS_OVERRIDDEN'
+};
+
+/**
+ * Possible operations.
+ * @name OPERATIONS
+ * @type {Object}
+ */
+const OPERATIONS = exports.OPERATIONS = {
+  SUBSCRIBE: 'SUBSCRIBE',
+  UNSUBSCRIBE: 'UNSUBSCRIBE'
+};
+
+/**
+ * This is the minimum allowed value based on which, any outstanding services subscription can be refreshed.
+ * Any user provided `subscription.expires` interval is always compared against this value,
+ * to ensure it does not go below this minimum.
+ */
+const MINIMUM_EXPIRY_SUBSCRIPTION_INTERVAL = exports.MINIMUM_EXPIRY_SUBSCRIPTION_INTERVAL = 60000; // in milliseconds
 
 /***/ }),
 
@@ -72815,7 +72951,7 @@ module.exports = str => encodeURIComponent(str).replace(/[!'()*]/g, x => `%${x.c
 
 /***/ }),
 
-/***/ 37563:
+/***/ 52817:
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -73047,7 +73183,7 @@ var _v4 = _interopRequireDefault(__webpack_require__(95899));
 
 var _nil = _interopRequireDefault(__webpack_require__(15384));
 
-var _version = _interopRequireDefault(__webpack_require__(37563));
+var _version = _interopRequireDefault(__webpack_require__(52817));
 
 var _validate = _interopRequireDefault(__webpack_require__(77888));
 

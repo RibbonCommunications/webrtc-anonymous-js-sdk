@@ -79,6 +79,7 @@ Configuration options for the anonymous Authentication feature.
 
     *   `authentication.subscription` **[Object][7]** 
 
+        *   `authentication.subscription.expires` **[number][12]** The time (in seconds) until subscription expiry. Cannot be less than minimum threshold of 60 seconds.
         *   `authentication.subscription.serviceUnavailableMaxRetries` **[number][12]** The maximum number of times this client will retry in order to subscribe for a
             given service, while getting 'Service Unavailable' from backend. (optional, default `3`)
         *   `authentication.subscription.protocol` **[string][8]** Protocol to be used for subscription requests. (optional, default `'https'`)
