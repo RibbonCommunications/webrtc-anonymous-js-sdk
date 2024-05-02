@@ -12,7 +12,7 @@
  *
  * WebRTC.js
  * webrtc.anonymous.js
- * Version: 6.11.0-beta.1334
+ * Version: 6.11.0-beta.1335
  */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
@@ -2322,7 +2322,7 @@ module.exports = root;
 
 /***/ }),
 
-/***/ 70469:
+/***/ 75079:
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -2340,7 +2340,7 @@ exports.getVersion = getVersion;
  * for the @@ tag below with actual version value.
  */
 function getVersion() {
-  return '6.11.0-beta.1334';
+  return '6.11.0-beta.1335';
 }
 
 /***/ }),
@@ -6506,26 +6506,47 @@ function callManager(container) {
    */
   async function newRemoteNegotiation(wrtcsSessionId, params) {
     /**
-     * Utility: If the call is blocked, wait a short time then check again.
-     * In some scenarios, the next negotiation is received before the previous
-     *    negotiation finishes.
-     * Reference: KJS-1152, KJS-1918
-     * @return {boolean}
+     * Utility for determining if the new remote negotiation will cause a glare scenario or not.
+     *
+     * Scenario 1: The on-going negotiation is local, with a new remote negotiation received.
+     *    This is a glare scenario whether we wait for the first negotiation to finish or not. The
+     *    first, local negotiation will change WebRTC state which is not taken into account in the
+     *    second, remote negotiation. It would cause a WebRTC error.
+     *
+     * Scenario 2: The on-going negotiation is remote, with another remote negotiation received.
+     *    Delay processing the second negotiation until the first is finished (or until time-out.)
+     *
+     * Reference: KJS-1152, KJS-1918, KJS-2059
+     * @method isGlare
+     * @param {Object} call The up-to-date call object.
+     * @param {number} [timeDelayed] The time delayed so far; only to be provided recursively.
+     * @return {Promise<boolean>}
      */
     async function isGlare(call) {
+      let timeDelayed = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
       if (!ongoing[call.id].isBlocked) {
         return false;
+      } else if (timeDelayed >= 3000) {
+        // Time-out after 3 seconds if it's still a glare scenario.
+        return true;
       }
       const {
         isLocal,
         type
       } = ongoing[call.id].getNegotiation();
       log.debug(`Received new remote operation during ${isLocal ? 'local' : 'remote'} ${type} operation. Delaying handling.`);
-
-      // TODO: Check to see if the blocking operation is PENDING / almost done?
-      // TODO: Don't wait the full timeout if not necessary.
-      await new Promise(resolve => setTimeout(() => resolve(), 1000));
-      return ongoing[call.id].isBlocked;
+      if (isLocal) {
+        // If the on-going negotiation is local, then immediately respond as a glare scenario.
+        //    The local negotiation will have changes that the remote side did not take into
+        //    account, leading to WebRTC errors. Mark this as a glare scenario immediately so
+        //    the remote side will be notified sooner.
+        return true;
+      } else {
+        // If it is two remote negotiations causing the glare scenario, try to let the first
+        //    negotiation finish before processing the second.
+        await new Promise(resolve => setTimeout(resolve, 250));
+        return isGlare((0, _selectors.getCallById)(context.getState(), call.id), timeDelayed + 250);
+      }
     }
     let call = (0, _selectors.getCallByWrtcsSessionId)(context.getState(), wrtcsSessionId);
     const log = logManager.getLogger('CALL', call ? call.id : undefined);
@@ -11110,7 +11131,7 @@ Object.defineProperty(exports, "__esModule", ({
 exports["default"] = getStatsOperation;
 var _selectors = __webpack_require__(11430);
 var _kandyWebrtc = __webpack_require__(15203);
-var _version = __webpack_require__(70469);
+var _version = __webpack_require__(75079);
 var _sdkId = _interopRequireDefault(__webpack_require__(15878));
 // Call plugin.
 
@@ -22966,7 +22987,7 @@ exports.fixIceServerUrls = fixIceServerUrls;
 exports.mergeDefaults = mergeDefaults;
 var _logs = __webpack_require__(43862);
 var _utils = __webpack_require__(25189);
-var _version = __webpack_require__(70469);
+var _version = __webpack_require__(75079);
 var _defaults = __webpack_require__(27241);
 var _validation = __webpack_require__(42850);
 // Other plugins.
@@ -34052,7 +34073,7 @@ var _reduxSaga = _interopRequireDefault(__webpack_require__(7));
 var _effects = __webpack_require__(27422);
 var _bottlejs = _interopRequireDefault(__webpack_require__(39146));
 var _utils = __webpack_require__(25189);
-var _version = __webpack_require__(70469);
+var _version = __webpack_require__(75079);
 var _intervalFactory = _interopRequireDefault(__webpack_require__(93725));
 var _logs = __webpack_require__(43862);
 var _validation = __webpack_require__(42850);
@@ -37952,7 +37973,7 @@ var authorizations = _interopRequireWildcard(__webpack_require__(55689));
 var _makeRequest = _interopRequireDefault(__webpack_require__(87569));
 var _utils = __webpack_require__(70720);
 var _selectors = __webpack_require__(46942);
-var _version = __webpack_require__(70469);
+var _version = __webpack_require__(75079);
 var _utils2 = __webpack_require__(25189);
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
 function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
@@ -38103,7 +38124,7 @@ var _cloneDeep2 = _interopRequireDefault(__webpack_require__(33904));
 var _selectors = __webpack_require__(50647);
 var _selectors2 = __webpack_require__(46942);
 var _logs = __webpack_require__(43862);
-var _version = __webpack_require__(70469);
+var _version = __webpack_require__(75079);
 var _utils = __webpack_require__(25189);
 var _effects = __webpack_require__(27422);
 // Request plugin.
@@ -72963,7 +72984,7 @@ module.exports = str => encodeURIComponent(str).replace(/[!'()*]/g, x => `%${x.c
 
 /***/ }),
 
-/***/ 6768:
+/***/ 66407:
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -73195,7 +73216,7 @@ var _v4 = _interopRequireDefault(__webpack_require__(95899));
 
 var _nil = _interopRequireDefault(__webpack_require__(15384));
 
-var _version = _interopRequireDefault(__webpack_require__(6768));
+var _version = _interopRequireDefault(__webpack_require__(66407));
 
 var _validate = _interopRequireDefault(__webpack_require__(77888));
 
