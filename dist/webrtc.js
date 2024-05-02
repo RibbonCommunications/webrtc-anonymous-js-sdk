@@ -12,7 +12,7 @@
  *
  * WebRTC.js
  * webrtc.anonymous.js
- * Version: 6.11.0-beta.1335
+ * Version: 6.11.0-beta.1336
  */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
@@ -2322,7 +2322,7 @@ module.exports = root;
 
 /***/ }),
 
-/***/ 75079:
+/***/ 91996:
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -2340,7 +2340,7 @@ exports.getVersion = getVersion;
  * for the @@ tag below with actual version value.
  */
 function getVersion() {
-  return '6.11.0-beta.1335';
+  return '6.11.0-beta.1336';
 }
 
 /***/ }),
@@ -8210,6 +8210,16 @@ function initOperation(bottle) {
       }
     };
   });
+  bottle.factory('Callstack.stages.addBasicMedia', () => {
+    return {
+      local: {
+        // Stages of local operation.
+        validate: _validateBasic.default,
+        localOffer: (0, _addMedia.default)(bottle.container),
+        remoteAnswer: (0, _remoteAnswer.default)(bottle.container)
+      }
+    };
+  });
 
   // Provide the top-level container to the factory functions.
   //    Otherwise they would get the `operations` sub-container.
@@ -8244,7 +8254,7 @@ function initOperation(bottle) {
   });
   bottle.factory('Callstack.operations.addBasicMedia', () => {
     const opFactory = bottle.container.Callstack.models.Operation;
-    function basicAddMedia(isLocal, stages) {
+    function basicAddMedia() {
       /**
        * Factory function for basic AddMedia operation.
        * @method basicAddMedia
@@ -8256,21 +8266,16 @@ function initOperation(bottle) {
           // Operation meta-data.
           type: _constants.OPERATIONS.ADD_BASIC_MEDIA,
           isNegotiation: true,
-          isLocal,
+          isLocal: true,
           // Operation methods.
-          stages
+          stages: bottle.container.Callstack.stages.addBasicMedia.local
         }, {
           callId
         });
       };
     }
     return {
-      local: basicAddMedia(true, {
-        // Stages of local operation.
-        validate: _validateBasic.default,
-        localOffer: (0, _addMedia.default)(bottle.container),
-        remoteAnswer: (0, _remoteAnswer.default)(bottle.container)
-      })
+      local: basicAddMedia()
       // There is no remote 'basic' operation; it is seen as a regular removeMedia operation.
     };
   });
@@ -11131,7 +11136,7 @@ Object.defineProperty(exports, "__esModule", ({
 exports["default"] = getStatsOperation;
 var _selectors = __webpack_require__(11430);
 var _kandyWebrtc = __webpack_require__(15203);
-var _version = __webpack_require__(75079);
+var _version = __webpack_require__(91996);
 var _sdkId = _interopRequireDefault(__webpack_require__(15878));
 // Call plugin.
 
@@ -12203,6 +12208,17 @@ var _validate = _interopRequireDefault(__webpack_require__(96093));
 var _remoteAnswer = _interopRequireDefault(__webpack_require__(96483));
 var _constants = __webpack_require__(37409);
 function initOperation(bottle) {
+  // Register the individual stages for the operation.
+  bottle.factory('Callstack.stages.iceRestart', () => {
+    return {
+      local: {
+        validate: _validate.default,
+        localOffer: (0, _iceRestart.default)(bottle.container),
+        remoteAnswer: (0, _remoteAnswer.default)(bottle.container)
+      }
+    };
+  });
+
   // Provide the top-level container to the factory functions.
   //    Otherwise they would get the `operations` sub-container.
   bottle.factory('Callstack.operations.iceRestart', () => {
@@ -12221,11 +12237,7 @@ function initOperation(bottle) {
         isNegotiation: true,
         isLocal: true,
         // Operation methods.
-        stages: {
-          validate: _validate.default,
-          localOffer: (0, _iceRestart.default)(bottle.container),
-          remoteAnswer: (0, _remoteAnswer.default)(bottle.container)
-        }
+        stages: bottle.container.Callstack.stages.iceRestart.local
       }, {
         callId
       });
@@ -15251,11 +15263,38 @@ var _constants = __webpack_require__(37409);
 // Operations.
 
 function initOperation(bottle) {
+  // Register the individual stages for the operation.
+  bottle.factory('Callstack.stages.removeMedia', () => {
+    return {
+      local: {
+        // Stages of local operation.
+        validate: _validate.default,
+        localOffer: (0, _removeMedia.default)(bottle.container),
+        remoteAnswer: (0, _remoteAnswer.default)(bottle.container)
+      },
+      remote: {
+        // Stages of remote operation.
+        remoteOffer: (0, _remoteOffer.default)(bottle.container)
+      }
+    };
+  });
+  bottle.factory('Callstack.stages.removeBasicMedia', () => {
+    return {
+      local: {
+        // Only the validate stage is different compared to LocalRemoveMedia.
+        validate: _validateBasic.default,
+        localOffer: (0, _removeMedia.default)(bottle.container),
+        remoteAnswer: (0, _remoteAnswer.default)(bottle.container)
+      }
+    };
+  });
+
   // Provide the top-level container to the factory functions.
   //    Otherwise they would get the `operations` sub-container.
   bottle.factory('Callstack.operations.removeMedia', () => {
-    const opFactory = bottle.container.Callstack.models.Operation;
-    function removeMedia(isLocal, stages) {
+    const Callstack = bottle.container.Callstack;
+    const opFactory = Callstack.models.Operation;
+    function removeMedia(isLocal) {
       /**
        * Factory function for a RemoveMedia operation.
        * @method removeMedia
@@ -15263,6 +15302,7 @@ function initOperation(bottle) {
        * @return {Operation} An instance of the removeMedia operation.
        */
       return callId => {
+        const stages = Callstack.stages.removeMedia[isLocal ? 'local' : 'remote'];
         return opFactory.instance({
           // Operation meta-data.
           type: _constants.OPERATIONS.REMOVE_MEDIA,
@@ -15276,16 +15316,8 @@ function initOperation(bottle) {
       };
     }
     return {
-      local: removeMedia(true, {
-        // Stages of local operation.
-        validate: _validate.default,
-        localOffer: (0, _removeMedia.default)(bottle.container),
-        remoteAnswer: (0, _remoteAnswer.default)(bottle.container)
-      }),
-      remote: removeMedia(false, {
-        // Stages of remote operation.
-        remoteOffer: (0, _remoteOffer.default)(bottle.container)
-      })
+      local: removeMedia(true),
+      remote: removeMedia(false)
     };
   });
   bottle.factory('Callstack.operations.removeBasicMedia', () => {
@@ -15306,12 +15338,7 @@ function initOperation(bottle) {
         isNegotiation: true,
         isLocal: true,
         // Operation methods.
-        stages: {
-          // Only the validate stage is different compared to LocalRemoveMedia.
-          validate: _validateBasic.default,
-          localOffer: (0, _removeMedia.default)(bottle.container),
-          remoteAnswer: (0, _remoteAnswer.default)(bottle.container)
-        }
+        stages: bottle.container.Callstack.stages.removeBasicMedia.local
       }, {
         callId
       });
@@ -18325,11 +18352,28 @@ var _constants = __webpack_require__(37409);
 // Operations.
 
 function initOperation(bottle) {
+  // Register the individual stages for the operation.
+  bottle.factory('Callstack.stages.unhold', () => {
+    return {
+      local: {
+        // Stages of local operation.
+        validate: _validate.default,
+        localOffer: (0, _unhold.default)(bottle.container),
+        remoteAnswer: (0, _remoteAnswer.default)(bottle.container)
+      },
+      remote: {
+        // Stages of remote operation.
+        remoteOffer: (0, _remoteOffer.default)(bottle.container)
+      }
+    };
+  });
+
   // Provide the top-level container to the factory functions.
   //    Otherwise they would get the `operations` sub-container.
   bottle.factory('Callstack.operations.unhold', () => {
-    const opFactory = bottle.container.Callstack.models.Operation;
-    function unhold(isLocal, stages) {
+    const Callstack = bottle.container.Callstack;
+    const opFactory = Callstack.models.Operation;
+    function unhold(isLocal) {
       /**
        * Factory function for a Hold operation.
        * @method unhold
@@ -18337,6 +18381,7 @@ function initOperation(bottle) {
        * @return {Operation} An instance of the hold operation.
        */
       return callId => {
+        const stages = Callstack.stages.unhold[isLocal ? 'local' : 'remote'];
         return opFactory.instance({
           // Operation meta-data.
           type: _constants.OPERATIONS.UNHOLD,
@@ -18350,16 +18395,8 @@ function initOperation(bottle) {
       };
     }
     return {
-      local: unhold(true, {
-        // Stages of local operation.
-        validate: _validate.default,
-        localOffer: (0, _unhold.default)(bottle.container),
-        remoteAnswer: (0, _remoteAnswer.default)(bottle.container)
-      }),
-      remote: unhold(false, {
-        // Stages of remote operation.
-        remoteOffer: (0, _remoteOffer.default)(bottle.container)
-      })
+      local: unhold(true),
+      remote: unhold(false)
     };
   });
   bottle.factory('Callstack.utils.rollbackUnhold', () => (0, _rollbackUnhold.default)(bottle.container));
@@ -22987,7 +23024,7 @@ exports.fixIceServerUrls = fixIceServerUrls;
 exports.mergeDefaults = mergeDefaults;
 var _logs = __webpack_require__(43862);
 var _utils = __webpack_require__(25189);
-var _version = __webpack_require__(75079);
+var _version = __webpack_require__(91996);
 var _defaults = __webpack_require__(27241);
 var _validation = __webpack_require__(42850);
 // Other plugins.
@@ -34073,7 +34110,7 @@ var _reduxSaga = _interopRequireDefault(__webpack_require__(7));
 var _effects = __webpack_require__(27422);
 var _bottlejs = _interopRequireDefault(__webpack_require__(39146));
 var _utils = __webpack_require__(25189);
-var _version = __webpack_require__(75079);
+var _version = __webpack_require__(91996);
 var _intervalFactory = _interopRequireDefault(__webpack_require__(93725));
 var _logs = __webpack_require__(43862);
 var _validation = __webpack_require__(42850);
@@ -37973,7 +38010,7 @@ var authorizations = _interopRequireWildcard(__webpack_require__(55689));
 var _makeRequest = _interopRequireDefault(__webpack_require__(87569));
 var _utils = __webpack_require__(70720);
 var _selectors = __webpack_require__(46942);
-var _version = __webpack_require__(75079);
+var _version = __webpack_require__(91996);
 var _utils2 = __webpack_require__(25189);
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
 function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
@@ -38124,7 +38161,7 @@ var _cloneDeep2 = _interopRequireDefault(__webpack_require__(33904));
 var _selectors = __webpack_require__(50647);
 var _selectors2 = __webpack_require__(46942);
 var _logs = __webpack_require__(43862);
-var _version = __webpack_require__(75079);
+var _version = __webpack_require__(91996);
 var _utils = __webpack_require__(25189);
 var _effects = __webpack_require__(27422);
 // Request plugin.
@@ -72984,7 +73021,7 @@ module.exports = str => encodeURIComponent(str).replace(/[!'()*]/g, x => `%${x.c
 
 /***/ }),
 
-/***/ 66407:
+/***/ 32453:
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -73216,7 +73253,7 @@ var _v4 = _interopRequireDefault(__webpack_require__(95899));
 
 var _nil = _interopRequireDefault(__webpack_require__(15384));
 
-var _version = _interopRequireDefault(__webpack_require__(66407));
+var _version = _interopRequireDefault(__webpack_require__(32453));
 
 var _validate = _interopRequireDefault(__webpack_require__(77888));
 
