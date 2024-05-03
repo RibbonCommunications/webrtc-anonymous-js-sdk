@@ -12,7 +12,7 @@
  *
  * WebRTC.js
  * webrtc.anonymous.js
- * Version: 6.11.0-beta.1339
+ * Version: 6.11.0-beta.1340
  */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
@@ -2322,7 +2322,7 @@ module.exports = root;
 
 /***/ }),
 
-/***/ 39533:
+/***/ 37382:
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -2340,7 +2340,7 @@ exports.getVersion = getVersion;
  * for the @@ tag below with actual version value.
  */
 function getVersion() {
-  return '6.11.0-beta.1339';
+  return '6.11.0-beta.1340';
 }
 
 /***/ }),
@@ -11145,7 +11145,7 @@ Object.defineProperty(exports, "__esModule", ({
 exports["default"] = getStatsOperation;
 var _selectors = __webpack_require__(11430);
 var _kandyWebrtc = __webpack_require__(15203);
-var _version = __webpack_require__(39533);
+var _version = __webpack_require__(37382);
 var _sdkId = _interopRequireDefault(__webpack_require__(15878));
 // Call plugin.
 
@@ -11258,6 +11258,19 @@ var _getStats = _interopRequireDefault(__webpack_require__(77279));
 var _validate = _interopRequireDefault(__webpack_require__(58999));
 var _constants = __webpack_require__(37409);
 function initOperation(bottle) {
+  // Register the individual stages for the operation.
+  bottle.factory('Callstack.stages.getStats', () => {
+    return {
+      local: {
+        validate: _validate.default,
+        // TODO: This operation isn't a negotiation, so we shouldn't be naming
+        //    a stage with WebRTC negotiation terms. But this is the method
+        //    name the `localOperation` flow uses.
+        localOffer: (0, _getStats.default)(bottle.container)
+      }
+    };
+  });
+
   // Provide the top-level container to the factory functions.
   //    Otherwise they would get the `operations` sub-container.
   bottle.factory('Callstack.operations.getStats', () => {
@@ -11276,13 +11289,7 @@ function initOperation(bottle) {
         isNegotiation: false,
         isLocal: true,
         // Operation methods.
-        stages: {
-          validate: _validate.default,
-          // TODO: This operation isn't a negotiation, so we shouldn't be naming
-          //    a stage with WebRTC negotiation terms. But this is the method
-          //    name the `localOperation` flow uses.
-          localOffer: (0, _getStats.default)(bottle.container)
-        }
+        stages: bottle.container.Callstack.stages.getStats.local
       }, {
         callId
       });
@@ -14850,6 +14857,19 @@ var _playAudio = _interopRequireDefault(__webpack_require__(81037));
 var _validate = _interopRequireDefault(__webpack_require__(55470));
 var _constants = __webpack_require__(37409);
 function initOperation(bottle) {
+  // Register the individual stages for the operation.
+  bottle.factory('Callstack.stages.getStats', () => {
+    return {
+      local: {
+        validate: _validate.default,
+        // TODO: This operation isn't a negotiation, so we shouldn't be naming
+        //    a stage with WebRTC negotiation terms. But this is the method
+        //    name the `localOperation` flow uses.
+        localOffer: (0, _playAudio.default)(bottle.container)
+      }
+    };
+  });
+
   // Provide the top-level container to the factory functions.
   //    Otherwise they would get the `operations` sub-container.
   bottle.factory('Callstack.operations.playAudioFile', () => {
@@ -14868,13 +14888,7 @@ function initOperation(bottle) {
         isNegotiation: false,
         isLocal: true,
         // Operation methods.
-        stages: {
-          validate: _validate.default,
-          // TODO: This operation isn't a negotiation, so we shouldn't be naming
-          //    a stage with WebRTC negotiation terms. But this is the method
-          //    name the `localOperation` flow uses.
-          localOffer: (0, _playAudio.default)(bottle.container)
-        }
+        stages: bottle.container.Callstack.stages.playAudioFile.local
       }, {
         callId
       });
@@ -16162,6 +16176,19 @@ var _validate = _interopRequireDefault(__webpack_require__(66823));
 var _webrtcReplaceTrack = _interopRequireDefault(__webpack_require__(12257));
 var _constants = __webpack_require__(37409);
 function initOperation(bottle) {
+  // Register the individual stages for the operation.
+  bottle.factory('Callstack.stages.replaceTrack', () => {
+    return {
+      local: {
+        validate: _validate.default,
+        // TODO: This operation isn't a negotiation, so we shouldn't be naming
+        //    a stage with WebRTC negotiation terms. But this is the method
+        //    name the `localOperation` flow uses.
+        localOffer: (0, _replaceTrack.default)(bottle.container)
+      }
+    };
+  });
+
   // Provide the top-level container to the factory functions.
   //    Otherwise they would get the `operations` sub-container.
   bottle.factory('Callstack.operations.replaceTrack', () => {
@@ -16180,13 +16207,7 @@ function initOperation(bottle) {
         isNegotiation: false,
         isLocal: true,
         // Operation methods.
-        stages: {
-          validate: _validate.default,
-          // TODO: This operation isn't a negotiation, so we shouldn't be naming
-          //    a stage with WebRTC negotiation terms. But this is the method
-          //    name the `localOperation` flow uses.
-          localOffer: (0, _replaceTrack.default)(bottle.container)
-        }
+        stages: bottle.container.Callstack.stages.replaceTrack.local
       }, {
         callId
       });
@@ -16505,6 +16526,19 @@ var _resyncCallState = _interopRequireDefault(__webpack_require__(46063));
 var _validate = _interopRequireDefault(__webpack_require__(62235));
 var _constants = __webpack_require__(37409);
 function initOperation(bottle) {
+  // Register the individual stages for the operation.
+  bottle.factory('Callstack.stages.getStats', () => {
+    return {
+      local: {
+        validate: _validate.default,
+        // TODO: This operation isn't a negotiation, so we shouldn't be naming
+        //    a stage with WebRTC negotiation terms. But this is the method
+        //    name the `localOperation` flow uses.
+        localOffer: (0, _resyncCallState.default)(bottle.container)
+      }
+    };
+  });
+
   // Provide the top-level container to the factory functions.
   //    Otherwise they would get the `operations` sub-container.
   bottle.factory('Callstack.operations.resyncCallState', () => {
@@ -16523,13 +16557,7 @@ function initOperation(bottle) {
         isNegotiation: false,
         isLocal: true,
         // Operation methods.
-        stages: {
-          validate: _validate.default,
-          // TODO: This operation isn't a negotiation, so we shouldn't be naming
-          //    a stage with WebRTC negotiation terms. But this is the method
-          //    name the `localOperation` flow uses.
-          localOffer: (0, _resyncCallState.default)(bottle.container)
-        }
+        stages: bottle.container.Callstack.stages.resyncCallState.local
       }, {
         callId
       });
@@ -17014,6 +17042,19 @@ var _sendCustomParameters = _interopRequireDefault(__webpack_require__(14273));
 var _validate = _interopRequireDefault(__webpack_require__(91005));
 var _constants = __webpack_require__(37409);
 function initOperation(bottle) {
+  // Register the individual stages for the operation.
+  bottle.factory('Callstack.stages.sendCustomParameters', () => {
+    return {
+      local: {
+        validate: _validate.default,
+        // TODO: This operation isn't a negotiation, so we shouldn't be naming
+        //    a stage with WebRTC negotiation terms. But this is the method
+        //    name the `localOperation` flow uses.
+        localOffer: (0, _sendCustomParameters.default)(bottle.container)
+      }
+    };
+  });
+
   // Provide the top-level container to the factory functions.
   //    Otherwise they would get the `operations` sub-container.
   bottle.factory('Callstack.operations.sendCustomParameters', () => {
@@ -17032,13 +17073,7 @@ function initOperation(bottle) {
         isNegotiation: false,
         isLocal: true,
         // Operation methods.
-        stages: {
-          validate: _validate.default,
-          // TODO: This operation isn't a negotiation, so we shouldn't be naming
-          //    a stage with WebRTC negotiation terms. But this is the method
-          //    name the `localOperation` flow uses.
-          localOffer: (0, _sendCustomParameters.default)(bottle.container)
-        }
+        stages: bottle.container.Callstack.stages.sendCustomParameters.local
       }, {
         callId
       });
@@ -17184,6 +17219,19 @@ var _sendDtmf = _interopRequireDefault(__webpack_require__(93367));
 var _validate = _interopRequireDefault(__webpack_require__(18515));
 var _constants = __webpack_require__(37409);
 function initOperation(bottle) {
+  // Register the individual stages for the operation.
+  bottle.factory('Callstack.stages.sendDtmf', () => {
+    return {
+      local: {
+        validate: _validate.default,
+        // TODO: This operation isn't a negotiation, so we shouldn't be naming
+        //    a stage with WebRTC negotiation terms. But this is the method
+        //    name the `localOperation` flow uses.
+        localOffer: (0, _sendDtmf.default)(bottle.container)
+      }
+    };
+  });
+
   // Provide the top-level container to the factory functions.
   //    Otherwise they would get the `operations` sub-container.
   bottle.factory('Callstack.operations.sendDtmf', () => {
@@ -17202,13 +17250,7 @@ function initOperation(bottle) {
         isNegotiation: false,
         isLocal: true,
         // Operation methods.
-        stages: {
-          validate: _validate.default,
-          // TODO: This operation isn't a negotiation, so we shouldn't be naming
-          //    a stage with WebRTC negotiation terms. But this is the method
-          //    name the `localOperation` flow uses.
-          localOffer: (0, _sendDtmf.default)(bottle.container)
-        }
+        stages: bottle.container.Callstack.stages.sendDtmf.local
       }, {
         callId
       });
@@ -23047,7 +23089,7 @@ exports.fixIceServerUrls = fixIceServerUrls;
 exports.mergeDefaults = mergeDefaults;
 var _logs = __webpack_require__(43862);
 var _utils = __webpack_require__(25189);
-var _version = __webpack_require__(39533);
+var _version = __webpack_require__(37382);
 var _defaults = __webpack_require__(27241);
 var _validation = __webpack_require__(42850);
 // Other plugins.
@@ -34133,7 +34175,7 @@ var _reduxSaga = _interopRequireDefault(__webpack_require__(7));
 var _effects = __webpack_require__(27422);
 var _bottlejs = _interopRequireDefault(__webpack_require__(39146));
 var _utils = __webpack_require__(25189);
-var _version = __webpack_require__(39533);
+var _version = __webpack_require__(37382);
 var _intervalFactory = _interopRequireDefault(__webpack_require__(93725));
 var _logs = __webpack_require__(43862);
 var _validation = __webpack_require__(42850);
@@ -38033,7 +38075,7 @@ var authorizations = _interopRequireWildcard(__webpack_require__(55689));
 var _makeRequest = _interopRequireDefault(__webpack_require__(87569));
 var _utils = __webpack_require__(70720);
 var _selectors = __webpack_require__(46942);
-var _version = __webpack_require__(39533);
+var _version = __webpack_require__(37382);
 var _utils2 = __webpack_require__(25189);
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
 function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
@@ -38184,7 +38226,7 @@ var _cloneDeep2 = _interopRequireDefault(__webpack_require__(33904));
 var _selectors = __webpack_require__(50647);
 var _selectors2 = __webpack_require__(46942);
 var _logs = __webpack_require__(43862);
-var _version = __webpack_require__(39533);
+var _version = __webpack_require__(37382);
 var _utils = __webpack_require__(25189);
 var _effects = __webpack_require__(27422);
 // Request plugin.
@@ -73044,7 +73086,7 @@ module.exports = str => encodeURIComponent(str).replace(/[!'()*]/g, x => `%${x.c
 
 /***/ }),
 
-/***/ 44869:
+/***/ 15634:
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -73276,7 +73318,7 @@ var _v4 = _interopRequireDefault(__webpack_require__(95899));
 
 var _nil = _interopRequireDefault(__webpack_require__(15384));
 
-var _version = _interopRequireDefault(__webpack_require__(44869));
+var _version = _interopRequireDefault(__webpack_require__(15634));
 
 var _validate = _interopRequireDefault(__webpack_require__(77888));
 
