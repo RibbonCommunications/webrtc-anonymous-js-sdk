@@ -13,6 +13,7 @@ Ribbon WebRTC SDK change log.
 
 - Fixed a Subscription issue where the `config.authentication.subscription.expires` value could be set too short, causing the user to be unsubscribed after some time. `KJS-1996`
   - The minimum value for `config.authentication.subscription.expires` is `60` seconds.
+- Fixed issue where an exception is thrown if the remote proxy channel is broken during a call and an operation is attempted. `KJS-2167`
 
 ## 6.10.0 - 2024-04-26
 
