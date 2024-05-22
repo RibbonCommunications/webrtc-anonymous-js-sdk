@@ -10021,6 +10021,10 @@ API.</p>
   <p>A new incoming call has been received.</p>
 <p>Information about the Call can be retrieved using the <a href="#callgetbyid">call.getById</a>
 API.</p>
+<p>NOTE: Upon receiving this notification the call is in "Initiating" state. In order
+to answer calls, they must be in either "Ringing" or "Initiated" states. Therefore,
+this event should not be used to prompt the user to respond. Instead, the
+<a href="#calleventcallstatechange">call:stateChange</a> event should be used for this purpose.</p>
 
 
   <div class='pre p1 fill-light mt0'>call:receive</div>
@@ -10094,7 +10098,7 @@ API.</p>
     
       
       <pre class='p1 overflow-auto round fill-light'>client.on(<span class="hljs-string">&#x27;call:receive&#x27;</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">params</span>) </span>{
-    <span class="hljs-comment">// We have received a call, prompt the user to respond.</span>
+    <span class="hljs-comment">// We have received a call</span>
     promptUser(client.call.getById(params.callId));
 });</pre>
     

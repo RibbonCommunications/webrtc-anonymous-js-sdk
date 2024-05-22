@@ -12,7 +12,7 @@
  *
  * WebRTC.js
  * webrtc.anonymous.js
- * Version: 6.11.0-beta.1350
+ * Version: 6.11.0-beta.1351
  */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
@@ -2322,7 +2322,7 @@ module.exports = root;
 
 /***/ }),
 
-/***/ 72994:
+/***/ 8309:
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -2340,7 +2340,7 @@ exports.getVersion = getVersion;
  * for the @@ tag below with actual version value.
  */
 function getVersion() {
-  return '6.11.0-beta.1350';
+  return '6.11.0-beta.1351';
 }
 
 /***/ }),
@@ -11143,7 +11143,7 @@ Object.defineProperty(exports, "__esModule", ({
 exports["default"] = getStatsOperation;
 var _selectors = __webpack_require__(11430);
 var _kandyWebrtc = __webpack_require__(15203);
-var _version = __webpack_require__(72994);
+var _version = __webpack_require__(8309);
 var _sdkId = _interopRequireDefault(__webpack_require__(15878));
 // Call plugin.
 
@@ -23098,7 +23098,7 @@ exports.fixIceServerUrls = fixIceServerUrls;
 exports.mergeDefaults = mergeDefaults;
 var _logs = __webpack_require__(43862);
 var _utils = __webpack_require__(25189);
-var _version = __webpack_require__(72994);
+var _version = __webpack_require__(8309);
 var _defaults = __webpack_require__(27241);
 var _validation = __webpack_require__(42850);
 // Other plugins.
@@ -27180,6 +27180,11 @@ const CALL_JOIN = exports.CALL_JOIN = 'call:join';
  * Information about the Call can be retrieved using the {@link call.getById}
  *    API.
  *
+ * NOTE: Upon receiving this notification the call is in "Initiating" state. In order
+ *    to answer calls, they must be in either "Ringing" or "Initiated" states. Therefore,
+ *    this event should not be used to prompt the user to respond. Instead, the
+ *    {@link #calleventcallstatechange call:stateChange} event should be used for this purpose.
+ *
  * @public
  * @memberof call
  * @event call:receive
@@ -27188,7 +27193,7 @@ const CALL_JOIN = exports.CALL_JOIN = 'call:join';
  * @param {api.BasicError} [params.error] An error object, if the operation was not successful.
  * @example
  * client.on('call:receive', function(params) {
- *     // We have received a call, prompt the user to respond.
+ *     // We have received a call
  *     promptUser(client.call.getById(params.callId));
  * });
  */
@@ -31282,9 +31287,11 @@ exports.autoRestart = autoRestart;
 exports.defer = defer;
 exports.delay = delay;
 exports.forwardAction = forwardAction;
+exports.logCssSelector = logCssSelector;
 exports.mergeValues = mergeValues;
 exports.normalizeServices = normalizeServices;
 exports.toQueryString = toQueryString;
+var _isElement2 = _interopRequireDefault(__webpack_require__(23004));
 var _isPlainObject2 = _interopRequireDefault(__webpack_require__(1449));
 var _isArray2 = _interopRequireDefault(__webpack_require__(61786));
 var _mergeAllWith2 = _interopRequireDefault(__webpack_require__(38041));
@@ -31413,6 +31420,17 @@ function defer() {
  */
 function delay(duration) {
   return new Promise(resolve => setTimeout(resolve, duration));
+}
+
+/**
+ * Returns a log-safe CSS selector string.
+ * This is needed because applications that may try to stringify logs that output an HTML element may run
+ *   into a circular structure exceptions.
+ * @param {*} selector CSS Selector.
+ * @returns A log-safe string.
+ */
+function logCssSelector(selector) {
+  return (0, _isElement2.default)(selector) ? selector.id : selector;
 }
 
 /***/ }),
@@ -34184,7 +34202,7 @@ var _reduxSaga = _interopRequireDefault(__webpack_require__(7));
 var _effects = __webpack_require__(27422);
 var _bottlejs = _interopRequireDefault(__webpack_require__(39146));
 var _utils = __webpack_require__(25189);
-var _version = __webpack_require__(72994);
+var _version = __webpack_require__(8309);
 var _intervalFactory = _interopRequireDefault(__webpack_require__(93725));
 var _logs = __webpack_require__(43862);
 var _validation = __webpack_require__(42850);
@@ -38084,7 +38102,7 @@ var authorizations = _interopRequireWildcard(__webpack_require__(55689));
 var _makeRequest = _interopRequireDefault(__webpack_require__(87569));
 var _utils = __webpack_require__(70720);
 var _selectors = __webpack_require__(46942);
-var _version = __webpack_require__(72994);
+var _version = __webpack_require__(8309);
 var _utils2 = __webpack_require__(25189);
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
 function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
@@ -38235,7 +38253,7 @@ var _cloneDeep2 = _interopRequireDefault(__webpack_require__(33904));
 var _selectors = __webpack_require__(50647);
 var _selectors2 = __webpack_require__(46942);
 var _logs = __webpack_require__(43862);
-var _version = __webpack_require__(72994);
+var _version = __webpack_require__(8309);
 var _utils = __webpack_require__(25189);
 var _effects = __webpack_require__(27422);
 // Request plugin.
@@ -39939,9 +39957,12 @@ Object.defineProperty(exports, "__esModule", ({
 exports["default"] = createMediaAPI;
 var _selectors = __webpack_require__(30105);
 var eventTypes = _interopRequireWildcard(__webpack_require__(46215));
+var _utils = __webpack_require__(25189);
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
 function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
 // Webrtc plugin.
+
+// Other plugins.
 
 /**
  * Media related APIs.
@@ -40095,7 +40116,7 @@ function createMediaAPI(container) {
      */
     async renderTracks(trackIds, cssSelector) {
       let options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
-      log.debug(API_LOG_TAG + 'media.renderTracks: ', trackIds, cssSelector, options);
+      log.debug(API_LOG_TAG + 'media.renderTracks: ', trackIds, (0, _utils.logCssSelector)(cssSelector), options);
       let retValue;
       try {
         retValue = await operations.renderTracks(trackIds, cssSelector, options);
@@ -40123,7 +40144,7 @@ function createMediaAPI(container) {
      *    escaped.
      */
     async removeTracks(trackIds, cssSelector) {
-      log.debug(API_LOG_TAG + 'media.removeTracks: ', trackIds, cssSelector);
+      log.debug(API_LOG_TAG + 'media.removeTracks: ', trackIds, (0, _utils.logCssSelector)(cssSelector));
       await operations.removeTracks(trackIds, cssSelector);
     },
     /**
@@ -41044,11 +41065,14 @@ var _isString2 = _interopRequireDefault(__webpack_require__(49775));
 var _isUndefined2 = _interopRequireDefault(__webpack_require__(73346));
 var _actions = __webpack_require__(37992);
 var _errors = _interopRequireWildcard(__webpack_require__(83437));
+var _utils = __webpack_require__(25189);
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
 function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
 function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
 function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { (0, _defineProperty2.default)(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; } // Webrtc plugin.
+// Other plugins.
 // Libraries.
+
 /**
  * WebRTC Media Operations factory function.
  * @method createMediaOperations
@@ -41096,7 +41120,7 @@ function createMediaOperations(container) {
     // selector is a string or a DOM element
     // (note: We can't use instanceof here since elements part of another window are not of the same instance as window.Element)
     (0, _isString2.default)(selector) || 'tagName' in selector)) {
-      log.info(`Rendering track(s) in element ${selector}.`, trackIds);
+      log.info(`Rendering track(s) in element ${(0, _utils.logCssSelector)(selector)}.`, trackIds);
 
       // Render the tracks.
       await Promise.all(filteredTracks.map(async track => {
@@ -41148,7 +41172,7 @@ function createMediaOperations(container) {
     dispatch(_actions.trackActions.removeTracks(trackIds, {
       selector
     }));
-    log.info(`Removing track(s) from element ${selector}.`, trackIds);
+    log.info(`Removing track(s) from element ${(0, _utils.logCssSelector)(selector)}.`, trackIds);
 
     // Remove the tracks.
     await Promise.all(trackIds.map(async id => {
@@ -58720,6 +58744,18 @@ module.exports = func;
 
 /***/ }),
 
+/***/ 23004:
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var convert = __webpack_require__(42003),
+    func = convert('isElement', __webpack_require__(92301), __webpack_require__(69112));
+
+func.placeholder = __webpack_require__(54652);
+module.exports = func;
+
+
+/***/ }),
+
 /***/ 8288:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
@@ -59382,6 +59418,38 @@ var nativeIsBuffer = Buffer ? Buffer.isBuffer : undefined;
 var isBuffer = nativeIsBuffer || stubFalse;
 
 module.exports = isBuffer;
+
+
+/***/ }),
+
+/***/ 92301:
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var isObjectLike = __webpack_require__(15125),
+    isPlainObject = __webpack_require__(97030);
+
+/**
+ * Checks if `value` is likely a DOM element.
+ *
+ * @static
+ * @memberOf _
+ * @since 0.1.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a DOM element, else `false`.
+ * @example
+ *
+ * _.isElement(document.body);
+ * // => true
+ *
+ * _.isElement('<body>');
+ * // => false
+ */
+function isElement(value) {
+  return isObjectLike(value) && value.nodeType === 1 && !isPlainObject(value);
+}
+
+module.exports = isElement;
 
 
 /***/ }),
@@ -73095,7 +73163,7 @@ module.exports = str => encodeURIComponent(str).replace(/[!'()*]/g, x => `%${x.c
 
 /***/ }),
 
-/***/ 49021:
+/***/ 60931:
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -73327,7 +73395,7 @@ var _v4 = _interopRequireDefault(__webpack_require__(95899));
 
 var _nil = _interopRequireDefault(__webpack_require__(15384));
 
-var _version = _interopRequireDefault(__webpack_require__(49021));
+var _version = _interopRequireDefault(__webpack_require__(60931));
 
 var _validate = _interopRequireDefault(__webpack_require__(77888));
 
