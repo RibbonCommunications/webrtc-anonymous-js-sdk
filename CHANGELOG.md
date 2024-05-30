@@ -7,6 +7,15 @@ Ribbon WebRTC SDK change log.
 - This project adheres to [Semantic Versioning](http://semver.org/).
 - This change log follows [keepachangelog.com](http://keepachangelog.com/) recommendations.
 
+## 6.12.0 beta
+
+### Added
+
+- New media APIs for managing local detached media. `createLocalMedia`, `getLocalMedia` and `disposeLocalMedia` are used to create
+  audio, video and screen media tracks locally outside of a call. `KJS-2105`
+- New configuration parameter for early negotiation `waitForIce`. Setting to true will skip waiting for ice collection anc proceed with negotiation. `KJS-2205`
+- New media option for passing local detached media to the following call apis: make, answer, addMedia and replaceMedia. `KJS-2106`
+
 ## 6.11.0 - 2024-05-30
 
 ### Fixed
