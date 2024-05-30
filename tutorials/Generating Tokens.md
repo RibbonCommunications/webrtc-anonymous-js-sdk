@@ -7,7 +7,7 @@ This page explains the use case of making anonymous calls using token based mode
 ## Obtaining Key & Token Realm Values from Administrator
 
 In order to generate authentication tokens, you need to obtain the key & realm token.
-The key & realm token values are not specific for a user/caller, but rather for a server side application.
+The key & realm token values are not specific for a user/anonymous caller, but rather for a server side application.
 
 The administrator should go through the following steps to generate them:
 
@@ -52,15 +52,18 @@ This code would typically run on server side:
 const crypto = require('crypto')
 ```
 
-2. Define the addresses for caller & callee:
+2. Define the addresse for callee & provide a display name to be used when calling out:
 
 ```javascript
-const account = 'mycaller@mydomain.com'
-const caller = 'sip:' + account
+const displayName = 'myDisplayName'
 const callee = 'sip:mycallee@mydomain.com'
 ```
 
-You will need to modify the full code example we provide and replace 'mycaller' & 'mycallee' with the actual user IDs involved in the anonymous call. Also replace 'mydomain' with your actual domain value. The User Ids & domain can be obtained from the values used in [Anonymous Calls Quickstart](Anonymous%20Calls).
+You will need to modify the full code example we provide and replace 'mycallee' with the actual user ID involved in the anonymous call.
+
+Also replace 'myDisplayName' with the actual display name you want to use. This display name is what callee will see when it gets the incoming call and it does not contain any domain or any user ID of a subscribed user.
+
+Also replace 'mydomain' with your actual domain value. The User Ids & domain can be obtained from the values used in [Anonymous Calls Quickstart](Anonymous%20Calls).
 
 3. Define the key you got from the previous section and generate a current timestamp:
 
@@ -74,8 +77,8 @@ You will also need to modify the code example provided by replacing the 'key val
 4. Finally, generate the 3 tokens based on all the info defined above.
 
 ```javascript
-const accountToken = createToken(account, key, timestamp)
-const fromToken = createToken(caller, key, timestamp)
+const accountToken = createToken(displayName, key, timestamp)
+const fromToken = createToken('sip:' + displayName, key, timestamp)
 const toToken = createToken(callee, key, timestamp)
 ```
 
@@ -109,7 +112,7 @@ chunks.push(crypter.update(textBuffer, 'buffer', 'hex'))
 chunks.push(crypter.final('hex'))
 ```
 
-Finally, we produce a buffer using HEX character encoding and thus `createToken` function returns its stringified contents to caller.
+Finally, we produce a buffer using HEX character encoding and thus `createToken` function returns its stringified contents to the anonymous caller.
 
 ```javascript
   const encryptedBuffer = Buffer.from(chunks.join(''), 'hex')
