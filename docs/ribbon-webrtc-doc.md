@@ -79,6 +79,7 @@ Configuration options for the anonymous Authentication feature.
 
     *   `authentication.subscription` **[Object][7]** 
 
+        *   `authentication.subscription.expires` **[number][12]** The time (in seconds) until subscription expiry. Cannot be less than minimum threshold of 60 seconds.
         *   `authentication.subscription.serviceUnavailableMaxRetries` **[number][12]** The maximum number of times this client will retry in order to subscribe for a
             given service, while getting 'Service Unavailable' from backend. (optional, default `3`)
         *   `authentication.subscription.protocol` **[string][8]** Protocol to be used for subscription requests. (optional, default `'https'`)
@@ -1875,6 +1876,11 @@ A new incoming call has been received.
 Information about the Call can be retrieved using the [call.getById][29]
 API.
 
+NOTE: Upon receiving this notification the call is in "Initiating" state. In order
+to answer calls, they must be in either "Ringing" or "Initiated" states. Therefore,
+this event should not be used to prompt the user to respond. Instead, the
+[call:stateChange][51] event should be used for this purpose.
+
 #### Parameters
 
 *   `params` **[Object][7]** 
@@ -1886,7 +1892,7 @@ API.
 
 ```javascript
 client.on('call:receive', function(params) {
-    // We have received a call, prompt the user to respond.
+    // We have received a call
     promptUser(client.call.getById(params.callId));
 });
 ```

@@ -3,7 +3,7 @@
 <html>
 <head>
   <meta charset='utf-8' />
-  <title>webrtc-anonymous-js-sdk 6.10.0 | Documentation</title>
+  <title>webrtc-anonymous-js-sdk 6.11.0 | Documentation</title>
   <meta name='viewport' content='width=device-width,initial-scale=1'>
   <link href='assets/bass.css' type='text/css' rel='stylesheet' />
   <link href='assets/style.css' type='text/css' rel='stylesheet' />
@@ -15,7 +15,7 @@
       <div id='split-left' class='overflow-auto fs0 height-viewport-100'>
         <div class='py1 px2'>
           <h3 class='mb0 no-anchor'>webrtc-anonymous-js-sdk</h3>
-          <div class='mb1'><code>6.10.0</code></div>
+          <div class='mb1'><code>6.11.0</code></div>
           <input
             placeholder='Filter'
             id='filter-input'
@@ -1215,6 +1215,15 @@ to be exposed in the logs, potentially displaying sensitive information.
   </td>
   <td class='break-word'><span></span></td>
 </tr>
+
+  
+    <tr>
+  <td class='break-word'><span class='code bold'>authentication.subscription.expires</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></code>
+  </td>
+  <td class='break-word'><span>The time (in seconds) until subscription expiry. Cannot be less than minimum threshold of 60 seconds.
+</span></td>
+</tr>
+
 
   
     <tr>
@@ -10012,6 +10021,10 @@ API.</p>
   <p>A new incoming call has been received.</p>
 <p>Information about the Call can be retrieved using the <a href="#callgetbyid">call.getById</a>
 API.</p>
+<p>NOTE: Upon receiving this notification the call is in "Initiating" state. In order
+to answer calls, they must be in either "Ringing" or "Initiated" states. Therefore,
+this event should not be used to prompt the user to respond. Instead, the
+<a href="#calleventcallstatechange">call:stateChange</a> event should be used for this purpose.</p>
 
 
   <div class='pre p1 fill-light mt0'>call:receive</div>
@@ -10085,7 +10098,7 @@ API.</p>
     
       
       <pre class='p1 overflow-auto round fill-light'>client.on(<span class="hljs-string">&#x27;call:receive&#x27;</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">params</span>) </span>{
-    <span class="hljs-comment">// We have received a call, prompt the user to respond.</span>
+    <span class="hljs-comment">// We have received a call</span>
     promptUser(client.call.getById(params.callId));
 });</pre>
     
