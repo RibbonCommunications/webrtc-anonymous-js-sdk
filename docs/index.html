@@ -5523,7 +5523,11 @@ client.call.make(destination, mediaConstraints,
                 <tr>
   <td class='break-word'><span class='code bold'>callOptions.from</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>
   </td>
-  <td class='break-word'><span>The URI of the user making the call.
+  <td class='break-word'><span>This identifies the anonymous caller, as seen by the callee.
+If the caller has a registered account and it's subscribed to backend at the time of the anonymous call is made, then its value must use the 
+<a href="mailto:username@domain">username@domain</a>
+ format.
+Otherwise, in most cases, the value can be any display name that the anonymous user wants to use when making the call.
 </span></td>
 </tr>
 
