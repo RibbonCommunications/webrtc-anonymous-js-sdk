@@ -15,6 +15,7 @@ Ribbon WebRTC SDK change log.
   audio, video and screen media tracks locally outside of a call. `KJS-2105`
 - New configuration parameter for early negotiation `waitForIce`. Setting to true will skip waiting for ice collection anc proceed with negotiation. `KJS-2205`
 - New media option for passing local detached media to the following call apis: make, answer, addMedia and replaceMedia. `KJS-2106`
+- Added support for `call.playAudioFile` mid-call API. `KJS-2212`
 
 ## 6.11.0 - 2024-05-30
 
