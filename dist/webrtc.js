@@ -12,7 +12,7 @@
  *
  * WebRTC.js
  * webrtc.anonymous.js
- * Version: 6.12.0-beta.1377
+ * Version: 6.12.0-beta.1378
  */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
@@ -2322,7 +2322,7 @@ module.exports = root;
 
 /***/ }),
 
-/***/ 42844:
+/***/ 5450:
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -2340,7 +2340,7 @@ exports.getVersion = getVersion;
  * for the @@ tag below with actual version value.
  */
 function getVersion() {
-  return '6.12.0-beta.1377';
+  return '6.12.0-beta.1378';
 }
 
 /***/ }),
@@ -11369,7 +11369,7 @@ Object.defineProperty(exports, "__esModule", ({
 exports["default"] = getStatsOperation;
 var _selectors = __webpack_require__(11430);
 var _kandyWebrtc = __webpack_require__(15203);
-var _version = __webpack_require__(42844);
+var _version = __webpack_require__(5450);
 var _sdkId = _interopRequireDefault(__webpack_require__(15878));
 // Call plugin.
 
@@ -23658,7 +23658,7 @@ exports.fixIceServerUrls = fixIceServerUrls;
 exports.mergeDefaults = mergeDefaults;
 var _logs = __webpack_require__(43862);
 var _utils = __webpack_require__(25189);
-var _version = __webpack_require__(42844);
+var _version = __webpack_require__(5450);
 var _defaults = __webpack_require__(27241);
 var _validation = __webpack_require__(42850);
 // Other plugins.
@@ -34986,7 +34986,7 @@ var _reduxSaga = _interopRequireDefault(__webpack_require__(7));
 var _effects = __webpack_require__(27422);
 var _bottlejs = _interopRequireDefault(__webpack_require__(39146));
 var _utils = __webpack_require__(25189);
-var _version = __webpack_require__(42844);
+var _version = __webpack_require__(5450);
 var _intervalFactory = _interopRequireDefault(__webpack_require__(93725));
 var _validation = __webpack_require__(42850);
 const _excluded = ["common"]; // Libraries.
@@ -38890,7 +38890,7 @@ var authorizations = _interopRequireWildcard(__webpack_require__(55689));
 var _makeRequest = _interopRequireDefault(__webpack_require__(87569));
 var _utils = __webpack_require__(70720);
 var _selectors = __webpack_require__(46942);
-var _version = __webpack_require__(42844);
+var _version = __webpack_require__(5450);
 var _utils2 = __webpack_require__(25189);
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
 function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
@@ -39041,7 +39041,7 @@ var _cloneDeep2 = _interopRequireDefault(__webpack_require__(33904));
 var _selectors = __webpack_require__(50647);
 var _selectors2 = __webpack_require__(46942);
 var _logs = __webpack_require__(43862);
-var _version = __webpack_require__(42844);
+var _version = __webpack_require__(5450);
 var _utils = __webpack_require__(25189);
 var _effects = __webpack_require__(27422);
 // Request plugin.
@@ -40671,6 +40671,7 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = createAPI;
+var _isPlainObject2 = _interopRequireDefault(__webpack_require__(1449));
 var _selectors = __webpack_require__(30105);
 var _media = _interopRequireDefault(__webpack_require__(45662));
 // Webrtc plugin.
@@ -40722,6 +40723,10 @@ function createAPI(container) {
    */
   function setupProxy(proxies) {
     log.debug(API_LOG_TAG + 'webrtc.setupProxy');
+    if (!(0, _isPlainObject2.default)(proxies)) {
+      log.error('Provided proxies is not an appropriate object.');
+      return;
+    }
     operations.setupProxies(proxies);
   }
 
@@ -40731,7 +40736,7 @@ function createAPI(container) {
    * @method teardownProxy
    */
   async function teardownProxy() {
-    log.debug(API_LOG_TAG + 'webrtc.setupProxy');
+    log.debug(API_LOG_TAG + 'webrtc.teardownProxy');
     await operations.teardownProxies();
   }
   return {
@@ -42369,10 +42374,12 @@ function createMediaOperations(container) {
 "use strict";
 
 
+var _interopRequireDefault = __webpack_require__(71600);
 Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = createWebRTCOperations;
+var _isPlainObject2 = _interopRequireDefault(__webpack_require__(1449));
 var _devices = __webpack_require__(61547);
 var _eventTypes = __webpack_require__(46215);
 /**
@@ -42402,33 +42409,39 @@ function createWebRTCOperations(container) {
     log.info('Setting up external proxies in WebRTC.');
 
     // Set proxy methods in WebRTC
-    WebRTC.webrtcManager.setProxies(proxies);
+    if ((0, _isPlainObject2.default)(proxies)) {
+      WebRTC.webrtcManager.setProxies(proxies);
+    }
 
     // Replace managers with any provided managers
-    Object.keys(proxies.managers).forEach(manager => {
-      // Store the original manager in order to be able to revert later.
-      // Make sure we don't rid of the original manager if the manager is already in replacedManagers.
-      if (!(manager in replacedManagers)) {
-        replacedManagers[manager] = WebRTC[manager];
-      }
-      // Replace the original manager with the new one.
-      WebRTC[manager] = proxies.managers[manager];
-      log.debug(`Replaced WebRTC ${manager} manager with proxy version.`);
-    });
+    if (proxies.managers) {
+      Object.keys(proxies.managers).forEach(manager => {
+        // Store the original manager in order to be able to revert later.
+        // Make sure we don't get rid of the original manager if the manager is already replaced.
+        if (!(manager in replacedManagers)) {
+          replacedManagers[manager] = WebRTC[manager];
+        }
+        // Replace the original manager with the new one.
+        WebRTC[manager] = proxies.managers[manager];
+        log.debug(`Replaced WebRTC ${manager} manager with proxy version.`);
+      });
+    }
 
     // Setup additional event handlers for any managers
-    Object.keys(proxies.managerEventHandlers).forEach(manager => {
-      if (manager in WebRTC) {
-        proxies.managerEventHandlers[manager].forEach(handler => {
-          WebRTC[manager].on(handler.eventName, handler.eventFn);
-          log.debug(`Added new '${handler.eventName}' event handler on ${manager} manager.`);
-        });
-        // Store these as added event handlers in order to be able to revert later.
-        addedManagerEventHandlers[manager] = proxies.managerEventHandlers[manager];
-      } else {
-        log.debug(`Provided '${manager}' manager is not a WebRTC manager, skipping event handler proxies.`);
-      }
-    });
+    if (proxies.managerEventHandlers) {
+      Object.keys(proxies.managerEventHandlers).forEach(manager => {
+        if (manager in WebRTC) {
+          proxies.managerEventHandlers[manager].forEach(handler => {
+            WebRTC[manager].on(handler.eventName, handler.eventFn);
+            log.debug(`Added new '${handler.eventName}' event handler on ${manager} manager.`);
+          });
+          // Store these as added event handlers in order to be able to revert later.
+          addedManagerEventHandlers[manager] = proxies.managerEventHandlers[manager];
+        } else {
+          log.debug(`Provided '${manager}' manager is not a WebRTC manager, skipping event handler proxies.`);
+        }
+      });
+    }
     log.info('Successfully set up external proxies in WebRTC.');
   }
 
@@ -74214,7 +74227,7 @@ module.exports = str => encodeURIComponent(str).replace(/[!'()*]/g, x => `%${x.c
 
 /***/ }),
 
-/***/ 96876:
+/***/ 30982:
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -74446,7 +74459,7 @@ var _v4 = _interopRequireDefault(__webpack_require__(95899));
 
 var _nil = _interopRequireDefault(__webpack_require__(15384));
 
-var _version = _interopRequireDefault(__webpack_require__(96876));
+var _version = _interopRequireDefault(__webpack_require__(30982));
 
 var _validate = _interopRequireDefault(__webpack_require__(77888));
 
