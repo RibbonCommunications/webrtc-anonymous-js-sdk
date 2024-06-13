@@ -17,6 +17,10 @@ Ribbon WebRTC SDK change log.
 - New media option for passing local detached media to the following call apis: make, answer, addMedia and replaceMedia. `KJS-2106`
 - Added support for `call.playAudioFile` mid-call API. `KJS-2212`
 
+### Fixed
+
+- Fixed a Call issue where `call:operation` events indicating a negotiation has finished had the incorrect `previous.status` parameter.
+
 ## 6.11.0 - 2024-05-30
 
 ### Fixed
