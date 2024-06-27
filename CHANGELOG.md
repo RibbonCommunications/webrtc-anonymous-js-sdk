@@ -13,8 +13,8 @@ Ribbon WebRTC SDK change log.
 
 - New media APIs for managing local detached media. `createLocalMedia`, `getLocalMedia` and `disposeLocalMedia` are used to create
   audio, video and screen media tracks locally outside of a call. `KJS-2105`
-- New configuration parameter for early negotiation `waitForIce`. Setting to true will skip waiting for ice collection anc proceed with negotiation. `KJS-2205`
-- New media option for passing local detached media to the following call apis: make, answer, addMedia and replaceMedia. `KJS-2106`
+- New configuration parameter for early negotiation `waitForIce`. Setting to true will skip waiting for ice collection and proceed with negotiation. `KJS-2205`
+- New media option for passing local detached media to the following call apis: make, answer, addMedia and replaceTrack. `KJS-2106`
 - Added support for `call.playAudioFile` mid-call API. `KJS-2212`
 
 ### Fixed
