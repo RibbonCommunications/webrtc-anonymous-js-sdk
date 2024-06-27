@@ -20,6 +20,7 @@ Ribbon WebRTC SDK change log.
 ### Fixed
 
 - Fixed a Call issue where `call:operation` events indicating a negotiation has finished had the incorrect `previous.status` parameter.
+- Fixed a Call issue where a new operation being started while the call is being ended could lead to vague errors. `KJS-2161`
 
 ## 6.11.0 - 2024-05-30
 
