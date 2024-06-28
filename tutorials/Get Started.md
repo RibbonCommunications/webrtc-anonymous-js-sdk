@@ -131,9 +131,9 @@ More on how to generate those tokens & the steps needed for server side configur
 
 ### Regular Anonymous Mode
 
-In this mode, the caller can simply call the SDK API without the need for generating tokens. Only the callee address needs to be provided with no encryption.
+In this mode, the caller can simply call the SDK API without the need for generating tokens. One needs the callee address and the display name of the anonymous caller. The callee address needs to be provided with no encryption. The display name can be any string that anonymous caller wants to identify with.
 
-Regular mode is more often used calls need to be made to well disclosed destinations (i.e., more globally available), such as: helpdesk@rbbn.com or support@rbbn.com
+Regular mode is more often used for calls that need to be made to well disclosed destinations (i.e., more globally available), such as: helpdesk@rbbn.com or support@rbbn.com
 
 #### Pros
 

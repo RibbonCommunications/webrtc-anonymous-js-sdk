@@ -24,14 +24,16 @@ const options = {
 //   - callee
 // need to be replaced by actual values you got from your administrator.
 // NOTE: Caller & Callee are only needed when making an anonymous call in token based mode,
-// since the generated token values are based on them.
+//       since the generated token values are based on them.
+//       If the Caller has a registered account and it's subscribed to backend at the time of the anonymous call is made, then its value must use the <username@domain> format.
+//       Otherwise, in most cases, the value can be any display name that the anonymous Caller wants to use when making the call.
 // ////////////////////////////////////////////////////////////////////////
 
 const key = 'YOUR KEY HERE' // See 'Generating Tokens' tutorial page for CallMe SDK on how to obtain this value
 const realm = 'YOUR SCHEMA HERE' // See 'Generating Tokens' tutorial page for CallMe SDK on how to obtain this value
 
 const account = 'YOUR CALLER@YOUR DOMAIN'
-const caller = 'sip:' + account
+const caller = 'sip:' + account // Use a registered & subscribed account OR simply any display name
 const callee = 'sip:' + 'YOUR CALLEE@YOUR DOMAIN'
 
 const ALGO_FOR_ECB_CIPHER = 'aes-128-ecb'

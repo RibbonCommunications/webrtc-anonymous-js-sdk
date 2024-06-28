@@ -12,7 +12,7 @@
  *
  * WebRTC.js
  * webrtc.anonymous.js
- * Version: 6.11.0
+ * Version: 6.12.0
  */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
@@ -2322,7 +2322,7 @@ module.exports = root;
 
 /***/ }),
 
-/***/ 58916:
+/***/ 96241:
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -2340,7 +2340,7 @@ exports.getVersion = getVersion;
  * for the @@ tag below with actual version value.
  */
 function getVersion() {
-  return '6.11.0';
+  return '6.12.0';
 }
 
 /***/ }),
@@ -2967,7 +2967,10 @@ function createOperation(container) {
       // If the info is in the store we can go ahead and unsubscribe.
       try {
         await AuthenticationRequests.unsubscribe(connection, subscription.url);
-      } catch (error) {}
+      } catch (error) {
+        // Ignore any errors during unsubscribe.
+        log.debug('Error occurred while attempting to unsubscribe from the server: ', error.message);
+      }
     }
     log.info('Successfully unsubscribed from services.');
     const wsState = (0, _selectors2.getConnectionState)(context.getState(), _constants.platforms.LINK);
@@ -4902,6 +4905,7 @@ function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; 
  * @memberof config
  * @instance
  * @param {string} [trickleIceMode='NONE'] The Trickle ICE method to use for calls. Currently, no mode is supported.
+ * @param {boolean} [skipIceCollection=true] Whether to skip the ICE collection process and proceed with negotiation, or not.
  */
 
 /**
@@ -5318,14 +5322,7 @@ function createTracker(log) {
   const operations = [];
 
   // State getters.
-  const isBlocked = () => {
-    // TODO: Make sure finished operations are removed?
-    return operations.some(op => {
-      return op.isNegotiation && op.tracker.status !== _constants.OP_STATUS.FINISHED ||
-      // Prevent new operations if the call is ending.
-      op.type === _constants.OPERATIONS.END;
-    });
-  };
+  const isBlocked = () => Boolean(getBlocking());
 
   /*
    * Methods.
@@ -5399,6 +5396,19 @@ function createTracker(log) {
     return operations.filter(op => op.tracker.status === _constants.OP_STATUS.PENDING);
   }
 
+  /**
+   * Get the on-going operation that is blocking other ones.
+   * @method getBlocking
+   * @return {Object}
+   */
+  function getBlocking() {
+    return operations.find(op => {
+      return op.isNegotiation && op.tracker.status !== _constants.OP_STATUS.FINISHED ||
+      // Prevent new operations if the call is ending.
+      op.type === _constants.OPERATIONS.END;
+    });
+  }
+
   // Get the list of all operations.
   function getAll() {
     return operations;
@@ -5415,6 +5425,7 @@ function createTracker(log) {
     getByType: type => getBy('type', type),
     getNegotiation: () => getBy('isNegotiation', true),
     getPending,
+    getBlocking,
     getAll,
     // Getter properties.
     get isBlocked() {
@@ -5507,7 +5518,7 @@ function createTracker(container, callId, operationId, eventId, opInfo, joinOpti
       log.debug(`Cannot finish ${opString} operation; already finished.`);
       throw new Error('Operation tracking cannot be finished.');
     }
-    finishOperation(container, callId, operationId, eventId, opInfo, err);
+    finishOperation(container, callId, operationId, eventId, opInfo, err, tracker.status);
     tracker.status = _constants.OP_STATUS.FINISHED;
   };
   return tracker;
@@ -5615,9 +5626,10 @@ function updateOperation(container, callId, operationId, eventId, opInfo, result
  * @param {boolean} opInfo.isLocal
  * @param {boolean} opInfo.isNegotiation
  * @param {BasicError} err
+ * @param {string} status The current status of the operation, before being finished.
  * @returns {undefined}
  */
-function finishOperation(container, callId, operationId, eventId, opInfo, err) {
+function finishOperation(container, callId, operationId, eventId, opInfo, err, status) {
   const {
     context,
     emitEvent
@@ -5640,14 +5652,211 @@ function finishOperation(container, callId, operationId, eventId, opInfo, err) {
     error: err,
     previous: {
       operation: opInfo.type,
-      status: _constants.OP_STATUS.ONGOING
+      status
     }
   });
 }
 
 /***/ }),
 
-/***/ 80782:
+/***/ 57679:
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+
+var _interopRequireDefault = __webpack_require__(71600);
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports["default"] = createFlow;
+var _StatusTracker = _interopRequireDefault(__webpack_require__(22286));
+// CallManager.
+
+/**
+ * Operation flow for a consultative transfer operation.
+ *
+ * This operation has its own flow because of special-handling needed:
+ *    - It acts on two local calls, which both need call report / status updates.
+ *    - The primary call's "response" notification is of two different types,
+ *        depending on success or failure.
+ *    - The second call receives a generic "call end" notification to indicate
+ *        success, and no notification on failure.
+ */
+function createFlow(container) {
+  const {
+    context,
+    CallReporter
+  } = container;
+
+  /**
+   * A consultative transfer operation has been started locally. Perform the
+   *    operation, while tracking it against two calls.
+   * @method localChanges
+   */
+  async function localChanges(priCallId, operation, params) {
+    // Setup tracking on the secondary call.
+    const secCallId = params[0];
+    const secReport = CallReporter.getReport(secCallId);
+    const secOpEvent = secReport.addEvent(operation.reportEvent.type);
+
+    /*
+     * Validate the operation before starting it. If the operation deems that it
+     *    can't be done right now, avoid doing any state tracking, etc. for the
+     *    operation.
+     */
+    const validationError = operation.stages.validate(context.getState(), priCallId, ...params);
+    if (validationError) {
+      // Update the Call Report to indicate the operation ended with an error.
+      operation.reportEvent.endEvent(validationError);
+      secOpEvent.endEvent(validationError);
+      throw validationError;
+    }
+    operation.tracker.start();
+    // The tracker to update the second call's state needs to be created manually.
+    // TODO: How to "finish" the secTracker on notification response?
+    const secTracker = (0, _StatusTracker.default)(container, secCallId, operation.id, secOpEvent.id, operation);
+    secTracker.start();
+    try {
+      // Perform the operation.
+      await operation.stages.localOffer(priCallId, ...params);
+
+      // Update operation tracking; now waiting on remote response.
+      operation.tracker.update();
+      secTracker.update();
+    } catch (err) {
+      operation.reportEvent.endEvent(err);
+      secOpEvent.endEvent(err);
+
+      // Finish operation tracking; operation has failed.
+      operation.tracker.finish(err);
+      secTracker.finish(err);
+      throw err;
+    }
+  }
+
+  /**
+   * A "session complete" notification has been received for the primay call,
+   *    indicating the consultative transfer succeeded. The primary call needs
+   *    to be cleaned-up.
+   * @method remoteSuccess
+   */
+  async function remoteSuccess(call, operation, params) {
+    /*
+     * TODO: Pre-processing logic.
+     *    - KJS-2175 Queue Inputs: Is the operation ready for this notification?
+     *    - Update call report/status: From "waiting" to "processing"?
+     */
+    await operation.stages.remoteSuccess(call, params);
+    operation.reportEvent.endEvent();
+    operation.tracker.finish();
+  }
+
+  /**
+   * A "session failure" notification has been received for the primary call,
+   *    indicating the consultative transfer failed.
+   * @method remoteFailure
+   */
+  async function remoteFailure(call, operation, params) {
+    /*
+     * TODO: Pre-processing logic.
+     *    - KJS-2175 Queue Inputs: Is the operation ready for this notification?
+     *    - Update call report/status: From "waiting" to "processing"?
+     */
+    const error = await operation.stages.remoteFailure(call, params);
+    operation.reportEvent.endEvent(error);
+    operation.tracker.finish(error);
+  }
+
+  /**
+   * A "call end" notification has been received for the secondary call,
+   *    indicating the consultative transfer succeeded. The backend considers
+   *    the secondary call ended, so only need client-side updates.
+   * @method callEndSuccess
+   */
+  async function callEndSuccess(call, operation, params) {
+    // KJS-2176 TODO: Implement this. Have the CallManager redirect the
+    //    notification here instead of the general "call end" handler.
+  }
+  return {
+    localChanges,
+    remoteSuccess,
+    remoteFailure,
+    callEndSuccess
+  };
+}
+
+/***/ }),
+
+/***/ 93907:
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+
+var _interopRequireDefault = __webpack_require__(71600);
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports["default"] = createFlow;
+var _LocalOperation = _interopRequireDefault(__webpack_require__(76445));
+/**
+ * Operation flow for a direct transfer operation.
+ *
+ * This operation has its own flow because of special-handling needed:
+ *    - The "response" notification is of two different types, depending
+ *        on success or failure.
+ */
+function createFlow(container) {
+  /**
+   * A direct transfer operation has been started locally.
+   * The "local changes" portion is identical to a local
+   *    negotiation. Re-use that flow.
+   * @method localChanges
+   */
+  const localChanges = (0, _LocalOperation.default)(container);
+
+  /**
+   * A "session complete" notification has been received, indicating the
+   *    direct transfer succeeded. The original call needs to be cleaned-up.
+   * @method remoteSuccess
+   */
+  async function remoteSuccess(call, operation, params) {
+    /*
+     * TODO: Pre-processing logic.
+     *    - KJS-2175 Queue Inputs: Is the operation ready for this notification?
+     *    - Update call report/status: From "waiting" to "processing"?
+     */
+    await operation.stages.remoteSuccess(call, params);
+    operation.reportEvent.endEvent();
+    operation.tracker.finish();
+  }
+
+  /**
+   * A "session failure" notification has been received, indicating the
+   *    direct transfer failed. The original call still exists.
+   * @method remoteFailure
+   */
+  async function remoteFailure(call, operation, params) {
+    /*
+     * TODO: Pre-processing logic.
+     *    - KJS-2175 Queue Inputs: Is the operation ready for this notification?
+     *    - Update call report/status: From "waiting" to "processing"?
+     */
+    const error = await operation.stages.remoteFailure(call, params);
+    operation.reportEvent.endEvent(error);
+    operation.tracker.finish(error);
+  }
+  return {
+    localChanges,
+    remoteSuccess,
+    remoteFailure
+  };
+}
+
+/***/ }),
+
+/***/ 51994:
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -5660,16 +5869,19 @@ Object.defineProperty(exports, "__esModule", ({
 exports["default"] = createFlow;
 var _StatusTracker = _interopRequireDefault(__webpack_require__(22286));
 var _constants = __webpack_require__(37409);
-var _constants2 = __webpack_require__(42750);
-// Call Reports.
+// CallManager.
 
-/*
- * Operation flow for local operations that act on two calls at once.
- *    Special-case flow for consultative transfer and join. Otherwise very
- *    similar to "localOpertion" flow.\
+// Call plugin.
+
+/**
+ * Operation flow for a join operation.
  *
- * Handles common logic for starting the local negotiation, then hands-off to
- *    the actual operation itself.
+ * This operation has its own flow because of special-handling needed:
+ *    - It acts on three local calls (two existing, one new).
+ *    - The existing calls' "response" notification is of two different types,
+ *        depending on success or failure.
+ *    - The new, joined call's response notification is of two different types,
+ *        depending on success or failure.
  */
 function createFlow(container) {
   const {
@@ -5678,38 +5890,26 @@ function createFlow(container) {
   } = container;
 
   /**
-   * @method dualCall
-   * @async
-   * @param {string} priCallId
-   * @param {Operation} operation
-   * @param {Object} params
-   * @return {undefined}
+   * A join operation has been started locally.
+   * @method localChanges
    */
-  return async function dualCall(priCallId, operation, params) {
-    // Complex operations act on two calls. The second call's ID is provided as
-    //    a parameter. Call reports, tracking, etc. will need to be handled manually for
-    //    this call.
+  async function localChanges(priCallId, operation, params) {
+    // Setup tracking on the secondary call.
     const secCallId = params[0];
     const secReport = CallReporter.getReport(secCallId);
     const secOpEvent = secReport.addEvent(operation.reportEvent.type);
-    /*
-     * Check for glare scenarios.
-     * ...
-     */
 
     /*
      * Validate the operation before starting it. If the operation deems that it
      *    can't be done right now, avoid doing any state tracking, etc. for the
      *    operation.
      */
-    if (operation.stages.validate) {
-      const validationError = operation.stages.validate(context.getState(), priCallId, ...params);
-      if (validationError) {
-        // Update the Call Report to indicate the operation ended with an error.
-        operation.reportEvent.endEvent(validationError);
-        secOpEvent.endEvent(validationError);
-        throw validationError;
-      }
+    const validationError = operation.stages.validate(context.getState(), priCallId, ...params);
+    if (validationError) {
+      // Update the Call Report to indicate the operation ended with an error.
+      operation.reportEvent.endEvent(validationError);
+      secOpEvent.endEvent(validationError);
+      throw validationError;
     }
     operation.tracker.start();
     // The tracker to update the second call's state needs to be created manually.
@@ -5718,18 +5918,15 @@ function createFlow(container) {
     secTracker.start();
 
     /*
-     * The join operation is a special-case even among complex operations.
-     *    It has a third call to update as well.
+     * Setup tracking for the third, joined call. Since this call is new, it does
+     *    not have a tracker / call report yet.
      */
-    let joinTracker, joinOpEvent;
-    if (operation.type === _constants.OPERATIONS.JOIN) {
-      const joinedCallId = params[1];
-      const joinedCallReport = CallReporter.createReport('CALL', joinedCallId);
-      joinOpEvent = joinedCallReport.addEvent(_constants2.REPORTER_OPERATION_EVENTS_MAP[operation.type]);
-      joinTracker = (0, _StatusTracker.default)(container, joinedCallId, operation.id, joinOpEvent.id, operation, {
-        isJoinedCall: true
-      });
-    }
+    const joinedCallId = params[1];
+    const joinedCallReport = CallReporter.createReport('CALL', joinedCallId);
+    const joinOpEvent = joinedCallReport.addEvent(operation.reportEvent.type);
+    const joinTracker = (0, _StatusTracker.default)(container, joinedCallId, operation.id, joinOpEvent.id, operation, {
+      isJoinedCall: true
+    });
     try {
       // Perform the operation.
       await operation.stages.localOffer(priCallId, ...params);
@@ -5737,55 +5934,100 @@ function createFlow(container) {
       // Update operation tracking; now waiting on remote response.
       operation.tracker.update();
       secTracker.update();
-      joinTracker && joinTracker.update();
+      joinTracker.update();
     } catch (err) {
       operation.reportEvent.endEvent(err);
       secOpEvent.endEvent(err);
-      joinOpEvent && joinOpEvent.endEvent(err);
+      joinOpEvent.endEvent(err);
 
       // Finish operation tracking; operation has failed.
       operation.tracker.finish(err);
       secTracker.finish(err);
-      joinTracker && joinTracker.finish(err);
+      joinTracker.finish(err);
       throw err;
     }
-  };
-}
+  }
 
-/***/ }),
+  /**
+   * A "respond call update" notification has been received for the new, joined
+   *    call, which indicates a successful operation. Process the answer to
+   *    establish the joined call.
+   * @method joinAnswer
+   */
+  async function joinAnswer() {
+    // KJS-2176 TODO: Implement this. Have the CallManager redirect the
+    //    notification here instead of the general "call end" handler.
+  }
 
-/***/ 13583:
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+  /**
+   * A "call end" notification has been received for the new, joined call,
+   *    which indicates a failed operation. The other calls do not receive
+   *    notifications in this scenario, so all must be updated.
+   * @method joinEnd
+   */
+  async function joinEnd() {
+    // KJS-2176 TODO: Implement this. Have the CallManager redirect the
+    //    notification here instead of the general "call end" handler.
+  }
 
-"use strict";
+  /**
+   * A "session complete" notification has been received for an existing call,
+   *    which indicates operation success. This call needs to be cleaned-up.
+   * Note: Both existing calls receive their own notification, so only update
+   *    one at a time.
+   * @method remoteSuccess
+   */
+  async function remoteSuccess(call, operation, params) {
+    /*
+     * TODO: Pre-processing logic.
+     *    - KJS-2175 Queue Inputs: Is the operation ready for this notification?
+     *    - Update call report/status: From "waiting" to "processing"?
+     */
+    await operation.stages.remoteSuccess(call, params);
 
+    /*
+     * Note: Don't manage operation tracking with these success operations.
+     * Join receives 3 notifications to indicate it succeeded (a respondCallUpdate for the new, joined
+     *    call, and these sessionComplete for the existing calls). Because of this, there is overlap between
+     *    them for when the operation actually ends. Currently, it is ended by the `respondCallUpdate`
+     *    notification which is received first, so don't try to end it again here.
+     */
+  }
 
-var _interopRequireDefault = __webpack_require__(71600);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = setupFlows;
-var _newIncoming = _interopRequireDefault(__webpack_require__(39472));
-var _localOperation = _interopRequireDefault(__webpack_require__(51713));
-var _remoteOffer = _interopRequireDefault(__webpack_require__(62355));
-var _remoteAnswer = _interopRequireDefault(__webpack_require__(25343));
-var _remoteOnly = _interopRequireDefault(__webpack_require__(73709));
-var _dualCall = _interopRequireDefault(__webpack_require__(80782));
-function setupFlows(container) {
+  /**
+   * A "session fail" notification has been received for an existing call,
+   *    which indicates a failed operation.
+   * Note: Both existing calls receive their own notification, so only update
+   *    one at a time.
+   * @method remoteFailure
+   */
+  async function remoteFailure(call, operation, params) {
+    /*
+     * TODO: Pre-processing logic.
+     *    - KJS-2175 Queue Inputs: Is the operation ready for this notification?
+     *    - Update call report/status: From "waiting" to "processing"?
+     */
+    const error = await operation.stages.remoteFailure(call, params);
+    if (operation.status !== _constants.OP_STATUS.FINISHED) {
+      // Two "failure" notifications will be received; one for each call. Only end the
+      //    the operation on the first notification processed to avoid overlap.
+      operation.reportEvent.endEvent(error);
+      operation.tracker.finish(error);
+    }
+  }
   return {
-    newIncoming: (0, _newIncoming.default)(container),
-    localOperation: (0, _localOperation.default)(container),
-    remoteOffer: (0, _remoteOffer.default)(container),
-    remoteAnswer: (0, _remoteAnswer.default)(container),
-    remoteOnly: (0, _remoteOnly.default)(container),
-    dualCall: (0, _dualCall.default)(container)
+    localChanges,
+    joinAnswer,
+    joinEnd,
+    remoteSuccess,
+    remoteFailure
   };
 }
 
 /***/ }),
 
-/***/ 51713:
-/***/ ((__unused_webpack_module, exports) => {
+/***/ 25967:
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
@@ -5794,29 +6036,49 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = createFlow;
-/*
- * Operation flow for new local operations (either negotiations or not).
- *    eg. For local hold, add media, getStats, ...
+var _constants = __webpack_require__(60683);
+var _actions = __webpack_require__(6313);
+var eventTypes = _interopRequireWildcard(__webpack_require__(55166));
+var _state = __webpack_require__(65794);
+var _errors = _interopRequireWildcard(__webpack_require__(83437));
+function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
+function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
+// Call plugin.
+
+// Other plugins.
+
+/**
+ * Operation flow for local negotiations.
  *
- * Handles common logic for how the operation is handled (eg. validaiton, state
- *    changes, call report, ...), then hands off to the actual operation.
+ * Defines how the "inputs" should be handled from each side of the call
+ *    (ie. local API call and remote response received). Handles common
+ *    logic for all negotiations, leaving actual call/webrtc processing
+ *    to the Operation itself.
+ *
+ * A Local Negotiation can receive the following inputs:
+ *    - API Call: To start the local negotiation.
+ *    - Notification Response (success): The remote response to complete negotiation.
+ *    - Notification Response (error): The remote response to indicate negotiation
+ *        failed due to an error on the remote end.
  */
 function createFlow(container) {
   const {
-    context
+    context,
+    emitEvent,
+    logManager
   } = container;
 
   /**
-   * @method localOperation
+   * Entry for the first half of the flow: perform local changes on the call
+   *    before signalling to the remote side.
+   * @method localChanges
    * @async
-   * @param {string} callId
-   * @param {Operation} operation
-   * @param {Object} params
-   * @throws {BasicError} Throws an error if operation validation fails.
-   * @throws {BasicError} Throws an error if the operation itself fails.
-   * @return {Object|undefined}
+   * @param {string} callId ID for the call being operated on.
+   * @param {Operation} operation The operation being performed.
+   * @param {Object} params Operation
+   * @return {Promise<undefined>}
    */
-  return async function localOperation(callId, operation, params) {
+  async function localChanges(callId, operation, params) {
     /*
      * Check for glare scenarios.
      * ...
@@ -5845,15 +6107,7 @@ function createFlow(container) {
      */
     try {
       const result = await operation.stages.localOffer(callId, ...params);
-
-      // If the operation is a negotiation, then it is pending a remote response.
-      //    Otherwise, the operation is complete.
-      if (operation.isNegotiation) {
-        operation.tracker.update(result);
-      } else {
-        operation.reportEvent.endEvent();
-        operation.tracker.finish();
-      }
+      operation.tracker.update(result);
       return result;
     } catch (err) {
       /*
@@ -5863,12 +6117,203 @@ function createFlow(container) {
       operation.tracker.finish(err);
       throw err;
     }
+  }
+
+  /**
+   * Entry for the second half of the flow: handle the remote response to complete the negotiation.
+   *    If the response includes an answer SDP, process it to finish the negotiation.
+   *    If the response indicate an error, rollback the local changes.
+   * @method remoteResponse
+   * @async
+   * @param {Object} call The call being operated on.
+   * @param {Operation} operation The operation being performed.
+   * @param {Object} params Response data provided by the remote endpoint.
+   * @return {Promise<undefined>}
+   */
+  async function remoteResponse(call, operation, params) {
+    const wrtcsSessionId = call.wrtcsSessionId;
+    const log = logManager.getLogger('CALL', call ? call.id : undefined);
+    if (call.state === _constants.CALL_STATES.ENDED) {
+      // Scenario: The notification is about a call that state says is ended.
+      //    Ignore the notification, since ended calls should not have an active
+      //    webRTC Session.
+      log.info('Update response for ended call. Ignoring.', {
+        wrtcsSessionId
+      });
+      return;
+    }
+
+    /**
+     * Check that the notification was not an "error" notification.
+     * Status code 49 with a `retryAfter` value indicates the original operation
+     *    failed (likely glare condition) and the SDK should retry the operation.
+     */
+    if (!params.sdp && params.code === 49 && params.retryAfter) {
+      await rollbackLocal(call, operation, params);
+      return;
+    }
+
+    // Dispatch a custom parameters received action/event if any custom parameters
+    //    were received as part of the notification.
+    // TODO: Handle this is a more general way, since multiple notifications can
+    //    have custom parameters on them.
+    if (params.customParameters) {
+      const customParameters = params.customParameters;
+      const customNames = customParameters.map(param => param.name);
+      log.debug(`Received custom parameters as part of the Call: ${customNames}.`);
+      context.dispatch(_actions.callActions.customParametersReceived(call.id, {
+        customParameters
+      }));
+
+      // Emit the associated event with the above action
+      emitEvent(eventTypes.CUSTOM_PARAMETERS, {
+        callId: call.id,
+        customParameters
+      });
+    }
+    return await processResponse(call, operation, params);
+  }
+
+  /**
+   * Negotiation step to process the remote answer SDP.
+   *
+   * Process the answer SDP, update call state to mark the operation as
+   *    finished, then tell the application of the update.
+   * @method processResponse
+   * @async
+   * @param {Object} call The call being operated on.
+   * @param {Operation} operation The operation being performed.
+   * @param {Object} params Response data provided by the remote endpoint.
+   * @return {Promise<undefined>}
+   */
+  async function processResponse(call, operation, params) {
+    const log = logManager.getLogger('CALL', call.id);
+    log.info(`Processing remote response for local ${operation.type} operation.`);
+    const mediaState = (0, _state.getMediaState)(call);
+    log.debug(`Current call info; State: ${call.state}, MediaState: ${mediaState}.`);
+    await operation.stages.remoteAnswer(call, params);
+    operation.reportEvent.endEvent();
+    operation.tracker.finish();
+  }
+
+  /**
+   * Negotiation step to undo the local changes.
+   * @method rollbackLocal
+   * @async
+   * @param {Object} call
+   * @param {Operation} operation
+   * @param {Object} params
+   * @return {Promise<undefined>}
+   */
+  async function rollbackLocal(call, operation, params) {
+    const log = logManager.getLogger('CALL', call.id);
+    // TODO: Properly handle this scenario. The call may be in a bad state
+    //    because we set an offer but not an answer. May need to revert
+    //    signaling state and/or re-perform operation internally.
+    // For now, fail loudly and abort the operation to prevent crashes. The
+    //    negotiation sagas expect there to be an SDP.
+    // The call state will be left in a broken state because of KAA-1607.
+    log.error(`Response indicates an error scenario (${params.message}). Aborting operation.`);
+    const error = new _errors.default({
+      message: 'Operation failed on remote side; aborting.',
+      code: _errors.callCodes.GENERIC_ERROR
+    });
+    operation.reportEvent.endEvent(error);
+    operation.tracker.finish(error);
+    return;
+  }
+  return {
+    localChanges,
+    // Start the negotiation.
+    remoteResponse // Handle remote response.
   };
 }
 
 /***/ }),
 
-/***/ 39472:
+/***/ 76445:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports["default"] = createFlow;
+/**
+ * Operation flow for local-only operations.
+ *
+ * Handles common logic for all local-only operations, leaving actual
+ *    call/webrtc processing to the Operation itself.
+ *
+ * A Local Operation can receive the following inputs:
+ *    - API Call: To start the local negotiation.
+ */
+function createFlow(container) {
+  const {
+    context
+  } = container;
+
+  /**
+   * @method localChanges
+   * @async
+   * @param {string} callId
+   * @param {Operation} operation
+   * @param {Object} params
+   * @throws {BasicError} Throws an error if operation validation fails.
+   * @throws {BasicError} Throws an error if the operation itself fails.
+   * @return {Promise<Object|undefined>}
+   */
+  async function localChanges(callId, operation, params) {
+    /*
+     * Check for glare scenarios.
+     * ...
+     */
+
+    // Start tracking this operation in state.
+    operation.tracker.start();
+
+    /*
+     * Validate the operation before starting it. If the operation deems that it
+     *    can't be done right now, avoid doing any state tracking, etc. for the
+     *    operation.
+     */
+    if (operation.stages.validate) {
+      const validationError = operation.stages.validate(context.getState(), callId, ...params);
+      if (validationError) {
+        // Update the Call Report to indicate the operation ended with an error.
+        operation.reportEvent.endEvent(validationError);
+        operation.tracker.finish(validationError);
+        throw validationError;
+      }
+    }
+
+    /*
+     * Perform the local portions of the negotiation.
+     */
+    try {
+      const result = await operation.stages.localOffer(callId, ...params);
+      operation.reportEvent.endEvent();
+      operation.tracker.finish();
+      return result;
+    } catch (err) {
+      /*
+       * Operation failed, end the operation tracking and throw the error.
+       */
+      operation.reportEvent.endEvent(err);
+      operation.tracker.finish(err);
+      throw err;
+    }
+  }
+  return {
+    localChanges // Start the operation.
+  };
+}
+
+/***/ }),
+
+/***/ 94131:
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -5916,7 +6361,7 @@ function createFlow(container) {
    * @param {Object} params Arbitrary parameter object.
    * @param {string} [channel] The notification channel the message was received on.
    */
-  return async function newIncoming(wrtcsSessionId, params, channel) {
+  async function newIncoming(wrtcsSessionId, params, channel) {
     const log = logManager.getLogger('CALL', params.callId);
     log.info('Received new incoming call; initiating.', {
       wrtcsSessionId
@@ -5999,162 +6444,15 @@ function createFlow(container) {
       }
     }
     notificationEvent.endEvent();
+  }
+  return {
+    newIncoming
   };
 }
 
 /***/ }),
 
-/***/ 25343:
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = createFlow;
-var _constants = __webpack_require__(60683);
-var _actions = __webpack_require__(6313);
-var eventTypes = _interopRequireWildcard(__webpack_require__(55166));
-var _constants2 = __webpack_require__(37409);
-var _state = __webpack_require__(65794);
-var _errors = _interopRequireWildcard(__webpack_require__(83437));
-function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
-function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
-// Call plugin.
-
-// Other plugins.
-
-/*
- * Operation flow for handling the answer of an on-going negotiation.
- *    eg. the remote response for a local hold, add media, ...
- *    Also handles the remote response for a remote slow-start negotiation.
- *
- * Handles common logic for processing the notification (eg. custom parameters),
- *    then hands-off to the operation itself.
- */
-function createFlow(container) {
-  const {
-    context,
-    emitEvent,
-    logManager
-  } = container;
-
-  /*
-   * Scenario: A local operation is on-going.
-   *    This answer is the response to our local negotiation operation.
-   *
-   * Process the answer SDP, update call state to mark the operation as
-   *    finished, then tell the application of the update.
-   */
-  async function existingLocal(call, operation, params) {
-    const log = logManager.getLogger('CALL', call.id);
-    log.info(`Processing remote response for local ${operation.type} operation.`);
-    const mediaState = (0, _state.getMediaState)(call);
-    log.debug(`Current call info; State: ${call.state}, MediaState: ${mediaState}.`);
-    await operation.stages.remoteAnswer(call, params);
-    operation.reportEvent.endEvent();
-    operation.tracker.finish();
-  }
-
-  /*
-   * Scenario: A remote slow-start operation is on-going.
-   *    This answer is the response to the offer we sent out after receiving
-   *    the slow-start negotiation.
-   *
-   * Process the answer SDP, then update call state to mark the operation as
-   *    finished.
-   */
-  async function remoteSlowAnswer(call, operation, params) {
-    await operation.stages.remoteAnswer(call, params);
-    operation.reportEvent.endEvent();
-    operation.tracker.finish();
-  }
-
-  /**
-   * Manage the answer for an on-going negotiation.
-   * This function is intended to be the entry point to the Callstack for all
-   *    "negotiation answer" notifications received from the call's remote side.
-   *
-   * A "negotiation answer" notification is the response to an operation that was
-   *    previously performed (a "negotiation offer"), and so represents the last
-   *    step in the WebRTC negotiation process.
-   *
-   * This function does not handle the answer itself. It handles the
-   *    non-call/webrtc aspects of processing the answer (eg. operation tracking
-   *    and report events).
-   *
-   * @method remoteAnswer
-   * @param {string} wrtcsSessionId The ID used by the backend to identify the call.
-   * @param {Object} params Arbitrary parameters object.
-   * @param {string} [params.sdp] The remote SDP answer included with the notification (if any).
-   * @return {undefined}
-   */
-  return async function remoteAnswer(call, operation, params) {
-    const wrtcsSessionId = call.wrtcsSessionId;
-    const log = logManager.getLogger('CALL', call ? call.id : undefined);
-    if (call.state === _constants.CALL_STATES.ENDED) {
-      // Scenario: The notification is about a call that state says is ended.
-      //    Ignore the notification, since ended calls should not have an active
-      //    webRTC Session.
-      log.info('Update response for ended call. Ignoring.', {
-        wrtcsSessionId
-      });
-      return;
-    }
-
-    /**
-     * Check that the notification was not an "error" notification.
-     * Status code 49 with a `retryAfter` value indicates the original operation
-     *    failed (likely glare condition) and the SDK should retry the operation.
-     */
-    if (!params.sdp && params.code === 49 && params.retryAfter) {
-      // TODO: Properly handle this scenario. The call may be in a bad state
-      //    because we set an offer but not an answer. May need to revert
-      //    signaling state and/or re-perform operation internally.
-      // For now, fail loudly and abort the operation to prevent crashes. The
-      //    negotiation sagas expect there to be an SDP.
-      // The call state will be left in a broken state because of KAA-1607.
-      log.error(`Response indicates an error scenario (${params.message}). Aborting operation.`);
-      const error = new _errors.default({
-        message: 'Operation failed on remote side; aborting.',
-        code: _errors.callCodes.GENERIC_ERROR
-      });
-      operation.reportEvent.endEvent(error);
-      operation.tracker.finish(error);
-      return;
-    }
-
-    // Dispatch a custom parameters received action/event if any custom parameters
-    //    were received as part of the notification.
-    // TODO: Handle this is a more general way, since multiple notifications can
-    //    have custom parameters on them.
-    if (params.customParameters) {
-      const customParameters = params.customParameters;
-      const customNames = customParameters.map(param => param.name);
-      log.debug(`Received custom parameters as part of the Call: ${customNames}.`);
-      context.dispatch(_actions.callActions.customParametersReceived(call.id, {
-        customParameters
-      }));
-
-      // Emit the associated event with the above action
-      emitEvent(eventTypes.CUSTOM_PARAMETERS, {
-        callId: call.id,
-        customParameters
-      });
-    }
-    if (operation.isLocal) {
-      return await existingLocal(call, operation, params);
-    } else if (!operation.isLocal && operation.type === _constants2.OPERATIONS.SLOW_START) {
-      return await remoteSlowAnswer(call, operation, params);
-    }
-  };
-}
-
-/***/ }),
-
-/***/ 62355:
+/***/ 56628:
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -6173,12 +6471,14 @@ function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return 
 function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
 // Call plugin.
 
-/*
- * Operation for for new, remote negotiations.
- *    eg. offer for remote hold, add media, ...
+/**
+ * Operation flow for remote negotiations.
  *
  * Handles common logic for processing the notification (eg. custom parameters),
  *    then hands-off to the operation itself.
+ *
+ * A Remote Negotiation can recieve the following inputs:
+ *    - Notification: To start the remote negotiation.
  */
 function createFlow(container) {
   const {
@@ -6196,7 +6496,7 @@ function createFlow(container) {
    * @param {Object} opInfo
    * @param {Object} params
    * @throws {BasicError} Throws an error if the operation itself fails.
-   * @return {undefined}
+   * @return {Promise<undefined>}
    */
   async function newRemoteOperation(call, operation, opInfo, params) {
     const log = logManager.getLogger('CALL', call.id);
@@ -6225,15 +6525,16 @@ function createFlow(container) {
   }
 
   /**
-   * @method remoteOffer
+   * Entry for a new remote negotiation. Performs the whole operation.
+   * @method remoteChanges
    * @async
-   * @param {string} wrtcsSessionId
+   * @param {Object} call
    * @param {Operation} operation
    * @param {Object} opInfo
    * @param {Object} params
-   * @return {undefined}
+   * @return {Promise<undefined>}
    */
-  async function remoteOffer(call, operation, opInfo, params) {
+  async function remoteChanges(call, operation, opInfo, params) {
     const log = logManager.getLogger('CALL', call ? call.id : undefined);
     log.info('Received new update call request; handling.', {
       wrtcsSessionId: call.wrtcsSessionId
@@ -6255,7 +6556,47 @@ function createFlow(container) {
     }
     return await newRemoteOperation(call, operation, opInfo, params);
   }
-  return remoteOffer;
+  return {
+    remoteChanges
+  };
+}
+
+/***/ }),
+
+/***/ 13583:
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+
+var _interopRequireDefault = __webpack_require__(71600);
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports["default"] = setupFlows;
+var _RemoteCall = _interopRequireDefault(__webpack_require__(94131));
+var _LocalOperation = _interopRequireDefault(__webpack_require__(76445));
+var _LocalNegotiation = _interopRequireDefault(__webpack_require__(25967));
+var _RemoteNegotiation = _interopRequireDefault(__webpack_require__(56628));
+var _remoteOnly = _interopRequireDefault(__webpack_require__(73709));
+var _DirectTransfer = _interopRequireDefault(__webpack_require__(93907));
+var _ConsultativeTransfer = _interopRequireDefault(__webpack_require__(57679));
+var _Join = _interopRequireDefault(__webpack_require__(51994));
+// General flows.
+
+// Special-case flows.
+
+function setupFlows(container) {
+  return {
+    RemoteCall: (0, _RemoteCall.default)(container),
+    LocalOperation: (0, _LocalOperation.default)(container),
+    LocalNegotiation: (0, _LocalNegotiation.default)(container),
+    RemoteNegotiation: (0, _RemoteNegotiation.default)(container),
+    remoteOnly: (0, _remoteOnly.default)(container),
+    directTransfer: (0, _DirectTransfer.default)(container),
+    consulTransfer: (0, _ConsultativeTransfer.default)(container),
+    join: (0, _Join.default)(container)
+  };
 }
 
 /***/ }),
@@ -6283,8 +6624,8 @@ function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; 
 // Call Reports.
 
 /*
- * Operation flow for a "remote update" notification. This can be either 1) the
- *    response from a complex operation, or 2) a simple state update (eg. call ended).
+ * Operation flow for a "remote update" notification. This is for a simple state updates
+ *    (eg. call ended) from the remote side of the call.
  */
 function createFlow(container) {
   const {
@@ -6293,11 +6634,16 @@ function createFlow(container) {
     emitEvent
   } = container;
 
-  /*
-   * Operation wrapper for handling remote notifications.
-   * TODO: Split out the "responses from local operation" notifications.
+  /**
+   * Flow entry-point for remote "update" notifications
+   *
+   * @method remoteOnly
+   * @param {string} wrtcsSessionId
+   * @param {Function|Object} handler The `handler` function to process the notification.
+   * @param {Object} params Operation-specific data.
+   * @return {Promise}
    */
-  return async function remoteOnly(wrtcsSessionId, handler, params) {
+  async function remoteNotification(wrtcsSessionId, handler, params) {
     let call = (0, _selectors.getCallByWrtcsSessionId)(context.getState(), wrtcsSessionId);
     let notificationEvent;
     const pendingLocal = call.currentOperations.find(op => op.isLocal && op.status === _constants.OP_STATUS.PENDING);
@@ -6331,11 +6677,7 @@ function createFlow(container) {
     call = (0, _selectors.getCallByWrtcsSessionId)(context.getState(), wrtcsSessionId);
     // If this notification is an answer from a local operation, update call state
     //    to indicate that the local operation is finished.
-    if (pendingLocal && ['sessionStatusEnded',
-    // Complex operation success.
-    'callStatusUpdateFailed',
-    // Complex operation failure.
-    'callStatusUpdateEnded' // Call end notification mid-operation.
+    if (pendingLocal && ['callStatusUpdateEnded' // Call end notification mid-operation.
     ].includes(handler.name)) {
       const eventId = pendingLocal.eventId;
       // TODO: Have `Operation` objects for notifications so this isn't done manually.
@@ -6360,7 +6702,8 @@ function createFlow(container) {
         }
       });
     }
-  };
+  }
+  return remoteNotification;
 }
 
 /***/ }),
@@ -6379,7 +6722,6 @@ exports.callManager = callManager;
 exports["default"] = createManager;
 var _constants = __webpack_require__(60683);
 var _constants2 = __webpack_require__(37409);
-var _remoteOperation = _interopRequireDefault(__webpack_require__(71146));
 var _selectors = __webpack_require__(11430);
 var _operationMap = __webpack_require__(81739);
 var _flows = _interopRequireDefault(__webpack_require__(13583));
@@ -6407,29 +6749,22 @@ function createManager(bottle) {
  * @returns {undefined} Returns undefined if the call exists.
  * @throws {BasicError} Throws if the call does not exist.
  */
-function checkCallExistence(state, callId) {
-  if (!(0, _selectors.getCallById)(state, callId)) {
+function checkCallExistence(state, id) {
+  if (!(0, _selectors.getCallById)(state, id) && !(0, _selectors.getCallByWrtcsSessionId)(state, id)) {
     throw new _errors.default({
       code: _errors.callCodes.INVALID_PARAM,
-      message: `Call does not exist: ${callId}`
+      message: `Call does not exist: ${id}`
     });
   }
 }
-
-// This is a modified file.
-// For a second time.
-// For a third time.
-// For a fourth time.
-// For a fifth time.
-
 function callManager(container) {
   const {
     context,
     Callstack,
-    logManager
+    logManager,
+    CallRequests
   } = container;
   const callFlows = (0, _flows.default)(container);
-  const getRemoteOperationInfo = (0, _remoteOperation.default)(container);
 
   // Map of calls to their on-going operations.
   const ongoing = {};
@@ -6477,7 +6812,7 @@ function callManager(container) {
       for (var _len = arguments.length, params = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
         params[_key - 1] = arguments[_key];
       }
-      return await callFlows.localOperation(callId, operation, params);
+      return await callFlows.LocalNegotiation.localChanges(callId, operation, params);
     };
   }
 
@@ -6488,7 +6823,7 @@ function callManager(container) {
     // Set up new call mapping for on-going operations.
     ongoing[callId] = (0, _OperationTracker.default)(logManager.getLogger('CALL', callId));
     params.callId = callId;
-    await callFlows.newIncoming(wrtcsSessionId, params, channel);
+    await callFlows.RemoteCall.newIncoming(wrtcsSessionId, params, channel);
   }
 
   /**
@@ -6529,13 +6864,15 @@ function callManager(container) {
       const {
         isLocal,
         type
-      } = ongoing[call.id].getNegotiation();
+      } = ongoing[call.id].getBlocking();
       log.debug(`Received new remote operation during ${isLocal ? 'local' : 'remote'} ${type} operation. Delaying handling.`);
-      if (isLocal) {
+      if (isLocal || type === _constants2.OPERATIONS.END) {
         // If the on-going negotiation is local, then immediately respond as a glare scenario.
         //    The local negotiation will have changes that the remote side did not take into
         //    account, leading to WebRTC errors. Mark this as a glare scenario immediately so
         //    the remote side will be notified sooner.
+        // If the blocking operation is an "end", also immediately respond. New operations
+        //    cannot be started on ending calls.
         return true;
       } else {
         // If it is two remote negotiations causing the glare scenario, try to let the first
@@ -6576,17 +6913,31 @@ function callManager(container) {
         remoteOp: _constants2.OPERATIONS.SLOW_START
       };
     } else {
-      opInfo = await getRemoteOperationInfo(call, params.sdp);
+      opInfo = await Callstack.utils.getRemoteOperationInfo(call, params.sdp);
     }
     const stackMethod = _operationMap.operationMap[opInfo.remoteOp];
     const operation = Callstack.operations[stackMethod].remote(call.id);
     if (await isGlare(call)) {
+      operation.tracker.start();
       log.warn('Received new remote operation during on-going remote operation; cannot process.');
       // Call is "blocked"; starting a new negotiation is a glare scenario.
-      throw new _errors.default({
+      // Therefore respond to Gateway that operation failed, so that the remote endpoint knows.
+      CallRequests.updateSessionResponse({
+        statusCode: 491,
+        wrtcsSessionId
+      }).then(() => {}).catch(error => {
+        log.warn(`Failed to reply for a remote session update. Error: ${error.message}`);
+      });
+
+      // Locally, we need to mark that remote negotiation as a failure in the Call report.
+      const err = new _errors.default({
         code: _errors.callCodes.GLARE,
         message: `Cannot process new remote ${opInfo.remoteOp} negotiation due to glare scenario.`
       });
+      operation.reportEvent.setError(err);
+      operation.reportEvent.endEvent();
+      operation.tracker.finish(err); // stop tracking the op because we have an error
+      throw err; // don't continue further
     } else {
       // Start tracking this operation.
       ongoing[call.id].add(operation);
@@ -6594,7 +6945,7 @@ function callManager(container) {
     try {
       // Get the latest call state, in case there was a delay due to glare.
       call = (0, _selectors.getCallByWrtcsSessionId)(context.getState(), wrtcsSessionId);
-      await callFlows.remoteOffer(call, operation, opInfo, params);
+      await callFlows.RemoteNegotiation.remoteChanges(call, operation, opInfo, params);
     } catch (err) {
       ongoing[call.id].remove(operation);
       throw err;
@@ -6693,7 +7044,7 @@ function callManager(container) {
       return;
     }
     try {
-      await callFlows.remoteAnswer(call, operation, params);
+      await callFlows.LocalNegotiation.remoteResponse(call, operation, params);
     } finally {
       // Remove the operation from the on-going list.
       ongoing[call.id].remove(operation);
@@ -6740,7 +7091,11 @@ function callManager(container) {
         for (var _len2 = arguments.length, params = new Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
           params[_key2 - 1] = arguments[_key2];
         }
-        result = await callFlows.localOperation(callId, operation, params);
+        if (operation.isNegotiation) {
+          result = await callFlows.LocalNegotiation.localChanges(callId, operation, params);
+        } else {
+          result = await callFlows.LocalOperation.localChanges(callId, operation, params);
+        }
       } catch (err) {
         // Operation failed; no longer on-going.
         ongoing[callId].remove(operation);
@@ -6767,6 +7122,7 @@ function callManager(container) {
     };
   }
   function exiComplexResponse(stackMethod) {
+    const stage = stackMethod === _operationMap.notificationMap.SESSION_STATUS_ENDED ? 'remoteSuccess' : 'remoteFailure';
     /*
      * The JOIN operation will receive a response for each call.
      * The transfers will receive a single response.
@@ -6780,11 +7136,23 @@ function callManager(container) {
 
       // Note: secCall will not exist for direct transfer.
       const secCall = (0, _selectors.getCallById)(state, operation.data.secCallId);
-      const handler = Callstack.notifications[stackMethod];
       for (var _len4 = arguments.length, params = new Array(_len4 > 1 ? _len4 - 1 : 0), _key4 = 1; _key4 < _len4; _key4++) {
         params[_key4 - 1] = arguments[_key4];
       }
-      await callFlows.remoteOnly(wrtcsSessionId, handler, params);
+      switch (operation.type) {
+        case _constants2.OPERATIONS.DIRECT_TRANSFER:
+          await callFlows.directTransfer[stage](priCall, operation, params);
+          break;
+        case _constants2.OPERATIONS.CONSULTATIVE_TRANSFER:
+          await callFlows.consulTransfer[stage](priCall, operation, params);
+          break;
+        case _constants2.OPERATIONS.JOIN:
+          await callFlows.join[stage](priCall, operation, params);
+          break;
+        default:
+          // Error: This entry should only be for a complex operation. This path indicates a bug.
+          throw new Error(`Complex response entry cannot be used for ${operation.type}`);
+      }
 
       // Remove the operation from the on-going lists.
       ongoing[priCall.id].remove(operation);
@@ -6848,9 +7216,14 @@ function callManager(container) {
           const track = (0, _OperationTracker.default)(logManager.getLogger('CALL', joinedCallId));
           ongoing[joinedCallId] = track;
           ongoing[joinedCallId].add(operation);
+          await callFlows.join.localChanges(priCallId, operation, params);
+        } else if (operation.type === _constants2.OPERATIONS.CONSULTATIVE_TRANSFER) {
+          await callFlows.consulTransfer.localChanges(priCallId, operation, params);
+        } else {
+          // This entry should only be used for the above two operations. This path indicates a bug.
+          throw new Error(`Dual-call entry cannot be used for ${operation.type}`);
         }
       }
-      await callFlows.dualCall(priCallId, operation, params);
     };
   }
 
@@ -6993,7 +7366,9 @@ function _default(bottle) {
         validate: validate,
         localOffer: localOffer,
         remoteAnswer: remoteAnswer,
-        remoteOffer: remoteOffer
+        remoteOffer: remoteOffer,
+        remoteSuccess: stages.remoteSuccess,
+        remoteFailure: stages.remoteFailure
       },
       // Instance specific.
       callId,
@@ -7093,11 +7468,11 @@ Object.defineProperty(exports, "__esModule", ({
 }));
 exports["default"] = createCallstack;
 var callOperations = _interopRequireWildcard(__webpack_require__(92660));
-var callNotifications = _interopRequireWildcard(__webpack_require__(79634));
 var _sdp = _interopRequireDefault(__webpack_require__(20590));
 var _webrtc = _interopRequireDefault(__webpack_require__(68358));
 var _callManager = _interopRequireDefault(__webpack_require__(7995));
 var _reporter = _interopRequireDefault(__webpack_require__(13840));
+var _utils = _interopRequireDefault(__webpack_require__(70504));
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
 function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
 /**
@@ -7111,15 +7486,12 @@ function createCallstack(bottle) {
   for (const name in callOperations) {
     callOperations[name](bottle);
   }
-  // Initialize the notification handlers, adding them to the bottle.
-  // They will be at `Callstack.notifications`.
-  for (const name in callNotifications) {
-    callNotifications[name](bottle);
-  }
   (0, _reporter.default)(bottle);
   // Initialize the SDP and WebRTC operations.
   (0, _sdp.default)(bottle);
   (0, _webrtc.default)(bottle);
+  // Initialize Callstack utils.
+  (0, _utils.default)(bottle);
   (0, _callManager.default)(bottle);
 }
 
@@ -7360,814 +7732,6 @@ function normalizeIceFailureMiddleware(context) {
  */
 function shouldHandlePattern(action) {
   return action.type === _actionTypes.SESSION_ICE_CONNECTION_STATE_CHANGE && action.payload.iceConnectionState === _constants.CALL_MEDIA_CONNECTION_STATES.DISCONNECTED;
-}
-
-/***/ }),
-
-/***/ 8760:
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = callCancelOperation;
-var _eventTypes = __webpack_require__(55166);
-var _constants = __webpack_require__(60683);
-var _actions = __webpack_require__(6313);
-var _selectors = __webpack_require__(11430);
-/**
- * Bottle wrapper for "call cancel" notification handler.
- * @return {Function}
- */
-function callCancelOperation(container) {
-  const {
-    context,
-    emitEvent,
-    CallstackWebrtc,
-    logManager
-  } = container;
-
-  /**
-   * A "call cancelled" notification needs to be handled.
-   *
-   * A call can be "cancelled" for different reasons. In general, it means that
-   *    the call was not established (locally) but it is no longer available for
-   *    the user to respond. For example, it may have been answered on another
-   *    device, or the caller may have ended it while it was ringing.
-   *
-   * The call is cancelled locally by cleaning up any/all Webrtc resources and
-   *    changing the call state to indicate it was cancelled.
-   *
-   * @method callCancel
-   * @param {string} wrtcsSessionId The server-side session ID of the call.
-   */
-  async function callCancel(wrtcsSessionId) {
-    const targetCall = (0, _selectors.getCallByWrtcsSessionId)(context.getState(), wrtcsSessionId);
-    const log = logManager.getLogger('CALL', (targetCall || {}).id);
-    log.info('Received call cancelled notice; handling.', {
-      wrtcsSessionId
-    });
-    if (!targetCall) {
-      log.info('Call cancelled notice for unknown wrtcsSession. Ignoring.', {
-        wrtcsSessionId
-      });
-      return;
-    } else if ([_constants.CALL_STATES.ENDED, _constants.CALL_STATES.CANCELLED].includes(targetCall.state)) {
-      log.info(`Call cancelled notice for already ${targetCall.state} call. Ignoring.`, {
-        wrtcsSessionId
-      });
-      return;
-    }
-
-    // Clean up the Webrtc portion of the Call.
-    await CallstackWebrtc.closeCall(targetCall.webrtcSessionId);
-    log.info(`Finished handling call cancelled notice. Changing to ${_constants.CALL_STATES.CANCELLED}.`);
-    // Dispatch an action to handle the redux portion of the Call.
-    context.dispatch(_actions.callActions.callCancelled(targetCall.id));
-
-    // Emit an event for the state change to cancelled
-    emitEvent(_eventTypes.CALL_STATE_CHANGE, {
-      callId: targetCall.id,
-      previous: {
-        state: targetCall.state,
-        localHold: targetCall.localHold,
-        remoteHold: targetCall.remoteHold
-      }
-    });
-  }
-  return callCancel;
-}
-
-/***/ }),
-
-/***/ 46913:
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-"use strict";
-
-
-var _interopRequireDefault = __webpack_require__(71600);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = initOperation;
-var _callCancelled = _interopRequireDefault(__webpack_require__(8760));
-// The factory funnction for the notification handler.
-
-function initOperation(bottle) {
-  // Provide the top-level container to the factory function.
-  //    Otherwise it would get the `notification` sub-container.
-  bottle.factory('Callstack.notifications.callCancelled', () => (0, _callCancelled.default)(bottle.container));
-}
-
-/***/ }),
-
-/***/ 30265:
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = callStatusRingingOperation;
-var _actions = __webpack_require__(6313);
-var _eventTypes = __webpack_require__(55166);
-var _selectors = __webpack_require__(11430);
-var _constants = __webpack_require__(37409);
-var _constants2 = __webpack_require__(60683);
-var _constants3 = __webpack_require__(42750);
-// Call plugin.
-
-/**
- * Bottle wrapper for "call status ringing" notification handler.
- * @return {Function}
- */
-function callStatusRingingOperation(container) {
-  const {
-    context,
-    CallReporter,
-    emitEvent,
-    logManager
-  } = container;
-
-  /**
-   * A "call status update" has been received and needs to be handled.
-   * The update specifies the server session is in "ringing" state.
-   *
-   * This operation handles the "call ringing" notification by updating the local
-   *    session state to match the server session state. This only affects the
-   *    local call state.
-   * Responsibilities:
-   *    1. Update call state to RINGING (via redux action).
-   *    2. Emit event to application.
-   * @method callStatusUpdateRinging
-   * @param {string} wrtcsSessionId ID that the server uses to identify the session.
-   * @param {Object} [params={}]
-   * @param {string} params.remoteName   Name of the remote participant.
-   * @param {string} params.remoteNumber Number of the remote participant.
-   * @param {Array}  params.customParameters
-   */
-  function callStatusUpdateRinging(wrtcsSessionId) {
-    let params = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-    const call = (0, _selectors.getCallByWrtcsSessionId)(context.getState(), wrtcsSessionId);
-    const log = logManager.getLogger('CALL', (call || {}).id);
-    log.info('Received call status ringing notice; handling.', {
-      wrtcsSessionId
-    });
-    if (!call) {
-      log.info('Call ringing notice for unknown wrtcsSession. Ignoring.', {
-        wrtcsSessionId
-      });
-      return;
-    } else if (call.state !== _constants2.CALL_STATES.INITIATED) {
-      log.info(`Call ringing notice for Call in an invalid state: ${call.state}. Ignoring.`);
-      return;
-    }
-    const callReport = CallReporter.getReport(call.id);
-    const makeOp = call.currentOperations.find(op => {
-      return op.isLocal && (op.type === _constants.OPERATIONS.MAKE || op.type === _constants.OPERATIONS.MAKE_ANONYMOUS);
-    });
-    const operationEvent = callReport.getEvent(makeOp.eventId);
-    const receiveRingingEvent = operationEvent.addEvent(_constants3.REPORT_EVENTS.REMOTE_RINGING);
-
-    // Dispatch a custom parameters received action/event if any custom parameters were
-    //    received as part of the notification
-    if (params.customParameters) {
-      const customNames = params.customParameters.map(param => param.name);
-      log.debug(`Received custom parameters as part of the Call: ${customNames}.`);
-      context.dispatch(_actions.callActions.customParametersReceived(call.id, {
-        customParameters: params.customParameters
-      }));
-      emitEvent(_eventTypes.CUSTOM_PARAMETERS, {
-        callId: call.id,
-        customParameters: params.customParameters
-      });
-    }
-    log.info(`Finished handling call ringing notice. Changing to ${_constants2.CALL_STATES.RINGING}.`);
-    context.dispatch(_actions.callActions.callRinging(call.id, {
-      // Remote participant's information.
-      remoteParticipant: {
-        displayNumber: params.remoteNumber,
-        displayName: params.remoteName
-      }
-    }));
-    emitEvent(_eventTypes.CALL_STATE_CHANGE, {
-      callId: call.id,
-      previous: {
-        state: call.state,
-        localHold: call.localHold,
-        remoteHold: call.remoteHold
-      }
-    });
-    receiveRingingEvent.endEvent();
-  }
-  return callStatusUpdateRinging;
-}
-
-/***/ }),
-
-/***/ 23823:
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-"use strict";
-
-
-var _interopRequireDefault = __webpack_require__(71600);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = initOperation;
-var _callStatusUpdateRinging = _interopRequireDefault(__webpack_require__(30265));
-// The factory funnction for the notification handler.
-
-function initOperation(bottle) {
-  // Provide the top-level container to the factory function.
-  //    Otherwise it would get the `notification` sub-container.
-  bottle.factory('Callstack.notifications.callStatusUpdateRinging', () => (0, _callStatusUpdateRinging.default)(bottle.container));
-}
-
-/***/ }),
-
-/***/ 6301:
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = callStatusFailedOperation;
-var _actions = __webpack_require__(6313);
-var _constants = __webpack_require__(37409);
-var _constants2 = __webpack_require__(60683);
-var _selectors = __webpack_require__(11430);
-var eventTypes = _interopRequireWildcard(__webpack_require__(55166));
-var _errors = _interopRequireWildcard(__webpack_require__(83437));
-function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
-function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
-// Call plugin.
-
-// Other plugins.
-
-/**
- * Bottle wrapper for "call status failed" notification handler.
- * @return {Function}
- */
-function callStatusFailedOperation(container) {
-  const {
-    context,
-    emitEvent,
-    logManager
-  } = container;
-  /**
-   * A call status notification indicating that an operation has failed and needs to be handled.
-   *
-   * This operation handles the "session fail" notification by generating a transition object
-   *    containing proper statusCode and reasonText and removing the current pending operation.
-   * Responsibilities:
-   *    1. Generate transition object containing proper statusCode and reasonText depending on pending operation.
-   * @method callStatusUpdateFailed
-   * @param {string}   wrtcsSessionId ID that the server uses to identify the session.
-   * @param {Object}   params        Parameters describing the incoming call.
-   */
-  function callStatusUpdateFailed(wrtcsSessionId, params) {
-    const {
-      reasonText,
-      statusCode
-    } = params;
-    const currentCall = (0, _selectors.getCallByWrtcsSessionId)(context.getState(), wrtcsSessionId);
-    const log = logManager.getLogger('CALL', (currentCall || {}).id);
-    log.info('Received call operation failed notice; handling.', {
-      wrtcsSessionId
-    });
-    if (!currentCall) {
-      log.info('Call operation failed notice for unknown wrtcsSession. Ignoring.', {
-        wrtcsSessionId
-      });
-      return;
-    }
-    const pendingLocal = currentCall.currentOperations.find(op => {
-      return op.isLocal && op.status === _constants.OP_STATUS.PENDING;
-    });
-    if (pendingLocal) {
-      let transition;
-      let finishAction;
-      switch (pendingLocal.type) {
-        case _constants.OPERATIONS.DIRECT_TRANSFER:
-          finishAction = _actions.callActions.directTransferFinish;
-          // TODO: May or may not need this when generic operation event is setup.
-          transition = {
-            reasonText: reasonText || _constants2.COMPLEX_OPERATION_MESSAGES.DIRECT_TRANSFER_FAILURE,
-            statusCode: statusCode || _constants2.STATUS_CODES.DIRECT_TRANSFER_FAILURE
-          };
-          break;
-        case _constants.OPERATIONS.CONSULTATIVE_TRANSFER:
-          finishAction = _actions.callActions.consultativeTransferFinish;
-          transition = {
-            reasonText: reasonText || _constants2.COMPLEX_OPERATION_MESSAGES.CONSULTATIVE_TRANSFER_FAILURE,
-            statusCode: statusCode || _constants2.STATUS_CODES.CONSULTATIVE_TRANSFER_FAILURE
-          };
-          break;
-        case _constants.OPERATIONS.JOIN:
-          finishAction = _actions.callActions.joinFinish;
-          transition = {
-            reasonText: reasonText || _constants2.COMPLEX_OPERATION_MESSAGES.JOIN_FAILURE,
-            statusCode: statusCode || _constants2.STATUS_CODES.JOIN_FAILURE
-          };
-          break;
-      }
-      log.debug(`Processing as a local ${pendingLocal.type} failure (${transition.statusCode}).`);
-      if (finishAction) {
-        log.info('Finished handling call operation failed notice.');
-        const error = new _errors.default({
-          message: `Operation ${pendingLocal.type} failed.`,
-          code: _errors.callCodes.GENERIC_ERROR
-        });
-        context.dispatch(finishAction(currentCall.id, {
-          error,
-          transition
-        }));
-
-        // Notify the app that there has been a call state change
-        emitEvent(eventTypes.CALL_STATE_CHANGE, {
-          callId: currentCall.id,
-          previous: {
-            state: currentCall.state,
-            localHold: false,
-            remoteHold: false
-          }
-        });
-        return;
-      }
-    }
-    context.dispatch(_actions.callActions.updateCall(currentCall.id));
-    emitEvent(eventTypes.CALL_STATE_CHANGE, {
-      callId: currentCall.id,
-      previous: {
-        state: currentCall.state,
-        localHold: false,
-        remoteHold: false
-      }
-    });
-  }
-  return callStatusUpdateFailed;
-}
-
-/***/ }),
-
-/***/ 83956:
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-"use strict";
-
-
-var _interopRequireDefault = __webpack_require__(71600);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = initOperation;
-var _callStatusUpdateFailed = _interopRequireDefault(__webpack_require__(6301));
-// The factory funnction for the notification handler.
-
-function initOperation(bottle) {
-  // Provide the top-level container to the factory function.
-  //    Otherwise it would get the `notification` sub-container.
-  bottle.factory('Callstack.notifications.callStatusUpdateFailed', () => (0, _callStatusUpdateFailed.default)(bottle.container));
-}
-
-/***/ }),
-
-/***/ 79634:
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-"use strict";
-
-
-var _interopRequireDefault = __webpack_require__(71600);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-Object.defineProperty(exports, "callCancelled", ({
-  enumerable: true,
-  get: function () {
-    return _callCancelled.default;
-  }
-}));
-Object.defineProperty(exports, "callStatusUpdateFailed", ({
-  enumerable: true,
-  get: function () {
-    return _callStatusUpdateFailed.default;
-  }
-}));
-Object.defineProperty(exports, "callStatusUpdateRinging", ({
-  enumerable: true,
-  get: function () {
-    return _callStatusRinging.default;
-  }
-}));
-Object.defineProperty(exports, "receiveEarlyMedia", ({
-  enumerable: true,
-  get: function () {
-    return _receiveEarlyMedia.default;
-  }
-}));
-Object.defineProperty(exports, "sessionStatusUpdateEnded", ({
-  enumerable: true,
-  get: function () {
-    return _sessionStatusEnded.default;
-  }
-}));
-var _callCancelled = _interopRequireDefault(__webpack_require__(46913));
-var _callStatusRinging = _interopRequireDefault(__webpack_require__(23823));
-var _callStatusUpdateFailed = _interopRequireDefault(__webpack_require__(83956));
-var _sessionStatusEnded = _interopRequireDefault(__webpack_require__(34884));
-var _receiveEarlyMedia = _interopRequireDefault(__webpack_require__(86419));
-
-/***/ }),
-
-/***/ 86419:
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-"use strict";
-
-
-var _interopRequireDefault = __webpack_require__(71600);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = initOperation;
-var _receiveEarlyMedia = _interopRequireDefault(__webpack_require__(18048));
-// The factory funnction for the notification handler.
-
-function initOperation(bottle) {
-  // Provide the top-level container to the factory function.
-  //    Otherwise it would get the `notification` sub-container.
-  bottle.factory('Callstack.notifications.receiveEarlyMedia', () => (0, _receiveEarlyMedia.default)(bottle.container));
-}
-
-/***/ }),
-
-/***/ 18048:
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = receiveEarlyMediaOperation;
-var _actions = __webpack_require__(6313);
-var _selectors = __webpack_require__(11430);
-var _remoteTracks = __webpack_require__(45294);
-var _eventTypes = __webpack_require__(55166);
-var _constants = __webpack_require__(60683);
-// Call Plugin
-
-/**
- * Bottle wrapper for "receive early media" notification handler.
- * @return {Function}
- */
-function receiveEarlyMediaOperation(container) {
-  const {
-    context,
-    emitEvent,
-    logManager,
-    WebRTC,
-    CallstackSDP
-  } = container;
-
-  /**
-   * A "session progress" notification has been received. It contains an "early
-   *    media" SDP (pranswer) that needs to be processed.
-   *
-   * Processing a pranswer is done by:
-   *    1. Validating the Call / Session.
-   *    2. Running the SDP through the SDP pipeline.
-   *    3. Setting the SDP as the Session's remote description (as pranswer).
-   *    4. Updating the Call state.
-   *
-   * @method receiveEarlyMedia
-   * @param {Object} params       Parameters describing the notification.
-   */
-  async function receiveEarlyMedia(wrtcsSessionId, params) {
-    const {
-      customParameters
-    } = params;
-
-    /**
-     * Get the call from state.
-     */
-    const currentCall = (0, _selectors.getCallByWrtcsSessionId)(context.getState(), wrtcsSessionId);
-    const log = logManager.getLogger('CALL', (currentCall || {}).id);
-    log.info('Received early media notice; handling.', {
-      wrtcsSessionId
-    });
-    if (!currentCall) {
-      log.info('Early media notice for unknown wrtcsSession. Ignoring.', {
-        wrtcsSessionId
-      });
-      return;
-    }
-
-    /**
-     * Get the Webrtc Session.
-     */
-    const session = await WebRTC.sessionManager.get(currentCall.webrtcSessionId);
-    if (!session) {
-      log.info('Early media notice for missing wrtcsSession. Ignoring.', {
-        wrtcsSessionId
-      });
-      // TODO: Better error.
-      return;
-    }
-    // Dispatch a custom parameters received action/event if any custom parameters were received as part of the notification
-    if (customParameters) {
-      const customNames = customParameters.map(param => param.name);
-      log.debug(`Received custom parameters as part of the Call: ${customNames}.`);
-      context.dispatch(_actions.callActions.customParametersReceived(currentCall.id, {
-        customParameters
-      }));
-
-      // Emit the associated event with the above action
-      emitEvent(_eventTypes.CUSTOM_PARAMETERS, {
-        callId: currentCall.id,
-        customParameters
-      });
-    }
-    try {
-      /*
-       * Run the remote SDP pranswer through any SDP handlers provided, then set it
-       *    as the Session's remote description.
-       * This is the "pre set remote" stage.
-       */
-      const callConfigOptions = (0, _selectors.getOptions)(context.getState());
-      const sdp = CallstackSDP.runPipeline(callConfigOptions.sdpHandlers, params.sdp, {
-        callId: currentCall.id,
-        type: 'pranswer',
-        step: 'set',
-        endpoint: 'remote'
-      });
-      await session.processAnswer({
-        type: 'pranswer',
-        sdp: sdp
-      });
-    } catch (err) {
-      log.debug(`Failed to process pranswer for Call ${currentCall.id}; ignoring.`);
-      return;
-    }
-
-    // Get the list of all remote tracks being offered in this call. This is a
-    //    new call, so this should be the full list of remote tracks available.
-    const remoteTracks = await (0, _remoteTracks.getAllRemoteTracks)(session);
-    log.info(`Finished handling early media notice. Changing to ${_constants.CALL_STATES.EARLY_MEDIA}.`);
-    context.dispatch(_actions.callActions.sessionProgress(currentCall.id, {
-      // Remote participant's information.
-      remoteParticipant: {
-        displayNumber: params.remoteNumber,
-        displayName: params.remoteName
-      },
-      remoteTracks
-    }));
-
-    // Tell the application that tracks are available on the call now.
-    emitEvent(_eventTypes.CALL_TRACKS_ADDED, {
-      callId: currentCall.id,
-      trackIds: remoteTracks
-    });
-    emitEvent(_eventTypes.CALL_STATE_CHANGE, {
-      callId: currentCall.id,
-      previous: {
-        state: currentCall.state,
-        localHold: currentCall.localHold,
-        remoteHold: currentCall.remoteHold
-      }
-    });
-  }
-  return receiveEarlyMedia;
-}
-
-/***/ }),
-
-/***/ 34884:
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-"use strict";
-
-
-var _interopRequireDefault = __webpack_require__(71600);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = initOperation;
-var _sessionStatusUpdateEnded = _interopRequireDefault(__webpack_require__(31493));
-// The factory funnction for the notification handler.
-
-function initOperation(bottle) {
-  // Provide the top-level container to the factory function.
-  //    Otherwise it would get the `notification` sub-container.
-  bottle.factory('Callstack.notifications.sessionStatusUpdateEnded', () => (0, _sessionStatusUpdateEnded.default)(bottle.container));
-}
-
-/***/ }),
-
-/***/ 31493:
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = sessionStatusEndedOperation;
-var _actions = __webpack_require__(6313);
-var _selectors = __webpack_require__(11430);
-var _constants = __webpack_require__(60683);
-var _constants2 = __webpack_require__(37409);
-var _eventTypes = __webpack_require__(55166);
-var _call = __webpack_require__(12442);
-// Call plugin
-
-// Helpers
-
-/**
- * Bottle wrapper for "session status ended" notification handler.
- * @return {Function}
- */
-function sessionStatusEndedOperation(container) {
-  const {
-    context,
-    CallRequests,
-    CallstackWebrtc,
-    emitEvent,
-    logManager
-  } = container;
-
-  /**
-   * A "session status ended" notification has been received and needs to be handled.
-   * A session has completed (in this context) means completing a midcall operation such as:
-   *
-   * - direct transfer
-   * - consultative transfer
-   * - join
-   * , where user A transferred user B to user C.
-   *
-   * For the direct & consultative transfer operations, the 'sessionComplete' notification
-   * will just refer to the original call between: A<->B, which has now completed.
-   * Therefore this saga will send a 'DELETE' REST request to inform backend to tear down
-   * this particular original call.
-   *
-   * Note that for the other original call, which is A<->C, server already knows
-   * that it has ended and callStatusUpdateEnded saga (above) already handles it by simply
-   * marking it locally as ended (i.e. in local Redux state). Therefore there is no need
-   * to send any 'DELETE' REST request for A<->C call.
-   *
-   * For the join operation, SDK will receive two separate 'sessionComplete' notifications from backend.
-   * Therefore this saga will send two 'DELETE' REST requests to inform backend to tear down those
-   * two original calls.
-   *
-   * @method sessionStatusUpdateEnded
-   * @param {string}   wrtcsSessionId ID that the server uses to identify the session.
-   * @param {Object}   params        Parameters describing the incoming call.
-   * @param {string}   [params.reasonText]   Human-readable explanation for the call change.
-   * @param {string}   [params.statusCode]     Code representing the reason for the call change.
-   */
-  async function sessionStatusEnded(wrtcsSessionId, params) {
-    const {
-      reasonText,
-      statusCode
-    } = params;
-    const currentCall = (0, _selectors.getCallByWrtcsSessionId)(context.getState(), wrtcsSessionId);
-    const log = logManager.getLogger('CALL', (currentCall || {}).id);
-
-    // Make sure the call state is what we expect
-    if (!currentCall) {
-      log.info('Session completed notice for unknown Call. Ignoring.');
-      return;
-    }
-    log.info('Received session status completed notice; handling.', {
-      wrtcsSessionId
-    });
-    if (reasonText) {
-      let customStatusCode = statusCode;
-      if (!statusCode && statusCode !== 0) {
-        if (reasonText === _constants.COMPLEX_OPERATION_MESSAGES.DIRECT_TRANSFER_SUCCESS) {
-          customStatusCode = _constants.STATUS_CODES.DIRECT_TRANSFER_SUCCESS;
-        } else if (reasonText === _constants.COMPLEX_OPERATION_MESSAGES.CONSULTATIVE_TRANSFER_SUCCESS) {
-          customStatusCode = _constants.STATUS_CODES.CONSULTATIVE_TRANSFER_SUCCESS;
-        } else if (reasonText === _constants.COMPLEX_OPERATION_MESSAGES.JOIN_SUCCESS) {
-          customStatusCode = _constants.STATUS_CODES.JOIN_SUCCESS;
-        }
-      }
-      log.debug(`Session completed notice caused by ${reasonText} (${customStatusCode}).`);
-    }
-    log.info(`Ending webRTC session with id: ${currentCall.webrtcSessionId}, locally ...`);
-    const prevCall = currentCall;
-
-    // Close the local webRTC session
-    await CallstackWebrtc.closeCall(currentCall.webrtcSessionId);
-
-    // If we had the local operation tracked in state, then we can dispatch the action
-    //    intended to "finish" the operation.
-    const pendingLocal = currentCall.currentOperations.find(op => {
-      return op.isLocal && op.status === _constants2.OP_STATUS.PENDING;
-    });
-    if (pendingLocal) {
-      let transition;
-      let finishAction;
-      switch (pendingLocal.type) {
-        case _constants2.OPERATIONS.DIRECT_TRANSFER:
-          finishAction = _actions.callActions.directTransferFinish;
-          transition = {
-            reasonText: _constants.COMPLEX_OPERATION_MESSAGES.DIRECT_TRANSFER_SUCCESS,
-            statusCode: _constants.STATUS_CODES.DIRECT_TRANSFER_SUCCESS
-          };
-          break;
-        case _constants2.OPERATIONS.CONSULTATIVE_TRANSFER:
-          finishAction = _actions.callActions.consultativeTransferFinish;
-          transition = {
-            reasonText: _constants.COMPLEX_OPERATION_MESSAGES.CONSULTATIVE_TRANSFER_SUCCESS,
-            statusCode: _constants.STATUS_CODES.CONSULTATIVE_TRANSFER_SUCCESS
-          };
-          break;
-        case _constants2.OPERATIONS.JOIN:
-          finishAction = _actions.callActions.joinFinish;
-          transition = {
-            reasonText: _constants.COMPLEX_OPERATION_MESSAGES.JOIN_SUCCESS,
-            statusCode: _constants.STATUS_CODES.JOIN_SUCCESS
-          };
-          break;
-        default:
-          log.info('Unknown local call operation for completed notice. Cannot provide transition information.');
-          break;
-      }
-      if (finishAction) {
-        context.dispatch(finishAction(currentCall.id, {
-          transition
-        }));
-      }
-    }
-
-    // We also need to notify the backend that call with currentCall.id should be removed
-    // by sending a DELETE REST request.
-    // Perform signalling to end the session on server's side.
-    try {
-      const isAnonymous = currentCall.isAnonymous;
-      const account = currentCall.account;
-      log.debug('Ending call session on server-side.');
-      await CallRequests.endSession({
-        callId: currentCall.id,
-        wrtcsSessionId,
-        isAnonymous,
-        account
-      });
-      log.info(`Finished ending call. Changing call state to ${_constants.CALL_STATES.ENDED}.`);
-      context.dispatch(_actions.callActions.endCallFinish(currentCall.id, (0, _call.generateEndParams)(currentCall.state, true, params)));
-
-      // Tell the application that no tracks are available any longer.
-      emitEvent(_eventTypes.CALL_TRACKS_REMOVED, {
-        callId: currentCall.id,
-        trackIds: [...prevCall.localTracks, ...prevCall.remoteTracks]
-      });
-      emitEvent(_eventTypes.CALL_STATE_CHANGE, {
-        callId: currentCall.id,
-        previous: {
-          state: prevCall.state,
-          localHold: prevCall.localHold,
-          remoteHold: prevCall.remoteHold
-        }
-      });
-    } catch (error) {
-      log.debug(`Error received when attempting to end the session: ${error}. Changing call state to ${_constants.CALL_STATES.ENDED}.`);
-      context.dispatch(_actions.callActions.endCallFinish(currentCall.id, {
-        isLocal: true,
-        error
-      }));
-
-      // Tell the application that no tracks are available any longer.
-      emitEvent(_eventTypes.CALL_TRACKS_REMOVED, {
-        callId: currentCall.id,
-        trackIds: [...prevCall.localTracks, ...prevCall.remoteTracks]
-      });
-      emitEvent(_eventTypes.CALL_STATE_CHANGE, {
-        callId: currentCall.id,
-        previous: {
-          state: prevCall.state,
-          localHold: prevCall.localHold,
-          remoteHold: prevCall.remoteHold
-        },
-        error
-      });
-    }
-  }
-  return sessionStatusEnded;
 }
 
 /***/ }),
@@ -8997,6 +8561,7 @@ function webrtcAddMediaOperation(container) {
    * @param  {Object} mediaConstraints Video and audio media constraints
    * @param  {boolean} mediaConstraints.audio Whether to enable audio or not
    * @param  {boolean} mediaConstraints.video Whether to enable video or not
+   * @param  {Array<Object>} [mediaConstraints.medias] List of medias containing tracks to be attached to this call.
    * @param  {Object} sessionOptions
    * @param  {string} sessionOptions.sessionId the local webrtc session id
    * @param  {Object} [sessionOptions.bandwidth] Contains configuration details for setting bandwidth
@@ -9021,7 +8586,18 @@ function webrtcAddMediaOperation(container) {
       return op.isLocal && [_constants.OPERATIONS.ADD_MEDIA, _constants.OPERATIONS.ADD_BASIC_MEDIA].includes(op.type);
     });
     const operationEvent = callReport.getEvent(operation.eventId);
-    const medias = await CallstackWebrtc.createLocal(mediaConstraints, callId);
+    let medias = [];
+    // If detached media is passed in, use that.
+    if (mediaConstraints.medias) {
+      for (const media of mediaConstraints.medias) {
+        medias.push({
+          type: media.type,
+          media: await WebRTC.media.get(media.media.id)
+        });
+      }
+    }
+    const createdMedias = await CallstackWebrtc.createLocal(mediaConstraints, callId);
+    medias = medias.concat(createdMedias);
     const session = await WebRTC.sessionManager.get(sessionId);
     const trackLists = await (0, _media.organizeTracks)(medias);
     const dscpTrackMapping = (0, _call.getTrackDscpMapping)(trackLists, dscpControls);
@@ -9102,10 +8678,13 @@ exports["default"] = answerWebrtcSessionOperation;
 var _selectors = __webpack_require__(11430);
 var _constants = __webpack_require__(37409);
 var _constants2 = __webpack_require__(42750);
+var _media = __webpack_require__(50654);
 var _errors = _interopRequireWildcard(__webpack_require__(83437));
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
 function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
 // Call plugin.
+
+// Utils
 
 // Other plugins.
 
@@ -9155,6 +8734,12 @@ function answerWebrtcSessionOperation(container) {
     const answerEvent = report.getEvent(operation.eventId);
     const gumEvent = answerEvent.addEvent(_constants2.REPORT_EVENTS.GET_USER_MEDIA);
     gumEvent.addData('mediaConstraints', mediaConstraints);
+
+    // Remove detached media from mediaConstraints before creating media in session
+    const {
+      medias: detachedMedias
+    } = mediaConstraints;
+    delete mediaConstraints.medias;
     let session, medias;
     try {
       const result = await WebRTC.sessionManager.getWithMedia(sessionId, mediaConstraints);
@@ -9169,6 +8754,28 @@ function answerWebrtcSessionOperation(container) {
       });
       gumEvent.endEvent(errorObj);
       throw errorObj;
+    }
+
+    // Get detached media from WebRTC stack
+    if (detachedMedias) {
+      const detachedMediaObjs = [];
+      for (const media of detachedMedias) {
+        detachedMediaObjs.push({
+          type: media.type,
+          media: await WebRTC.media.get(media.media.id)
+        });
+      }
+      // Add detached media to session
+      const trackLists = await (0, _media.organizeTracks)(detachedMediaObjs);
+
+      // eslint-disable-next-line no-useless-catch
+      try {
+        await session.addTracks(trackLists.all);
+        detachedMediaObjs.forEach(detachedMedia => medias.push(detachedMedia.media));
+      } catch (err) {
+        // Follow-up / TODO.
+        throw err;
+      }
     }
 
     /*
@@ -9573,7 +9180,8 @@ function validate(state, callId, media, options) {
   } else {
     // For regular call, ensure local offer matches what is being offered in incoming call
     for (const [key, value] of Object.entries(media)) {
-      if (value) {
+      // Detached media is validated at the API level.
+      if (value && key !== 'medias') {
         // if callee offered screen share, then this is equivalent to video in webRTC framework,
         // so allow it to match as 'video' into the incoming offer
         const equivalentKey = key === 'screen' ? 'video' : key;
@@ -9962,6 +9570,107 @@ function validate(state, callId, media, options) {
 
 /***/ }),
 
+/***/ 93948:
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+
+var _interopRequireDefault = __webpack_require__(71600);
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports["default"] = initOperation;
+var _callCancelled = _interopRequireDefault(__webpack_require__(18898));
+// The factory funnction for the notification handler.
+
+function initOperation(bottle) {
+  // Provide the top-level container to the factory function.
+  //    Otherwise it would get the `notification` sub-container.
+  bottle.factory('Callstack.notifications.callCancelled', () => (0, _callCancelled.default)(bottle.container));
+}
+
+/***/ }),
+
+/***/ 18898:
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports["default"] = callCancelOperation;
+var _eventTypes = __webpack_require__(55166);
+var _constants = __webpack_require__(60683);
+var _actions = __webpack_require__(6313);
+var _selectors = __webpack_require__(11430);
+/**
+ * Bottle wrapper for "call cancel" notification handler.
+ * @return {Function}
+ */
+function callCancelOperation(container) {
+  const {
+    context,
+    emitEvent,
+    CallstackWebrtc,
+    logManager
+  } = container;
+
+  /**
+   * A "call cancelled" notification needs to be handled.
+   *
+   * A call can be "cancelled" for different reasons. In general, it means that
+   *    the call was not established (locally) but it is no longer available for
+   *    the user to respond. For example, it may have been answered on another
+   *    device, or the caller may have ended it while it was ringing.
+   *
+   * The call is cancelled locally by cleaning up any/all Webrtc resources and
+   *    changing the call state to indicate it was cancelled.
+   *
+   * @method callCancel
+   * @param {string} wrtcsSessionId The server-side session ID of the call.
+   */
+  async function callCancel(wrtcsSessionId) {
+    const targetCall = (0, _selectors.getCallByWrtcsSessionId)(context.getState(), wrtcsSessionId);
+    const log = logManager.getLogger('CALL', (targetCall || {}).id);
+    log.info('Received call cancelled notice; handling.', {
+      wrtcsSessionId
+    });
+    if (!targetCall) {
+      log.info('Call cancelled notice for unknown wrtcsSession. Ignoring.', {
+        wrtcsSessionId
+      });
+      return;
+    } else if ([_constants.CALL_STATES.ENDED, _constants.CALL_STATES.CANCELLED].includes(targetCall.state)) {
+      log.info(`Call cancelled notice for already ${targetCall.state} call. Ignoring.`, {
+        wrtcsSessionId
+      });
+      return;
+    }
+
+    // Clean up the Webrtc portion of the Call.
+    await CallstackWebrtc.closeCall(targetCall.webrtcSessionId);
+    log.info(`Finished handling call cancelled notice. Changing to ${_constants.CALL_STATES.CANCELLED}.`);
+    // Dispatch an action to handle the redux portion of the Call.
+    context.dispatch(_actions.callActions.callCancelled(targetCall.id));
+
+    // Emit an event for the state change to cancelled
+    emitEvent(_eventTypes.CALL_STATE_CHANGE, {
+      callId: targetCall.id,
+      previous: {
+        state: targetCall.state,
+        localHold: targetCall.localHold,
+        remoteHold: targetCall.remoteHold
+      }
+    });
+  }
+  return callCancel;
+}
+
+/***/ }),
+
 /***/ 21147:
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
@@ -10039,6 +9748,8 @@ Object.defineProperty(exports, "__esModule", ({
 }));
 exports["default"] = initOperation;
 var _consultativeTransfer = _interopRequireDefault(__webpack_require__(21147));
+var _remoteSuccess = _interopRequireDefault(__webpack_require__(25103));
+var _remoteFailure = _interopRequireDefault(__webpack_require__(50414));
 var _validate = _interopRequireDefault(__webpack_require__(85363));
 var _constants = __webpack_require__(37409);
 // Operations.
@@ -10067,7 +9778,9 @@ function initOperation(bottle) {
         stages: {
           validate: _validate.default,
           // TODO: Don't use negotiation terms for this.
-          localOffer: (0, _consultativeTransfer.default)(bottle.container)
+          localOffer: (0, _consultativeTransfer.default)(bottle.container),
+          remoteSuccess: (0, _remoteSuccess.default)(bottle.container),
+          remoteFailure: (0, _remoteFailure.default)(bottle.container)
         }
       }, {
         callId,
@@ -10078,6 +9791,187 @@ function initOperation(bottle) {
       local: LocalConsultTransfer
     };
   });
+}
+
+/***/ }),
+
+/***/ 50414:
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports["default"] = createHandler;
+var _actions = __webpack_require__(6313);
+var _constants = __webpack_require__(60683);
+var eventTypes = _interopRequireWildcard(__webpack_require__(55166));
+var _errors = _interopRequireWildcard(__webpack_require__(83437));
+function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
+function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
+// Call plugin.
+
+// Other plugins.
+
+function createHandler(container) {
+  const {
+    context,
+    emitEvent,
+    logManager
+  } = container;
+
+  /**
+   * A "session failure" notification has been received, indicating the operation failed.
+   *    Finish the operation.
+   *
+   * @method remoteFailure
+   * @param {Object} call The primary call for the operation.
+   * @param {Object} params Parameters describing the incoming call.
+   * @param {string} [params.reasonText] Human-readable explanation for the call change.
+   * @param {string} [params.statusCode] Code representing the reason for the call change.
+   * @return {BasicError}
+   */
+  return function remoteFailure(call, params) {
+    const reasonText = params.reasonText || _constants.COMPLEX_OPERATION_MESSAGES.CONSULTATIVE_TRANSFER_FAILURE;
+    const statusCode = params.statusCode || _constants.STATUS_CODES.CONSULTATIVE_TRANSFER_FAILURE;
+    const log = logManager.getLogger('CALL', call.id);
+    log.info('Received call operation failed notice; handling.', {
+      wrtcsSessionId: call.wrtcsSessionId
+    });
+    log.debug(`Processing as a local consultative transfer failure (${statusCode}).`);
+    log.info('Finished handling call operation failed notice.');
+    const error = new _errors.default({
+      message: `Consultative transfer operation failed: ${reasonText} (${statusCode})`,
+      code: _errors.callCodes.GENERIC_ERROR
+    });
+    context.dispatch(_actions.callActions.consultativeTransferFinish(call.id, {
+      error,
+      transition: {
+        reasonText,
+        statusCode
+      }
+    }));
+
+    // Notify the app that there has been a call state change
+    emitEvent(eventTypes.CALL_STATE_CHANGE, {
+      callId: call.id,
+      previous: {
+        state: call.state,
+        localHold: true,
+        remoteHold: false
+      },
+      error
+    });
+    return error;
+  };
+}
+
+/***/ }),
+
+/***/ 25103:
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports["default"] = createHandler;
+var _actions = __webpack_require__(6313);
+var _eventTypes = __webpack_require__(55166);
+var _constants = __webpack_require__(60683);
+var _call = __webpack_require__(12442);
+// Call plugin.
+
+// Helpers
+
+function createHandler(container) {
+  const {
+    context,
+    CallRequests,
+    CallstackWebrtc,
+    emitEvent,
+    logManager
+  } = container;
+
+  /**
+   * A "session complete" notification has been received, indicating the operation was
+   *    successful. Finish the operation by ending the call.
+   *
+   * For a consultative transfer, this notification is only for the primary call of the
+   *    operation. The secondary call will receive a separate "call end" notification.
+   *
+   * @method consultativeSuccess
+   * @param {Object} call The primary call for the operation.
+   * @param {Object} params Parameters describing the incoming call.
+   * @param {string} [params.reasonText] Human-readable explanation for the call change.
+   * @param {string} [params.statusCode] Code representing the reason for the call change.
+   * @return {Promise<undefined>}
+   */
+  async function consultativeSuccess(call, params) {
+    const log = logManager.getLogger('CALL', call.id);
+    log.info('Received session status completed notice; handling.', {
+      wrtcsSessionId: call.wrtcsSessionId
+    });
+    const {
+      reasonText,
+      statusCode
+    } = params;
+    if (reasonText) {
+      let customStatusCode;
+      if (!statusCode && statusCode !== 0) {
+        customStatusCode = _constants.STATUS_CODES.CONSULTATIVE_TRANSFER_SUCCESS;
+      } else {
+        customStatusCode = statusCode;
+      }
+      log.debug(`Session completed notice caused by ${reasonText} (${customStatusCode}).`);
+    }
+    log.info(`Ending webRTC session with id: ${call.webrtcSessionId}, locally ...`);
+    // Close the local webRTC session
+    await CallstackWebrtc.closeCall(call.webrtcSessionId);
+
+    // Update call state to 'Ended'.
+    context.dispatch(_actions.callActions.consultativeTransferFinish(call.id, {
+      transition: {
+        reasonText: _constants.COMPLEX_OPERATION_MESSAGES.CONSULTATIVE_TRANSFER_SUCCESS,
+        statusCode: _constants.STATUS_CODES.CONSULTATIVE_TRANSFER_SUCCESS
+      }
+    }));
+    try {
+      log.debug('Ending call session on server-side.');
+      await CallRequests.endSession({
+        callId: call.id,
+        wrtcsSessionId: call.wrtcsSessionId,
+        isAnonymous: call.isAnonymous,
+        account: call.account
+      });
+    } catch (error) {
+      // Ignore an error from the REST request. End the call locally no matter what.
+      log.debug(`Error received when attempting to end the session: ${error}.`);
+    } finally {
+      log.info(`Finished ending call. Changing call state to ${_constants.CALL_STATES.ENDED}.`);
+      // TODO: Is this action needed? The call should be 'Ended' by the above action.
+      context.dispatch(_actions.callActions.endCallFinish(call.id, (0, _call.generateEndParams)(call.state, true, params)));
+
+      // Tell the application that no tracks are available any longer.
+      emitEvent(_eventTypes.CALL_TRACKS_REMOVED, {
+        callId: call.id,
+        trackIds: [...call.localTracks, ...call.remoteTracks]
+      });
+      emitEvent(_eventTypes.CALL_STATE_CHANGE, {
+        callId: call.id,
+        previous: {
+          state: call.state,
+          localHold: call.localHold,
+          remoteHold: call.remoteHold
+        }
+      });
+    }
+  }
+  return consultativeSuccess;
 }
 
 /***/ }),
@@ -10218,6 +10112,8 @@ Object.defineProperty(exports, "__esModule", ({
 exports["default"] = initOperation;
 var _directTransfer = _interopRequireDefault(__webpack_require__(42871));
 var _validate = _interopRequireDefault(__webpack_require__(65372));
+var _remoteSuccess = _interopRequireDefault(__webpack_require__(33800));
+var _remoteFailure = _interopRequireDefault(__webpack_require__(46016));
 var _constants = __webpack_require__(37409);
 // Operations.
 
@@ -10248,8 +10144,9 @@ function initOperation(bottle) {
           // TODO: This operation isn't a negotiation, so we shouldn't be naming
           //    a stage with WebRTC negotiation terms. But this is the method
           //    name the `localOperation` flow uses.
-          localOffer: (0, _directTransfer.default)(bottle.container)
-          // TODO: The "remote answer" for this operation should be included here.
+          localOffer: (0, _directTransfer.default)(bottle.container),
+          remoteSuccess: (0, _remoteSuccess.default)(bottle.container),
+          remoteFailure: (0, _remoteFailure.default)(bottle.container)
         }
       }, {
         callId
@@ -10259,6 +10156,184 @@ function initOperation(bottle) {
       local: LocalDirectTransfer
     };
   });
+}
+
+/***/ }),
+
+/***/ 46016:
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports["default"] = createHandler;
+var _actions = __webpack_require__(6313);
+var _constants = __webpack_require__(60683);
+var eventTypes = _interopRequireWildcard(__webpack_require__(55166));
+var _errors = _interopRequireWildcard(__webpack_require__(83437));
+function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
+function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
+// Call plugin.
+
+// Other plugins.
+
+function createHandler(container) {
+  const {
+    context,
+    emitEvent,
+    logManager
+  } = container;
+
+  /**
+   * A "session failure" notification has been received, indicating the operation failed.
+   *    Finish the operation.
+   *
+   * @method remoteFailure
+   * @param {Object} call The primary call for the operation.
+   * @param {Object} params Parameters describing the incoming call.
+   * @param {string} [params.reasonText] Human-readable explanation for the call change.
+   * @param {string} [params.statusCode] Code representing the reason for the call change.
+   * @return {BasicError}
+   */
+  return function remoteFailure(call, params) {
+    const reasonText = params.reasonText || _constants.COMPLEX_OPERATION_MESSAGES.DIRECT_TRANSFER_FAILURE;
+    const statusCode = params.statusCode || _constants.STATUS_CODES.DIRECT_TRANSFER_FAILURE;
+    const log = logManager.getLogger('CALL', call.id);
+    log.info('Received call operation failed notice; handling.', {
+      wrtcsSessionId: call.wrtcsSessionId
+    });
+    log.debug(`Processing as a local direct transfer failure (${statusCode}).`);
+    log.info('Finished handling call operation failed notice.');
+    const error = new _errors.default({
+      message: `Direct transfer operation failed: ${reasonText} (${statusCode})`,
+      code: _errors.callCodes.GENERIC_ERROR
+    });
+    context.dispatch(_actions.callActions.directTransferFinish(call.id, {
+      error,
+      transition: {
+        reasonText,
+        statusCode
+      }
+    }));
+
+    // Notify the app that there has been a call state change
+    emitEvent(eventTypes.CALL_STATE_CHANGE, {
+      callId: call.id,
+      previous: {
+        state: call.state,
+        localHold: true,
+        remoteHold: false
+      },
+      error
+    });
+    return error;
+  };
+}
+
+/***/ }),
+
+/***/ 33800:
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports["default"] = createHandler;
+var _actions = __webpack_require__(6313);
+var _eventTypes = __webpack_require__(55166);
+var _constants = __webpack_require__(60683);
+var _call = __webpack_require__(12442);
+// Call plugin.
+
+// Helpers
+
+function createHandler(container) {
+  const {
+    context,
+    CallRequests,
+    CallstackWebrtc,
+    emitEvent,
+    logManager
+  } = container;
+
+  /**
+   * A "session complete" notification has been received, indicating the operation was
+   *    successful. Finish the operation by ending the call.
+   *
+   * @method consultativeSuccess
+   * @param {Object} call The call being operated on.
+   * @param {Object} params Parameters describing the incoming call.
+   * @param {string} [params.reasonText] Human-readable explanation for the call change.
+   * @param {string} [params.statusCode] Code representing the reason for the call change.
+   * @return {Promise<undefined>}
+   */
+  async function directSuccess(call, params) {
+    const log = logManager.getLogger('CALL', call.id);
+    log.info('Received session status completed notice; handling.', {
+      wrtcsSessionId: call.wrtcsSessionId
+    });
+    const {
+      reasonText,
+      statusCode
+    } = params;
+    if (reasonText) {
+      let customStatusCode;
+      if (!statusCode && statusCode !== 0) {
+        customStatusCode = _constants.STATUS_CODES.DIRECT_TRANSFER_SUCCESS;
+      } else {
+        customStatusCode = statusCode;
+      }
+      log.debug(`Session completed notice caused by ${reasonText} (${customStatusCode}).`);
+    }
+    log.info(`Ending webRTC session with id: ${call.webrtcSessionId}, locally ...`);
+    // Close the local webRTC session
+    await CallstackWebrtc.closeCall(call.webrtcSessionId);
+
+    // Update call state to 'Ended'.
+    context.dispatch(_actions.callActions.directTransferFinish(call.id, {
+      transition: {
+        reasonText: _constants.COMPLEX_OPERATION_MESSAGES.DIRECT_TRANSFER_SUCCESS,
+        statusCode: _constants.STATUS_CODES.DIRECT_TRANSFER_SUCCESS
+      }
+    }));
+    try {
+      log.debug('Ending call session on server-side.');
+      await CallRequests.endSession({
+        callId: call.id,
+        wrtcsSessionId: call.wrtcsSessionId,
+        isAnonymous: call.isAnonymous,
+        account: call.account
+      });
+    } catch (error) {
+      // Ignore an error from the REST request. End the call locally no matter what.
+      log.debug(`Error received when attempting to end the session: ${error}.`);
+    } finally {
+      log.info(`Finished ending call. Changing call state to ${_constants.CALL_STATES.ENDED}.`);
+      // TODO: Is this action needed? The call should be 'Ended' by the above action.
+      context.dispatch(_actions.callActions.endCallFinish(call.id, (0, _call.generateEndParams)(call.state, true, params)));
+
+      // Tell the application that no tracks are available any longer.
+      emitEvent(_eventTypes.CALL_TRACKS_REMOVED, {
+        callId: call.id,
+        trackIds: [...call.localTracks, ...call.remoteTracks]
+      });
+      emitEvent(_eventTypes.CALL_STATE_CHANGE, {
+        callId: call.id,
+        previous: {
+          state: call.state,
+          localHold: call.localHold,
+          remoteHold: call.remoteHold
+        }
+      });
+    }
+  }
+  return directSuccess;
 }
 
 /***/ }),
@@ -10311,7 +10386,29 @@ function validate(state, callId, destination) {
 
 /***/ }),
 
-/***/ 71005:
+/***/ 42702:
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+
+var _interopRequireDefault = __webpack_require__(71600);
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports["default"] = initOperation;
+var _receiveEarlyMedia = _interopRequireDefault(__webpack_require__(75934));
+// The factory funnction for the notification handler.
+
+function initOperation(bottle) {
+  // Provide the top-level container to the factory function.
+  //    Otherwise it would get the `notification` sub-container.
+  bottle.factory('Callstack.notifications.receiveEarlyMedia', () => (0, _receiveEarlyMedia.default)(bottle.container));
+}
+
+/***/ }),
+
+/***/ 75934:
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -10320,105 +10417,135 @@ function validate(state, callId, destination) {
 Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
-exports["default"] = callStatusEndedOperation;
+exports["default"] = receiveEarlyMediaOperation;
 var _actions = __webpack_require__(6313);
 var _selectors = __webpack_require__(11430);
-var _constants = __webpack_require__(37409);
-var _constants2 = __webpack_require__(60683);
+var _remoteTracks = __webpack_require__(45294);
 var _eventTypes = __webpack_require__(55166);
-var _call = __webpack_require__(12442);
-// Call plugin.
+var _constants = __webpack_require__(60683);
+// Call Plugin
 
 /**
- * Bottle wrapper for "call status ended" notification handler.
+ * Bottle wrapper for "receive early media" notification handler.
  * @return {Function}
  */
-function callStatusEndedOperation(container) {
+function receiveEarlyMediaOperation(container) {
   const {
     context,
     emitEvent,
-    CallstackWebrtc,
-    logManager
+    logManager,
+    WebRTC,
+    CallstackSDP
   } = container;
 
   /**
-   * Handle a "call ended" notification from the backend.
+   * A "session progress" notification has been received. It contains an "early
+   *    media" SDP (pranswer) that needs to be processed.
    *
-   * This notification means that the session has ended on the other side and we need to end our session as well.
-   * Handling the notification will cleanup the session's media and puts the call in ENDED state.
-   * Responsibilities:
-   *    1. Have the callstack perform the required webRTC cleanup process.
-   *    2. Update call state to ENDED (via redux action).
-   *    3. Emit events to the application about the operation.
-   * @method callStatusUpdateEnded
-   * @param {string}  wrtcsSessionId         ID that the server uses to identify the session.
-   * @param {Object}  params
-   * @param {string}  [params.reasonText]    Human-readable explanation for the call change.
-   * @param {string}  [params.statusCode]    Code representing the reason for the call change.
-   * @param {string}  [params.remoteName]    Name of the remote participant.
-   * @param {string}  [params.remoteNumber]  Number of the remote participant.
+   * Processing a pranswer is done by:
+   *    1. Validating the Call / Session.
+   *    2. Running the SDP through the SDP pipeline.
+   *    3. Setting the SDP as the Session's remote description (as pranswer).
+   *    4. Updating the Call state.
+   *
+   * @method receiveEarlyMedia
+   * @param {Object} params       Parameters describing the notification.
    */
-  async function callStatusUpdateEnded(wrtcsSessionId) {
-    let {
-      reasonText,
-      statusCode,
-      remoteName,
-      remoteNumber
-    } = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+  async function receiveEarlyMedia(wrtcsSessionId, params) {
+    const {
+      customParameters
+    } = params;
+
+    /**
+     * Get the call from state.
+     */
     const currentCall = (0, _selectors.getCallByWrtcsSessionId)(context.getState(), wrtcsSessionId);
     const log = logManager.getLogger('CALL', (currentCall || {}).id);
-    log.info('Received call status ended notice; handling.', {
+    log.info('Received early media notice; handling.', {
       wrtcsSessionId
     });
     if (!currentCall) {
-      log.info('Call ended notice for unknown wrtcsSession. Ignoring.', {
+      log.info('Early media notice for unknown wrtcsSession. Ignoring.', {
         wrtcsSessionId
       });
       return;
     }
-    if (currentCall.state === _constants2.CALL_STATES.ENDED) {
-      log.info('Call ended notice for already Ended call. Ignoring.', {
-        wrtcsSessionId
-      });
-      return;
-    }
-    const prevCall = currentCall;
-    log.debug(`Call ended notice caused by ${reasonText} (Status Code: ${statusCode}).`);
-    await CallstackWebrtc.closeCall(currentCall.webrtcSessionId);
-    log.info(`Finished handling call ended notice. Changing to ${_constants2.CALL_STATES.ENDED}.`);
-    context.dispatch(_actions.callActions.endCallFinish(currentCall.id, (0, _call.generateEndParams)(currentCall.state, false, {
-      reasonText,
-      statusCode,
-      remoteName,
-      remoteNumber
-    })));
-    emitEvent(_eventTypes.CALL_OPERATION, {
-      callId: currentCall.id,
-      operation: _constants.OPERATIONS.END,
-      transition: _constants.OP_TRANSITIONS.FINISH,
-      isLocal: false,
-      previous: {}
-    });
 
-    // Tell the application that no tracks are available any longer.
-    emitEvent(_eventTypes.CALL_TRACKS_REMOVED, {
+    /**
+     * Get the Webrtc Session.
+     */
+    const session = await WebRTC.sessionManager.get(currentCall.webrtcSessionId);
+    if (!session) {
+      log.info('Early media notice for missing wrtcsSession. Ignoring.', {
+        wrtcsSessionId
+      });
+      // TODO: Better error.
+      return;
+    }
+    // Dispatch a custom parameters received action/event if any custom parameters were received as part of the notification
+    if (customParameters) {
+      const customNames = customParameters.map(param => param.name);
+      log.debug(`Received custom parameters as part of the Call: ${customNames}.`);
+      context.dispatch(_actions.callActions.customParametersReceived(currentCall.id, {
+        customParameters
+      }));
+
+      // Emit the associated event with the above action
+      emitEvent(_eventTypes.CUSTOM_PARAMETERS, {
+        callId: currentCall.id,
+        customParameters
+      });
+    }
+    try {
+      /*
+       * Run the remote SDP pranswer through any SDP handlers provided, then set it
+       *    as the Session's remote description.
+       * This is the "pre set remote" stage.
+       */
+      const callConfigOptions = (0, _selectors.getOptions)(context.getState());
+      const sdp = CallstackSDP.runPipeline(callConfigOptions.sdpHandlers, params.sdp, {
+        callId: currentCall.id,
+        type: 'pranswer',
+        step: 'set',
+        endpoint: 'remote'
+      });
+      await session.processAnswer({
+        type: 'pranswer',
+        sdp: sdp
+      });
+    } catch (err) {
+      log.debug(`Failed to process pranswer for Call ${currentCall.id}; ignoring.`);
+      return;
+    }
+
+    // Get the list of all remote tracks being offered in this call. This is a
+    //    new call, so this should be the full list of remote tracks available.
+    const remoteTracks = await (0, _remoteTracks.getAllRemoteTracks)(session);
+    log.info(`Finished handling early media notice. Changing to ${_constants.CALL_STATES.EARLY_MEDIA}.`);
+    context.dispatch(_actions.callActions.sessionProgress(currentCall.id, {
+      // Remote participant's information.
+      remoteParticipant: {
+        displayNumber: params.remoteNumber,
+        displayName: params.remoteName
+      },
+      remoteTracks
+    }));
+
+    // Tell the application that tracks are available on the call now.
+    emitEvent(_eventTypes.CALL_TRACKS_ADDED, {
       callId: currentCall.id,
-      trackIds: [...prevCall.localTracks, ...prevCall.remoteTracks]
+      trackIds: remoteTracks
     });
     emitEvent(_eventTypes.CALL_STATE_CHANGE, {
       callId: currentCall.id,
-      transition: {
-        reasonText,
-        statusCode
-      },
       previous: {
-        state: prevCall.state,
-        localHold: prevCall.localHold,
-        remoteHold: prevCall.remoteHold
+        state: currentCall.state,
+        localHold: currentCall.localHold,
+        remoteHold: currentCall.remoteHold
       }
     });
   }
-  return callStatusUpdateEnded;
+  return receiveEarlyMedia;
 }
 
 /***/ }),
@@ -10436,7 +10563,7 @@ Object.defineProperty(exports, "__esModule", ({
 exports["default"] = initOperation;
 var _end = _interopRequireDefault(__webpack_require__(16108));
 var _validate = _interopRequireDefault(__webpack_require__(84725));
-var _callStatusUpdateEnded = _interopRequireDefault(__webpack_require__(71005));
+var _callStatusUpdateEnded = _interopRequireDefault(__webpack_require__(61881));
 var _constants = __webpack_require__(37409);
 function initOperation(bottle) {
   // Register the individual stages for the operation.
@@ -10608,6 +10735,118 @@ function validate(state, callId) {
       message: 'Call state not found; invalid call ID.'
     });
   }
+}
+
+/***/ }),
+
+/***/ 61881:
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports["default"] = callStatusEndedOperation;
+var _actions = __webpack_require__(6313);
+var _selectors = __webpack_require__(11430);
+var _constants = __webpack_require__(37409);
+var _constants2 = __webpack_require__(60683);
+var _eventTypes = __webpack_require__(55166);
+var _call = __webpack_require__(12442);
+// Call plugin.
+
+/**
+ * Bottle wrapper for "call status ended" notification handler.
+ * @return {Function}
+ */
+function callStatusEndedOperation(container) {
+  const {
+    context,
+    emitEvent,
+    CallstackWebrtc,
+    logManager
+  } = container;
+
+  /**
+   * Handle a "call ended" notification from the backend.
+   *
+   * This notification means that the session has ended on the other side and we need to end our session as well.
+   * Handling the notification will cleanup the session's media and puts the call in ENDED state.
+   * Responsibilities:
+   *    1. Have the callstack perform the required webRTC cleanup process.
+   *    2. Update call state to ENDED (via redux action).
+   *    3. Emit events to the application about the operation.
+   * @method callStatusUpdateEnded
+   * @param {string}  wrtcsSessionId         ID that the server uses to identify the session.
+   * @param {Object}  params
+   * @param {string}  [params.reasonText]    Human-readable explanation for the call change.
+   * @param {string}  [params.statusCode]    Code representing the reason for the call change.
+   * @param {string}  [params.remoteName]    Name of the remote participant.
+   * @param {string}  [params.remoteNumber]  Number of the remote participant.
+   */
+  async function callStatusUpdateEnded(wrtcsSessionId) {
+    let {
+      reasonText,
+      statusCode,
+      remoteName,
+      remoteNumber
+    } = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+    const currentCall = (0, _selectors.getCallByWrtcsSessionId)(context.getState(), wrtcsSessionId);
+    const log = logManager.getLogger('CALL', (currentCall || {}).id);
+    log.info('Received call status ended notice; handling.', {
+      wrtcsSessionId
+    });
+    if (!currentCall) {
+      log.info('Call ended notice for unknown wrtcsSession. Ignoring.', {
+        wrtcsSessionId
+      });
+      return;
+    }
+    if (currentCall.state === _constants2.CALL_STATES.ENDED) {
+      log.info('Call ended notice for already Ended call. Ignoring.', {
+        wrtcsSessionId
+      });
+      return;
+    }
+    const prevCall = currentCall;
+    log.debug(`Call ended notice caused by ${reasonText} (Status Code: ${statusCode}).`);
+    await CallstackWebrtc.closeCall(currentCall.webrtcSessionId);
+    log.info(`Finished handling call ended notice. Changing to ${_constants2.CALL_STATES.ENDED}.`);
+    context.dispatch(_actions.callActions.endCallFinish(currentCall.id, (0, _call.generateEndParams)(currentCall.state, false, {
+      reasonText,
+      statusCode,
+      remoteName,
+      remoteNumber
+    })));
+    emitEvent(_eventTypes.CALL_OPERATION, {
+      callId: currentCall.id,
+      operation: _constants.OPERATIONS.END,
+      transition: _constants.OP_TRANSITIONS.FINISH,
+      isLocal: false,
+      previous: {}
+    });
+
+    // Tell the application that no tracks are available any longer.
+    emitEvent(_eventTypes.CALL_TRACKS_REMOVED, {
+      callId: currentCall.id,
+      trackIds: [...prevCall.localTracks, ...prevCall.remoteTracks]
+    });
+    emitEvent(_eventTypes.CALL_STATE_CHANGE, {
+      callId: currentCall.id,
+      transition: {
+        reasonText,
+        statusCode
+      },
+      previous: {
+        state: prevCall.state,
+        localHold: prevCall.localHold,
+        remoteHold: prevCall.remoteHold
+      }
+    });
+  }
+  return callStatusUpdateEnded;
 }
 
 /***/ }),
@@ -11143,7 +11382,7 @@ Object.defineProperty(exports, "__esModule", ({
 exports["default"] = getStatsOperation;
 var _selectors = __webpack_require__(11430);
 var _kandyWebrtc = __webpack_require__(15203);
-var _version = __webpack_require__(58916);
+var _version = __webpack_require__(96241);
 var _sdkId = _interopRequireDefault(__webpack_require__(15878));
 // Call plugin.
 
@@ -12773,6 +13012,12 @@ Object.defineProperty(exports, "createAnswer", ({
     return _answer.default;
   }
 }));
+Object.defineProperty(exports, "createCallCancelled", ({
+  enumerable: true,
+  get: function () {
+    return _callCancelled.default;
+  }
+}));
 Object.defineProperty(exports, "createConsultTransfer", ({
   enumerable: true,
   get: function () {
@@ -12783,6 +13028,12 @@ Object.defineProperty(exports, "createDirectTransfer", ({
   enumerable: true,
   get: function () {
     return _directTransfer.default;
+  }
+}));
+Object.defineProperty(exports, "createEarlyMedia", ({
+  enumerable: true,
+  get: function () {
+    return _earlyMedia.default;
   }
 }));
 Object.defineProperty(exports, "createEnd", ({
@@ -12944,6 +13195,8 @@ var _end = _interopRequireDefault(__webpack_require__(28732));
 var _forward = _interopRequireDefault(__webpack_require__(34316));
 var _ignore = _interopRequireDefault(__webpack_require__(87969));
 var _reject = _interopRequireDefault(__webpack_require__(48215));
+var _earlyMedia = _interopRequireDefault(__webpack_require__(42702));
+var _callCancelled = _interopRequireDefault(__webpack_require__(93948));
 var _addMedia = _interopRequireDefault(__webpack_require__(50196));
 var _hold = _interopRequireDefault(__webpack_require__(26846));
 var _unhold = _interopRequireDefault(__webpack_require__(10823));
@@ -12981,6 +13234,8 @@ exports["default"] = initOperation;
 var _join = _interopRequireDefault(__webpack_require__(83254));
 var _validate = _interopRequireDefault(__webpack_require__(85344));
 var _remoteAnswer = _interopRequireDefault(__webpack_require__(35845));
+var _remoteSuccess = _interopRequireDefault(__webpack_require__(43271));
+var _remoteFailure = _interopRequireDefault(__webpack_require__(28522));
 var _constants = __webpack_require__(37409);
 // Operations.
 
@@ -13017,7 +13272,11 @@ function initOperation(bottle) {
         stages: {
           validate: _validate.default,
           localOffer: (0, _join.default)(bottle.container),
-          remoteAnswer: (0, _remoteAnswer.default)(bottle.container)
+          // Negotiation handler for the new, joined call.
+          remoteAnswer: (0, _remoteAnswer.default)(bottle.container),
+          // Response handlers for the existing calls.
+          remoteSuccess: (0, _remoteSuccess.default)(bottle.container),
+          remoteFailure: (0, _remoteFailure.default)(bottle.container)
         }
       }, {
         callId,
@@ -13301,6 +13560,192 @@ var _remoteAnswer = _interopRequireDefault(__webpack_require__(43658));
  *    would need any special handling, then its own handler should be implemented.
  */
 var _default = exports["default"] = _remoteAnswer.default;
+
+/***/ }),
+
+/***/ 28522:
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports["default"] = createHandler;
+var _actions = __webpack_require__(6313);
+var _constants = __webpack_require__(60683);
+var eventTypes = _interopRequireWildcard(__webpack_require__(55166));
+var _errors = _interopRequireWildcard(__webpack_require__(83437));
+function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
+function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
+// Call plugin.
+
+// Other plugins.
+
+function createHandler(container) {
+  const {
+    context,
+    emitEvent,
+    logManager
+  } = container;
+
+  /**
+   * A "session failure" notification has been received, indicating the operation failed.
+   *    Finish the operation.
+   *
+   * @method joinFailure
+   * @param {Object} call The primary call for the operation.
+   * @param {Object} params Parameters describing the incoming call.
+   * @param {string} [params.reasonText] Human-readable explanation for the call change.
+   * @param {string} [params.statusCode] Code representing the reason for the call change.
+   * @emits call#call:stateChange Error event for operation; no actual state change.
+   * @return {BasicError}
+   */
+  return function joinFailure(call, params) {
+    const reasonText = params.reasonText || _constants.COMPLEX_OPERATION_MESSAGES.JOIN_FAILURE;
+    const statusCode = params.statusCode || _constants.STATUS_CODES.JOIN_FAILURE;
+    const log = logManager.getLogger('CALL', call.id);
+    log.info('Received call operation failed notice; handling.', {
+      wrtcsSessionId: call.wrtcsSessionId
+    });
+    log.debug(`Processing as a local join failure (${statusCode}).`);
+    log.info('Finished handling call operation failed notice.');
+    const error = new _errors.default({
+      message: `Join operation failed: ${reasonText} (${statusCode})`,
+      code: _errors.callCodes.GENERIC_ERROR
+    });
+    context.dispatch(_actions.callActions.joinFinish(call.id, {
+      error,
+      transition: {
+        reasonText,
+        statusCode
+      }
+    }));
+
+    // Notify the app that there has been a call state change
+    emitEvent(eventTypes.CALL_STATE_CHANGE, {
+      callId: call.id,
+      previous: {
+        state: call.state,
+        localHold: true,
+        remoteHold: false
+      },
+      error
+    });
+    return error;
+  };
+}
+
+/***/ }),
+
+/***/ 43271:
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports["default"] = createHandler;
+var _actions = __webpack_require__(6313);
+var _constants = __webpack_require__(60683);
+var _eventTypes = __webpack_require__(55166);
+var _call = __webpack_require__(12442);
+// Call plugin
+
+// Helpers
+
+/**
+ * Bottle wrapper for the "join success" notification handler.
+ * @return {Function}
+ */
+function createHandler(container) {
+  const {
+    context,
+    CallRequests,
+    CallstackWebrtc,
+    emitEvent,
+    logManager
+  } = container;
+
+  /**
+   * A "session complete" notification has been received, indicating the operation was
+   *    successful. Finish the operation by ending the call and notifying the application.
+   *
+   * @method joinSuccess
+   * @param {Object} call The call being operated on.
+   * @param {Object} params Parameters describing the incoming call.
+   * @param {string} [params.reasonText] Human-readable explanation for the call change.
+   * @param {string} [params.statusCode] Code representing the reason for the call change.
+   * @emits call#call:tracksRemoved All tracks on the call have been removed.
+   * @emits call#call:stateChange The call has changed to 'Ended' state.
+   * @return {Promise<undefined>}
+   */
+  async function joinSuccess(call, params) {
+    const log = logManager.getLogger('CALL', call.id);
+    log.info('Received session status completed notice; handling.', {
+      wrtcsSessionId: call.wrtcsSessionId
+    });
+    const {
+      reasonText,
+      statusCode
+    } = params;
+    if (reasonText) {
+      let customStatusCode;
+      if (!statusCode && statusCode !== 0) {
+        customStatusCode = _constants.STATUS_CODES.JOIN_SUCCESS;
+      } else {
+        customStatusCode = statusCode;
+      }
+      log.debug(`Session completed notice caused by ${reasonText} (${customStatusCode}).`);
+    }
+    log.info(`Ending webRTC session with id: ${call.webrtcSessionId}, locally ...`);
+    // Close the local webRTC session
+    await CallstackWebrtc.closeCall(call.webrtcSessionId);
+
+    // Update call state to 'Ended'.
+    context.dispatch(_actions.callActions.joinFinish(call.id, {
+      transition: {
+        reasonText: _constants.COMPLEX_OPERATION_MESSAGES.JOIN_SUCCESS,
+        statusCode: _constants.STATUS_CODES.JOIN_SUCCESS
+      }
+    }));
+    try {
+      log.debug('Ending call session on server-side.');
+      await CallRequests.endSession({
+        callId: call.id,
+        wrtcsSessionId: call.wrtcsSessionId,
+        isAnonymous: call.isAnonymous,
+        account: call.account
+      });
+    } catch (error) {
+      // Ignore an error from the REST request. End the call locally so the call/application isn't
+      //    stuck in a limbo state.
+      log.debug(`Error received when attempting to end the session: ${error}`);
+    } finally {
+      log.info(`Finished ending call. Changing call state to ${_constants.CALL_STATES.ENDED}.`);
+      // TODO: Is this action needed? The call should be 'Ended' by the above action.
+      context.dispatch(_actions.callActions.endCallFinish(call.id, (0, _call.generateEndParams)(call.state, true, params)));
+
+      // Tell the application that no tracks are available any longer.
+      emitEvent(_eventTypes.CALL_TRACKS_REMOVED, {
+        callId: call.id,
+        trackIds: [...call.localTracks, ...call.remoteTracks]
+      });
+      emitEvent(_eventTypes.CALL_STATE_CHANGE, {
+        callId: call.id,
+        previous: {
+          state: call.state,
+          localHold: call.localHold,
+          remoteHold: call.remoteHold
+        }
+      });
+    }
+  }
+  return joinSuccess;
+}
 
 /***/ }),
 
@@ -13659,6 +14104,7 @@ function createMakeOperation(container) {
    * @param {Object|boolean} media.audio
    * @param {Object|boolean} media.video
    * @param {Object|boolean} media.screen
+   * @param {Object|Array<Object>} media.medias
    * @param {Object} [options={}]
    * @param {string} [options.displayName]
    * @param {call.DSCPControls} [options.dscpControls]
@@ -14104,6 +14550,7 @@ function setupOutgoingSessionOperation(container) {
    * @param {Object|boolean} mediaConstraints.audio
    * @param {Object|boolean} mediaConstraints.video
    * @param {Object|boolean} mediaConstraints.screen
+   * @param {Object|Array<string>} mediaConstraints.tracks
    * @param {Object} options
    * @param {string} options.callId
    * @param {Object} options.defaultPeerConfig
@@ -14129,20 +14576,34 @@ function setupOutgoingSessionOperation(container) {
       return op.isLocal && op.status === _constants.OP_STATUS.ONGOING;
     });
     const operationEvent = callReport.getEvent(operation.eventId);
-    let medias;
-    try {
-      /*
-       * Create local user media for the call.
-       * Expected return:
-       * @param {Array<Obect>} medias List of objects.
-       * @param {Object} mediaObj
-       * @param {Media}  mediaObj.media The WebRTC-Stack Media object.
-       * @param {string} mediaObj.type The kind of media.
-       */
-      medias = await container.CallstackWebrtc.createLocal(mediaConstraints, options.callId);
-    } catch (err) {
-      log.debug('Failed to get media requested for the call.');
-      throw err;
+    let medias = [];
+    // If detached media is passed in, use that.
+    if (mediaConstraints.medias) {
+      for (const media of mediaConstraints.medias) {
+        medias.push({
+          type: media.type,
+          media: await WebRTC.media.get(media.media.id)
+        });
+      }
+    }
+
+    // If any further media is requested by the api but not detached, create it.
+    if (mediaConstraints.audio || mediaConstraints.video || mediaConstraints.screen) {
+      try {
+        /*
+         * Create local user media for the call.
+         * Expected return:
+         * @param {Array<Object>} medias List of objects.
+         * @param {Object} mediaObj
+         * @param {Media}  mediaObj.media The WebRTC-Stack Media object.
+         * @param {string} mediaObj.type The kind of media.
+         */
+        const createdMedias = await container.CallstackWebrtc.createLocal(mediaConstraints, options.callId);
+        medias = medias.concat(createdMedias);
+      } catch (err) {
+        log.debug('Failed to get media requested for the call.');
+        throw err;
+      }
     }
     let session;
     try {
@@ -16273,6 +16734,8 @@ function replaceTrackOperation(container) {
    * @param {string} [mediaConstraints.screen.width] The width of the video.
    * @param {string} [mediaConstraints.screen.height] The height of the video.
    * @param {string} [mediaConstraints.screen.frameRate] The frame rate of the video.
+   *
+   * @param {Array} [mediaConstraints.medias] List of medias containing tracks to be attached to this call.
    */
   async function replaceTrack(callId, trackId, mediaConstraints) {
     const log = logManager.getLogger('CALL', callId);
@@ -16382,6 +16845,7 @@ function webrtcReplaceTrackOperation(container) {
    * @param  {Object|boolean} params.mediaConstraints.audio Audio configs.
    * @param  {Object|boolean} params.mediaConstraints.video Video configs.
    * @param  {Object|boolean} params.mediaConstraints.screenShare Screen sharing configs.
+   * @param {Array} [params.mediaConstraints.medias] List of medias containing tracks to be attached to this call.
    * @returns {Object} replaceTrackResult The result of the track replace operation.
    * @returns {string} replaceTrackResult.newTrackId The ID of the new track that we used to replace the old one.
    * @returns {Object} replaceTrackResult.oldTrackState The state of the old track before it was replaced.
@@ -16403,7 +16867,7 @@ function webrtcReplaceTrackOperation(container) {
       let [key, value] = _ref;
       if (value) {
         noOfTruthyTrackTypes++;
-        newTrackKind = key;
+        newTrackKind = key === 'medias' ? mediaConstraints.medias[0].type : key;
       }
     });
 
@@ -16447,15 +16911,26 @@ function webrtcReplaceTrackOperation(container) {
         message: `Media constraints incompatible for old track kind: ${oldTrackKind}.`
       });
     }
-    let newMedias;
-    try {
-      // Create Media
-      const call = (0, _selectors.getCallByWebrtcSessionId)(context.getState(), sessionId);
-      newMedias = await CallstackWebrtc.createLocal(mediaConstraints, call.id);
-    } catch (err) {
-      // Error thown from call/callstack/webrtc/media/createLocal
-      log.debug('Failed to create local media.');
-      throw err;
+    let newMedias = [];
+    // If detached media is passed in, use that.
+    if (mediaConstraints.medias) {
+      for (const media of mediaConstraints.medias) {
+        newMedias.push({
+          type: media.type,
+          media: await WebRTC.media.get(media.media.id)
+        });
+      }
+    } else {
+      // If no detached media was passed in, create new media.
+      try {
+        // Create Media
+        const call = (0, _selectors.getCallByWebrtcSessionId)(context.getState(), sessionId);
+        newMedias = await CallstackWebrtc.createLocal(mediaConstraints, call.id);
+      } catch (err) {
+        // Error thown from call/callstack/webrtc/media/createLocal
+        log.debug('Failed to create local media.');
+        throw err;
+      }
     }
     let allNewTracks = [];
 
@@ -17726,9 +18201,16 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = initOperation;
-var _sendRingingFeedback = _interopRequireDefault(__webpack_require__(67314));
-var _validate = _interopRequireDefault(__webpack_require__(94368));
+var _sendRingingFeedback = _interopRequireDefault(__webpack_require__(53516));
+var _validate = _interopRequireDefault(__webpack_require__(97965));
+var _callStatusUpdateRinging = _interopRequireDefault(__webpack_require__(43846));
 var _constants = __webpack_require__(37409);
+// Local operation.
+
+// Remote operation.
+
+// Call plugin.
+
 function initOperation(bottle) {
   // Provide the top-level container to the factory functions.
   //    Otherwise they would get the `operations` sub-container.
@@ -17763,11 +18245,14 @@ function initOperation(bottle) {
       local: LocalSendFeedback
     };
   });
+
+  // Register the handler for the "call ringing" notitication.
+  bottle.factory('Callstack.notifications.callStatusUpdateRinging', () => (0, _callStatusUpdateRinging.default)(bottle.container));
 }
 
 /***/ }),
 
-/***/ 67314:
+/***/ 53516:
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -17830,7 +18315,7 @@ function sendRingingFeedbackOperation(container) {
 
 /***/ }),
 
-/***/ 94368:
+/***/ 97965:
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -17886,6 +18371,112 @@ function validate(state, callId) {
 
 /***/ }),
 
+/***/ 43846:
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports["default"] = callStatusRingingOperation;
+var _actions = __webpack_require__(6313);
+var _eventTypes = __webpack_require__(55166);
+var _selectors = __webpack_require__(11430);
+var _constants = __webpack_require__(37409);
+var _constants2 = __webpack_require__(60683);
+var _constants3 = __webpack_require__(42750);
+// Call plugin.
+
+/**
+ * Bottle wrapper for "call status ringing" notification handler.
+ * @return {Function}
+ */
+function callStatusRingingOperation(container) {
+  const {
+    context,
+    CallReporter,
+    emitEvent,
+    logManager
+  } = container;
+
+  /**
+   * A "call status update" has been received and needs to be handled.
+   * The update specifies the server session is in "ringing" state.
+   *
+   * This operation handles the "call ringing" notification by updating the local
+   *    session state to match the server session state. This only affects the
+   *    local call state.
+   * Responsibilities:
+   *    1. Update call state to RINGING (via redux action).
+   *    2. Emit event to application.
+   * @method callStatusUpdateRinging
+   * @param {string} wrtcsSessionId ID that the server uses to identify the session.
+   * @param {Object} [params={}]
+   * @param {string} params.remoteName   Name of the remote participant.
+   * @param {string} params.remoteNumber Number of the remote participant.
+   * @param {Array}  params.customParameters
+   */
+  function callStatusUpdateRinging(wrtcsSessionId) {
+    let params = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+    const call = (0, _selectors.getCallByWrtcsSessionId)(context.getState(), wrtcsSessionId);
+    const log = logManager.getLogger('CALL', (call || {}).id);
+    log.info('Received call status ringing notice; handling.', {
+      wrtcsSessionId
+    });
+    if (!call) {
+      log.info('Call ringing notice for unknown wrtcsSession. Ignoring.', {
+        wrtcsSessionId
+      });
+      return;
+    } else if (call.state !== _constants2.CALL_STATES.INITIATED) {
+      log.info(`Call ringing notice for Call in an invalid state: ${call.state}. Ignoring.`);
+      return;
+    }
+    const callReport = CallReporter.getReport(call.id);
+    const makeOrJoinOp = call.currentOperations.find(op => {
+      return op.isLocal && (op.type === _constants.OPERATIONS.MAKE || op.type === _constants.OPERATIONS.MAKE_ANONYMOUS || op.type === _constants.OPERATIONS.JOIN);
+    });
+    const operationEvent = callReport.getEvent(makeOrJoinOp.eventId);
+    const receiveRingingEvent = operationEvent.addEvent(_constants3.REPORT_EVENTS.REMOTE_RINGING);
+
+    // Dispatch a custom parameters received action/event if any custom parameters were
+    //    received as part of the notification
+    if (params.customParameters) {
+      const customNames = params.customParameters.map(param => param.name);
+      log.debug(`Received custom parameters as part of the Call: ${customNames}.`);
+      context.dispatch(_actions.callActions.customParametersReceived(call.id, {
+        customParameters: params.customParameters
+      }));
+      emitEvent(_eventTypes.CUSTOM_PARAMETERS, {
+        callId: call.id,
+        customParameters: params.customParameters
+      });
+    }
+    log.info(`Finished handling call ringing notice. Changing to ${_constants2.CALL_STATES.RINGING}.`);
+    context.dispatch(_actions.callActions.callRinging(call.id, {
+      // Remote participant's information.
+      remoteParticipant: {
+        displayNumber: params.remoteNumber,
+        displayName: params.remoteName
+      }
+    }));
+    emitEvent(_eventTypes.CALL_STATE_CHANGE, {
+      callId: call.id,
+      previous: {
+        state: call.state,
+        localHold: call.localHold,
+        remoteHold: call.remoteHold
+      }
+    });
+    receiveRingingEvent.endEvent();
+  }
+  return callStatusUpdateRinging;
+}
+
+/***/ }),
+
 /***/ 32132:
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
@@ -17898,7 +18489,6 @@ Object.defineProperty(exports, "__esModule", ({
 }));
 exports["default"] = createSlowFinishHandler;
 var _state = __webpack_require__(65794);
-var _remoteOperation = _interopRequireDefault(__webpack_require__(71146));
 var _hasMediaFlowing = _interopRequireDefault(__webpack_require__(43393));
 var _remoteTracks = _interopRequireDefault(__webpack_require__(45294));
 var _constants = __webpack_require__(60683);
@@ -17930,13 +18520,13 @@ function createSlowFinishHandler(container) {
   const {
     context,
     WebRTC,
+    Callstack,
     CallstackSDP,
     CallstackWebrtc,
     emitEvent,
     logManager,
     CallReporter
   } = container;
-  const getRemoteOperationInfo = (0, _remoteOperation.default)(container);
 
   /**
    * Operation flow handler.
@@ -17979,7 +18569,7 @@ function createSlowFinishHandler(container) {
       remoteOp,
       mediaDiff,
       remoteDesc
-    } = await getRemoteOperationInfo(call, sdp);
+    } = await Callstack.utils.getRemoteOperationInfo(call, sdp);
     const mediaState = (0, _state.getMediaState)(call);
     log.info(`Handling state change as remote ${remoteOp} in ${mediaState} scenario.`);
 
@@ -18199,33 +18789,40 @@ var _constants = __webpack_require__(37409);
 // Operations.
 
 function initOperation(bottle) {
+  // Register the individual stages for the operation.
+  bottle.factory('Callstack.stages.slowStart', () => {
+    return {
+      remote: {
+        // Stages of remote operation.
+        remoteOffer: (0, _start.default)(bottle.container),
+        remoteAnswer: (0, _finish.default)(bottle.container)
+      }
+    };
+  });
   // Remote-only "slow start" operation.
   bottle.factory('Callstack.operations.slowStart', () => {
     const opFactory = bottle.container.Callstack.models.Operation;
 
     /**
-     * Factory function for a RemoteHold operation.
-     * @method RemoteHold
+     * Factory function for a RemoteSlowStart operation.
+     * @method RemoteSlowStart
      * @param {string} callId ID for the call this operation will affect.
      * @return {Operation} An instance of a remote hold operation.
      */
-    function RemoteHold(callId) {
+    function RemoteSlowStart(callId) {
       return opFactory.instance({
         // Operation meta-data.
         type: _constants.OPERATIONS.SLOW_START,
         isNegotiation: true,
         isLocal: false,
         // Operation methods.
-        stages: {
-          remoteOffer: (0, _start.default)(bottle.container),
-          remoteAnswer: (0, _finish.default)(bottle.container)
-        }
+        stages: bottle.container.Callstack.stages.slowStart.remote
       }, {
         callId
       });
     }
     return {
-      remote: RemoteHold
+      remote: RemoteSlowStart
     };
   });
 }
@@ -22242,6 +22839,31 @@ function checkBandwidthControls(bandwidthControls) {
 
 /***/ }),
 
+/***/ 70504:
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+
+var _interopRequireDefault = __webpack_require__(71600);
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports["default"] = initOperation;
+var _remoteOperation = _interopRequireDefault(__webpack_require__(71146));
+/*
+ * Utility helpers available in the Callstack.
+ * This file is where the names for the operations are defined.
+ */
+
+function initOperation(bottle) {
+  // Provide the top-level container to the factory functions.
+  //    Otherwise they would get the `operations` sub-container.
+  bottle.factory('Callstack.utils.getRemoteOperationInfo', () => (0, _remoteOperation.default)(bottle.container));
+}
+
+/***/ }),
+
 /***/ 50654:
 /***/ ((__unused_webpack_module, exports) => {
 
@@ -22518,7 +23140,10 @@ function closeCallOperation(container) {
       return;
     }
     await Promise.all(session.localTracks.map(async track => {
-      await track.stop();
+      const detached = await track.isDetached();
+      if (!detached) {
+        await track.stop();
+      }
     }));
     await session.end();
   }
@@ -22572,10 +23197,7 @@ Object.defineProperty(exports, "__esModule", ({
 exports["default"] = createLocalOperation;
 var _selectors = __webpack_require__(11430);
 var _constants = __webpack_require__(37409);
-var _errors = _interopRequireWildcard(__webpack_require__(83437));
 var _constants2 = __webpack_require__(42750);
-function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
-function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
 // Call Plugin.
 
 // Other plugins.
@@ -22588,8 +23210,7 @@ function createLocalOperation(container) {
   const {
     context,
     CallReporter,
-    logManager,
-    WebRTC
+    WebRTCMediaOperations
   } = container;
 
   /**
@@ -22608,9 +23229,6 @@ function createLocalOperation(container) {
    * @throws {BasicError} Throws a USER_MEDIA_ERROR error if it fails to get media for other reasons.
    */
   async function createLocal(mediaConstraints, callId) {
-    const log = logManager.getLogger('CALLSTACK');
-    log.debug('Getting media with constraints: ', mediaConstraints);
-
     // Add the get user media sub event to the current operation event in the call report
     const call = (0, _selectors.getCallById)(context.getState(), callId);
     const callReport = CallReporter.getReport(callId);
@@ -22620,58 +23238,13 @@ function createLocalOperation(container) {
     const operationEvent = callReport.getEvent(operation.eventId);
     const getUserMediaEvent = operationEvent.addEvent(_constants2.REPORT_EVENTS.GET_USER_MEDIA);
     getUserMediaEvent.addData('mediaConstraints', mediaConstraints);
-    const medias = [];
+    let medias = [];
     try {
-      if (mediaConstraints.screen) {
-        const screenShareConstraints = {
-          video: mediaConstraints.screen
-        };
-        const screenShareMedia = await WebRTC.media.createLocalScreen(screenShareConstraints);
-        medias.push({
-          type: 'screen',
-          media: screenShareMedia
-        });
-      }
-      if (mediaConstraints.audio) {
-        const audioConstraints = {
-          audio: mediaConstraints.audio
-        };
-        const audioMedia = await WebRTC.media.createLocal(audioConstraints);
-        medias.push({
-          type: 'audio',
-          media: audioMedia
-        });
-      }
-      if (mediaConstraints.video) {
-        const videoConstraints = {
-          video: mediaConstraints.video
-        };
-        const videoMedia = await WebRTC.media.createLocal(videoConstraints);
-        medias.push({
-          type: 'video',
-          media: videoMedia
-        });
-      }
+      medias = await WebRTCMediaOperations.createLocal(mediaConstraints);
     } catch (err) {
-      let errMessage;
-      if (err.name === 'OverconstrainedError') {
-        errMessage = `Failed to get media due to constraint: ${err.constraint}.`;
-      } else {
-        errMessage = `Failed to get media => Name: ${err.name}; Error Message :${err.message}.`;
-      }
-      log.info(errMessage);
-
-      // Clean up successful media object when there is partial media failure.
-      for (const eachMedia of medias) {
-        await eachMedia.media.stop();
-      }
-      const errorObj = new _errors.default({
-        message: errMessage,
-        code: _errors.callCodes.USER_MEDIA_ERROR
-      });
-      getUserMediaEvent.setError(errorObj);
+      getUserMediaEvent.setError(err);
       getUserMediaEvent.endEvent();
-      throw errorObj;
+      throw err;
     }
     getUserMediaEvent.endEvent();
     return medias;
@@ -23098,7 +23671,7 @@ exports.fixIceServerUrls = fixIceServerUrls;
 exports.mergeDefaults = mergeDefaults;
 var _logs = __webpack_require__(43862);
 var _utils = __webpack_require__(25189);
-var _version = __webpack_require__(58916);
+var _version = __webpack_require__(96241);
 var _defaults = __webpack_require__(27241);
 var _validation = __webpack_require__(42850);
 // Other plugins.
@@ -23130,6 +23703,7 @@ const defaultOptions = {
   resyncOnConnect: false,
   mediaBrokerOnly: false,
   trickleIceMode: 'NONE',
+  skipIceCollection: false,
   normalizeDestination: true,
   ringingFeedbackMode: 'auto',
   callAuditTimer: 25000,
@@ -23167,6 +23741,7 @@ const v8nValidation = _validation.validation.schema({
   resyncOnConnect: _validation.validation.boolean(),
   mediaBrokerOnly: _validation.validation.boolean(),
   trickleIceMode: _validation.validation.string(),
+  skipIceCollection: _validation.validation.boolean(),
   normalizeDestination: _validation.validation.boolean(),
   ringingFeedbackMode: (0, _validation.enums)(['auto', 'manual']),
   callAuditTimer: _validation.validation.positive(),
@@ -23244,6 +23819,18 @@ function parseConfigs() {
       options.iceCollectionMaxTimeout = options.maxIceTimeout;
     }
     delete options.maxIceTimeout;
+  }
+
+  // TODO: Remove this once trickle ICE is fully supported.
+  if (options.skipIceCollection) {
+    // Prevent conflicting skipIceCollection and trickleIceMode specifications.
+    if (options.trickleIceMode && ['NONE', 'HALF'].includes(options.trickleIceMode)) {
+      log.warn('Conflicting `skipIceCollection` and `trickleIceMode` options specified. Proceeding with `skipIceCollection: true` only.');
+      delete options.trickleIceMode;
+    }
+    // "skipIceCollection: true" is equivalent to "trickleIceMode: 'FULL'", i.e., current trickleIceMode "FULL" implementation
+    //   proceeds to negotiation without waiting for ICE candidate collection to process/complete.
+    options.trickleIceMode = 'FULL';
   }
   return options;
 }
@@ -24089,7 +24676,7 @@ var eventTypes = _interopRequireWildcard(__webpack_require__(55166));
 var _constants = __webpack_require__(60683);
 var _uuid = __webpack_require__(60130);
 var _utils = __webpack_require__(27842);
-const _excluded = ["audio", "audioOptions", "video", "videoOptions", "screen", "screenOptions"]; // Regular Call API.
+const _excluded = ["audio", "audioOptions", "video", "videoOptions", "screen", "screenOptions", "medias"]; // Regular Call API.
 // Call plugin.
 // Libraries.
 // Helpers.
@@ -24119,7 +24706,7 @@ function createAnonApi(container) {
   // Setters.
   'setCustomParameters', 'setSdpHandlers',
   // Call functionality.
-  'hold', 'unhold', 'sendCustomParameters', 'end', 'addMedia', 'removeMedia', 'startVideo', 'stopVideo', 'sendDTMF', 'getStats', 'replaceTrack', 'restartMedia', 'getReport',
+  'hold', 'unhold', 'playAudioFile', 'sendCustomParameters', 'end', 'addMedia', 'removeMedia', 'startVideo', 'stopVideo', 'sendDTMF', 'getStats', 'replaceTrack', 'restartMedia', 'getReport',
   // States,
   'states', 'mediaConnectionStates'];
   const linkAPI = (0, _pick2.default)(anonAPIs, (0, _index.default)(container).call);
@@ -24138,7 +24725,9 @@ function createAnonApi(container) {
    * @param {Object} [credentials.toToken] The encrypted SIP address of the callee.
    * @param {Object} [credentials.authAccount] The account used to authenticate if no token is provided.
    * @param {Object} callOptions Call options.
-   * @param {string} callOptions.from The URI of the user making the call.
+   * @param {string} callOptions.from This identifies the anonymous caller, as seen by the callee.
+   *    If the caller has a registered account and it's subscribed to backend at the time of the anonymous call is made, then its value must use the <username@domain> format.
+   *    Otherwise, in most cases, the value can be any display name that the anonymous user wants to use when making the call.
    * @param {Boolean} [callOptions.audio=true] Whether the call should have audio on start. Currently, audio-less calls are not supported.
    * @param {Object} [callOptions.audioOptions] Options for configuring the call's audio.
    * @param {call.BandwidthControls} [callOptions.bandwidth] Options for configuring media's bandwidth.
@@ -24149,6 +24738,7 @@ function createAnonApi(container) {
    * @param {call.MediaConstraint} [callOptions.videoOptions.height] The height of the video.
    * @param {call.MediaConstraint} [callOptions.videoOptions.width] The width of the video.
    * @param {call.MediaConstraint} [callOptions.videoOptions.frameRate] The frame rate of the video.
+   * @param {Array} [callOptions.medias] List of medias containing tracks to be attached to this call.
    * @param {Boolean} [callOptions.screen=false] Whether the call should have screenshare on start.
    * @param {Object} [callOptions.screenOptions] Options for configuring the call's screenShare.
    * @param {call.MediaConstraint} [callOptions.screenOptions.height] The height of the screenShare.
@@ -24209,16 +24799,29 @@ function createAnonApi(container) {
         video,
         videoOptions,
         screen,
-        screenOptions
+        screenOptions,
+        medias
       } = callOptions,
       options = (0, _objectWithoutProperties2.default)(callOptions, _excluded);
+
+    // Validate mediaConstraints
+    (0, _utils.validateMediaConstraints)({
+      audio,
+      audioOptions,
+      video,
+      videoOptions,
+      screen,
+      screenOptions,
+      medias
+    });
     const mediaConstraints = (0, _utils.formatMediaConstraints)({
       audio,
       audioOptions,
       video,
       videoOptions,
       screen,
-      screenOptions
+      screenOptions,
+      medias
     });
 
     // Create our own call ID for storing in state.
@@ -24270,6 +24873,12 @@ function createAnonApi(container) {
      */
     setTimeout(async () => {
       try {
+        // Validating detached media before attempting to start a call.
+        // This verifies that the detached media being provided is, detached, local
+        // and not already in use by a session.
+        if (medias) {
+          await (0, _utils.validateDetachedMedia)(medias);
+        }
         const participants = {
           to: callee,
           from: options.from
@@ -24758,6 +25367,16 @@ function createAPI(container) {
    *    in order to make a call. If it does not already have permissions to
    *    use the devices, the user may be prompted by the browser to give
    *    permissions.
+   *
+   * Detached media can be used when starting a call. Detached media is created
+   *    locally outside of a call and must be managed by the application. It can
+   *    be used when making a call by passing an array of detached track ids in
+   *    the media object. You can start a call with a mixture of detached
+   *    and requested media, however, you can only use one of each type (audio, video,
+   *    screen). For example, you could include a detached track id for video, and set
+   *    MediaConstraint.audio: true, but you can't set MediaConstraint.video: true
+   *    if you have passed in a detached track id of kind video.
+   *
    * @public
    * @static
    * @memberof call
@@ -24779,11 +25398,19 @@ function createAPI(container) {
    * @param {call.MediaConstraint} [media.screenOptions.height] The height of the screenShare.
    * @param {call.MediaConstraint} [media.screenOptions.width] The width of the screenShare.
    * @param {call.MediaConstraint} [media.screenOptions.frameRate] The frame rate of the screenShare.
+   * @param {Array} [media.medias] List of medias containing tracks to be attached to this call.
    * @param {Object} [options]
    * @param {call.BandwidthControls} [options.bandwidth] Options for configuring media's bandwidth.
    * @param {string} [options.displayName] Custom display name to be provided to the destination. Not supported in all environments and may use default display name.
    * @param {Array<call.CustomParameter>} [options.customParameters] Custom SIP header parameters for the SIP backend.
    * @param {call.DSCPControls} [options.dscpControls] Options for configuring DSCP markings on the media traffic
+   * @throws {BasicError} Throws an error if mediaConstraints.medias is not an array.
+   * @throws {BasicError} Throws an error if mediaConstraints.medias Objects are missing `media` and `type` properties.
+   * @throws {BasicError} Throws an error if mediaConstraints contains duplicate media kinds.
+   * @throws {BasicError} Throws an error if any tracks in mediaConstraints.medias are not detached.
+   * @throws {BasicError} Throws an error if any tracks in mediaConstraints.medias are not local.
+   * @throws {BasicError} Throws an error if any tracks in mediaConstraints.medias are already in use by a session.
+   * @throws {BasicError} Throws an error if mediaConstraints.medias contains any type other than Object containing `media` and `type` properties.
    * @returns {string} The generated ID of the newly created call.
    * @example
    * // Listen for the event emitted after making a call.
@@ -24812,6 +25439,9 @@ function createAPI(container) {
   function make(destination, media) {
     let options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
     log.debug(API_LOG_TAG + 'call.make: ', destination, media, options);
+
+    // Validate mediaConstraints
+    (0, _utils.validateMediaConstraints)(media);
     const callId = (0, _uuid.v4)();
     const participants = {
       to: destination,
@@ -24847,6 +25477,12 @@ function createAPI(container) {
         callId
       });
       try {
+        // Validating detached media before attempting to start a call.
+        // This verifies that the detached media being provided is, detached, local
+        // and not already in use by a session.
+        if (media.medias) {
+          await (0, _utils.validateDetachedMedia)(media.medias);
+        }
         await CallManager.make(callId, participants, mediaConstraints, options);
 
         // Tell the application that the call has finished "initiating".
@@ -24925,6 +25561,7 @@ function createAPI(container) {
    * @param {call.MediaConstraint} [media.screenOptions.height] The height of the screenShare.
    * @param {call.MediaConstraint} [media.screenOptions.width] The width of the screenShare.
    * @param {call.MediaConstraint} [media.screenOptions.frameRate] The frame rate of the screenShare.
+   * @param {Array} [media.medias] List of medias containing tracks to be attached to this call.
    * @param {Object} [options]
    * @param {call.BandwidthControls} [options.bandwidth] Options for configuring media's bandwidth.
    * @param {Array<call.CustomParameter>} [options.customParameters] Custom SIP header parameters for the SIP backend.
@@ -24945,6 +25582,9 @@ function createAPI(container) {
   async function answer(callId, media) {
     let options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
     log.debug(API_LOG_TAG + 'call.answer: ', callId, media, options);
+
+    // Validate mediaConstraints
+    (0, _utils.validateMediaConstraints)(media);
     const mediaConstraints = (0, _utils.formatMediaConstraints)(media);
 
     // Dispatch the "answer call" action so the call is updated in state
@@ -24953,6 +25593,12 @@ function createAPI(container) {
       mediaConstraints
     }, options)));
     try {
+      // Validating detached media before attempting to start a call.
+      // This verifies that the detached media being provided is, detached, local
+      // and not already in use by a session.
+      if (media.medias) {
+        await (0, _utils.validateDetachedMedia)(media.medias);
+      }
       const call = (0, _selectors.getCallById)(context.getState(), callId);
       if (call && call.isSlowStart) {
         await CallManager.answerSlow(callId, mediaConstraints, options);
@@ -25524,6 +26170,7 @@ function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t =
  * @memberof call
  * @property {string} id The ID of the Media object.
  * @property {boolean} local Indicator on whether this media is local or remote.
+ * @property {boolean} detached Indicator on whether this media contains detached tracks.
  * @property {Array<call.TrackObject>} tracks A list of Track objects that are contained in this Media object.
  */
 
@@ -25845,6 +26492,7 @@ function createAPI(container) {
    * @param {boolean} [media.audio=false] Whether to add audio to the call.
    * @param {boolean} [media.video=false] Whether to add video to the call.
    * @param {boolean} [media.screen=false] Whether to add the screenshare to the call. (Note: Screensharing is not supported on iOS Safari.)
+   * @param {Array}   [media.medias] List of medias containing tracks to be attached to this call.
    * @param {Object}  [media.audioOptions] Options for configuring the call's audio.
    * @param {Object}  [media.videoOptions] Options for configuring the call's video.
    * @param {Object}  [media.screenOptions] Options for configuring the call's screenShare.
@@ -25859,11 +26507,28 @@ function createAPI(container) {
    * @param {Object} [options]
    * @param {call.BandwidthControls} [options.bandwidth] Options for configuring media's bandwidth.
    * @param {call.DSCPControls} [options.dscpControls] Options for configuring DSCP markings on the media traffic
+   * @throws {BasicError} Throws an error if mediaConstraints.medias is not an array.
+   * @throws {BasicError} Throws an error if mediaConstraints.medias Objects are missing `media` and `type` properties.
+   * @throws {BasicError} Throws an error if mediaConstraints contains duplicate media kinds.
+   * @throws {BasicError} Throws an error if any tracks in mediaConstraints.medias are not detached.
+   * @throws {BasicError} Throws an error if any tracks in mediaConstraints.medias are not local.
+   * @throws {BasicError} Throws an error if any tracks in mediaConstraints.medias are already in use by a session.
+   * @throws {BasicError} Throws an error if mediaConstraints.medias contains any type other than Object containing `media` and `type` properties.
    */
   async function addMedia(callId) {
     let media = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
     let options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
     log.debug(API_LOG_TAG + 'call.addMedia: ', callId, media, options);
+
+    // Validate mediaConstraints
+    (0, _utils.validateMediaConstraints)(media);
+
+    // Validating detached media before attempting to start a call.
+    // This verifies that the detached media being provided is, detached, local
+    // and not already in use by a session.
+    if (media.medias) {
+      await (0, _utils.validateDetachedMedia)(media.medias);
+    }
     const mediaConstraints = (0, _utils.formatMediaConstraints)(media);
     context.dispatch(_actions.callActions.addMedia(callId, _objectSpread({
       mediaConstraints
@@ -25974,7 +26639,7 @@ function createAPI(container) {
     const mediaConstraints = {
       audio: false,
       video: !(0, _isEmpty2.default)(videoOptions) ? videoOptions : true,
-      screenShare: false
+      screen: false
     };
     const action = _actions.callActions.addBasicMedia(callId, _objectSpread({
       mediaConstraints,
@@ -26168,6 +26833,14 @@ function createAPI(container) {
    * @param {call.MediaConstraint} [media.videoOptions.height] The height of the video.
    * @param {call.MediaConstraint} [media.videoOptions.width] The width of the video.
    * @param {call.MediaConstraint} [media.videoOptions.frameRate] The frame rate of the video.
+   * @param {Array} [media.medias] List of medias containing tracks to be attached to this call.
+   * @throws {BasicError} Throws an error if mediaConstraints.medias is not an array.
+   * @throws {BasicError} Throws an error if mediaConstraints.medias Objects are missing `media` and `type` properties.
+   * @throws {BasicError} Throws an error if mediaConstraints contains duplicate media kinds.
+   * @throws {BasicError} Throws an error if any tracks in mediaConstraints.medias are not detached.
+   * @throws {BasicError} Throws an error if any tracks in mediaConstraints.medias are not local.
+   * @throws {BasicError} Throws an error if any tracks in mediaConstraints.medias are already in use by a session.
+   * @throws {BasicError} Throws an error if mediaConstraints.medias contains any type other than Object containing `media` and `type` properties.
    * @example
    * const callId = ...
    * // Get the video track used by the call.
@@ -26202,6 +26875,16 @@ function createAPI(container) {
    */
   async function replaceTrack(callId, trackId, media) {
     log.debug(API_LOG_TAG + 'call.replaceTrack: ', callId, trackId, media);
+
+    // Validate mediaConstraints
+    (0, _utils.validateMediaConstraints)(media);
+
+    // Validating detached media before attempting to start a call.
+    // This verifies that the detached media being provided is, detached, local
+    // and not already in use by a session.
+    if (media.medias) {
+      await (0, _utils.validateDetachedMedia)(media.medias);
+    }
     const mediaConstraints = (0, _utils.formatMediaConstraints)(media);
     context.dispatch(_actions.callActions.replaceTrack(callId, {
       trackId,
@@ -28580,7 +29263,12 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports.formatMediaConstraints = formatMediaConstraints;
+exports.validateDetachedMedia = validateDetachedMedia;
+exports.validateMediaConstraints = validateMediaConstraints;
 var _isEmpty2 = _interopRequireDefault(__webpack_require__(8288));
+var _errors = _interopRequireWildcard(__webpack_require__(83437));
+function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
+function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
 // Lodash FP
 
 /**
@@ -28597,15 +29285,108 @@ var _isEmpty2 = _interopRequireDefault(__webpack_require__(8288));
  * @param {Object} media.videoOptions
  * @param {boolean} media.screen
  * @param {Object} media.screenOptions
+ * @param {Array} media.medias
  * @returns {Object}
  */
 function formatMediaConstraints(media) {
   const mediaConstraints = {
     audio: media.audio && !(0, _isEmpty2.default)(media.audioOptions) ? media.audioOptions : media.audio,
     video: media.video && !(0, _isEmpty2.default)(media.videoOptions) ? media.videoOptions : media.video,
-    screen: media.screen && !(0, _isEmpty2.default)(media.screenOptions) ? media.screenOptions : media.screen
+    screen: media.screen && !(0, _isEmpty2.default)(media.screenOptions) ? media.screenOptions : media.screen,
+    medias: media.medias
   };
   return mediaConstraints;
+}
+
+/**
+ * Helper function to validate mediaConstraints for Call APIs.
+ *
+ * This function will validate the following scenarios:
+ *   1. Duplicate media types are passed as detached media and requested media.
+ *   2. Invalid type is passed as `medias`. Should be an array of media objects.
+ *   3. Any tracks in the `medias` are not detached.
+ *   4. Any tracks in the `medias` are not local.
+ *   5. Any track is already in use by a session (including the one in context).
+ *
+ * @method validateMediaConstraints
+ * @param {Object} media The mediaConstraints being validated.
+ * @throws {BasicError} Throws an error if mediaConstraints.medias is not an array.
+ * @throws {BasicError} Throws an error if mediaConstraints.medias Objects are missing `media` and `type` properties.
+ * @throws {BasicError} Throws an error if mediaConstraints contains duplicate media kinds.
+ */
+function validateMediaConstraints(media) {
+  // If no media objects are passed in, no need to validate.
+  if (!media.medias) {
+    return;
+  }
+  // Validate correct media objects
+  if (!Array.isArray(media.medias)) {
+    throw new _errors.default({
+      message: `Incorrect type for mediaConstraints.medias. Must be an array of media objects.`,
+      code: _errors.callCodes.GENERIC_ERROR
+    });
+  }
+  media.medias.forEach(media => {
+    if (!media.type || !media.media) {
+      throw new _errors.default({
+        message: `Incorrect media objects.`,
+        code: _errors.callCodes.GENERIC_ERROR
+      });
+    }
+  });
+
+  // Validate duplicate media kinds
+  if (media.medias) {
+    const requestedMedia = [];
+    if (media.audio) {
+      requestedMedia.push('audio');
+    }
+    if (media.video) {
+      requestedMedia.push('video');
+    }
+    if (media.screen) {
+      requestedMedia.push('screen');
+    }
+
+    // Get tracks for each media and check if kind equals any of the requested media and throw if it does.
+    const trackKinds = [];
+    media.medias.forEach(media => {
+      trackKinds.push(media.type);
+    });
+    const duplicateKinds = requestedMedia.filter(mediaKind => trackKinds.includes(mediaKind));
+    // Throw an error if requested media kind has also been passed in as detached media
+    if (duplicateKinds.length > 0) {
+      throw new _errors.default({
+        message: `Both detached media tracks and media constraints provided for ${duplicateKinds}`,
+        code: _errors.callCodes.GENERIC_ERROR
+      });
+    }
+  }
+}
+
+/**
+ * Helper function to validate detached media for Call APIs.
+ * @method validateDetachedMedia
+ * @param {Object} medias The detached media being validated.
+ * @throws {BasicError} Throws an error if any tracks in mediaConstraints.medias are not detached.
+ * @throws {BasicError} Throws an error if any tracks in mediaConstraints.medias are not local.
+ */
+async function validateDetachedMedia(medias) {
+  // Validate that all tracks are detached, local and not in use by an existing session.
+  for (const media of medias) {
+    if (!media.media.detached) {
+      throw new _errors.default({
+        message: `Media: ${media.media.id} is not detached.`,
+        code: _errors.callCodes.GENERIC_ERROR
+      });
+    }
+    if (!media.media.local) {
+      throw new _errors.default({
+        message: `Media: ${media.media.id} is not local. Only local media may be used when adding media to a call.`,
+        code: _errors.callCodes.GENERIC_ERROR
+      });
+    }
+  }
 }
 
 /***/ }),
@@ -30400,9 +31181,14 @@ function negotiationRequests(container) {
    * Responds to a received remote offer to update the webRTC session.
    * Link-specific signaling function.
    *
-   * This request responds to a "call update" request as part of renegotiation. This
+   * This request responds to a "call update" request as part of renegotiation.
+   * This request handles both success and failure scenarios.
+   *
+   * In the case of a success scenario, this request
    *    updates the server session with an answer SDP, which in turn should notify
    *    the remote end of the session with the response.
+   * In the case of a failure scenario, this request responds with a status code.
+   *
    * Assumptions:
    *    1. The current user is authenticated.
    * Responsibilities:
@@ -30424,14 +31210,19 @@ function negotiationRequests(container) {
       method: 'PUT'
     };
     const bodyType = callInfo.isAnonymous && callInfo.account ? 'callMeRequest' : 'callControlRequest';
-    options.body = JSON.stringify({
+    const body = {
       [bodyType]: {
-        type: 'respondCallUpdate',
-        sdp: callInfo.answer,
-        customParameters: callInfo.customParameters,
-        customBodies: callInfo.customBodies
+        type: 'respondCallUpdate'
       }
-    });
+    };
+    if (callInfo.statusCode) {
+      body[bodyType].statusCode = `${callInfo.statusCode}`;
+    } else {
+      body[bodyType].sdp = callInfo.answer;
+      body[bodyType].customParameters = callInfo.customParameters;
+      body[bodyType].customBodies = callInfo.customBodies;
+    }
+    options.body = JSON.stringify(body);
     const targetCall = (0, _selectors2.getCallByWrtcsSessionId)(context.getState(), callInfo.wrtcsSessionId);
     // Get the report for this call id
     const report = CallReporter.getReport(targetCall.id);
@@ -33380,7 +34171,10 @@ const usersCodes = exports.usersCodes = {
  * @name webrtcCodes
  */
 const webrtcCodes = exports.webrtcCodes = {
-  INVALID_PARAM: 'webrtc:1'
+  INVALID_PARAM: 'webrtc:1',
+  INVALID_TRACK_ID: 'webrtc:2',
+  TRACK_IN_USE: 'webrtc:3',
+  TRACK_NOT_LOCAL: 'webrtc:4'
 };
 
 /**
@@ -33697,7 +34491,7 @@ function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return 
 function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
 // Events plugin.
 
-// Logs
+// Logs, TODO: Remove this once the middleware is removed.
 
 const log = _logs.logManager.getLogger('EVENTS');
 
@@ -33716,9 +34510,12 @@ function eventsImplementation() {
 
   // Provide the emit function to the bottle container.
   //    This function will be provided to other plugins for emitting events.
-  bottle.value('emitEvent', function emitEvent(type, args) {
-    log.info(`Emitting event: ${type}`, args);
-    emitter.emit(type, args);
+  bottle.factory('emitEvent', () => {
+    const log = bottle.container.logManager.getLogger('EVENTS');
+    return function emitEvent(type, args) {
+      log.info(`Emitting event: ${type}`, args);
+      emitter.emit(type, args);
+    };
   });
   const Events = {
     on: (eventType, listener) => {
@@ -34202,26 +34999,25 @@ var _reduxSaga = _interopRequireDefault(__webpack_require__(7));
 var _effects = __webpack_require__(27422);
 var _bottlejs = _interopRequireDefault(__webpack_require__(39146));
 var _utils = __webpack_require__(25189);
-var _version = __webpack_require__(58916);
+var _version = __webpack_require__(96241);
 var _intervalFactory = _interopRequireDefault(__webpack_require__(93725));
-var _logs = __webpack_require__(43862);
 var _validation = __webpack_require__(42850);
 const _excluded = ["common"]; // Libraries.
 // Helpers.
-// Plugins.
 // Parse and/or Validate
 function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
 function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { (0, _defineProperty2.default)(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
-const log = _logs.logManager.getLogger('FACTORY');
 const factoryDefaults = {
   enableReduxDevTools: false,
-  reduxDevToolsName: 'WebRTC SDK'
+  reduxDevToolsName: 'WebRTC SDK',
+  disableProxy: false
 };
 
 // config validation
 const v8nValidation = _validation.validation.schema({
   enableReduxDevTools: _validation.validation.boolean(),
-  reduxDevToolsName: _validation.validation.string()
+  reduxDevToolsName: _validation.validation.string(),
+  disableProxy: _validation.validation.boolean()
 });
 const parseOptions = (0, _validation.parse)('common', v8nValidation);
 
@@ -34237,9 +35033,7 @@ const parseOptions = (0, _validation.parse)('common', v8nValidation);
  */
 function factory(pluginFactories) {
   let sdkOptions = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-  // Log the SDK's version (templated by webpack) on initialization.
   const version = (0, _version.getVersion)();
-  log.info(`SDK version: ${version}`);
 
   // Clone the options so we don't mutate the application's object.
   const clonedOptions = (0, _cloneDeep2.default)(sdkOptions);
@@ -34253,6 +35047,15 @@ function factory(pluginFactories) {
 
   // Create a bottle which will act as a container for plugin components.
   const bottle = new _bottlejs.default();
+  bottle.defer(container => {
+    // Log the SDK's version after the plugins have been initialized.
+    if (container.logManager && container.logManager.getLogger) {
+      const log = container.logManager.getLogger('FACTORY');
+      if (log && log.info) {
+        log.info(`SDK version: ${version}`);
+      }
+    }
+  });
   var sagas = [];
   var store;
   var middlewares = [];
@@ -34308,6 +35111,11 @@ function factory(pluginFactories) {
   let plugins = (0, _map2.default)(function (plugin) {
     // Make sure the plugin factory is actually a function.
     if (!plugin || !plugin.fn || typeof plugin.fn !== 'function') {
+      return false;
+    }
+
+    // Ignore the Proxy Plugin if not configured to allow it.
+    if (plugin.name === 'proxy' && options.disableProxy) {
       return false;
     }
 
@@ -36828,9 +37636,6 @@ function createOperation(container) {
     // If a push registration endpoint was configured, use that instead of default.
     if (pushRegistration) {
       connection.server = (0, _defaults2.default)(connection.server, pushRegistration);
-      connection.protocol = (0, _defaults2.default)(connection.protocol, pushRegistration);
-      connection.port = (0, _defaults2.default)(connection.port, pushRegistration);
-      connection.version = (0, _defaults2.default)(connection.version, pushRegistration);
     }
     log.info('Registering device token for PUSH notifications...');
     return await NotificationRequests.pushNotificationsRegistration(connection, _objectSpread({}, params));
@@ -36885,9 +37690,6 @@ function createOperation(container) {
     // If a push registration endpoint was configured, use that instead of default.
     if (pushRegistration) {
       connection.server = (0, _defaults2.default)(connection.server, pushRegistration);
-      connection.protocol = (0, _defaults2.default)(connection.protocol, pushRegistration);
-      connection.port = (0, _defaults2.default)(connection.port, pushRegistration);
-      connection.version = (0, _defaults2.default)(connection.version, pushRegistration);
     }
     log.info('Un-registering device token for PUSH notifications...');
     return await NotificationRequests.pushNotificationsDeRegistration(connection, {
@@ -38102,7 +38904,7 @@ var authorizations = _interopRequireWildcard(__webpack_require__(55689));
 var _makeRequest = _interopRequireDefault(__webpack_require__(87569));
 var _utils = __webpack_require__(70720);
 var _selectors = __webpack_require__(46942);
-var _version = __webpack_require__(58916);
+var _version = __webpack_require__(96241);
 var _utils2 = __webpack_require__(25189);
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
 function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
@@ -38253,7 +39055,7 @@ var _cloneDeep2 = _interopRequireDefault(__webpack_require__(33904));
 var _selectors = __webpack_require__(50647);
 var _selectors2 = __webpack_require__(46942);
 var _logs = __webpack_require__(43862);
-var _version = __webpack_require__(58916);
+var _version = __webpack_require__(96241);
 var _utils = __webpack_require__(25189);
 var _effects = __webpack_require__(27422);
 // Request plugin.
@@ -38965,8 +39767,10 @@ function watchMediaManagerEvents(manager, handler) {
     (0, _media.default)(media, handler);
 
     // Pass the action to the handler to be handled as appropriate
+    const detached = media.getTracks().some(track => track.isDetached());
     const newMediaAction = _actions.mediaActions.newMedia(id, {
       local: media.getState().isLocal,
+      detached,
       tracks: media.getTracks().map(track => track.id)
     });
     handler(newMediaAction);
@@ -39251,6 +40055,7 @@ Object.defineProperty(exports, "__esModule", ({
 }));
 exports["default"] = watchTrackManagerEvents;
 var _actions = __webpack_require__(37992);
+var _eventTypes = __webpack_require__(46215);
 var _track = _interopRequireDefault(__webpack_require__(80027));
 // Call plugin.
 
@@ -39288,7 +40093,17 @@ function watchTrackManagerEvents(manager, handler) {
   const trackRemoved = id => {
     // Pass the action to the handler to be handled as appropriate
     const trackRemovedAction = _actions.trackActions.trackRemoved(id);
-    handler(trackRemovedAction);
+    // Check if track is detached and emit a 'track ended' event if it is
+    const track = manager.get(id);
+    const trackEndedEvent = track.isDetached() ? {
+      type: _eventTypes.TRACK_ENDED,
+      args: {
+        trackId: id,
+        isLocal: true,
+        detached: true
+      }
+    } : undefined;
+    handler(trackRemovedAction, trackEndedEvent);
   };
 
   // Listen for track add or remove events
@@ -39405,16 +40220,19 @@ function initWebrtc(container) {
  * @method initLogLevel
  * @param  {Object} container The bottle container.
  */
-function* initLogLevel(container) {
+function initLogLevel(container) {
   const {
+    context,
     WebRTCLogOperations: operations
   } = container;
   // Get the WEBRTC logger's level.
-  const level = (0, _selectors.getLevel)('WEBRTC');
+  const level = (0, _selectors.getLevel)(context.getState(), 'WEBRTC');
   // Call the "set log level" saga for the WEBRTC logger, pretending that we
   //    received an action updating its level.
   operations.updateLogLevel({
-    WEBRTC: level
+    payload: {
+      WEBRTC: level
+    }
   });
 }
 
@@ -39870,6 +40688,7 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = createAPI;
+var _isPlainObject2 = _interopRequireDefault(__webpack_require__(1449));
 var _selectors = __webpack_require__(30105);
 var _media = _interopRequireDefault(__webpack_require__(45662));
 // Webrtc plugin.
@@ -39921,6 +40740,10 @@ function createAPI(container) {
    */
   function setupProxy(proxies) {
     log.debug(API_LOG_TAG + 'webrtc.setupProxy');
+    if (!(0, _isPlainObject2.default)(proxies)) {
+      log.error('Provided proxies is not an appropriate object.');
+      return;
+    }
     operations.setupProxies(proxies);
   }
 
@@ -39930,7 +40753,7 @@ function createAPI(container) {
    * @method teardownProxy
    */
   async function teardownProxy() {
-    log.debug(API_LOG_TAG + 'webrtc.setupProxy');
+    log.debug(API_LOG_TAG + 'webrtc.teardownProxy');
     await operations.teardownProxies();
   }
   return {
@@ -40087,6 +40910,71 @@ function createMediaAPI(container) {
         return;
       }
       emitEvent(eventTypes.DEVICES_CHANGED, {}); // empty payload.
+    },
+    /**
+     * Create local media Tracks.
+     * @public
+     * @static
+     * @memberof media
+     * @method createLocalMedia
+     * @param {Object} mediaConstraints Collection of constraints for each media type.
+     * @param {boolean|Object} [mediaConstraints.audio] Native media constraints for audio.
+     * @param {boolean|Object} [mediaConstraints.video] Native media constraints for video.
+     * @returns {Promise} Resolves with an array of objects containing both a media type and a media object.
+     * @throws {BasicError} Throws a USER_MEDIA_ERROR error if any any other media type other than audio, video or screen is passed in mediaConstraints.
+     * @throws {BasicError} Throws a USER_MEDIA_ERROR error if provided constraints cannot be fulfilled.
+     * @throws {BasicError} Throws a USER_MEDIA_ERROR error if it fails to get media for other reasons.
+     * @example
+     * // Create detached media for your local video
+     * const medias = await client.media.createLocalMedia({ video: true })
+     */
+    async createLocalMedia(mediaConstraints) {
+      log.debug(`${API_LOG_TAG}media.createLocalMedia: `, mediaConstraints);
+      const medias = await operations.createLocal(mediaConstraints, true);
+      return medias.map(media => {
+        return {
+          type: media.type,
+          media: (0, _selectors.getMediaById)(context.getState(), media.media.id)
+        };
+      });
+    },
+    /**
+     * Get local media Tracks.
+     * @public
+     * @static
+     * @memberof media
+     * @method getLocalMedia
+     * @returns {Promise} Resolves with an array of objects containing both a media type and a media object.
+     * @example
+     * await client.media.createLocalMedia({ video: true })
+     * // Get all detached tracks
+     * const medias = await client.media.getLocalMedia()
+     */
+    async getLocalMedia() {
+      log.debug(API_LOG_TAG + 'media.getLocalMedia');
+      const medias = await operations.getLocalMedia();
+      return medias.map(media => {
+        return {
+          type: media.type,
+          media: (0, _selectors.getMediaById)(context.getState(), media.media.id)
+        };
+      });
+    },
+    /**
+     * Dispose local media Tracks.
+     * @public
+     * @static
+     * @memberof media
+     * @method disposeLocalMedia
+     * @param {string} trackId An id to a track to be cleaned up.
+     * @returns {Promise<undefined>}
+     * @throws {BasicError} An error indicating that trackId must be defined.
+     * @throws {BasicError} An error indicating that the track that is to be disposed is in use by a call.
+     * @throws {BasicError} An error indicating that the track that is to be disposed was not created locally.
+     */
+    async disposeLocalMedia(trackId) {
+      log.debug(API_LOG_TAG + 'media.disposeLocalMedia: ' + trackId);
+      await operations.disposeLocalMedia(trackId);
     },
     /**
      * Render Media Tracks in a container.
@@ -41088,6 +41976,170 @@ function createMediaOperations(container) {
   const log = logManager.getLogger('MEDIA');
 
   /**
+   * Create local Media object(s).
+   * The underlying WebRTC APIs used are getUserMedia and getDisplayMedia.
+   * See https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia
+   *    for more information.
+   * @method createLocal
+   * @async
+   * @param  {Object} mediaConstraints Collection of constraints for each media type.
+   * @param  {MediaStreamConstraints} mediaConstraints.audio Native media contraints for audio.
+   * @param  {MediaStreamConstraints} mediaConstraints.video Native media constraints for video.
+   * @param  {MediaStreamConstraints} mediaConstraints.screen Native media constraints for display (screen).
+   * @param {boolean} detached Specifies if the track is detached and can be used with or without a call.
+   * @return {Array<Object>} List of objects containing the media type and the media itself.
+   * @throws {BasicError} Throws a USER_MEDIA_ERROR error if any any other media type other than audio, video or screen is passed in mediaConstraints.
+   * @throws {BasicError} Throws a USER_MEDIA_ERROR error if provided constraints cannot be fulfilled.
+   * @throws {BasicError} Throws a USER_MEDIA_ERROR error if it fails to get media for other reasons.
+   */
+  async function createLocal(mediaConstraints) {
+    let detached = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+    log.debug('Getting media with constraints: ', mediaConstraints);
+
+    // Only allow media types 'audio', 'video', and 'screen'
+    if (!mediaConstraints || !Object.keys(mediaConstraints).every(mediaType => ['audio', 'video', 'screen', 'medias'].includes(mediaType))) {
+      throw new _errors.default({
+        code: _errors.callCodes.USER_MEDIA_ERROR,
+        message: `mediaConstraints must be an object containing at least one of the following media types (and only these types): 'audio', 'video', and 'screen'`
+      });
+    }
+    const medias = [];
+    try {
+      if (mediaConstraints.screen) {
+        const screenShareConstraints = {
+          video: mediaConstraints.screen
+        };
+        const screenShareMedia = await WebRTC.media.createLocalScreen(screenShareConstraints, detached);
+        medias.push({
+          type: 'screen',
+          media: screenShareMedia
+        });
+      }
+      if (mediaConstraints.audio) {
+        const audioConstraints = {
+          audio: mediaConstraints.audio
+        };
+        const audioMedia = await WebRTC.media.createLocal(audioConstraints, detached);
+        medias.push({
+          type: 'audio',
+          media: audioMedia
+        });
+      }
+      if (mediaConstraints.video) {
+        const videoConstraints = {
+          video: mediaConstraints.video
+        };
+        const videoMedia = await WebRTC.media.createLocal(videoConstraints, detached);
+        medias.push({
+          type: 'video',
+          media: videoMedia
+        });
+      }
+    } catch (err) {
+      let errMessage;
+      if (err.name === 'OverconstrainedError') {
+        errMessage = `Failed to get media due to constraint: ${err.constraint}.`;
+      } else {
+        errMessage = `Failed to get media => Name: ${err.name}; Error Message :${err.message}.`;
+      }
+      log.info(errMessage);
+
+      // Clean up successful media object when there is partial media failure.
+      for (const eachMedia of medias) {
+        await eachMedia.media.stop();
+      }
+      const errorObj = new _errors.default({
+        message: errMessage,
+        code: _errors.callCodes.USER_MEDIA_ERROR
+      });
+      throw errorObj;
+    }
+    return medias;
+  }
+
+  /**
+   * Get local media.
+   * @method getLocalMedia
+   * @return {Promise} Resolves to a list of objects containing the media type and the media itself.
+   */
+  async function getLocalMedia() {
+    log.debug('Getting local media');
+    const mediaIds = await WebRTC.media.getAll();
+    const detachedMedias = [];
+    for (const mediaId of mediaIds) {
+      const media = await WebRTC.media.get(mediaId);
+      if (media) {
+        const tracks = await media.getTracks();
+        for (const track of tracks) {
+          const trackState = await track.getState();
+          if (trackState.detached) {
+            detachedMedias.push({
+              type: trackState.kind,
+              media
+            });
+            break;
+          }
+        }
+      }
+    }
+    return detachedMedias;
+  }
+
+  /**
+   * Dispose local media.
+   * @method disposeLocalMedia
+   * @param {string} trackId A track identifier to dispose of from media.
+   * @throws {BasicError} An error indicating that trackId must be defined.
+   * @throws {BasicError} An error indicating that the track that is to be disposed is in use by a session.
+   * @throws {BasicError} An error indicating that the track that is to be disposed was not created locally.
+   */
+  async function disposeLocalMedia(trackId) {
+    const {
+      dispatch
+    } = context;
+    if (!trackId) {
+      throw new _errors.default({
+        message: 'Track id is `undefined`. You must pass an existing track id to dispose of the associated track.',
+        code: _errors.webrtcCodes.INVALID_PARAM
+      });
+    }
+    let disposedTrack = await WebRTC.track.get(trackId);
+    if (!disposedTrack) {
+      throw new _errors.default({
+        message: `Either ${trackId} is not a valid track id type or track does not exist.`,
+        code: _errors.webrtcCodes.INVALID_TRACK_ID
+      });
+    }
+
+    // Check if the track is in use by a session
+    const sessions = await WebRTC.sessionManager.getAll();
+    sessions.forEach(session => {
+      const tracks = session.localTracks;
+      // throw an error if the track is in use by a session
+      if (tracks.find(track => track.id === trackId)) {
+        throw new _errors.default({
+          message: `Can't dispose track: ${trackId}. It's in use by session: ${session.id}`,
+          code: _errors.webrtcCodes.TRACK_IN_USE
+        });
+      }
+    });
+    if (disposedTrack) {
+      const detached = await disposedTrack.isDetached();
+      if (detached) {
+        await disposedTrack.stop();
+      } else {
+        throw new _errors.default({
+          message: `Can't dispose track: ${trackId}. Track was not created locally.`,
+          code: _errors.webrtcCodes.TRACK_NOT_LOCAL
+        });
+      }
+    }
+
+    // Update the track in state to 'ended'
+    dispatch(_actions.trackActions.trackRemoved(trackId));
+  }
+
+  /**
    * Render Tracks in a specified container.
    * @method renderTracks
    * @param  {Array} trackIds A list of track IDs.
@@ -41320,6 +42372,9 @@ function createMediaOperations(container) {
     }
   }
   return {
+    createLocal,
+    getLocalMedia,
+    disposeLocalMedia,
     renderTracks,
     removeTracks,
     muteTracks,
@@ -41336,10 +42391,12 @@ function createMediaOperations(container) {
 "use strict";
 
 
+var _interopRequireDefault = __webpack_require__(71600);
 Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = createWebRTCOperations;
+var _isPlainObject2 = _interopRequireDefault(__webpack_require__(1449));
 var _devices = __webpack_require__(61547);
 var _eventTypes = __webpack_require__(46215);
 /**
@@ -41369,33 +42426,39 @@ function createWebRTCOperations(container) {
     log.info('Setting up external proxies in WebRTC.');
 
     // Set proxy methods in WebRTC
-    WebRTC.webrtcManager.setProxies(proxies);
+    if ((0, _isPlainObject2.default)(proxies)) {
+      WebRTC.webrtcManager.setProxies(proxies);
+    }
 
     // Replace managers with any provided managers
-    Object.keys(proxies.managers).forEach(manager => {
-      // Store the original manager in order to be able to revert later.
-      // Make sure we don't rid of the original manager if the manager is already in replacedManagers.
-      if (!(manager in replacedManagers)) {
-        replacedManagers[manager] = WebRTC[manager];
-      }
-      // Replace the original manager with the new one.
-      WebRTC[manager] = proxies.managers[manager];
-      log.debug(`Replaced WebRTC ${manager} manager with proxy version.`);
-    });
+    if (proxies.managers) {
+      Object.keys(proxies.managers).forEach(manager => {
+        // Store the original manager in order to be able to revert later.
+        // Make sure we don't get rid of the original manager if the manager is already replaced.
+        if (!(manager in replacedManagers)) {
+          replacedManagers[manager] = WebRTC[manager];
+        }
+        // Replace the original manager with the new one.
+        WebRTC[manager] = proxies.managers[manager];
+        log.debug(`Replaced WebRTC ${manager} manager with proxy version.`);
+      });
+    }
 
     // Setup additional event handlers for any managers
-    Object.keys(proxies.managerEventHandlers).forEach(manager => {
-      if (manager in WebRTC) {
-        proxies.managerEventHandlers[manager].forEach(handler => {
-          WebRTC[manager].on(handler.eventName, handler.eventFn);
-          log.debug(`Added new '${handler.eventName}' event handler on ${manager} manager.`);
-        });
-        // Store these as added event handlers in order to be able to revert later.
-        addedManagerEventHandlers[manager] = proxies.managerEventHandlers[manager];
-      } else {
-        log.debug(`Provided '${manager}' manager is not a WebRTC manager, skipping event handler proxies.`);
-      }
-    });
+    if (proxies.managerEventHandlers) {
+      Object.keys(proxies.managerEventHandlers).forEach(manager => {
+        if (manager in WebRTC) {
+          proxies.managerEventHandlers[manager].forEach(handler => {
+            WebRTC[manager].on(handler.eventName, handler.eventFn);
+            log.debug(`Added new '${handler.eventName}' event handler on ${manager} manager.`);
+          });
+          // Store these as added event handlers in order to be able to revert later.
+          addedManagerEventHandlers[manager] = proxies.managerEventHandlers[manager];
+        } else {
+          log.debug(`Provided '${manager}' manager is not a WebRTC manager, skipping event handler proxies.`);
+        }
+      });
+    }
     log.info('Successfully set up external proxies in WebRTC.');
   }
 
@@ -42099,7 +43162,7 @@ function createTimer(log, warn) {
       event: 'time',
       name
     };
-    if (timers.hasOwnProperty(name)) {
+    if (Object.hasOwn(timers, name)) {
       data.start = timers[name];
       warn(`Timer ${name} already started.`, data);
     } else {
@@ -42123,7 +43186,7 @@ function createTimer(log, warn) {
       name,
       start: timers[name]
     };
-    if (timers.hasOwnProperty(name)) {
+    if (Object.hasOwn(timers, name)) {
       const start = timers[name];
       // End the timer.
       delete timers[name];
@@ -42150,7 +43213,7 @@ function createTimer(log, warn) {
       name,
       start: timers[name]
     };
-    if (timers.hasOwnProperty(name)) {
+    if (Object.hasOwn(timers, name)) {
       const elapsed = now - timers[name];
       data.split = now;
       data.elapsed = elapsed;
@@ -42577,7 +43640,7 @@ function createReporter() {
     if (!id || !(0, _isString2.default)(id)) {
       throw new Error(`${API_TAG}reporter.createReport: Invalid id (${typeof id}), must be of type string.`);
     }
-    if (reports.hasOwnProperty(id)) {
+    if (Object.hasOwn(reports, id)) {
       throw new Error(`${API_TAG}reporter.createReport: Cannot create report. One already exists for id: ${id}`);
     }
     // Create a blank report
@@ -45087,16 +46150,17 @@ function MediaManager(managers) {
    * Wraps native mediaStream, adds tracks to trackManager and Media, and sets up event handlers on a given media.
    * @method setupMedia
    * @param {MediaStream} mediaStream Creating a Media object with it.
+   * @param {boolean} isDetached Specifies if the track is detached and can be used with or without a call.
    * @return {Media}
    */
-  function setupMedia(mediaStream) {
+  function setupMedia(mediaStream, isDetached) {
     const media = new _media.default(mediaStream, true);
     log.debug(`Creating Media with ID: ${media.id}.`);
 
     // Only add tracks to a Media objects using the `addTrack` method.
     // Specify that this is a local track we're adding
     mediaStream.getTracks().forEach(nativeTrack => {
-      const wrappedTrack = trackManager.add(nativeTrack, mediaStream, true);
+      const wrappedTrack = trackManager.add(nativeTrack, mediaStream, true, isDetached);
       media.addTrack(wrappedTrack);
     });
     media.once('media:stopped', mediaId => {
@@ -45126,9 +46190,10 @@ function MediaManager(managers) {
    * Use the provided constraints to get user media as the base MediaStream.
    * @method createLocal
    * @param  {MediaStreamConstraints}  constraints
+   * @param  {boolean} isDetached Specifies if the track is detached and can be used with or without a call.
    * @return {Promise}
    */
-  function createLocal(constraints) {
+  function createLocal(constraints, isDetached) {
     const constraintsWorkaround = browserConstraintsWorkaround(constraints);
 
     // Get user media, ...
@@ -45136,7 +46201,7 @@ function MediaManager(managers) {
       // TODO: Proper error checking.
       // TODO: Use the WebAPI directly here? Probably not.
       navigator.mediaDevices.getUserMedia(constraintsWorkaround).then(mediaStream => {
-        const media = setupMedia(mediaStream);
+        const media = setupMedia(mediaStream, isDetached);
         medias.set(media.id, media);
         // TODO: Better event. Include metadata?
         emitter.emit('media:new', media.id);
@@ -45150,13 +46215,14 @@ function MediaManager(managers) {
    * Use the provided constraints to get user media as the base MediaStream.
    * @method createLocalScreen
    * @param {MediaStreamConstraints} constraints
+   * @param  {boolean} isDetached Specifies if the track is detached and can be used with or without a call.
    * @return {promise}
    */
-  function createLocalScreen(constraints) {
+  function createLocalScreen(constraints, isDetached) {
     const constraintsWorkaround = browserConstraintsWorkaround(constraints);
     return new Promise((resolve, reject) => {
       navigator.mediaDevices.getDisplayMedia(constraintsWorkaround).then(mediaStream => {
-        const media = setupMedia(mediaStream);
+        const media = setupMedia(mediaStream, isDetached);
         medias.set(media.id, media);
         // TODO: Better event. Include metadata?
         emitter.emit('media:new', media.id);
@@ -45739,9 +46805,10 @@ function TrackManager() {
    * @param  {MediaStreamTrack} track A native track object.
    * @param  {MediaStream} stream
    * @param  {boolean} isLocalTrack Specifies if the track parameter is a local one or a remote one.
+   * @param  {boolean} isDetached Specifies if the track is detached and can be used with or without a call.
    * @return {Track} The added/wrapped Track object.
    */
-  function add(track, stream, isLocalTrack) {
+  function add(track, stream, isLocalTrack, isDetached) {
     const targetTrack = tracks.get(track.id);
 
     // Chrome issue: track.stream is outdated and needs to be updated to newStream.
@@ -45761,11 +46828,14 @@ function TrackManager() {
 
       // Mark it as local (or remote) before we save it in the state
       wrappedTrack.setIsLocal(isLocalTrack);
+
+      // Mark as detached before we save it in the state
+      wrappedTrack.setIsDetached(isDetached);
       tracks.set(track.id, wrappedTrack);
 
       // Remove the track from the manager when it ends.
       wrappedTrack.once('ended', event => {
-        if (!event.isUnsolicited) {
+        if (!event.isUnsolicited || event.isDetached) {
           remove({
             trackId: track.id
           });
@@ -45788,10 +46858,10 @@ function TrackManager() {
     } = _ref;
     const track = get(trackId);
     if (track) {
+      emitter.emit('remove', trackId);
       tracks.delete(trackId);
       // Clean up any listeners.
       track.off('ended', remove);
-      emitter.emit('remove', trackId);
     }
     return Boolean(track);
   }
@@ -46318,7 +47388,7 @@ function Session(id, managers) {
               }
 
               // Remove track from session dscp settings
-              if (settings.dscpControls.hasOwnProperty(track.id)) {
+              if (Object.hasOwn(settings.dscpControls, track.id)) {
                 log.debug(`Removing track ${track.id} from session dscp settings`);
                 delete settings.dscpControls[track.id];
               }
@@ -46553,7 +47623,7 @@ function Session(id, managers) {
               isUnsolicited
             });
             // Remove track from session dscp settings
-            if (settings.dscpControls.hasOwnProperty(track.id)) {
+            if (Object.hasOwn(settings.dscpControls, track.id)) {
               log.debug(`Removing track ${track.id} from session dscp settings`);
               delete settings.dscpControls[track.id];
             }
@@ -46757,7 +47827,7 @@ function Session(id, managers) {
         if (allLocalTracks.findIndex(track => track.id === trackId) > -1) {
           peer.removeTrack(trackId);
           // Remove the track from the session dscp settings
-          if (settings.dscpControls.hasOwnProperty(trackId)) {
+          if (Object.hasOwn(settings.dscpControls, trackId)) {
             log.debug(`Removing track ${trackId} from session dscp settings`);
             delete settings.dscpControls[trackId];
           }
@@ -47404,6 +48474,7 @@ function Track(mediaTrack, mediaStream) {
   const track = mediaTrack;
   let stream = mediaStream;
   let isLocalTrack;
+  let isDetatchedTrack;
   let constraints = {};
   const emitter = new _eventemitter.default();
 
@@ -47430,7 +48501,8 @@ function Track(mediaTrack, mediaStream) {
        *    part of an operation. The operation should handle the track being
        *    ended since it was solicited.
        */
-      isUnsolicited: isNative
+      isUnsolicited: isNative,
+      isDetached: isDetached()
     });
   };
 
@@ -47467,6 +48539,12 @@ function Track(mediaTrack, mediaStream) {
   function isLocal() {
     return isLocalTrack;
   }
+  function setIsDetached(detached) {
+    isDetatchedTrack = detached;
+  }
+  function isDetached() {
+    return isDetatchedTrack;
+  }
   function setStream(newStream) {
     stream = newStream;
   }
@@ -47488,7 +48566,8 @@ function Track(mediaTrack, mediaStream) {
       label: track.label,
       muted: track.muted,
       enabled: track.enabled,
-      state: track.readyState
+      state: track.readyState,
+      detached: isDetatchedTrack
     };
   }
 
@@ -47576,7 +48655,9 @@ function Track(mediaTrack, mediaStream) {
     setStream,
     getStream,
     setIsLocal,
-    isLocal
+    isLocal,
+    setIsDetached,
+    isDetached
   };
 }
 
@@ -73163,7 +74244,7 @@ module.exports = str => encodeURIComponent(str).replace(/[!'()*]/g, x => `%${x.c
 
 /***/ }),
 
-/***/ 63064:
+/***/ 63977:
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -73395,7 +74476,7 @@ var _v4 = _interopRequireDefault(__webpack_require__(95899));
 
 var _nil = _interopRequireDefault(__webpack_require__(15384));
 
-var _version = _interopRequireDefault(__webpack_require__(63064));
+var _version = _interopRequireDefault(__webpack_require__(63977));
 
 var _validate = _interopRequireDefault(__webpack_require__(77888));
 
