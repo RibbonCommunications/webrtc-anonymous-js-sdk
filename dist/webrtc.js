@@ -12,7 +12,7 @@
  *
  * WebRTC.js
  * webrtc.anonymous.js
- * Version: 6.13.0-beta.1395
+ * Version: 6.13.0-beta.1396
  */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
@@ -2322,7 +2322,7 @@ module.exports = root;
 
 /***/ }),
 
-/***/ 17680:
+/***/ 63485:
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -2340,7 +2340,7 @@ exports.getVersion = getVersion;
  * for the @@ tag below with actual version value.
  */
 function getVersion() {
-  return '6.13.0-beta.1395';
+  return '6.13.0-beta.1396';
 }
 
 /***/ }),
@@ -11334,7 +11334,7 @@ Object.defineProperty(exports, "__esModule", ({
 exports["default"] = getStatsOperation;
 var _selectors = __webpack_require__(11430);
 var _kandyWebrtc = __webpack_require__(15203);
-var _version = __webpack_require__(17680);
+var _version = __webpack_require__(63485);
 var _sdkId = _interopRequireDefault(__webpack_require__(15878));
 // Call plugin.
 
@@ -23776,7 +23776,7 @@ exports.fixIceServerUrls = fixIceServerUrls;
 exports.mergeDefaults = mergeDefaults;
 var _logs = __webpack_require__(43862);
 var _utils = __webpack_require__(25189);
-var _version = __webpack_require__(17680);
+var _version = __webpack_require__(63485);
 var _defaults = __webpack_require__(27241);
 var _validation = __webpack_require__(42850);
 // Other plugins.
@@ -35221,7 +35221,7 @@ var _reduxSaga = _interopRequireDefault(__webpack_require__(7));
 var _effects = __webpack_require__(27422);
 var _bottlejs = _interopRequireDefault(__webpack_require__(39146));
 var _utils = __webpack_require__(25189);
-var _version = __webpack_require__(17680);
+var _version = __webpack_require__(63485);
 var _intervalFactory = _interopRequireDefault(__webpack_require__(93725));
 var _validation = __webpack_require__(42850);
 // Libraries.
@@ -39150,7 +39150,7 @@ var authorizations = _interopRequireWildcard(__webpack_require__(55689));
 var _makeRequest = _interopRequireDefault(__webpack_require__(87569));
 var _utils = __webpack_require__(70720);
 var _selectors = __webpack_require__(46942);
-var _version = __webpack_require__(17680);
+var _version = __webpack_require__(63485);
 var _utils2 = __webpack_require__(25189);
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
 function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
@@ -39301,7 +39301,7 @@ var _cloneDeep2 = _interopRequireDefault(__webpack_require__(33904));
 var _selectors = __webpack_require__(50647);
 var _selectors2 = __webpack_require__(46942);
 var _logs = __webpack_require__(43862);
-var _version = __webpack_require__(17680);
+var _version = __webpack_require__(63485);
 var _utils = __webpack_require__(25189);
 var _effects = __webpack_require__(27422);
 // Request plugin.
@@ -41172,8 +41172,9 @@ function createMediaAPI(container) {
      * @memberof media
      * @method createLocalMedia
      * @param {Object} mediaConstraints Collection of constraints for each media type.
-     * @param {boolean|Object} [mediaConstraints.audio] Native media constraints for audio.
-     * @param {boolean|Object} [mediaConstraints.video] Native media constraints for video.
+     * @param {boolean} [mediaConstraints.audio] Native media constraints for audio.
+     * @param {boolean} [mediaConstraints.video] Native media constraints for video.
+     * @param {boolean} [mediaConstraints.screen] Native media constraints for display (screen).
      * @returns {Promise} Resolves with an array of objects containing both a media type and a media object.
      * @throws {BasicError} Throws a USER_MEDIA_ERROR error if any any other media type other than audio, video or screen is passed in mediaConstraints.
      * @throws {BasicError} Throws a USER_MEDIA_ERROR error if provided constraints cannot be fulfilled.
@@ -42344,7 +42345,7 @@ function createMediaOperations(container) {
           const trackState = await track.getState();
           if (trackState.detached) {
             detachedMedias.push({
-              type: trackState.kind,
+              type: trackState.type,
               media
             });
             break;
@@ -44575,7 +44576,7 @@ function ontrack(listener) {
 
     // Convert the native MediaStreamTrack into a Track object.
     // Specify that this is not a local one (i.e. it's a remote track)
-    const track = trackManager.add(nativeTrack, targetStream, false);
+    const track = trackManager.add(nativeTrack, nativeTrack.kind, targetStream, false);
     listener(track);
   };
   return true;
@@ -46426,17 +46427,18 @@ function MediaManager(managers) {
    * Wraps native mediaStream, adds tracks to trackManager and Media, and sets up event handlers on a given media.
    * @method setupMedia
    * @param {MediaStream} mediaStream Creating a Media object with it.
+   * @param {string} type The media type to use when creating tracks.
    * @param {boolean} isDetached Specifies if the track is detached and can be used with or without a call.
    * @return {Media}
    */
-  function setupMedia(mediaStream, isDetached) {
+  function setupMedia(mediaStream, type, isDetached) {
     const media = new _media.default(mediaStream, true);
     log.debug(`Creating Media with ID: ${media.id}.`);
 
     // Only add tracks to a Media objects using the `addTrack` method.
     // Specify that this is a local track we're adding
     mediaStream.getTracks().forEach(nativeTrack => {
-      const wrappedTrack = trackManager.add(nativeTrack, mediaStream, true, isDetached);
+      const wrappedTrack = trackManager.add(nativeTrack, type ? type : nativeTrack.kind, mediaStream, true, isDetached);
       media.addTrack(wrappedTrack);
     });
     media.once('media:stopped', mediaId => {
@@ -46477,7 +46479,8 @@ function MediaManager(managers) {
       // TODO: Proper error checking.
       // TODO: Use the WebAPI directly here? Probably not.
       navigator.mediaDevices.getUserMedia(constraintsWorkaround).then(mediaStream => {
-        const media = setupMedia(mediaStream, isDetached);
+        // Only pass the type if it's screenshare, otherwise, let the media kind determine the type
+        const media = setupMedia(mediaStream, undefined, isDetached);
         medias.set(media.id, media);
         // TODO: Better event. Include metadata?
         emitter.emit('media:new', media.id);
@@ -46498,7 +46501,9 @@ function MediaManager(managers) {
     const constraintsWorkaround = browserConstraintsWorkaround(constraints);
     return new Promise((resolve, reject) => {
       navigator.mediaDevices.getDisplayMedia(constraintsWorkaround).then(mediaStream => {
-        const media = setupMedia(mediaStream, isDetached);
+        // Only pass the type if it's screenshare, otherwise, let the media kind determine the type
+        const type = 'screen';
+        const media = setupMedia(mediaStream, type, isDetached);
         medias.set(media.id, media);
         // TODO: Better event. Include metadata?
         emitter.emit('media:new', media.id);
@@ -47079,12 +47084,13 @@ function TrackManager() {
    *    it to the manager.
    * @method add
    * @param  {MediaStreamTrack} track A native track object.
+   * @param  {string} type The media type to use when creating tracks.
    * @param  {MediaStream} stream
    * @param  {boolean} isLocalTrack Specifies if the track parameter is a local one or a remote one.
    * @param  {boolean} isDetached Specifies if the track is detached and can be used with or without a call.
    * @return {Track} The added/wrapped Track object.
    */
-  function add(track, stream, isLocalTrack, isDetached) {
+  function add(track, type, stream, isLocalTrack, isDetached) {
     const targetTrack = tracks.get(track.id);
 
     // Chrome issue: track.stream is outdated and needs to be updated to newStream.
@@ -47101,6 +47107,9 @@ function TrackManager() {
     } else {
       // Wrap the track as a Track object.
       const wrappedTrack = new _track.default(track, stream);
+
+      // Set the requested media type (audio, video, screen) before we save it in the state
+      wrappedTrack.setType(type);
 
       // Mark it as local (or remote) before we save it in the state
       wrappedTrack.setIsLocal(isLocalTrack);
@@ -48753,6 +48762,7 @@ function Track(mediaTrack, mediaStream) {
   const id = mediaTrack.id;
   const track = mediaTrack;
   let stream = mediaStream;
+  let type;
   let isLocalTrack;
   let isDetatchedTrack;
   let constraints = {};
@@ -48813,6 +48823,12 @@ function Track(mediaTrack, mediaStream) {
       isLocal: isLocalTrack
     });
   };
+  function setType(mediaType) {
+    type = mediaType;
+  }
+  function getType() {
+    return type;
+  }
   function setIsLocal(isLocal) {
     isLocalTrack = isLocal;
   }
@@ -48842,6 +48858,7 @@ function Track(mediaTrack, mediaStream) {
       id,
       streamId: stream.id,
       kind: track.kind,
+      type,
       isLocal: isLocalTrack,
       label: track.label,
       muted: track.muted,
@@ -48934,6 +48951,8 @@ function Track(mediaTrack, mediaStream) {
     track,
     setStream,
     getStream,
+    setType,
+    getType,
     setIsLocal,
     isLocal,
     setIsDetached,
@@ -74524,7 +74543,7 @@ module.exports = str => encodeURIComponent(str).replace(/[!'()*]/g, x => `%${x.c
 
 /***/ }),
 
-/***/ 71970:
+/***/ 73113:
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -74756,7 +74775,7 @@ var _v4 = _interopRequireDefault(__webpack_require__(95899));
 
 var _nil = _interopRequireDefault(__webpack_require__(15384));
 
-var _version = _interopRequireDefault(__webpack_require__(71970));
+var _version = _interopRequireDefault(__webpack_require__(73113));
 
 var _validate = _interopRequireDefault(__webpack_require__(77888));
 
