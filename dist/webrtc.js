@@ -12,7 +12,7 @@
  *
  * WebRTC.js
  * webrtc.anonymous.js
- * Version: 6.13.0-beta.1396
+ * Version: 6.13.0-beta.1397
  */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
@@ -2322,7 +2322,7 @@ module.exports = root;
 
 /***/ }),
 
-/***/ 63485:
+/***/ 10838:
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -2340,7 +2340,7 @@ exports.getVersion = getVersion;
  * for the @@ tag below with actual version value.
  */
 function getVersion() {
-  return '6.13.0-beta.1396';
+  return '6.13.0-beta.1397';
 }
 
 /***/ }),
@@ -3150,6 +3150,7 @@ Object.defineProperty(exports, "__esModule", ({
 exports["default"] = registerRequests;
 var _subscribe = _interopRequireDefault(__webpack_require__(58437));
 var _resubscribe = _interopRequireDefault(__webpack_require__(46690));
+var _unsubscribe = _interopRequireDefault(__webpack_require__(25315));
 /**
  * Register the requests with the bottle. This will make it available on the
  * top-level container under its namespace.
@@ -3160,6 +3161,9 @@ function registerRequests(bottle) {
   });
   bottle.factory('AuthenticationRequests.resubscribe', () => {
     return (0, _resubscribe.default)(bottle.container);
+  });
+  bottle.factory('AuthenticationRequests.unsubscribe', () => {
+    return (0, _unsubscribe.default)(bottle.container);
   });
 }
 
@@ -3448,6 +3452,76 @@ function createRequests(container) {
     }
   }
   return subscribe;
+}
+
+/***/ }),
+
+/***/ 25315:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports["default"] = createRequests;
+/**
+ * Authentication Anonymous REST Requests factory function.
+ * Defines the REST interface between the SDK and KL's Authentication REST APIs.
+ * @method createRequests
+ * @param  {Object} container The bottle container.
+ * @return {Object} Available requests for Messaging.
+ */
+function createRequests(container) {
+  const {
+    logManager,
+    sendRequest
+  } = container;
+  const log = logManager.getLogger('AUTH');
+
+  /**
+   * Unsubscribe from Link with the provided subscription info.
+   * @method unsubscribe
+   * @param  {Object}    connection Server information for the service in use.
+   * @param  {string}    connection.server Server information for generating the URL.
+   * @param  {string}    connection.requestOptions Common request options to be added.
+   * @param  {string}    subscriptionURL URL of the user's subscription instance.
+   */
+  async function unsubscribe(connection, subscriptionURL) {
+    let requestOptions = {};
+    requestOptions.method = 'DELETE';
+    requestOptions.url = `${connection.server.protocol}://${connection.server.server}:${connection.server.port}` + subscriptionURL;
+    log.info('Unsubscribing user.');
+    // Send the unsubscribe request.
+    const response = await sendRequest(requestOptions);
+
+    /*
+     * No matter what the response was, we still want to handle the user as
+     *    unsubscribed afterwards. If the request fails, there isn't a point to
+     *    keep the user subscribed since they want to unsubscribe anyway.
+     * For debug purposes, log what the response was but handle it as a success.
+     */
+    if (response.error) {
+      if (response.payload.body) {
+        // Handle errors from the server.
+        const {
+          statusCode
+        } = response.payload.body.subscribeResponse;
+        log.debug(`Encountered error unsubscribing user with status code ${statusCode}.`);
+      } else {
+        // Handle errors from the request helper.
+        const {
+          message
+        } = response.payload.result;
+        log.debug('Encountered error unsubscribing user.', message);
+      }
+    } else {
+      // Request was successful.
+      log.debug('User unsubscribed successfully.');
+    }
+  }
+  return unsubscribe;
 }
 
 /***/ }),
@@ -11334,7 +11408,7 @@ Object.defineProperty(exports, "__esModule", ({
 exports["default"] = getStatsOperation;
 var _selectors = __webpack_require__(11430);
 var _kandyWebrtc = __webpack_require__(15203);
-var _version = __webpack_require__(63485);
+var _version = __webpack_require__(10838);
 var _sdkId = _interopRequireDefault(__webpack_require__(15878));
 // Call plugin.
 
@@ -23776,7 +23850,7 @@ exports.fixIceServerUrls = fixIceServerUrls;
 exports.mergeDefaults = mergeDefaults;
 var _logs = __webpack_require__(43862);
 var _utils = __webpack_require__(25189);
-var _version = __webpack_require__(63485);
+var _version = __webpack_require__(10838);
 var _defaults = __webpack_require__(27241);
 var _validation = __webpack_require__(42850);
 // Other plugins.
@@ -35221,7 +35295,7 @@ var _reduxSaga = _interopRequireDefault(__webpack_require__(7));
 var _effects = __webpack_require__(27422);
 var _bottlejs = _interopRequireDefault(__webpack_require__(39146));
 var _utils = __webpack_require__(25189);
-var _version = __webpack_require__(63485);
+var _version = __webpack_require__(10838);
 var _intervalFactory = _interopRequireDefault(__webpack_require__(93725));
 var _validation = __webpack_require__(42850);
 // Libraries.
@@ -39150,7 +39224,7 @@ var authorizations = _interopRequireWildcard(__webpack_require__(55689));
 var _makeRequest = _interopRequireDefault(__webpack_require__(87569));
 var _utils = __webpack_require__(70720);
 var _selectors = __webpack_require__(46942);
-var _version = __webpack_require__(63485);
+var _version = __webpack_require__(10838);
 var _utils2 = __webpack_require__(25189);
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
 function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
@@ -39301,7 +39375,7 @@ var _cloneDeep2 = _interopRequireDefault(__webpack_require__(33904));
 var _selectors = __webpack_require__(50647);
 var _selectors2 = __webpack_require__(46942);
 var _logs = __webpack_require__(43862);
-var _version = __webpack_require__(63485);
+var _version = __webpack_require__(10838);
 var _utils = __webpack_require__(25189);
 var _effects = __webpack_require__(27422);
 // Request plugin.
@@ -74543,7 +74617,7 @@ module.exports = str => encodeURIComponent(str).replace(/[!'()*]/g, x => `%${x.c
 
 /***/ }),
 
-/***/ 73113:
+/***/ 40462:
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -74775,7 +74849,7 @@ var _v4 = _interopRequireDefault(__webpack_require__(95899));
 
 var _nil = _interopRequireDefault(__webpack_require__(15384));
 
-var _version = _interopRequireDefault(__webpack_require__(73113));
+var _version = _interopRequireDefault(__webpack_require__(40462));
 
 var _validate = _interopRequireDefault(__webpack_require__(77888));
 
