@@ -12,7 +12,7 @@
  *
  * WebRTC.js
  * webrtc.anonymous.js
- * Version: 6.13.0-beta.1398
+ * Version: 6.13.0-beta.1399
  */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
@@ -2322,7 +2322,7 @@ module.exports = root;
 
 /***/ }),
 
-/***/ 66316:
+/***/ 362:
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -2340,7 +2340,7 @@ exports.getVersion = getVersion;
  * for the @@ tag below with actual version value.
  */
 function getVersion() {
-  return '6.13.0-beta.1398';
+  return '6.13.0-beta.1399';
 }
 
 /***/ }),
@@ -5772,6 +5772,7 @@ Object.defineProperty(exports, "__esModule", ({
 }));
 exports["default"] = createFlow;
 var _StatusTracker = _interopRequireDefault(__webpack_require__(22286));
+var _constants = __webpack_require__(37409);
 // CallManager.
 
 /**
@@ -5850,7 +5851,11 @@ function createFlow(container) {
      */
     await operation.stages.remoteSuccess(call, params);
     operation.reportEvent.endEvent();
-    operation.tracker.finish();
+    // KJS-2176 TODO: Need to coordinate between this "transfer successful" notification and the "call ended"
+    //    notification that will be received for the other call. Only one of them should be completing the operation.
+    if (operation.tracker.status !== _constants.OP_STATUS.FINISHED) {
+      operation.tracker.finish();
+    }
   }
 
   /**
@@ -6678,7 +6683,10 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = createFlow;
-var _constants = __webpack_require__(42750);
+var _constants = __webpack_require__(37409);
+var _constants2 = __webpack_require__(42750);
+// Call plugin.
+
 // Call Reports.
 
 /*
@@ -6709,7 +6717,7 @@ function createFlow(container) {
    * This is intended for the following scenarios:
    *    - a WebRTC prAnswer SDP (during MAKE).
    *    - a "call ringing" update (during MAKE).
-   * @method pendingMake
+   * @method pendingUpdate
    * @param {Object} call The call object being operated on.
    * @param {Operation} operation The pending local operation.
    * @param {string} stage The name of the stage that should handle the notification.
@@ -6718,7 +6726,7 @@ function createFlow(container) {
    */
   async function pendingUpdate(call, operation, stage, params) {
     // Add an event as part of the on-going operation event.
-    const notificationEvent = operation.reportEvent.addEvent(_constants.REPORTER_OPERATION_EVENTS_MAP[stage]);
+    const notificationEvent = operation.reportEvent.addEvent(_constants2.REPORTER_OPERATION_EVENTS_MAP[stage]);
 
     // Process the notification as normal.
     try {
@@ -6742,11 +6750,14 @@ function createFlow(container) {
   async function ended(call, operation, params, pendingOp) {
     // Handle the notification itself the same as a generic update.
     await generic(call, operation, params);
-
-    // ...but then, if it interrupted another operation, the other operation needs to be ended.
     if (pendingOp) {
+      // ...but then, if it interrupted another operation, the other operation needs to be ended.
       pendingOp.reportEvent.endEvent();
-      pendingOp.tracker.finish();
+      if (pendingOp.tracker.status !== _constants.OP_STATUS.FINISHED) {
+        // KJS-2176 TODO: For transfers, need to coordinate between this "end call" notification and the "transfer success"
+        //    notification that will be received for the other call. Only one of them should be completing the operation.
+        pendingOp.tracker.finish();
+      }
     }
   }
   return {
@@ -11408,7 +11419,7 @@ Object.defineProperty(exports, "__esModule", ({
 exports["default"] = getStatsOperation;
 var _selectors = __webpack_require__(11430);
 var _kandyWebrtc = __webpack_require__(15203);
-var _version = __webpack_require__(66316);
+var _version = __webpack_require__(362);
 var _sdkId = _interopRequireDefault(__webpack_require__(15878));
 // Call plugin.
 
@@ -23850,7 +23861,7 @@ exports.fixIceServerUrls = fixIceServerUrls;
 exports.mergeDefaults = mergeDefaults;
 var _logs = __webpack_require__(43862);
 var _utils = __webpack_require__(25189);
-var _version = __webpack_require__(66316);
+var _version = __webpack_require__(362);
 var _defaults = __webpack_require__(27241);
 var _validation = __webpack_require__(42850);
 // Other plugins.
@@ -35295,7 +35306,7 @@ var _reduxSaga = _interopRequireDefault(__webpack_require__(7));
 var _effects = __webpack_require__(27422);
 var _bottlejs = _interopRequireDefault(__webpack_require__(39146));
 var _utils = __webpack_require__(25189);
-var _version = __webpack_require__(66316);
+var _version = __webpack_require__(362);
 var _intervalFactory = _interopRequireDefault(__webpack_require__(93725));
 var _validation = __webpack_require__(42850);
 // Libraries.
@@ -39224,7 +39235,7 @@ var authorizations = _interopRequireWildcard(__webpack_require__(55689));
 var _makeRequest = _interopRequireDefault(__webpack_require__(87569));
 var _utils = __webpack_require__(70720);
 var _selectors = __webpack_require__(46942);
-var _version = __webpack_require__(66316);
+var _version = __webpack_require__(362);
 var _utils2 = __webpack_require__(25189);
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
 function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
@@ -39375,7 +39386,7 @@ var _cloneDeep2 = _interopRequireDefault(__webpack_require__(33904));
 var _selectors = __webpack_require__(50647);
 var _selectors2 = __webpack_require__(46942);
 var _logs = __webpack_require__(43862);
-var _version = __webpack_require__(66316);
+var _version = __webpack_require__(362);
 var _utils = __webpack_require__(25189);
 var _effects = __webpack_require__(27422);
 // Request plugin.
@@ -74617,7 +74628,7 @@ module.exports = str => encodeURIComponent(str).replace(/[!'()*]/g, x => `%${x.c
 
 /***/ }),
 
-/***/ 94561:
+/***/ 9494:
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -74849,7 +74860,7 @@ var _v4 = _interopRequireDefault(__webpack_require__(95899));
 
 var _nil = _interopRequireDefault(__webpack_require__(15384));
 
-var _version = _interopRequireDefault(__webpack_require__(94561));
+var _version = _interopRequireDefault(__webpack_require__(9494));
 
 var _validate = _interopRequireDefault(__webpack_require__(77888));
 
