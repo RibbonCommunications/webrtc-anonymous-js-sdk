@@ -25363,22 +25363,22 @@
           ],
           "loc": {
             "start": {
-              "line": 1,
+              "line": 4,
               "column": 0
             },
             "end": {
-              "line": 62,
+              "line": 65,
               "column": 3
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 63,
+                "line": 66,
                 "column": 0
               },
               "end": {
-                "line": 106,
+                "line": 109,
                 "column": 1
               }
             },
@@ -26714,22 +26714,22 @@
           ],
           "loc": {
             "start": {
-              "line": 123,
+              "line": 126,
               "column": 0
             },
             "end": {
-              "line": 172,
+              "line": 175,
               "column": 3
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 173,
+                "line": 176,
                 "column": 0
               },
               "end": {
-                "line": 203,
+                "line": 206,
                 "column": 1
               }
             },
@@ -32774,17 +32774,8 @@
               "type": {
                 "type": "OptionalType",
                 "expression": {
-                  "type": "UnionType",
-                  "elements": [
-                    {
-                      "type": "NameExpression",
-                      "name": "boolean"
-                    },
-                    {
-                      "type": "NameExpression",
-                      "name": "Object"
-                    }
-                  ]
+                  "type": "NameExpression",
+                  "name": "boolean"
                 }
               },
               "name": "mediaConstraints.audio"
@@ -32796,25 +32787,29 @@
               "type": {
                 "type": "OptionalType",
                 "expression": {
-                  "type": "UnionType",
-                  "elements": [
-                    {
-                      "type": "NameExpression",
-                      "name": "boolean"
-                    },
-                    {
-                      "type": "NameExpression",
-                      "name": "Object"
-                    }
-                  ]
+                  "type": "NameExpression",
+                  "name": "boolean"
                 }
               },
               "name": "mediaConstraints.video"
             },
             {
+              "title": "param",
+              "description": "Native media constraints for display (screen).",
+              "lineNumber": 9,
+              "type": {
+                "type": "OptionalType",
+                "expression": {
+                  "type": "NameExpression",
+                  "name": "boolean"
+                }
+              },
+              "name": "mediaConstraints.screen"
+            },
+            {
               "title": "returns",
               "description": "Resolves with an array of objects containing both a media type and a media object.",
-              "lineNumber": 9,
+              "lineNumber": 10,
               "type": {
                 "type": "NameExpression",
                 "name": "Promise"
@@ -32823,15 +32818,6 @@
             {
               "title": "throws",
               "description": "Throws a USER_MEDIA_ERROR error if any any other media type other than audio, video or screen is passed in mediaConstraints.",
-              "lineNumber": 10,
-              "type": {
-                "type": "NameExpression",
-                "name": "BasicError"
-              }
-            },
-            {
-              "title": "throws",
-              "description": "Throws a USER_MEDIA_ERROR error if provided constraints cannot be fulfilled.",
               "lineNumber": 11,
               "type": {
                 "type": "NameExpression",
@@ -32840,8 +32826,17 @@
             },
             {
               "title": "throws",
-              "description": "Throws a USER_MEDIA_ERROR error if it fails to get media for other reasons.",
+              "description": "Throws a USER_MEDIA_ERROR error if provided constraints cannot be fulfilled.",
               "lineNumber": 12,
+              "type": {
+                "type": "NameExpression",
+                "name": "BasicError"
+              }
+            },
+            {
+              "title": "throws",
+              "description": "Throws a USER_MEDIA_ERROR error if it fails to get media for other reasons.",
+              "lineNumber": 13,
               "type": {
                 "type": "NameExpression",
                 "name": "BasicError"
@@ -32850,7 +32845,7 @@
             {
               "title": "example",
               "description": "// Create detached media for your local video\nconst medias = await client.media.createLocalMedia({ video: true })",
-              "lineNumber": 13
+              "lineNumber": 14
             }
           ],
           "loc": {
@@ -32859,18 +32854,18 @@
               "column": 4
             },
             "end": {
-              "line": 147,
+              "line": 148,
               "column": 7
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 148,
+                "line": 149,
                 "column": 4
               },
               "end": {
-                "line": 159,
+                "line": 160,
                 "column": 5
               }
             },
@@ -32928,17 +32923,8 @@
                   "type": {
                     "type": "OptionalType",
                     "expression": {
-                      "type": "UnionType",
-                      "elements": [
-                        {
-                          "type": "NameExpression",
-                          "name": "boolean"
-                        },
-                        {
-                          "type": "NameExpression",
-                          "name": "Object"
-                        }
-                      ]
+                      "type": "NameExpression",
+                      "name": "boolean"
                     }
                   }
                 },
@@ -32963,17 +32949,34 @@
                   "type": {
                     "type": "OptionalType",
                     "expression": {
-                      "type": "UnionType",
-                      "elements": [
-                        {
-                          "type": "NameExpression",
-                          "name": "boolean"
-                        },
-                        {
-                          "type": "NameExpression",
-                          "name": "Object"
-                        }
-                      ]
+                      "type": "NameExpression",
+                      "name": "boolean"
+                    }
+                  }
+                },
+                {
+                  "title": "param",
+                  "name": "mediaConstraints.screen",
+                  "lineNumber": 9,
+                  "description": {
+                    "type": "root",
+                    "children": [
+                      {
+                        "type": "paragraph",
+                        "children": [
+                          {
+                            "type": "text",
+                            "value": "Native media constraints for display (screen)."
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "type": {
+                    "type": "OptionalType",
+                    "expression": {
+                      "type": "NameExpression",
+                      "name": "boolean"
                     }
                   }
                 }
@@ -33149,22 +33152,22 @@
           ],
           "loc": {
             "start": {
-              "line": 161,
+              "line": 162,
               "column": 4
             },
             "end": {
-              "line": 172,
+              "line": 173,
               "column": 7
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 173,
+                "line": 174,
                 "column": 4
               },
               "end": {
-                "line": 184,
+                "line": 185,
                 "column": 5
               }
             },
@@ -33326,22 +33329,22 @@
           ],
           "loc": {
             "start": {
-              "line": 186,
+              "line": 187,
               "column": 4
             },
             "end": {
-              "line": 197,
+              "line": 198,
               "column": 7
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 198,
+                "line": 199,
                 "column": 4
               },
               "end": {
-                "line": 202,
+                "line": 203,
                 "column": 5
               }
             },
@@ -33597,22 +33600,22 @@
           ],
           "loc": {
             "start": {
-              "line": 204,
+              "line": 205,
               "column": 4
             },
             "end": {
-              "line": 230,
+              "line": 231,
               "column": 7
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 231,
+                "line": 232,
                 "column": 4
               },
               "end": {
-                "line": 242,
+                "line": 243,
                 "column": 5
               }
             },
@@ -33846,22 +33849,22 @@
           ],
           "loc": {
             "start": {
-              "line": 244,
+              "line": 245,
               "column": 4
             },
             "end": {
-              "line": 257,
+              "line": 258,
               "column": 7
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 258,
+                "line": 259,
                 "column": 4
               },
               "end": {
-                "line": 261,
+                "line": 262,
                 "column": 5
               }
             },
@@ -34070,22 +34073,22 @@
           ],
           "loc": {
             "start": {
-              "line": 263,
+              "line": 264,
               "column": 4
             },
             "end": {
-              "line": 285,
+              "line": 286,
               "column": 7
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 286,
+                "line": 287,
                 "column": 4
               },
               "end": {
-                "line": 303,
+                "line": 304,
                 "column": 5
               }
             },
@@ -34253,22 +34256,22 @@
           ],
           "loc": {
             "start": {
-              "line": 305,
+              "line": 306,
               "column": 4
             },
             "end": {
-              "line": 319,
+              "line": 320,
               "column": 7
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 320,
+                "line": 321,
                 "column": 4
               },
               "end": {
-                "line": 337,
+                "line": 338,
                 "column": 5
               }
             },

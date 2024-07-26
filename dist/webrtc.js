@@ -12,7 +12,7 @@
  *
  * WebRTC.js
  * webrtc.anonymous.js
- * Version: 6.12.0
+ * Version: 6.13.0
  */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
@@ -2322,7 +2322,7 @@ module.exports = root;
 
 /***/ }),
 
-/***/ 33164:
+/***/ 42298:
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -2340,7 +2340,7 @@ exports.getVersion = getVersion;
  * for the @@ tag below with actual version value.
  */
 function getVersion() {
-  return '6.12.0';
+  return '6.13.0';
 }
 
 /***/ }),
@@ -2717,12 +2717,10 @@ function createInterval(container) {
 "use strict";
 
 
-var _interopRequireDefault = __webpack_require__(71600);
 Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = createOperation;
-var _defineProperty2 = _interopRequireDefault(__webpack_require__(26290));
 var actions = _interopRequireWildcard(__webpack_require__(35770));
 var eventTypes = _interopRequireWildcard(__webpack_require__(71430));
 var _selectors = __webpack_require__(46942);
@@ -2732,10 +2730,12 @@ var _errors = _interopRequireWildcard(__webpack_require__(83437));
 var _constants = __webpack_require__(49833);
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
 function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
-function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { (0, _defineProperty2.default)(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; } // Auth plugin.
+// Auth plugin.
+
 // Other plugins.
+
 // Constants
+
 function createOperation(container) {
   const {
     logManager,
@@ -2771,11 +2771,12 @@ function createOperation(container) {
         tokenrealm: credentials.realm
       };
     }
-    const subscriptionInfo = _objectSpread(_objectSpread({}, config.subscription), {}, {
+    const subscriptionInfo = {
+      ...config.subscription,
       isAnonymous: true,
       // TODO: Hardcode / override this here?
       service: ['callMe']
-    });
+    };
     let response;
     let attemptNum = 1; // keeps count of how many subscription requests we sent so far
     const maxReAttempts = (0, _selectors.getServiceUnavailableMaxRetries)(context.getState());
@@ -2854,9 +2855,10 @@ function createOperation(container) {
     log.info('Successfully subscribed to callMe service. Connecting to websocket.');
 
     // Connect the websocket.
-    const websocketInfo = _objectSpread(_objectSpread({}, config.websocket), {}, {
+    const websocketInfo = {
+      ...config.websocket,
       url: response.subscriptionParams.notificationChannel
-    });
+    };
 
     // Request the websocket connection.
     context.dispatch((0, _actions2.wsAttemptConnect)(websocketInfo, _constants.platforms.LINK));
@@ -2879,7 +2881,9 @@ function createOperation(container) {
     }
     log.info('Successfully connected to websocket.');
     const connection = {
-      server: _objectSpread({}, config.subscription),
+      server: {
+        ...config.subscription
+      },
       username: credentials.username,
       requestOptions,
       // Store the fact that this is an anonymous subscription as part of
@@ -2891,9 +2895,10 @@ function createOperation(container) {
       userInfo: {
         username: credentials.anonUsername
       },
-      subscription: _objectSpread(_objectSpread({}, response.subscriptionParams), {}, {
+      subscription: {
+        ...response.subscriptionParams,
         url: response.subscription
-      }),
+      },
       connection
     }, _constants.platforms.LINK));
 
@@ -3145,6 +3150,7 @@ Object.defineProperty(exports, "__esModule", ({
 exports["default"] = registerRequests;
 var _subscribe = _interopRequireDefault(__webpack_require__(58437));
 var _resubscribe = _interopRequireDefault(__webpack_require__(46690));
+var _unsubscribe = _interopRequireDefault(__webpack_require__(25315));
 /**
  * Register the requests with the bottle. This will make it available on the
  * top-level container under its namespace.
@@ -3156,6 +3162,9 @@ function registerRequests(bottle) {
   bottle.factory('AuthenticationRequests.resubscribe', () => {
     return (0, _resubscribe.default)(bottle.container);
   });
+  bottle.factory('AuthenticationRequests.unsubscribe', () => {
+    return (0, _unsubscribe.default)(bottle.container);
+  });
 }
 
 /***/ }),
@@ -3166,19 +3175,18 @@ function registerRequests(bottle) {
 "use strict";
 
 
-var _interopRequireDefault = __webpack_require__(71600);
 Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = createRequests;
-var _defineProperty2 = _interopRequireDefault(__webpack_require__(26290));
 var _services = __webpack_require__(4025);
 var _errors = _interopRequireWildcard(__webpack_require__(83437));
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
 function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
-function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { (0, _defineProperty2.default)(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; } // Authentication plugin.
+// Authentication plugin.
+
 // Other plugins.
+
 /**
  * Authentication Anonymous REST Requests factory function.
  * Defines the REST interface between the SDK and KL's Authentication REST APIs.
@@ -3284,10 +3292,11 @@ function createRequests(container) {
         log.debug(`Successfully resubscribed user. Service resubscription status: ${servicesInfo.status}`);
 
         // Success.
-        return _objectSpread({
+        return {
           error: false,
-          servicesInfo
-        }, resubResponse);
+          servicesInfo,
+          ...resubResponse
+        };
       } else {
         log.info('Failed to resubscribe user. Status Code: ', resubResponse.statusCode);
         // Unknown statusCode, consider as failure.
@@ -3311,21 +3320,21 @@ function createRequests(container) {
 "use strict";
 
 
-var _interopRequireDefault = __webpack_require__(71600);
 Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = createRequests;
-var _defineProperty2 = _interopRequireDefault(__webpack_require__(26290));
 var _services = __webpack_require__(4025);
 var _errors = _interopRequireWildcard(__webpack_require__(83437));
 var _utils = __webpack_require__(25189);
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
 function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
-function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { (0, _defineProperty2.default)(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; } // Authentication plugin.
+// Authentication plugin.
+
 // Other plugins.
+
 // Libraries.
+
 /**
  * Authentication Anonymous REST Requests factory function.
  * Defines the REST interface between the SDK and KL's Authentication REST APIs.
@@ -3435,13 +3444,84 @@ function createRequests(container) {
       const subscribedServices = subscribeResponse.subscriptionParams.service;
       const servicesInfo = (0, _services.parseSpidrServices)(connection.service, subscribedServices);
       log.debug(`Successfully subscribed user. Service subscription status: ${servicesInfo.status}`);
-      return _objectSpread({
+      return {
         error: false,
-        servicesInfo
-      }, subscribeResponse);
+        servicesInfo,
+        ...subscribeResponse
+      };
     }
   }
   return subscribe;
+}
+
+/***/ }),
+
+/***/ 25315:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports["default"] = createRequests;
+/**
+ * Authentication Anonymous REST Requests factory function.
+ * Defines the REST interface between the SDK and KL's Authentication REST APIs.
+ * @method createRequests
+ * @param  {Object} container The bottle container.
+ * @return {Object} Available requests for Messaging.
+ */
+function createRequests(container) {
+  const {
+    logManager,
+    sendRequest
+  } = container;
+  const log = logManager.getLogger('AUTH');
+
+  /**
+   * Unsubscribe from Link with the provided subscription info.
+   * @method unsubscribe
+   * @param  {Object}    connection Server information for the service in use.
+   * @param  {string}    connection.server Server information for generating the URL.
+   * @param  {string}    connection.requestOptions Common request options to be added.
+   * @param  {string}    subscriptionURL URL of the user's subscription instance.
+   */
+  async function unsubscribe(connection, subscriptionURL) {
+    let requestOptions = {};
+    requestOptions.method = 'DELETE';
+    requestOptions.url = `${connection.server.protocol}://${connection.server.server}:${connection.server.port}` + subscriptionURL;
+    log.info('Unsubscribing user.');
+    // Send the unsubscribe request.
+    const response = await sendRequest(requestOptions);
+
+    /*
+     * No matter what the response was, we still want to handle the user as
+     *    unsubscribed afterwards. If the request fails, there isn't a point to
+     *    keep the user subscribed since they want to unsubscribe anyway.
+     * For debug purposes, log what the response was but handle it as a success.
+     */
+    if (response.error) {
+      if (response.payload.body) {
+        // Handle errors from the server.
+        const {
+          statusCode
+        } = response.payload.body.subscribeResponse;
+        log.debug(`Encountered error unsubscribing user with status code ${statusCode}.`);
+      } else {
+        // Handle errors from the request helper.
+        const {
+          message
+        } = response.payload.result;
+        log.debug('Encountered error unsubscribing user.', message);
+      }
+    } else {
+      // Request was successful.
+      log.debug('User unsubscribed successfully.');
+    }
+  }
+  return unsubscribe;
 }
 
 /***/ }),
@@ -4423,39 +4503,38 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = void 0;
-var _objectWithoutProperties2 = _interopRequireDefault(__webpack_require__(24923));
-var _defineProperty2 = _interopRequireDefault(__webpack_require__(26290));
 var _merge2 = _interopRequireDefault(__webpack_require__(9612));
 var actionTypes = _interopRequireWildcard(__webpack_require__(10530));
 var _reduxActions = __webpack_require__(68305);
-const _excluded = ["x-token"];
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
 function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
-function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { (0, _defineProperty2.default)(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
 const reducers = {};
 reducers[actionTypes.CONNECT] = {
   next(state) {
-    return _objectSpread(_objectSpread({}, state), {}, {
+    return {
+      ...state,
       isPending: true,
       error: undefined
-    });
+    };
   }
 };
 reducers[actionTypes.SET_CONNECTION_INFO] = {
   next(state, action) {
-    return _objectSpread(_objectSpread({}, state), {}, {
+    return {
+      ...state,
       platform: action.meta.platform,
-      connection: _objectSpread(_objectSpread({}, state.connection), {}, {
+      connection: {
+        ...state.connection,
         [action.meta.platform]: action.payload.connection
-      }),
+      },
       userInfo: action.payload.userInfo
-    });
+    };
   }
 };
 reducers[actionTypes.CONNECT_FINISHED] = {
   next(state, action) {
-    return _objectSpread(_objectSpread({}, state), {}, {
+    return {
+      ...state,
       isConnected: true,
       isPending: false,
       error: undefined,
@@ -4463,23 +4542,28 @@ reducers[actionTypes.CONNECT_FINISHED] = {
       platform: action.meta.platform,
       // Separate subscription, connection info based on the platform used.
       // Store platform subscription information.
-      subscription: _objectSpread(_objectSpread({}, state.subscription), {}, {
+      subscription: {
+        ...state.subscription,
         [action.meta.platform]: action.payload.subscription
-      }),
+      },
       // Store platform connection information to be provided to other plugins.
-      connection: action.payload.connection ? _objectSpread(_objectSpread({}, state.connection), {}, {
+      connection: action.payload.connection ? {
+        ...state.connection,
         [action.meta.platform]: action.payload.connection
-      }) : _objectSpread({}, state.connection),
+      } : {
+        ...state.connection
+      },
       // Store user information to be provided to developers.
       userInfo: action.payload.userInfo ? action.payload.userInfo : state.userInfo
-    });
+    };
   },
   throw(state, action) {
-    return _objectSpread(_objectSpread({}, state), {}, {
+    return {
+      ...state,
       isConnected: false,
       isPending: false,
       error: action.payload
-    });
+    };
   }
 };
 
@@ -4487,25 +4571,29 @@ reducers[actionTypes.CONNECT_FINISHED] = {
 // not update any status state. The connection has not yet finished.
 reducers[actionTypes.CONNECTION_OCCURRED] = {
   next(state, action) {
-    return _objectSpread(_objectSpread({}, state), {}, {
+    return {
+      ...state,
       // Separate subscription, connection info based on the platform used.
       // Store platform subscription information.
-      subscription: _objectSpread(_objectSpread({}, state.subscription), {}, {
+      subscription: {
+        ...state.subscription,
         [action.meta.platform]: action.payload.subscription
-      }),
+      },
       // Store platform connection information to be provided to other plugins.
-      connection: _objectSpread(_objectSpread({}, state.connection), {}, {
+      connection: {
+        ...state.connection,
         [action.meta.platform]: action.payload.connection
-      })
-    });
+      }
+    };
   }
 };
 reducers[actionTypes.DISCONNECT] = {
   next(state) {
-    return _objectSpread(_objectSpread({}, state), {}, {
+    return {
+      ...state,
       isPending: true,
       error: undefined
-    });
+    };
   }
 };
 
@@ -4523,48 +4611,57 @@ reducers[actionTypes.DISCONNECT_FINISHED] = {
     };
   },
   throw(state, action) {
-    return _objectSpread(_objectSpread({}, state), {}, {
+    return {
+      ...state,
       // Treat an error as if we are still disconnected.
       isConnected: false,
       isPending: false,
       error: action.payload
-    });
+    };
   }
 };
 reducers[actionTypes.REFRESH_TOKENS_FINISHED] = {
   next(state, action) {
     // Merge the updated requestOptions into the current state.
     const requestOptions = (0, _merge2.default)(state.connection[action.meta.platform].requestOptions, action.payload.connection.requestOptions);
-    return _objectSpread(_objectSpread({}, state), {}, {
-      connection: _objectSpread(_objectSpread({}, state.connection), {}, {
-        [action.meta.platform]: _objectSpread(_objectSpread(_objectSpread({}, state.connection[action.meta.platform]), action.payload.connection), {}, {
+    return {
+      ...state,
+      connection: {
+        ...state.connection,
+        [action.meta.platform]: {
+          ...state.connection[action.meta.platform],
+          ...action.payload.connection,
           requestOptions
-        })
-      }),
-      userInfo: _objectSpread(_objectSpread({}, state.userInfo), {}, {
+        }
+      },
+      userInfo: {
+        ...state.userInfo,
         accessToken: action.payload.connection.accessToken,
         refreshToken: action.payload.connection.refreshToken
-      })
-    });
+      }
+    };
   }
 };
 reducers[actionTypes.SET_CREDENTIALS_FINISH] = {
   next(state, action) {
-    return _objectSpread(_objectSpread({}, state), {}, {
+    return {
+      ...state,
       error: undefined,
       platform: action.meta.platform,
       // Store platform connection information to be provided to other plugins.
-      connection: _objectSpread(_objectSpread({}, state.connection), {}, {
+      connection: {
+        ...state.connection,
         [action.meta.platform]: action.payload.connection
-      }),
+      },
       // Store user information to be provided to developers.
       userInfo: action.payload.userInfo
-    });
+    };
   },
   throw(state, action) {
-    return _objectSpread(_objectSpread({}, state), {}, {
+    return {
+      ...state,
       error: action.payload
-    });
+    };
   }
 };
 
@@ -4573,23 +4670,27 @@ reducers[actionTypes.SET_CREDENTIALS_FINISH] = {
  */
 reducers[actionTypes.UPDATE_HMAC_TOKEN] = {
   next(state, action) {
-    const _state$connection$act = state.connection[action.meta.platform].requestOptions.headers,
-      {
-        'x-token': _removed
-      } = _state$connection$act,
-      removeXtoken = (0, _objectWithoutProperties2.default)(_state$connection$act, _excluded);
-    const headers = _objectSpread(_objectSpread({}, removeXtoken), {}, {
+    const {
+      'x-token': _removed,
+      ...removeXtoken
+    } = state.connection[action.meta.platform].requestOptions.headers;
+    const headers = {
+      ...removeXtoken,
       'x-session': action.payload
-    });
-    return _objectSpread(_objectSpread({}, state), {}, {
-      connection: _objectSpread(_objectSpread({}, state.connection), {}, {
-        [action.meta.platform]: _objectSpread(_objectSpread({}, state.connection[action.meta.platform]), {}, {
-          requestOptions: _objectSpread(_objectSpread({}, state.connection[action.meta.platform].requestOptions), {}, {
+    };
+    return {
+      ...state,
+      connection: {
+        ...state.connection,
+        [action.meta.platform]: {
+          ...state.connection[action.meta.platform],
+          requestOptions: {
+            ...state.connection[action.meta.platform].requestOptions,
             headers
-          })
-        })
-      })
-    });
+          }
+        }
+      }
+    };
   }
 };
 
@@ -5125,12 +5226,10 @@ function registerOperation(bottle) {
 "use strict";
 
 
-var _interopRequireDefault = __webpack_require__(71600);
 Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = createAnonOperations;
-var _defineProperty2 = _interopRequireDefault(__webpack_require__(26290));
 var _actions = __webpack_require__(6313);
 var actionTypes = _interopRequireWildcard(__webpack_require__(39100));
 var eventTypes = _interopRequireWildcard(__webpack_require__(55166));
@@ -5140,9 +5239,10 @@ var _errors = _interopRequireWildcard(__webpack_require__(83437));
 var authActions = _interopRequireWildcard(__webpack_require__(35770));
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
 function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
-function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { (0, _defineProperty2.default)(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; } // Call plugin.
+// Call plugin.
+
 // Other plugins.
+
 function createAnonOperations(container) {
   const {
     CallManager,
@@ -5252,11 +5352,12 @@ function createAnonOperations(container) {
     }
     let error;
     try {
-      const anonOptions = _objectSpread(_objectSpread({}, options), {}, {
+      const anonOptions = {
+        ...options,
         isAnonymous: true,
         account,
         displayName: isTokenBased ? '' : options.displayName
-      });
+      };
       emitEvent(eventTypes.CALL_OPERATION, {
         callId,
         isLocal: true,
@@ -5671,6 +5772,7 @@ Object.defineProperty(exports, "__esModule", ({
 }));
 exports["default"] = createFlow;
 var _StatusTracker = _interopRequireDefault(__webpack_require__(22286));
+var _constants = __webpack_require__(37409);
 // CallManager.
 
 /**
@@ -5749,7 +5851,11 @@ function createFlow(container) {
      */
     await operation.stages.remoteSuccess(call, params);
     operation.reportEvent.endEvent();
-    operation.tracker.finish();
+    // KJS-2176 TODO: Need to coordinate between this "transfer successful" notification and the "call ended"
+    //    notification that will be received for the other call. Only one of them should be completing the operation.
+    if (operation.tracker.status !== _constants.OP_STATUS.FINISHED) {
+      operation.tracker.finish();
+    }
   }
 
   /**
@@ -6327,13 +6433,10 @@ exports["default"] = createFlow;
 var _selectors = __webpack_require__(11430);
 var _actions = __webpack_require__(6313);
 var eventTypes = _interopRequireWildcard(__webpack_require__(55166));
-var _constants = __webpack_require__(42750);
 var _sdpTransform = _interopRequireDefault(__webpack_require__(23978));
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
 function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
 // Call plugin.
-
-// Call Reports.
 
 // Libraries
 
@@ -6349,7 +6452,6 @@ function createFlow(container) {
   const {
     context,
     Callstack,
-    CallReporter,
     emitEvent,
     logManager
   } = container;
@@ -6361,7 +6463,7 @@ function createFlow(container) {
    * @param {Object} params Arbitrary parameter object.
    * @param {string} [channel] The notification channel the message was received on.
    */
-  async function newIncoming(wrtcsSessionId, params, channel) {
+  async function newIncoming(wrtcsSessionId, operation, params, channel) {
     const log = logManager.getLogger('CALL', params.callId);
     log.info('Received new incoming call; initiating.', {
       wrtcsSessionId
@@ -6372,8 +6474,6 @@ function createFlow(container) {
       return;
     }
     const isSlowStart = !params.sdp;
-    const callReport = CallReporter.createReport('CALL', params.callId);
-    const notificationEvent = callReport.addEvent(_constants.REPORT_EVENTS.RECEIVE_CALL);
     let mediaOffered = null;
     if (!isSlowStart) {
       // For a regular call, parse the SDP & collect what media has been offered by the caller:
@@ -6404,6 +6504,9 @@ function createFlow(container) {
       // For a slow-start call, this will be null.
       mediaOffered
     }));
+
+    // Start tracking this operation now that the call exists in state.
+    operation.tracker.start();
     emitEvent(eventTypes.CALL_INCOMING, {
       callId: params.callId,
       mediaOffered
@@ -6425,7 +6528,13 @@ function createFlow(container) {
         customParameters
       });
     }
-    await Callstack.notifications.incomingCall(wrtcsSessionId, params);
+    try {
+      await operation.stages.remoteOffer(wrtcsSessionId, params);
+    } catch (err) {
+      operation.tracker.finish(err);
+      operation.reportEvent.endEvent(err);
+      return;
+    }
 
     // Workaround for re-syncing incoming calls received via PUSH.
     // TODO: Check if this can be removed once we start receiving TURN credentials with incoming call notifications.
@@ -6440,10 +6549,11 @@ function createFlow(container) {
         await Callstack.operations.resyncCallState.stages.localOffer(params.callId);
       } catch (err) {
         // Don't do anything with an error here. This is a side-effect, and the
-        //    operation will handly any required changes.
+        //    operation will handle any required changes.
       }
     }
-    notificationEvent.endEvent();
+    operation.tracker.finish();
+    operation.reportEvent.endEvent();
   }
   return {
     newIncoming
@@ -6563,6 +6673,102 @@ function createFlow(container) {
 
 /***/ }),
 
+/***/ 7913:
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports["default"] = createFlow;
+var _constants = __webpack_require__(37409);
+var _constants2 = __webpack_require__(42750);
+// Call plugin.
+
+// Call Reports.
+
+/*
+ * Operation flow for a "remote update" notification. This is for a simple state updates
+ *    (eg. call ended) from the remote side of the call.
+ */
+function createFlow(container) {
+  /**
+   * Flow for a generic "remote update" notification.
+   * Simply tracks the operation and processes the notification.
+   *
+   * @method generic
+   * @param {Object} call The call object being operated on.
+   * @param {Operation} operation
+   * @param {Object} params Operation-specific data.
+   * @return {Promise<undefined>}
+   */
+  async function generic(call, operation, params) {
+    operation.tracker.start();
+    await operation.stages.remoteOffer(call.wrtcsSessionId, params);
+    operation.tracker.finish();
+    operation.reportEvent.endEvent();
+  }
+
+  /**
+   * Flow for an update received while there is a PENDING local operation on-going.
+   *
+   * This is intended for the following scenarios:
+   *    - a WebRTC prAnswer SDP (during MAKE).
+   *    - a "call ringing" update (during MAKE).
+   * @method pendingUpdate
+   * @param {Object} call The call object being operated on.
+   * @param {Operation} operation The pending local operation.
+   * @param {string} stage The name of the stage that should handle the notification.
+   * @param {Object} params Operation-specific data.
+   * @return {Promise<undefined>}
+   */
+  async function pendingUpdate(call, operation, stage, params) {
+    // Add an event as part of the on-going operation event.
+    const notificationEvent = operation.reportEvent.addEvent(_constants2.REPORTER_OPERATION_EVENTS_MAP[stage]);
+
+    // Process the notification as normal.
+    try {
+      await operation.stages[stage](call.wrtcsSessionId, ...params);
+      notificationEvent.endEvent();
+    } catch (err) {
+      notificationEvent.endEvent(err);
+    }
+  }
+
+  /**
+   * Flow for a "call ended" update.
+   * This update can be received at any time, either solicited or unsolicited.
+   * @method ended
+   * @param {Object} call The call object being operated on.
+   * @param {Operation} operation
+   * @param {Object} params Operation-specific data.
+   * @param {Operation} [pendingOp] The pending Operation that this notification interrupted.
+   * @return {Promise<undefined>}
+   */
+  async function ended(call, operation, params, pendingOp) {
+    // Handle the notification itself the same as a generic update.
+    await generic(call, operation, params);
+    if (pendingOp) {
+      // ...but then, if it interrupted another operation, the other operation needs to be ended.
+      pendingOp.reportEvent.endEvent();
+      if (pendingOp.tracker.status !== _constants.OP_STATUS.FINISHED) {
+        // KJS-2176 TODO: For transfers, need to coordinate between this "end call" notification and the "transfer success"
+        //    notification that will be received for the other call. Only one of them should be completing the operation.
+        pendingOp.tracker.finish();
+      }
+    }
+  }
+  return {
+    generic,
+    pendingUpdate,
+    ended
+  };
+}
+
+/***/ }),
+
 /***/ 13583:
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
@@ -6578,7 +6784,7 @@ var _RemoteCall = _interopRequireDefault(__webpack_require__(94131));
 var _LocalOperation = _interopRequireDefault(__webpack_require__(76445));
 var _LocalNegotiation = _interopRequireDefault(__webpack_require__(25967));
 var _RemoteNegotiation = _interopRequireDefault(__webpack_require__(56628));
-var _remoteOnly = _interopRequireDefault(__webpack_require__(73709));
+var _RemoteUpdate = _interopRequireDefault(__webpack_require__(7913));
 var _DirectTransfer = _interopRequireDefault(__webpack_require__(93907));
 var _ConsultativeTransfer = _interopRequireDefault(__webpack_require__(57679));
 var _Join = _interopRequireDefault(__webpack_require__(51994));
@@ -6592,118 +6798,11 @@ function setupFlows(container) {
     LocalOperation: (0, _LocalOperation.default)(container),
     LocalNegotiation: (0, _LocalNegotiation.default)(container),
     RemoteNegotiation: (0, _RemoteNegotiation.default)(container),
-    remoteOnly: (0, _remoteOnly.default)(container),
+    RemoteUpdate: (0, _RemoteUpdate.default)(container),
     directTransfer: (0, _DirectTransfer.default)(container),
     consulTransfer: (0, _ConsultativeTransfer.default)(container),
     join: (0, _Join.default)(container)
   };
-}
-
-/***/ }),
-
-/***/ 73709:
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = createFlow;
-var _actions = __webpack_require__(6313);
-var eventTypes = _interopRequireWildcard(__webpack_require__(55166));
-var _constants = __webpack_require__(37409);
-var _constants2 = __webpack_require__(60683);
-var _selectors = __webpack_require__(11430);
-var _constants3 = __webpack_require__(42750);
-function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
-function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
-// Call plugin.
-
-// Call Reports.
-
-/*
- * Operation flow for a "remote update" notification. This is for a simple state updates
- *    (eg. call ended) from the remote side of the call.
- */
-function createFlow(container) {
-  const {
-    context,
-    CallReporter,
-    emitEvent
-  } = container;
-
-  /**
-   * Flow entry-point for remote "update" notifications
-   *
-   * @method remoteOnly
-   * @param {string} wrtcsSessionId
-   * @param {Function|Object} handler The `handler` function to process the notification.
-   * @param {Object} params Operation-specific data.
-   * @return {Promise}
-   */
-  async function remoteNotification(wrtcsSessionId, handler, params) {
-    let call = (0, _selectors.getCallByWrtcsSessionId)(context.getState(), wrtcsSessionId);
-    let notificationEvent;
-    const pendingLocal = call.currentOperations.find(op => op.isLocal && op.status === _constants.OP_STATUS.PENDING);
-
-    // TODO: Handle all notifications instead of only the ones the reporter knows about.
-    // If the call exists (in the sense that is both valid as an object AND it's state is not ended)
-    if (call.state !== _constants2.CALL_STATES.ENDED) {
-      if (pendingLocal && pendingLocal.eventId && _constants3.REPORTER_OPERATION_EVENTS_MAP.hasOwnProperty(handler.name)) {
-        // if call has an on-going local operation, then the
-        // notification is part of that operation.
-
-        // Get the local main event
-        const operationEvent = CallReporter.getReport(call.id).getEvent(pendingLocal.eventId);
-        // create & add a local sub-event
-        notificationEvent = operationEvent.addEvent(_constants3.REPORTER_OPERATION_EVENTS_MAP[handler.name]);
-      } else if (_constants3.REPORTER_OPERATION_EVENTS_MAP.hasOwnProperty(handler.name)) {
-        // Otherwise, if the call exists (but there isn't an on-going local operation),
-        //    the notification is part of a new remote operation.
-        const report = CallReporter.getReport(call.id);
-        notificationEvent = report.addEvent(_constants3.REPORTER_OPERATION_EVENTS_MAP[handler.name]);
-      }
-    } else {
-      // If the call doesn't exist, can't add anything to its report. TODO.
-    }
-    await handler(wrtcsSessionId, ...params);
-
-    // End the sub-event from handling the notification.
-    notificationEvent && notificationEvent.endEvent();
-
-    // Get the call again for new state after the handler has run
-    call = (0, _selectors.getCallByWrtcsSessionId)(context.getState(), wrtcsSessionId);
-    // If this notification is an answer from a local operation, update call state
-    //    to indicate that the local operation is finished.
-    if (pendingLocal && ['callStatusUpdateEnded' // Call end notification mid-operation.
-    ].includes(handler.name)) {
-      const eventId = pendingLocal.eventId;
-      // TODO: Have `Operation` objects for notifications so this isn't done manually.
-      context.dispatch(_actions.callActions.operationUpdate(call.id, pendingLocal.type, true, {
-        transition: _constants.OP_TRANSITIONS.FINISH,
-        eventId
-      }));
-
-      // End the timeline event for the local operation.
-      const operationEvent = CallReporter.getReport(call.id).getEvent(eventId);
-      operationEvent.endEvent();
-
-      // Emit "operation finish" event for the application.
-      emitEvent(eventTypes.CALL_OPERATION, {
-        callId: call.id,
-        isLocal: true,
-        operation: pendingLocal.type,
-        transition: _constants.OP_TRANSITIONS.FINISH,
-        previous: {
-          operation: pendingLocal.type,
-          status: _constants.OP_STATUS.PENDING
-        }
-      });
-    }
-  }
-  return remoteNotification;
 }
 
 /***/ }),
@@ -6820,10 +6919,17 @@ function callManager(container) {
   async function newRemoteCall(wrtcsSessionId, params, channel) {
     // Create an ID for the SDK to use for the call.
     const callId = (0, _uuid.v4)();
+    container.CallReporter.createReport('CALL', callId);
+
     // Set up new call mapping for on-going operations.
     ongoing[callId] = (0, _OperationTracker.default)(logManager.getLogger('CALL', callId));
+
+    // Start tracking this operation.
+    const operation = Callstack.operations.make.remote(callId);
+    ongoing[callId].add(operation);
     params.callId = callId;
-    await callFlows.RemoteCall.newIncoming(wrtcsSessionId, params, channel);
+    await callFlows.RemoteCall.newIncoming(wrtcsSessionId, operation, params, channel);
+    ongoing[callId].remove(operation);
   }
 
   /**
@@ -6919,7 +7025,7 @@ function callManager(container) {
     const operation = Callstack.operations[stackMethod].remote(call.id);
     if (await isGlare(call)) {
       operation.tracker.start();
-      log.warn('Received new remote operation during on-going remote operation; cannot process.');
+      log.warn(`Received new remote operation during on-going operation; cannot process.`);
       // Call is "blocked"; starting a new negotiation is a glare scenario.
       // Therefore respond to Gateway that operation failed, so that the remote endpoint knows.
       CallRequests.updateSessionResponse({
@@ -7108,18 +7214,88 @@ function callManager(container) {
       return result;
     };
   }
+
+  /**
+   * Wrapper for generic "remote update" notifications.
+   * @method remoteUpdate
+   * @param {string} stackMethod
+   * @return {Function}
+   */
   function newRemoteNotify(stackMethod) {
-    return async function remoteOnly(wrtcsSessionId) {
-      // TODO: Track 'remote notify' operations too.
-      const handler = Callstack.notifications[stackMethod];
+    /**
+     * CallManager API for generic 'remote notifications', that aren't
+     *    handled by a different API.
+     * @method remoteNotify
+     * @param {string} wrtcsSessionId
+     * @param {Object} params
+     * @return {Promise<undefined>}
+     */
+    return async function remoteNotify(wrtcsSessionId, params) {
       const state = context.getState();
+      checkCallExistence(state, wrtcsSessionId);
       const call = (0, _selectors.getCallByWrtcsSessionId)(state, wrtcsSessionId);
-      checkCallExistence(state, call.id);
+      const operation = Callstack.operations[stackMethod](call.id);
+      ongoing[call.id].add(operation);
+      await callFlows.RemoteUpdate.generic(call, operation, params);
+      ongoing[call.id].remove(operation);
+    };
+  }
+
+  /**
+   * Wrapper for updates to a local "make" operation update.
+   * @method makeUpdate
+   * @param {string} stackMethod
+   * @return {Function}
+   */
+  function makeUpdate(stackMethod) {
+    /**
+     * CallManager API for 'local make' update notifications.
+     * Expected Scenarios:
+     *    1. Call ringing
+     *    2. Early media
+     * @method makeUpdate
+     * @param {string} wrtcsSessionId
+     * @param {Array<any>} params
+     * @return {Promise<undefined>}
+     */
+    return async function makeUpdate(wrtcsSessionId) {
+      const state = context.getState();
+      checkCallExistence(state, wrtcsSessionId);
+      const call = (0, _selectors.getCallByWrtcsSessionId)(context.getState(), wrtcsSessionId);
+      const pendingMake = ongoing[call.id].getPending().find(op => {
+        return op.isLocal && [_constants2.OPERATIONS.MAKE, _constants2.OPERATIONS.MAKE_ANONYMOUS, _constants2.OPERATIONS.JOIN].includes(op.type);
+      });
       for (var _len3 = arguments.length, params = new Array(_len3 > 1 ? _len3 - 1 : 0), _key3 = 1; _key3 < _len3; _key3++) {
         params[_key3 - 1] = arguments[_key3];
       }
-      await callFlows.remoteOnly(wrtcsSessionId, handler, params);
+      await callFlows.RemoteUpdate.pendingUpdate(call, pendingMake, stackMethod, params);
     };
+  }
+
+  /**
+   * CallManager API for "call ended" remote notifications.
+   * Expected Scenarios:
+   *    1. Update received unsolicited, with no pending operation.
+   *    2. Update received unsolicited, with an unrelated pending operation.
+   *    3. Update received solicited (ie. with a related pending operation).
+   * @method remoteCallEnded
+   * @param {string} wrtcsSessionId
+   * @param {Object} params Operation-specific data.
+   * @return {Promise<undefined>}
+   */
+  async function remoteCallEnded(wrtcsSessionId, params) {
+    const state = context.getState();
+    checkCallExistence(state, wrtcsSessionId);
+    const call = (0, _selectors.getCallByWrtcsSessionId)(state, wrtcsSessionId);
+    const pendingOp = ongoing[call.id].getPending()[0];
+    // KJS-2176 TODO: Differentiate between Scenarios 2 and 3. If solicited 'callEnd' notification,
+    //    don't create a stand-alone operation for it. Reuse the operation that triggered receiving
+    //    the notification (eg. complex operations).
+
+    const operation = Callstack.operations.end.remote(call.id);
+    ongoing[call.id].add(operation);
+    await callFlows.RemoteUpdate.ended(call, operation, params, pendingOp);
+    ongoing[call.id].remove(operation);
   }
   function exiComplexResponse(stackMethod) {
     const stage = stackMethod === _operationMap.notificationMap.SESSION_STATUS_ENDED ? 'remoteSuccess' : 'remoteFailure';
@@ -7263,10 +7439,12 @@ function callManager(container) {
    */;
   [
   // TODO: No magic strings.
-  'CALL_STATUS_ENDED', 'CALL_CANCELLED', 'CALL_STATUS_RINGING', 'RECEIVE_EARLY_MEDIA'].forEach(type => {
+  'CALL_STATUS_RINGING', 'RECEIVE_EARLY_MEDIA'].forEach(type => {
     const stackMethod = _operationMap.notificationMap[type];
-    manager[stackMethod] = newRemoteNotify(stackMethod);
-  })
+    manager[stackMethod] = makeUpdate(stackMethod);
+  });
+  manager[_operationMap.notificationMap['CALL_CANCELLED']] = newRemoteNotify(_operationMap.notificationMap['CALL_CANCELLED']);
+  manager[_operationMap.notificationMap['CALL_STATUS_ENDED']] = remoteCallEnded
 
   /*
    * Handle the response notifications for complex operations.
@@ -7301,13 +7479,13 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = _default;
-var _defineProperty2 = _interopRequireDefault(__webpack_require__(26290));
 var _StatusTracker = _interopRequireDefault(__webpack_require__(22286));
 var _constants = __webpack_require__(42750);
 var _uuid = __webpack_require__(60130);
-function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { (0, _defineProperty2.default)(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; } // Call Reports.
+// Call Reports.
+
 // Libraries.
+
 function _default(bottle) {
   /**
    * Factory for creating instances of a generic Operation.
@@ -7340,7 +7518,8 @@ function _default(bottle) {
       validate,
       localOffer,
       remoteAnswer,
-      remoteOffer
+      remoteOffer,
+      ...nonstandardStages
     } = stages;
 
     // Instance data for the operation.
@@ -7367,13 +7546,14 @@ function _default(bottle) {
         localOffer: localOffer,
         remoteAnswer: remoteAnswer,
         remoteOffer: remoteOffer,
-        remoteSuccess: stages.remoteSuccess,
-        remoteFailure: stages.remoteFailure
+        ...nonstandardStages
       },
       // Instance specific.
       callId,
       id,
-      data: _objectSpread({}, data),
+      data: {
+        ...data
+      },
       // Progress tracker.
       tracker,
       get status() {
@@ -7636,15 +7816,12 @@ function shouldHandlePattern(action) {
 "use strict";
 
 
-var _interopRequireDefault = __webpack_require__(71600);
 Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = callCollectionCheckMiddleware;
 exports.shouldHandlePattern = shouldHandlePattern;
-var _objectWithoutProperties2 = _interopRequireDefault(__webpack_require__(24923));
 var _actionTypes = __webpack_require__(1371);
-const _excluded = ["id"];
 /**
  * Bottle wrapper for "ICE collection check" triggers.
  * @return {Function}
@@ -7658,11 +7835,10 @@ function callCollectionCheckMiddleware(context) {
     }
 
     // Handle it.
-    const _action$payload = action.payload,
-      {
-        id
-      } = _action$payload,
-      iceCollectionInfo = (0, _objectWithoutProperties2.default)(_action$payload, _excluded);
+    const {
+      id,
+      ...iceCollectionInfo
+    } = action.payload;
     await operations.callIceCollectionCheck(id, iceCollectionInfo);
   }
   return callCollectionCheck;
@@ -9582,12 +9758,32 @@ Object.defineProperty(exports, "__esModule", ({
 }));
 exports["default"] = initOperation;
 var _callCancelled = _interopRequireDefault(__webpack_require__(18898));
+var _constants = __webpack_require__(37409);
 // The factory funnction for the notification handler.
 
 function initOperation(bottle) {
-  // Provide the top-level container to the factory function.
-  //    Otherwise it would get the `notification` sub-container.
-  bottle.factory('Callstack.notifications.callCancelled', () => (0, _callCancelled.default)(bottle.container));
+  // Register the individual stages for the operation.
+  bottle.factory('Callstack.stages.callCancelled', () => {
+    return {
+      remote: {
+        remoteOffer: (0, _callCancelled.default)(bottle.container)
+      }
+    };
+  });
+  bottle.factory('Callstack.operations.callCancelled', () => {
+    const opFactory = bottle.container.Callstack.models.Operation;
+    return callId => {
+      return opFactory.instance({
+        // Operation meta-data.
+        type: _constants.OPERATIONS.CALL_CANCEL,
+        isNegotiation: false,
+        isLocal: false,
+        stages: bottle.container.Callstack.stages.callCancelled.remote
+      }, {
+        callId
+      });
+    };
+  });
 }
 
 /***/ }),
@@ -10386,170 +10582,6 @@ function validate(state, callId, destination) {
 
 /***/ }),
 
-/***/ 42702:
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-"use strict";
-
-
-var _interopRequireDefault = __webpack_require__(71600);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = initOperation;
-var _receiveEarlyMedia = _interopRequireDefault(__webpack_require__(75934));
-// The factory funnction for the notification handler.
-
-function initOperation(bottle) {
-  // Provide the top-level container to the factory function.
-  //    Otherwise it would get the `notification` sub-container.
-  bottle.factory('Callstack.notifications.receiveEarlyMedia', () => (0, _receiveEarlyMedia.default)(bottle.container));
-}
-
-/***/ }),
-
-/***/ 75934:
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = receiveEarlyMediaOperation;
-var _actions = __webpack_require__(6313);
-var _selectors = __webpack_require__(11430);
-var _remoteTracks = __webpack_require__(45294);
-var _eventTypes = __webpack_require__(55166);
-var _constants = __webpack_require__(60683);
-// Call Plugin
-
-/**
- * Bottle wrapper for "receive early media" notification handler.
- * @return {Function}
- */
-function receiveEarlyMediaOperation(container) {
-  const {
-    context,
-    emitEvent,
-    logManager,
-    WebRTC,
-    CallstackSDP
-  } = container;
-
-  /**
-   * A "session progress" notification has been received. It contains an "early
-   *    media" SDP (pranswer) that needs to be processed.
-   *
-   * Processing a pranswer is done by:
-   *    1. Validating the Call / Session.
-   *    2. Running the SDP through the SDP pipeline.
-   *    3. Setting the SDP as the Session's remote description (as pranswer).
-   *    4. Updating the Call state.
-   *
-   * @method receiveEarlyMedia
-   * @param {Object} params       Parameters describing the notification.
-   */
-  async function receiveEarlyMedia(wrtcsSessionId, params) {
-    const {
-      customParameters
-    } = params;
-
-    /**
-     * Get the call from state.
-     */
-    const currentCall = (0, _selectors.getCallByWrtcsSessionId)(context.getState(), wrtcsSessionId);
-    const log = logManager.getLogger('CALL', (currentCall || {}).id);
-    log.info('Received early media notice; handling.', {
-      wrtcsSessionId
-    });
-    if (!currentCall) {
-      log.info('Early media notice for unknown wrtcsSession. Ignoring.', {
-        wrtcsSessionId
-      });
-      return;
-    }
-
-    /**
-     * Get the Webrtc Session.
-     */
-    const session = await WebRTC.sessionManager.get(currentCall.webrtcSessionId);
-    if (!session) {
-      log.info('Early media notice for missing wrtcsSession. Ignoring.', {
-        wrtcsSessionId
-      });
-      // TODO: Better error.
-      return;
-    }
-    // Dispatch a custom parameters received action/event if any custom parameters were received as part of the notification
-    if (customParameters) {
-      const customNames = customParameters.map(param => param.name);
-      log.debug(`Received custom parameters as part of the Call: ${customNames}.`);
-      context.dispatch(_actions.callActions.customParametersReceived(currentCall.id, {
-        customParameters
-      }));
-
-      // Emit the associated event with the above action
-      emitEvent(_eventTypes.CUSTOM_PARAMETERS, {
-        callId: currentCall.id,
-        customParameters
-      });
-    }
-    try {
-      /*
-       * Run the remote SDP pranswer through any SDP handlers provided, then set it
-       *    as the Session's remote description.
-       * This is the "pre set remote" stage.
-       */
-      const callConfigOptions = (0, _selectors.getOptions)(context.getState());
-      const sdp = CallstackSDP.runPipeline(callConfigOptions.sdpHandlers, params.sdp, {
-        callId: currentCall.id,
-        type: 'pranswer',
-        step: 'set',
-        endpoint: 'remote'
-      });
-      await session.processAnswer({
-        type: 'pranswer',
-        sdp: sdp
-      });
-    } catch (err) {
-      log.debug(`Failed to process pranswer for Call ${currentCall.id}; ignoring.`);
-      return;
-    }
-
-    // Get the list of all remote tracks being offered in this call. This is a
-    //    new call, so this should be the full list of remote tracks available.
-    const remoteTracks = await (0, _remoteTracks.getAllRemoteTracks)(session);
-    log.info(`Finished handling early media notice. Changing to ${_constants.CALL_STATES.EARLY_MEDIA}.`);
-    context.dispatch(_actions.callActions.sessionProgress(currentCall.id, {
-      // Remote participant's information.
-      remoteParticipant: {
-        displayNumber: params.remoteNumber,
-        displayName: params.remoteName
-      },
-      remoteTracks
-    }));
-
-    // Tell the application that tracks are available on the call now.
-    emitEvent(_eventTypes.CALL_TRACKS_ADDED, {
-      callId: currentCall.id,
-      trackIds: remoteTracks
-    });
-    emitEvent(_eventTypes.CALL_STATE_CHANGE, {
-      callId: currentCall.id,
-      previous: {
-        state: currentCall.state,
-        localHold: currentCall.localHold,
-        remoteHold: currentCall.remoteHold
-      }
-    });
-  }
-  return receiveEarlyMedia;
-}
-
-/***/ }),
-
 /***/ 28732:
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
@@ -10575,6 +10607,9 @@ function initOperation(bottle) {
         //    a stage with WebRTC negotiation terms. But this is the method
         //    name the `localOperation` flow uses.
         localOffer: (0, _end.default)(bottle.container)
+      },
+      remote: {
+        remoteOffer: (0, _callStatusUpdateEnded.default)(bottle.container)
       }
     };
   });
@@ -10583,30 +10618,32 @@ function initOperation(bottle) {
   //    Otherwise they would get the `operations` sub-container.
   bottle.factory('Callstack.operations.end', () => {
     const opFactory = bottle.container.Callstack.models.Operation;
-
-    /**
-     * Factory function for a LocalEnd operation.
-     * @method LocalEnd
-     * @param {string} callId ID for the call this operation will affect.
-     * @return {Operation} An instance of a local end operation.
-     */
-    function LocalEnd(callId) {
-      return opFactory.instance({
-        // Operation meta-data.
-        type: _constants.OPERATIONS.END,
-        isNegotiation: false,
-        isLocal: true,
-        // Operation methods.
-        stages: bottle.container.Callstack.stages.end.local
-      }, {
-        callId
-      });
+    function end(isLocal) {
+      /**
+       * Factory function for a End operation.
+       * @method End
+       * @param {string} callId ID for the call this operation will affect.
+       * @return {Operation} An instance of a local end operation.
+       */
+      return callId => {
+        const stages = bottle.container.Callstack.stages.end[isLocal ? 'local' : 'remote'];
+        return opFactory.instance({
+          // Operation meta-data.
+          type: _constants.OPERATIONS.END,
+          isNegotiation: false,
+          isLocal,
+          // Operation methods.
+          stages
+        }, {
+          callId
+        });
+      };
     }
     return {
-      local: LocalEnd
+      local: end(true),
+      remote: end(false)
     };
   });
-  bottle.factory('Callstack.notifications.callStatusUpdateEnded', () => (0, _callStatusUpdateEnded.default)(bottle.container));
 }
 
 /***/ }),
@@ -10812,7 +10849,14 @@ function callStatusEndedOperation(container) {
     }
     const prevCall = currentCall;
     log.debug(`Call ended notice caused by ${reasonText} (Status Code: ${statusCode}).`);
-    await CallstackWebrtc.closeCall(currentCall.webrtcSessionId);
+    try {
+      await CallstackWebrtc.closeCall(currentCall.webrtcSessionId);
+    } catch (error) {
+      // Even if there is an error at the webrtc callstack layer,
+      // we should still end call locally (as a result of receiving a remote end-call notification)
+      // by catching this error and allowing the triggering of action below.
+      log.warn(`Could not succesfully complete closing local webrtc call: ${error.message}`);
+    }
     log.info(`Finished handling call ended notice. Changing to ${_constants2.CALL_STATES.ENDED}.`);
     context.dispatch(_actions.callActions.endCallFinish(currentCall.id, (0, _call.generateEndParams)(currentCall.state, false, {
       reasonText,
@@ -11382,7 +11426,7 @@ Object.defineProperty(exports, "__esModule", ({
 exports["default"] = getStatsOperation;
 var _selectors = __webpack_require__(11430);
 var _kandyWebrtc = __webpack_require__(15203);
-var _version = __webpack_require__(33164);
+var _version = __webpack_require__(42298);
 var _sdkId = _interopRequireDefault(__webpack_require__(15878));
 // Call plugin.
 
@@ -11798,20 +11842,18 @@ function holdOperation(container) {
 "use strict";
 
 
-var _interopRequireDefault = __webpack_require__(71600);
 Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = createHoldResponse;
-var _defineProperty2 = _interopRequireDefault(__webpack_require__(26290));
 var _actions = __webpack_require__(6313);
 var eventTypes = _interopRequireWildcard(__webpack_require__(55166));
 var _constants = __webpack_require__(37409);
 var _constants2 = __webpack_require__(42750);
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
 function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
-function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { (0, _defineProperty2.default)(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; } // Callstack.
+// Callstack.
+
 function createHoldResponse(container) {
   const {
     context,
@@ -11893,11 +11935,12 @@ function createHoldResponse(container) {
      *    - state change to "on hold",
      *    - tracks affected by operation removed.
      */
-    context.dispatch(_actions.callActions.holdCallFinish(call.id, _objectSpread(_objectSpread({}, operation.operationData), {}, {
+    context.dispatch(_actions.callActions.holdCallFinish(call.id, {
+      ...operation.operationData,
       // For a hold operation, all tracks currently on the call are affected.
       localTracks: call.localTracks,
       remoteTracks: call.remoteTracks
-    })));
+    }));
 
     // Tell the application that tracks have been removed.
     emitEvent(eventTypes.CALL_TRACKS_REMOVED, {
@@ -12241,12 +12284,10 @@ function rollbackHoldOperation(container) {
 "use strict";
 
 
-var _interopRequireDefault = __webpack_require__(71600);
 Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = callIceCollectionCheckOperation;
-var _defineProperty2 = _interopRequireDefault(__webpack_require__(26290));
 var _selectors = __webpack_require__(11430);
 var _actions = __webpack_require__(6313);
 var _constants = __webpack_require__(60683);
@@ -12255,9 +12296,10 @@ var _eventTypes = __webpack_require__(55166);
 var _errors = _interopRequireWildcard(__webpack_require__(83437));
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
 function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
-function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { (0, _defineProperty2.default)(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; } // Call plugin.
+// Call plugin.
+
 // Other plugins.
+
 /**
  * Bottle wrapper for ..."callIceCollectionCheck".
  * @return {Function}
@@ -12341,10 +12383,11 @@ function callIceCollectionCheckOperation(container) {
           return op.eventId === latestMainEvent.id;
         }
       });
-      result = config.iceCollectionCheckFunction(_objectSpread({
+      result = config.iceCollectionCheckFunction({
         callId: currentCall.id,
-        callOperation: operation ? operation.type : 'UNKNOWN'
-      }, iceCollectionInfo), {
+        callOperation: operation ? operation.type : 'UNKNOWN',
+        ...iceCollectionInfo
+      }, {
         // TODO: If a call changes these configs in the middle of ICE collection,
         //    it will change the values given to this function. Very unlikely scenario,
         //    but could cause issues. Could also change `iceCollectionCheckFunction` itself.
@@ -13030,12 +13073,6 @@ Object.defineProperty(exports, "createDirectTransfer", ({
     return _directTransfer.default;
   }
 }));
-Object.defineProperty(exports, "createEarlyMedia", ({
-  enumerable: true,
-  get: function () {
-    return _earlyMedia.default;
-  }
-}));
 Object.defineProperty(exports, "createEnd", ({
   enumerable: true,
   get: function () {
@@ -13195,7 +13232,6 @@ var _end = _interopRequireDefault(__webpack_require__(28732));
 var _forward = _interopRequireDefault(__webpack_require__(34316));
 var _ignore = _interopRequireDefault(__webpack_require__(87969));
 var _reject = _interopRequireDefault(__webpack_require__(48215));
-var _earlyMedia = _interopRequireDefault(__webpack_require__(42702));
 var _callCancelled = _interopRequireDefault(__webpack_require__(93948));
 var _addMedia = _interopRequireDefault(__webpack_require__(50196));
 var _hold = _interopRequireDefault(__webpack_require__(26846));
@@ -13806,184 +13842,6 @@ function validate(state, callId, otherCallId, newCallId, from) {
 
 /***/ }),
 
-/***/ 83517:
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = incomingCallOperation;
-var _actions = __webpack_require__(6313);
-var _selectors = __webpack_require__(11430);
-var _eventTypes = __webpack_require__(55166);
-var _constants = __webpack_require__(37409);
-var _constants2 = __webpack_require__(60683);
-var _constants3 = __webpack_require__(42750);
-// Call plugin
-
-/**
- * Bottle wrapper for "incoming call" notification handler.
- * @return {Function}
- */
-function incomingCallOperation(container) {
-  const {
-    context,
-    CallRequests,
-    Callstack,
-    emitEvent,
-    CallReporter,
-    logManager
-  } = container;
-  const {
-    setupIncomingCall
-  } = Callstack.utils;
-  /**
-   * A "call incoming" notification has been received and needs to be handled.
-   *
-   * This operation is intended to be the entry point for all "call incoming"
-   *    notifications. A "call incoming" notification is the initial offer to
-   *    establish a call with a remote endpoint. It represents the start of both
-   *    the call flow and webRTC negotiation process for the local side.
-   * Handling the notification will create a new call in state.
-   * Responsibilities:
-   *    1. Have the callstack perform the required webRTC negotiation process.
-   *        - Regular or Slow Start negotiation.
-   *    2. Respond that the call has been received (ie. ringing).
-   *    3. Create call state (via redux action).
-   * @method incomingCall
-   * @param {string}   wrtcsSessionId ID that the server uses to identify the session.
-   * @param {Object}   params        Parameters describing the incoming call.
-   * @param {string}   [params.sdp]  The remote SDP offer included with the notification (if any).
-   * @param {string}   params.remoteNumber   Number of the remote participant.
-   * @param {string}   params.remoteName     Display name of the remote participant.
-   * @param {string}   params.calleeNumber  Number of the intended call recipient
-   */
-  async function incomingCall(wrtcsSessionId, params, channel) {
-    const {
-      sdp,
-      callId
-    } = params;
-    const callConfig = (0, _selectors.getOptions)(context.getState());
-
-    // Get the call report for this call
-    const callReport = CallReporter.getReport(callId);
-
-    // Get the RECEIVE_CALL event from the report
-    const receiveCallEvent = callReport.findLastOngoingEvent(_constants3.REPORT_EVENTS.RECEIVE_CALL);
-    const log = logManager.getLogger('CALL', callId);
-
-    /**
-     * An incoming call may or may not have an SDP offer associated with it.
-     * If it has an SDP, then it is a "regular" call scenario and can be handled
-     *    as a normal webRTC negotiation.
-     * If it has no SDP, then it is a "slow start" call scenario. In a slow start
-     *    scenario, the signaling server acts as a webRTC-middleman, requiring
-     *    both sides to provide it with offers and generating the answers itself.
-     */
-    if (sdp) {
-      // Regular call.
-      receiveCallEvent.addData('isSlowStart', false);
-      const turnInfo = (0, _selectors.getTurnInfo)(context.getState());
-
-      // Since we have the remote offer SDP, we can setup a webRTC session.
-      try {
-        await setupIncomingCall({
-          offer: {
-            sdp,
-            type: 'offer'
-          },
-          trickleIceMode: callConfig.trickleIceMode,
-          defaultPeerConfig: callConfig.defaultPeerConfig,
-          turnInfo,
-          callId,
-          removeBundling: callConfig.removeBundling,
-          serverTurnCredentials: callConfig.serverTurnCredentials
-        });
-      } catch (error) {
-        // The reason we're wrapping the error in an object here is because the setupIncomingCall operation
-        // used to return an object with an error property. Now that we are throwing instead, we throw the
-        // BasicError directly, but our interface is expecting an object with an error property.
-        log.info(`Failed to initiate incoming call. Changing to ${_constants2.CALL_STATES.ENDED}.`);
-        context.dispatch(_actions.callActions.endCallFinish(callId, {
-          isLocal: true,
-          error: {
-            error
-          }
-        }));
-        emitEvent(_eventTypes.CALL_OPERATION, {
-          callId,
-          isLocal: true,
-          operation: _constants.OPERATIONS.END,
-          transition: _constants.OP_TRANSITIONS.FINISH,
-          error: {
-            error
-          }
-        });
-        emitEvent(_eventTypes.CALL_STATE_CHANGE, {
-          callId,
-          previous: {
-            state: _constants2.CALL_STATES.INITIATING,
-            localHold: false,
-            remoteHold: false
-          },
-          error: {
-            error
-          }
-        });
-        receiveCallEvent.setError(error);
-        return;
-      }
-    } else {
-      log.debug('Incoming call is a slow-start call.');
-      // Slow start call.
-      receiveCallEvent.addData('isSlowStart', true);
-
-      /*
-       * We can't setup a webRTC session yet because generating an offer requires
-       *   media constraints. We need to wait until the application provides
-       *   media information before we can setup the call.
-       */
-    }
-
-    // Next state will be Initiated normally, or Ringing if ringing feedback is sent.
-    let nextState = _constants2.CALL_STATES.INITIATED;
-
-    // If in 'auto' mode for `ringingFeedbackMode`, send the feedback immediately.
-    if (callConfig.ringingFeedbackMode === 'auto') {
-      log.info('Sending ringing feedback automatically for incoming call.');
-      const callInfo = {
-        wrtcsSessionId,
-        id: callId
-      };
-      try {
-        await CallRequests.updateCallRinging(callInfo);
-        log.debug('Successfully sent ringing feedback.');
-        nextState = _constants2.CALL_STATES.RINGING;
-      } catch (error) {
-        log.info(`Failed to send ringing feedback - ${error.code}: ${error.message} `);
-      }
-    }
-    log.info(`Finished initiating incoming call. Changing to ${nextState} and waiting on local answer.`);
-    context.dispatch(_actions.callActions.updateCall(callId, {
-      state: nextState
-    }));
-    emitEvent(_eventTypes.CALL_STATE_CHANGE, {
-      callId,
-      previous: {
-        state: _constants2.CALL_STATES.INITIATING,
-        localHold: false,
-        remoteHold: false
-      }
-    });
-  }
-  return incomingCall;
-}
-
-/***/ }),
-
 /***/ 11641:
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
@@ -13997,11 +13855,15 @@ Object.defineProperty(exports, "__esModule", ({
 exports["default"] = initOperation;
 var _make = _interopRequireDefault(__webpack_require__(96422));
 var _remoteAnswer = _interopRequireDefault(__webpack_require__(43658));
-var _incomingCall = _interopRequireDefault(__webpack_require__(83517));
+var _callStatusUpdateRinging = _interopRequireDefault(__webpack_require__(43846));
+var _receiveEarlyMedia = _interopRequireDefault(__webpack_require__(46105));
+var _incomingCall = _interopRequireDefault(__webpack_require__(39494));
 var _setupIncomingCall = _interopRequireDefault(__webpack_require__(10418));
 var _setupOutgoingSession = _interopRequireDefault(__webpack_require__(71290));
 var _constants = __webpack_require__(37409);
-// Operations.
+// Local operation stages.
+
+// Remote operation stages.
 
 // Helpers
 
@@ -14012,7 +13874,13 @@ function initOperation(bottle) {
       local: {
         // Note: No `validate` stage; can always start a new call.
         localOffer: (0, _make.default)(bottle.container),
-        remoteAnswer: (0, _remoteAnswer.default)(bottle.container)
+        remoteAnswer: (0, _remoteAnswer.default)(bottle.container),
+        // Remote updates while operation is pending.
+        callStatusUpdateRinging: (0, _callStatusUpdateRinging.default)(bottle.container),
+        receiveEarlyMedia: (0, _receiveEarlyMedia.default)(bottle.container)
+      },
+      remote: {
+        remoteOffer: (0, _incomingCall.default)(bottle.container)
       }
     };
   });
@@ -14040,11 +13908,21 @@ function initOperation(bottle) {
         callId
       });
     }
+    function IncomingCall(callId) {
+      return opFactory.instance({
+        type: _constants.OPERATIONS.MAKE,
+        isNegotiation: false,
+        isLocal: false,
+        stages: Callstack.stages.make.remote
+      }, {
+        callId
+      });
+    }
     return {
-      local: LocalMake
+      local: LocalMake,
+      remote: IncomingCall
     };
   });
-  bottle.factory('Callstack.notifications.incomingCall', () => (0, _incomingCall.default)(bottle.container));
   bottle.factory('Callstack.utils.setupIncomingCall', () => (0, _setupIncomingCall.default)(bottle.container));
   bottle.factory('Callstack.utils.setupOutgoingSession', () => (0, _setupOutgoingSession.default)(bottle.container));
 }
@@ -14245,6 +14123,148 @@ function createMakeOperation(container) {
 
 /***/ }),
 
+/***/ 46105:
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports["default"] = receiveEarlyMediaOperation;
+var _actions = __webpack_require__(6313);
+var _selectors = __webpack_require__(11430);
+var _remoteTracks = __webpack_require__(45294);
+var _eventTypes = __webpack_require__(55166);
+var _constants = __webpack_require__(60683);
+// Call Plugin
+
+/**
+ * Bottle wrapper for "receive early media" notification handler.
+ * @return {Function}
+ */
+function receiveEarlyMediaOperation(container) {
+  const {
+    context,
+    emitEvent,
+    logManager,
+    WebRTC,
+    CallstackSDP
+  } = container;
+
+  /**
+   * A "session progress" notification has been received. It contains an "early
+   *    media" SDP (pranswer) that needs to be processed.
+   *
+   * Processing a pranswer is done by:
+   *    1. Validating the Call / Session.
+   *    2. Running the SDP through the SDP pipeline.
+   *    3. Setting the SDP as the Session's remote description (as pranswer).
+   *    4. Updating the Call state.
+   *
+   * @method receiveEarlyMedia
+   * @param {Object} params       Parameters describing the notification.
+   */
+  async function receiveEarlyMedia(wrtcsSessionId, params) {
+    const {
+      customParameters
+    } = params;
+
+    /**
+     * Get the call from state.
+     */
+    const currentCall = (0, _selectors.getCallByWrtcsSessionId)(context.getState(), wrtcsSessionId);
+    const log = logManager.getLogger('CALL', (currentCall || {}).id);
+    log.info('Received early media notice; handling.', {
+      wrtcsSessionId
+    });
+    if (!currentCall) {
+      log.info('Early media notice for unknown wrtcsSession. Ignoring.', {
+        wrtcsSessionId
+      });
+      return;
+    }
+
+    /**
+     * Get the Webrtc Session.
+     */
+    const session = await WebRTC.sessionManager.get(currentCall.webrtcSessionId);
+    if (!session) {
+      log.info('Early media notice for missing wrtcsSession. Ignoring.', {
+        wrtcsSessionId
+      });
+      // TODO: Better error.
+      return;
+    }
+    // Dispatch a custom parameters received action/event if any custom parameters were received as part of the notification
+    if (customParameters) {
+      const customNames = customParameters.map(param => param.name);
+      log.debug(`Received custom parameters as part of the Call: ${customNames}.`);
+      context.dispatch(_actions.callActions.customParametersReceived(currentCall.id, {
+        customParameters
+      }));
+
+      // Emit the associated event with the above action
+      emitEvent(_eventTypes.CUSTOM_PARAMETERS, {
+        callId: currentCall.id,
+        customParameters
+      });
+    }
+    try {
+      /*
+       * Run the remote SDP pranswer through any SDP handlers provided, then set it
+       *    as the Session's remote description.
+       * This is the "pre set remote" stage.
+       */
+      const callConfigOptions = (0, _selectors.getOptions)(context.getState());
+      const sdp = CallstackSDP.runPipeline(callConfigOptions.sdpHandlers, params.sdp, {
+        callId: currentCall.id,
+        type: 'pranswer',
+        step: 'set',
+        endpoint: 'remote'
+      });
+      await session.processAnswer({
+        type: 'pranswer',
+        sdp: sdp
+      });
+    } catch (err) {
+      log.debug(`Failed to process pranswer for Call ${currentCall.id}; ignoring.`);
+      throw err;
+    }
+
+    // Get the list of all remote tracks being offered in this call. This is a
+    //    new call, so this should be the full list of remote tracks available.
+    const remoteTracks = await (0, _remoteTracks.getAllRemoteTracks)(session);
+    log.info(`Finished handling early media notice. Changing to ${_constants.CALL_STATES.EARLY_MEDIA}.`);
+    context.dispatch(_actions.callActions.sessionProgress(currentCall.id, {
+      // Remote participant's information.
+      remoteParticipant: {
+        displayNumber: params.remoteNumber,
+        displayName: params.remoteName
+      },
+      remoteTracks
+    }));
+
+    // Tell the application that tracks are available on the call now.
+    emitEvent(_eventTypes.CALL_TRACKS_ADDED, {
+      callId: currentCall.id,
+      trackIds: remoteTracks
+    });
+    emitEvent(_eventTypes.CALL_STATE_CHANGE, {
+      callId: currentCall.id,
+      previous: {
+        state: currentCall.state,
+        localHold: currentCall.localHold,
+        remoteHold: currentCall.remoteHold
+      }
+    });
+  }
+  return receiveEarlyMedia;
+}
+
+/***/ }),
+
 /***/ 43658:
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
@@ -14389,26 +14409,203 @@ function createMakeResponse(container) {
 
 /***/ }),
 
+/***/ 39494:
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports["default"] = incomingCallOperation;
+var _actions = __webpack_require__(6313);
+var _selectors = __webpack_require__(11430);
+var _eventTypes = __webpack_require__(55166);
+var _constants = __webpack_require__(37409);
+var _constants2 = __webpack_require__(60683);
+var _constants3 = __webpack_require__(42750);
+// Call plugin
+
+/**
+ * Bottle wrapper for "incoming call" notification handler.
+ * @return {Function}
+ */
+function incomingCallOperation(container) {
+  const {
+    context,
+    CallRequests,
+    Callstack,
+    emitEvent,
+    CallReporter,
+    logManager
+  } = container;
+  const {
+    setupIncomingCall
+  } = Callstack.utils;
+  /**
+   * A "call incoming" notification has been received and needs to be handled.
+   *
+   * This operation is intended to be the entry point for all "call incoming"
+   *    notifications. A "call incoming" notification is the initial offer to
+   *    establish a call with a remote endpoint. It represents the start of both
+   *    the call flow and webRTC negotiation process for the local side.
+   * Handling the notification will create a new call in state.
+   * Responsibilities:
+   *    1. Have the callstack perform the required webRTC negotiation process.
+   *        - Regular or Slow Start negotiation.
+   *    2. Respond that the call has been received (ie. ringing).
+   *    3. Create call state (via redux action).
+   * @method incomingCall
+   * @param {string}   wrtcsSessionId ID that the server uses to identify the session.
+   * @param {Object}   params        Parameters describing the incoming call.
+   * @param {string}   [params.sdp]  The remote SDP offer included with the notification (if any).
+   * @param {string}   params.remoteNumber   Number of the remote participant.
+   * @param {string}   params.remoteName     Display name of the remote participant.
+   * @param {string}   params.calleeNumber  Number of the intended call recipient
+   */
+  async function incomingCall(wrtcsSessionId, params, channel) {
+    const {
+      sdp,
+      callId
+    } = params;
+    const callConfig = (0, _selectors.getOptions)(context.getState());
+
+    // Get the call report for this call
+    const callReport = CallReporter.getReport(callId);
+
+    // Get the RECEIVE_CALL event from the report
+    const receiveCallEvent = callReport.findLastOngoingEvent(_constants3.REPORT_EVENTS.RECEIVE_CALL);
+    const log = logManager.getLogger('CALL', callId);
+
+    /**
+     * An incoming call may or may not have an SDP offer associated with it.
+     * If it has an SDP, then it is a "regular" call scenario and can be handled
+     *    as a normal webRTC negotiation.
+     * If it has no SDP, then it is a "slow start" call scenario. In a slow start
+     *    scenario, the signaling server acts as a webRTC-middleman, requiring
+     *    both sides to provide it with offers and generating the answers itself.
+     */
+    if (sdp) {
+      // Regular call.
+      receiveCallEvent.addData('isSlowStart', false);
+      const turnInfo = (0, _selectors.getTurnInfo)(context.getState());
+
+      // Since we have the remote offer SDP, we can setup a webRTC session.
+      try {
+        // TODO: The call report is missing a "process remote media" event as part of the RECEIVE_CALL event.
+        await setupIncomingCall({
+          offer: {
+            sdp,
+            type: 'offer'
+          },
+          trickleIceMode: callConfig.trickleIceMode,
+          defaultPeerConfig: callConfig.defaultPeerConfig,
+          turnInfo,
+          callId,
+          removeBundling: callConfig.removeBundling,
+          serverTurnCredentials: callConfig.serverTurnCredentials
+        });
+      } catch (error) {
+        // The reason we're wrapping the error in an object here is because the setupIncomingCall operation
+        // used to return an object with an error property. Now that we are throwing instead, we throw the
+        // BasicError directly, but our interface is expecting an object with an error property.
+        log.info(`Failed to initiate incoming call. Changing to ${_constants2.CALL_STATES.ENDED}.`);
+        context.dispatch(_actions.callActions.endCallFinish(callId, {
+          isLocal: true,
+          error: {
+            error
+          }
+        }));
+        emitEvent(_eventTypes.CALL_OPERATION, {
+          callId,
+          isLocal: true,
+          operation: _constants.OPERATIONS.END,
+          transition: _constants.OP_TRANSITIONS.FINISH,
+          error: {
+            error
+          }
+        });
+        emitEvent(_eventTypes.CALL_STATE_CHANGE, {
+          callId,
+          previous: {
+            state: _constants2.CALL_STATES.INITIATING,
+            localHold: false,
+            remoteHold: false
+          },
+          error: {
+            error
+          }
+        });
+        throw error;
+      }
+    } else {
+      log.debug('Incoming call is a slow-start call.');
+      // Slow start call.
+      receiveCallEvent.addData('isSlowStart', true);
+
+      /*
+       * We can't setup a webRTC session yet because generating an offer requires
+       *   media constraints. We need to wait until the application provides
+       *   media information before we can setup the call.
+       */
+    }
+
+    // Next state will be Initiated normally, or Ringing if ringing feedback is sent.
+    let nextState = _constants2.CALL_STATES.INITIATED;
+
+    // If in 'auto' mode for `ringingFeedbackMode`, send the feedback immediately.
+    if (callConfig.ringingFeedbackMode === 'auto') {
+      log.info('Sending ringing feedback automatically for incoming call.');
+      const callInfo = {
+        wrtcsSessionId,
+        id: callId
+      };
+      try {
+        await CallRequests.updateCallRinging(callInfo);
+        log.debug('Successfully sent ringing feedback.');
+        nextState = _constants2.CALL_STATES.RINGING;
+      } catch (error) {
+        log.info(`Failed to send ringing feedback - ${error.code}: ${error.message} `);
+      }
+    }
+    log.info(`Finished initiating incoming call. Changing to ${nextState} and waiting on local answer.`);
+    context.dispatch(_actions.callActions.updateCall(callId, {
+      state: nextState
+    }));
+    emitEvent(_eventTypes.CALL_STATE_CHANGE, {
+      callId,
+      previous: {
+        state: _constants2.CALL_STATES.INITIATING,
+        localHold: false,
+        remoteHold: false
+      }
+    });
+  }
+  return incomingCall;
+}
+
+/***/ }),
+
 /***/ 10418:
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
 
-var _interopRequireDefault = __webpack_require__(71600);
 Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = setupIncomingCallOperation;
-var _defineProperty2 = _interopRequireDefault(__webpack_require__(26290));
 var _actions = __webpack_require__(6313);
 var _selectors = __webpack_require__(11430);
 var _errors = _interopRequireWildcard(__webpack_require__(83437));
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
 function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
-function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { (0, _defineProperty2.default)(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; } // Call plugin.
+// Call plugin.
+
 // Helpers
+
 /**
  * Bottle wrapper for "setup incoming call" operation.
  * @return {Function}
@@ -14450,17 +14647,19 @@ function setupIncomingCallOperation(container) {
       // Merge the ICE server information together with their credentials.
       if (turnInfo) {
         iceServers = iceServers.map(iceInfo => {
-          return _objectSpread(_objectSpread({}, iceInfo), {}, {
+          return {
+            ...iceInfo,
             username: turnInfo.username,
             credential: turnInfo.password
-          });
+          };
         });
       }
       session = await WebRTC.sessionManager.create({
         peer: {
-          rtcConfig: _objectSpread(_objectSpread({}, defaultPeerConfig), {}, {
+          rtcConfig: {
+            ...defaultPeerConfig,
             iceServers
-          }),
+          },
           trickleIceMode,
           removeBundling
         }
@@ -14509,12 +14708,10 @@ function setupIncomingCallOperation(container) {
 "use strict";
 
 
-var _interopRequireDefault = __webpack_require__(71600);
 Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = setupOutgoingSessionOperation;
-var _defineProperty2 = _interopRequireDefault(__webpack_require__(26290));
 var _actions = __webpack_require__(6313);
 var _selectors = __webpack_require__(11430);
 var _constants = __webpack_require__(37409);
@@ -14524,10 +14721,12 @@ var _errors = _interopRequireWildcard(__webpack_require__(83437));
 var _constants2 = __webpack_require__(42750);
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
 function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
-function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { (0, _defineProperty2.default)(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; } // Call plugin.
+// Call plugin.
+
 // Utils
+
 // Other plugins.
+
 /**
  * Bottle wrapper for "setup outgoing session" operation.
  * @return {Function}
@@ -14611,19 +14810,21 @@ function setupOutgoingSessionOperation(container) {
       // Merge the ICE server information together with their credentials.
       if (options.turnInfo) {
         iceServers = iceServers.map(iceInfo => {
-          return _objectSpread(_objectSpread({}, iceInfo), {}, {
+          return {
+            ...iceInfo,
             username: options.turnInfo.username,
             credential: options.turnInfo.password
-          });
+          };
         });
       }
 
       // Create a WebRTC-Stack Session object.
       session = await WebRTC.sessionManager.create({
         peer: {
-          rtcConfig: _objectSpread(_objectSpread({}, options.defaultPeerConfig), {}, {
+          rtcConfig: {
+            ...options.defaultPeerConfig,
             iceServers
-          }),
+          },
           // Follow-up / TODO: Remove `trickleIceMode` option; not used.
           trickleIceMode: options.trickleIceMode,
           removeBundling: options.removeBundling
@@ -17108,7 +17309,7 @@ function resyncCallStateOperation(container) {
         id: callId
       });
       if (sessionStatusResponse.state === 'ANSWERED' && currentCall.state !== _constants.CALL_STATES.CONNECTED && currentCall.state !== _constants.CALL_STATES.ON_HOLD) {
-        log.info('Call re-sync found that call is cancelled. Cancelling call.');
+        log.info('Call re-sync found that call was answered elsewhere. Cancelling call.');
         // If the call is answered, but not by us, report call as cancelled
         await CallstackWebrtc.closeCall(currentCall.webrtcSessionId);
         const latestCall = (0, _selectors.getCallById)(context.getState(), callId);
@@ -18203,11 +18404,8 @@ Object.defineProperty(exports, "__esModule", ({
 exports["default"] = initOperation;
 var _sendRingingFeedback = _interopRequireDefault(__webpack_require__(53516));
 var _validate = _interopRequireDefault(__webpack_require__(97965));
-var _callStatusUpdateRinging = _interopRequireDefault(__webpack_require__(43846));
 var _constants = __webpack_require__(37409);
 // Local operation.
-
-// Remote operation.
 
 // Call plugin.
 
@@ -18243,11 +18441,9 @@ function initOperation(bottle) {
     }
     return {
       local: LocalSendFeedback
+      // remote "ringing feedback" is part of the `make` operation.
     };
   });
-
-  // Register the handler for the "call ringing" notitication.
-  bottle.factory('Callstack.notifications.callStatusUpdateRinging', () => (0, _callStatusUpdateRinging.default)(bottle.container));
 }
 
 /***/ }),
@@ -18384,9 +18580,7 @@ exports["default"] = callStatusRingingOperation;
 var _actions = __webpack_require__(6313);
 var _eventTypes = __webpack_require__(55166);
 var _selectors = __webpack_require__(11430);
-var _constants = __webpack_require__(37409);
-var _constants2 = __webpack_require__(60683);
-var _constants3 = __webpack_require__(42750);
+var _constants = __webpack_require__(60683);
 // Call plugin.
 
 /**
@@ -18396,7 +18590,6 @@ var _constants3 = __webpack_require__(42750);
 function callStatusRingingOperation(container) {
   const {
     context,
-    CallReporter,
     emitEvent,
     logManager
   } = container;
@@ -18430,16 +18623,10 @@ function callStatusRingingOperation(container) {
         wrtcsSessionId
       });
       return;
-    } else if (call.state !== _constants2.CALL_STATES.INITIATED) {
+    } else if (call.state !== _constants.CALL_STATES.INITIATED) {
       log.info(`Call ringing notice for Call in an invalid state: ${call.state}. Ignoring.`);
       return;
     }
-    const callReport = CallReporter.getReport(call.id);
-    const makeOrJoinOp = call.currentOperations.find(op => {
-      return op.isLocal && (op.type === _constants.OPERATIONS.MAKE || op.type === _constants.OPERATIONS.MAKE_ANONYMOUS || op.type === _constants.OPERATIONS.JOIN);
-    });
-    const operationEvent = callReport.getEvent(makeOrJoinOp.eventId);
-    const receiveRingingEvent = operationEvent.addEvent(_constants3.REPORT_EVENTS.REMOTE_RINGING);
 
     // Dispatch a custom parameters received action/event if any custom parameters were
     //    received as part of the notification
@@ -18454,7 +18641,7 @@ function callStatusRingingOperation(container) {
         customParameters: params.customParameters
       });
     }
-    log.info(`Finished handling call ringing notice. Changing to ${_constants2.CALL_STATES.RINGING}.`);
+    log.info(`Finished handling call ringing notice. Changing to ${_constants.CALL_STATES.RINGING}.`);
     context.dispatch(_actions.callActions.callRinging(call.id, {
       // Remote participant's information.
       remoteParticipant: {
@@ -18470,7 +18657,6 @@ function callStatusRingingOperation(container) {
         remoteHold: call.remoteHold
       }
     });
-    receiveRingingEvent.endEvent();
   }
   return callStatusUpdateRinging;
 }
@@ -19086,7 +19272,6 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = createUnholdResponse;
-var _defineProperty2 = _interopRequireDefault(__webpack_require__(26290));
 var _actions = __webpack_require__(6313);
 var eventTypes = _interopRequireWildcard(__webpack_require__(55166));
 var _constants = __webpack_require__(37409);
@@ -19097,10 +19282,12 @@ var _selectors2 = __webpack_require__(30105);
 var _sdpTransform = _interopRequireDefault(__webpack_require__(23978));
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
 function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
-function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { (0, _defineProperty2.default)(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; } // Callstack.
+// Callstack.
+
 // Other plugins.
+
 // Libraries
+
 function createUnholdResponse(container) {
   const {
     context,
@@ -19217,11 +19404,12 @@ function createUnholdResponse(container) {
      *    - state change to remove local hold flag,
      *    - add tracks affected by operation.
      */
-    context.dispatch(_actions.callActions.unholdCallFinish(call.id, _objectSpread(_objectSpread({}, operation.operationData), {}, {
+    context.dispatch(_actions.callActions.unholdCallFinish(call.id, {
+      ...operation.operationData,
       // For an unhold operation, only certain tracks are affected.
       localTracks: affectedLocalTracks,
       remoteTracks: affectedRemoteTracks
-    })));
+    }));
 
     // Tell the application that tracks have been added.
     if ([...affectedLocalTracks, ...affectedRemoteTracks].length > 0) {
@@ -19961,7 +20149,7 @@ function updateCallStateOperation(container) {
 /***/ }),
 
 /***/ 42750:
-/***/ ((__unused_webpack_module, exports) => {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
@@ -19970,6 +20158,9 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports.REPORT_METRICS = exports.REPORT_EVENTS = exports.REPORTER_REQUESTS = exports.REPORTER_OPERATION_EVENTS_MAP = exports.ICE_COLLECTION_OPERATIONS = void 0;
+var _constants = __webpack_require__(37409);
+// Call plugin.
+
 /**
  * Events used in the SDK's call reports.
  *
@@ -20180,6 +20371,7 @@ const REPORT_METRICS = exports.REPORT_METRICS = {
 const REPORTER_OPERATION_EVENTS_MAP = exports.REPORTER_OPERATION_EVENTS_MAP = {
   // Establishment.
   MAKE: 'MAKE',
+  MAKE_REMOTE: REPORT_EVENTS.RECEIVE_CALL,
   MAKE_ANONYMOUS: 'MAKE',
   ANSWER: 'ANSWER',
   REJECT: 'REJECT',
@@ -20211,6 +20403,7 @@ const REPORTER_OPERATION_EVENTS_MAP = exports.REPORTER_OPERATION_EVENTS_MAP = {
   PLAY_AUDIO: 'PLAY_AUDIO',
   GET_AVAILABLE_CODECS: 'GET_AVAILABLE_CODECS',
   END: 'END_LOCAL',
+  END_REMOTE: 'END_REMOTE',
   // Remote-only.
   START_MOH_REMOTE: 'START_MOH',
   STOP_MOH_REMOTE: 'STOP_MOH',
@@ -20218,7 +20411,12 @@ const REPORTER_OPERATION_EVENTS_MAP = exports.REPORTER_OPERATION_EVENTS_MAP = {
   UNKNOWN_REMOTE: 'UNKNOWN',
   GENERIC_REMOTE: 'UNKNOWN',
   NO_CHANGE_REMOTE: 'UNKNOWN',
-  callStatusUpdateEnded: 'END_REMOTE'
+  // TechDebt TODO: Have these consistently named.
+  callStatusUpdateEnded: REPORT_EVENTS.END_REMOTE,
+  receiveEarlyMedia: 'EARLY_MEDIA',
+  callStatusUpdateRinging: REPORT_EVENTS.REMOTE_RINGING,
+  // TechDebt TODO: These constants are mostly hardcoded copy/paste of the call OPERATIONS.
+  [_constants.OPERATIONS.CALL_CANCEL]: _constants.OPERATIONS.CALL_CANCEL
 };
 
 /*
@@ -20291,15 +20489,11 @@ function reporter() {
 "use strict";
 
 
-var _interopRequireDefault = __webpack_require__(71600);
 Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = void 0;
-var _defineProperty2 = _interopRequireDefault(__webpack_require__(26290));
 var _constants = __webpack_require__(42750);
-function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { (0, _defineProperty2.default)(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
 /**
  * @method durationHandler
  * @param {string} metric The metric type which will be added to report when handler function is executed.
@@ -20434,9 +20628,10 @@ function relayCandidatesHandler() {
   return (callReport, event) => {
     if (event.type === _constants.REPORT_EVENTS.RELAY_CANDIDATE_COLLECTED) {
       const eventData = event.getData();
-      const collectedCandidateInformation = _objectSpread(_objectSpread({}, eventData), {}, {
+      const collectedCandidateInformation = {
+        ...eventData,
         duration: event.start // The candidate was collected by the time this event was added
-      });
+      };
       collectedCandidates.push(collectedCandidateInformation);
     } else if (event.type === _constants.REPORT_EVENTS.PROCESS_MEDIA_LOCAL) {
       // Update the duration of all the collected candidates
@@ -22615,7 +22810,6 @@ exports.getCallAction = getCallAction;
 exports.getLocalOpTrackEvents = getLocalOpTrackEvents;
 exports.getLocalTracks = getLocalTracks;
 exports.getTrackDscpMapping = getTrackDscpMapping;
-var _defineProperty2 = _interopRequireDefault(__webpack_require__(26290));
 var _without2 = _interopRequireDefault(__webpack_require__(43214));
 var _selectors = __webpack_require__(11430);
 var _actions = __webpack_require__(6313);
@@ -22624,9 +22818,10 @@ var _constants = __webpack_require__(37409);
 var _selectors2 = __webpack_require__(30105);
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
 function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
-function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { (0, _defineProperty2.default)(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; } // Call plugin
+// Call plugin
+
 // Other plugins
+
 // Libraries
 
 /**
@@ -22825,7 +23020,9 @@ function getTrackDscpMapping(trackLists, dscpControls) {
 function checkBandwidthControls(bandwidthControls) {
   // TODO: Is this function needed for anything other than ensuring
   //    the bandwidth object has the "right" format? Is that even needed?
-  const finalBandwidthControls = _objectSpread({}, bandwidthControls);
+  const finalBandwidthControls = {
+    ...bandwidthControls
+  };
 
   // If there are no bandwidth limits set or the bandwidth limits provided are not numbers, set them to undefined
   if (!bandwidthControls || !(bandwidthControls.audio && typeof bandwidthControls.audio === 'number')) {
@@ -23260,21 +23457,20 @@ function createLocalOperation(container) {
 "use strict";
 
 
-var _interopRequireDefault = __webpack_require__(71600);
 Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = generateOfferOperation;
-var _defineProperty2 = _interopRequireDefault(__webpack_require__(26290));
 var _selectors = __webpack_require__(11430);
 var _constants = __webpack_require__(37409);
 var _errors = _interopRequireWildcard(__webpack_require__(83437));
 var _constants2 = __webpack_require__(42750);
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
 function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
-function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { (0, _defineProperty2.default)(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; } // Call plugin
+// Call plugin
+
 // Other plugins
+
 /**
  * Bottle wrapper for "generate offer" operation.
  * @return {Function}
@@ -23330,9 +23526,10 @@ function generateOfferOperation(container) {
     //    renegotiation operation.
     let offer, callConfigOptions;
     try {
-      offer = await session.createOffer(_objectSpread({
-        mediaDirections
-      }, otherOptions));
+      offer = await session.createOffer({
+        mediaDirections,
+        ...otherOptions
+      });
       callConfigOptions = (0, _selectors.getOptions)(context.getState());
       // This is the "pre set local" stage.
       offer.sdp = CallstackSDP.runPipeline(callConfigOptions.sdpHandlers, offer.sdp, {
@@ -23671,7 +23868,7 @@ exports.fixIceServerUrls = fixIceServerUrls;
 exports.mergeDefaults = mergeDefaults;
 var _logs = __webpack_require__(43862);
 var _utils = __webpack_require__(25189);
-var _version = __webpack_require__(33164);
+var _version = __webpack_require__(42298);
 var _defaults = __webpack_require__(27241);
 var _validation = __webpack_require__(42850);
 // Other plugins.
@@ -24211,14 +24408,13 @@ exports.setCustomParameters = setCustomParameters;
 exports.unholdCall = unholdCall;
 exports.unholdCallFinish = unholdCallFinish;
 exports.updateCall = updateCall;
-var _defineProperty2 = _interopRequireDefault(__webpack_require__(26290));
 var _isPlainObject2 = _interopRequireDefault(__webpack_require__(1449));
 var _isEmpty2 = _interopRequireDefault(__webpack_require__(8288));
 var actionTypes = _interopRequireWildcard(__webpack_require__(39100));
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
 function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
-function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { (0, _defineProperty2.default)(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; } // Call plugin.
+// Call plugin.
+
 // Libraries.
 
 /**
@@ -24252,9 +24448,10 @@ function callActionHelper(type, id) {
    */
   const action = {
     type,
-    payload: _objectSpread(_objectSpread({}, payload), {}, {
+    payload: {
+      ...payload,
       id
-    })
+    }
   };
   // Only have meta and error properties on the action if they're needed.
   if (!(0, _isEmpty2.default)(meta)) {
@@ -24397,9 +24594,10 @@ function sendDTMFFinish(id, params) {
 function getStats(id, params, deferred) {
   const action = {
     type: actionTypes.GET_STATS,
-    payload: _objectSpread(_objectSpread({}, params), {}, {
+    payload: {
+      ...params,
       id
-    }),
+    },
     meta: {
       deferred
     }
@@ -24454,7 +24652,9 @@ function pendingOperation(id, params) {
 function getAvailableCodecs(params, deferred) {
   const action = {
     type: actionTypes.GET_AVAILABLE_CODECS,
-    payload: _objectSpread({}, params),
+    payload: {
+      ...params
+    },
     meta: {
       deferred
     }
@@ -24464,7 +24664,9 @@ function getAvailableCodecs(params, deferred) {
 function availableCodecsRetrieved(params) {
   const action = {
     type: actionTypes.AVAILABLE_CODECS_RETRIEVED,
-    payload: _objectSpread({}, params)
+    payload: {
+      ...params
+    }
   };
   if (params.error) {
     action.error = true;
@@ -24667,8 +24869,6 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = createAnonApi;
-var _defineProperty2 = _interopRequireDefault(__webpack_require__(26290));
-var _objectWithoutProperties2 = _interopRequireDefault(__webpack_require__(24923));
 var _pick2 = _interopRequireDefault(__webpack_require__(13337));
 var _index = _interopRequireDefault(__webpack_require__(25535));
 var _actions = __webpack_require__(6313);
@@ -24676,14 +24876,16 @@ var eventTypes = _interopRequireWildcard(__webpack_require__(55166));
 var _constants = __webpack_require__(60683);
 var _uuid = __webpack_require__(60130);
 var _utils = __webpack_require__(27842);
-const _excluded = ["audio", "audioOptions", "video", "videoOptions", "screen", "screenOptions", "medias"]; // Regular Call API.
-// Call plugin.
-// Libraries.
-// Helpers.
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
 function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
-function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { (0, _defineProperty2.default)(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+// Regular Call API.
+
+// Call plugin.
+
+// Libraries.
+
+// Helpers.
+
 function createAnonApi(container) {
   const {
     CallManager,
@@ -24794,15 +24996,15 @@ function createAnonApi(container) {
 
     // Separate the media constraints from the callOptions.
     const {
-        audio,
-        audioOptions,
-        video,
-        videoOptions,
-        screen,
-        screenOptions,
-        medias
-      } = callOptions,
-      options = (0, _objectWithoutProperties2.default)(callOptions, _excluded);
+      audio,
+      audioOptions,
+      video,
+      videoOptions,
+      screen,
+      screenOptions,
+      medias,
+      ...options
+    } = callOptions;
 
     // Validate mediaConstraints
     (0, _utils.validateMediaConstraints)({
@@ -24853,18 +25055,20 @@ function createAnonApi(container) {
       account = authAccount ? authAccount : callee;
       isTokenBased = false;
     }
-    const anonOptions = _objectSpread(_objectSpread({}, options), {}, {
+    const anonOptions = {
+      ...options,
       isAnonymous: true,
       account,
       displayName: isTokenBased ? '' : options.displayName
-    });
+    };
 
     // Dispatch an action to add the call to state.
-    context.dispatch(_actions.callActions.makeCall(callId, _objectSpread({
+    context.dispatch(_actions.callActions.makeCall(callId, {
       participantAddress: callee,
       from: options.from,
-      mediaConstraints
-    }, anonOptions)));
+      mediaConstraints,
+      ...anonOptions
+    }));
 
     /*
      * Timeout is needed to be backwards-compatible with saga-style API. The API
@@ -24905,9 +25109,10 @@ function createAnonApi(container) {
 
   // Return the API object: The Link APIs plus the anonymous `make` API.
   return {
-    call: _objectSpread(_objectSpread({}, linkAPI), {}, {
+    call: {
+      ...linkAPI,
       makeAnonymous
-    })
+    }
   };
 }
 
@@ -25306,12 +25511,10 @@ function createAPI() {
 "use strict";
 
 
-var _interopRequireDefault = __webpack_require__(71600);
 Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = createAPI;
-var _defineProperty2 = _interopRequireDefault(__webpack_require__(26290));
 var _actions = __webpack_require__(6313);
 var _selectors = __webpack_require__(11430);
 var eventTypes = _interopRequireWildcard(__webpack_require__(55166));
@@ -25322,11 +25525,14 @@ var _normalization = __webpack_require__(54395);
 var _uuid = __webpack_require__(60130);
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
 function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
-function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { (0, _defineProperty2.default)(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; } // Call plugin.
+// Call plugin.
+
 // Other plugins.
+
 // Helpers.
+
 // Libraries.
+
 /**
  * Call Establish APIs factory function.
  * @method createAPI
@@ -25457,11 +25663,12 @@ function createAPI(container) {
 
     // Dispatch the "make call" action so the call is in state before the operation
     //    and/or the application goes to look for it there.
-    context.dispatch(_actions.callActions.makeCall(callId, _objectSpread({
+    context.dispatch(_actions.callActions.makeCall(callId, {
       participantAddress: participants.to,
       from: participants.from,
-      mediaConstraints
-    }, options)));
+      mediaConstraints,
+      ...options
+    }));
 
     /*
      * Timeout is needed to be backwards-compatible with saga-style API. The API
@@ -25589,9 +25796,10 @@ function createAPI(container) {
 
     // Dispatch the "answer call" action so the call is updated in state
     // before the operation and/or the application goes to look for it there.
-    context.dispatch(_actions.callActions.answerCall(callId, _objectSpread({
-      mediaConstraints
-    }, options)));
+    context.dispatch(_actions.callActions.answerCall(callId, {
+      mediaConstraints,
+      ...options
+    }));
     try {
       // Validating detached media before attempting to start a call.
       // This verifies that the detached media being provided is, detached, local
@@ -25850,14 +26058,11 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = createAPI;
-var _defineProperty2 = _interopRequireDefault(__webpack_require__(26290));
 var _establish = _interopRequireDefault(__webpack_require__(38330));
 var _midcall = _interopRequireDefault(__webpack_require__(1594));
 var _complex = _interopRequireDefault(__webpack_require__(10094));
 var _misc = _interopRequireDefault(__webpack_require__(39992));
 var _constants = _interopRequireDefault(__webpack_require__(56465));
-function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { (0, _defineProperty2.default)(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
 /**
  * The 'call' namespace (within the 'api' type) is used to make audio and video calls to and from
  * SIP users and PSTN phones.
@@ -26313,7 +26518,13 @@ function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t =
  * @return {Object} API.
  */
 function createAPI(container) {
-  const api = _objectSpread(_objectSpread(_objectSpread(_objectSpread(_objectSpread({}, (0, _establish.default)(container)), (0, _midcall.default)(container)), (0, _complex.default)(container)), (0, _misc.default)(container)), (0, _constants.default)(container));
+  const api = {
+    ...(0, _establish.default)(container),
+    ...(0, _midcall.default)(container),
+    ...(0, _complex.default)(container),
+    ...(0, _misc.default)(container),
+    ...(0, _constants.default)(container)
+  };
   return {
     call: api
   };
@@ -26332,7 +26543,6 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = createAPI;
-var _defineProperty2 = _interopRequireDefault(__webpack_require__(26290));
 var _isEmpty2 = _interopRequireDefault(__webpack_require__(8288));
 var _actions = __webpack_require__(6313);
 var eventTypes = _interopRequireWildcard(__webpack_require__(55166));
@@ -26341,9 +26551,10 @@ var _utils = __webpack_require__(27842);
 var _call = __webpack_require__(12442);
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
 function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
-function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { (0, _defineProperty2.default)(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; } // Call plugin.
+// Call plugin.
+
 // Helpers.
+
 // Libraries.
 
 /**
@@ -26530,9 +26741,10 @@ function createAPI(container) {
       await (0, _utils.validateDetachedMedia)(media.medias);
     }
     const mediaConstraints = (0, _utils.formatMediaConstraints)(media);
-    context.dispatch(_actions.callActions.addMedia(callId, _objectSpread({
-      mediaConstraints
-    }, options)));
+    context.dispatch(_actions.callActions.addMedia(callId, {
+      mediaConstraints,
+      ...options
+    }));
 
     // Start the operation
     let error;
@@ -26577,9 +26789,10 @@ function createAPI(container) {
   async function removeMedia(callId, tracks) {
     let options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
     log.debug(API_LOG_TAG + 'call.removeMedia: ', callId, tracks);
-    context.dispatch(_actions.callActions.removeMedia(callId, _objectSpread({
-      tracks
-    }, options)));
+    context.dispatch(_actions.callActions.removeMedia(callId, {
+      tracks,
+      ...options
+    }));
 
     // Start the operation
     let error;
@@ -26641,10 +26854,11 @@ function createAPI(container) {
       video: !(0, _isEmpty2.default)(videoOptions) ? videoOptions : true,
       screen: false
     };
-    const action = _actions.callActions.addBasicMedia(callId, _objectSpread({
+    const action = _actions.callActions.addBasicMedia(callId, {
       mediaConstraints,
-      kind: 'video'
-    }, options));
+      kind: 'video',
+      ...options
+    });
     context.dispatch(action);
 
     // Start the operation
@@ -26899,9 +27113,10 @@ function createAPI(container) {
     } catch (err) {
       error = err;
     }
-    context.dispatch(_actions.callActions.replaceTrackFinish(callId, _objectSpread(_objectSpread({}, result), {}, {
+    context.dispatch(_actions.callActions.replaceTrackFinish(callId, {
+      ...result,
       error
-    })));
+    }));
 
     // Both events are issued for either success of failure path
     emitEvent(eventTypes.CALL_TRACK_REPLACED, {
@@ -27734,7 +27949,9 @@ const OPERATIONS = exports.OPERATIONS = {
   START_MOH: 'START_MOH',
   STOP_MOH: 'STOP_MOH',
   SLOW_START: 'SLOW_START',
-  GENERIC_REMOTE: 'GENERIC_REMOTE'
+  GENERIC_REMOTE: 'GENERIC_REMOTE',
+  // Remote updates.
+  CALL_CANCEL: 'CALL_CANCEL'
 };
 
 /*
@@ -28213,8 +28430,6 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = void 0;
-var _objectWithoutProperties2 = _interopRequireDefault(__webpack_require__(24923));
-var _defineProperty2 = _interopRequireDefault(__webpack_require__(26290));
 var _union2 = _interopRequireDefault(__webpack_require__(38959));
 var _concat2 = _interopRequireDefault(__webpack_require__(12462));
 var actionTypes = _interopRequireWildcard(__webpack_require__(39100));
@@ -28223,12 +28438,12 @@ var _constants = __webpack_require__(60683);
 var _constants2 = __webpack_require__(37409);
 var _operations = _interopRequireDefault(__webpack_require__(87156));
 var _reduxActions = __webpack_require__(68305);
-const _excluded = ["transition", "localTracks", "remoteTracks"];
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
 function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
-function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { (0, _defineProperty2.default)(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; } // Call plugin.
+// Call plugin.
+
 // Libraries.
+
 /**
  * A no-op reducer.
  * Some reducers don't need to change state, but need to exist so their actions
@@ -28244,13 +28459,17 @@ const noop = (state, action) => state;
  */
 const callEnder = (state, action) => {
   const now = Date.now();
-  return _objectSpread(_objectSpread({}, state), {}, {
+  return {
+    ...state,
     state: _constants.CALL_STATES.ENDED,
     // If there isn't a start time, then the call was never completed.
     //    Meaning it's duration was 0, so set the start time appropriately.
     startTime: state.startTime || now,
     endTime: now,
-    remoteParticipant: _objectSpread(_objectSpread({}, state.remoteParticipant), action.payload.remoteParticipant),
+    remoteParticipant: {
+      ...state.remoteParticipant,
+      ...action.payload.remoteParticipant
+    },
     // Closing the peer doesn't trigger an oniceconnectionstatechange event
     // although it does change the iceConnectionState property to closed
     mediaConnectionState: 'closed',
@@ -28258,7 +28477,7 @@ const callEnder = (state, action) => {
     isPending: undefined,
     localTracks: [],
     remoteTracks: []
-  });
+  };
 };
 
 // Top-tier reducers: Handles the whole call state.
@@ -28308,7 +28527,9 @@ reducers[actionTypes.MAKE_CALL] = {
 // Add the new call to state.
 reducers[actionTypes.CALL_INCOMING] = {
   next(state, action) {
-    return (0, _concat2.default)(state, _objectSpread(_objectSpread({}, action.payload), {}, {
+    return (0, _concat2.default)(state, {
+      // Dynamic state from the action.
+      ...action.payload,
       // Constants for a new incoming call.
       direction: 'incoming',
       isCaller: false,
@@ -28320,7 +28541,7 @@ reducers[actionTypes.CALL_INCOMING] = {
       localTracks: [],
       remoteTracks: [],
       currentOperations: []
-    }));
+    });
   }
 };
 
@@ -28331,22 +28552,25 @@ reducers[actionTypes.CALL_INCOMING] = {
 
 callReducers[actionTypes.SEND_RINGING_FEEDBACK_FINISH] = {
   next(state, action) {
-    return _objectSpread(_objectSpread({}, state), {}, {
+    return {
+      ...state,
       state: _constants.CALL_STATES.RINGING
-    });
+    };
   }
 };
 callReducers[actionTypes.CALL_RINGING] = {
   next(state, action) {
     if (action.payload.remoteParticipant) {
-      return _objectSpread(_objectSpread({}, state), {}, {
+      return {
+        ...state,
         state: _constants.CALL_STATES.RINGING,
         remoteParticipant: action.payload.remoteParticipant
-      });
+      };
     } else {
-      return _objectSpread(_objectSpread({}, state), {}, {
+      return {
+        ...state,
         state: _constants.CALL_STATES.RINGING
-      });
+      };
     }
   }
 };
@@ -28354,11 +28578,12 @@ callReducers[actionTypes.CALL_RINGING] = {
 // Handle Early Media the same as Ringing, just with a different state.
 callReducers[actionTypes.SESSION_PROGRESS] = {
   next(state, action) {
-    return _objectSpread(_objectSpread({}, state), {}, {
+    return {
+      ...state,
       state: _constants.CALL_STATES.EARLY_MEDIA,
       remoteParticipant: action.payload.remoteParticipant,
       remoteTracks: action.payload.remoteTracks
-    });
+    };
   }
 };
 
@@ -28384,18 +28609,20 @@ callReducers[actionTypes.REMOTE_SLOW_START] = noop;
  *    the notification. This flag is used to know when to ignore the call cancel.
  */
 const setHandling = (state, action) => {
-  return _objectSpread(_objectSpread({}, state), {}, {
+  return {
+    ...state,
     isHandling: true
-  });
+  };
 };
 callReducers[actionTypes.ANSWER_CALL] = setHandling;
 callReducers[actionTypes.REJECT_CALL] = setHandling;
 callReducers[actionTypes.FORWARD_CALL] = setHandling;
 callReducers[actionTypes.CALL_CANCELLED] = {
   next(state, action) {
-    return _objectSpread(_objectSpread({}, state), {}, {
+    return {
+      ...state,
       state: _constants.CALL_STATES.CANCELLED
-    });
+    };
   }
 };
 
@@ -28406,11 +28633,12 @@ callReducers[actionTypes.IGNORE_CALL_FINISH] = {
     //    in state, and they reflect that the call was not completed.
     // TODO: Better call times.
     const now = Date.now();
-    return _objectSpread(_objectSpread({}, state), {}, {
+    return {
+      ...state,
       startTime: now,
       endTime: now,
       state: _constants.CALL_STATES.ENDED
-    });
+    };
   },
   throw: (state, action) => {
     return state;
@@ -28424,11 +28652,12 @@ callReducers[actionTypes.REJECT_CALL_FINISH] = {
     //    times in state, and they reflect that the call was not completed.
     // TODO: Better call times.
     const now = Date.now();
-    const newState = _objectSpread(_objectSpread({}, state), {}, {
+    const newState = {
+      ...state,
       startTime: now,
       endTime: now,
       state: _constants.CALL_STATES.ENDED
-    });
+    };
 
     // After the reject operation finishes, remove the flag that indicates we
     //    were handling the call.
@@ -28444,14 +28673,16 @@ callReducers[actionTypes.SESSION_CREATED] = {
     // When we get SESSION_CREATED action, the call object already exists as part of reducers state
     // so we only add the webrtc session id. This way we can find the call object
     // by searching for this associated webrtcSessionId.
-    return _objectSpread(_objectSpread({}, state), {}, {
+    return {
+      ...state,
       webrtcSessionId: action.payload.webrtcSessionId
-    });
+    };
   }
 };
 callReducers[actionTypes.PENDING_MAKE_CALL] = {
   next(state, action) {
-    return _objectSpread(_objectSpread({}, state), {}, {
+    return {
+      ...state,
       state: _constants.CALL_STATES.INITIATED,
       wrtcsSessionId: action.payload.wrtcsSessionId,
       webrtcSessionId: action.payload.webrtcSessionId,
@@ -28460,17 +28691,23 @@ callReducers[actionTypes.PENDING_MAKE_CALL] = {
       customParameters: action.payload.customParameters,
       customBodies: action.payload.customBodies,
       localTracks: action.payload.localTracks
-    });
+    };
   }
 };
 
 // Update the new call state based on the outcome.
 callReducers[actionTypes.MAKE_CALL_FINISH] = {
   next(state, action) {
-    return _objectSpread(_objectSpread({}, state), action.payload);
+    return {
+      ...state,
+      ...action.payload
+    };
   },
   throw(state, action) {
-    return _objectSpread(_objectSpread({}, state), action.payload);
+    return {
+      ...state,
+      ...action.payload
+    };
   }
 };
 
@@ -28491,7 +28728,8 @@ callReducers[actionTypes.ANSWER_CALL_FINISH] = {
     // In some scenarios (slow start), the we only get an ID
     //    at the answer step.
     const webrtcId = action.payload.webrtcSessionId || state.webrtcSessionId;
-    const newState = _objectSpread(_objectSpread({}, state), {}, {
+    const newState = {
+      ...state,
       state: action.payload.state,
       mediaConstraints: action.payload.mediaConstraints,
       dscpControls: action.payload.dscpControls,
@@ -28503,7 +28741,7 @@ callReducers[actionTypes.ANSWER_CALL_FINISH] = {
       customBodies: action.payload.customBodies,
       localTracks: action.payload.localTracks,
       remoteTracks: action.payload.remoteTracks
-    });
+    };
 
     // Add start time to the call's state here if the call is not a slowstart call
     if (action.meta && !action.meta.isSlowStart) {
@@ -28518,7 +28756,10 @@ callReducers[actionTypes.ANSWER_CALL_FINISH] = {
     return newState;
   },
   throw(state, action) {
-    const newState = _objectSpread(_objectSpread({}, state), action.payload);
+    const newState = {
+      ...state,
+      ...action.payload
+    };
 
     // If we failed to answer the call, then we're not actually handling the
     //    call, so remove the flag.
@@ -28528,7 +28769,10 @@ callReducers[actionTypes.ANSWER_CALL_FINISH] = {
 };
 callReducers[actionTypes.CALL_ACCEPTED] = {
   next(state, action) {
-    const newState = _objectSpread(_objectSpread({}, state), action.payload);
+    const newState = {
+      ...state,
+      ...action.payload
+    };
 
     // If we were answering, but it's the remote accept that puts us in the
     //    Connected state (ie. slow-start), then we can remove this flag since
@@ -28540,9 +28784,10 @@ callReducers[actionTypes.CALL_ACCEPTED] = {
   },
   throw(state, action) {
     const newState = action.payload.state || state.state;
-    return _objectSpread(_objectSpread({}, state), {}, {
+    return {
+      ...state,
       state: newState
-    });
+    };
   }
 };
 
@@ -28557,14 +28802,16 @@ callReducers[actionTypes.UPDATE_CALL] = {
      *  - transition: Data for an event; not call state.
      *  - localTracks: UPDATE_CALL should not affect local tracks.
      */
-    const _action$payload = action.payload,
-      {
-        transition,
-        localTracks,
-        remoteTracks
-      } = _action$payload,
-      stateProperties = (0, _objectWithoutProperties2.default)(_action$payload, _excluded);
-    const newState = _objectSpread(_objectSpread({}, state), stateProperties);
+    const {
+      transition,
+      localTracks,
+      remoteTracks,
+      ...stateProperties
+    } = action.payload;
+    const newState = {
+      ...state,
+      ...stateProperties
+    };
     if (remoteTracks && remoteTracks.length > 0) {
       newState.remoteTracks = remoteTracks;
     }
@@ -28606,12 +28853,13 @@ callReducers[actionTypes.CALL_HOLD_FINISH] = {
       localTracks
     } = action.payload;
     const localTracksLeft = state.localTracks.filter(trackId => !localTracks.includes(trackId));
-    return _objectSpread(_objectSpread({}, state), {}, {
+    return {
+      ...state,
       localHold: true,
       state: _constants.CALL_STATES.ON_HOLD,
       localTracks: localTracksLeft,
       remoteTracks: tracksLeft
-    });
+    };
   }
 };
 callReducers[actionTypes.CALL_UNHOLD_FINISH] = {
@@ -28625,25 +28873,30 @@ callReducers[actionTypes.CALL_UNHOLD_FINISH] = {
     } = action.payload;
     const localAdded = (0, _union2.default)(state.localTracks, localTracks);
     const callState = state.remoteHold ? _constants.CALL_STATES.ON_HOLD : _constants.CALL_STATES.CONNECTED;
-    return _objectSpread(_objectSpread({}, state), {}, {
+    return {
+      ...state,
       localHold: false,
       state: callState,
       localTracks: localAdded,
       remoteTracks: tracks
-    });
+    };
   }
 };
 callReducers[actionTypes.SET_CUSTOM_PARAMETERS] = {
   next(state, action) {
-    return _objectSpread(_objectSpread({}, state), {}, {
+    return {
+      ...state,
       customParameters: action.payload.customParameters,
       customBodies: action.payload.customBodies
-    });
+    };
   }
 };
 callReducers[actionTypes.SEND_CUSTOM_PARAMETERS_FINISH] = {
   next(state, action) {
-    return _objectSpread(_objectSpread({}, state), action.payload);
+    return {
+      ...state,
+      ...action.payload
+    };
   }
 };
 callReducers[actionTypes.CALL_REMOTE_HOLD_FINISH] = {
@@ -28654,13 +28907,17 @@ callReducers[actionTypes.CALL_REMOTE_HOLD_FINISH] = {
     const tracksLeft = state.remoteTracks.filter(trackId => !removedRemote.includes(trackId));
     const removedLocal = action.payload.localTracks;
     const localLeft = state.localTracks.filter(trackId => !removedLocal.includes(trackId));
-    return _objectSpread(_objectSpread({}, state), {}, {
+    return {
+      ...state,
       remoteHold: true,
       state: _constants.CALL_STATES.ON_HOLD,
-      remoteParticipant: _objectSpread(_objectSpread({}, state.remoteParticipant), action.payload.remoteParticipant),
+      remoteParticipant: {
+        ...state.remoteParticipant,
+        ...action.payload.remoteParticipant
+      },
       localTracks: localLeft,
       remoteTracks: tracksLeft
-    });
+    };
   }
 };
 callReducers[actionTypes.CALL_REMOTE_UNHOLD_FINISH] = {
@@ -28670,13 +28927,17 @@ callReducers[actionTypes.CALL_REMOTE_UNHOLD_FINISH] = {
     const addedLocal = action.payload.localTracks;
     const localTracks = (0, _union2.default)(state.localTracks, addedLocal);
     const callState = state.localHold ? _constants.CALL_STATES.ON_HOLD : _constants.CALL_STATES.CONNECTED;
-    const newCall = _objectSpread(_objectSpread({}, state), {}, {
+    const newCall = {
+      ...state,
       remoteHold: false,
       state: callState,
-      remoteParticipant: _objectSpread(_objectSpread({}, state.remoteParticipant), action.payload.remoteParticipant),
+      remoteParticipant: {
+        ...state.remoteParticipant,
+        ...action.payload.remoteParticipant
+      },
       localTracks,
       remoteTracks: tracks
-    });
+    };
 
     // If `hasMOH` was explicitly set to true, set it to false as part of unhold.
     // This will happen when there is an explicit "start MOH" negotiation but
@@ -28692,9 +28953,10 @@ callReducers[actionTypes.REMOTE_ADD_MEDIA_FINISH] = {
     // Added the affected tracks to the list of remote tracks.
     const addedTracks = action.payload.remoteTracks;
     const tracks = (0, _union2.default)(state.remoteTracks, addedTracks);
-    return _objectSpread(_objectSpread({}, state), {}, {
+    return {
+      ...state,
       remoteTracks: tracks
-    });
+    };
   }
 };
 callReducers[actionTypes.REMOTE_REMOVE_MEDIA_FINISH] = {
@@ -28702,9 +28964,10 @@ callReducers[actionTypes.REMOTE_REMOVE_MEDIA_FINISH] = {
     // Filter out the affected tracks from the list of remote tracks.
     const removedTracks = action.payload.remoteTracks;
     const tracksLeft = state.remoteTracks.filter(trackId => !removedTracks.includes(trackId));
-    return _objectSpread(_objectSpread({}, state), {}, {
+    return {
+      ...state,
       remoteTracks: tracksLeft
-    });
+    };
   }
 };
 callReducers[actionTypes.REMOTE_START_MOH_FINISH] = {
@@ -28712,10 +28975,11 @@ callReducers[actionTypes.REMOTE_START_MOH_FINISH] = {
     // Added the affected tracks to the list of remote tracks.
     const addedTracks = action.payload.remoteTracks;
     const tracks = (0, _union2.default)(state.remoteTracks, addedTracks);
-    return _objectSpread(_objectSpread({}, state), {}, {
+    return {
+      ...state,
       hasMOH: true,
       remoteTracks: tracks
-    });
+    };
   }
 };
 callReducers[actionTypes.REMOTE_STOP_MOH_FINISH] = {
@@ -28723,17 +28987,19 @@ callReducers[actionTypes.REMOTE_STOP_MOH_FINISH] = {
     // Filter out the affected tracks from the list of remote tracks.
     const removedTracks = action.payload.remoteTracks;
     const tracksLeft = state.remoteTracks.filter(trackId => !removedTracks.includes(trackId));
-    return _objectSpread(_objectSpread({}, state), {}, {
+    return {
+      ...state,
       hasMOH: false,
       remoteTracks: tracksLeft
-    });
+    };
   }
 };
 callReducers[actionTypes.FORWARD_CALL_FINISH] = {
   next(state, action) {
-    const newState = _objectSpread(_objectSpread({}, state), {}, {
+    const newState = {
+      ...state,
       state: _constants.CALL_STATES.ENDED
-    });
+    };
 
     // After the forward operation finishes, remove the flag that indicates we
     //    were handling the call.
@@ -28801,12 +29067,13 @@ reducers[actionTypes.PENDING_JOIN] = {
     return state.map(call => {
       if (call.id === action.payload.id) {
         // Update the joined call with the new payload
-        return _objectSpread(_objectSpread({}, call), {}, {
+        return {
+          ...call,
           wrtcsSessionId: action.payload.wrtcsSessionId,
           webrtcSessionId: action.payload.webrtcSessionId,
           localTracks: action.payload.localTracks,
           state: action.payload.state
-        });
+        };
       } else {
         return call;
       }
@@ -28846,20 +29113,22 @@ reducers[actionTypes.JOIN_FINISH] = {
 callReducers[actionTypes.ADD_MEDIA_FINISH] = {
   next(state, action) {
     const localAdded = action.payload.localTracks;
-    return _objectSpread(_objectSpread({}, state), {}, {
+    return {
+      ...state,
       bandwidth: action.payload.bandwidth,
       localTracks: state.localTracks.concat(localAdded)
-    });
+    };
   }
 };
 callReducers[actionTypes.REMOVE_MEDIA_FINISH] = {
   next(state, action) {
     const localRemoved = action.payload.localTracks;
     const tracksLeft = state.localTracks.filter(trackId => !localRemoved.includes(trackId));
-    return _objectSpread(_objectSpread({}, state), {}, {
+    return {
+      ...state,
       bandwidth: action.payload.bandwidth,
       localTracks: tracksLeft
-    });
+    };
   }
 };
 callReducers[actionTypes.REPLACE_TRACK_FINISH] = {
@@ -28869,16 +29138,18 @@ callReducers[actionTypes.REPLACE_TRACK_FINISH] = {
 
     // Remove the old ID and add the new ID to localTracks state.
     const tracks = state.localTracks.filter(trackId => trackId !== oldTrackId).concat(newTrackId);
-    return _objectSpread(_objectSpread({}, state), {}, {
+    return {
+      ...state,
       localTracks: tracks
-    });
+    };
   }
 };
 callReducers[webrtcActionTypes.SESSION_ICE_CONNECTION_STATE_CHANGE] = {
   next(state, action) {
-    return _objectSpread(_objectSpread({}, state), {}, {
+    return {
+      ...state,
       mediaConnectionState: action.payload.iceConnectionState
-    });
+    };
   }
 };
 /*
@@ -28972,7 +29243,6 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = void 0;
-var _defineProperty2 = _interopRequireDefault(__webpack_require__(26290));
 var _isNil2 = _interopRequireDefault(__webpack_require__(91543));
 var _contains2 = _interopRequireDefault(__webpack_require__(54665));
 var actionTypes = _interopRequireWildcard(__webpack_require__(39100));
@@ -28980,9 +29250,10 @@ var _constants = __webpack_require__(37409);
 var _reduxActions = __webpack_require__(68305);
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
 function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
-function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { (0, _defineProperty2.default)(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; } // Call plugin.
+// Call plugin.
+
 // Libraries.
+
 const reducers = {};
 
 /**
@@ -29012,10 +29283,11 @@ function currentOperations() {
   } else if (transition === _constants.OP_TRANSITIONS.UPDATE) {
     return state.map(op => {
       if (op.id === operationId) {
-        return _objectSpread(_objectSpread({}, op), {}, {
+        return {
+          ...op,
           status: _constants.OP_STATUS.PENDING,
           operationData: action.payload.operationData
-        });
+        };
       } else {
         return op;
       }
@@ -29047,28 +29319,32 @@ reducers[actionTypes.OPERATION_UPDATE] = {
       } else {
         // ...and there is no current operation on-going.
         // Set the new operation in state.
-        return _objectSpread(_objectSpread({}, state), {}, {
+        return {
+          ...state,
           [stateProp]: {
             operation: action.payload.operation,
             status: _constants.OP_STATUS.ONGOING,
             eventId: action.payload.eventId
           }
-        });
+        };
       }
     } else if (action.payload.transition === _constants.OP_TRANSITIONS.UPDATE) {
       // Existing operation is now waiting on remote side.
-      return _objectSpread(_objectSpread({}, state), {}, {
-        [stateProp]: _objectSpread(_objectSpread({}, state[stateProp]), {}, {
+      return {
+        ...state,
+        [stateProp]: {
+          ...state[stateProp],
           status: _constants.OP_STATUS.PENDING,
           operationData: action.payload.operationData
-        })
-      });
+        }
+      };
     } else if (action.payload.transition === _constants.OP_TRANSITIONS.FINISH) {
       // Existing operation is finishing.
       const isRemote = !action.payload.isLocal;
-      const unsetOperation = _objectSpread(_objectSpread({}, state), {}, {
+      const unsetOperation = {
+        ...state,
         [stateProp]: undefined
-      });
+      };
       const currentOp = state[stateProp] && state[stateProp].operation;
       if ((0, _isNil2.default)(currentOp)) {
         // Should be considered an error scenario.
@@ -29124,25 +29400,27 @@ var _default = exports["default"] = reducer;
 "use strict";
 
 
-var _interopRequireDefault = __webpack_require__(71600);
 Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = void 0;
-var _defineProperty2 = _interopRequireDefault(__webpack_require__(26290));
 var actionTypes = _interopRequireWildcard(__webpack_require__(39100));
 var _reduxActions = __webpack_require__(68305);
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
 function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
-function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { (0, _defineProperty2.default)(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; } // Call plugin.
+// Call plugin.
+
 // Libraries.
+
 const reducers = {};
 
 // Replace any previous information with the new information.
 reducers[actionTypes.TURN_CHANGED] = {
   next(state, action) {
-    return _objectSpread(_objectSpread({}, state), action.payload.credentials);
+    return {
+      ...state,
+      ...action.payload.credentials
+    };
   }
 };
 
@@ -29472,20 +29750,19 @@ function shouldHandlePattern(action) {
 "use strict";
 
 
-var _interopRequireDefault = __webpack_require__(71600);
 Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = createMiddleware;
 exports.shouldHandlePattern = shouldHandlePattern;
-var _defineProperty2 = _interopRequireDefault(__webpack_require__(26290));
 var _selectors = __webpack_require__(11430);
 var _utils = __webpack_require__(32100);
 var _actionTypes = __webpack_require__(9148);
 var _selectors2 = __webpack_require__(46942);
-function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { (0, _defineProperty2.default)(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; } // Call plugin
+// Call plugin
+
 // Other plugins
+
 function createMiddleware(context) {
   const {
     CallManager,
@@ -29510,10 +29787,12 @@ function createMiddleware(context) {
     }
     const domain = (0, _selectors2.getDomain)(context.getState());
     const remoteInfo = (0, _utils.getRemoteParticipant)(targetCall, message, domain);
-    const params = _objectSpread({
+    const params = {
       reasonText,
-      statusCode
-    }, remoteInfo);
+      statusCode,
+      // Remote participant's information.
+      ...remoteInfo
+    };
     await CallManager.callStatusUpdateEnded(wrtcsSessionId, params);
   }
   return callStatusUpdateEndedNotification;
@@ -29530,20 +29809,19 @@ function shouldHandlePattern(action) {
 "use strict";
 
 
-var _interopRequireDefault = __webpack_require__(71600);
 Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = createMiddleware;
 exports.shouldHandlePattern = shouldHandlePattern;
-var _defineProperty2 = _interopRequireDefault(__webpack_require__(26290));
 var _selectors = __webpack_require__(11430);
 var _utils = __webpack_require__(32100);
 var _actionTypes = __webpack_require__(9148);
 var _selectors2 = __webpack_require__(46942);
-function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { (0, _defineProperty2.default)(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; } // Call plugin
+// Call plugin
+
 // Other plugins
+
 function createMiddleware(context) {
   const {
     CallManager,
@@ -29567,10 +29845,12 @@ function createMiddleware(context) {
     }
     const domain = (0, _selectors2.getDomain)(context.getState());
     const remoteInfo = (0, _utils.getRemoteParticipant)(targetCall, message, domain);
-    const params = _objectSpread({
+    const params = {
       reasonText,
-      statusCode
-    }, remoteInfo);
+      statusCode,
+      // Remote participant's information.
+      ...remoteInfo
+    };
     await CallManager.callStatusUpdateFailed(wrtcsSessionId, params);
   }
   return callStatusUpdateFailedNotification;
@@ -29587,20 +29867,19 @@ function shouldHandlePattern(action) {
 "use strict";
 
 
-var _interopRequireDefault = __webpack_require__(71600);
 Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = createMiddleware;
 exports.shouldHandlePattern = shouldHandlePattern;
-var _defineProperty2 = _interopRequireDefault(__webpack_require__(26290));
 var _selectors = __webpack_require__(11430);
 var _utils = __webpack_require__(32100);
 var _actionTypes = __webpack_require__(9148);
 var _selectors2 = __webpack_require__(46942);
-function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { (0, _defineProperty2.default)(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; } // Call plugin
+// Call plugin
+
 // Other plugins
+
 function createMiddleware(context) {
   const {
     CallManager,
@@ -29622,9 +29901,11 @@ function createMiddleware(context) {
     }
     const domain = (0, _selectors2.getDomain)(context.getState());
     const remoteInfo = (0, _utils.getRemoteParticipant)(targetCall, message, domain);
-    const params = _objectSpread(_objectSpread({}, remoteInfo), {}, {
+    const params = {
+      // Remote participant's information.
+      ...remoteInfo,
       customParameters: message.customParameters
-    });
+    };
     CallManager.callStatusUpdateRinging(wrtcsSessionId, params);
   }
   return callStatusUpdateRingingNotification;
@@ -29745,19 +30026,17 @@ function createMiddleware(context) {
 "use strict";
 
 
-var _interopRequireDefault = __webpack_require__(71600);
 Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = createMiddleware;
 exports.shouldHandlePattern = shouldHandlePattern;
-var _defineProperty2 = _interopRequireDefault(__webpack_require__(26290));
 var _actionTypes = __webpack_require__(9148);
 var _selectors = __webpack_require__(11430);
 var _utils = __webpack_require__(32100);
 var _selectors2 = __webpack_require__(46942);
-function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { (0, _defineProperty2.default)(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; } // Other plugins
+// Other plugins
+
 function createMiddleware(context) {
   const CallManager = context.container.CallManager;
   const logManager = context.container.logManager;
@@ -29790,15 +30069,16 @@ function createMiddleware(context) {
     const remoteInfo = (0, _utils.getRemoteParticipant)(targetCall, message, domain);
 
     // Pull-out the parameters into a standard format for the Callstack.
-    const params = _objectSpread(_objectSpread({
+    const params = {
       wrtcsSessionId: message.sessionParams.sessionData,
       sdp: message.sessionParams.sdp,
       retryAfter: message.sessionParams.retryAfter,
       message: message.sessionParams.reasonText,
-      code: message.statusCode
-    }, remoteInfo), {}, {
+      code: message.statusCode,
+      // Remote participant information.
+      ...remoteInfo,
       customParameters: message.customParameters
-    });
+    };
     // Pass the call parameters to the Callstack for handling.
     await CallManager.negotiationAnswer(wrtcsSessionId, params);
   }
@@ -29818,19 +30098,15 @@ function shouldHandlePattern(action) {
 "use strict";
 
 
-var _interopRequireDefault = __webpack_require__(71600);
 Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = createMiddleware;
 exports.shouldHandlePattern = shouldHandlePattern;
-var _defineProperty2 = _interopRequireDefault(__webpack_require__(26290));
 var _actionTypes = __webpack_require__(9148);
 var _selectors = __webpack_require__(11430);
 var _constants = __webpack_require__(60683);
 var _utils = __webpack_require__(32100);
-function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { (0, _defineProperty2.default)(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
 function createMiddleware(context) {
   const {
     CallManager,
@@ -29867,12 +30143,12 @@ function createMiddleware(context) {
     const remoteInfo = (0, _utils.getRemoteParticipant)(targetCall, message);
 
     // Pull-out the parameters into a standard format for the Callstack.
-    const params = _objectSpread(_objectSpread({
+    const params = {
       wrtcsSessionId: message.sessionParams.sessionData,
-      sdp: message.sessionParams.sdp
-    }, remoteInfo), {}, {
+      sdp: message.sessionParams.sdp,
+      ...remoteInfo,
       customParameters: message.customParameters
-    });
+    };
     try {
       await CallManager.negotiationOffer(wrtcsSessionId, params);
     } catch (error) {
@@ -29983,20 +30259,19 @@ function shouldHandlePattern(action) {
 "use strict";
 
 
-var _interopRequireDefault = __webpack_require__(71600);
 Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = createMiddleware;
 exports.shouldHandlePattern = shouldHandlePattern;
-var _defineProperty2 = _interopRequireDefault(__webpack_require__(26290));
 var _selectors = __webpack_require__(11430);
 var _utils = __webpack_require__(32100);
 var _actionTypes = __webpack_require__(9148);
 var _selectors2 = __webpack_require__(46942);
-function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { (0, _defineProperty2.default)(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; } // Call plugin
+// Call plugin
+
 // Other plugins
+
 function createMiddleware(context) {
   const {
     CallManager,
@@ -30020,10 +30295,12 @@ function createMiddleware(context) {
     }
     const domain = (0, _selectors2.getDomain)(context.getState());
     const remoteInfo = (0, _utils.getRemoteParticipant)(targetCall, message, domain);
-    const params = _objectSpread({
+    const params = {
       reasonText,
-      statusCode
-    }, remoteInfo);
+      statusCode,
+      // Remote participant's information.
+      ...remoteInfo
+    };
     await CallManager.sessionStatusUpdateEnded(wrtcsSessionId, params);
   }
   return sessionStatusUpdateEndedNotification;
@@ -30185,12 +30462,10 @@ function createOperation(container) {
 "use strict";
 
 
-var _interopRequireDefault = __webpack_require__(71600);
 Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = complexRequests;
-var _defineProperty2 = _interopRequireDefault(__webpack_require__(26290));
 var _selectors = __webpack_require__(11430);
 var _constants = __webpack_require__(37409);
 var _constants2 = __webpack_require__(42750);
@@ -30198,10 +30473,12 @@ var _selectors2 = __webpack_require__(46942);
 var requestUtils = _interopRequireWildcard(__webpack_require__(39790));
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
 function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
-function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { (0, _defineProperty2.default)(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; } // Call plugin
+// Call plugin
+
 // Other plugins.
+
 // Helpers.
+
 /**
  * Bottle wrapper for Link "complex" call requests.
  * @return {Object}
@@ -30256,7 +30533,10 @@ function complexRequests(container) {
 
     // Create main event representing the request we're about to make
     const requestEvent = operationEvent.addEvent(_constants2.REPORT_EVENTS.REST_REQUEST);
-    const response = await requestUtils.linkCallRequest(sendRequest, requestInfo, _objectSpread(_objectSpread({}, options), callInfo));
+    const response = await requestUtils.linkCallRequest(sendRequest, requestInfo, {
+      ...options,
+      ...callInfo
+    });
     if (response.error) {
       requestEvent.setError(response.error);
       requestEvent.endEvent();
@@ -30310,7 +30590,10 @@ function complexRequests(container) {
 
     // Create main event representing the request we're about to make
     const requestEvent = operationEvent.addEvent(_constants2.REPORT_EVENTS.REST_REQUEST);
-    const response = await requestUtils.linkCallRequest(sendRequest, requestInfo, _objectSpread(_objectSpread({}, options), callInfo));
+    const response = await requestUtils.linkCallRequest(sendRequest, requestInfo, {
+      ...options,
+      ...callInfo
+    });
     if (response.error) {
       requestEvent.setError(response.error);
       requestEvent.endEvent();
@@ -30392,12 +30675,10 @@ function complexRequests(container) {
 "use strict";
 
 
-var _interopRequireDefault = __webpack_require__(71600);
 Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = establishRequests;
-var _defineProperty2 = _interopRequireDefault(__webpack_require__(26290));
 var _selectors = __webpack_require__(11430);
 var _constants = __webpack_require__(37409);
 var _constants2 = __webpack_require__(42750);
@@ -30408,10 +30689,12 @@ var requestUtils = _interopRequireWildcard(__webpack_require__(39790));
 var _errors = _interopRequireWildcard(__webpack_require__(83437));
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
 function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
-function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { (0, _defineProperty2.default)(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; } // Call plugin.
+// Call plugin.
+
 // Other plugins.
+
 // Helpers.
+
 /**
  * Bottle wrapper for Link "establish" call requests.
  * @return {Object}
@@ -30504,9 +30787,10 @@ function establishRequests(container) {
     }
 
     // The information to be passed to `fetch`.
-    const fetchInfo = _objectSpread(_objectSpread({}, info), {}, {
+    const fetchInfo = {
+      ...info,
       method: 'POST'
-    });
+    };
     let responseType;
     if (info.isAnonymous) {
       responseType = 'callMeResponse';
@@ -30521,9 +30805,10 @@ function establishRequests(container) {
         });
       }
       fetchInfo.body = JSON.stringify({
-        callMeRequest: _objectSpread(_objectSpread({}, requestBody), {}, {
+        callMeRequest: {
+          ...requestBody,
           notifyChannelId: websocketId
-        })
+        }
       });
     } else {
       responseType = 'callControlResponse';
@@ -30583,7 +30868,10 @@ function establishRequests(container) {
     const requestEvent = operationEvent.addEvent(_constants2.REPORT_EVENTS.REST_REQUEST);
     // Add some metadata to it
     requestEvent.addData('requestType', _constants2.REPORTER_REQUESTS.ANSWER_SESSION);
-    const response = await requestUtils.linkCallRequest(sendRequest, requestInfo, _objectSpread(_objectSpread({}, options), info));
+    const response = await requestUtils.linkCallRequest(sendRequest, requestInfo, {
+      ...options,
+      ...info
+    });
     if (response.error) {
       log.debug('Failed to answer Call session server-side.', response.error);
       requestEvent.setError(response.error);
@@ -30750,7 +31038,10 @@ function establishRequests(container) {
     const requestEvent = operationEvent.addEvent(_constants2.REPORT_EVENTS.REST_REQUEST);
     // Add some metadata to it
     requestEvent.addData('requestType', _constants2.REPORTER_REQUESTS.END_SESSION);
-    const response = await requestUtils.linkCallRequest(sendRequest, requestInfo, _objectSpread(_objectSpread({}, options), callInfo));
+    const response = await requestUtils.linkCallRequest(sendRequest, requestInfo, {
+      ...options,
+      ...callInfo
+    });
     if (response.error) {
       log.info('Failed to end Call session server-side.', response.error);
       requestEvent.setError(response.error);
@@ -30784,20 +31075,22 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = createRequests;
-var _defineProperty2 = _interopRequireDefault(__webpack_require__(26290));
 var _complex = _interopRequireDefault(__webpack_require__(47630));
 var _establish = _interopRequireDefault(__webpack_require__(7554));
 var _misc = _interopRequireDefault(__webpack_require__(97617));
 var _negotiation = _interopRequireDefault(__webpack_require__(12972));
-function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { (0, _defineProperty2.default)(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
 /**
  * Link-specific Call Requests factory function.
  * Creates a closure where dependencies can be set and used
  *    by requests.
  */
 function createRequests(container) {
-  return _objectSpread(_objectSpread(_objectSpread(_objectSpread({}, (0, _complex.default)(container)), (0, _establish.default)(container)), (0, _misc.default)(container)), (0, _negotiation.default)(container));
+  return {
+    ...(0, _complex.default)(container),
+    ...(0, _establish.default)(container),
+    ...(0, _misc.default)(container),
+    ...(0, _negotiation.default)(container)
+  };
 }
 
 /***/ }),
@@ -30813,7 +31106,6 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = miscRequests;
-var _defineProperty2 = _interopRequireDefault(__webpack_require__(26290));
 var _selectors = __webpack_require__(11430);
 var _constants = __webpack_require__(37409);
 var _constants2 = __webpack_require__(42750);
@@ -30822,10 +31114,12 @@ var requestUtils = _interopRequireWildcard(__webpack_require__(39790));
 var _errors = _interopRequireDefault(__webpack_require__(83437));
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
 function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
-function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { (0, _defineProperty2.default)(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; } // Call plugin
+// Call plugin
+
 // Other plugins
+
 // Helpers
+
 /**
  * Bottle wrapper for Link "misc" call requests.
  * @return {Object}
@@ -30889,7 +31183,10 @@ function miscRequests(container) {
       // Add some metadata to it
       requestEvent.addData('requestType', _constants2.REPORTER_REQUESTS.GET_SESSION);
     }
-    const response = await requestUtils.linkCallRequest(sendRequest, requestInfo, _objectSpread(_objectSpread({}, options), callInfo));
+    const response = await requestUtils.linkCallRequest(sendRequest, requestInfo, {
+      ...options,
+      ...callInfo
+    });
     if (response.error) {
       requestEvent.setError(response.error);
       requestEvent.endEvent();
@@ -30947,7 +31244,10 @@ function miscRequests(container) {
     const requestEvent = receiveCallEvent.addEvent(_constants2.REPORT_EVENTS.REST_REQUEST);
     // Add some metadata to it
     requestEvent.addData('requestType', _constants2.REPORTER_REQUESTS.CALL_RINGING_UPDATE_SESSION);
-    const response = await requestUtils.linkCallRequest(sendRequest, requestInfo, _objectSpread(_objectSpread({}, options), callInfo));
+    const response = await requestUtils.linkCallRequest(sendRequest, requestInfo, {
+      ...options,
+      ...callInfo
+    });
     if (response.error) {
       requestEvent.setError(response.error);
       requestEvent.endEvent();
@@ -31005,7 +31305,10 @@ function miscRequests(container) {
     const requestEvent = operationEvent.addEvent(_constants2.REPORT_EVENTS.REST_REQUEST);
     // Add some metadata to it
     requestEvent.addData('requestType', _constants2.REPORTER_REQUESTS.UPDATE_CUSTOM_PARAMETERS_ON_SESSION);
-    const response = await requestUtils.linkCallRequest(sendRequest, requestInfo, _objectSpread(_objectSpread({}, options), callInfo));
+    const response = await requestUtils.linkCallRequest(sendRequest, requestInfo, {
+      ...options,
+      ...callInfo
+    });
     if (response.error) {
       requestEvent.setError(response.error);
       requestEvent.endEvent();
@@ -31060,7 +31363,10 @@ function miscRequests(container) {
     const report = CallReporter.getReport(callInfo.id);
     // Add an AUDIT_CALL main event from the report
     const auditCallEvent = report.addEvent(_constants2.REPORT_EVENTS.AUDIT_CALL);
-    const response = await requestUtils.linkCallRequest(sendRequest, requestInfo, _objectSpread(_objectSpread({}, options), callInfo));
+    const response = await requestUtils.linkCallRequest(sendRequest, requestInfo, {
+      ...options,
+      ...callInfo
+    });
     if (response.error) {
       auditCallEvent.setError(response.error);
       auditCallEvent.endEvent();
@@ -31093,12 +31399,10 @@ function miscRequests(container) {
 "use strict";
 
 
-var _interopRequireDefault = __webpack_require__(71600);
 Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = negotiationRequests;
-var _defineProperty2 = _interopRequireDefault(__webpack_require__(26290));
 var _selectors = __webpack_require__(46942);
 var _selectors2 = __webpack_require__(11430);
 var _constants = __webpack_require__(37409);
@@ -31106,8 +31410,8 @@ var _constants2 = __webpack_require__(42750);
 var requestUtils = _interopRequireWildcard(__webpack_require__(39790));
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
 function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
-function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { (0, _defineProperty2.default)(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; } // Helpers
+// Helpers
+
 /**
  * Bottle wrapper for Link "negotiation" call requests.
  * @return {Object}
@@ -31169,7 +31473,10 @@ function negotiationRequests(container) {
     const operationEvent = report.getEvent(operation.eventId);
     const requestEvent = operationEvent.addEvent(_constants2.REPORT_EVENTS.REST_REQUEST);
     requestEvent.addData('requestType', _constants2.REPORTER_REQUESTS.UPDATE_SESSION);
-    const response = await requestUtils.linkCallRequest(sendRequest, requestInfo, _objectSpread(_objectSpread({}, options), info));
+    const response = await requestUtils.linkCallRequest(sendRequest, requestInfo, {
+      ...options,
+      ...info
+    });
     if (response.error) {
       requestEvent.endEvent(response.error);
       throw response.error;
@@ -31238,7 +31545,10 @@ function negotiationRequests(container) {
     const requestEvent = operationEvent.addEvent(_constants2.REPORT_EVENTS.REST_REQUEST);
     // Add some metadata to it
     requestEvent.addData('requestType', _constants2.REPORTER_REQUESTS.UPDATE_SESSION);
-    const response = await requestUtils.linkCallRequest(sendRequest, requestInfo, _objectSpread(_objectSpread({}, options), callInfo));
+    const response = await requestUtils.linkCallRequest(sendRequest, requestInfo, {
+      ...options,
+      ...callInfo
+    });
     if (response.error) {
       requestEvent.endEvent(response.error);
       throw response.error;
@@ -32630,19 +32940,15 @@ var _default = exports["default"] = {
 "use strict";
 
 
-var _interopRequireDefault = __webpack_require__(71600);
 Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = void 0;
-var _defineProperty2 = _interopRequireDefault(__webpack_require__(26290));
 var actionTypes = _interopRequireWildcard(__webpack_require__(29341));
 var _reduxActions = __webpack_require__(68305);
 var _utils = __webpack_require__(25189);
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
 function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
-function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { (0, _defineProperty2.default)(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
 const reducers = {};
 reducers[actionTypes.CONFIG_UPDATE] = {
   next(state, action) {
@@ -32651,11 +32957,13 @@ reducers[actionTypes.CONFIG_UPDATE] = {
 };
 reducers[actionTypes.SET_SDP_HANDLERS] = {
   next(state, action) {
-    return _objectSpread(_objectSpread({}, state), {}, {
-      call: _objectSpread(_objectSpread({}, state.call), {}, {
+    return {
+      ...state,
+      call: {
+        ...state.call,
         sdpHandlers: action.payload.sdpHandlers
-      })
-    });
+      }
+    };
   }
 };
 
@@ -33640,44 +33948,48 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = void 0;
-var _defineProperty2 = _interopRequireDefault(__webpack_require__(26290));
 var _omit2 = _interopRequireDefault(__webpack_require__(81053));
 var actionTypes = _interopRequireWildcard(__webpack_require__(53202));
 var _reduxActions = __webpack_require__(68305);
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
 function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
-function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { (0, _defineProperty2.default)(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
 const reducers = {};
 reducers[actionTypes.WS_ATTEMPT_CONNECT] = {
   next(state, action) {
-    return _objectSpread(_objectSpread({}, state), {}, {
-      [action.meta.platform]: _objectSpread(_objectSpread({}, state[action.meta.platform]), {}, {
+    return {
+      ...state,
+      [action.meta.platform]: {
+        ...state[action.meta.platform],
         connected: false,
         pinging: false
-      })
-    });
+      }
+    };
   }
 };
 reducers[actionTypes.WS_RECONNECT_FAILED] = {
   next(state, action) {
-    return _objectSpread(_objectSpread({}, state), {}, {
-      [action.meta.platform]: _objectSpread(_objectSpread({}, state[action.meta.platform]), {}, {
+    return {
+      ...state,
+      [action.meta.platform]: {
+        ...state[action.meta.platform],
         connected: false,
         pinging: false
-      })
-    });
+      }
+    };
   }
 };
 reducers[actionTypes.WS_CONNECT_FINISHED] = {
   next(state, action) {
-    return _objectSpread(_objectSpread({}, state), {}, {
-      [action.meta.platform]: _objectSpread(_objectSpread({}, state[action.meta.platform]), {}, {
+    return {
+      ...state,
+      [action.meta.platform]: {
+        ...state[action.meta.platform],
         connected: true,
         method: action.payload.kandy.method,
-        platform: action.meta.platform
-      }, (0, _omit2.default)('checkConnectivity', action.payload.kandy))
-    });
+        platform: action.meta.platform,
+        ...(0, _omit2.default)('checkConnectivity', action.payload.kandy)
+      }
+    };
   },
   throw(state, action) {
     return {
@@ -33690,12 +34002,14 @@ reducers[actionTypes.WS_CONNECT_FINISHED] = {
 };
 reducers[actionTypes.LOST_CONNECTION] = {
   next(state, action) {
-    return _objectSpread(_objectSpread({}, state), {}, {
-      [action.meta.platform]: _objectSpread(_objectSpread({}, state[action.meta.platform]), {}, {
+    return {
+      ...state,
+      [action.meta.platform]: {
+        ...state[action.meta.platform],
         connected: false,
         pinging: false
-      })
-    });
+      }
+    };
   }
 };
 reducers[actionTypes.WS_DISCONNECT_FINISHED] = {
@@ -33740,9 +34054,10 @@ reducers[actionTypes.WS_ERROR] = {
  */
 reducers[actionTypes.CHANGE_CONNECTIVITY_CHECKING] = {
   next(state, action) {
-    return _objectSpread(_objectSpread({}, state), {}, {
+    return {
+      ...state,
       checkConnectivity: action.payload
-    });
+    };
   }
 };
 
@@ -33751,9 +34066,10 @@ reducers[actionTypes.CHANGE_CONNECTIVITY_CHECKING] = {
  */
 reducers[actionTypes.CHANGE_PING_INTERVAL] = {
   next(state, action) {
-    return _objectSpread(_objectSpread({}, state), {}, {
+    return {
+      ...state,
       pingInterval: action.payload
-    });
+    };
   }
 };
 
@@ -34926,7 +35242,6 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = reducer;
-var _defineProperty2 = _interopRequireDefault(__webpack_require__(26290));
 var _contains2 = _interopRequireDefault(__webpack_require__(54665));
 var _concat2 = _interopRequireDefault(__webpack_require__(12462));
 var _add2 = _interopRequireDefault(__webpack_require__(14727));
@@ -34934,8 +35249,8 @@ var _update2 = _interopRequireDefault(__webpack_require__(68496));
 var actionTypes = _interopRequireWildcard(__webpack_require__(73051));
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
 function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
-function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { (0, _defineProperty2.default)(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; } // Events plugin.
+// Events plugin.
+
 // Libraries.
 
 function eventReducer() {
@@ -34970,9 +35285,10 @@ function reducer() {
   if (!(0, _contains2.default)(action.type, actionTypes)) {
     return state;
   }
-  return _objectSpread(_objectSpread({}, state), {}, {
+  return {
+    ...state,
     [action.payload.eventType]: eventReducer(state[action.payload.eventType], action)
-  });
+  };
 }
 
 /***/ }),
@@ -34988,8 +35304,6 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports.factory = factory;
-var _defineProperty2 = _interopRequireDefault(__webpack_require__(26290));
-var _objectWithoutProperties2 = _interopRequireDefault(__webpack_require__(24923));
 var _merge2 = _interopRequireDefault(__webpack_require__(9612));
 var _map2 = _interopRequireDefault(__webpack_require__(65159));
 var _cloneDeep2 = _interopRequireDefault(__webpack_require__(33904));
@@ -34999,14 +35313,15 @@ var _reduxSaga = _interopRequireDefault(__webpack_require__(7));
 var _effects = __webpack_require__(27422);
 var _bottlejs = _interopRequireDefault(__webpack_require__(39146));
 var _utils = __webpack_require__(25189);
-var _version = __webpack_require__(33164);
+var _version = __webpack_require__(42298);
 var _intervalFactory = _interopRequireDefault(__webpack_require__(93725));
 var _validation = __webpack_require__(42850);
-const _excluded = ["common"]; // Libraries.
+// Libraries.
+
 // Helpers.
+
 // Parse and/or Validate
-function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { (0, _defineProperty2.default)(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+
 const factoryDefaults = {
   enableReduxDevTools: false,
   reduxDevToolsName: 'WebRTC SDK',
@@ -35039,9 +35354,9 @@ function factory(pluginFactories) {
   const clonedOptions = (0, _cloneDeep2.default)(sdkOptions);
   // Separate factory and plugin options.
   let {
-      common: options
-    } = clonedOptions,
-    pluginOptions = (0, _objectWithoutProperties2.default)(clonedOptions, _excluded);
+    common: options,
+    ...pluginOptions
+  } = clonedOptions;
   options = (0, _utils.mergeValues)(factoryDefaults, options);
   parseOptions(options);
 
@@ -35214,7 +35529,8 @@ function factory(pluginFactories) {
   bottle.resolve(bottle.container);
 
   // setup the API
-  const publicAPI = _objectSpread(_objectSpread({}, context.api), {}, {
+  const publicAPI = {
+    ...context.api,
     state: {
       get: function () {
         return store.getState();
@@ -35298,7 +35614,7 @@ function factory(pluginFactories) {
       const immediately = 0;
       setTimeout(_destroy, immediately);
     }
-  });
+  };
 
   // Return the public API.
   return publicAPI;
@@ -35401,16 +35717,17 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = createActionLogger;
-var _defineProperty2 = _interopRequireDefault(__webpack_require__(26290));
 var _index = __webpack_require__(43862);
 var _constants = __webpack_require__(8599);
 var _transformers = _interopRequireDefault(__webpack_require__(34305));
 var _utils = __webpack_require__(63821);
 var _reduxLogger = __webpack_require__(17073);
-function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { (0, _defineProperty2.default)(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; } // Logs plugin.
+// Logs plugin.
+
 // Action specific.
+
 // Libraries.
+
 /**
  * Creates a redux middleware for logging actions.
  * @method createActionLogger
@@ -35431,7 +35748,9 @@ function createActionLogger(options) {
     actionOptions.diff = false;
   } else {
     // At the DEBUG+ levels, use the configs.
-    actionOptions = _objectSpread({}, options.logActions);
+    actionOptions = {
+      ...options.logActions
+    };
   }
   if (options.logActions.actionOnly) {
     // Hide prevState and nextState.
@@ -35457,7 +35776,10 @@ function createActionLogger(options) {
   const transformers = (0, _transformers.default)(options.logActions);
   // Create the logger middleware.
 
-  return (0, _reduxLogger.createLogger)(_objectSpread(_objectSpread({}, actionOptions), transformers));
+  return (0, _reduxLogger.createLogger)({
+    ...actionOptions,
+    ...transformers
+  });
 }
 
 /**
@@ -36141,18 +36463,16 @@ const name = exports.name = 'logs';
 "use strict";
 
 
-var _interopRequireDefault = __webpack_require__(71600);
 Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = void 0;
-var _defineProperty2 = _interopRequireDefault(__webpack_require__(26290));
 var actionTypes = _interopRequireWildcard(__webpack_require__(91913));
 var _reduxActions = __webpack_require__(68305);
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
 function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
-function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { (0, _defineProperty2.default)(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; } // Libraries
+// Libraries
+
 /**
  * Logs state is a mapping between every Logger type (and the default type)
  *    and its set log level.
@@ -36168,7 +36488,10 @@ const reducers = {};
 reducers[actionTypes.LEVELS_CHANGE] = {
   next(state, action) {
     // Replace all levels that have been changed.
-    return _objectSpread(_objectSpread({}, state), action.payload);
+    return {
+      ...state,
+      ...action.payload
+    };
   }
 };
 const reducer = (0, _reduxActions.handleActions)(reducers, {});
@@ -36557,7 +36880,6 @@ const UNREGISTER_ANDROID_PUSH_NOTIFICATION = exports.UNREGISTER_ANDROID_PUSH_NOT
 "use strict";
 
 
-var _interopRequireDefault = __webpack_require__(71600);
 Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
@@ -36571,12 +36893,9 @@ exports.registerApplePushNotification = registerApplePushNotification;
 exports.unregisterAndroidPushNotification = unregisterAndroidPushNotification;
 exports.unregisterApplePushNotification = unregisterApplePushNotification;
 exports.websocketNotification = websocketNotification;
-var _defineProperty2 = _interopRequireDefault(__webpack_require__(26290));
 var actionTypes = _interopRequireWildcard(__webpack_require__(9148));
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
 function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
-function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { (0, _defineProperty2.default)(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
 /**
  * Helper function for funneling all notification types into a single action.
  * @method notificationHelper
@@ -36660,7 +36979,9 @@ function enableNotificationChannel(channel) {
   let params = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
   return {
     type: actionTypes.ENABLE_NOTIFICATION_CHANNEL,
-    payload: _objectSpread({}, params),
+    payload: {
+      ...params
+    },
     meta: {
       channel
     }
@@ -36676,9 +36997,10 @@ function enableNotificationChannel(channel) {
 function registerApplePushNotification(params, deferred) {
   return {
     type: actionTypes.REGISTER_APPLE_PUSH_NOTIFICATION,
-    payload: _objectSpread(_objectSpread({}, params), {}, {
+    payload: {
+      ...params,
       pushProvider: 'apple'
-    }),
+    },
     meta: {
       deferred
     }
@@ -36694,9 +37016,10 @@ function registerApplePushNotification(params, deferred) {
 function registerAndroidPushNotification(params, deferred) {
   return {
     type: actionTypes.REGISTER_ANDROID_PUSH_NOTIFICATION,
-    payload: _objectSpread(_objectSpread({}, params), {}, {
+    payload: {
+      ...params,
       pushProvider: 'google'
-    }),
+    },
     meta: {
       deferred
     }
@@ -36765,7 +37088,9 @@ function enableNotificationChannelFinish(channel) {
     action.payload = new Error(error);
     action.payload.channelEnabled = params.channelEnabled;
   } else {
-    action.payload = _objectSpread({}, params);
+    action.payload = {
+      ...params
+    };
   }
   return action;
 }
@@ -37078,19 +37403,15 @@ const name = exports.name = 'notifications';
 "use strict";
 
 
-var _interopRequireDefault = __webpack_require__(71600);
 Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = void 0;
-var _defineProperty2 = _interopRequireDefault(__webpack_require__(26290));
 var actionTypes = _interopRequireWildcard(__webpack_require__(9148));
 var _actionTypes2 = __webpack_require__(53202);
 var _reduxActions = __webpack_require__(68305);
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
 function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
-function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { (0, _defineProperty2.default)(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
 const reducers = {};
 reducers[actionTypes.ENABLE_NOTIFICATION_CHANNEL_FINISH] = {
   next(state, action) {
@@ -37098,14 +37419,20 @@ reducers[actionTypes.ENABLE_NOTIFICATION_CHANNEL_FINISH] = {
     const enabled = action.payload.channelEnabled;
     let newChannelState;
     if (enabled) {
-      newChannelState = _objectSpread(_objectSpread({}, state[channel]), action.payload);
+      newChannelState = {
+        ...state[channel],
+        ...action.payload
+      };
     } else {
       // If the channel is being disabled, clear old state.
-      newChannelState = _objectSpread({}, action.payload);
+      newChannelState = {
+        ...action.payload
+      };
     }
-    return _objectSpread(_objectSpread({}, state), {}, {
+    return {
+      ...state,
       [channel]: newChannelState
-    });
+    };
   }
 };
 
@@ -37116,11 +37443,13 @@ reducers[actionTypes.ENABLE_NOTIFICATION_CHANNEL_FINISH] = {
 reducers[_actionTypes2.WS_CONNECT_FINISHED] = {
   next(state) {
     // TODO: Link WS only?
-    return _objectSpread(_objectSpread({}, state), {}, {
-      WEBSOCKET: _objectSpread(_objectSpread({}, state.WEBSOCKET), {}, {
+    return {
+      ...state,
+      WEBSOCKET: {
+        ...state.WEBSOCKET,
         channelEnabled: true
-      })
-    });
+      }
+    };
   }
 };
 
@@ -37131,11 +37460,13 @@ reducers[_actionTypes2.WS_CONNECT_FINISHED] = {
 reducers[_actionTypes2.WS_DISCONNECT_FINISHED] = {
   next(state) {
     // TODO: Link WS only?
-    return _objectSpread(_objectSpread({}, state), {}, {
-      WEBSOCKET: _objectSpread(_objectSpread({}, state.WEBSOCKET), {}, {
+    return {
+      ...state,
+      WEBSOCKET: {
+        ...state.WEBSOCKET,
         channelEnabled: false
-      })
-    });
+      }
+    };
   }
 };
 
@@ -37406,7 +37737,6 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = createOperation;
-var _defineProperty2 = _interopRequireDefault(__webpack_require__(26290));
 var _has2 = _interopRequireDefault(__webpack_require__(15107));
 var _defaults2 = _interopRequireDefault(__webpack_require__(469));
 var _selectors = __webpack_require__(50606);
@@ -37416,10 +37746,12 @@ var _selectors2 = __webpack_require__(46942);
 var _pako = __webpack_require__(32845);
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
 function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
-function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { (0, _defineProperty2.default)(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; } // Notifications plugin
+// Notifications plugin
+
 // Other plugins
+
 // Libraries
+
 /**
  * Link-specific notification factory function.
  * @method createOperation
@@ -37444,7 +37776,9 @@ function createOperation(container) {
    */
   async function normalizeSDP(notification) {
     // Copy the notification.
-    notification = _objectSpread({}, notification);
+    notification = {
+      ...notification
+    };
     if (notification.notificationMessage.sessionParams.sdpFormat === 'compressed') {
       log.debug('Found SDP format: compressed. Deflating compressed SDP...');
       // convert based64 encoded string into bytes
@@ -37553,7 +37887,9 @@ function createOperation(container) {
 
         // For backwards compatibility, also emit the event that 'notificationReceived' action normally emits.
         emitEvent(eventTypes.NOTI_RECEIVED, {
-          payload: _objectSpread({}, formattedNotification)
+          payload: {
+            ...formattedNotification
+          }
         });
       }
     }
@@ -37602,13 +37938,13 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = createOperation;
-var _defineProperty2 = _interopRequireDefault(__webpack_require__(26290));
 var _defaults2 = _interopRequireDefault(__webpack_require__(469));
 var _selectors = __webpack_require__(50606);
 var _selectors2 = __webpack_require__(46942);
-function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { (0, _defineProperty2.default)(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; } // Libraries.
+// Libraries.
+
 // Other plugins.
+
 /**
  * Link-specific push notification factory function.
  * @method createOperation
@@ -37638,7 +37974,9 @@ function createOperation(container) {
       connection.server = (0, _defaults2.default)(connection.server, pushRegistration);
     }
     log.info('Registering device token for PUSH notifications...');
-    return await NotificationRequests.pushNotificationsRegistration(connection, _objectSpread({}, params));
+    return await NotificationRequests.pushNotificationsRegistration(connection, {
+      ...params
+    });
   }
   return registerPushDeviceToken;
 }
@@ -37712,10 +38050,9 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = createRequests;
-var _defineProperty2 = _interopRequireDefault(__webpack_require__(26290));
 var _errors = _interopRequireDefault(__webpack_require__(83437));
-function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { (0, _defineProperty2.default)(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; } // Error plugin
+// Error plugin
+
 /**
  * Messaging Link REST Requests factory function.
  * Defines the REST interface between the SDK and KL's Messaging REST APIs.
@@ -37826,9 +38163,10 @@ function createRequests(container) {
       });
     } else {
       log.info('Successfully registered device token for PUSH notifications.');
-      return _objectSpread({
-        error: false
-      }, registrationResponse);
+      return {
+        error: false,
+        ...registrationResponse
+      };
     }
   }
 
@@ -38558,19 +38896,16 @@ function customAgentVersionHeaderSuffix(state) {
 "use strict";
 
 
-var _interopRequireDefault = __webpack_require__(71600);
 Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = makeRequest;
-var _defineProperty2 = _interopRequireDefault(__webpack_require__(26290));
-var _objectWithoutProperties2 = _interopRequireDefault(__webpack_require__(24923));
 var _logs = __webpack_require__(43862);
 var _utils = __webpack_require__(25189);
-const _excluded = ["url", "queryParams", "responseType"]; // Other plugins.
+// Other plugins.
+
 // Utils.
-function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { (0, _defineProperty2.default)(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+
 /**
  * The possible response data types that can be handled.
  */
@@ -38616,11 +38951,11 @@ async function makeRequest(options, requestId) {
 
   // Extract and remove the non-fetch API properties.
   const {
-      url,
-      queryParams,
-      responseType = 'json'
-    } = options,
-    fetchOptions = (0, _objectWithoutProperties2.default)(options, _excluded);
+    url,
+    queryParams,
+    responseType = 'json',
+    ...fetchOptions
+  } = options;
 
   // Grab that last part of the URL (after the last /) to be logged.
   let endUrl = url.match(/([^/]*)$/)[0];
@@ -38663,9 +38998,10 @@ async function makeRequest(options, requestId) {
        */
       // Scenario 2: Response is ok, with no response body.
       log.info(`Finished request with successful response (status ${response.status}).`);
-      return makeResponse(undefined, _objectSpread({
-        body: {}
-      }, result));
+      return makeResponse(undefined, {
+        body: {},
+        ...result
+      });
     }
     const data = await parseBody(response, responseType);
     if (data instanceof Error) {
@@ -38680,9 +39016,10 @@ async function makeRequest(options, requestId) {
     } else {
       // Scenario 3: Response is ok, with an expected type.
       log.info(`Finished request with successful response (status ${response.status}).`);
-      return makeResponse(undefined, _objectSpread({
-        body: data
-      }, result));
+      return makeResponse(undefined, {
+        body: data,
+        ...result
+      });
     }
   } else {
     // Scenario 5: Response is not ok.
@@ -38776,9 +39113,10 @@ async function makeRequest(options, requestId) {
     }
     return makeResponse({
       error: 'REQUEST'
-    }, _objectSpread({
-      body: responseBody
-    }, result));
+    }, {
+      body: responseBody,
+      ...result
+    });
   }
 }
 
@@ -38904,7 +39242,7 @@ var authorizations = _interopRequireWildcard(__webpack_require__(55689));
 var _makeRequest = _interopRequireDefault(__webpack_require__(87569));
 var _utils = __webpack_require__(70720);
 var _selectors = __webpack_require__(46942);
-var _version = __webpack_require__(33164);
+var _version = __webpack_require__(42298);
 var _utils2 = __webpack_require__(25189);
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
 function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
@@ -39055,7 +39393,7 @@ var _cloneDeep2 = _interopRequireDefault(__webpack_require__(33904));
 var _selectors = __webpack_require__(50647);
 var _selectors2 = __webpack_require__(46942);
 var _logs = __webpack_require__(43862);
-var _version = __webpack_require__(33164);
+var _version = __webpack_require__(42298);
 var _utils = __webpack_require__(25189);
 var _effects = __webpack_require__(27422);
 // Request plugin.
@@ -40403,13 +40741,12 @@ exports.mediaNewTrack = mediaNewTrack;
 exports.mediaTrackEnded = mediaTrackEnded;
 exports.newMedia = newMedia;
 exports.removedMedia = removedMedia;
-var _defineProperty2 = _interopRequireDefault(__webpack_require__(26290));
 var _isEmpty2 = _interopRequireDefault(__webpack_require__(8288));
 var actionTypes = _interopRequireWildcard(__webpack_require__(1371));
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
 function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
-function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { (0, _defineProperty2.default)(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; } // Webrtc plugin.
+// Webrtc plugin.
+
 // Libraries.
 
 function mediaActionHelper(type, id) {
@@ -40417,9 +40754,10 @@ function mediaActionHelper(type, id) {
   let meta = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
   const action = {
     type,
-    payload: _objectSpread(_objectSpread({}, payload), {}, {
+    payload: {
+      ...payload,
       id
-    })
+    }
   };
 
   // Only have meta and error properties on the action if they're needed.
@@ -40498,13 +40836,12 @@ exports.sessionNewTrack = sessionNewTrack;
 exports.sessionRemoved = sessionRemoved;
 exports.sessionTrackEnded = sessionTrackEnded;
 exports.sessionTrackReplaced = sessionTrackReplaced;
-var _defineProperty2 = _interopRequireDefault(__webpack_require__(26290));
 var _isEmpty2 = _interopRequireDefault(__webpack_require__(8288));
 var actionTypes = _interopRequireWildcard(__webpack_require__(1371));
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
 function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
-function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { (0, _defineProperty2.default)(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; } // Call plugin.
+// Call plugin.
+
 // Libraries.
 
 function sessionActionHelper(type, id) {
@@ -40512,9 +40849,10 @@ function sessionActionHelper(type, id) {
   let meta = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
   const action = {
     type,
-    payload: _objectSpread(_objectSpread({}, payload), {}, {
+    payload: {
+      ...payload,
       id
-    })
+    }
   };
 
   // Only have meta and error properties on the action if they're needed.
@@ -40561,9 +40899,10 @@ function sessionIceCollectionScheduledCheck(id, params) {
 function sessionAudioEnded(id, params) {
   return {
     type: actionTypes.SESSION_AUDIO_ENDED,
-    payload: _objectSpread({
-      id
-    }, params),
+    payload: {
+      id,
+      ...params
+    },
     error: Boolean(params.error)
   };
 }
@@ -40576,7 +40915,6 @@ function sessionAudioEnded(id, params) {
 "use strict";
 
 
-var _interopRequireDefault = __webpack_require__(71600);
 Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
@@ -40592,20 +40930,20 @@ exports.trackSourceMuted = trackSourceMuted;
 exports.trackSourceUnmuted = trackSourceUnmuted;
 exports.unmuteTracks = unmuteTracks;
 exports.unmuteTracksFinish = unmuteTracksFinish;
-var _defineProperty2 = _interopRequireDefault(__webpack_require__(26290));
 var actionTypes = _interopRequireWildcard(__webpack_require__(1371));
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
 function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
-function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { (0, _defineProperty2.default)(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; } // Call plugin.
+// Call plugin.
+
 function trackManagerHelper(type, trackId) {
   let payload = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
   let meta = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
   return {
     type,
-    payload: _objectSpread(_objectSpread({}, payload), {}, {
+    payload: {
+      ...payload,
       trackId
-    }),
+    },
     meta
   };
 }
@@ -40632,47 +40970,55 @@ function muteTracks(trackIds) {
   return trackHelper(actionTypes.MUTE_TRACKS, trackIds);
 }
 function muteTracksFinish(trackIds, params) {
-  return trackHelper(actionTypes.MUTE_TRACKS_FINISH, _objectSpread({
-    trackIds: trackIds
-  }, params));
+  return trackHelper(actionTypes.MUTE_TRACKS_FINISH, {
+    trackIds: trackIds,
+    ...params
+  });
 }
 function unmuteTracks(trackIds) {
   return trackHelper(actionTypes.UNMUTE_TRACKS, trackIds);
 }
 function unmuteTracksFinish(trackIds, params) {
-  return trackHelper(actionTypes.UNMUTE_TRACKS_FINISH, _objectSpread({
-    trackIds: trackIds
-  }, params));
+  return trackHelper(actionTypes.UNMUTE_TRACKS_FINISH, {
+    trackIds: trackIds,
+    ...params
+  });
 }
 function trackSourceMuted(trackIds, params) {
-  return trackHelper(actionTypes.TRACK_SOURCE_MUTED, _objectSpread({
-    trackIds: trackIds
-  }, params));
+  return trackHelper(actionTypes.TRACK_SOURCE_MUTED, {
+    trackIds: trackIds,
+    ...params
+  });
 }
 function trackSourceUnmuted(trackIds, params) {
-  return trackHelper(actionTypes.TRACK_SOURCE_UNMUTED, _objectSpread({
-    trackIds: trackIds
-  }, params));
+  return trackHelper(actionTypes.TRACK_SOURCE_UNMUTED, {
+    trackIds: trackIds,
+    ...params
+  });
 }
 function renderTracks(trackIds, params) {
-  return trackHelper(actionTypes.RENDER_TRACKS, _objectSpread({
-    trackIds
-  }, params));
+  return trackHelper(actionTypes.RENDER_TRACKS, {
+    trackIds,
+    ...params
+  });
 }
 function renderTracksFinish(trackIds, params) {
-  return trackHelper(actionTypes.RENDER_TRACKS_FINISH, _objectSpread({
-    trackIds
-  }, params));
+  return trackHelper(actionTypes.RENDER_TRACKS_FINISH, {
+    trackIds,
+    ...params
+  });
 }
 function removeTracks(trackIds, params) {
-  return trackHelper(actionTypes.REMOVE_TRACKS, _objectSpread({
-    trackIds
-  }, params));
+  return trackHelper(actionTypes.REMOVE_TRACKS, {
+    trackIds,
+    ...params
+  });
 }
 function removeTracksFinish(trackIds, params) {
-  return trackHelper(actionTypes.REMOVE_TRACKS_FINISH, _objectSpread({
-    trackIds
-  }, params));
+  return trackHelper(actionTypes.REMOVE_TRACKS_FINISH, {
+    trackIds,
+    ...params
+  });
 }
 
 /***/ }),
@@ -40918,8 +41264,9 @@ function createMediaAPI(container) {
      * @memberof media
      * @method createLocalMedia
      * @param {Object} mediaConstraints Collection of constraints for each media type.
-     * @param {boolean|Object} [mediaConstraints.audio] Native media constraints for audio.
-     * @param {boolean|Object} [mediaConstraints.video] Native media constraints for video.
+     * @param {boolean} [mediaConstraints.audio] Native media constraints for audio.
+     * @param {boolean} [mediaConstraints.video] Native media constraints for video.
+     * @param {boolean} [mediaConstraints.screen] Native media constraints for display (screen).
      * @returns {Promise} Resolves with an array of objects containing both a media type and a media object.
      * @throws {BasicError} Throws a USER_MEDIA_ERROR error if any any other media type other than audio, video or screen is passed in mediaConstraints.
      * @throws {BasicError} Throws a USER_MEDIA_ERROR error if provided constraints cannot be fulfilled.
@@ -41421,23 +41768,25 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = void 0;
-var _defineProperty2 = _interopRequireDefault(__webpack_require__(26290));
 var _remove2 = _interopRequireDefault(__webpack_require__(58009));
 var _concat2 = _interopRequireDefault(__webpack_require__(12462));
 var actionTypes = _interopRequireWildcard(__webpack_require__(1371));
 var _reduxActions = __webpack_require__(68305);
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
 function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
-function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { (0, _defineProperty2.default)(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; } // Webrtc plugin.
+// Webrtc plugin.
+
 // Libraries.
+
 // Top-tier reducers: Handles the whole state.
 const reducers = {};
 
 // Add the new media object to state.
 reducers[actionTypes.MEDIA_NEW] = {
   next(state, action) {
-    return (0, _concat2.default)(state, _objectSpread({}, action.payload));
+    return (0, _concat2.default)(state, {
+      ...action.payload
+    });
   }
 };
 
@@ -41453,9 +41802,10 @@ reducers[actionTypes.MEDIA_REMOVED] = {
 const mediaReducers = {};
 mediaReducers[actionTypes.MEDIA_NEW_TRACK] = {
   next(state, action) {
-    return _objectSpread(_objectSpread({}, state), {}, {
+    return {
+      ...state,
       tracks: (0, _concat2.default)(state.tracks, [action.payload.trackId])
-    });
+    };
   }
 };
 
@@ -41463,9 +41813,10 @@ mediaReducers[actionTypes.MEDIA_NEW_TRACK] = {
 mediaReducers[actionTypes.MEDIA_TRACK_ENDED] = {
   next(state, action) {
     const removeTrack = trackId => trackId === action.payload.trackId;
-    return _objectSpread(_objectSpread({}, state), {}, {
+    return {
+      ...state,
       tracks: (0, _remove2.default)(removeTrack, state.tracks)
-    });
+    };
   }
 };
 const mediaReducer = (0, _reduxActions.handleActions)(mediaReducers, {});
@@ -41500,16 +41851,16 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = void 0;
-var _defineProperty2 = _interopRequireDefault(__webpack_require__(26290));
 var _remove2 = _interopRequireDefault(__webpack_require__(58009));
 var _concat2 = _interopRequireDefault(__webpack_require__(12462));
 var actionTypes = _interopRequireWildcard(__webpack_require__(1371));
 var _reduxActions = __webpack_require__(68305);
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
 function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
-function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { (0, _defineProperty2.default)(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; } // Webrtc plugin.
+// Webrtc plugin.
+
 // Libraries.
+
 const reducers = {};
 reducers[actionTypes.SESSION_ADDED] = {
   next(state, action) {
@@ -41526,13 +41877,15 @@ const sessionReducers = {};
 sessionReducers[actionTypes.SESSION_NEW_TRACK] = {
   next(state, action) {
     if (action.payload.local) {
-      return _objectSpread(_objectSpread({}, state), {}, {
+      return {
+        ...state,
         localTracks: state.localTracks.includes(action.payload.trackId) ? state.localTracks : (0, _concat2.default)(state.localTracks, [action.payload.trackId])
-      });
+      };
     } else {
-      return _objectSpread(_objectSpread({}, state), {}, {
+      return {
+        ...state,
         remoteTracks: state.remoteTracks.includes(action.payload.trackId) ? state.remoteTracks : (0, _concat2.default)(state.remoteTracks, [action.payload.trackId])
-      });
+      };
     }
   }
 };
@@ -41540,13 +41893,15 @@ sessionReducers[actionTypes.SESSION_TRACK_ENDED] = {
   next(state, action) {
     const removeTrack = trackId => trackId === action.payload.trackId;
     if (action.payload.local) {
-      return _objectSpread(_objectSpread({}, state), {}, {
+      return {
+        ...state,
         localTracks: (0, _remove2.default)(removeTrack, state.localTracks)
-      });
+      };
     } else {
-      return _objectSpread(_objectSpread({}, state), {}, {
+      return {
+        ...state,
         remoteTracks: (0, _remove2.default)(removeTrack, state.remoteTracks)
-      });
+      };
     }
   }
 };
@@ -41559,9 +41914,10 @@ sessionReducers[actionTypes.SESSION_TRACK_REPLACED] = {
     if (newLocalTracks.indexOf(action.payload.trackId) === -1) {
       newLocalTracks.push(action.payload.trackId);
     }
-    return _objectSpread(_objectSpread({}, state), {}, {
+    return {
+      ...state,
       localTracks: newLocalTracks
-    });
+    };
   }
 };
 const sessionReducer = (0, _reduxActions.handleActions)(sessionReducers, {});
@@ -41596,16 +41952,16 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = void 0;
-var _defineProperty2 = _interopRequireDefault(__webpack_require__(26290));
 var _remove2 = _interopRequireDefault(__webpack_require__(58009));
 var _concat2 = _interopRequireDefault(__webpack_require__(12462));
 var actionTypes = _interopRequireWildcard(__webpack_require__(1371));
 var _reduxActions = __webpack_require__(68305);
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
 function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
-function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { (0, _defineProperty2.default)(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; } // Webrtc plugin.
+// Webrtc plugin.
+
 // Libraries.
+
 const reducers = {};
 
 // Add the new Track to state.
@@ -41642,9 +41998,10 @@ reducers[actionTypes.TRACK_REMOVED] = {
   next(state, action) {
     return state.map(track => {
       if (action.payload.trackId === track.trackId) {
-        return _objectSpread(_objectSpread({}, track), {}, {
+        return {
+          ...track,
           state: 'ended'
-        });
+        };
       } else {
         return track;
       }
@@ -41657,9 +42014,10 @@ reducers[actionTypes.RENDER_TRACKS_FINISH] = {
   next(state, action) {
     return state.map(track => {
       if (action.payload.trackIds.includes(track.trackId)) {
-        return _objectSpread(_objectSpread({}, track), {}, {
+        return {
+          ...track,
           containers: (0, _concat2.default)(track.containers, action.payload.selector)
-        });
+        };
       } else {
         return track;
       }
@@ -41674,9 +42032,10 @@ reducers[actionTypes.REMOVE_TRACKS_FINISH] = {
     const removeContainer = container => container === action.payload.selector;
     return state.map(track => {
       if (action.payload.trackIds.includes(track.trackId)) {
-        return _objectSpread(_objectSpread({}, track), {}, {
+        return {
+          ...track,
           containers: (0, _remove2.default)(removeContainer)(track.containers)
-        });
+        };
       } else {
         return track;
       }
@@ -41689,9 +42048,10 @@ reducers[actionTypes.MUTE_TRACKS_FINISH] = {
   next(state, action) {
     return state.map(track => {
       if (action.payload.trackIds.includes(track.trackId)) {
-        return _objectSpread(_objectSpread({}, track), {}, {
+        return {
+          ...track,
           muted: true
-        });
+        };
       } else {
         return track;
       }
@@ -41702,9 +42062,10 @@ reducers[actionTypes.UNMUTE_TRACKS_FINISH] = {
   next(state, action) {
     return state.map(track => {
       if (action.payload.trackIds.includes(track.trackId)) {
-        return _objectSpread(_objectSpread({}, track), {}, {
+        return {
+          ...track,
           muted: false
-        });
+        };
       } else {
         return track;
       }
@@ -41715,9 +42076,10 @@ reducers[actionTypes.TRACK_SOURCE_MUTED] = {
   next(state, action) {
     return state.map(track => {
       if (action.payload.trackIds.includes(track.trackId)) {
-        return _objectSpread(_objectSpread({}, track), {}, {
+        return {
+          ...track,
           sourceMuted: true
-        });
+        };
       } else {
         return track;
       }
@@ -41728,9 +42090,10 @@ reducers[actionTypes.TRACK_SOURCE_UNMUTED] = {
   next(state, action) {
     return state.map(track => {
       if (action.payload.trackIds.includes(track.trackId)) {
-        return _objectSpread(_objectSpread({}, track), {}, {
+        return {
+          ...track,
           sourceMuted: false
-        });
+        };
       } else {
         return track;
       }
@@ -41948,7 +42311,6 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = createMediaOperations;
-var _defineProperty2 = _interopRequireDefault(__webpack_require__(26290));
 var _isString2 = _interopRequireDefault(__webpack_require__(49775));
 var _isUndefined2 = _interopRequireDefault(__webpack_require__(73346));
 var _actions = __webpack_require__(37992);
@@ -41956,9 +42318,10 @@ var _errors = _interopRequireWildcard(__webpack_require__(83437));
 var _utils = __webpack_require__(25189);
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
 function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
-function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { (0, _defineProperty2.default)(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; } // Webrtc plugin.
+// Webrtc plugin.
+
 // Other plugins.
+
 // Libraries.
 
 /**
@@ -42074,7 +42437,7 @@ function createMediaOperations(container) {
           const trackState = await track.getState();
           if (trackState.detached) {
             detachedMedias.push({
-              type: trackState.kind,
+              type: trackState.type,
               media
             });
             break;
@@ -42152,9 +42515,10 @@ function createMediaOperations(container) {
       dispatch
     } = context;
     // Dispatch the associated action for backwards-compatibility
-    dispatch(_actions.trackActions.renderTracks(trackIds, _objectSpread({
-      selector
-    }, options)));
+    dispatch(_actions.trackActions.renderTracks(trackIds, {
+      selector,
+      ...options
+    }));
 
     // Get the tracks that are to be rendered.
     const tracks = await WebRTC.track.getTracks(trackIds);
@@ -42954,12 +43318,9 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = createLogger;
-var _defineProperty2 = _interopRequireDefault(__webpack_require__(26290));
 var _constants = __webpack_require__(8599);
 var _validation = __webpack_require__(70920);
 var _timer = _interopRequireDefault(__webpack_require__(66270));
-function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { (0, _defineProperty2.default)(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
 /**
  * Creates a Logger.
  * @method createLogger
@@ -43012,7 +43373,9 @@ function createLogger(target) {
       for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
         args[_key] = arguments[_key];
       }
-      const entry = _objectSpread(_objectSpread({}, injectables), {}, {
+      const entry = {
+        // Extra data to be added to the LogEntry.
+        ...injectables,
         // Meta-info about the log.
         method,
         timestamp: Date.now(),
@@ -43020,7 +43383,7 @@ function createLogger(target) {
         target: logger.target,
         // The actual arguments logged.
         messages: [...args]
-      });
+      };
       logger.handler(entry);
     };
   }
@@ -43112,7 +43475,10 @@ function createLogger(target) {
     timer: data
   })(message);
   const timer = (0, _timer.default)(timeLog, timeWarn);
-  return _objectSpread(_objectSpread({}, api), timer);
+  return {
+    ...api,
+    ...timer
+  };
 }
 
 /***/ }),
@@ -43162,7 +43528,7 @@ function createTimer(log, warn) {
       event: 'time',
       name
     };
-    if (Object.hasOwn(timers, name)) {
+    if (timers.hasOwnProperty(name)) {
       data.start = timers[name];
       warn(`Timer ${name} already started.`, data);
     } else {
@@ -43186,7 +43552,7 @@ function createTimer(log, warn) {
       name,
       start: timers[name]
     };
-    if (Object.hasOwn(timers, name)) {
+    if (timers.hasOwnProperty(name)) {
       const start = timers[name];
       // End the timer.
       delete timers[name];
@@ -43213,7 +43579,7 @@ function createTimer(log, warn) {
       name,
       start: timers[name]
     };
-    if (Object.hasOwn(timers, name)) {
+    if (timers.hasOwnProperty(name)) {
       const elapsed = now - timers[name];
       data.split = now;
       data.elapsed = elapsed;
@@ -43640,7 +44006,7 @@ function createReporter() {
     if (!id || !(0, _isString2.default)(id)) {
       throw new Error(`${API_TAG}reporter.createReport: Invalid id (${typeof id}), must be of type string.`);
     }
-    if (Object.hasOwn(reports, id)) {
+    if (reports.hasOwnProperty(id)) {
       throw new Error(`${API_TAG}reporter.createReport: Cannot create report. One already exists for id: ${id}`);
     }
     // Create a blank report
@@ -44302,7 +44668,7 @@ function ontrack(listener) {
 
     // Convert the native MediaStreamTrack into a Track object.
     // Specify that this is not a local one (i.e. it's a remote track)
-    const track = trackManager.add(nativeTrack, targetStream, false);
+    const track = trackManager.add(nativeTrack, nativeTrack.kind, targetStream, false);
     listener(track);
   };
   return true;
@@ -44322,7 +44688,6 @@ Object.defineProperty(exports, "__esModule", ({
 }));
 exports["default"] = peer;
 exports.setPeerProxies = setPeerProxies;
-var _defineProperty2 = _interopRequireDefault(__webpack_require__(26290));
 var _events = _interopRequireDefault(__webpack_require__(43255));
 var _methods = _interopRequireDefault(__webpack_require__(60424));
 var _properties = _interopRequireDefault(__webpack_require__(1936));
@@ -44331,11 +44696,13 @@ var _config = _interopRequireDefault(__webpack_require__(60352));
 var _logs = __webpack_require__(88915);
 var _eventemitter = _interopRequireDefault(__webpack_require__(10161));
 var _timer = __webpack_require__(66564);
-function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { (0, _defineProperty2.default)(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; } /*
+/*
  * Wrapper imports.
  * Events, methods, and properties that we want to wrap/add to the native Peer.
- */ // Libraries.
+ */
+
+// Libraries.
+
 // EXTERNAL PROXY CODE
 let proxies;
 /**
@@ -44373,12 +44740,14 @@ function peer(id) {
   });
 
   // Add the event emitter methods to the wrapped methods as well.
-  const customMethods = _objectSpread(_objectSpread(_objectSpread({}, _methods.default), proxies), {}, {
+  const customMethods = {
+    ..._methods.default,
+    ...proxies,
     // EXTERNAL PROXY CODE
     on: emitter.on.bind(emitter),
     off: emitter.off.bind(emitter),
     once: emitter.once.bind(emitter)
-  });
+  };
 
   /**
    * The Peer model.
@@ -46150,17 +46519,18 @@ function MediaManager(managers) {
    * Wraps native mediaStream, adds tracks to trackManager and Media, and sets up event handlers on a given media.
    * @method setupMedia
    * @param {MediaStream} mediaStream Creating a Media object with it.
+   * @param {string} type The media type to use when creating tracks.
    * @param {boolean} isDetached Specifies if the track is detached and can be used with or without a call.
    * @return {Media}
    */
-  function setupMedia(mediaStream, isDetached) {
+  function setupMedia(mediaStream, type, isDetached) {
     const media = new _media.default(mediaStream, true);
     log.debug(`Creating Media with ID: ${media.id}.`);
 
     // Only add tracks to a Media objects using the `addTrack` method.
     // Specify that this is a local track we're adding
     mediaStream.getTracks().forEach(nativeTrack => {
-      const wrappedTrack = trackManager.add(nativeTrack, mediaStream, true, isDetached);
+      const wrappedTrack = trackManager.add(nativeTrack, type ? type : nativeTrack.kind, mediaStream, true, isDetached);
       media.addTrack(wrappedTrack);
     });
     media.once('media:stopped', mediaId => {
@@ -46201,7 +46571,8 @@ function MediaManager(managers) {
       // TODO: Proper error checking.
       // TODO: Use the WebAPI directly here? Probably not.
       navigator.mediaDevices.getUserMedia(constraintsWorkaround).then(mediaStream => {
-        const media = setupMedia(mediaStream, isDetached);
+        // Only pass the type if it's screenshare, otherwise, let the media kind determine the type
+        const media = setupMedia(mediaStream, undefined, isDetached);
         medias.set(media.id, media);
         // TODO: Better event. Include metadata?
         emitter.emit('media:new', media.id);
@@ -46222,7 +46593,9 @@ function MediaManager(managers) {
     const constraintsWorkaround = browserConstraintsWorkaround(constraints);
     return new Promise((resolve, reject) => {
       navigator.mediaDevices.getDisplayMedia(constraintsWorkaround).then(mediaStream => {
-        const media = setupMedia(mediaStream, isDetached);
+        // Only pass the type if it's screenshare, otherwise, let the media kind determine the type
+        const type = 'screen';
+        const media = setupMedia(mediaStream, type, isDetached);
         medias.set(media.id, media);
         // TODO: Better event. Include metadata?
         emitter.emit('media:new', media.id);
@@ -46803,12 +47176,13 @@ function TrackManager() {
    *    it to the manager.
    * @method add
    * @param  {MediaStreamTrack} track A native track object.
+   * @param  {string} type The media type to use when creating tracks.
    * @param  {MediaStream} stream
    * @param  {boolean} isLocalTrack Specifies if the track parameter is a local one or a remote one.
    * @param  {boolean} isDetached Specifies if the track is detached and can be used with or without a call.
    * @return {Track} The added/wrapped Track object.
    */
-  function add(track, stream, isLocalTrack, isDetached) {
+  function add(track, type, stream, isLocalTrack, isDetached) {
     const targetTrack = tracks.get(track.id);
 
     // Chrome issue: track.stream is outdated and needs to be updated to newStream.
@@ -46825,6 +47199,9 @@ function TrackManager() {
     } else {
       // Wrap the track as a Track object.
       const wrappedTrack = new _track.default(track, stream);
+
+      // Set the requested media type (audio, video, screen) before we save it in the state
+      wrappedTrack.setType(type);
 
       // Mark it as local (or remote) before we save it in the state
       wrappedTrack.setIsLocal(isLocalTrack);
@@ -47159,7 +47536,6 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = Session;
-var _defineProperty2 = _interopRequireDefault(__webpack_require__(26290));
 var _debounce2 = _interopRequireDefault(__webpack_require__(32915));
 var _logs = __webpack_require__(88915);
 var _transceiverUtils = __webpack_require__(30671);
@@ -47169,11 +47545,14 @@ var _extractors = __webpack_require__(65969);
 var _utils = __webpack_require__(30791);
 var _iceCollectionScheduledCheck = _interopRequireDefault(__webpack_require__(85846));
 var _eventemitter = _interopRequireDefault(__webpack_require__(10161));
-function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { (0, _defineProperty2.default)(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; } // Helpers.
+// Helpers.
+
 // SDP Helpers.
+
 // General Utils.
+
 // Libraries.
+
 const unfixedDebounce = _debounce2.default.convert({
   fixed: false
 });
@@ -47388,7 +47767,7 @@ function Session(id, managers) {
               }
 
               // Remove track from session dscp settings
-              if (Object.hasOwn(settings.dscpControls, track.id)) {
+              if (settings.dscpControls.hasOwnProperty(track.id)) {
                 log.debug(`Removing track ${track.id} from session dscp settings`);
                 delete settings.dscpControls[track.id];
               }
@@ -47623,7 +48002,7 @@ function Session(id, managers) {
               isUnsolicited
             });
             // Remove track from session dscp settings
-            if (Object.hasOwn(settings.dscpControls, track.id)) {
+            if (settings.dscpControls.hasOwnProperty(track.id)) {
               log.debug(`Removing track ${track.id} from session dscp settings`);
               delete settings.dscpControls[track.id];
             }
@@ -47827,7 +48206,7 @@ function Session(id, managers) {
         if (allLocalTracks.findIndex(track => track.id === trackId) > -1) {
           peer.removeTrack(trackId);
           // Remove the track from the session dscp settings
-          if (Object.hasOwn(settings.dscpControls, trackId)) {
+          if (settings.dscpControls.hasOwnProperty(trackId)) {
             log.debug(`Removing track ${trackId} from session dscp settings`);
             delete settings.dscpControls[trackId];
           }
@@ -47967,9 +48346,10 @@ function Session(id, managers) {
           clearTimeout(targetPeer.iceLoop);
           targetPeer.iceLoop = undefined;
         }
-        emitter.emit('peer:iceCandidateCollected', _objectSpread({
-          reason: _constants.ICE_COLLECTION_CHECK_REASONS.NEW_CANDIDATE
-        }, iceCollectionInfo));
+        emitter.emit('peer:iceCandidateCollected', {
+          reason: _constants.ICE_COLLECTION_CHECK_REASONS.NEW_CANDIDATE,
+          ...iceCollectionInfo
+        });
       }
     }, {
       leading: true
@@ -47982,9 +48362,10 @@ function Session(id, managers) {
           clearTimeout(targetPeer.iceLoop);
           targetPeer.iceLoop = undefined;
         }
-        emitter.emit('peer:iceCollectionScheduledCheck', _objectSpread({
-          reason: _constants.ICE_COLLECTION_CHECK_REASONS.SCHEDULED
-        }, iceCollectionInfo));
+        emitter.emit('peer:iceCollectionScheduledCheck', {
+          reason: _constants.ICE_COLLECTION_CHECK_REASONS.SCHEDULED,
+          ...iceCollectionInfo
+        });
       }
     });
 
@@ -48473,6 +48854,7 @@ function Track(mediaTrack, mediaStream) {
   const id = mediaTrack.id;
   const track = mediaTrack;
   let stream = mediaStream;
+  let type;
   let isLocalTrack;
   let isDetatchedTrack;
   let constraints = {};
@@ -48533,6 +48915,12 @@ function Track(mediaTrack, mediaStream) {
       isLocal: isLocalTrack
     });
   };
+  function setType(mediaType) {
+    type = mediaType;
+  }
+  function getType() {
+    return type;
+  }
   function setIsLocal(isLocal) {
     isLocalTrack = isLocal;
   }
@@ -48562,6 +48950,7 @@ function Track(mediaTrack, mediaStream) {
       id,
       streamId: stream.id,
       kind: track.kind,
+      type,
       isLocal: isLocalTrack,
       label: track.label,
       muted: track.muted,
@@ -48654,6 +49043,8 @@ function Track(mediaTrack, mediaStream) {
     track,
     setStream,
     getStream,
+    setType,
+    getType,
     setIsLocal,
     isLocal,
     setIsDetached,
@@ -74244,7 +74635,7 @@ module.exports = str => encodeURIComponent(str).replace(/[!'()*]/g, x => `%${x.c
 
 /***/ }),
 
-/***/ 97434:
+/***/ 45056:
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -74476,7 +74867,7 @@ var _v4 = _interopRequireDefault(__webpack_require__(95899));
 
 var _nil = _interopRequireDefault(__webpack_require__(15384));
 
-var _version = _interopRequireDefault(__webpack_require__(97434));
+var _version = _interopRequireDefault(__webpack_require__(45056));
 
 var _validate = _interopRequireDefault(__webpack_require__(77888));
 
@@ -79396,28 +79787,6 @@ if ((typeof module === 'undefined' ? 'undefined' : _typeof(module)) === 'object'
 
 /***/ }),
 
-/***/ 26290:
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-var toPropertyKey = __webpack_require__(47739);
-function _defineProperty(obj, key, value) {
-  key = toPropertyKey(key);
-  if (key in obj) {
-    Object.defineProperty(obj, key, {
-      value: value,
-      enumerable: true,
-      configurable: true,
-      writable: true
-    });
-  } else {
-    obj[key] = value;
-  }
-  return obj;
-}
-module.exports = _defineProperty, module.exports.__esModule = true, module.exports["default"] = module.exports;
-
-/***/ }),
-
 /***/ 71600:
 /***/ ((module) => {
 
@@ -79427,95 +79796,6 @@ function _interopRequireDefault(obj) {
   };
 }
 module.exports = _interopRequireDefault, module.exports.__esModule = true, module.exports["default"] = module.exports;
-
-/***/ }),
-
-/***/ 24923:
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-var objectWithoutPropertiesLoose = __webpack_require__(15538);
-function _objectWithoutProperties(source, excluded) {
-  if (source == null) return {};
-  var target = objectWithoutPropertiesLoose(source, excluded);
-  var key, i;
-  if (Object.getOwnPropertySymbols) {
-    var sourceSymbolKeys = Object.getOwnPropertySymbols(source);
-    for (i = 0; i < sourceSymbolKeys.length; i++) {
-      key = sourceSymbolKeys[i];
-      if (excluded.indexOf(key) >= 0) continue;
-      if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue;
-      target[key] = source[key];
-    }
-  }
-  return target;
-}
-module.exports = _objectWithoutProperties, module.exports.__esModule = true, module.exports["default"] = module.exports;
-
-/***/ }),
-
-/***/ 15538:
-/***/ ((module) => {
-
-function _objectWithoutPropertiesLoose(source, excluded) {
-  if (source == null) return {};
-  var target = {};
-  var sourceKeys = Object.keys(source);
-  var key, i;
-  for (i = 0; i < sourceKeys.length; i++) {
-    key = sourceKeys[i];
-    if (excluded.indexOf(key) >= 0) continue;
-    target[key] = source[key];
-  }
-  return target;
-}
-module.exports = _objectWithoutPropertiesLoose, module.exports.__esModule = true, module.exports["default"] = module.exports;
-
-/***/ }),
-
-/***/ 68064:
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-var _typeof = (__webpack_require__(67425)["default"]);
-function toPrimitive(t, r) {
-  if ("object" != _typeof(t) || !t) return t;
-  var e = t[Symbol.toPrimitive];
-  if (void 0 !== e) {
-    var i = e.call(t, r || "default");
-    if ("object" != _typeof(i)) return i;
-    throw new TypeError("@@toPrimitive must return a primitive value.");
-  }
-  return ("string" === r ? String : Number)(t);
-}
-module.exports = toPrimitive, module.exports.__esModule = true, module.exports["default"] = module.exports;
-
-/***/ }),
-
-/***/ 47739:
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-var _typeof = (__webpack_require__(67425)["default"]);
-var toPrimitive = __webpack_require__(68064);
-function toPropertyKey(t) {
-  var i = toPrimitive(t, "string");
-  return "symbol" == _typeof(i) ? i : String(i);
-}
-module.exports = toPropertyKey, module.exports.__esModule = true, module.exports["default"] = module.exports;
-
-/***/ }),
-
-/***/ 67425:
-/***/ ((module) => {
-
-function _typeof(o) {
-  "@babel/helpers - typeof";
-
-  return (module.exports = _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) {
-    return typeof o;
-  } : function (o) {
-    return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o;
-  }, module.exports.__esModule = true, module.exports["default"] = module.exports), _typeof(o);
-}
-module.exports = _typeof, module.exports.__esModule = true, module.exports["default"] = module.exports;
 
 /***/ }),
 
