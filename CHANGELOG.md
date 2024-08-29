@@ -7,6 +7,12 @@ Ribbon WebRTC SDK change log.
 - This project adheres to [Semantic Versioning](http://semver.org/).
 - This change log follows [keepachangelog.com](http://keepachangelog.com/) recommendations.
 
+## 6.15.0 - beta
+
+### Added
+
+- Upon receiving a glare error from the gateway, the remote-side SDK which initiated the offer, will rollback its local operation.
+
 ## 6.14.0 - 2024-08-29
 
 ## 6.13.0 - 2024-07-26
