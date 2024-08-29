@@ -12,7 +12,7 @@
  *
  * WebRTC.js
  * webrtc.anonymous.js
- * Version: 6.13.0
+ * Version: 6.14.0
  */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
@@ -2322,7 +2322,7 @@ module.exports = root;
 
 /***/ }),
 
-/***/ 42298:
+/***/ 58219:
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -2340,7 +2340,7 @@ exports.getVersion = getVersion;
  * for the @@ tag below with actual version value.
  */
 function getVersion() {
-  return '6.13.0';
+  return '6.14.0';
 }
 
 /***/ }),
@@ -5179,42 +5179,13 @@ Object.defineProperty(exports, "__esModule", ({
 }));
 exports["default"] = registerOperation;
 var _makeAnonymous = _interopRequireDefault(__webpack_require__(35954));
-var _constants = __webpack_require__(37409);
-var _remoteAnswer = _interopRequireDefault(__webpack_require__(43658));
 /*
  * Register the operation with the bottle. This will make it available on the
  *    top-level container under its namespace.
  */
 function registerOperation(bottle) {
-  bottle.factory('Callstack.operations.makeAnonymousCall', () => {
-    const opFactory = bottle.container.Callstack.models.Operation;
-
-    /**
-     * Factory function for a LocalMakeAnon operation.
-     * @method LocalMakeAnon
-     * @param {string} callId ID for the call this operation will affect.
-     * @return {Operation} An instance of a local anonymous make operation.
-     */
-    function localMakeAnon(callId) {
-      return opFactory.instance({
-        // Operation meta-data.
-        type: _constants.OPERATIONS.MAKE_ANONYMOUS,
-        isNegotiation: false,
-        isLocal: true,
-        // Operation methods.
-        stages: {
-          // Stages of local operation.
-          // Note: No `validate` stage; can always start a new call.
-          localOffer: (0, _makeAnonymous.default)(bottle.container),
-          remoteAnswer: (0, _remoteAnswer.default)(bottle.container)
-        }
-      }, {
-        callId
-      });
-    }
-    return {
-      local: localMakeAnon
-    };
+  bottle.factory('CallOperations.makeAnonymousCall', () => {
+    return (0, _makeAnonymous.default)(bottle.container);
   });
 }
 
@@ -6825,7 +6796,8 @@ var _selectors = __webpack_require__(11430);
 var _operationMap = __webpack_require__(81739);
 var _flows = _interopRequireDefault(__webpack_require__(13583));
 var _OperationTracker = _interopRequireDefault(__webpack_require__(99392));
-var _Operation = _interopRequireDefault(__webpack_require__(9988));
+var _Negotiation = _interopRequireDefault(__webpack_require__(21196));
+var _Update = _interopRequireDefault(__webpack_require__(2117));
 var _errors = _interopRequireWildcard(__webpack_require__(83437));
 var _uuid = __webpack_require__(60130);
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
@@ -6839,7 +6811,8 @@ function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; 
 // Libraries.
 
 function createManager(bottle) {
-  (0, _Operation.default)(bottle);
+  (0, _Negotiation.default)(bottle);
+  (0, _Update.default)(bottle);
   bottle.factory('CallManager', () => callManager(bottle.container));
 }
 
@@ -6879,40 +6852,25 @@ function callManager(container) {
   };
 
   /**
-   * Wrapper for the two "make outgoing call" APIs.
-   * This function is wrapped so it can be used for both regular and anonymous calls.
+   * CallManager API for making new, outgoing calls.
    * @method newLocalCall
-   * @param {string} stackMethod
-   * @return {Function} The actual CallManager API.
+   * @async
+   * @param {string} callId
+   * @param {Array} params
+   * @return {Object|undefined}
    */
-  function newLocalCall(stackMethod) {
-    /**
-     * CallManager API for making new, outgoing calls.
-     * @method newOutgoingCall
-     * @async
-     * @param {string} callId
-     * @param {Array} params
-     * @return {Object|undefined}
-     */
-    return async function newOutgoingCall(callId) {
-      // Other than creating a call report, the "new outgoing call" flow
-      //    is the same as the "local operation" flow.
-      if (!container.CallReporter.getReport(callId)) {
-        // TechDebt TODO: The AnonymousMake operation does not fit nicely anymore since
-        //    operations are strictly structured now. It re-uses the Make operation, so
-        //    would create the call report twice (thus fail).
-        // The AnonymousMake operation needs to be changed to fit the Operation/Flow changes.
-        container.CallReporter.createReport('CALL', callId);
-      }
-      const operation = Callstack.operations[stackMethod].local(callId);
-      // Set up new call mapping for on-going operations.
-      ongoing[callId] = (0, _OperationTracker.default)(logManager.getLogger('CALL', callId));
-      ongoing[callId].add(operation);
-      for (var _len = arguments.length, params = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-        params[_key - 1] = arguments[_key];
-      }
-      return await callFlows.LocalNegotiation.localChanges(callId, operation, params);
-    };
+  async function newLocalCall(callId) {
+    // Other than creating a call report, the "new outgoing call" flow
+    //    is the same as the "local operation" flow.
+    container.CallReporter.createReport('CALL', callId);
+    const operation = Callstack.operations.make.local(callId);
+    // Set up new call mapping for on-going operations.
+    ongoing[callId] = (0, _OperationTracker.default)(logManager.getLogger('CALL', callId));
+    ongoing[callId].add(operation);
+    for (var _len = arguments.length, params = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+      params[_key - 1] = arguments[_key];
+    }
+    return await callFlows.LocalNegotiation.localChanges(callId, operation, params);
   }
 
   // CallManager method for receiving a new, incoming call.
@@ -7403,16 +7361,8 @@ function callManager(container) {
     };
   }
 
-  /*
-   * callManager.make
-   * callManager.makeAnonymousCall
-   */
-  ;
-  [_constants2.OPERATIONS.MAKE, _constants2.OPERATIONS.MAKE_ANONYMOUS].forEach(type => {
-    const stackMethod = _operationMap.operationMap[type];
-    manager[stackMethod] = newLocalCall(stackMethod);
-  });
-
+  // CallManager method for making a new, outgoing call.
+  manager.make = newLocalCall;
   // CallManager method for receiving a new, incoming call.
   manager.establishOffer = newRemoteCall;
   // CallManager method for receiving a new, remote operation.
@@ -7426,9 +7376,9 @@ function callManager(container) {
    */;
   [
   // Local Negotiations.
-  _constants2.OPERATIONS.SLOW_ANSWER, _constants2.OPERATIONS.HOLD, _constants2.OPERATIONS.UNHOLD, _constants2.OPERATIONS.ADD_MEDIA, _constants2.OPERATIONS.REMOVE_MEDIA, _constants2.OPERATIONS.ADD_BASIC_MEDIA, _constants2.OPERATIONS.REMOVE_BASIC_MEDIA, _constants2.OPERATIONS.MEDIA_RESTART,
+  _constants2.OPERATIONS.SLOW_ANSWER, _constants2.OPERATIONS.HOLD, _constants2.OPERATIONS.UNHOLD, _constants2.OPERATIONS.ADD_MEDIA, _constants2.OPERATIONS.REMOVE_MEDIA, _constants2.OPERATIONS.ADD_BASIC_MEDIA, _constants2.OPERATIONS.REMOVE_BASIC_MEDIA, _constants2.OPERATIONS.MEDIA_RESTART, _constants2.OPERATIONS.DIRECT_TRANSFER,
   // Local-only.
-  _constants2.OPERATIONS.ANSWER, _constants2.OPERATIONS.REJECT, _constants2.OPERATIONS.IGNORE, _constants2.OPERATIONS.FORWARD_CALL, _constants2.OPERATIONS.END, _constants2.OPERATIONS.DIRECT_TRANSFER, _constants2.OPERATIONS.REPLACE_TRACK, _constants2.OPERATIONS.RESYNC, _constants2.OPERATIONS.PLAY_AUDIO, _constants2.OPERATIONS.SEND_RINGING_FEEDBACK, _constants2.OPERATIONS.SEND_CUSTOM_PARAMETERS, _constants2.OPERATIONS.SEND_DTMF, _constants2.OPERATIONS.GET_STATS].forEach(type => {
+  _constants2.OPERATIONS.ANSWER, _constants2.OPERATIONS.REJECT, _constants2.OPERATIONS.IGNORE, _constants2.OPERATIONS.FORWARD_CALL, _constants2.OPERATIONS.END, _constants2.OPERATIONS.REPLACE_TRACK, _constants2.OPERATIONS.RESYNC, _constants2.OPERATIONS.PLAY_AUDIO, _constants2.OPERATIONS.SEND_RINGING_FEEDBACK, _constants2.OPERATIONS.SEND_CUSTOM_PARAMETERS, _constants2.OPERATIONS.SEND_DTMF, _constants2.OPERATIONS.GET_STATS].forEach(type => {
     const stackMethod = _operationMap.operationMap[type];
     manager[stackMethod] = newLocalNegotiation(stackMethod);
   })
@@ -7468,7 +7418,7 @@ function callManager(container) {
 
 /***/ }),
 
-/***/ 9988:
+/***/ 21196:
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -7492,7 +7442,6 @@ function _default(bottle) {
    * @param {Object} container The nested container; not actually used here.
    * @param {Object} opInfo Static info about this operation.
    * @param {string} opInfo.type Type constant of the operation.
-   * @param {boolean} opInfo.isNegotiation Whether this operation includes negotiation.
    * @param {boolean} opInfo.isLocal Whether this operation is locall triggered.
    * @param {Object} opInfo.stages The methods to handle various stages of this operation.
    * @param {Function} opInfo.stages.validate
@@ -7503,14 +7452,13 @@ function _default(bottle) {
    * @param {string} instanceInfo.callId The ID of the call the operation is performed on.
    * @return {Operation} An instance of an operation.
    */
-  bottle.instanceFactory('Callstack.models.Operation', (container, opInfo, instanceInfo) => {
+  bottle.instanceFactory('Callstack.models.Negotiation', (container, opInfo, instanceInfo) => {
     // TODO: Parameter validation.
     // TODO: Based on which stages were provided, determine the "flow" the operation needs to follow.
 
     // Static data for the operation.
     const {
       type,
-      isNegotiation,
       isLocal,
       stages
     } = opInfo;
@@ -7533,11 +7481,12 @@ function _default(bottle) {
     const eventName = _constants.REPORTER_OPERATION_EVENTS_MAP[type + (isLocal ? '_LOCAL' : '_REMOTE')] || _constants.REPORTER_OPERATION_EVENTS_MAP[type];
     // TODO: Should the Operation factory add the event immediately or at a later point?
     const reportEvent = bottle.container.CallReporter.getReport(callId).addEvent(eventName);
+    opInfo.isNegotiation = true;
     const tracker = (0, _StatusTracker.default)(bottle.container, callId, id, reportEvent.id, opInfo);
     const Operation = {
       // Operation meta-data.
       type,
-      isNegotiation,
+      isNegotiation: true,
       isLocal,
       // Operation methods.
       stages: {
@@ -7563,6 +7512,120 @@ function _default(bottle) {
       reportEvent
     };
     return Operation;
+  });
+}
+
+/***/ }),
+
+/***/ 2117:
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+
+var _interopRequireDefault = __webpack_require__(71600);
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports["default"] = _default;
+var _StatusTracker = _interopRequireDefault(__webpack_require__(22286));
+var _constants = __webpack_require__(42750);
+var _uuid = __webpack_require__(60130);
+// Call Reports.
+
+// Libraries.
+
+/**
+ * Helper method to ensure the required stages are defined.
+ * @method hasUpdateStages
+ * @param {boolean} isLocal
+ * @param {Object} stages
+ * @throws {Error} When the operation is missing stages.
+ */
+function hasUpdateStages(isLocal, stages) {
+  const {
+    validate,
+    localOffer,
+    remoteOffer
+  } = stages;
+  if (isLocal && !(Boolean(validate) || Boolean(localOffer))) {
+    throw new Error('Missing local stage for Update operation.');
+  } else if (!isLocal && !remoteOffer) {
+    throw new Error('Missing remote stage for Update operation.');
+  } else {
+    // Operation has all the required stages for an 'Update'.
+  }
+}
+function _default(bottle) {
+  /**
+   * Factory for creating instances of 'Update' operations.
+   * An "Update" operation includes changes being done to the call locally
+   *    and optionally a REST request.
+   *
+   * @param {Object} container The nested container; not actually used here.
+   * @param {Object} opInfo Static info about this operation.
+   * @param {string} opInfo.type Type constant of the operation.
+   * @param {boolean} opInfo.isLocal Whether this operation is locall triggered.
+   * @param {Object} opInfo.stages Methods to handle various stages of an 'update' operation.
+   * @param {Object} instanceInfo Info specific to this instance of the operation.
+   * @param {string} instanceInfo.callId The ID of the call the operation is performed on.
+   * @return {Operation} An instance of an operation.
+   */
+  bottle.instanceFactory('Callstack.models.Update', (container, opInfo, instanceInfo) => {
+    hasUpdateStages(opInfo.isLocal, opInfo.stages);
+
+    // Static data for the operation.
+    const {
+      type,
+      isLocal,
+      stages
+    } = opInfo;
+    const {
+      validate,
+      localOffer,
+      remoteOffer
+    } = stages;
+
+    // Instance data for the operation.
+    const id = (0, _uuid.v4)();
+    const {
+      callId,
+      data
+    } = instanceInfo;
+
+    // TechDebt TODO: The Reporter's event map should be consistent so we don't have to guess for the right name.
+    const eventName = _constants.REPORTER_OPERATION_EVENTS_MAP[type + (isLocal ? '_LOCAL' : '_REMOTE')] || _constants.REPORTER_OPERATION_EVENTS_MAP[type];
+    // TODO: Should the Operation factory add the event immediately or at a later point?
+    const reportEvent = bottle.container.CallReporter.getReport(callId).addEvent(eventName);
+    opInfo.isNegotiation = false;
+    const tracker = (0, _StatusTracker.default)(bottle.container, callId, id, reportEvent.id, opInfo);
+    const UpdateOperation = {
+      // Operation meta-data.
+      type,
+      isNegotiation: false,
+      isLocal,
+      // Operation methods.
+      stages: {
+        // Local Update handlers.
+        validate: validate,
+        localOffer: localOffer,
+        // Remote Update handlers.
+        remoteOffer: remoteOffer
+      },
+      // Instance specific.
+      callId,
+      id,
+      data: {
+        ...data
+      },
+      // Operation Tracking
+      tracker,
+      get status() {
+        return tracker.status;
+      },
+      reportEvent
+    };
+    return UpdateOperation;
   });
 }
 
@@ -7964,7 +8027,7 @@ function initOperation(bottle) {
   //    Otherwise they would get the `operations` sub-container.
   bottle.factory('Callstack.operations.addMedia', () => {
     const Callstack = bottle.container.Callstack;
-    const opFactory = Callstack.models.Operation;
+    const negFactory = Callstack.models.Negotiation;
     function addMedia(isLocal) {
       /**
        * Factory function for AddMedia operation.
@@ -7974,10 +8037,9 @@ function initOperation(bottle) {
        */
       return callId => {
         const stages = Callstack.stages.addMedia[isLocal ? 'local' : 'remote'];
-        return opFactory.instance({
+        return negFactory.instance({
           // Operation meta-data.
           type: _constants.OPERATIONS.ADD_MEDIA,
-          isNegotiation: true,
           isLocal,
           // Operation methods.
           stages
@@ -7992,7 +8054,7 @@ function initOperation(bottle) {
     };
   });
   bottle.factory('Callstack.operations.addBasicMedia', () => {
-    const opFactory = bottle.container.Callstack.models.Operation;
+    const negFactory = bottle.container.Callstack.models.Negotiation;
     function basicAddMedia() {
       /**
        * Factory function for basic AddMedia operation.
@@ -8001,10 +8063,9 @@ function initOperation(bottle) {
        * @return {Operation} An instance of the basic addMedia operation.
        */
       return callId => {
-        return opFactory.instance({
+        return negFactory.instance({
           // Operation meta-data.
           type: _constants.OPERATIONS.ADD_BASIC_MEDIA,
-          isNegotiation: true,
           isLocal: true,
           // Operation methods.
           stages: bottle.container.Callstack.stages.addBasicMedia.local
@@ -9057,7 +9118,7 @@ function initOperation(bottle) {
   //    Otherwise they would get the `operations` sub-container.
   bottle.factory('Callstack.operations.answer', () => {
     const Callstack = bottle.container.Callstack;
-    const opFactory = Callstack.models.Operation;
+    const updateFactory = Callstack.models.Update;
 
     /**
      * Factory function for a LocalAnswer operation.
@@ -9066,9 +9127,8 @@ function initOperation(bottle) {
      * @return {Operation} An instance of a local answer operation.
      */
     function LocalAnswer(callId) {
-      return opFactory.instance({
+      return updateFactory.instance({
         type: _constants.OPERATIONS.ANSWER,
-        isNegotiation: false,
         isLocal: true,
         stages: Callstack.stages.answer.local
       }, {
@@ -9081,7 +9141,7 @@ function initOperation(bottle) {
   });
   bottle.factory('Callstack.operations.answerSlow', () => {
     const Callstack = bottle.container.Callstack;
-    const opFactory = Callstack.models.Operation;
+    const negFactory = Callstack.models.Negotiation;
 
     /**
      * Factory function for a SlowAnswer operation.
@@ -9090,9 +9150,8 @@ function initOperation(bottle) {
      * @return {Operation} An instance of a local slow-start answer operation.
      */
     function SlowAnswer(callId) {
-      return opFactory.instance({
+      return negFactory.instance({
         type: _constants.OPERATIONS.ANSWER,
-        isNegotiation: true,
         isLocal: true,
         stages: Callstack.stages.answerSlow.local
       }, {
@@ -9771,12 +9830,11 @@ function initOperation(bottle) {
     };
   });
   bottle.factory('Callstack.operations.callCancelled', () => {
-    const opFactory = bottle.container.Callstack.models.Operation;
+    const updateFactory = bottle.container.Callstack.models.Update;
     return callId => {
-      return opFactory.instance({
+      return updateFactory.instance({
         // Operation meta-data.
         type: _constants.OPERATIONS.CALL_CANCEL,
-        isNegotiation: false,
         isLocal: false,
         stages: bottle.container.Callstack.stages.callCancelled.remote
       }, {
@@ -9954,7 +10012,9 @@ function initOperation(bottle) {
   // Provide the top-level container to the factory functions.
   //    Otherwise they would get the `operations` sub-container.
   bottle.factory('Callstack.operations.consultativeTransfer', () => {
-    const opFactory = bottle.container.Callstack.models.Operation;
+    // TODO: This operation is not actually a negotiation, but this is currently
+    //    how we indicate this is a "blocking" operation (to prevent glare).
+    const negFactory = bottle.container.Callstack.models.Negotiation;
 
     /**
      * Factory function for a LocalConsultTransfer operation.
@@ -9963,12 +10023,9 @@ function initOperation(bottle) {
      * @return {Operation} An instance of a local consultative transfer operation.
      */
     function LocalConsultTransfer(callId, data) {
-      return opFactory.instance({
+      return negFactory.instance({
         // Operation meta-data.
         type: _constants.OPERATIONS.CONSULTATIVE_TRANSFER,
-        // TODO: This operation is not actually a negotiation, but this is currently
-        //    how we indicate this is a "blocking" operation (to prevent glare).
-        isNegotiation: true,
         isLocal: true,
         // Operation methods.
         stages: {
@@ -10317,7 +10374,10 @@ function initOperation(bottle) {
   // Provide the top-level container to the factory functions.
   //    Otherwise they would get the `operations` sub-container.
   bottle.factory('Callstack.operations.directTransfer', () => {
-    const opFactory = bottle.container.Callstack.models.Operation;
+    // TODO: This is not a WebRTC negotiation, but it does expect a notification
+    //    in response. Currently, `isNegotiation` is the only flag to tell the
+    //    `localOperation` flow that the operation needs to wait for a response.
+    const negFactory = bottle.container.Callstack.models.Negotiation;
 
     /**
      * Factory function for a LocalDirectTransfer operation.
@@ -10326,13 +10386,9 @@ function initOperation(bottle) {
      * @return {Operation} An instance of a local direct transfer operation.
      */
     function LocalDirectTransfer(callId) {
-      return opFactory.instance({
+      return negFactory.instance({
         // Operation meta-data.
         type: _constants.OPERATIONS.DIRECT_TRANSFER,
-        // TODO: This is not a WebRTC negotiation, but it does expect a notification
-        //    in response. Currently, `isNegotiation` is the only flag to tell the
-        //    `localOperation` flow that the operation needs to wait for a response.
-        isNegotiation: true,
         isLocal: true,
         // Operation methods.
         stages: {
@@ -10617,7 +10673,7 @@ function initOperation(bottle) {
   // Provide the top-level container to the factory functions.
   //    Otherwise they would get the `operations` sub-container.
   bottle.factory('Callstack.operations.end', () => {
-    const opFactory = bottle.container.Callstack.models.Operation;
+    const updateFactory = bottle.container.Callstack.models.Update;
     function end(isLocal) {
       /**
        * Factory function for a End operation.
@@ -10627,10 +10683,9 @@ function initOperation(bottle) {
        */
       return callId => {
         const stages = bottle.container.Callstack.stages.end[isLocal ? 'local' : 'remote'];
-        return opFactory.instance({
+        return updateFactory.instance({
           // Operation meta-data.
           type: _constants.OPERATIONS.END,
-          isNegotiation: false,
           isLocal,
           // Operation methods.
           stages
@@ -10995,7 +11050,7 @@ function initOperation(bottle) {
   // Provide the top-level container to the factory functions.
   //    Otherwise they would get the `operations` sub-container.
   bottle.factory('Callstack.operations.forward', () => {
-    const opFactory = bottle.container.Callstack.models.Operation;
+    const updateFactory = bottle.container.Callstack.models.Update;
 
     /**
      * Factory function for a LocalForward operation.
@@ -11004,10 +11059,9 @@ function initOperation(bottle) {
      * @return {Operation} An instance of a local forward operation.
      */
     function LocalForward(callId) {
-      return opFactory.instance({
+      return updateFactory.instance({
         // Operation meta-data.
         type: _constants.OPERATIONS.FORWARD_CALL,
-        isNegotiation: false,
         isLocal: true,
         // Operation methods.
         stages: bottle.container.Callstack.stages.forward.local
@@ -11109,7 +11163,7 @@ function initOperation(bottle) {
   // Provide the top-level container to the factory functions.
   //    Otherwise they would get the `operations` sub-container.
   bottle.factory('Callstack.operations.genericRemote', () => {
-    const opFactory = bottle.container.Callstack.models.Operation;
+    const negFactory = bottle.container.Callstack.models.Negotiation;
 
     /**
      * Factory function for a RemoteGeneric operation.
@@ -11118,10 +11172,9 @@ function initOperation(bottle) {
      * @return {Operation} An instance of a remote generic operation.
      */
     function RemoteGeneric(callId) {
-      return opFactory.instance({
+      return negFactory.instance({
         // Operation meta-data.
         type: _constants.OPERATIONS.GENERIC_REMOTE,
-        isNegotiation: true,
         isLocal: false,
         // Operation methods.
         stages: bottle.container.Callstack.stages.genericRemote.remote
@@ -11426,7 +11479,7 @@ Object.defineProperty(exports, "__esModule", ({
 exports["default"] = getStatsOperation;
 var _selectors = __webpack_require__(11430);
 var _kandyWebrtc = __webpack_require__(15203);
-var _version = __webpack_require__(42298);
+var _version = __webpack_require__(58219);
 var _sdkId = _interopRequireDefault(__webpack_require__(15878));
 // Call plugin.
 
@@ -11555,7 +11608,7 @@ function initOperation(bottle) {
   // Provide the top-level container to the factory functions.
   //    Otherwise they would get the `operations` sub-container.
   bottle.factory('Callstack.operations.getStats', () => {
-    const opFactory = bottle.container.Callstack.models.Operation;
+    const updateFactory = bottle.container.Callstack.models.Update;
 
     /**
      * Factory function for a LocalGetStats operation.
@@ -11564,10 +11617,9 @@ function initOperation(bottle) {
      * @return {Operation} An instance of a local get stats operation.
      */
     function LocalGetStats(callId) {
-      return opFactory.instance({
+      return updateFactory.instance({
         // Operation meta-data.
         type: _constants.OPERATIONS.GET_STATS,
-        isNegotiation: false,
         isLocal: true,
         // Operation methods.
         stages: bottle.container.Callstack.stages.getStats.local
@@ -11677,7 +11729,7 @@ function initOperation(bottle) {
   //    Otherwise they would get the `operations` sub-container.
   bottle.factory('Callstack.operations.hold', () => {
     const Callstack = bottle.container.Callstack;
-    const opFactory = Callstack.models.Operation;
+    const negFactory = Callstack.models.Negotiation;
     function hold(isLocal) {
       /**
        * Factory function for a Hold operation.
@@ -11687,10 +11739,9 @@ function initOperation(bottle) {
        */
       return callId => {
         const stages = Callstack.stages.hold[isLocal ? 'local' : 'remote'];
-        return opFactory.instance({
+        return negFactory.instance({
           // Operation meta-data.
           type: _constants.OPERATIONS.HOLD,
-          isNegotiation: true,
           isLocal,
           // Operation methods.
           stages
@@ -12518,7 +12569,7 @@ function initOperation(bottle) {
   // Provide the top-level container to the factory functions.
   //    Otherwise they would get the `operations` sub-container.
   bottle.factory('Callstack.operations.iceRestart', () => {
-    const opFactory = bottle.container.Callstack.models.Operation;
+    const negFactory = bottle.container.Callstack.models.Negotiation;
 
     /**
      * Factory function for a LocalIceRestart operation.
@@ -12527,10 +12578,9 @@ function initOperation(bottle) {
      * @return {Operation} An instance of a local ICE restart operation.
      */
     function LocalIceRestart(callId) {
-      return opFactory.instance({
+      return negFactory.instance({
         // Operation meta-data.
         type: _constants.OPERATIONS.MEDIA_RESTART,
-        isNegotiation: true,
         isLocal: true,
         // Operation methods.
         stages: bottle.container.Callstack.stages.iceRestart.local
@@ -12952,7 +13002,7 @@ function initOperation(bottle) {
   // Provide the top-level container to the factory functions.
   //    Otherwise they would get the `operations` sub-container.
   bottle.factory('Callstack.operations.ignore', () => {
-    const opFactory = bottle.container.Callstack.models.Operation;
+    const updateFactory = bottle.container.Callstack.models.Update;
 
     /**
      * Factory function for a LocalIgnore operation.
@@ -12961,10 +13011,9 @@ function initOperation(bottle) {
      * @return {Operation} An instance of a local ignore operation.
      */
     function LocalIgnore(callId) {
-      return opFactory.instance({
+      return updateFactory.instance({
         // Operation meta-data.
         type: _constants.OPERATIONS.IGNORE,
-        isNegotiation: false,
         isLocal: true,
         // Operation methods.
         stages: bottle.container.Callstack.stages.ignore.local
@@ -13279,7 +13328,7 @@ function initOperation(bottle) {
   // Provide the top-level container to the factory functions.
   //    Otherwise they would get the `operations` sub-container.
   bottle.factory('Callstack.operations.join', () => {
-    const opFactory = bottle.container.Callstack.models.Operation;
+    const negFactory = bottle.container.Callstack.models.Negotiation;
 
     /**
      * Factory function for a LocalJoin operation.
@@ -13288,7 +13337,7 @@ function initOperation(bottle) {
      * @return {Operation} An instance of a local join operation.
      */
     function LocalJoin(callId, data) {
-      return opFactory.instance({
+      return negFactory.instance({
         // Operation meta-data.
         type: _constants.OPERATIONS.JOIN,
         /*
@@ -13888,7 +13937,8 @@ function initOperation(bottle) {
   // Register the Operation as a whole entity.
   bottle.factory('Callstack.operations.make', () => {
     const Callstack = bottle.container.Callstack;
-    const opFactory = Callstack.models.Operation;
+    const negFactory = Callstack.models.Negotiation;
+    const updateFactory = Callstack.models.Update;
 
     /**
      * Factory function for a LocalMake operation.
@@ -13897,10 +13947,9 @@ function initOperation(bottle) {
      * @return {Operation} An instance of a local make operation.
      */
     function LocalMake(callId) {
-      return opFactory.instance({
+      return negFactory.instance({
         // Operation meta-data.
         type: _constants.OPERATIONS.MAKE,
-        isNegotiation: true,
         isLocal: true,
         // Operation methods.
         stages: Callstack.stages.make.local
@@ -13909,9 +13958,8 @@ function initOperation(bottle) {
       });
     }
     function IncomingCall(callId) {
-      return opFactory.instance({
+      return updateFactory.instance({
         type: _constants.OPERATIONS.MAKE,
-        isNegotiation: false,
         isLocal: false,
         stages: Callstack.stages.make.remote
       }, {
@@ -14947,7 +14995,7 @@ function initOperation(bottle) {
 
   // Remote-only "start MOH" operation.
   bottle.factory('Callstack.operations.startMOH', () => {
-    const opFactory = bottle.container.Callstack.models.Operation;
+    const negFactory = bottle.container.Callstack.models.Negotiation;
 
     /**
      * Factory function for a RemoteStartMOH operation.
@@ -14956,10 +15004,9 @@ function initOperation(bottle) {
      * @return {Operation} An instance of a remote start MOH operation.
      */
     function RemoteStartMOH(callId) {
-      return opFactory.instance({
+      return negFactory.instance({
         // Operation meta-data.
         type: _constants.OPERATIONS.START_MOH,
-        isNegotiation: true,
         isLocal: false,
         // Operation methods.
         stages: bottle.container.Callstack.stages.startMOH.remote
@@ -14974,7 +15021,7 @@ function initOperation(bottle) {
 
   // Remote-only "stop MOH" operation.
   bottle.factory('Callstack.operations.stopMOH', () => {
-    const opFactory = bottle.container.Callstack.models.Operation;
+    const negFactory = bottle.container.Callstack.models.Negotiation;
 
     /**
      * Factory function for a RemoteStopMOH operation.
@@ -14983,10 +15030,9 @@ function initOperation(bottle) {
      * @return {Operation} An instance of a remote stop MOH operation.
      */
     function RemoteStopMOH(callId) {
-      return opFactory.instance({
+      return negFactory.instance({
         // Operation meta-data.
         type: _constants.OPERATIONS.STOP_MOH,
-        isNegotiation: true,
         isLocal: false,
         // Operation methods.
         stages: bottle.container.Callstack.stages.stopMOH.remote
@@ -15533,7 +15579,7 @@ function initOperation(bottle) {
   // Provide the top-level container to the factory functions.
   //    Otherwise they would get the `operations` sub-container.
   bottle.factory('Callstack.operations.playAudioFile', () => {
-    const opFactory = bottle.container.Callstack.models.Operation;
+    const updateFactory = bottle.container.Callstack.models.Update;
 
     /**
      * Factory function for a LocalPlayAudio operation.
@@ -15542,10 +15588,9 @@ function initOperation(bottle) {
      * @return {Operation} An instance of a local play audio operation.
      */
     function LocalPlayAudio(callId) {
-      return opFactory.instance({
+      return updateFactory.instance({
         // Operation meta-data.
         type: _constants.OPERATIONS.PLAY_AUDIO,
-        isNegotiation: false,
         isLocal: true,
         // Operation methods.
         stages: bottle.container.Callstack.stages.playAudioFile.local
@@ -15789,7 +15834,7 @@ function initOperation(bottle) {
   // Provide the top-level container to the factory functions.
   //    Otherwise they would get the `operations` sub-container.
   bottle.factory('Callstack.operations.reject', () => {
-    const opFactory = bottle.container.Callstack.models.Operation;
+    const updateFactory = bottle.container.Callstack.models.Update;
 
     /**
      * Factory function for a LocalReject operation.
@@ -15798,10 +15843,9 @@ function initOperation(bottle) {
      * @return {Operation} An instance of a local reject operation.
      */
     function LocalReject(callId) {
-      return opFactory.instance({
+      return updateFactory.instance({
         // Operation meta-data.
         type: _constants.OPERATIONS.REJECT,
-        isNegotiation: false,
         isLocal: true,
         // Operation methods.
         stages: bottle.container.Callstack.stages.reject.local
@@ -15990,7 +16034,7 @@ function initOperation(bottle) {
   //    Otherwise they would get the `operations` sub-container.
   bottle.factory('Callstack.operations.removeMedia', () => {
     const Callstack = bottle.container.Callstack;
-    const opFactory = Callstack.models.Operation;
+    const negFactory = Callstack.models.Negotiation;
     function removeMedia(isLocal) {
       /**
        * Factory function for a RemoveMedia operation.
@@ -16000,10 +16044,9 @@ function initOperation(bottle) {
        */
       return callId => {
         const stages = Callstack.stages.removeMedia[isLocal ? 'local' : 'remote'];
-        return opFactory.instance({
+        return negFactory.instance({
           // Operation meta-data.
           type: _constants.OPERATIONS.REMOVE_MEDIA,
-          isNegotiation: true,
           isLocal,
           // Operation methods.
           stages
@@ -16018,7 +16061,7 @@ function initOperation(bottle) {
     };
   });
   bottle.factory('Callstack.operations.removeBasicMedia', () => {
-    const opFactory = bottle.container.Callstack.models.Operation;
+    const negFactory = bottle.container.Callstack.models.Negotiation;
 
     /**
      * Factory function for a LocalRemoveBasicMedia operation.
@@ -16029,10 +16072,9 @@ function initOperation(bottle) {
      * @return {Operation} An instance of a local basic removeMedia operation.
      */
     function LocalRemoveBasicMedia(callId) {
-      return opFactory.instance({
+      return negFactory.instance({
         // Operation meta-data.
         type: _constants.OPERATIONS.REMOVE_BASIC_MEDIA,
-        isNegotiation: true,
         isLocal: true,
         // Operation methods.
         stages: bottle.container.Callstack.stages.removeBasicMedia.local
@@ -16852,7 +16894,7 @@ function initOperation(bottle) {
   // Provide the top-level container to the factory functions.
   //    Otherwise they would get the `operations` sub-container.
   bottle.factory('Callstack.operations.replaceTrack', () => {
-    const opFactory = bottle.container.Callstack.models.Operation;
+    const updateFactory = bottle.container.Callstack.models.Update;
 
     /**
      * Factory function for a LocalReplaceTrack operation.
@@ -16861,10 +16903,9 @@ function initOperation(bottle) {
      * @return {Operation} An instance of a local replace track operation.
      */
     function LocalReplaceTrack(callId) {
-      return opFactory.instance({
+      return updateFactory.instance({
         // Operation meta-data.
         type: _constants.OPERATIONS.REPLACE_TRACK,
-        isNegotiation: false,
         isLocal: true,
         // Operation methods.
         stages: bottle.container.Callstack.stages.replaceTrack.local
@@ -17216,7 +17257,7 @@ function initOperation(bottle) {
   // Provide the top-level container to the factory functions.
   //    Otherwise they would get the `operations` sub-container.
   bottle.factory('Callstack.operations.resyncCallState', () => {
-    const opFactory = bottle.container.Callstack.models.Operation;
+    const updateFactory = bottle.container.Callstack.models.Update;
 
     /**
      * Factory function for a LocalResync operation.
@@ -17225,10 +17266,9 @@ function initOperation(bottle) {
      * @return {Operation} An instance of a local resync operation.
      */
     function LocalResync(callId) {
-      return opFactory.instance({
+      return updateFactory.instance({
         // Operation meta-data.
         type: _constants.OPERATIONS.RESYNC,
-        isNegotiation: false,
         isLocal: true,
         // Operation methods.
         stages: bottle.container.Callstack.stages.resyncCallState.local
@@ -17743,7 +17783,7 @@ function initOperation(bottle) {
   // Provide the top-level container to the factory functions.
   //    Otherwise they would get the `operations` sub-container.
   bottle.factory('Callstack.operations.sendCustomParameters', () => {
-    const opFactory = bottle.container.Callstack.models.Operation;
+    const updateFactory = bottle.container.Callstack.models.Update;
 
     /**
      * Factory function for a LocalSendParameters operation.
@@ -17752,10 +17792,9 @@ function initOperation(bottle) {
      * @return {Operation} An instance of a local send custom parameters operation.
      */
     function LocalSendParameters(callId) {
-      return opFactory.instance({
+      return updateFactory.instance({
         // Operation meta-data.
         type: _constants.OPERATIONS.SEND_CUSTOM_PARAMETERS,
-        isNegotiation: false,
         isLocal: true,
         // Operation methods.
         stages: bottle.container.Callstack.stages.sendCustomParameters.local
@@ -17920,7 +17959,7 @@ function initOperation(bottle) {
   // Provide the top-level container to the factory functions.
   //    Otherwise they would get the `operations` sub-container.
   bottle.factory('Callstack.operations.sendDtmf', () => {
-    const opFactory = bottle.container.Callstack.models.Operation;
+    const updateFactory = bottle.container.Callstack.models.Update;
 
     /**
      * Factory function for a LocalSendDtmf operation.
@@ -17929,10 +17968,9 @@ function initOperation(bottle) {
      * @return {Operation} An instance of a local send DTMF operation.
      */
     function LocalSendDtmf(callId) {
-      return opFactory.instance({
+      return updateFactory.instance({
         // Operation meta-data.
         type: _constants.OPERATIONS.SEND_DTMF,
-        isNegotiation: false,
         isLocal: true,
         // Operation methods.
         stages: bottle.container.Callstack.stages.sendDtmf.local
@@ -18413,7 +18451,7 @@ function initOperation(bottle) {
   // Provide the top-level container to the factory functions.
   //    Otherwise they would get the `operations` sub-container.
   bottle.factory('Callstack.operations.sendRingingFeedback', () => {
-    const opFactory = bottle.container.Callstack.models.Operation;
+    const updateFactory = bottle.container.Callstack.models.Update;
 
     /**
      * Factory function for a LocalSendFeedback operation.
@@ -18422,10 +18460,9 @@ function initOperation(bottle) {
      * @return {Operation} An instance of a local send ringing feedback operation.
      */
     function LocalSendFeedback(callId) {
-      return opFactory.instance({
+      return updateFactory.instance({
         // Operation meta-data.
         type: _constants.OPERATIONS.SEND_RINGING_FEEDBACK,
-        isNegotiation: false,
         isLocal: true,
         // Operation methods.
         stages: {
@@ -18987,7 +19024,7 @@ function initOperation(bottle) {
   });
   // Remote-only "slow start" operation.
   bottle.factory('Callstack.operations.slowStart', () => {
-    const opFactory = bottle.container.Callstack.models.Operation;
+    const negFactory = bottle.container.Callstack.models.Negotiation;
 
     /**
      * Factory function for a RemoteSlowStart operation.
@@ -18996,10 +19033,9 @@ function initOperation(bottle) {
      * @return {Operation} An instance of a remote hold operation.
      */
     function RemoteSlowStart(callId) {
-      return opFactory.instance({
+      return negFactory.instance({
         // Operation meta-data.
         type: _constants.OPERATIONS.SLOW_START,
-        isNegotiation: true,
         isLocal: false,
         // Operation methods.
         stages: bottle.container.Callstack.stages.slowStart.remote
@@ -19229,7 +19265,7 @@ function initOperation(bottle) {
   //    Otherwise they would get the `operations` sub-container.
   bottle.factory('Callstack.operations.unhold', () => {
     const Callstack = bottle.container.Callstack;
-    const opFactory = Callstack.models.Operation;
+    const negFactory = Callstack.models.Negotiation;
     function unhold(isLocal) {
       /**
        * Factory function for a Hold operation.
@@ -19239,10 +19275,9 @@ function initOperation(bottle) {
        */
       return callId => {
         const stages = Callstack.stages.unhold[isLocal ? 'local' : 'remote'];
-        return opFactory.instance({
+        return negFactory.instance({
           // Operation meta-data.
           type: _constants.OPERATIONS.UNHOLD,
-          isNegotiation: true,
           isLocal,
           // Operation methods.
           stages
@@ -23868,7 +23903,7 @@ exports.fixIceServerUrls = fixIceServerUrls;
 exports.mergeDefaults = mergeDefaults;
 var _logs = __webpack_require__(43862);
 var _utils = __webpack_require__(25189);
-var _version = __webpack_require__(42298);
+var _version = __webpack_require__(58219);
 var _defaults = __webpack_require__(27241);
 var _validation = __webpack_require__(42850);
 // Other plugins.
@@ -24888,7 +24923,7 @@ function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; 
 
 function createAnonApi(container) {
   const {
-    CallManager,
+    CallOperations,
     context,
     logManager,
     API_LOG_TAG,
@@ -25087,7 +25122,7 @@ function createAnonApi(container) {
           to: callee,
           from: options.from
         };
-        await CallManager.makeAnonymousCall(callId, participants, credentials, mediaConstraints, options);
+        await CallOperations.makeAnonymousCall(callId, participants, credentials, mediaConstraints, options);
 
         // Tell the application that the call has finished "initiating".
         emitEvent(eventTypes.CALL_STATE_CHANGE, {
@@ -35313,7 +35348,7 @@ var _reduxSaga = _interopRequireDefault(__webpack_require__(7));
 var _effects = __webpack_require__(27422);
 var _bottlejs = _interopRequireDefault(__webpack_require__(39146));
 var _utils = __webpack_require__(25189);
-var _version = __webpack_require__(42298);
+var _version = __webpack_require__(58219);
 var _intervalFactory = _interopRequireDefault(__webpack_require__(93725));
 var _validation = __webpack_require__(42850);
 // Libraries.
@@ -39242,7 +39277,7 @@ var authorizations = _interopRequireWildcard(__webpack_require__(55689));
 var _makeRequest = _interopRequireDefault(__webpack_require__(87569));
 var _utils = __webpack_require__(70720);
 var _selectors = __webpack_require__(46942);
-var _version = __webpack_require__(42298);
+var _version = __webpack_require__(58219);
 var _utils2 = __webpack_require__(25189);
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
 function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
@@ -39393,7 +39428,7 @@ var _cloneDeep2 = _interopRequireDefault(__webpack_require__(33904));
 var _selectors = __webpack_require__(50647);
 var _selectors2 = __webpack_require__(46942);
 var _logs = __webpack_require__(43862);
-var _version = __webpack_require__(42298);
+var _version = __webpack_require__(58219);
 var _utils = __webpack_require__(25189);
 var _effects = __webpack_require__(27422);
 // Request plugin.
@@ -74635,7 +74670,7 @@ module.exports = str => encodeURIComponent(str).replace(/[!'()*]/g, x => `%${x.c
 
 /***/ }),
 
-/***/ 45056:
+/***/ 18053:
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -74867,7 +74902,7 @@ var _v4 = _interopRequireDefault(__webpack_require__(95899));
 
 var _nil = _interopRequireDefault(__webpack_require__(15384));
 
-var _version = _interopRequireDefault(__webpack_require__(45056));
+var _version = _interopRequireDefault(__webpack_require__(18053));
 
 var _validate = _interopRequireDefault(__webpack_require__(77888));
 

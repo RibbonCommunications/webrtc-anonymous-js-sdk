@@ -7,6 +7,8 @@ Ribbon WebRTC SDK change log.
 - This project adheres to [Semantic Versioning](http://semver.org/).
 - This change log follows [keepachangelog.com](http://keepachangelog.com/) recommendations.
 
+## 6.14.0 - 2024-08-29
+
 ## 6.13.0 - 2024-07-26
 
 ## 6.12.0 - 2024-06-28
@@ -16,9 +18,11 @@ Ribbon WebRTC SDK change log.
 - New media APIs for managing local detached media. `createLocalMedia`, `getLocalMedia` and `disposeLocalMedia` are used to create
   audio, video and screen media tracks locally outside of a call. `KJS-2105`
 - New call configuration parameter for faster call setup: `call.skipIceCollection`. `KJS-2205`
-  - Setting to `true`` will skip waiting for ICE collection and proceed with negotiation.
+  - Setting to `true` will skip waiting for ICE collection and proceed with negotiation.
 - New media option for passing local detached media to the following call apis: make, answer, addMedia and replaceTrack. `KJS-2106`
 - Added support for `call.playAudioFile` mid-call API. `KJS-2212`
+- Added the handling of a glare condition caused by a remote offer.
+  - In such a case, the SDK will reply with a `491` status code, indicating to backend that remote offer could not be fulfilled, due to same operation already being initiated, locally. `KJS-2136`
 
 ### Fixed
 
