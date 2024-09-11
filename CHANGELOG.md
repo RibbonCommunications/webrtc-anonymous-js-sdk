@@ -11,7 +11,12 @@ Ribbon WebRTC SDK change log.
 
 ### Added
 
-- Upon receiving a glare error from the gateway, the remote-side SDK which initiated the offer, will rollback its local operation.
+- Added Call handling for glare error notifications from the Gateway.
+  - When received, the SDK will attempt to revert the pending call negotiation to return the call to a stable state.
+
+### Fixed
+
+- Fixed a Call issue where receiving a websocket notification for an unknown call would result in an exception appearing in the logs. `KJS-2239`
 
 ## 6.14.0 - 2024-08-29
 
