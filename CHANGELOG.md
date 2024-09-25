@@ -13,6 +13,7 @@ Ribbon WebRTC SDK change log.
 
 - Added Call handling for glare error notifications from the Gateway.
   - When received, the SDK will attempt to revert the pending call negotiation to return the call to a stable state.
+- Added the dispatch of `subscription:error` event for the case when user tries to subscribe/unsubscribe for/from a service without being first authenticated. `KJS-1756`
 
 ### Fixed
 
