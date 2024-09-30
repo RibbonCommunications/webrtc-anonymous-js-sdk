@@ -7,6 +7,18 @@ Ribbon WebRTC SDK change log.
 - This project adheres to [Semantic Versioning](http://semver.org/).
 - This change log follows [keepachangelog.com](http://keepachangelog.com/) recommendations.
 
+## 6.15.0 - 2024-09-27
+
+### Added
+
+- Added Call handling for glare error notifications from the Gateway.
+  - When received, the SDK will attempt to revert the pending call negotiation to return the call to a stable state.
+- Added the dispatch of `subscription:error` event for the case when user tries to subscribe/unsubscribe for/from a service without being first authenticated. `KJS-1756`
+
+### Fixed
+
+- Fixed a Call issue where receiving a websocket notification for an unknown call would result in an exception appearing in the logs. `KJS-2239`
+
 ## 6.14.0 - 2024-08-29
 
 ## 6.13.0 - 2024-07-26
