@@ -9,6 +9,10 @@ Ribbon WebRTC SDK change log.
 
 ## 6.16.0 - beta
 
+### Fixed
+
+- Fixed the cleaning of server subscription's resource for the case when websocket connection fails during a subscription attempt. `KJS-2345`
+
 ## 6.15.0 - 2024-09-27
 
 ### Added
