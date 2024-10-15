@@ -12,7 +12,7 @@
  *
  * WebRTC.js
  * webrtc.anonymous.js
- * Version: 6.16.0-beta.1458
+ * Version: 6.16.0-beta.1459
  */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
@@ -2326,7 +2326,7 @@ module.exports = root;
 
 /***/ }),
 
-/***/ 64177:
+/***/ 46075:
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -2344,7 +2344,7 @@ exports.getVersion = getVersion;
  * for the @@ tag below with actual version value.
  */
 function getVersion() {
-  return '6.16.0-beta.1458';
+  return '6.16.0-beta.1459';
 }
 
 /***/ }),
@@ -11118,7 +11118,7 @@ Object.defineProperty(exports, "__esModule", ({
 exports["default"] = getStatsOperation;
 var _selectors = __webpack_require__(40481);
 var _kandyWebrtc = __webpack_require__(37654);
-var _version = __webpack_require__(64177);
+var _version = __webpack_require__(46075);
 var _sdkId = _interopRequireDefault(__webpack_require__(20855));
 function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
 // Call plugin.
@@ -23824,7 +23824,7 @@ __webpack_require__(91883);
 __webpack_require__(70286);
 var _logs = __webpack_require__(69932);
 var _utils = __webpack_require__(1011);
-var _version = __webpack_require__(64177);
+var _version = __webpack_require__(46075);
 var _defaults = __webpack_require__(24679);
 var _validation = __webpack_require__(52932);
 // Other plugins.
@@ -30384,7 +30384,6 @@ Object.defineProperty(exports, "__esModule", ({
 exports["default"] = createMiddleware;
 exports.shouldHandlePattern = shouldHandlePattern;
 var _actionTypes = __webpack_require__(34721);
-var _actionTypes2 = __webpack_require__(97082);
 // Other plugins
 
 // src/call/sagaLink/sagas/index.js
@@ -30404,7 +30403,7 @@ function createMiddleware(context) {
 
 // The `incomingCallPattern` function.
 function shouldHandlePattern(action) {
-  return !!(!action.error && (action.type === _actionTypes2.CONNECT_FINISHED && action.payload.subscription && action.payload.subscription.turnCredentials || action.type === _actionTypes.SUBSCRIBE_FINISHED && action.payload.subscriptions && action.payload.subscriptions.length && action.payload.subscriptions[0].turnCredentials));
+  return !!(!action.error && action.type === _actionTypes.SUBSCRIBE_FINISHED && action.payload.subscriptions && action.payload.subscriptions.length && action.payload.subscriptions[0].turnCredentials);
 }
 
 /***/ }),
@@ -30468,10 +30467,7 @@ Object.defineProperty(exports, "__esModule", ({
 exports["default"] = createOperation;
 var _actions = __webpack_require__(35);
 var _selectors = __webpack_require__(40481);
-var _actionTypes = __webpack_require__(97082);
 // Call plugin.
-
-// Other plugins.
 
 /**
  * Link-specific "set turn credentials" operation factory.
@@ -30507,7 +30503,7 @@ function createOperation(container) {
     }
 
     // TURN credentials received from the server.
-    const turnCredentials = action.type === _actionTypes.CONNECT_FINISHED ? action.payload.subscription.turnCredentials : action.payload.subscriptions[0].turnCredentials;
+    const turnCredentials = action.payload.subscriptions[0].turnCredentials;
     context.dispatch(_actions.turnActions.turnChanged({
       credentials: turnCredentials
     }));
@@ -35285,7 +35281,7 @@ var _reduxSaga = _interopRequireDefault(__webpack_require__(71028));
 var _effects = __webpack_require__(89979);
 var _bottlejs = _interopRequireDefault(__webpack_require__(8997));
 var _utils = __webpack_require__(1011);
-var _version = __webpack_require__(64177);
+var _version = __webpack_require__(46075);
 var _intervalFactory = _interopRequireDefault(__webpack_require__(73181));
 var _validation = __webpack_require__(52932);
 function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
@@ -39393,7 +39389,7 @@ var _cloneDeep2 = _interopRequireDefault(__webpack_require__(89321));
 var _selectors = __webpack_require__(45590);
 var _selectors2 = __webpack_require__(87075);
 var _logs = __webpack_require__(69932);
-var _version = __webpack_require__(64177);
+var _version = __webpack_require__(46075);
 var _utils = __webpack_require__(1011);
 var _effects = __webpack_require__(89979);
 function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
@@ -77621,7 +77617,7 @@ module.exports = str => encodeURIComponent(str).replace(/[!'()*]/g, x => `%${x.c
 
 /***/ }),
 
-/***/ 59799:
+/***/ 47091:
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -78062,7 +78058,7 @@ var _v4 = _interopRequireDefault(__webpack_require__(93423));
 
 var _nil = _interopRequireDefault(__webpack_require__(35911));
 
-var _version = _interopRequireDefault(__webpack_require__(59799));
+var _version = _interopRequireDefault(__webpack_require__(47091));
 
 var _validate = _interopRequireDefault(__webpack_require__(4564));
 
@@ -85998,7 +85994,7 @@ module.exports = function (key, value) {
 
 var globalThis = __webpack_require__(79117);
 var fails = __webpack_require__(5234);
-var V8 = __webpack_require__(70859);
+var V8 = __webpack_require__(52369);
 var ENVIRONMENT = __webpack_require__(11078);
 
 var structuredClone = globalThis.structuredClone;
@@ -86021,7 +86017,7 @@ module.exports = !!structuredClone && !fails(function () {
 "use strict";
 
 /* eslint-disable es/no-symbol -- required for testing */
-var V8_VERSION = __webpack_require__(70859);
+var V8_VERSION = __webpack_require__(52369);
 var fails = __webpack_require__(5234);
 var globalThis = __webpack_require__(79117);
 
@@ -87006,10 +87002,10 @@ var fails = __webpack_require__(5234);
 var aCallable = __webpack_require__(44977);
 var internalSort = __webpack_require__(9295);
 var ArrayBufferViewCore = __webpack_require__(47223);
-var FF = __webpack_require__(1505);
+var FF = __webpack_require__(98779);
 var IE_OR_EDGE = __webpack_require__(84598);
-var V8 = __webpack_require__(70859);
-var WEBKIT = __webpack_require__(96163);
+var V8 = __webpack_require__(52369);
+var WEBKIT = __webpack_require__(71857);
 
 var aTypedArray = ArrayBufferViewCore.aTypedArray;
 var exportTypedArrayMethod = ArrayBufferViewCore.exportTypedArrayMethod;
@@ -87357,7 +87353,7 @@ if (DESCRIPTORS && !('size' in URLSearchParamsPrototype)) {
 
 /***/ }),
 
-/***/ 1505:
+/***/ 98779:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -87371,7 +87367,7 @@ module.exports = !!firefox && +firefox[1];
 
 /***/ }),
 
-/***/ 70859:
+/***/ 52369:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -87407,7 +87403,7 @@ module.exports = version;
 
 /***/ }),
 
-/***/ 96163:
+/***/ 71857:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
