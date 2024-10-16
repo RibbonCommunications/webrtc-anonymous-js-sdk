@@ -12,7 +12,7 @@
  *
  * WebRTC.js
  * webrtc.anonymous.js
- * Version: 6.16.0-beta.1460
+ * Version: 6.16.0-beta.1461
  */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
@@ -2281,7 +2281,7 @@ var _link = _interopRequireDefault(__webpack_require__(63702));
 var _link2 = _interopRequireDefault(__webpack_require__(29799));
 var _anonymous = _interopRequireDefault(__webpack_require__(67413));
 var _link3 = _interopRequireDefault(__webpack_require__(41293));
-var _link4 = _interopRequireDefault(__webpack_require__(4281));
+var _link4 = _interopRequireDefault(__webpack_require__(26662));
 var _request = __webpack_require__(5168);
 __webpack_require__(15701);
 var _codecRemover = __webpack_require__(40449);
@@ -2326,7 +2326,7 @@ module.exports = root;
 
 /***/ }),
 
-/***/ 15368:
+/***/ 51764:
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -2344,7 +2344,7 @@ exports.getVersion = getVersion;
  * for the @@ tag below with actual version value.
  */
 function getVersion() {
-  return '6.16.0-beta.1460';
+  return '6.16.0-beta.1461';
 }
 
 /***/ }),
@@ -11118,7 +11118,7 @@ Object.defineProperty(exports, "__esModule", ({
 exports["default"] = getStatsOperation;
 var _selectors = __webpack_require__(40481);
 var _kandyWebrtc = __webpack_require__(37654);
-var _version = __webpack_require__(15368);
+var _version = __webpack_require__(51764);
 var _sdkId = _interopRequireDefault(__webpack_require__(20855));
 function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
 // Call plugin.
@@ -23824,7 +23824,7 @@ __webpack_require__(91883);
 __webpack_require__(70286);
 var _logs = __webpack_require__(69932);
 var _utils = __webpack_require__(1011);
-var _version = __webpack_require__(15368);
+var _version = __webpack_require__(51764);
 var _defaults = __webpack_require__(24679);
 var _validation = __webpack_require__(52932);
 // Other plugins.
@@ -35281,7 +35281,7 @@ var _reduxSaga = _interopRequireDefault(__webpack_require__(71028));
 var _effects = __webpack_require__(89979);
 var _bottlejs = _interopRequireDefault(__webpack_require__(8997));
 var _utils = __webpack_require__(1011);
-var _version = __webpack_require__(15368);
+var _version = __webpack_require__(51764);
 var _intervalFactory = _interopRequireDefault(__webpack_require__(73181));
 var _validation = __webpack_require__(52932);
 function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
@@ -37513,7 +37513,7 @@ function getNotificationConfig(state) {
 
 /***/ }),
 
-/***/ 4281:
+/***/ 26662:
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -39389,7 +39389,7 @@ var _cloneDeep2 = _interopRequireDefault(__webpack_require__(89321));
 var _selectors = __webpack_require__(45590);
 var _selectors2 = __webpack_require__(87075);
 var _logs = __webpack_require__(69932);
-var _version = __webpack_require__(15368);
+var _version = __webpack_require__(51764);
 var _utils = __webpack_require__(1011);
 var _effects = __webpack_require__(89979);
 function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
@@ -77617,7 +77617,7 @@ module.exports = str => encodeURIComponent(str).replace(/[!'()*]/g, x => `%${x.c
 
 /***/ }),
 
-/***/ 26662:
+/***/ 91436:
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -78058,7 +78058,7 @@ var _v4 = _interopRequireDefault(__webpack_require__(93423));
 
 var _nil = _interopRequireDefault(__webpack_require__(35911));
 
-var _version = _interopRequireDefault(__webpack_require__(26662));
+var _version = _interopRequireDefault(__webpack_require__(91436));
 
 var _validate = _interopRequireDefault(__webpack_require__(4564));
 
@@ -85994,7 +85994,7 @@ module.exports = function (key, value) {
 
 var globalThis = __webpack_require__(79117);
 var fails = __webpack_require__(5234);
-var V8 = __webpack_require__(86950);
+var V8 = __webpack_require__(84402);
 var ENVIRONMENT = __webpack_require__(11078);
 
 var structuredClone = globalThis.structuredClone;
@@ -86017,7 +86017,7 @@ module.exports = !!structuredClone && !fails(function () {
 "use strict";
 
 /* eslint-disable es/no-symbol -- required for testing */
-var V8_VERSION = __webpack_require__(86950);
+var V8_VERSION = __webpack_require__(84402);
 var fails = __webpack_require__(5234);
 var globalThis = __webpack_require__(79117);
 
@@ -87002,10 +87002,10 @@ var fails = __webpack_require__(5234);
 var aCallable = __webpack_require__(44977);
 var internalSort = __webpack_require__(9295);
 var ArrayBufferViewCore = __webpack_require__(47223);
-var FF = __webpack_require__(51512);
+var FF = __webpack_require__(3100);
 var IE_OR_EDGE = __webpack_require__(84598);
-var V8 = __webpack_require__(86950);
-var WEBKIT = __webpack_require__(27938);
+var V8 = __webpack_require__(84402);
+var WEBKIT = __webpack_require__(82894);
 
 var aTypedArray = ArrayBufferViewCore.aTypedArray;
 var exportTypedArrayMethod = ArrayBufferViewCore.exportTypedArrayMethod;
@@ -87353,7 +87353,7 @@ if (DESCRIPTORS && !('size' in URLSearchParamsPrototype)) {
 
 /***/ }),
 
-/***/ 51512:
+/***/ 3100:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -87367,7 +87367,7 @@ module.exports = !!firefox && +firefox[1];
 
 /***/ }),
 
-/***/ 86950:
+/***/ 84402:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -87403,7 +87403,7 @@ module.exports = version;
 
 /***/ }),
 
-/***/ 27938:
+/***/ 82894:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
