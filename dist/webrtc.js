@@ -12,7 +12,7 @@
  *
  * WebRTC.js
  * webrtc.anonymous.js
- * Version: 6.15.0
+ * Version: 6.16.0
  */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
@@ -27,50 +27,51 @@
 return /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 36882:
+/***/ 90258:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 
 // EXPORTS
 __webpack_require__.d(__webpack_exports__, {
-  $: () => (/* binding */ apply),
+  $: () => (/* binding */ io_22ea0cf9_all),
   A: () => (/* binding */ ALL),
-  B: () => (/* binding */ logError),
+  B: () => (/* binding */ compose),
   C: () => (/* binding */ CALL),
-  D: () => (/* binding */ wrapSagaDispatch),
-  E: () => (/* binding */ identity),
+  D: () => (/* binding */ logError),
+  E: () => (/* binding */ wrapSagaDispatch),
   F: () => (/* binding */ FORK),
   G: () => (/* binding */ GET_CONTEXT),
-  H: () => (/* binding */ buffers),
-  I: () => (/* binding */ detach),
+  H: () => (/* binding */ identity),
+  I: () => (/* binding */ buffers),
   J: () => (/* binding */ JOIN),
-  K: () => (/* binding */ take),
-  L: () => (/* binding */ fork),
-  M: () => (/* binding */ cancel),
-  N: () => (/* binding */ call),
-  O: () => (/* binding */ delay),
+  K: () => (/* binding */ detach),
+  L: () => (/* binding */ take),
+  M: () => (/* binding */ fork),
+  N: () => (/* binding */ cancel),
+  O: () => (/* binding */ call),
   P: () => (/* binding */ PUT),
-  Q: () => (/* binding */ actionChannel),
+  Q: () => (/* binding */ delay),
   R: () => (/* binding */ RACE),
   S: () => (/* binding */ SELECT),
   T: () => (/* binding */ TAKE),
-  U: () => (/* binding */ sliding),
-  V: () => (/* binding */ race),
-  W: () => (/* binding */ effectTypes),
-  X: () => (/* binding */ takeMaybe),
-  Y: () => (/* binding */ put),
-  Z: () => (/* binding */ putResolve),
-  _: () => (/* binding */ io_c3792963_all),
+  U: () => (/* binding */ actionChannel),
+  V: () => (/* binding */ sliding),
+  W: () => (/* binding */ race),
+  X: () => (/* binding */ effectTypes),
+  Y: () => (/* binding */ takeMaybe),
+  Z: () => (/* binding */ put),
+  _: () => (/* binding */ putResolve),
   a: () => (/* binding */ CPS),
-  a0: () => (/* binding */ cps),
-  a1: () => (/* binding */ spawn),
-  a2: () => (/* binding */ join),
-  a3: () => (/* binding */ io_c3792963_select),
-  a4: () => (/* binding */ cancelled),
-  a5: () => (/* binding */ flush),
-  a6: () => (/* binding */ getContext),
-  a7: () => (/* binding */ setContext),
+  a0: () => (/* binding */ apply),
+  a1: () => (/* binding */ cps),
+  a2: () => (/* binding */ spawn),
+  a3: () => (/* binding */ join),
+  a4: () => (/* binding */ io_22ea0cf9_select),
+  a5: () => (/* binding */ cancelled),
+  a6: () => (/* binding */ flush),
+  a7: () => (/* binding */ getContext),
+  a8: () => (/* binding */ setContext),
   b: () => (/* binding */ CANCEL),
   d: () => (/* binding */ ACTION_CHANNEL),
   e: () => (/* binding */ expanding),
@@ -129,7 +130,7 @@ function delayP(ms, val) {
 
 /* harmony default export */ const redux_saga_delay_p_esm = (delayP);
 
-;// CONCATENATED MODULE: ../../node_modules/@redux-saga/core/dist/io-c3792963.js
+;// CONCATENATED MODULE: ../../node_modules/@redux-saga/core/dist/io-22ea0cf9.js
 
 
 
@@ -321,6 +322,27 @@ function getMetaInfo(fn) {
 }
 function getLocation(instrumented) {
   return instrumented[redux_saga_symbols_esm/* SAGA_LOCATION */.x2];
+}
+function compose() {
+  for (var _len = arguments.length, funcs = new Array(_len), _key = 0; _key < _len; _key++) {
+    funcs[_key] = arguments[_key];
+  }
+
+  if (funcs.length === 0) {
+    return function (arg) {
+      return arg;
+    };
+  }
+
+  if (funcs.length === 1) {
+    return funcs[0];
+  }
+
+  return funcs.reduce(function (a, b) {
+    return function () {
+      return a(b.apply(void 0, arguments));
+    };
+  });
 }
 
 var BUFFER_OVERFLOW = "Channel's Buffer overflow!";
@@ -552,7 +574,7 @@ var putResolve = function putResolve() {
   eff.payload.resolve = true;
   return eff;
 };
-function io_c3792963_all(effects) {
+function io_22ea0cf9_all(effects) {
   var eff = makeEffect(ALL, effects);
   eff.combinator = true;
   return eff;
@@ -686,7 +708,7 @@ function cancel(taskOrTasks) {
 
   return makeEffect(CANCEL, taskOrTasks);
 }
-function io_c3792963_select(selector) {
+function io_22ea0cf9_select(selector) {
   if (selector === void 0) {
     selector = identity;
   }
@@ -2326,7 +2348,7 @@ module.exports = root;
 
 /***/ }),
 
-/***/ 63510:
+/***/ 74394:
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -2344,7 +2366,7 @@ exports.getVersion = getVersion;
  * for the @@ tag below with actual version value.
  */
 function getVersion() {
-  return '6.15.0';
+  return '6.16.0';
 }
 
 /***/ }),
@@ -3785,7 +3807,7 @@ function createOperation(container) {
         tokenrealm: realm
       };
     }
-    if (hmacToken) {
+    if (username && hmacToken) {
       // Only need the hmacToken in the x-token header when subscribing.
       log.info('Setting the info for hmacToken scenario.');
       requestOptions.headers['x-token'] = hmacToken;
@@ -3797,7 +3819,7 @@ function createOperation(container) {
     } else if (authname && password) {
       log.info('Setting the info for authname/password scenario.');
       requestOptions.headers.Authorization = 'Basic ' + _base.default.encode(_utf.default.encode(authname + ':' + password));
-    } else if (bearerAccessToken && username) {
+    } else if (username && bearerAccessToken) {
       log.info('Setting the info for bearerAccessToken/username scenario.');
       requestOptions.headers.Authorization = `Bearer ${bearerAccessToken}`;
     } else if (username && password) {
@@ -4078,19 +4100,13 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = createAnonOperations;
-var eventTypes = _interopRequireWildcard(__webpack_require__(9516));
 var _selectors = __webpack_require__(56512);
-function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
-function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && {}.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
-// Auth plugin
-
 // Subscription plugin
 
 function createAnonOperations(container) {
   const {
     context,
-    SubscriptionAPI,
-    emitEvent
+    SubscriptionOperations
   } = container;
 
   /**
@@ -4099,15 +4115,9 @@ function createAnonOperations(container) {
    * @method anonymousCallEnd
    */
   async function anonymousCallEnd() {
-    // Emit an auth changed event
-    emitEvent(eventTypes.AUTH_CHANGE, {});
-
     // Retrieve needed info from the store.
     const activeServices = (0, _selectors.getSubscribedServices)(context.getState());
-    await SubscriptionAPI.services.unsubscribe(activeServices);
-
-    // Emit an auth changed event
-    emitEvent(eventTypes.AUTH_CHANGE, {});
+    await SubscriptionOperations.unsubscribeFlow(activeServices);
   }
   return anonymousCallEnd;
 }
@@ -4205,6 +4215,7 @@ var eventTypes = _interopRequireWildcard(__webpack_require__(51918));
 var _normalization = __webpack_require__(89968);
 var _constants = __webpack_require__(59090);
 var _errors = _interopRequireWildcard(__webpack_require__(75412));
+var _utils = __webpack_require__(1011);
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
 function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && {}.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
 // Call plugin.
@@ -4220,7 +4231,7 @@ function createAnonOperations(container) {
     logManager,
     Notifications,
     AuthenticationOperations,
-    SubscriptionAPI
+    SubscriptionOperations
   } = container;
   const log = logManager.getLogger('CALL');
   async function makeAnonymousCall(callId, participants, credentials, mediaConstraints) {
@@ -4299,7 +4310,14 @@ function createAnonOperations(container) {
       });
 
       // Subscribe to callMe service
-      await SubscriptionAPI.services.subscribe(['callMe']);
+      // Normalize services array
+      const services = (0, _utils.normalizeServices)(['callMe']);
+
+      // The flow will call one of the two operations: subscribe OR updateSubscription
+      await SubscriptionOperations.subscribeFlow({
+        services,
+        options
+      });
     } catch (err) {
       const error = new _errors.default({
         code: _errors.callCodes.INVALID_PARAM,
@@ -4731,8 +4749,8 @@ function finishOperation(container, callId, operationId, eventId, opInfo, err, s
 
 /***/ }),
 
-/***/ 15774:
-/***/ ((__unused_webpack_module, exports) => {
+/***/ 53229:
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
@@ -4741,6 +4759,7 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = createFlow;
+__webpack_require__(97107);
 /**
  * Operation flow for a consultative transfer operation.
  *
@@ -4755,6 +4774,34 @@ function createFlow(container, operation, stages) {
   const {
     context
   } = container;
+
+  /*
+   * Boolean map between a call ID and whether that call has received remote feedback or not.
+   */
+  const responsesReceived = operation.calls.reduce((acc, cur) => {
+    acc[cur.callId] = false;
+    return acc;
+  }, {});
+
+  /*
+   * Boolean whether the flow has performed its "resolve" functionality or not yet.
+   *    This is used to ensure multiple notifications can't trigger it multiple times
+   *    in a race-condition.
+   */
+  let hasResolved = false;
+
+  /**
+   * Helper function to know if every call has received feedback.
+   *    When this is true, that indicates the operation can resolve successfully.
+   * Note: In a failure scenario, only primary call will receive feedback.
+   * @method hasAllFeedback
+   * @returns {boolean}
+   */
+  function hasAllFeedback() {
+    // The flow has all the feedback needed to complete the operation if it has received
+    //    a notification for every call.
+    return operation.calls.every(call => responsesReceived[call.callId] === true);
+  }
 
   /**
    * A consultative transfer operation has been started locally. Perform the
@@ -4794,23 +4841,27 @@ function createFlow(container, operation, stages) {
   /**
    * A "session complete" notification has been received for the primay call,
    *    indicating the consultative transfer succeeded. The primary call needs
-   *    to be cleaned-up.
+   *    to be cleaned-up. The secondary call will receive a notification in
+   *    this scenario.
    * @method remoteSuccess
    */
   async function remoteSuccess(call, params) {
+    responsesReceived[call.id] = true;
     /*
      * TODO: Pre-processing logic.
      *    - KJS-2175 Queue Inputs: Is the operation ready for this notification?
      *    - Update call report/status: From "waiting" to "processing"?
      */
     await stages.remoteSuccess(call, params);
-    operation.reportEvent.endEvent();
-    operation.tracker.finish();
+    if (hasAllFeedback()) {
+      return onComplete();
+    }
   }
 
   /**
    * A "session failure" notification has been received for the primary call,
-   *    indicating the consultative transfer failed.
+   *    indicating the consultative transfer failed. The secondary call will not
+   *    receive a notification in this scenario.
    * @method remoteFailure
    */
   async function remoteFailure(call, params) {
@@ -4820,8 +4871,7 @@ function createFlow(container, operation, stages) {
      *    - Update call report/status: From "waiting" to "processing"?
      */
     const error = await stages.remoteFailure(call, params);
-    operation.reportEvent.endEvent(error);
-    operation.tracker.finish(error);
+    return onComplete(error);
   }
 
   /**
@@ -4832,14 +4882,53 @@ function createFlow(container, operation, stages) {
    * @method callEndSuccess
    */
   async function callEnd(call, params) {
+    responsesReceived[call.id] = true;
+
     // Handle the notification the same as the "sessionComplete" notification.
     await stages.remoteSuccess(call, params);
+    if (hasAllFeedback()) {
+      return onComplete();
+    }
   }
-  return {
-    start: localChanges,
+
+  /**
+   * "Resolve" functionality for the operation.
+   * @method onComplete
+   * @param {Object} [error] If a failure scenario, the error information.
+   */
+  function onComplete(error) {
+    if (hasResolved) {
+      return;
+    }
+    hasResolved = true;
+    operation.reportEvent.endEvent(error);
+    operation.tracker.finish(error);
+  }
+  const feedbackHandlers = {
     sessionComplete: remoteSuccess,
     sessionFail: remoteFailure,
     callEnd
+  };
+
+  /**
+   * Operation method for receiving any/all responses from the remote side.
+   * @method receiveResponse
+   * @param {Object} call
+   * @param {Object} params
+   * @param {string} params.eventType
+   */
+  async function receiveResponse(call, params) {
+    const eventType = params.eventType;
+    if (!eventType) {
+      throw new Error(`No event type provided for ${operation.type} feedback!`);
+    } else if (typeof feedbackHandlers[eventType] === 'undefined') {
+      throw new Error(`No ${eventType} on the flow!`);
+    }
+    return feedbackHandlers[eventType](call, params);
+  }
+  return {
+    start: localChanges,
+    receiveResponse
   };
 }
 
@@ -4932,6 +5021,7 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = createFlow;
+__webpack_require__(97107);
 var _LocalNegotiation = _interopRequireDefault(__webpack_require__(98307));
 var _constants = __webpack_require__(59090);
 var _selectors = __webpack_require__(40481);
@@ -5065,12 +5155,32 @@ function createFlow(container, operation, stages) {
       operation.tracker.finish(error);
     }
   }
-  return {
-    start: localChanges,
+  const feedbackHandlers = {
     respondCallUpdate: joinAnswer,
     callEnd: joinEnd,
     sessionComplete: remoteSuccess,
     sessionFail: remoteFailure
+  };
+
+  /**
+   * Operation method for receiving any/all responses from the remote side.
+   * @method receiveResponse
+   * @param {Object} call
+   * @param {Object} params
+   * @param {string} params.eventType
+   */
+  async function receiveResponse(call, params) {
+    const eventType = params.eventType;
+    if (!eventType) {
+      throw new Error(`No event type provided for ${operation.type} feedback!`);
+    } else if (typeof feedbackHandlers[eventType] === 'undefined') {
+      throw new Error(`No ${eventType} on the flow!`);
+    }
+    return feedbackHandlers[eventType](call, params);
+  }
+  return {
+    start: localChanges,
+    receiveResponse
   };
 }
 
@@ -6493,7 +6603,6 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = _default;
-__webpack_require__(97107);
 var _StatusTracker = _interopRequireDefault(__webpack_require__(3226));
 var _constants = __webpack_require__(84581);
 var _uuid = __webpack_require__(84596);
@@ -6555,6 +6664,7 @@ function _default(bottle) {
        */
       return {
         callId,
+        // TODO: Have this just ID?
         role,
         reportEvent,
         tracker: (0, _StatusTracker.default)(bottle.container, callId, id, reportEvent.id, opInfo, {
@@ -6564,35 +6674,22 @@ function _default(bottle) {
         })
       };
     });
-
-    /**
-     * Method to start the operation.
-     * @method start
-     */
-    async function start() {
-      return flow.start(...arguments);
-    }
-
-    /**
-     * Method to process the remote response to the negotiation.
-     * @method receiveResponse
-     */
-    async function receiveResponse(call, params) {
-      const responseType = params.eventType;
-      // TODO: Validation.
-      if (typeof flow[responseType] === 'undefined') {
-        throw new Error(`No ${responseType} on the flow!`);
-      }
-      return flow[responseType](call, params);
-    }
     const Operation = {
       // Operation meta-data.
       type,
       isNegotiation,
       isLocal: true,
       // Operation methods.
-      start,
-      receiveResponse,
+      /**
+       * Method to start the operation.
+       * @method start
+       */
+      start: undefined,
+      /**
+       * Method to process the remote response(s) to the operation.
+       * @method receiveResponse
+       */
+      receiveResponse: undefined,
       // Instance specific.
       calls,
       id,
@@ -6625,6 +6722,8 @@ function _default(bottle) {
       }
     };
     const flow = createFlow(bottle.container, Operation, stages);
+    // Add the flow methods to the Operation.
+    Object.assign(Operation, flow);
     return Operation;
   });
 }
@@ -6641,7 +6740,6 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = _default;
-__webpack_require__(97107);
 var _StatusTracker = _interopRequireDefault(__webpack_require__(3226));
 var _LocalNegotiation = _interopRequireDefault(__webpack_require__(98307));
 var _RemoteNegotiation = _interopRequireDefault(__webpack_require__(29749));
@@ -6695,47 +6793,27 @@ function _default(bottle) {
     const reportEvent = bottle.container.CallReporter.getReport(callId).addEvent(eventName);
     opInfo.isNegotiation = true;
     const tracker = (0, _StatusTracker.default)(bottle.container, callId, id, reportEvent.id, opInfo);
-
-    /**
-     * Method to start the operation.
-     * @method start
-     */
-    async function start() {
-      return flow.start(...arguments);
-    }
-
-    /**
-     * Method to process the remote response to the negotiation.
-     * @method receiveResponse
-     */
-    async function receiveResponse() {
-      // TODO: Validation.
-      if (typeof flow.receiveResponse === 'undefined') {
-        throw new Error('No receiveResponse on the flow!');
-      }
-      return flow.receiveResponse(...arguments);
-    }
-
-    /**
-     * Method to process a remote update to the negotiation.
-     * @method receiveUpdate
-     */
-    async function receiveUpdate() {
-      // TODO: Validation.
-      if (typeof flow.receiveUpdate === 'undefined') {
-        throw new Error('No receiveUpdate on the flow!');
-      }
-      return flow.receiveUpdate(...arguments);
-    }
     const Operation = {
       // Operation meta-data.
       type,
       isNegotiation: true,
       isLocal,
       // Operation methods.
-      start,
-      receiveResponse,
-      receiveUpdate,
+      /**
+       * Method to start the operation.
+       * @method start
+       */
+      start: undefined,
+      /**
+       * Method to process the remote response to the negotiation.
+       * @method receiveResponse
+       */
+      receiveResponse: undefined,
+      /**
+       * Method to process a remote update to the negotiation.
+       * @method receiveUpdate
+       */
+      receiveUpdate: undefined,
       // Instance specific.
       callId,
       id,
@@ -6751,6 +6829,8 @@ function _default(bottle) {
       reportEvent
     };
     const flow = createFlow(bottle.container, Operation, stages);
+    // Add the flow methods to the Operation.
+    Object.assign(Operation, flow);
     return Operation;
   });
 }
@@ -6842,14 +6922,6 @@ function _default(bottle) {
     const tracker = (0, _StatusTracker.default)(bottle.container, callId, id, reportEvent.id, opInfo);
 
     /**
-     * Method to start the operation.
-     * @method start
-     */
-    async function start() {
-      return flow.start(...arguments);
-    }
-
-    /**
      * @typedef {Object} UpdateOperation
      * @property {string}   type The type of operation.
      * @property {boolean}  isNegotiation Whether the operation is a negotiation or not.
@@ -6868,7 +6940,11 @@ function _default(bottle) {
       isNegotiation: false,
       isLocal,
       // Operation methods.
-      start,
+      /**
+       * Method to start the operation.
+       * @method start
+       */
+      start: undefined,
       // Instance specific.
       callId,
       id,
@@ -6883,6 +6959,8 @@ function _default(bottle) {
       reportEvent
     };
     const flow = createFlow(bottle.container, UpdateOperation, stages);
+    // Add the flow methods to the Operation.
+    Object.assign(UpdateOperation, flow);
     return UpdateOperation;
   });
 }
@@ -7071,9 +7149,14 @@ Object.defineProperty(exports, "__esModule", ({
 }));
 exports["default"] = getSessionsMiddleware;
 exports.shouldHandlePattern = shouldHandlePattern;
+var _actions = __webpack_require__(35);
+var eventTypes = _interopRequireWildcard(__webpack_require__(51918));
+var _constants = __webpack_require__(59090);
 var _selectors = __webpack_require__(40481);
-var _constants = __webpack_require__(77126);
+var _constants2 = __webpack_require__(77126);
 var _actionTypes = __webpack_require__(9719);
+function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
+function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && {}.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
 // Call plugin
 
 // Other plugins
@@ -7084,7 +7167,13 @@ var _actionTypes = __webpack_require__(9719);
  * @return {Function} The function which is responsible for triggering a call audit.
  */
 function getSessionsMiddleware(context) {
-  const operations = context.container.Callstack.operations;
+  const {
+    logManager,
+    Callstack,
+    CallRequests,
+    CallstackWebrtc,
+    emitEvent
+  } = context.container;
 
   /*
    * TODO: Rename this middleware (and file).
@@ -7099,7 +7188,7 @@ function getSessionsMiddleware(context) {
    * Responsibilities:
    *   1. Ensure resyncOnConnect config is set
    *   2. Filter out inactive calls (calls already in an ended state)
-   *   3. Call updateCallState operation for each active call.
+   *   3. Call resyncCallState operation for each active call.
    * @method getSessions
    * @param {Object} action Any action.
    * @return {undefined}
@@ -7118,10 +7207,109 @@ function getSessionsMiddleware(context) {
 
     // Grab all active calls
     const calls = (0, _selectors.getCalls)(context.getState());
-    const activeCalls = calls.filter(call => call.state !== _constants.CALL_STATES.CANCELLED && call.state !== _constants.CALL_STATES.ENDED);
+    const activeCalls = calls.filter(call => call.state !== _constants2.CALL_STATES.CANCELLED && call.state !== _constants2.CALL_STATES.ENDED);
+
+    /*
+     * TODO: This operation's logic is not safe. It assumes that an on-going operation will re-sync the call's state,
+     *    but not all operations will do that (eg. some operations are local-only, getStats).
+     * Reference: https://jira.rbbn.com/browse/KJS-1974
+     */
+    function hasNoOperation(call) {
+      return call.currentOperations.length === 0;
+    }
 
     // Check and update the call state of each call if necessary
-    activeCalls.map(async activeCall => await operations.updateCallState(activeCall));
+    for (const activeCall of activeCalls) {
+      const log = logManager.getLogger('CALL', activeCall.id);
+      const callStateAfterConnect = activeCall.state;
+
+      // If there is an ongoing operation when the WS connects, the response to that operation will re-sync the state
+      // Otherwise, we need to get the status of the session from the server
+      if (hasNoOperation(activeCall)) {
+        try {
+          const sessionStatusResponse = await CallRequests.getSession({
+            wrtcsSessionId: activeCall.wrtcsSessionId,
+            id: activeCall.id
+          });
+
+          // Get state of the call again before evaluating the response as an operation request and response
+          // could have been processed in between the request to get the session and the response received
+          const currentCall = (0, _selectors.getCallById)(context.getState(), activeCall.id);
+
+          // Do nothing if an operation was triggered in between the GET sessions request and response, and is ongoing
+          if (hasNoOperation(currentCall)) {
+            /*
+             * If the current call state is ringing OR if the state of the call was connected/on hold before we
+             * did the GET, look at the response of the GET request.
+             * If call is ringing and GET session returns ringing, we don't need to do anything
+             * Also, if we were previously connected, but GET returns ringing, this could be due to an operation that was resolved
+             * between the GET request and response. In any case, no need to look at GET response for this scenario.
+             */
+            if (currentCall.state === _constants2.CALL_STATES.RINGING || callStateAfterConnect !== _constants2.CALL_STATES.RINGING) {
+              await Callstack.operations.resyncCallState(activeCall.id, sessionStatusResponse);
+            }
+          }
+        } catch (error) {
+          // Get state of the call again before evaluating the response as an operation request and response
+          // could have been processed in between the request to get the session and the response received
+          const currentCall = (0, _selectors.getCallById)(context.getState(), activeCall.id);
+
+          // Do nothing if an operation was triggered in between the GET sessions request and response, and is ongoing
+          if (hasNoOperation(currentCall)) {
+            /*
+             * If the current call state is ringing OR if the state of the call was connected/on hold before we
+             * did the GET, look at the response of the GET request.
+             * If call is ringing and GET session returns ringing, we don't need to do anything
+             * Also, if we were previously connected, but GET returns ringing, this could be due to an operation that was resolved
+             * between the GET request and response. In any case, no need to look at GET response for this scenario.
+             */
+            if (currentCall.state === _constants2.CALL_STATES.RINGING || callStateAfterConnect !== _constants2.CALL_STATES.RINGING) {
+              // Call not found
+              if (error.code === 47) {
+                // End the call as the session does not exist on the server anymore (statusCode 47 response)
+                await CallstackWebrtc.closeCall(activeCall.webrtcSessionId);
+                log.info(`Call re-sync found that call is ended. Changing to ${_constants2.CALL_STATES.ENDED}.`);
+                context.dispatch(_actions.callActions.endCallFinish(activeCall.id, {
+                  isLocal: true,
+                  error
+                }));
+
+                // 1- 'call operation' event
+                emitEvent(eventTypes.CALL_OPERATION, {
+                  callId: activeCall.id,
+                  isLocal: true,
+                  operation: _constants.OPERATIONS.END,
+                  transition: _constants.OP_TRANSITIONS.FINISH,
+                  previous: {},
+                  error
+                });
+
+                // Tell the application that no tracks are available any longer.
+                emitEvent(eventTypes.CALL_TRACKS_REMOVED, {
+                  callId: activeCall.id,
+                  trackIds: [...activeCall.localTracks, ...activeCall.remoteTracks]
+                });
+
+                // 2- 'call state change' event, which updates the state.
+                emitEvent(eventTypes.CALL_STATE_CHANGE, {
+                  callId: activeCall.id,
+                  previous: {
+                    state: activeCall.state,
+                    localHold: activeCall.localHold,
+                    remoteHold: activeCall.remoteHold
+                  },
+                  error
+                });
+
+                // GET response errors other than session not found
+              } else {
+                log.debug(`Call re-sync failure (${error.code}).`, error);
+              }
+            }
+          }
+        }
+      }
+    }
   }
   return getSessions;
 }
@@ -9394,7 +9582,7 @@ var _consultativeTransfer = _interopRequireDefault(__webpack_require__(90910));
 var _remoteSuccess = _interopRequireDefault(__webpack_require__(23119));
 var _remoteFailure = _interopRequireDefault(__webpack_require__(23514));
 var _validate = _interopRequireDefault(__webpack_require__(53578));
-var _ConsultativeTransfer = _interopRequireDefault(__webpack_require__(15774));
+var _ConsultativeTransfer = _interopRequireDefault(__webpack_require__(53229));
 var _constants = __webpack_require__(59090);
 function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
 // Stages.
@@ -10948,7 +11136,7 @@ Object.defineProperty(exports, "__esModule", ({
 exports["default"] = getStatsOperation;
 var _selectors = __webpack_require__(40481);
 var _kandyWebrtc = __webpack_require__(37654);
-var _version = __webpack_require__(63510);
+var _version = __webpack_require__(74394);
 var _sdkId = _interopRequireDefault(__webpack_require__(20855));
 function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
 // Call plugin.
@@ -12902,12 +13090,6 @@ Object.defineProperty(exports, "createUnhold", ({
     return _unhold.default;
   }
 }));
-Object.defineProperty(exports, "createUpdateCallState", ({
-  enumerable: true,
-  get: function () {
-    return _updateCallState.default;
-  }
-}));
 var _consultativeTransfer = _interopRequireDefault(__webpack_require__(61246));
 var _directTransfer = _interopRequireDefault(__webpack_require__(25070));
 var _join = _interopRequireDefault(__webpack_require__(17840));
@@ -12927,7 +13109,6 @@ var _playAudioFile = _interopRequireDefault(__webpack_require__(51854));
 var _getAvailableCodecs = _interopRequireDefault(__webpack_require__(5972));
 var _iceRestart = _interopRequireDefault(__webpack_require__(87386));
 var _sendDtmf = _interopRequireDefault(__webpack_require__(62253));
-var _updateCallState = _interopRequireDefault(__webpack_require__(85330));
 var _resyncCallState = _interopRequireDefault(__webpack_require__(67163));
 var _iceCollectionCheck = _interopRequireDefault(__webpack_require__(95265));
 var _getStats = _interopRequireDefault(__webpack_require__(8683));
@@ -17163,8 +17344,8 @@ function createResync(container) {
    * This operation performs the signaling operation to get the status of a call session on the server, and any local
    *    WebRTC operations necessary for closing the call if necessary.
    */
-  return async function resyncCallState(callId) {
-    await signalling(container, callId);
+  return async function resyncCallState(callId, sessionStatus) {
+    await signalling(container, callId, sessionStatus);
   };
 }
 
@@ -17172,9 +17353,10 @@ function createResync(container) {
  * @method resyncCallState
  * @param {Object} container
  * @param {string} callId  The call being acted on.
+ * @param {Object} sessionStatus The session status response from the server.
  * @return {Promise<undefined>}
  */
-async function signalling(container, callId) {
+async function signalling(container, callId, sessionStatus) {
   const {
     context,
     CallRequests,
@@ -17185,10 +17367,10 @@ async function signalling(container, callId) {
   const log = logManager.getLogger('CALL', callId);
   const currentCall = (0, _selectors.getCallById)(context.getState(), callId);
   try {
-    const sessionStatusResponse = await CallRequests.getSession({
+    const sessionStatusResponse = sessionStatus || (await CallRequests.getSession({
       wrtcsSessionId: currentCall.wrtcsSessionId,
       id: callId
-    });
+    }));
     if (sessionStatusResponse.state === 'ANSWERED' && currentCall.state !== _constants.CALL_STATES.CONNECTED && currentCall.state !== _constants.CALL_STATES.ON_HOLD) {
       log.info('Call re-sync found that call was answered elsewhere. Cancelling call.');
       // If the call is answered, but not by us, report call as cancelled
@@ -19919,192 +20101,6 @@ function rollbackUnholdOperation(container) {
     };
   }
   return rollbackUnhold;
-}
-
-/***/ }),
-
-/***/ 85330:
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = initOperation;
-var _updateCallState = _interopRequireDefault(__webpack_require__(40448));
-function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
-function initOperation(bottle) {
-  // Provide the top-level container to the factory functions.
-  //    Otherwise they would get the `operations` sub-container.
-  bottle.factory('Callstack.operations.updateCallState', () => (0, _updateCallState.default)(bottle.container));
-}
-
-/***/ }),
-
-/***/ 40448:
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = updateCallStateOperation;
-var _actions = __webpack_require__(35);
-var _selectors = __webpack_require__(40481);
-var _constants = __webpack_require__(77126);
-var eventTypes = _interopRequireWildcard(__webpack_require__(51918));
-var _constants2 = __webpack_require__(59090);
-function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
-function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && {}.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
-// Call plugin
-
-/**
- * Bottle wrapper for "update call state" operation.
- * @return {Function}
- */
-function updateCallStateOperation(container) {
-  const {
-    context,
-    CallRequests,
-    logManager,
-    emitEvent
-  } = container;
-
-  // eslint-disable-next-line no-warning-comments
-  /**
-   * Sends a GET session request and updates call if required.
-   *
-   * This operation performs the signaling operation to get the status of a call session on the server.
-   *    There are no local webRTC operations involved.
-   *
-   * Assumptions:
-   *    1. The server uses Kandy Link 4.7.1+
-   * Responsibilities:
-   *    2. Update the call state if the call is out of sync (call's status does not match response from server)
-   * @method updateCallState
-   * @param {Object}   activeCall        The call being acted on.
-   */
-  async function updateCallState(activeCall) {
-    const {
-      CallstackWebrtc
-    } = container;
-    const log = logManager.getLogger('CALL', activeCall.id);
-    const callStateAfterConnect = activeCall.state;
-
-    /*
-     * TODO: This operation's logic is not safe. It assumes that an on-going operation will re-sync the call's state,
-     *    but not all operations will do that (eg. some operations are local-only, getStats).
-     * Reference: https://jira.rbbn.com/browse/KJS-1974
-     */
-    function hasNoOperation(call) {
-      return call.currentOperations.length === 0;
-    }
-
-    // If there is an ongoing operation when the WS connects, the response to that operation will re-sync the state
-    // Otherwise, we need to get the status of the session from the server
-    if (hasNoOperation(activeCall)) {
-      try {
-        const sessionStatusResponse = await CallRequests.getSession({
-          wrtcsSessionId: activeCall.wrtcsSessionId,
-          id: activeCall.id
-        });
-
-        // Get state of the call again before evaluating the response as an operation request and response
-        // could have been processed in between the request to get the session and the response received
-        const currentCall = (0, _selectors.getCallById)(context.getState(), activeCall.id);
-
-        // Do nothing if an operation was triggered in between the GET sessions request and response, and is ongoing
-        if (hasNoOperation(currentCall)) {
-          /*
-           * If the current call state is ringing OR if the state of the call was connected/on hold before we
-           * did the GET, look at the response of the GET request.
-           * If call is ringing and GET session returns ringing, we don't need to do anything
-           * Also, if we were previously connected, but GET returns ringing, this could be due to an operation that was resolved
-           * between the GET request and response. In any case, no need to look at GET response for this scenario.
-           */
-          if (currentCall.state === _constants.CALL_STATES.RINGING || callStateAfterConnect !== _constants.CALL_STATES.RINGING) {
-            if (sessionStatusResponse.state === 'ANSWERED' && currentCall.state !== _constants.CALL_STATES.CONNECTED && currentCall.state !== _constants.CALL_STATES.ON_HOLD) {
-              // Report call as cancelled
-              await CallstackWebrtc.closeCall(activeCall.webrtcSessionId);
-              log.info(`Call re-sync found that call is cancelled. Changing to ${_constants.CALL_STATES.CANCELLED}.`);
-              context.dispatch(_actions.callActions.callCancelled(activeCall.id));
-              emitEvent(eventTypes.CALL_STATE_CHANGE, {
-                callId: activeCall.id,
-                previous: {
-                  state: activeCall.state,
-                  localHold: activeCall.localHold,
-                  remoteHold: activeCall.remoteHold
-                }
-              });
-            }
-          }
-        }
-      } catch (error) {
-        // Get state of the call again before evaluating the response as an operation request and response
-        // could have been processed in between the request to get the session and the response received
-        const currentCall = (0, _selectors.getCallById)(context.getState(), activeCall.id);
-
-        // Do nothing if an operation was triggered in between the GET sessions request and response, and is ongoing
-        if (hasNoOperation(currentCall)) {
-          /*
-           * If the current call state is ringing OR if the state of the call was connected/on hold before we
-           * did the GET, look at the response of the GET request.
-           * If call is ringing and GET session returns ringing, we don't need to do anything
-           * Also, if we were previously connected, but GET returns ringing, this could be due to an operation that was resolved
-           * between the GET request and response. In any case, no need to look at GET response for this scenario.
-           */
-          if (currentCall.state === _constants.CALL_STATES.RINGING || callStateAfterConnect !== _constants.CALL_STATES.RINGING) {
-            // Call not found
-            if (error.code === 47) {
-              // End the call as the session does not exist on the server anymore (statusCode 47 response)
-              await CallstackWebrtc.closeCall(activeCall.webrtcSessionId);
-              log.info(`Call re-sync found that call is ended. Changing to ${_constants.CALL_STATES.ENDED}.`);
-              context.dispatch(_actions.callActions.endCallFinish(activeCall.id, {
-                isLocal: true,
-                error
-              }));
-
-              // 1- 'call operation' event
-              emitEvent(eventTypes.CALL_OPERATION, {
-                callId: activeCall.id,
-                isLocal: true,
-                operation: _constants2.OPERATIONS.END,
-                transition: _constants2.OP_TRANSITIONS.FINISH,
-                previous: {},
-                error
-              });
-
-              // Tell the application that no tracks are available any longer.
-              emitEvent(eventTypes.CALL_TRACKS_REMOVED, {
-                callId: activeCall.id,
-                trackIds: [...activeCall.localTracks, ...activeCall.remoteTracks]
-              });
-
-              // 2- 'call state change' event, which updates the state.
-              emitEvent(eventTypes.CALL_STATE_CHANGE, {
-                callId: activeCall.id,
-                previous: {
-                  state: activeCall.state,
-                  localHold: activeCall.localHold,
-                  remoteHold: activeCall.remoteHold
-                },
-                error
-              });
-
-              // GET response errors other than session not found
-            } else {
-              log.debug(`Call re-sync failure (${error.code}).`, error);
-            }
-          }
-        }
-      }
-    }
-  }
-  return updateCallState;
 }
 
 /***/ }),
@@ -23846,7 +23842,7 @@ __webpack_require__(91883);
 __webpack_require__(70286);
 var _logs = __webpack_require__(69932);
 var _utils = __webpack_require__(1011);
-var _version = __webpack_require__(63510);
+var _version = __webpack_require__(74394);
 var _defaults = __webpack_require__(24679);
 var _validation = __webpack_require__(52932);
 // Other plugins.
@@ -25632,6 +25628,9 @@ function createAPI(container) {
   function make(destination, media) {
     let options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
     log.debug(API_LOG_TAG + 'call.make: ', destination, media, options);
+
+    // Validate destination
+    (0, _utils.validateDestination)(destination);
 
     // Validate mediaConstraints
     (0, _utils.validateMediaConstraints)(media);
@@ -29569,6 +29568,7 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports.formatMediaConstraints = formatMediaConstraints;
+exports.validateDestination = validateDestination;
 exports.validateDetachedMedia = validateDetachedMedia;
 exports.validateMediaConstraints = validateMediaConstraints;
 __webpack_require__(62234);
@@ -29605,6 +29605,29 @@ function formatMediaConstraints(media) {
     medias: media.medias
   };
   return mediaConstraints;
+}
+
+/**
+ * Helper function to validate destination for Call APIs.
+ *
+ * @method validateDestination
+ * @param {string} destination
+ * @throws {BasicError} Throws an error if destination is not defined
+ * @throws {BasicError} Throws an error if destination is not a string
+ */
+function validateDestination(destination) {
+  if (!destination) {
+    throw new _errors.default({
+      message: `No destination provided.`,
+      code: _errors.callCodes.INVALID_PARAM
+    });
+  }
+  if (typeof destination !== 'string') {
+    throw new _errors.default({
+      message: `Incorrect destination type.`,
+      code: _errors.callCodes.INVALID_PARAM
+    });
+  }
 }
 
 /**
@@ -30379,7 +30402,6 @@ Object.defineProperty(exports, "__esModule", ({
 exports["default"] = createMiddleware;
 exports.shouldHandlePattern = shouldHandlePattern;
 var _actionTypes = __webpack_require__(34721);
-var _actionTypes2 = __webpack_require__(97082);
 // Other plugins
 
 // src/call/sagaLink/sagas/index.js
@@ -30399,7 +30421,7 @@ function createMiddleware(context) {
 
 // The `incomingCallPattern` function.
 function shouldHandlePattern(action) {
-  return !!(!action.error && (action.type === _actionTypes2.CONNECT_FINISHED && action.payload.subscription && action.payload.subscription.turnCredentials || action.type === _actionTypes.SUBSCRIBE_FINISHED && action.payload.subscriptions && action.payload.subscriptions.length && action.payload.subscriptions[0].turnCredentials));
+  return !!(!action.error && action.type === _actionTypes.SUBSCRIBE_FINISHED && action.payload.subscriptions && action.payload.subscriptions.length && action.payload.subscriptions[0].turnCredentials);
 }
 
 /***/ }),
@@ -30463,10 +30485,7 @@ Object.defineProperty(exports, "__esModule", ({
 exports["default"] = createOperation;
 var _actions = __webpack_require__(35);
 var _selectors = __webpack_require__(40481);
-var _actionTypes = __webpack_require__(97082);
 // Call plugin.
-
-// Other plugins.
 
 /**
  * Link-specific "set turn credentials" operation factory.
@@ -30502,7 +30521,7 @@ function createOperation(container) {
     }
 
     // TURN credentials received from the server.
-    const turnCredentials = action.type === _actionTypes.CONNECT_FINISHED ? action.payload.subscription.turnCredentials : action.payload.subscriptions[0].turnCredentials;
+    const turnCredentials = action.payload.subscriptions[0].turnCredentials;
     context.dispatch(_actions.turnActions.turnChanged({
       credentials: turnCredentials
     }));
@@ -35280,7 +35299,7 @@ var _reduxSaga = _interopRequireDefault(__webpack_require__(71028));
 var _effects = __webpack_require__(89979);
 var _bottlejs = _interopRequireDefault(__webpack_require__(8997));
 var _utils = __webpack_require__(1011);
-var _version = __webpack_require__(63510);
+var _version = __webpack_require__(74394);
 var _intervalFactory = _interopRequireDefault(__webpack_require__(73181));
 var _validation = __webpack_require__(52932);
 function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
@@ -38245,7 +38264,7 @@ function createRequests(container) {
     if (!response.error) {
       log.info('SDP fetched successfully.');
       // TODO: test and see what this format actually is.
-      return response.payload.body;
+      return response.body;
     } else {
       log.debug(`Failed to fetch SDP. Error is: ${JSON.stringify(response.error)}`);
       throw new _errors.default({
@@ -39388,7 +39407,7 @@ var _cloneDeep2 = _interopRequireDefault(__webpack_require__(89321));
 var _selectors = __webpack_require__(45590);
 var _selectors2 = __webpack_require__(87075);
 var _logs = __webpack_require__(69932);
-var _version = __webpack_require__(63510);
+var _version = __webpack_require__(74394);
 var _utils = __webpack_require__(1011);
 var _effects = __webpack_require__(89979);
 function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
@@ -39902,8 +39921,6 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = createAPI;
-__webpack_require__(62234);
-var actions = _interopRequireWildcard(__webpack_require__(49561));
 var eventTypes = _interopRequireWildcard(__webpack_require__(34889));
 var _selectors = __webpack_require__(56512);
 var _selectors2 = __webpack_require__(87075);
@@ -39996,7 +40013,6 @@ function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; 
 function createAPI(container) {
   const {
     context,
-    SubscriptionIntervals,
     SubscriptionOperations: operations,
     logManager,
     API_LOG_TAG,
@@ -40054,62 +40070,26 @@ function createAPI(container) {
         log.warn('forceLogOut option has been marked as deprecated, as no longer supported.');
       }
       const userInfo = (0, _selectors2.getUserInfo)(context.getState());
-      if (userInfo && (userInfo.username || userInfo.accessToken)) {
-        // Normalize services array
-        services = (0, _utils.normalizeServices)(services);
-        context.dispatch(actions.subscribe(services, options));
-        emitEvent(eventTypes.SUB_CHANGE, {
-          reason: undefined
-        });
-        try {
-          // The flow will call one of the two operations: subscribe OR updateSubscription
-          const result = await operations.subscriptionFlow({
+      try {
+        if (userInfo && (userInfo.username || userInfo.accessToken)) {
+          // Normalize services array
+          services = (0, _utils.normalizeServices)(services);
+
+          // This will call one of the two operations: subscribe OR updateSubscription
+          await operations.subscribeFlow({
             services,
             options
           });
-          if (result) {
-            // result returned by a new subcription or an updated subscription
-            context.dispatch(actions.subscribeFinished({
-              subscriptions: result.subscriptions
-            }, result.platform));
-            const payload = result.retryAfter ? {
-              reason: result.reason,
-              retryAfter: result.retryAfter
-            } : {
-              reason: result.reason
-            };
-            emitEvent(eventTypes.SUB_CHANGE, payload);
-
-            // We have a sucessful subscription, so start the resubscription interval
-            // so that we automatically update our subscription, when it expires.
-            SubscriptionIntervals.resubInterval.startResubInterval();
-          } else {
-            const error = new _errors.default({
-              message: 'Failed user subscription.',
-              code: _errors.subscriptionCodes.GENERIC_ERROR
-            });
-            context.dispatch(actions.subscribeFinished({
-              error
-            }));
-            emitEvent(eventTypes.SUB_ERROR, {
-              error
-            });
-          }
-        } catch (error) {
-          context.dispatch(actions.subscribeFinished({
-            error
-          }));
+        } else {
           emitEvent(eventTypes.SUB_ERROR, {
-            error
+            error: new _errors.default({
+              message: 'Failed to subscribe user. Please ensure credentials are set.',
+              code: _errors.subscriptionCodes.INVALID_STATE
+            })
           });
         }
-      } else {
-        emitEvent(eventTypes.SUB_ERROR, {
-          error: new _errors.default({
-            message: 'Failed to subscribe user. Please ensure credentials are set.',
-            code: _errors.subscriptionCodes.INVALID_STATE
-          })
-        });
+      } catch (error) {
+        // No further handling needed as the subscribeFlow operation emitted the subscription error.
       }
     },
     /**
@@ -40139,40 +40119,13 @@ function createAPI(container) {
       log.debug(API_LOG_TAG + 'services.unsubscribe: ', services, type);
       const userInfo = (0, _selectors2.getUserInfo)(context.getState());
       if (userInfo && (userInfo.accessToken || userInfo.username)) {
-        context.dispatch(actions.unsubscribe(services, type));
-        emitEvent(eventTypes.SUB_CHANGE, {
-          reason: undefined
-        });
         try {
-          // Compare the current services against what is being unsubscribe to figure out if partial or full.
-          const activeServices = (0, _selectors.getSubscribedServices)(context.getState());
-          const remainingServices = activeServices.filter(serv => !services.includes(serv));
-          const isPartial = remainingServices.length > 0;
-
           // The flow will call one of the two operations: unsubscribe OR updateSubscription
           // There is no extected result returned to API
-          const result = await operations.subscriptionFlow(services);
-          const platform = (0, _selectors.getSubscriptionPlatform)(context.getState());
-          // Depending if it was a partial or full unsubscribe, we need to update state differently.
-          // TODO: Have the `unsubscribeFinished` action be able to handle both partial&full scenarios.
-          if (isPartial) {
-            context.dispatch(actions.subscribeFinished({
-              subscriptions: result.subscriptions
-            }, result.platform));
-          } else {
-            //We successfuly unsubscribed from all services, so stop the resubscription interval.
-            SubscriptionIntervals.resubInterval.stopResubInterval();
-            context.dispatch(actions.unsubscribeFinished({}, platform));
-          }
-          emitEvent(eventTypes.SUB_CHANGE, {});
+          await operations.unsubscribeFlow(services, type);
           log.info('Successfully unsubscribed from all services.');
         } catch (error) {
-          context.dispatch(actions.unsubscribeFinished({
-            error
-          }));
-          emitEvent(eventTypes.SUB_ERROR, {
-            error
-          });
+          // No op, unsubscribeFlow operation will dispatch/emit errors.
         }
       } else {
         emitEvent(eventTypes.SUB_ERROR, {
@@ -40882,6 +40835,7 @@ Object.defineProperty(exports, "__esModule", ({
 exports["default"] = registerFeature;
 var _request = _interopRequireDefault(__webpack_require__(78641));
 var _operation = _interopRequireDefault(__webpack_require__(34189));
+var _subscribeFlow = _interopRequireDefault(__webpack_require__(65400));
 function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
 function registerFeature(bottle) {
   bottle.factory('SubscriptionRequests.subscribe', container => {
@@ -40889,6 +40843,9 @@ function registerFeature(bottle) {
   });
   bottle.factory('SubscriptionOperations.subscribe', container => {
     return (0, _operation.default)(bottle.container);
+  });
+  bottle.factory('SubscriptionOperations.subscribeFlow', container => {
+    return (0, _subscribeFlow.default)(bottle.container);
   });
 }
 
@@ -41103,7 +41060,7 @@ function createOperation(container) {
       // Check for error in the result.
       if (wsOpenOrError.error) {
         // Clean up our subscription on the backend
-        await operations.unsubscribe(subscription);
+        await operations.unsubscribe([subscription]);
         throw wsOpenOrError.payload; // will be caught below
       }
       log.info(`Subscribed to the following services: ${subscription.service}`);
@@ -41268,6 +41225,144 @@ function createRequest(container) {
 
 /***/ }),
 
+/***/ 65400:
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports["default"] = createOperation;
+var actions = _interopRequireWildcard(__webpack_require__(49561));
+var actionTypes = _interopRequireWildcard(__webpack_require__(34721));
+var eventTypes = _interopRequireWildcard(__webpack_require__(34889));
+var _selectors = __webpack_require__(56512);
+var _errors = _interopRequireWildcard(__webpack_require__(75412));
+function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
+function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && {}.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
+// Subscription plugin.
+
+// Errors
+
+/**
+ * Operation factory function responsible for controlling the subscribe flow.
+ * @method createOperation
+ * @param  {Object} container The bottle container.
+ * @return {Function} The `subscribe flow` operation.
+ */
+function createOperation(container) {
+  const {
+    context,
+    emitEvent,
+    SubscriptionOperations: operations,
+    Notifications,
+    SubscriptionIntervals
+  } = container;
+
+  /**
+   * Entry point for subscribe and update subscription change actions.
+   * It watches over the progress by checking whether operation suceeded or there was an error.
+   * It triggers the appropriate action and event for either success or failure scenario.
+   * @method subscribeFlow
+   * @param {Object} info The info needed for a subscribe or update subscription operation.
+   */
+  async function subscribeFlow(info) {
+    const {
+      services,
+      options
+    } = info;
+    context.dispatch(actions.subscribe(services, options));
+    emitEvent(eventTypes.SUB_CHANGE, {
+      reason: undefined
+    });
+    try {
+      // Check if we have an existing subscription
+      const subscription = (0, _selectors.getSubscriptionInfo)(context.getState());
+      let finishOrCancel;
+
+      // Check what we have in Redux state at the time we got the SUBSCRIBE action
+      if (!subscription || !subscription[0]) {
+        if (!services || services.length === 0) {
+          // Error scenario: No services specified.
+          throw new _errors.default({
+            code: _errors.subscriptionCodes.NO_SERVICE_PROVIDED,
+            message: 'No service provided'
+          });
+        }
+
+        // No existing subscription, make a new subscription request
+        // Fork off and try to connect/subscribe by calling 'subscribe' operation.
+        // Call the operation just like the API calls it, except we don't await.
+        // The 'services' param is already normalized and
+        // 'options' param contains the type, clientCorrelator & forceLogOut.
+        finishOrCancel = await Promise.race([operations.subscribe(services, options), Notifications.takeAction(actionTypes.UNSUBSCRIBE)]);
+      } else {
+        // Existing subscription found, update our subscription.
+        // Fork off and try to update subscription by calling 'updateSubscription' operation
+        // by not waiting for it. 'services' param is already normalized.
+        finishOrCancel = await Promise.race([operations.updateSubscription(services, true), Notifications.takeAction(actionTypes.UNSUBSCRIBE)]);
+      }
+
+      /**
+       * This if block covers 2 of the 3 flows of subscribe / unsubscribe.
+       * 1. The first block covers what happens when we receive an UNSUBSCRIBE action before we finish connecting.
+       *        IE UNSUBSCRIBE comes before a SUBSCRIBE_FINISHED.
+       * 2. The second scenario covers what happens when we get a successful SUBSCRIBE_FINISHED event before any UNSUBSCRIBE events.
+       * 3. The third scenario is not explicitly covered here. That scenario is when we received a SUBSCRIBE_FINISHED event with an error before any unsubscribe events.
+       *      In this case, there is nothing that we explicitly have to do, since a SUBSCRIBE_FINISHED event with an error doesn't place anything into the state.
+       *      Therefore there is no real cleanup for us to do in this scenario. We then want to wait for the next SUBSCRIBE (which we do via the next iteration).
+       **/
+      // In the case when updateSubscription operation finishes first, there will be no finishOrCancel returned.
+      if (finishOrCancel && finishOrCancel.type === actionTypes.UNSUBSCRIBE) {
+        // We got unsubscribe request before 'subscribe' operation (or 'updateSubscription' operation)
+        // had a chance to finish. Therefore cancel the operation by forking the 'unsubscribe' operation.
+        operations.unsubscribe();
+      } else {
+        if (finishOrCancel) {
+          // result returned by a new subcription or an updated subscription
+          context.dispatch(actions.subscribeFinished({
+            subscriptions: finishOrCancel.subscriptions
+          }, finishOrCancel.platform));
+          const payload = finishOrCancel.retryAfter ? {
+            reason: finishOrCancel.reason,
+            retryAfter: finishOrCancel.retryAfter
+          } : {
+            reason: finishOrCancel.reason
+          };
+          emitEvent(eventTypes.SUB_CHANGE, payload);
+
+          // We have a sucessful subscription, so start the resubscription interval
+          // so that we automatically update our subscription, when it expires.
+          SubscriptionIntervals.resubInterval.startResubInterval();
+        } else {
+          const error = new _errors.default({
+            message: 'Failed user subscription.',
+            code: _errors.subscriptionCodes.GENERIC_ERROR
+          });
+          throw error;
+        }
+
+        // In the case of subscribe or updateSubscription operations finishing first, we need to return the result to API.
+        // The API will then dispatch SUBSCRIBE_FINISHED action.
+        return finishOrCancel;
+      }
+    } catch (error) {
+      context.dispatch(actions.subscribeFinished({
+        error
+      }));
+      emitEvent(eventTypes.SUB_ERROR, {
+        error
+      });
+      throw error;
+    }
+  }
+  return subscribeFlow;
+}
+
+/***/ }),
+
 /***/ 63657:
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
@@ -41280,6 +41375,7 @@ Object.defineProperty(exports, "__esModule", ({
 exports["default"] = registerFeature;
 var _request = _interopRequireDefault(__webpack_require__(27388));
 var _operation = _interopRequireDefault(__webpack_require__(60508));
+var _unsubscribeFlow = _interopRequireDefault(__webpack_require__(76248));
 function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
 function registerFeature(bottle) {
   bottle.factory('SubscriptionRequests.unsubscribe', container => {
@@ -41287,6 +41383,9 @@ function registerFeature(bottle) {
   });
   bottle.factory('SubscriptionOperations.unsubscribe', container => {
     return (0, _operation.default)(bottle.container);
+  });
+  bottle.factory('SubscriptionOperations.unsubscribeFlow', container => {
+    return (0, _unsubscribeFlow.default)(bottle.container);
   });
 }
 
@@ -41474,6 +41573,150 @@ function createRequest(container) {
 
 /***/ }),
 
+/***/ 76248:
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports["default"] = createOperation;
+__webpack_require__(62234);
+var _difference2 = _interopRequireDefault(__webpack_require__(37011));
+var _isEmpty2 = _interopRequireDefault(__webpack_require__(84499));
+var actions = _interopRequireWildcard(__webpack_require__(49561));
+var eventTypes = _interopRequireWildcard(__webpack_require__(34889));
+var _selectors = __webpack_require__(56512);
+var _constants = __webpack_require__(78215);
+var _errors = _interopRequireWildcard(__webpack_require__(75412));
+function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
+function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && {}.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
+function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
+// Subscription plugin.
+
+// Constants
+
+// Errors
+
+/**
+ * Operation factory function responsible for controlling the unsubscribe flow.
+ * @method createOperation
+ * @param  {Object} container The bottle container.
+ * @return {Function} The `unsubscribe flow` operation.
+ */
+function createOperation(container) {
+  const {
+    context,
+    emitEvent,
+    SubscriptionOperations: operations,
+    SubscriptionIntervals,
+    logManager
+  } = container;
+  const log = logManager.getLogger('SUBSCRIPTION');
+
+  /**
+   * Entry point for unsubscribe subscription change actions.
+   * It triggers the appropriate action and event for either success or failure scenario.
+   * @method unsubscribeFlow
+   * @param {Array} services The services to unsubscribe to.
+   * @param {string} type The notification type.
+   */
+  async function unsubscribeFlow(services) {
+    let type = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _constants.notificationTypes.WEBSOCKET;
+    context.dispatch(actions.unsubscribe(services, type));
+    emitEvent(eventTypes.SUB_CHANGE, {
+      reason: undefined
+    });
+    if (!services || services.length === 0) {
+      // Error scenario: No services specified.
+      const error = new _errors.default({
+        code: _errors.subscriptionCodes.NO_SERVICE_PROVIDED,
+        message: 'No service provided'
+      });
+      context.dispatch(actions.unsubscribeFinished({
+        error
+      }));
+      emitEvent(eventTypes.SUB_ERROR, {
+        error
+      });
+      throw error;
+    }
+
+    // Check if we have an existing subscription
+    const subscription = (0, _selectors.getSubscriptionInfo)(context.getState());
+    if (subscription && subscription[0]) {
+      try {
+        // Remove all services from our subscribed services if they are present
+        const updatedServices = subscription[0].service.filter(service => !services.includes(service));
+        if (updatedServices.length === 0) {
+          // All services are being unsubscribed, so call 'unsubscribe' operation.
+          // Wait for 'unsubscribe' operation to finish so that when it returns,
+          // the API will dispatch the UNSUBSCRIBE_FINISHED action
+          await operations.unsubscribe();
+
+          //We successfuly unsubscribed from all services, so stop the resubscription interval.
+          SubscriptionIntervals.resubInterval.stopResubInterval();
+          const platform = (0, _selectors.getSubscriptionPlatform)(context.getState());
+          context.dispatch(actions.unsubscribeFinished({}, platform));
+          emitEvent(eventTypes.SUB_CHANGE, {});
+        } else if ((0, _isEmpty2.default)((0, _difference2.default)(subscription[0].service, updatedServices))) {
+          // We don't have a subscription for any of the services requesting unsubscribing
+          // No subscription found
+          const error = new _errors.default({
+            message: `No subscription found for ${JSON.stringify(services)}, can't unsubscribe.`,
+            code: _errors.authCodes.LINK_UNSUBSCRIBE_FAIL
+          });
+          context.dispatch(actions.unsubscribeFinished({
+            error
+          }));
+          log.debug(`Unsubscribe failed: ${error.message}`);
+          throw error;
+        } else {
+          // Some services are being unsubscribed, update our subscription
+          services = updatedServices.map(service => {
+            return {
+              service: service
+            };
+          });
+
+          // Fork off the 'updateSubscription' operation
+          const result = await operations.updateSubscription(services, false);
+          if (result) {
+            // TODO: Have the `unsubscribeFinished` action be able to handle both partial&full scenarios.
+            context.dispatch(actions.subscribeFinished({
+              subscriptions: result.subscriptions
+            }, result.platform));
+            emitEvent(eventTypes.SUB_CHANGE, {});
+          }
+        }
+      } catch (error) {
+        context.dispatch(actions.unsubscribeFinished({
+          error
+        }));
+        emitEvent(eventTypes.SUB_ERROR, {
+          error
+        });
+        throw error;
+      }
+    } else {
+      // No subscription found
+      const error = new _errors.default({
+        message: "No subscription found, can't unsubscribe.",
+        code: _errors.authCodes.LINK_UNSUBSCRIBE_FAIL
+      });
+      log.debug(`Unsubscribe failed: ${error.message}`);
+      emitEvent(eventTypes.SUB_ERROR, {
+        error
+      });
+    }
+  }
+  return unsubscribeFlow;
+}
+
+/***/ }),
+
 /***/ 32965:
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
@@ -41573,7 +41816,7 @@ function createOperation(container) {
       };
       log.info(`Subscribed to the following services: ${subscription[0].service}`);
 
-      // Upon returning this to subscriptionFlow (which returns it to API),
+      // Upon returning this to subscribeFlow (which returns it to API),
       // the API will then trigger the associated action & event
       return {
         subscriptions: [updatedSubscription],
@@ -41747,7 +41990,6 @@ exports["default"] = subscriptionFactory;
 var _interface = __webpack_require__(57946);
 var actionTypes = _interopRequireWildcard(__webpack_require__(34721));
 var _constants = __webpack_require__(22191);
-var _subscriptionFlow = _interopRequireDefault(__webpack_require__(96230));
 var _onWebsocketOverridden = _interopRequireDefault(__webpack_require__(51539));
 var _onSubscriptionGone = _interopRequireDefault(__webpack_require__(19528));
 var _onConnectionLost = _interopRequireDefault(__webpack_require__(70516));
@@ -41910,11 +42152,6 @@ function subscriptionFactory() {
 
   // Register the component factory functions to the bottle.
   bottle.factory('SubscriptionAPI', _interface.createAPI);
-
-  // Register the main operation which controls the subscription flow
-  bottle.factory('SubscriptionOperations.subscriptionFlow', container => {
-    return (0, _subscriptionFlow.default)(bottle.container);
-  });
 
   // Register the operation that handles a 'websocket overwritten' notification
   bottle.factory('SubscriptionOperations.onWebsocketOverridden', container => {
@@ -42387,156 +42624,6 @@ function createOperation(container) {
     });
   }
   return handleWebSocketOverridden;
-}
-
-/***/ }),
-
-/***/ 96230:
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = createOperation;
-__webpack_require__(62234);
-var _difference2 = _interopRequireDefault(__webpack_require__(37011));
-var _isEmpty2 = _interopRequireDefault(__webpack_require__(84499));
-var actionTypes = _interopRequireWildcard(__webpack_require__(34721));
-var _selectors = __webpack_require__(56512);
-var _errors = _interopRequireWildcard(__webpack_require__(75412));
-function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
-function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && {}.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
-function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
-// Subscription plugin.
-
-// Errors
-
-/**
- * Operation factory function responsible for controlling the subscription flow.
- * @method createOperation
- * @param  {Object} container The bottle container.
- * @return {Function} The `subscription flow` operation.
- */
-function createOperation(container) {
-  const {
-    context,
-    SubscriptionOperations: operations,
-    Notifications,
-    logManager
-  } = container;
-  const log = logManager.getLogger('SUBSCRIPTION');
-
-  /**
-   * Entry point for ALL subscription change actions.
-   * Handles SUBSCRIBE & UNSUBSCRIBE incoming actions and calls the appropriate operation.
-   * In the case of a subscribe or update subscription request, it also watches over the progress by checking wether
-   * operation suceeded or there was an error.
-   * It triggers the appropriate action and event for either success or failure scenario.
-   * @method subscriptionFlow
-   * @param {Object|Array} info The info needed for a subscribe Or unsubscribe operation.
-   */
-  async function subscriptionFlow(info) {
-    if (!info || info.length === 0) {
-      // Error scenario: No services specified.
-      throw new _errors.default({
-        code: _errors.subscriptionCodes.NO_SERVICE_PROVIDED,
-        message: 'No service provided'
-      });
-    }
-    if (!(info instanceof Array)) {
-      // it's a subscribe request
-      const {
-        services,
-        options
-      } = info;
-
-      // Check if we have an existing subscription
-      const subscription = (0, _selectors.getSubscriptionInfo)(context.getState());
-      let finishOrCancel;
-
-      // Check what we have in Redux state at the time we got the SUBSCRIBE action
-      if (!subscription || !subscription[0]) {
-        // No existing subscription, make a new subscription request
-        // Fork off and try to connect/subscribe by calling 'subscribe' operation.
-        // Call the operation just like the API calls it, except we don't await.
-        // The 'services' param is already normalized and
-        // 'options' param contains the type, clientCorrelator & forceLogOut.
-        finishOrCancel = await Promise.race([operations.subscribe(services, options), Notifications.takeAction(actionTypes.UNSUBSCRIBE)]);
-      } else {
-        // Existing subscription found, update our subscription.
-        // Fork off and try to update subscription by calling 'updateSubscription' operation
-        // by not waiting for it. 'services' param is already normalized.
-        finishOrCancel = await Promise.race([operations.updateSubscription(services, true), Notifications.takeAction(actionTypes.UNSUBSCRIBE)]);
-      }
-
-      /**
-       * This if block covers 2 of the 3 flows of subscribe / unsubscribe.
-       * 1. The first block covers what happens when we receive an UNSUBSCRIBE action before we finish connecting.
-       *        IE UNSUBSCRIBE comes before a SUBSCRIBE_FINISHED.
-       * 2. The second scenario covers what happens when we get a successful SUBSCRIBE_FINISHED event before any UNSUBSCRIBE events.
-       * 3. The third scenario is not explicitly covered here. That scenario is when we received a SUBSCRIBE_FINISHED event with an error before any unsubscribe events.
-       *      In this case, there is nothing that we explicitly have to do, since a SUBSCRIBE_FINISHED event with an error doesn't place anything into the state.
-       *      Therefore there is no real cleanup for us to do in this scenario. We then want to wait for the next SUBSCRIBE (which we do via the next iteration).
-       **/
-      // In the case when updateSubscription operation finishes first, there will be no finishOrCancel returned.
-      if (finishOrCancel && finishOrCancel.type === actionTypes.UNSUBSCRIBE) {
-        // We got unsubscribe request before 'subscribe' operation (or 'updateSubscription' operation)
-        // had a chance to finish. Therefore cancel the operation by forking the 'unsubscribe' operation.
-        operations.unsubscribe();
-      } else {
-        // In the case of subscribe or updateSubscription operations finishing first, we need to return the result to API.
-        // The API will then dispatch SUBSCRIBE_FINISHED action.
-        return finishOrCancel;
-      }
-    } else {
-      // it's for an unsubscribe request
-      // Check if we have an existing subscription
-      const subscription = (0, _selectors.getSubscriptionInfo)(context.getState());
-      if (subscription && subscription[0]) {
-        // Remove all services from our subscribed services if they are present
-        const updatedServices = subscription[0].service.filter(service => !info.includes(service));
-        if (updatedServices.length === 0) {
-          // All services are being unsubscribed, so call 'unsubscribe' operation.
-          // Wait for 'unsubscribe' operation to finish so that when it returns,
-          // the API will dispatch the UNSUBSCRIBE_FINISHED action
-          await operations.unsubscribe();
-        } else if ((0, _isEmpty2.default)((0, _difference2.default)(subscription[0].service, updatedServices))) {
-          // We don't have a subscription for any of the services requesting unsubscribing
-          // No subscription found
-          const error = new _errors.default({
-            message: `No subscription found for ${JSON.stringify(info)}, can't unsubscribe.`,
-            code: _errors.authCodes.LINK_UNSUBSCRIBE_FAIL
-          });
-          log.debug(`Unsubscribe failed: ${error.message}`);
-          //  The API will dispatch the action + event
-          throw error;
-        } else {
-          // Some services are being unsubscribed, update our subscription
-          info = updatedServices.map(service => {
-            return {
-              service: service
-            };
-          });
-
-          // Fork off the 'updateSubscription' operation
-          return await operations.updateSubscription(info, false);
-        }
-      } else {
-        // No subscription found
-        const error = new _errors.default({
-          message: "No subscription found, can't unsubscribe.",
-          code: _errors.authCodes.LINK_UNSUBSCRIBE_FAIL
-        });
-        log.debug(`Unsubscribe failed: ${error.message}`);
-        //  The API will dispatch the action + event
-        throw error;
-      }
-    }
-  }
-  return subscriptionFlow;
 }
 
 /***/ }),
@@ -49033,8 +49120,12 @@ function DeviceManager() {
 
   // Check devices on initialization.
   checkDevices().then(() => {
-    // Emit an initial event to notify that devices are available.
-    emitter.emit('change');
+    if (isListening) {
+      // Emit an initial event to notify that devices are available.
+      emitter.emit('change');
+    } else {
+      log.info('Initial media device discovery ignored.');
+    }
   });
 
   // Check devices whenever they change.
@@ -49051,8 +49142,12 @@ function DeviceManager() {
       setTimeout(() => {
         recentDeviceChange = false;
         checkDevices().then(() => {
-          // Emit an event to notify of the change.
-          emitter.emit('change');
+          if (isListening) {
+            // Emit an event to notify of the change.
+            emitter.emit('change');
+          } else {
+            log.info('Media device change ignored after being detected.');
+          }
         });
       }, 50);
     } else {
@@ -74069,10 +74164,10 @@ __webpack_require__.d(__webpack_exports__, {
   CANCEL: () => (/* reexport */ redux_saga_symbols_esm/* CANCEL */.bO),
   END: () => (/* reexport */ END),
   SAGA_LOCATION: () => (/* reexport */ redux_saga_symbols_esm/* SAGA_LOCATION */.x2),
-  buffers: () => (/* reexport */ io_c3792963.H),
+  buffers: () => (/* reexport */ io_22ea0cf9.I),
   channel: () => (/* reexport */ channel),
   "default": () => (/* binding */ redux_saga_core_npm_proxy_esm),
-  detach: () => (/* reexport */ io_c3792963.I),
+  detach: () => (/* reexport */ io_22ea0cf9.K),
   eventChannel: () => (/* reexport */ eventChannel),
   isEnd: () => (/* reexport */ isEnd),
   multicastChannel: () => (/* reexport */ multicastChannel),
@@ -74085,24 +74180,20 @@ var redux_saga_symbols_esm = __webpack_require__(3068);
 // EXTERNAL MODULE: ../../node_modules/@babel/runtime/helpers/esm/extends.js
 var esm_extends = __webpack_require__(89575);
 ;// CONCATENATED MODULE: ../../node_modules/@babel/runtime/helpers/esm/objectWithoutPropertiesLoose.js
-function _objectWithoutPropertiesLoose(source, excluded) {
-  if (source == null) return {};
-  var target = {};
-  var sourceKeys = Object.keys(source);
-  var key, i;
-  for (i = 0; i < sourceKeys.length; i++) {
-    key = sourceKeys[i];
-    if (excluded.indexOf(key) >= 0) continue;
-    target[key] = source[key];
+function _objectWithoutPropertiesLoose(r, e) {
+  if (null == r) return {};
+  var t = {};
+  for (var n in r) if ({}.hasOwnProperty.call(r, n)) {
+    if (e.includes(n)) continue;
+    t[n] = r[n];
   }
-  return target;
+  return t;
 }
+
 // EXTERNAL MODULE: ../../node_modules/@redux-saga/is/dist/redux-saga-is.esm.js
 var redux_saga_is_esm = __webpack_require__(54860);
-// EXTERNAL MODULE: ../../node_modules/@redux-saga/core/dist/io-c3792963.js + 1 modules
-var io_c3792963 = __webpack_require__(36882);
-// EXTERNAL MODULE: ../../node_modules/redux/es/redux.js + 5 modules
-var redux = __webpack_require__(14848);
+// EXTERNAL MODULE: ../../node_modules/@redux-saga/core/dist/io-22ea0cf9.js + 1 modules
+var io_22ea0cf9 = __webpack_require__(90258);
 ;// CONCATENATED MODULE: ../../node_modules/@redux-saga/deferred/dist/redux-saga-deferred.esm.js
 function deferred() {
   var def = {};
@@ -74126,7 +74217,6 @@ function arrayOfDeferred(length) {
 
 
 ;// CONCATENATED MODULE: ../../node_modules/@redux-saga/core/dist/redux-saga-core.esm.js
-
 
 
 
@@ -74239,7 +74329,7 @@ var symbol = function symbol(pattern) {
   };
 };
 var wildcard = function wildcard() {
-  return io_c3792963.k;
+  return io_22ea0cf9.k;
 };
 function matcher(pattern) {
   // prettier-ignore
@@ -74263,7 +74353,7 @@ var INVALID_BUFFER = 'invalid buffer passed to channel factory function';
 var UNDEFINED_INPUT_ERROR = "Saga or channel was provided with an undefined action\nHints:\n  - check that your Action Creator returns a non-undefined value\n  - if the Saga was started using runSaga, check that your subscribe source provides the action to its listeners";
 function channel(buffer$1) {
   if (buffer$1 === void 0) {
-    buffer$1 = (0,io_c3792963.e)();
+    buffer$1 = (0,io_22ea0cf9.e)();
   }
 
   var closed = false;
@@ -74273,11 +74363,11 @@ function channel(buffer$1) {
 
   function checkForbiddenStates() {
     if (closed && takers.length) {
-      throw (0,io_c3792963.i)(CLOSED_CHANNEL_WITH_TAKERS);
+      throw (0,io_22ea0cf9.i)(CLOSED_CHANNEL_WITH_TAKERS);
     }
 
     if (takers.length && !buffer$1.isEmpty()) {
-      throw (0,io_c3792963.i)('Cannot have pending takers with non empty buffer');
+      throw (0,io_22ea0cf9.i)('Cannot have pending takers with non empty buffer');
     }
   }
 
@@ -74307,7 +74397,7 @@ function channel(buffer$1) {
       takers.push(cb);
 
       cb.cancel = function () {
-        (0,io_c3792963.r)(takers, cb);
+        (0,io_22ea0cf9.r)(takers, cb);
       };
     }
   }
@@ -74349,7 +74439,7 @@ function channel(buffer$1) {
 }
 function eventChannel(subscribe, buffer) {
   if (buffer === void 0) {
-    buffer = (0,io_c3792963.n)();
+    buffer = (0,io_22ea0cf9.n)();
   }
 
   var closed = false;
@@ -74381,7 +74471,7 @@ function eventChannel(subscribe, buffer) {
 
   if (false) {}
 
-  unsubscribe = (0,io_c3792963.o)(unsubscribe);
+  unsubscribe = (0,io_22ea0cf9.o)(unsubscribe);
 
   if (closed) {
     unsubscribe();
@@ -74402,7 +74492,7 @@ function multicastChannel() {
 
   function checkForbiddenStates() {
     if (closed && nextTakers.length) {
-      throw (0,io_c3792963.i)(CLOSED_CHANNEL_WITH_TAKERS);
+      throw (0,io_22ea0cf9.i)(CLOSED_CHANNEL_WITH_TAKERS);
     }
   }
 
@@ -74462,9 +74552,9 @@ function multicastChannel() {
     cb[redux_saga_symbols_esm/* MATCH */.E_] = matcher;
     ensureCanMutateNextTakers();
     nextTakers.push(cb);
-    cb.cancel = (0,io_c3792963.o)(function () {
+    cb.cancel = (0,io_22ea0cf9.o)(function () {
       ensureCanMutateNextTakers();
-      (0,io_c3792963.r)(nextTakers, cb);
+      (0,io_22ea0cf9.r)(nextTakers, cb);
     });
   }, _ref.close = close, _ref;
 }
@@ -74517,7 +74607,7 @@ function getIteratorMetaInfo(iterator, fn) {
     };
   }
 
-  return (0,io_c3792963.j)(fn);
+  return (0,io_22ea0cf9.j)(fn);
 }
 
 function createTaskIterator(_ref) {
@@ -74551,11 +74641,11 @@ function createTaskIterator(_ref) {
       }
     };
 
-    return (0,io_c3792963.q)(next);
+    return (0,io_22ea0cf9.q)(next);
   } catch (err) {
     // do not bubble up synchronous failures for detached forks
     // instead create a failed task. See #152 and #441
-    return (0,io_c3792963.q)(function () {
+    return (0,io_22ea0cf9.q)(function () {
       throw err;
     });
   }
@@ -74636,7 +74726,7 @@ function runCallEffect(env, _ref4, cb, _ref5) {
 
     if ((0,redux_saga_is_esm/* iterator */.lJ)(result)) {
       // resolve iterator
-      proc(env, result, task.context, current, (0,io_c3792963.j)(fn),
+      proc(env, result, task.context, current, (0,io_22ea0cf9.j)(fn),
       /* isRoot */
       false, cb);
       return;
@@ -74716,7 +74806,7 @@ function runJoinEffect(env, taskOrTasks, cb, _ref9) {
       };
 
       cb.cancel = function () {
-        if (taskToJoin.isRunning()) (0,io_c3792963.r)(taskToJoin.joiners, joiner);
+        if (taskToJoin.isRunning()) (0,io_22ea0cf9.r)(taskToJoin.joiners, joiner);
       };
 
       taskToJoin.joiners.push(joiner);
@@ -74735,7 +74825,7 @@ function runJoinEffect(env, taskOrTasks, cb, _ref9) {
       return;
     }
 
-    var childCallbacks = (0,io_c3792963.l)(taskOrTasks, cb);
+    var childCallbacks = (0,io_22ea0cf9.l)(taskOrTasks, cb);
     taskOrTasks.forEach(function (t, i) {
       joinSingleTask(t, childCallbacks[i]);
     });
@@ -74774,7 +74864,7 @@ function runAllEffect(env, effects, cb, _ref11) {
     return;
   }
 
-  var childCallbacks = (0,io_c3792963.l)(effects, cb);
+  var childCallbacks = (0,io_22ea0cf9.l)(effects, cb);
   keys.forEach(function (key) {
     digestEffect(effects[key], effectId, childCallbacks[key], key);
   });
@@ -74784,7 +74874,7 @@ function runRaceEffect(env, effects, cb, _ref12) {
   var digestEffect = _ref12.digestEffect;
   var effectId = current;
   var keys = Object.keys(effects);
-  var response = (0,redux_saga_is_esm/* array */.YO)(effects) ? (0,io_c3792963.m)(keys.length) : {};
+  var response = (0,redux_saga_is_esm/* array */.YO)(effects) ? (0,io_22ea0cf9.m)(keys.length) : {};
   var childCbs = {};
   var completed = false;
   keys.forEach(function (key) {
@@ -74793,7 +74883,7 @@ function runRaceEffect(env, effects, cb, _ref12) {
         return;
       }
 
-      if (isErr || (0,io_c3792963.s)(res)) {
+      if (isErr || (0,io_22ea0cf9.s)(res)) {
         // Race Auto cancellation
         cb.cancel();
         cb(res, isErr);
@@ -74805,7 +74895,7 @@ function runRaceEffect(env, effects, cb, _ref12) {
       }
     };
 
-    chCbAtKey.cancel = io_c3792963.t;
+    chCbAtKey.cancel = io_22ea0cf9.t;
     childCbs[key] = chCbAtKey;
   });
 
@@ -74881,11 +74971,11 @@ function runGetContextEffect(env, prop, cb, _ref16) {
 
 function runSetContextEffect(env, props, cb, _ref17) {
   var task = _ref17.task;
-  (0,io_c3792963.p)(task.context, props);
+  (0,io_22ea0cf9.p)(task.context, props);
   cb();
 }
 
-var effectRunnerMap = (_effectRunnerMap = {}, _effectRunnerMap[io_c3792963.T] = runTakeEffect, _effectRunnerMap[io_c3792963.P] = runPutEffect, _effectRunnerMap[io_c3792963.A] = runAllEffect, _effectRunnerMap[io_c3792963.R] = runRaceEffect, _effectRunnerMap[io_c3792963.C] = runCallEffect, _effectRunnerMap[io_c3792963.a] = runCPSEffect, _effectRunnerMap[io_c3792963.F] = runForkEffect, _effectRunnerMap[io_c3792963.J] = runJoinEffect, _effectRunnerMap[io_c3792963.b] = runCancelEffect, _effectRunnerMap[io_c3792963.S] = runSelectEffect, _effectRunnerMap[io_c3792963.d] = runChannelEffect, _effectRunnerMap[io_c3792963.f] = runCancelledEffect, _effectRunnerMap[io_c3792963.g] = runFlushEffect, _effectRunnerMap[io_c3792963.G] = runGetContextEffect, _effectRunnerMap[io_c3792963.h] = runSetContextEffect, _effectRunnerMap);
+var effectRunnerMap = (_effectRunnerMap = {}, _effectRunnerMap[io_22ea0cf9.T] = runTakeEffect, _effectRunnerMap[io_22ea0cf9.P] = runPutEffect, _effectRunnerMap[io_22ea0cf9.A] = runAllEffect, _effectRunnerMap[io_22ea0cf9.R] = runRaceEffect, _effectRunnerMap[io_22ea0cf9.C] = runCallEffect, _effectRunnerMap[io_22ea0cf9.a] = runCPSEffect, _effectRunnerMap[io_22ea0cf9.F] = runForkEffect, _effectRunnerMap[io_22ea0cf9.J] = runJoinEffect, _effectRunnerMap[io_22ea0cf9.b] = runCancelEffect, _effectRunnerMap[io_22ea0cf9.S] = runSelectEffect, _effectRunnerMap[io_22ea0cf9.d] = runChannelEffect, _effectRunnerMap[io_22ea0cf9.f] = runCancelledEffect, _effectRunnerMap[io_22ea0cf9.g] = runFlushEffect, _effectRunnerMap[io_22ea0cf9.G] = runGetContextEffect, _effectRunnerMap[io_22ea0cf9.h] = runSetContextEffect, _effectRunnerMap);
 
 /**
  Used to track a parent task and its forks
@@ -74927,8 +75017,8 @@ function forkQueue(mainTask, onAbort, cont) {
         return;
       }
 
-      (0,io_c3792963.r)(tasks, task);
-      task.cont = io_c3792963.t;
+      (0,io_22ea0cf9.r)(tasks, task);
+      task.cont = io_22ea0cf9.t;
 
       if (isErr) {
         abort(res);
@@ -74952,7 +75042,7 @@ function forkQueue(mainTask, onAbort, cont) {
 
     completed = true;
     tasks.forEach(function (t) {
-      t.cont = io_c3792963.t;
+      t.cont = io_22ea0cf9.t;
       t.cancel();
     });
     tasks = [];
@@ -74973,7 +75063,7 @@ function formatLocation(fileName, lineNumber) {
 }
 
 function effectLocationAsString(effect) {
-  var location = (0,io_c3792963.v)(effect);
+  var location = (0,io_22ea0cf9.v)(effect);
 
   if (location) {
     var code = location.code,
@@ -74998,7 +75088,7 @@ function sagaLocationAsString(sagaMeta) {
 }
 
 function cancelledTasksAsString(sagaStack) {
-  var cancelledTasks = (0,io_c3792963.u)(function (i) {
+  var cancelledTasks = (0,io_22ea0cf9.u)(function (i) {
     return i.cancelledTasks;
   }, sagaStack);
 
@@ -75049,7 +75139,7 @@ function newTask(env, mainTask, parentContext, parentEffectId, meta, isRoot, con
   var _task;
 
   if (cont === void 0) {
-    cont = io_c3792963.t;
+    cont = io_22ea0cf9.t;
   }
 
   var status = RUNNING;
@@ -75125,7 +75215,7 @@ function newTask(env, mainTask, parentContext, parentEffectId, meta, isRoot, con
   function setContext(props) {
     if (false) {}
 
-    (0,io_c3792963.p)(context, props);
+    (0,io_22ea0cf9.p)(context, props);
   }
 
   function toPromise() {
@@ -75168,7 +75258,7 @@ function proc(env, iterator$1, parentContext, parentEffectId, meta, isRoot, cont
     on it. It allows propagating cancellation to child effects
   **/
 
-  next.cancel = io_c3792963.t;
+  next.cancel = io_22ea0cf9.t;
   /** Creates a main task to track the main flow */
 
   var mainTask = {
@@ -75228,7 +75318,7 @@ function proc(env, iterator$1, parentContext, parentEffectId, meta, isRoot, cont
         result = iterator$1.throw(arg); // user handled the error, we can clear bookkept values
 
         clear();
-      } else if ((0,io_c3792963.y)(arg)) {
+      } else if ((0,io_22ea0cf9.y)(arg)) {
         /**
           getting TASK_CANCEL automatically cancels the main task
           We can get this value here
@@ -75250,7 +75340,7 @@ function proc(env, iterator$1, parentContext, parentEffectId, meta, isRoot, cont
           done: true,
           value: redux_saga_symbols_esm/* TASK_CANCEL */.nm
         };
-      } else if ((0,io_c3792963.z)(arg)) {
+      } else if ((0,io_22ea0cf9.z)(arg)) {
         // We get TERMINATE flag, i.e. by taking from a channel that ended using `take` (and not `takem` used to trap End of channels)
         result = (0,redux_saga_is_esm/* func */.Pc)(iterator$1.return) ? iterator$1.return() : {
           done: true
@@ -75336,7 +75426,7 @@ function proc(env, iterator$1, parentContext, parentEffectId, meta, isRoot, cont
       }
 
       effectSettled = true;
-      cb.cancel = io_c3792963.t; // defensive measure
+      cb.cancel = io_22ea0cf9.t; // defensive measure
 
       if (env.sagaMonitor) {
         if (isErr) {
@@ -75354,7 +75444,7 @@ function proc(env, iterator$1, parentContext, parentEffectId, meta, isRoot, cont
     } // tracks down the current cancel
 
 
-    currCb.cancel = io_c3792963.t; // setup cancellation logic on the parent cb
+    currCb.cancel = io_22ea0cf9.t; // setup cancellation logic on the parent cb
 
     cb.cancel = function () {
       // prevents cancelling an already completed effect
@@ -75365,7 +75455,7 @@ function proc(env, iterator$1, parentContext, parentEffectId, meta, isRoot, cont
       effectSettled = true;
       currCb.cancel(); // propagates cancel downward
 
-      currCb.cancel = io_c3792963.t; // defensive measure
+      currCb.cancel = io_22ea0cf9.t; // defensive measure
 
       env.sagaMonitor && env.sagaMonitor.effectCancelled(effectId);
     };
@@ -75386,7 +75476,7 @@ function runSaga(_ref, saga) {
       sagaMonitor = _ref.sagaMonitor,
       effectMiddlewares = _ref.effectMiddlewares,
       _ref$onError = _ref.onError,
-      onError = _ref$onError === void 0 ? io_c3792963.B : _ref$onError;
+      onError = _ref$onError === void 0 ? io_22ea0cf9.D : _ref$onError;
 
   if (false) {}
 
@@ -75402,12 +75492,12 @@ function runSaga(_ref, saga) {
 
   if (sagaMonitor) {
     // monitors are expected to have a certain interface, let's fill-in any missing ones
-    sagaMonitor.rootSagaStarted = sagaMonitor.rootSagaStarted || io_c3792963.t;
-    sagaMonitor.effectTriggered = sagaMonitor.effectTriggered || io_c3792963.t;
-    sagaMonitor.effectResolved = sagaMonitor.effectResolved || io_c3792963.t;
-    sagaMonitor.effectRejected = sagaMonitor.effectRejected || io_c3792963.t;
-    sagaMonitor.effectCancelled = sagaMonitor.effectCancelled || io_c3792963.t;
-    sagaMonitor.actionDispatched = sagaMonitor.actionDispatched || io_c3792963.t;
+    sagaMonitor.rootSagaStarted = sagaMonitor.rootSagaStarted || io_22ea0cf9.t;
+    sagaMonitor.effectTriggered = sagaMonitor.effectTriggered || io_22ea0cf9.t;
+    sagaMonitor.effectResolved = sagaMonitor.effectResolved || io_22ea0cf9.t;
+    sagaMonitor.effectRejected = sagaMonitor.effectRejected || io_22ea0cf9.t;
+    sagaMonitor.effectCancelled = sagaMonitor.effectCancelled || io_22ea0cf9.t;
+    sagaMonitor.actionDispatched = sagaMonitor.actionDispatched || io_22ea0cf9.t;
     sagaMonitor.rootSagaStarted({
       effectId: effectId,
       saga: saga,
@@ -75420,7 +75510,7 @@ function runSaga(_ref, saga) {
   var finalizeRunEffect;
 
   if (effectMiddlewares) {
-    var middleware = redux.compose.apply(void 0, effectMiddlewares);
+    var middleware = io_22ea0cf9.B.apply(void 0, effectMiddlewares);
 
     finalizeRunEffect = function finalizeRunEffect(runEffect) {
       return function (effect, effectId, currCb) {
@@ -75432,19 +75522,19 @@ function runSaga(_ref, saga) {
       };
     };
   } else {
-    finalizeRunEffect = io_c3792963.E;
+    finalizeRunEffect = io_22ea0cf9.H;
   }
 
   var env = {
     channel: channel,
-    dispatch: (0,io_c3792963.D)(dispatch),
+    dispatch: (0,io_22ea0cf9.E)(dispatch),
     getState: getState,
     sagaMonitor: sagaMonitor,
     onError: onError,
     finalizeRunEffect: finalizeRunEffect
   };
   return immediately(function () {
-    var task = proc(env, iterator$1, context, effectId, (0,io_c3792963.j)(saga),
+    var task = proc(env, iterator$1, context, effectId, (0,io_22ea0cf9.j)(saga),
     /* isRoot */
     true, undefined);
 
@@ -75502,7 +75592,7 @@ function sagaMiddlewareFactory(_temp) {
   sagaMiddleware.setContext = function (props) {
     if (false) {}
 
-    (0,io_c3792963.p)(context, props);
+    (0,io_22ea0cf9.p)(context, props);
   };
 
   return sagaMiddleware;
@@ -75531,39 +75621,39 @@ __webpack_require__.r(__webpack_exports__);
 
 // EXPORTS
 __webpack_require__.d(__webpack_exports__, {
-  actionChannel: () => (/* reexport */ io_c3792963.Q),
-  all: () => (/* reexport */ io_c3792963._),
-  apply: () => (/* reexport */ io_c3792963.$),
-  call: () => (/* reexport */ io_c3792963.N),
-  cancel: () => (/* reexport */ io_c3792963.M),
-  cancelled: () => (/* reexport */ io_c3792963.a4),
-  cps: () => (/* reexport */ io_c3792963.a0),
+  actionChannel: () => (/* reexport */ io_22ea0cf9.U),
+  all: () => (/* reexport */ io_22ea0cf9.$),
+  apply: () => (/* reexport */ io_22ea0cf9.a0),
+  call: () => (/* reexport */ io_22ea0cf9.O),
+  cancel: () => (/* reexport */ io_22ea0cf9.N),
+  cancelled: () => (/* reexport */ io_22ea0cf9.a5),
+  cps: () => (/* reexport */ io_22ea0cf9.a1),
   debounce: () => (/* reexport */ debounce),
-  delay: () => (/* reexport */ io_c3792963.O),
-  effectTypes: () => (/* reexport */ io_c3792963.W),
-  flush: () => (/* reexport */ io_c3792963.a5),
-  fork: () => (/* reexport */ io_c3792963.L),
-  getContext: () => (/* reexport */ io_c3792963.a6),
-  join: () => (/* reexport */ io_c3792963.a2),
-  put: () => (/* reexport */ io_c3792963.Y),
-  putResolve: () => (/* reexport */ io_c3792963.Z),
-  race: () => (/* reexport */ io_c3792963.V),
+  delay: () => (/* reexport */ io_22ea0cf9.Q),
+  effectTypes: () => (/* reexport */ io_22ea0cf9.X),
+  flush: () => (/* reexport */ io_22ea0cf9.a6),
+  fork: () => (/* reexport */ io_22ea0cf9.M),
+  getContext: () => (/* reexport */ io_22ea0cf9.a7),
+  join: () => (/* reexport */ io_22ea0cf9.a3),
+  put: () => (/* reexport */ io_22ea0cf9.Z),
+  putResolve: () => (/* reexport */ io_22ea0cf9._),
+  race: () => (/* reexport */ io_22ea0cf9.W),
   retry: () => (/* reexport */ retry$1),
-  select: () => (/* reexport */ io_c3792963.a3),
-  setContext: () => (/* reexport */ io_c3792963.a7),
-  spawn: () => (/* reexport */ io_c3792963.a1),
-  take: () => (/* reexport */ io_c3792963.K),
+  select: () => (/* reexport */ io_22ea0cf9.a4),
+  setContext: () => (/* reexport */ io_22ea0cf9.a8),
+  spawn: () => (/* reexport */ io_22ea0cf9.a2),
+  take: () => (/* reexport */ io_22ea0cf9.L),
   takeEvery: () => (/* reexport */ takeEvery$1),
   takeLatest: () => (/* reexport */ takeLatest$1),
   takeLeading: () => (/* reexport */ takeLeading$1),
-  takeMaybe: () => (/* reexport */ io_c3792963.X),
+  takeMaybe: () => (/* reexport */ io_22ea0cf9.Y),
   throttle: () => (/* reexport */ throttle$1)
 });
 
 // EXTERNAL MODULE: ../../node_modules/@redux-saga/is/dist/redux-saga-is.esm.js
 var redux_saga_is_esm = __webpack_require__(54860);
-// EXTERNAL MODULE: ../../node_modules/@redux-saga/core/dist/io-c3792963.js + 1 modules
-var io_c3792963 = __webpack_require__(36882);
+// EXTERNAL MODULE: ../../node_modules/@redux-saga/core/dist/io-22ea0cf9.js + 1 modules
+var io_22ea0cf9 = __webpack_require__(90258);
 ;// CONCATENATED MODULE: ../../node_modules/@redux-saga/core/dist/redux-saga-effects.esm.js
 
 
@@ -75620,7 +75710,7 @@ function fsmIterator(fsm, startState, name) {
     }
   }
 
-  return (0,io_c3792963.q)(next, function (error) {
+  return (0,io_22ea0cf9.q)(next, function (error) {
     return next(null, error);
   }, name);
 }
@@ -75632,13 +75722,13 @@ function takeEvery(patternOrChannel, worker) {
 
   var yTake = {
     done: false,
-    value: (0,io_c3792963.K)(patternOrChannel)
+    value: (0,io_22ea0cf9.L)(patternOrChannel)
   };
 
   var yFork = function yFork(ac) {
     return {
       done: false,
-      value: io_c3792963.L.apply(void 0, [worker].concat(args, [ac]))
+      value: io_22ea0cf9.M.apply(void 0, [worker].concat(args, [ac]))
     };
   };
 
@@ -75671,20 +75761,20 @@ function takeLatest(patternOrChannel, worker) {
 
   var yTake = {
     done: false,
-    value: (0,io_c3792963.K)(patternOrChannel)
+    value: (0,io_22ea0cf9.L)(patternOrChannel)
   };
 
   var yFork = function yFork(ac) {
     return {
       done: false,
-      value: io_c3792963.L.apply(void 0, [worker].concat(args, [ac]))
+      value: io_22ea0cf9.M.apply(void 0, [worker].concat(args, [ac]))
     };
   };
 
   var yCancel = function yCancel(task) {
     return {
       done: false,
-      value: (0,io_c3792963.M)(task)
+      value: (0,io_22ea0cf9.N)(task)
     };
   };
 
@@ -75733,13 +75823,13 @@ function takeLeading(patternOrChannel, worker) {
 
   var yTake = {
     done: false,
-    value: (0,io_c3792963.K)(patternOrChannel)
+    value: (0,io_22ea0cf9.L)(patternOrChannel)
   };
 
   var yCall = function yCall(ac) {
     return {
       done: false,
-      value: io_c3792963.N.apply(void 0, [worker].concat(args, [ac]))
+      value: io_22ea0cf9.O.apply(void 0, [worker].concat(args, [ac]))
     };
   };
 
@@ -75776,20 +75866,20 @@ function throttle(delayLength, patternOrChannel, worker) {
   var yTake = function yTake() {
     return {
       done: false,
-      value: (0,io_c3792963.K)(channel$1)
+      value: (0,io_22ea0cf9.L)(channel$1)
     };
   };
 
   var yFork = function yFork(ac) {
     return {
       done: false,
-      value: io_c3792963.L.apply(void 0, [worker].concat(args, [ac]))
+      value: io_22ea0cf9.M.apply(void 0, [worker].concat(args, [ac]))
     };
   };
 
   var yDelay = {
     done: false,
-    value: (0,io_c3792963.O)(delayLength)
+    value: (0,io_22ea0cf9.Q)(delayLength)
   };
 
   var setAction = function setAction(ac) {
@@ -75810,7 +75900,7 @@ function throttle(delayLength, patternOrChannel, worker) {
     q1: function q1() {
       var yActionChannel = {
         done: false,
-        value: (0,io_c3792963.Q)(patternOrChannel, (0,io_c3792963.U)(1))
+        value: (0,io_22ea0cf9.U)(patternOrChannel, (0,io_22ea0cf9.V)(1))
       };
       return {
         nextState: 'q2',
@@ -75849,11 +75939,11 @@ function retry(maxTries, delayLength, fn) {
 
   var yCall = {
     done: false,
-    value: io_c3792963.N.apply(void 0, [fn].concat(args))
+    value: io_22ea0cf9.O.apply(void 0, [fn].concat(args))
   };
   var yDelay = {
     done: false,
-    value: (0,io_c3792963.O)(delayLength)
+    value: (0,io_22ea0cf9.Q)(delayLength)
   };
   return fsmIterator({
     q1: function q1() {
@@ -75891,20 +75981,20 @@ function debounceHelper(delayLength, patternOrChannel, worker) {
   var action, raceOutput;
   var yTake = {
     done: false,
-    value: (0,io_c3792963.K)(patternOrChannel)
+    value: (0,io_22ea0cf9.L)(patternOrChannel)
   };
   var yRace = {
     done: false,
-    value: (0,io_c3792963.V)({
-      action: (0,io_c3792963.K)(patternOrChannel),
-      debounce: (0,io_c3792963.O)(delayLength)
+    value: (0,io_22ea0cf9.W)({
+      action: (0,io_22ea0cf9.L)(patternOrChannel),
+      debounce: (0,io_22ea0cf9.Q)(delayLength)
     })
   };
 
   var yFork = function yFork(ac) {
     return {
       done: false,
-      value: io_c3792963.L.apply(void 0, [worker].concat(args, [ac]))
+      value: io_22ea0cf9.M.apply(void 0, [worker].concat(args, [ac]))
     };
   };
 
@@ -75963,7 +76053,7 @@ function takeEvery$1(patternOrChannel, worker) {
     args[_key - 2] = arguments[_key];
   }
 
-  return io_c3792963.L.apply(void 0, [takeEvery, patternOrChannel, worker].concat(args));
+  return io_22ea0cf9.M.apply(void 0, [takeEvery, patternOrChannel, worker].concat(args));
 }
 function takeLatest$1(patternOrChannel, worker) {
   if (false) {}
@@ -75972,7 +76062,7 @@ function takeLatest$1(patternOrChannel, worker) {
     args[_key2 - 2] = arguments[_key2];
   }
 
-  return io_c3792963.L.apply(void 0, [takeLatest, patternOrChannel, worker].concat(args));
+  return io_22ea0cf9.M.apply(void 0, [takeLatest, patternOrChannel, worker].concat(args));
 }
 function takeLeading$1(patternOrChannel, worker) {
   if (false) {}
@@ -75981,7 +76071,7 @@ function takeLeading$1(patternOrChannel, worker) {
     args[_key3 - 2] = arguments[_key3];
   }
 
-  return io_c3792963.L.apply(void 0, [takeLeading, patternOrChannel, worker].concat(args));
+  return io_22ea0cf9.M.apply(void 0, [takeLeading, patternOrChannel, worker].concat(args));
 }
 function throttle$1(ms, patternOrChannel, worker) {
   if (false) {}
@@ -75990,21 +76080,21 @@ function throttle$1(ms, patternOrChannel, worker) {
     args[_key4 - 3] = arguments[_key4];
   }
 
-  return io_c3792963.L.apply(void 0, [throttle, ms, patternOrChannel, worker].concat(args));
+  return io_22ea0cf9.M.apply(void 0, [throttle, ms, patternOrChannel, worker].concat(args));
 }
 function retry$1(maxTries, delayLength, worker) {
   for (var _len5 = arguments.length, args = new Array(_len5 > 3 ? _len5 - 3 : 0), _key5 = 3; _key5 < _len5; _key5++) {
     args[_key5 - 3] = arguments[_key5];
   }
 
-  return io_c3792963.N.apply(void 0, [retry, maxTries, delayLength, worker].concat(args));
+  return io_22ea0cf9.O.apply(void 0, [retry, maxTries, delayLength, worker].concat(args));
 }
 function debounce(delayLength, pattern, worker) {
   for (var _len6 = arguments.length, args = new Array(_len6 > 3 ? _len6 - 3 : 0), _key6 = 3; _key6 < _len6; _key6++) {
     args[_key6 - 3] = arguments[_key6];
   }
 
-  return io_c3792963.L.apply(void 0, [debounceHelper, delayLength, pattern, worker].concat(args));
+  return io_22ea0cf9.M.apply(void 0, [debounceHelper, delayLength, pattern, worker].concat(args));
 }
 
 
@@ -76043,41 +76133,39 @@ function _typeof(o) {
     return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o;
   }, _typeof(o);
 }
+
 ;// CONCATENATED MODULE: ../../node_modules/@babel/runtime/helpers/esm/toPrimitive.js
 
-function _toPrimitive(input, hint) {
-  if (_typeof(input) !== "object" || input === null) return input;
-  var prim = input[Symbol.toPrimitive];
-  if (prim !== undefined) {
-    var res = prim.call(input, hint || "default");
-    if (_typeof(res) !== "object") return res;
+function toPrimitive(t, r) {
+  if ("object" != _typeof(t) || !t) return t;
+  var e = t[Symbol.toPrimitive];
+  if (void 0 !== e) {
+    var i = e.call(t, r || "default");
+    if ("object" != _typeof(i)) return i;
     throw new TypeError("@@toPrimitive must return a primitive value.");
   }
-  return (hint === "string" ? String : Number)(input);
+  return ("string" === r ? String : Number)(t);
 }
+
 ;// CONCATENATED MODULE: ../../node_modules/@babel/runtime/helpers/esm/toPropertyKey.js
 
 
-function _toPropertyKey(arg) {
-  var key = _toPrimitive(arg, "string");
-  return _typeof(key) === "symbol" ? key : String(key);
+function toPropertyKey(t) {
+  var i = toPrimitive(t, "string");
+  return "symbol" == _typeof(i) ? i : i + "";
 }
+
 ;// CONCATENATED MODULE: ../../node_modules/@babel/runtime/helpers/esm/defineProperty.js
 
-function _defineProperty(obj, key, value) {
-  key = _toPropertyKey(key);
-  if (key in obj) {
-    Object.defineProperty(obj, key, {
-      value: value,
-      enumerable: true,
-      configurable: true,
-      writable: true
-    });
-  } else {
-    obj[key] = value;
-  }
-  return obj;
+function _defineProperty(e, r, t) {
+  return (r = toPropertyKey(r)) in e ? Object.defineProperty(e, r, {
+    value: t,
+    enumerable: !0,
+    configurable: !0,
+    writable: !0
+  }) : e[r] = t, e;
 }
+
 ;// CONCATENATED MODULE: ../../node_modules/@babel/runtime/helpers/esm/objectSpread2.js
 
 function ownKeys(e, r) {
@@ -76101,6 +76189,7 @@ function _objectSpread2(e) {
   }
   return e;
 }
+
 ;// CONCATENATED MODULE: ../../node_modules/redux/es/redux.js
 
 
@@ -77608,7 +77697,7 @@ module.exports = str => encodeURIComponent(str).replace(/[!'()*]/g, x => `%${x.c
 
 /***/ }),
 
-/***/ 96672:
+/***/ 48030:
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -78049,7 +78138,7 @@ var _v4 = _interopRequireDefault(__webpack_require__(93423));
 
 var _nil = _interopRequireDefault(__webpack_require__(35911));
 
-var _version = _interopRequireDefault(__webpack_require__(96672));
+var _version = _interopRequireDefault(__webpack_require__(48030));
 
 var _validate = _interopRequireDefault(__webpack_require__(4564));
 
@@ -85954,10 +86043,10 @@ var SHARED = '__core-js_shared__';
 var store = module.exports = globalThis[SHARED] || defineGlobalProperty(SHARED, {});
 
 (store.versions || (store.versions = [])).push({
-  version: '3.38.1',
+  version: '3.38.0',
   mode: IS_PURE ? 'pure' : 'global',
   copyright: '© 2014-2024 Denis Pushkarev (zloirock.ru)',
-  license: 'https://github.com/zloirock/core-js/blob/v3.38.1/LICENSE',
+  license: 'https://github.com/zloirock/core-js/blob/v3.38.0/LICENSE',
   source: 'https://github.com/zloirock/core-js'
 });
 
@@ -85985,7 +86074,7 @@ module.exports = function (key, value) {
 
 var globalThis = __webpack_require__(79117);
 var fails = __webpack_require__(5234);
-var V8 = __webpack_require__(87160);
+var V8 = __webpack_require__(66260);
 var ENVIRONMENT = __webpack_require__(11078);
 
 var structuredClone = globalThis.structuredClone;
@@ -86008,7 +86097,7 @@ module.exports = !!structuredClone && !fails(function () {
 "use strict";
 
 /* eslint-disable es/no-symbol -- required for testing */
-var V8_VERSION = __webpack_require__(87160);
+var V8_VERSION = __webpack_require__(66260);
 var fails = __webpack_require__(5234);
 var globalThis = __webpack_require__(79117);
 
@@ -86993,10 +87082,10 @@ var fails = __webpack_require__(5234);
 var aCallable = __webpack_require__(44977);
 var internalSort = __webpack_require__(9295);
 var ArrayBufferViewCore = __webpack_require__(47223);
-var FF = __webpack_require__(18246);
+var FF = __webpack_require__(92730);
 var IE_OR_EDGE = __webpack_require__(84598);
-var V8 = __webpack_require__(87160);
-var WEBKIT = __webpack_require__(13508);
+var V8 = __webpack_require__(66260);
+var WEBKIT = __webpack_require__(6240);
 
 var aTypedArray = ArrayBufferViewCore.aTypedArray;
 var exportTypedArrayMethod = ArrayBufferViewCore.exportTypedArrayMethod;
@@ -87344,7 +87433,7 @@ if (DESCRIPTORS && !('size' in URLSearchParamsPrototype)) {
 
 /***/ }),
 
-/***/ 18246:
+/***/ 92730:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -87358,7 +87447,7 @@ module.exports = !!firefox && +firefox[1];
 
 /***/ }),
 
-/***/ 87160:
+/***/ 66260:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -87394,7 +87483,7 @@ module.exports = version;
 
 /***/ }),
 
-/***/ 13508:
+/***/ 6240:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -87416,19 +87505,15 @@ module.exports = !!webkit && +webkit[1];
 /* harmony export */   A: () => (/* binding */ _extends)
 /* harmony export */ });
 function _extends() {
-  _extends = Object.assign ? Object.assign.bind() : function (target) {
-    for (var i = 1; i < arguments.length; i++) {
-      var source = arguments[i];
-      for (var key in source) {
-        if (Object.prototype.hasOwnProperty.call(source, key)) {
-          target[key] = source[key];
-        }
-      }
+  return _extends = Object.assign ? Object.assign.bind() : function (n) {
+    for (var e = 1; e < arguments.length; e++) {
+      var t = arguments[e];
+      for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]);
     }
-    return target;
-  };
-  return _extends.apply(this, arguments);
+    return n;
+  }, _extends.apply(null, arguments);
 }
+
 
 /***/ })
 
