@@ -158,9 +158,8 @@ For more information on keepalive see here: [https://en.wikipedia.org/wiki/Keepa
     *   `connectivity.reconnectTimeMultiplier` **[Number][12]** Reconnect delay multiplier for subsequent attempts. The reconnect delay time will be multiplied by this after each failed reconnect attempt to increase the delay between attempts. eg. 5000ms then 10000ms then 20000ms delay if value is 2. (optional, default `1`)
     *   `connectivity.reconnectTimeLimit` **[Number][12]** Maximum time delay between reconnect attempts (milliseconds). Used in conjunction with the reconnect time multiplier to prevent overly long delays between reconnection attempts. (optional, default `640000`)
     *   `connectivity.autoReconnect` **[Boolean][11]** Flag to determine whether the SDK will attempt to automatically reconnect after connectivity disruptions. (optional, default `true`)
-    *   `connectivity.maxMissedPings` **[Number][12]** Maximum pings sent (without receiving a response) before reporting an error. (optional, default `3`)
     *   `connectivity.checkConnectivity` **[Boolean][11]** Flag to determine whether the SDK should check connectivity. (optional, default `true`)
-    *   `connectivity.webSocketOAuthMode` **[string][8]** query will send the bearer access token to authenticate the websocket and none will not send it. (optional, default `query`)
+    *   `connectivity.webSocketOAuthMode` **[string][8]** When set to 'query', the OAuth bearer access token will be appended as a query string parameter to the websocket address. (optional, default `none`)
 
 ### config.notifications
 
@@ -331,37 +330,6 @@ Type: [Object][7]
 *   `code` **[string][8]** The code of the error. If no code is known, this will be 'NO_CODE'.
 *   `message` **[string][8]** A human-readable message to describe the error. If no message is known, this will be 'An error occurred'.
 
-### updateToken
-
-If you're authenticating with tokens that expire and have not provided a refresh token to the `connect` function, you can update your access token with `updateToken` before it expires to stay connected.
-
-#### Parameters
-
-*   `credentials` **[Object][7]** The credentials object.
-
-    *   `credentials.username` **[string][8]** The username without the application's domain.
-    *   `credentials.accessToken` **[string][8]** An access token for the user with the provided user Id.
-
-### updateToken
-
-If you're authenticating with tokens that expire, you can update your access token with `updateToken` before it expires to stay connected.
-
-#### Parameters
-
-*   `credentials` **[Object][7]** The credentials object.
-
-    *   `credentials.username` **[string][8]** The username without the application's domain.
-    *   `credentials.bearerAccessToken` **[string][8]** A bearerAccessToken provided by an outside service.
-
-#### Examples
-
-```javascript
-client.updateToken({
-  username: 'alfred@example.com',
-  bearerAccessToken: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...'
-});
-```
-
 ### getUserInfo
 
 Retrieves information about the current user.
@@ -435,7 +403,8 @@ client.setCredentials({
 ### setCredentials
 
 Provides a bearerAccessToken to any backend services that the SDK instance deals with.
-The bearerAccessToken provided establishes what can be accessed by the SDK.
+The bearerAccessToken provided establishes what can be accessed by the SDK. The bearerAccessToken
+can be set again after subscription as long as the subscribed username is passed with the updated bearerAccessToken.
 
 #### Parameters
 
@@ -450,27 +419,6 @@ The bearerAccessToken provided establishes what can be accessed by the SDK.
 client.setCredentials({
   username: 'alfred@example.com',
   bearerAccessToken: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...'
-});
-```
-
-### setCredentials
-
-Provides an access token to any backend services that the SDK instance deals with.
-The access token provided establishes what can be accessed by the SDK.
-
-#### Parameters
-
-*   `credentials` **[Object][7]** The credentials object.
-
-    *   `credentials.username` **[string][8]** The username without the application's domain.
-    *   `credentials.accessToken` **[string][8]** An accessToken retrieved using the authentication APIs of the platform. Used for CIM authentication.
-
-#### Examples
-
-```javascript
-client.setCredentials({
-  username: 'alfred@example.com',
-  accessToken: 'ATgtBl8QAoJaeeJU!zhARKBYaN2BUxFQsc8F...'
 });
 ```
 
@@ -2433,18 +2381,12 @@ Type: [Object][7]
 
 *   `connected` **[boolean][11]** The state of the websocket connection.
 *   `pinging` **[boolean][11]** True if the client has sent a ping to the server and is still waiting for a pong response.
-*   `method` **[Object][7]** Information about how the websocket is being used.
-
-    *   `method.type` **[string][8]?** How the websocket is staying connected.
-    *   `method.responsibleParty` **[string][8]?** Who is responsible for keeping the connection alive.
-*   `platform` **[string][8]** The SDK platform being used.
 *   `pingInterval` **[number][12]** How often the client will ping the server to test for websocket connectivity.
 *   `reconnectLimit` **[number][12]** How many times the SDK will try to reconnect a disconnected websocket.
 *   `reconnectDelay` **[number][12]** How long the SDK will wait before retrying websocket reconnection.
 *   `reconnectTimeMultiplier` **[number][12]** Reconnect delay multiplier for subsequent attempts. The reconnect delay time will be multiplied by this after each failed reconnect attempt to increase the delay between attempts. eg. 5000ms then 10000ms then 20000ms delay if value is 2.
 *   `reconnectTimeLimit` **[number][12]** Maximum time delay between reconnect attempts (milliseconds). Used in conjunction with `reconnectTimeMultiplier` to prevent overly long delays between reconnection attempts.
 *   `autoReconnect` **[boolean][11]** Indicates if the SDK should automatically try reconnecting a disconnected websocket.
-*   `maxMissedPings` **[number][12]** How many missed pings before the SDK stops trying to reconnect a disconnected websocket.
 *   `webSocketOAuthMode` **[string][8]** The mode used for authenticating with the server.
 *   `wsInfo` **[Object][7]** Information required to connect a websocket to the server.
 
@@ -2453,15 +2395,10 @@ Type: [Object][7]
     *   `wsInfo.port` **[number][12]?** The port of the server to connect to.
     *   `wsInfo.url` **[string][8]?** The URL path to use to request a websocket connection.
     *   `wsInfo.params` **[string][8]?** Any additional params that might be required by the server to establish the websocket connection.
-*   `lastContact` **[number][12]** The date and time that the last known contact with the server was.
 
 ### getSocketState
 
 Get the state of the websocket.
-
-#### Parameters
-
-*   `platform` **[string][8]** Backend platform for which to request the websocket's state. (optional, default `'link'`)
 
 Returns **[connection.WSConnectionObject][94]** Details about the current websocket connection, including state and configuration.
 
@@ -2469,33 +2406,33 @@ Returns **[connection.WSConnectionObject][94]** Details about the current websoc
 
 Enables or disables connectivity checking.
 
+This API will change the `connectivity.checkConnectivity` configuration set during SDK initialization. If there
+was a connected websocket while it is changed, the change will take affect immediately.
+
 #### Parameters
 
-*   `enable` **[boolean][11]** Enable connectivity checking.
+*   `enable` **[boolean][11]** Whether the websocket should be pinging to check for connectivity issues or not.
 
 ### resetConnection
 
-Triggers a reset in the connection to the WebSocket being used for notifications.
-This can be used in scenarios where a network issue (undetectable by the SDK)
-is detected by an application.
+Resets the connected websocket by manually disconnecting then reconnecting.
 
-If there is no WebSocket currently connected, this function has no effect.
-Calling this function will trigger all the normal WebSocket and connectivity lifecycle
-events as well as trigger re-connection processing that follows the configuration of the SDK.
-Calling this function always has the potential of causing some events being lost by the
-SDK and preventing proper operation.
+This API will simulate the SDK receiving a websocket disconnect from the browser,
+which will trigger its recovery functionality. This API can be used if the application
+is aware of a network issue before the SDK is notified by the browser.
+
+If there is no websocket connected, this API has no effect. If the SDK is not configured
+to autoreconnect (see `connectivity.autoReconnect` configuration property), then this
+API will not attempt to reconnect the websocket automatically.
+
+The normal websocket and lifecycle events will be emitted during this operation,
+notably the [ws:change][95] event.
 
 ### ws:change
 
 The WebSocket to the server has changed state.
 
 This event is only emitted when the WebSocket is connected, or has lost connection.
-
-#### Parameters
-
-*   `params` **[Object][7]** 
-
-    *   `params.platform` **[string][8]** The platform
 
 ## logger
 
@@ -2504,7 +2441,7 @@ behaviour. The SDK will generate logs, at different levels for different
 types of information, which are routed to a
 "[Log Handler][4]" for consumption. An application
 can provide their own Log Handler (see
-[config.logs][95]) to customize how the logs are
+[config.logs][96]) to customize how the logs are
 handled, or allow the default Log Handler to print the logs to the
 console.
 
@@ -2564,7 +2501,7 @@ logged. It contains both the logged information and meta-info about when
 and who logged it.
 
 A [LogHandler][4] provided to the SDK (see
-[config.logs][95]) will need to handle LogEntry
+[config.logs][96]) will need to handle LogEntry
 objects.
 
 Type: [Object][7]
@@ -2614,7 +2551,7 @@ default, the SDK will log information to the console, but a LogHandler can
 be configured to change this behaviour.
 
 A LogHandler can be provided to the SDK as part of its configuration (see
-[config.logs][95]). The SDK will then provide this
+[config.logs][96]). The SDK will then provide this
 function with the logged information.
 
 Type: [Function][15]
@@ -2654,7 +2591,7 @@ const client = create(configs)
 ## media
 
 The 'media' namespace provides an interface for interacting with Media that the
-SDK has access to. Media is used in conjunction with the [Calls][96]
+SDK has access to. Media is used in conjunction with the [Calls][97]
 feature to manipulate and render the Tracks sent and received from a Call.
 
 Media and Track objects are not created directly, but are created as part of
@@ -2665,13 +2602,13 @@ or a remote user's machine.
 The Media feature also keeps track of media devices that the user's machine
 can access. Any media device (eg. USB headset) connected to the machine
 can be used as a source for media. Available devices can be found using
-the [media.getDevices][97] API.
+the [media.getDevices][98] API.
 
 ### getDevices
 
 Retrieves the available media devices for use.
 
-The [devices:change][98] event will be
+The [devices:change][99] event will be
 emitted when the available media devices have changed.
 
 Returns **[Object][7]** The lists of camera, microphone, and speaker devices.
@@ -2684,7 +2621,7 @@ Retrieves an available Media object with a specific Media ID.
 
 *   `mediaId` **[string][8]** The ID of the Media to retrieve.
 
-Returns **[call.MediaObject][99]** A Media object.
+Returns **[call.MediaObject][100]** A Media object.
 
 ### getTrackById
 
@@ -2719,18 +2656,18 @@ convenient for them, rather than during call setup. If the user saves
 their decision, they will not be prompted again when the SDK accesses
 those devices for a call.
 
-For device information, the [media.getDevices][97] API will retrieve
+For device information, the [media.getDevices][98] API will retrieve
 the list of media devices available for the SDK to use. If this list
 is empty, or is missing information, it is likely that the browser
 does not have permission to access the device's information. We
-recommend using the [media.initializeDevices][100] API in this
+recommend using the [media.initializeDevices][101] API in this
 scenario if you would like to allow the end-user to select which
 device(s) they would like to use when they make a call, rather than
 using the system default.
 
-The SDK will emit a [devices:change][98]
+The SDK will emit a [devices:change][99]
 event when the operation is successful or a
-[devices:error][101] event if an error is
+[devices:error][102] event if an error is
 encountered.
 
 #### Parameters
@@ -2867,7 +2804,7 @@ call is muted, the result will only be noticeable locally.
 This mute operation acts on those specified Tracks directly.
 It does not act on the active Call as a whole.
 
-The SDK will emit a [media:muted][102] event
+The SDK will emit a [media:muted][103] event
 when a Track has been muted.
 
 #### Parameters
@@ -2882,7 +2819,7 @@ Media will resume its normal rendering for the Tracks.
 Like the 'muteTracks' API, this unmute operation acts on those specified Tracks directly.
 Therefore it does not act on active Call as a whole.
 
-The SDK will emit a [media:unmuted][103] event
+The SDK will emit a [media:unmuted][104] event
 when a Track has been unmuted.
 
 #### Parameters
@@ -2894,7 +2831,7 @@ when a Track has been unmuted.
 The media devices available for use have changed.
 
 Information about the available media devices can be retrieved using the
-[media.getDevices][97] API.
+[media.getDevices][98] API.
 
 #### Examples
 
@@ -2913,13 +2850,13 @@ An error occurred while trying to access media devices.
 The most common causes of this error are when the browser does not have
 permission from the end-user to access the devices, or when the browser
 cannot find a media device that fulfills the
-[MediaConstraint(s)][104] that was provided.
+[MediaConstraint(s)][105] that was provided.
 
 #### Parameters
 
 *   `params` **[Object][7]** 
 
-    *   `params.error` **[Error][105]** The Basic error object.
+    *   `params.error` **[Error][106]** The Basic error object.
 
 ### media:muted
 
@@ -2937,7 +2874,7 @@ A Track can be muted using the [media.muteTracks][67] API.
 
 The specified Tracks have been unmuted.
 
-A Track can be unmuted using the [media.unmuteTracks][106]
+A Track can be unmuted using the [media.unmuteTracks][107]
 API.
 
 #### Parameters
@@ -2953,7 +2890,7 @@ The specified Track has had its media source muted.
 The Track is still active, but is not receiving media any longer. An audio
 track will be silent and a video track will be a black frame. It is
 possible for the track to start receiving media again (see the
-[media:sourceUnmuted][107] event).
+[media:sourceUnmuted][108] event).
 
 This event is generated outside the control of the SDK. This will predominantly
 happen for a remote track during network issues, where media will lose frames
@@ -2971,7 +2908,7 @@ end-user stops allowing the SDK to access the media device, for example.
 The specified Track has started receiving media from its source once again.
 
 The Track returns to the state before it was muted (see the
-[media:sourceMuted][108] event), and will
+[media:sourceMuted][109] event), and will
 be able to display video or play audio once again.
 
 This event is generated outside the control of the SDK, when the cause of the
@@ -3038,7 +2975,7 @@ Provides an external notification to the system for processing.
 ### registerApplePush
 
 Registers with Apple push notification service. Once registration is successful, the application will be able to receive
-standard and/or voip push notifications. It can then send these notifications to the SDK with [api.notifications.process][109]
+standard and/or voip push notifications. It can then send these notifications to the SDK with [api.notifications.process][110]
 in order for the SDK to process them.
 
 #### Parameters
@@ -3063,7 +3000,7 @@ Promise will reject with error object otherwise.
 ### registerAndroidPush
 
 Registers with Google push notification service. Once registration is successful, the application will be able to receive
-standard and/or voip push notifications. It can then send these notifications to the SDK with [api.notifications.process][109]
+standard and/or voip push notifications. It can then send these notifications to the SDK with [api.notifications.process][110]
 in order for the SDK to process them.
 
 #### Parameters
@@ -3139,7 +3076,7 @@ The 'request' namespace (within the 'api' type) is used to make network requests
 ### fetch
 
 Send a request to the underlying REST service with the appropriate configuration and authentication.
-This is a wrapper on top of the browser's [fetch API][110]
+This is a wrapper on top of the browser's [fetch API][111]
 and behaves very similarly but using SDK configuration for the base URL and authentication as well
 as SDK logging.
 
@@ -3147,7 +3084,7 @@ as SDK logging.
 
 *   `resource` **[string][8]** The full path of the resource to fetch from the underlying service. This should include any REST version
     or user information. This path will be appended to the base URL according to SDK configuration.
-*   `init` **RequestInit** An object containing any custom settings that you want to apply to the request. See [fetch API][110]
+*   `init` **RequestInit** An object containing any custom settings that you want to apply to the request. See [fetch API][111]
     for a full description and defaults.
 
 #### Examples
@@ -3167,7 +3104,7 @@ const requestOptions = {
 const response = await client.request.fetch('/rest/version/1/user/xyz@test.com/externalnotification', requestOptions)
 ```
 
-Returns **[Promise][72]<[Response][111]>** A promise for a [Response][112] object.
+Returns **[Promise][72]<[Response][112]>** A promise for a [Response][113] object.
 
 ## sdpHandlers
 
@@ -3178,7 +3115,7 @@ environments and/or scenarios.
 Note that SDP handlers are exposed on the entry point of the SDK. They can be added during
 initialization of the SDK using the [config.call.sdpHandlers][40] configuration
 parameter. They can also be set after the SDK's creation by using the
-[call.setSdpHandlers][113] function.
+[call.setSdpHandlers][114] function.
 
 ### Examples
 
@@ -3263,8 +3200,8 @@ fully functional.
 
 The services an application can subscribe to are based on the features
 included in the SDK. The list of available services can be retrieved
-using the [services.getSubscriptions][114] API. These values can be used
-with the [services.subscribe][115] API.
+using the [services.getSubscriptions][115] API. These values can be used
+with the [services.subscribe][116] API.
 
 The channel used for subscriptions is the method for receiving the service
 updates. The recommended channel is `websocket`, where the SDK is able to
@@ -3275,7 +3212,7 @@ websocket cannot be used, will be available in the future.
 
 The ServiceDescriptor type defines the format for specifying how to subscribe for a certain service.
 This is the service configuration object that needs to be passed (as part of an array of configuration objects) when calling
-the [services.subscribe][115] function.
+the [services.subscribe][116] function.
 Only some plugins (`call`, `messaging` and `presence`) support such configuration object that needs to be passed
 to the subscribe function.
 
@@ -3302,7 +3239,7 @@ client.services.subscribe([
 ### SmsInboundServiceParams
 
 The SmsInboundServiceParams type defines the additional information when subscribing to SMS inbound service.
-This is the configuration object that needs to be passed as the value for the [ServiceDescriptor.params][116] property.
+This is the configuration object that needs to be passed as the value for the [ServiceDescriptor.params][117] property.
 
 Type: [Object][7]
 
@@ -3324,26 +3261,21 @@ client.services.subscribe([
 
 Subscribes to platform notifications for an SDK service.
 
-Extra configuration can be provided as an additional object parameter.
-The "forceLogOut" flag has been deprecated, as no longer being supported by backend.
-It will be removed in the next major release.
-
-For push notifications on link, please see [notifications.registerPush][117]
+For push notifications on link, please see [notifications.registerPush][118]
 
 The SDK currently only supports the `websocket` channel as a subscription
 type.
 
-When calling this API, SDK emits a [subscription:change][118] event, each time there is a change in subscriptions.
+When calling this API, SDK emits a [subscription:change][119] event, each time there is a change in subscriptions.
 
 Upon getting such event, existing subscriptions can be retrieved using the
-[services.getSubscriptions][114] API.
+[services.getSubscriptions][115] API.
 
 #### Parameters
 
-*   `services` **[Array][19]<([string][8] | [services.ServiceDescriptor][119])>** A list of service configurations.
+*   `services` **[Array][19]<([string][8] | [services.ServiceDescriptor][120])>** A list of service configurations.
 *   `options` **[Object][7]?** The options object for non-credential options.
 
-    *   `options.forceLogOut` **[boolean][11]?** Deprecated: Force the oldest connection to log out if too many simultaneous connections. Link only.
     *   `options.type` **[string][8]** The method of how to receive service updates. (optional, default `'websocket'`)
     *   `options.clientCorrelator` **[string][8]?** Unique ID for the client. This is used by the platform to identify an instance of the application used by the specific device.
 
@@ -3351,7 +3283,7 @@ Upon getting such event, existing subscriptions can be retrieved using the
 
 ```javascript
 // Subscribe for chat and SMS services.
-client.services.subscribe(['call', 'IM'], {forceLogOut: true, clientCorrelator: 'abc123'})
+client.services.subscribe(['call', 'IM'], {clientCorrelator: 'abc123'})
 ```
 
 Returns **[undefined][83]** 
@@ -3360,10 +3292,10 @@ Returns **[undefined][83]**
 
 Cancels existing subscriptions for platform notifications.
 
-When calling this API, SDK emits a [subscription:change][118] event, each time there is a change in subscriptions.
+When calling this API, SDK emits a [subscription:change][119] event, each time there is a change in subscriptions.
 
 Upon getting such event, existing subscriptions can be retrieved using the
-[services.getSubscriptions][114] API. The `subscribed` values are the
+[services.getSubscriptions][115] API. The `subscribed` values are the
 services that can be unsubscribed from.
 
 #### Parameters
@@ -3388,7 +3320,7 @@ The data returned by this API is a snapshot of the SDK's current local subscript
 The data does indicate whether there was an ongoing subscription at the time this API was called.
 If a subscription is in fact in progress, the user should not take decisions based on this snapshot, as the subscription is not yet complete.
 
-To be notified when any subscription(s) did change/complete, listen for [subscription:change][118] events.
+To be notified when any subscription(s) did change/complete, listen for [subscription:change][119] events.
 
 The `available` values are the SDK's services that an application can
 subscribe to receive notifications about. A feature generally
@@ -3396,7 +3328,7 @@ requires a subscription to its service in order to be fully functional.
 
 The `subscribed` values are the SDK's services that the application has
 an active subscription for. Services are subscribed to using the
-[services.subscribe][115] API.
+[services.subscribe][116] API.
 
 #### Examples
 
@@ -3424,7 +3356,7 @@ Returns **[Object][7]** Lists of subscribed and available services.
 Subscription information has changed.
 
 The updated subscription information can be retrieved using the
-[services.getSubscriptions][114] API.
+[services.getSubscriptions][115] API.
 
 #### Parameters
 
@@ -3443,7 +3375,7 @@ The updated subscription information can be retrieved using the
 An error occurred during a subscription operation.
 
 The subscription information can be retrieved using the
-[services.getSubscriptions][114] API.
+[services.getSubscriptions][115] API.
 
 Below are some common errors related to service subscriptions.
 
@@ -3680,52 +3612,54 @@ session expires.
 
 [94]: #connectionwsconnectionobject
 
-[95]: #configconfiglogs
+[95]: #connectioneventwschange
 
-[96]: #call
+[96]: #configconfiglogs
 
-[97]: #mediagetdevices
+[97]: #call
 
-[98]: #mediaeventdeviceschange
+[98]: #mediagetdevices
 
-[99]: #callmediaobject
+[99]: #mediaeventdeviceschange
 
-[100]: #mediainitializedevices
+[100]: #callmediaobject
 
-[101]: #mediaeventdeviceserror
+[101]: #mediainitializedevices
 
-[102]: #mediaeventmediamuted
+[102]: #mediaeventdeviceserror
 
-[103]: #mediaeventmediaunmuted
+[103]: #mediaeventmediamuted
 
-[104]: #callmediaconstraint
+[104]: #mediaeventmediaunmuted
 
-[105]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Error
+[105]: #callmediaconstraint
 
-[106]: #mediaunmutetracks
+[106]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Error
 
-[107]: #mediaeventmediasourceunmuted
+[107]: #mediaunmutetracks
 
-[108]: #mediaeventmediasourcemuted
+[108]: #mediaeventmediasourceunmuted
 
-[109]: api.notifications.process
+[109]: #mediaeventmediasourcemuted
 
-[110]: https://developer.mozilla.org/en-US/docs/Web/API/fetch
+[110]: api.notifications.process
 
-[111]: https://developer.mozilla.org/docs/Web/Guide/HTML/HTML5
+[111]: https://developer.mozilla.org/en-US/docs/Web/API/fetch
 
-[112]: https://developer.mozilla.org/en-US/docs/Web/API/Response
+[112]: https://developer.mozilla.org/docs/Web/Guide/HTML/HTML5
 
-[113]: #callsetsdphandlers
+[113]: https://developer.mozilla.org/en-US/docs/Web/API/Response
 
-[114]: #servicesgetsubscriptions
+[114]: #callsetsdphandlers
 
-[115]: #servicessubscribe
+[115]: #servicesgetsubscriptions
 
-[116]: #servicesservicedescriptor
+[116]: #servicessubscribe
 
-[117]: notifications.registerPush
+[117]: #servicesservicedescriptor
 
-[118]: #serviceseventsubscriptionchange
+[118]: notifications.registerPush
 
-[119]: #servicesservicedescriptor
+[119]: #serviceseventsubscriptionchange
+
+[120]: #servicesservicedescriptor

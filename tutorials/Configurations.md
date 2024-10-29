@@ -85,7 +85,6 @@ connectivity: {
   reconnectTimeMultiplier: 2,
   reconnectTimeLimit: 300000, // milliseconds
   autoReconnect: true,
-  maxMissedPings: 3,
   checkConnectivity: true
 }
 ```
