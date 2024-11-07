@@ -25,6 +25,12 @@ Ribbon WebRTC SDK change log.
   - The Subscription APIs, under `client.services` should be used to retrieve information about the user's connection to the backend.
   - If this API was used to retrieved the latest authentication error, the `auth:error` event should be used for that purpose.
 
+### Fixed
+
+- The make, answer and addMedia APIs were throwing an error if parameter validation failed. This has been fixed
+  to include the error in the event that is emitted instead of throwing.
+  - This issue was introduced in the v6.12.0
+
 ### Changed
 
 - Code optimization has been turned on for the SDK which will minify the code. `KJS-2035`
