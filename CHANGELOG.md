@@ -29,6 +29,7 @@ Ribbon WebRTC SDK change log.
 
 - The make, answer, addMedia and replaceTrack APIs were throwing an error if parameter validation failed. This has been fixed to include the error in the event that is emitted instead of throwing.
   - This issue was introduced in the v6.12.0. `KJS-2422`
+- Fixed an issue where if a call join request fails, the peer connection that was created locally for the new joined call doesn't get cleaned up. `KJS-2373`
 
 ### Changed
 
