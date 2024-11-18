@@ -18461,22 +18461,22 @@
           ],
           "loc": {
             "start": {
-              "line": 456,
+              "line": 478,
               "column": 2
             },
             "end": {
-              "line": 479,
+              "line": 501,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 480,
+                "line": 502,
                 "column": 2
               },
               "end": {
-                "line": 512,
+                "line": 534,
                 "column": 3
               }
             },
@@ -20869,11 +20869,11 @@
           "context": {
             "loc": {
               "start": {
-                "line": 530,
+                "line": 523,
                 "column": 2
               },
               "end": {
-                "line": 569,
+                "line": 562,
                 "column": 3
               }
             },
@@ -21086,11 +21086,11 @@
           "context": {
             "loc": {
               "start": {
-                "line": 530,
+                "line": 523,
                 "column": 2
               },
               "end": {
-                "line": 569,
+                "line": 562,
                 "column": 3
               }
             },
@@ -21376,77 +21376,14 @@
               "name": "media.medias"
             },
             {
-              "title": "throws",
-              "description": "Throws an error if mediaConstraints.medias is not an array.",
-              "lineNumber": 36,
-              "type": {
-                "type": "NameExpression",
-                "name": "BasicError"
-              }
-            },
-            {
-              "title": "throws",
-              "description": "Throws an error if mediaConstraints.medias Objects are missing `media` and `type` properties.",
-              "lineNumber": 37,
-              "type": {
-                "type": "NameExpression",
-                "name": "BasicError"
-              }
-            },
-            {
-              "title": "throws",
-              "description": "Throws an error if mediaConstraints contains duplicate media kinds.",
-              "lineNumber": 38,
-              "type": {
-                "type": "NameExpression",
-                "name": "BasicError"
-              }
-            },
-            {
-              "title": "throws",
-              "description": "Throws an error if any tracks in mediaConstraints.medias are not detached.",
-              "lineNumber": 39,
-              "type": {
-                "type": "NameExpression",
-                "name": "BasicError"
-              }
-            },
-            {
-              "title": "throws",
-              "description": "Throws an error if any tracks in mediaConstraints.medias are not local.",
-              "lineNumber": 40,
-              "type": {
-                "type": "NameExpression",
-                "name": "BasicError"
-              }
-            },
-            {
-              "title": "throws",
-              "description": "Throws an error if any tracks in mediaConstraints.medias are already in use by a session.",
-              "lineNumber": 41,
-              "type": {
-                "type": "NameExpression",
-                "name": "BasicError"
-              }
-            },
-            {
-              "title": "throws",
-              "description": "Throws an error if mediaConstraints.medias contains any type other than Object containing `media` and `type` properties.",
-              "lineNumber": 42,
-              "type": {
-                "type": "NameExpression",
-                "name": "BasicError"
-              }
-            },
-            {
               "title": "example",
               "description": "const callId = ...\n// Get the video track used by the call.\nconst videoTrack = ...\n\n// Replace the specified video track of the call with a new\n//    video track.\nclient.call.replaceTrack(callId, videoTrack.id, {\n  // The track should be replaced with a video track using\n  //    a specific device. This effectively changes the input\n  //    device for an ongoing call.\n  video: true,\n  videoOptions: {\n    deviceId: cameraId\n  }\n})",
-              "lineNumber": 43
+              "lineNumber": 36
             },
             {
               "title": "example",
               "description": "const callId = ...\n// Get the video track used by the call.\nconst videoTrack = ...\n\n// Can also replace the specified video track of the call with a new\n// screen sharing track because screen sharing is delivered as a video stream to remote peer.\n// User will then be prompted to pick a specific screen to share and thus the device id will be selected.\nclient.call.replaceTrack(callId, videoTrack.id, {\n  // The track should be replaced with a screen sharing track.\n  // Note that 'screenOptions' property is not mandatory, as API will use default values\n  // for properties like: width, height, frameRate.\n  screen: true\n})",
-              "lineNumber": 60
+              "lineNumber": 53
             }
           ],
           "loc": {
@@ -21455,18 +21392,18 @@
               "column": 2
             },
             "end": {
-              "line": 529,
+              "line": 522,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 530,
+                "line": 523,
                 "column": 2
               },
               "end": {
-                "line": 569,
+                "line": 562,
                 "column": 3
               }
             },
@@ -21735,180 +21672,7 @@
           "properties": [],
           "returns": [],
           "sees": [],
-          "throws": [
-            {
-              "description": {
-                "type": "root",
-                "children": [
-                  {
-                    "type": "paragraph",
-                    "children": [
-                      {
-                        "type": "text",
-                        "value": "Throws an error if mediaConstraints.medias is not an array."
-                      }
-                    ]
-                  }
-                ]
-              },
-              "type": {
-                "type": "NameExpression",
-                "name": "BasicError"
-              }
-            },
-            {
-              "description": {
-                "type": "root",
-                "children": [
-                  {
-                    "type": "paragraph",
-                    "children": [
-                      {
-                        "type": "text",
-                        "value": "Throws an error if mediaConstraints.medias Objects are missing "
-                      },
-                      {
-                        "type": "inlineCode",
-                        "value": "media"
-                      },
-                      {
-                        "type": "text",
-                        "value": " and "
-                      },
-                      {
-                        "type": "inlineCode",
-                        "value": "type"
-                      },
-                      {
-                        "type": "text",
-                        "value": " properties."
-                      }
-                    ]
-                  }
-                ]
-              },
-              "type": {
-                "type": "NameExpression",
-                "name": "BasicError"
-              }
-            },
-            {
-              "description": {
-                "type": "root",
-                "children": [
-                  {
-                    "type": "paragraph",
-                    "children": [
-                      {
-                        "type": "text",
-                        "value": "Throws an error if mediaConstraints contains duplicate media kinds."
-                      }
-                    ]
-                  }
-                ]
-              },
-              "type": {
-                "type": "NameExpression",
-                "name": "BasicError"
-              }
-            },
-            {
-              "description": {
-                "type": "root",
-                "children": [
-                  {
-                    "type": "paragraph",
-                    "children": [
-                      {
-                        "type": "text",
-                        "value": "Throws an error if any tracks in mediaConstraints.medias are not detached."
-                      }
-                    ]
-                  }
-                ]
-              },
-              "type": {
-                "type": "NameExpression",
-                "name": "BasicError"
-              }
-            },
-            {
-              "description": {
-                "type": "root",
-                "children": [
-                  {
-                    "type": "paragraph",
-                    "children": [
-                      {
-                        "type": "text",
-                        "value": "Throws an error if any tracks in mediaConstraints.medias are not local."
-                      }
-                    ]
-                  }
-                ]
-              },
-              "type": {
-                "type": "NameExpression",
-                "name": "BasicError"
-              }
-            },
-            {
-              "description": {
-                "type": "root",
-                "children": [
-                  {
-                    "type": "paragraph",
-                    "children": [
-                      {
-                        "type": "text",
-                        "value": "Throws an error if any tracks in mediaConstraints.medias are already in use by a session."
-                      }
-                    ]
-                  }
-                ]
-              },
-              "type": {
-                "type": "NameExpression",
-                "name": "BasicError"
-              }
-            },
-            {
-              "description": {
-                "type": "root",
-                "children": [
-                  {
-                    "type": "paragraph",
-                    "children": [
-                      {
-                        "type": "text",
-                        "value": "Throws an error if mediaConstraints.medias contains any type other than Object containing "
-                      },
-                      {
-                        "type": "inlineCode",
-                        "value": "media"
-                      },
-                      {
-                        "type": "text",
-                        "value": " and "
-                      },
-                      {
-                        "type": "inlineCode",
-                        "value": "type"
-                      },
-                      {
-                        "type": "text",
-                        "value": " properties."
-                      }
-                    ]
-                  }
-                ]
-              },
-              "type": {
-                "type": "NameExpression",
-                "name": "BasicError"
-              }
-            }
-          ],
+          "throws": [],
           "todos": [],
           "yields": [],
           "access": "public",
@@ -22282,22 +22046,22 @@
           ],
           "loc": {
             "start": {
-              "line": 571,
+              "line": 564,
               "column": 2
             },
             "end": {
-              "line": 615,
+              "line": 608,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 616,
+                "line": 609,
                 "column": 2
               },
               "end": {
-                "line": 636,
+                "line": 629,
                 "column": 3
               }
             },
@@ -22630,22 +22394,22 @@
           ],
           "loc": {
             "start": {
-              "line": 672,
+              "line": 665,
               "column": 2
             },
             "end": {
-              "line": 735,
+              "line": 728,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 736,
+                "line": 729,
                 "column": 2
               },
               "end": {
-                "line": 776,
+                "line": 769,
                 "column": 3
               }
             },

@@ -12,7 +12,7 @@
  *
  * WebRTC.js
  * webrtc.anonymous.js
- * Version: 6.16.0
+ * Version: 6.16.1
  */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
@@ -2348,7 +2348,7 @@ module.exports = root;
 
 /***/ }),
 
-/***/ 74394:
+/***/ 64988:
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -2366,7 +2366,7 @@ exports.getVersion = getVersion;
  * for the @@ tag below with actual version value.
  */
 function getVersion() {
-  return '6.16.0';
+  return '6.16.1';
 }
 
 /***/ }),
@@ -8437,6 +8437,7 @@ var _selectors = __webpack_require__(40481);
 var _constants = __webpack_require__(59090);
 var _constants2 = __webpack_require__(84581);
 var _media = __webpack_require__(56294);
+var _call = __webpack_require__(69752);
 var _errors = _interopRequireWildcard(__webpack_require__(75412));
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
 function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && {}.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
@@ -8468,7 +8469,8 @@ function answerWebrtcSessionOperation(container) {
    * @param  {Object} sessionOptions
    * @param  {string} sessionOptions.sessionId the local webrtc session id
    * @param  {string} sessionOptions.callId the local call id
-   * @param  {Object} [sessionOptions.bandwidth] Contains configuration details for setting bandwidth
+   * @param  {call.BandwidthControls} [sessionOptions.bandwidth] Contains configuration details for setting bandwidth
+   * @param  {call.DSCPControls} [sessionOptions.dscpControls] Contains DSCP configuration for media
    * @return {Object} Object
    * @return {string} Object.answerSDP Session Description Protocol for answer
    * @return {string} Object.mediaId an identifier for media
@@ -8480,7 +8482,8 @@ function answerWebrtcSessionOperation(container) {
     const {
       sessionId,
       bandwidth,
-      callId
+      callId,
+      dscpControls
     } = sessionOptions;
     const log = logManager.getLogger('CALL', callId);
     log.info('Setting up local WebRTC portions of call.');
@@ -8500,7 +8503,7 @@ function answerWebrtcSessionOperation(container) {
     delete mediaConstraints.medias;
     let session, medias;
     try {
-      const result = await WebRTC.sessionManager.getWithMedia(sessionId, mediaConstraints);
+      const result = await WebRTC.sessionManager.getWithMedia(sessionId, mediaConstraints, dscpControls);
       session = result.session;
       medias = result.medias;
       gumEvent.endEvent();
@@ -8525,10 +8528,11 @@ function answerWebrtcSessionOperation(container) {
       }
       // Add detached media to session
       const trackLists = await (0, _media.organizeTracks)(detachedMediaObjs);
+      const dscpTrackMapping = (0, _call.getTrackDscpMapping)(trackLists, dscpControls);
 
       // eslint-disable-next-line no-useless-catch
       try {
-        await session.addTracks(trackLists.all);
+        await session.addTracks(trackLists.all, dscpTrackMapping);
         detachedMediaObjs.forEach(detachedMedia => medias.push(detachedMedia.media));
       } catch (err) {
         // Follow-up / TODO.
@@ -11136,7 +11140,7 @@ Object.defineProperty(exports, "__esModule", ({
 exports["default"] = getStatsOperation;
 var _selectors = __webpack_require__(40481);
 var _kandyWebrtc = __webpack_require__(37654);
-var _version = __webpack_require__(74394);
+var _version = __webpack_require__(64988);
 var _sdkId = _interopRequireDefault(__webpack_require__(20855));
 function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
 // Call plugin.
@@ -23842,7 +23846,7 @@ __webpack_require__(91883);
 __webpack_require__(70286);
 var _logs = __webpack_require__(69932);
 var _utils = __webpack_require__(1011);
-var _version = __webpack_require__(74394);
+var _version = __webpack_require__(64988);
 var _defaults = __webpack_require__(24679);
 var _validation = __webpack_require__(52932);
 // Other plugins.
@@ -25628,12 +25632,37 @@ function createAPI(container) {
   function make(destination, media) {
     let options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
     log.debug(API_LOG_TAG + 'call.make: ', destination, media, options);
+    try {
+      // Validate destination
+      (0, _utils.validateDestination)(destination);
 
-    // Validate destination
-    (0, _utils.validateDestination)(destination);
+      // Validate mediaConstraints
+      (0, _utils.validateMediaConstraints)(media);
 
-    // Validate mediaConstraints
-    (0, _utils.validateMediaConstraints)(media);
+      // Validating detached media before attempting to start a call.
+      // This verifies that the detached media being provided is, detached, local
+      // and not already in use by a session.
+      if (media.medias) {
+        (0, _utils.validateDetachedMedia)(media.medias);
+      }
+    } catch (err) {
+      // Update call state.
+      context.dispatch(_actions.callActions.makeCallFinish(callId, {
+        state: _constants.CALL_STATES.ENDED,
+        error: err
+      }));
+
+      // Inform the application with an error event.
+      emitEvent(eventTypes.CALL_STATE_CHANGE, {
+        callId,
+        previous: {
+          state: _constants.CALL_STATES.INITIATING,
+          localHold: false,
+          remoteHold: false
+        },
+        error: err
+      });
+    }
     const callId = (0, _uuid.v4)();
     const participants = {
       to: destination,
@@ -25670,12 +25699,6 @@ function createAPI(container) {
         callId
       });
       try {
-        // Validating detached media before attempting to start a call.
-        // This verifies that the detached media being provided is, detached, local
-        // and not already in use by a session.
-        if (media.medias) {
-          await (0, _utils.validateDetachedMedia)(media.medias);
-        }
         await CallManager.make(callId, participants, mediaConstraints, options);
 
         // Tell the application that the call has finished "initiating".
@@ -25767,23 +25790,23 @@ function createAPI(container) {
   async function answer(callId, media) {
     let options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
     log.debug(API_LOG_TAG + 'call.answer: ', callId, media, options);
-
-    // Validate mediaConstraints
-    (0, _utils.validateMediaConstraints)(media);
-    const mediaConstraints = (0, _utils.formatMediaConstraints)(media);
-
-    // Dispatch the "answer call" action so the call is updated in state
-    // before the operation and/or the application goes to look for it there.
-    context.dispatch(_actions.callActions.answerCall(callId, {
-      mediaConstraints,
-      ...options
-    }));
     try {
+      // Validate mediaConstraints
+      (0, _utils.validateMediaConstraints)(media);
+      const mediaConstraints = (0, _utils.formatMediaConstraints)(media);
+
+      // Dispatch the "answer call" action so the call is updated in state
+      // before the operation and/or the application goes to look for it there.
+      context.dispatch(_actions.callActions.answerCall(callId, {
+        mediaConstraints,
+        ...options
+      }));
+
       // Validating detached media before attempting to start a call.
       // This verifies that the detached media being provided is, detached, local
       // and not already in use by a session.
       if (media.medias) {
-        await (0, _utils.validateDetachedMedia)(media.medias);
+        (0, _utils.validateDetachedMedia)(media.medias);
       }
       const call = (0, _selectors.getCallById)(context.getState(), callId);
       if (call && call.isSlowStart) {
@@ -26763,24 +26786,23 @@ function createAPI(container) {
     let options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
     log.debug(API_LOG_TAG + 'call.addMedia: ', callId, media, options);
 
-    // Validate mediaConstraints
-    (0, _utils.validateMediaConstraints)(media);
-
-    // Validating detached media before attempting to start a call.
-    // This verifies that the detached media being provided is, detached, local
-    // and not already in use by a session.
-    if (media.medias) {
-      await (0, _utils.validateDetachedMedia)(media.medias);
-    }
-    const mediaConstraints = (0, _utils.formatMediaConstraints)(media);
-    context.dispatch(_actions.callActions.addMedia(callId, {
-      mediaConstraints,
-      ...options
-    }));
-
     // Start the operation
     let error;
     try {
+      // Validate mediaConstraints
+      (0, _utils.validateMediaConstraints)(media);
+
+      // Validating detached media before attempting to start a call.
+      // This verifies that the detached media being provided is, detached, local
+      // and not already in use by a session.
+      if (media.medias) {
+        (0, _utils.validateDetachedMedia)(media.medias);
+      }
+      const mediaConstraints = (0, _utils.formatMediaConstraints)(media);
+      context.dispatch(_actions.callActions.addMedia(callId, {
+        mediaConstraints,
+        ...options
+      }));
       await CallManager.addMedia(callId, mediaConstraints, options);
     } catch (err) {
       error = err;
@@ -27073,13 +27095,6 @@ function createAPI(container) {
    * @param {boolean} [media.screen=false] Whether to create a screen share track.
    * @param {call.ScreenOptions} [media.screenOptions] Options for configuring the call's screenShare.
    * @param {Array} [media.medias] List of medias containing tracks to be attached to this call.
-   * @throws {BasicError} Throws an error if mediaConstraints.medias is not an array.
-   * @throws {BasicError} Throws an error if mediaConstraints.medias Objects are missing `media` and `type` properties.
-   * @throws {BasicError} Throws an error if mediaConstraints contains duplicate media kinds.
-   * @throws {BasicError} Throws an error if any tracks in mediaConstraints.medias are not detached.
-   * @throws {BasicError} Throws an error if any tracks in mediaConstraints.medias are not local.
-   * @throws {BasicError} Throws an error if any tracks in mediaConstraints.medias are already in use by a session.
-   * @throws {BasicError} Throws an error if mediaConstraints.medias contains any type other than Object containing `media` and `type` properties.
    * @example
    * const callId = ...
    * // Get the video track used by the call.
@@ -27114,16 +27129,6 @@ function createAPI(container) {
    */
   async function replaceTrack(callId, trackId, media) {
     log.debug(API_LOG_TAG + 'call.replaceTrack: ', callId, trackId, media);
-
-    // Validate mediaConstraints
-    (0, _utils.validateMediaConstraints)(media);
-
-    // Validating detached media before attempting to start a call.
-    // This verifies that the detached media being provided is, detached, local
-    // and not already in use by a session.
-    if (media.medias) {
-      await (0, _utils.validateDetachedMedia)(media.medias);
-    }
     const mediaConstraints = (0, _utils.formatMediaConstraints)(media);
     context.dispatch(_actions.callActions.replaceTrack(callId, {
       trackId,
@@ -27134,6 +27139,15 @@ function createAPI(container) {
     let error;
     let result = {};
     try {
+      // Validate mediaConstraints
+      (0, _utils.validateMediaConstraints)(media);
+
+      // Validating detached media before attempting to start a call.
+      // This verifies that the detached media being provided is, detached, local
+      // and not already in use by a session.
+      if (media.medias) {
+        await (0, _utils.validateDetachedMedia)(media.medias);
+      }
       result = await CallManager.replaceTrack(callId, trackId, mediaConstraints);
     } catch (err) {
       error = err;
@@ -29703,7 +29717,7 @@ function validateMediaConstraints(media) {
  * @throws {BasicError} Throws an error if any tracks in mediaConstraints.medias are not detached.
  * @throws {BasicError} Throws an error if any tracks in mediaConstraints.medias are not local.
  */
-async function validateDetachedMedia(medias) {
+function validateDetachedMedia(medias) {
   // Validate that all tracks are detached, local and not in use by an existing session.
   for (const media of medias) {
     if (!media.media.detached) {
@@ -35299,7 +35313,7 @@ var _reduxSaga = _interopRequireDefault(__webpack_require__(71028));
 var _effects = __webpack_require__(89979);
 var _bottlejs = _interopRequireDefault(__webpack_require__(8997));
 var _utils = __webpack_require__(1011);
-var _version = __webpack_require__(74394);
+var _version = __webpack_require__(64988);
 var _intervalFactory = _interopRequireDefault(__webpack_require__(73181));
 var _validation = __webpack_require__(52932);
 function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
@@ -39407,7 +39421,7 @@ var _cloneDeep2 = _interopRequireDefault(__webpack_require__(89321));
 var _selectors = __webpack_require__(45590);
 var _selectors2 = __webpack_require__(87075);
 var _logs = __webpack_require__(69932);
-var _version = __webpack_require__(74394);
+var _version = __webpack_require__(64988);
 var _utils = __webpack_require__(1011);
 var _effects = __webpack_require__(89979);
 function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
@@ -42757,6 +42771,22 @@ function createHandler(container) {
    * @return {undefined}
    */
   return function handleMessage(action, event) {
+    try {
+      /*
+       * This is a workaround to prevent an uncaught exception being thrown to console
+       *    when the SDK has been destroyed but native WebRTC events are still bubbling
+       *    up. If the SDK has been destroyed, getting state will throw an error and the
+       *    event will stop being processed here.
+       *
+       * The proper solution is to clean-up WebRTC resources as part of destroying the SDK.
+       * See KJS-2415 for the proper solution.
+       * See KJS-2416 for why this was added here.
+       */
+      container.context.getState();
+    } catch (err) {
+      return;
+    }
+
     // All messages from the webrtc-stack are expected to be formatted as an
     //    action or event.
 
@@ -49929,14 +49959,14 @@ function SessionManager(managers) {
    * @method getWithMedia
    * @return {Promise} Resolves with the Session and Media objects.
    */
-  function getWithMedia(sessionId, mediaConstrants) {
+  function getWithMedia(sessionId, mediaConstrants, dscpControls) {
     const session = sessions.get(sessionId);
     if (!session) {
       log.debug(`No session found with ID: ${sessionId}.`);
       return;
     }
     return new Promise((resolve, reject) => {
-      session.addNewMedia(mediaConstrants).then(medias => {
+      session.addNewMedia(mediaConstrants, dscpControls).then(medias => {
         resolve({
           session,
           medias
@@ -51519,7 +51549,7 @@ function Session(id, managers) {
    * @param {Object} mediaConstraints
    * @return {Promise}
    */
-  function addNewMedia(constraints) {
+  function addNewMedia(constraints, dscpControls) {
     /*
      * Helper method that wraps the getUserMedia functions on the MediaManager.
      *    The wrapper is to prevent them from rejecting, so even a failure will
@@ -51606,12 +51636,28 @@ function Session(id, managers) {
           });
         } else {
           // All media was gathered successfully.
+          const dscpTrackMapping = {};
           const tracks = results.reduce((acc, cur) => {
             // Add the tracks from the current media object to the accumulator.
-            //    If cur is undefined, just return the accumulator.
-            return cur ? acc.concat(cur.value.getTracks()) : acc;
+            if (cur) {
+              const tracks = cur.value.getTracks();
+              if (dscpControls) {
+                for (const track of tracks) {
+                  if (track.getType() === 'audio' && dscpControls.audioNetworkPriority) {
+                    dscpTrackMapping[track.id] = dscpControls.audioNetworkPriority;
+                  } else if (track.getType() === 'video' && dscpControls.videoNetworkPriority) {
+                    dscpTrackMapping[track.id] = dscpControls.videoNetworkPriority;
+                  } else if (track.getType() === 'screen' && dscpControls.screenNetworkPriority) {
+                    dscpTrackMapping[track.id] = dscpControls.screenNetworkPriority;
+                  }
+                }
+              }
+              return acc.concat(tracks);
+            }
+            // If cur is undefined, just return the accumulator.
+            return acc;
           }, []);
-          addTracks(tracks).then(() => {
+          addTracks(tracks, dscpTrackMapping).then(() => {
             const medias = results.filter(result => result && result.value).map(result => result.value);
             resolve(medias);
           }).catch(reject);
@@ -77697,7 +77743,7 @@ module.exports = str => encodeURIComponent(str).replace(/[!'()*]/g, x => `%${x.c
 
 /***/ }),
 
-/***/ 48030:
+/***/ 98952:
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -78138,7 +78184,7 @@ var _v4 = _interopRequireDefault(__webpack_require__(93423));
 
 var _nil = _interopRequireDefault(__webpack_require__(35911));
 
-var _version = _interopRequireDefault(__webpack_require__(48030));
+var _version = _interopRequireDefault(__webpack_require__(98952));
 
 var _validate = _interopRequireDefault(__webpack_require__(4564));
 
@@ -86074,7 +86120,7 @@ module.exports = function (key, value) {
 
 var globalThis = __webpack_require__(79117);
 var fails = __webpack_require__(5234);
-var V8 = __webpack_require__(66260);
+var V8 = __webpack_require__(46150);
 var ENVIRONMENT = __webpack_require__(11078);
 
 var structuredClone = globalThis.structuredClone;
@@ -86097,7 +86143,7 @@ module.exports = !!structuredClone && !fails(function () {
 "use strict";
 
 /* eslint-disable es/no-symbol -- required for testing */
-var V8_VERSION = __webpack_require__(66260);
+var V8_VERSION = __webpack_require__(46150);
 var fails = __webpack_require__(5234);
 var globalThis = __webpack_require__(79117);
 
@@ -87082,10 +87128,10 @@ var fails = __webpack_require__(5234);
 var aCallable = __webpack_require__(44977);
 var internalSort = __webpack_require__(9295);
 var ArrayBufferViewCore = __webpack_require__(47223);
-var FF = __webpack_require__(92730);
+var FF = __webpack_require__(27064);
 var IE_OR_EDGE = __webpack_require__(84598);
-var V8 = __webpack_require__(66260);
-var WEBKIT = __webpack_require__(6240);
+var V8 = __webpack_require__(46150);
+var WEBKIT = __webpack_require__(83458);
 
 var aTypedArray = ArrayBufferViewCore.aTypedArray;
 var exportTypedArrayMethod = ArrayBufferViewCore.exportTypedArrayMethod;
@@ -87433,7 +87479,7 @@ if (DESCRIPTORS && !('size' in URLSearchParamsPrototype)) {
 
 /***/ }),
 
-/***/ 92730:
+/***/ 27064:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -87447,7 +87493,7 @@ module.exports = !!firefox && +firefox[1];
 
 /***/ }),
 
-/***/ 66260:
+/***/ 46150:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -87483,7 +87529,7 @@ module.exports = version;
 
 /***/ }),
 
-/***/ 6240:
+/***/ 83458:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";

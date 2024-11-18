@@ -1375,14 +1375,6 @@ client.call.replaceTrack(callId, videoTrack.id, {
 })
 ```
 
-*   Throws **BasicError** Throws an error if mediaConstraints.medias is not an array.
-*   Throws **BasicError** Throws an error if mediaConstraints.medias Objects are missing `media` and `type` properties.
-*   Throws **BasicError** Throws an error if mediaConstraints contains duplicate media kinds.
-*   Throws **BasicError** Throws an error if any tracks in mediaConstraints.medias are not detached.
-*   Throws **BasicError** Throws an error if any tracks in mediaConstraints.medias are not local.
-*   Throws **BasicError** Throws an error if any tracks in mediaConstraints.medias are already in use by a session.
-*   Throws **BasicError** Throws an error if mediaConstraints.medias contains any type other than Object containing `media` and `type` properties.
-
 ### restartMedia
 
 Attempt to re-establish a media connection for a call.
