@@ -27,8 +27,6 @@ Ribbon WebRTC SDK change log.
 
 ### Fixed
 
-- The make, answer, addMedia and replaceTrack APIs were throwing an error if parameter validation failed. This has been fixed to include the error in the event that is emitted instead of throwing.
-  - This issue was introduced in the v6.12.0. `KJS-2422`
 - Fixed an issue where if a call join request fails, the peer connection that was created locally for the new joined call doesn't get cleaned up. `KJS-2373`
 
 ### Changed
@@ -107,6 +105,14 @@ The`client.getConnection` and `client.getServices` APIs have been removed in v7.
 This release also includes changes to a few other parts of the SDK. These changes should not be noticeable to an application, but are worth mentioning for awareness. A number of features of the SDK have had their codebase renewed to better support the direction of the SDK going forward. This will translate to a better developer experience in the future.
 
 The following features have been updated internally: Connectivity. They do not require any application changes as part of the release, as the changes are backwards-compatible. As always, if you encounter an issue with a release change, please report the issue to us.
+
+## 6.16.1 - 2024-11-18
+
+### Fixed
+
+- The make, answer, addMedia and replaceTrack APIs were throwing an error if parameter validation failed. This has been fixed to include the error in the event that is emitted instead of throwing.
+  - This issue was introduced in the v6.12.0. `KJS-2422`
+- Fixed a Call issue where destroying the SDK before ending calls would lead to unhandled exceptions being thrown. `KJS-2416`
 
 ## 6.16.0 - 2024-10-28
 
