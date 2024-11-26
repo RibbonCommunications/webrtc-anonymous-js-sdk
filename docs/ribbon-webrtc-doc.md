@@ -1179,78 +1179,6 @@ has been removed.
 
 *   `callId` **[string][8]** ID of the call being acted on.
 
-### startScreenshare
-
-Adds local screenshare to an ongoing Call, to start sending to the remote
-participant.
-
-The latest SDK release (v4.X+) has not yet implemented this API in the
-same way that it was available in previous releases (v3.X). In place
-of this API, the SDK has a more general API that can be used for this
-same behaviour.
-
-The [call.addMedia][60] API can be used to perform the same behaviour
-as `startScreenshare`. [call.addMedia][60] is a general-purpose API
-for adding media to a call, which covers the same functionality as
-`startScreenshare`. Selecting only screen options when using
-[call.addMedia][60] will perform the same behaviour as using
-`startScreenshare`.
-
-#### Examples
-
-```javascript
-// Select media options for adding only screenshare.
-const media = {
-   audio: false,
-   video: false,
-   screen: true,
-   screenOptions: { ... }
-}
-
-// Add the selected media to the call.
-client.call.addMedia(callId, media)
-```
-
-### stopScreenshare
-
-Removes local screenshare from an ongoing Call, stopping it from being
-sent to the remote participant.
-
-The latest SDK release (v4.X+) has not yet implemented this API in the
-same way that it was available in previous releases (v3.X). In place
-of this API, the SDK has a more general API that can be used for this
-same behaviour.
-
-The [call.removeMedia][62] API can be used to perform the same
-behaviour as `stopScreenshare`. [call.removeMedia][62] is a
-general-purpose API for removing media from a call, which covers the
-same functionality as `stopScreenshare`. Specifying only the screen
-track when using [call.removeMedia][62] will perform the same
-behaviour as using `stopScreenshare`.
-
-There is a caveat that if a Call has multiple video tracks (for example,
-both a video and a screen track), the SDK itself cannot yet
-differentiate one from the other. The application will need to know
-which track was the screen track in this scenario.
-
-#### Examples
-
-```javascript
-const call = client.call.getById(callId)
-// Get the ID of any/all video tracks on the call.
-const videoTracks = call.localTracks.filter(trackId => {
-   const track = call.media.getTrackById(trackId)
-   // Both video and screen tracks have kind of 'video'.
-   return track.kind === 'video'
-})
-
-// Pick out the screen track.
-const screenTrack = videoTracks[0]
-
-// Remove screen from the call.
-client.call.removeMedia(callId, [ screenTrack ])
-```
-
 ### replaceTrack
 
 Replace a call's track with a new track of the same media type.
@@ -1646,80 +1574,6 @@ unexpected behaviour in future call operations for that call.
 
 Returns **[undefined][83]** 
 
-### changeInputDevices
-
-Changes the camera and/or microphone used for a Call's media input.
-
-The latest SDK release (v4.X+) has not yet implemented this API in the
-same way that it was available in previous releases (v3.X). In place
-of this API, the SDK has a more general API that can be used for this
-same behaviour.
-
-The same behaviour as the `changeInputDevices` API can be implemented
-using the general-purpose [call.replaceTrack][71] API. This API can
-be used to replace an existing media track with a new track of the
-same type, allowing an application to change certain aspects of the
-media, such as input device.
-
-#### Examples
-
-```javascript
-const call = client.call.getById(callId)
-// Get the ID of the Call's video track.
-const videoTrack = call.localTracks.find(trackId => {
-   const track = client.media.getTrackById(trackId)
-   return track.kind === 'video'
-})
-
-// Select the new video options.
-const media = {
-   video: true,
-   videoOptions: {
-       deviceId: 'cameraId'
-   }
-}
-
-// Change the call's camera by replacing the video track.
-client.call.replaceTrack(callId, videoTrack, media)
-```
-
-### changeSpeaker
-
-Changes the speaker used for a Call's audio output. Supported on
-browser's that support HTMLMediaElement.setSinkId().
-
-The latest SDK release (v4.X+) has not yet implemented this API in the
-same way that it was available in previous releases (v3.X). In place
-of this API, the SDK has a more general API that can be used for this
-same behaviour.
-
-The same behaviour as the `changeSpeaker` API can be implemented by
-re-rendering the Call's audio track.  A speaker can be selected when
-rendering an audio track, so changing a speaker can be simulated
-by unrendering the track with [media.removeTracks][68], then
-re-rendering it with a new speaker with [media.renderTracks][84].
-
-#### Examples
-
-```javascript
-const call = client.call.getById(callId)
-// Get the ID of the Call's audio track.
-const audioTrack = call.localTracks.find(trackId => {
-   const track = client.media.getTrackById(trackId)
-   return track.kind === 'audio'
-})
-
-// Where the audio track was previously rendered.
-const audioContainer = ...
-
-// Unrender the audio track we want to change speaker for.
-client.media.removeTrack([ audioTrack ], audioContainer)
-// Re-render the audio track with a new speaker.
-client.media.renderTrack([ audioTrack ], audioContainer, {
-   speakerId: 'speakerId'
-})
-```
-
 ### states
 
 Possible states that a Call can be in.
@@ -1780,11 +1634,11 @@ are occurring while the participants are expecting to be connected.
 
 An important state to check for is the `FAILED` state. This state signifies that there is no
 media connection between the call participants and an action must be taken to resolve the
-problem. Using the [call.restartMedia][85] API will attempt to reconnect the media. See
-the [call.restartMedia][85] API description for more information.
+problem. Using the [call.restartMedia][84] API will attempt to reconnect the media. See
+the [call.restartMedia][84] API description for more information.
 
 These states are direct reflections of the possible
-[RTCPeerConnection.iceConnectionState][86] values.
+[RTCPeerConnection.iceConnectionState][85] values.
 
 The Call's media connection state is a property of the [CallObject][50],
 which can be retrieved using the [call.getById][31] or
@@ -1807,7 +1661,7 @@ Type: [Object][7]
     the Call endpoints will receive each other's media.
 *   `DISCONNECTED` **[string][8]** Media has become disconnected and the Call endpoints have stopped receiving each other's media.
     The Call will automatically attempt to reconnect, transitioning back to `completed` if successful or to `failed` if not.
-*   `FAILED` **[string][8]** The connection has failed and cannot be recovered automatically. A full media connection refresh is required to reestablish a connection. See the [call.restartMedia][85] API.
+*   `FAILED` **[string][8]** The connection has failed and cannot be recovered automatically. A full media connection refresh is required to reestablish a connection. See the [call.restartMedia][84] API.
 *   `CLOSED` **[string][8]** The connection has been shut down and is no longer in use.
 
 #### Examples
@@ -1857,7 +1711,7 @@ Events used in the SDK's call reports.
 
 As a call progresses, the operation(s)/function(s) being performed throughout
 the duration of a call are recorded as events in a call report.
-The call report can be retrieved via the [call.getReport][87] API.
+The call report can be retrieved via the [call.getReport][86] API.
 An application can use these event names to find the associated event(s)
 in the call report for more information on the event.
 See *Call Reports* tutorial for more information on call reports and events.
@@ -1922,7 +1776,7 @@ Metrics are calculated only for the successful scenarios.
 
 As a call progresses, timings are calculated for the duration of operations and
 other events. They are recorded in a call report that can be retrieved via
-the [call.getReport][87] API.
+the [call.getReport][86] API.
 
 Type: [Object][7]
 
@@ -2140,7 +1994,7 @@ event would indicate a single, remote video track was added. If the local
 user unheld the call, this event would indicate that any tracks previously
 on the call have been re-added, both local and remote.
 
-Information about a Track can be retrieved using the [media.getTrackById][88] API.
+Information about a Track can be retrieved using the [media.getTrackById][87] API.
 
 #### Parameters
 
@@ -2170,7 +2024,7 @@ exist, but the media is not available to both sides of the Call any longer.
 
 Tracks are removed from a Call when either the local or remote user stops the
 tracks, by using the [call.removeMedia][62] API for example, or when the
-Call is held with the [call.hold][89] API.
+Call is held with the [call.hold][88] API.
 
 This event can indicate that multiple tracks have been removed by the same
 operation. For example, if the remote user removed video from the call, this
@@ -2178,7 +2032,7 @@ event would indicate a single, remote video track was removed. If the local
 user held the call, this event would indicate that all tracks on the call
 have been removed, both local and remote.
 
-Information about a Track can be retrieved using the [media.getTrackById][88] API.
+Information about a Track can be retrieved using the [media.getTrackById][87] API.
 
 #### Parameters
 
@@ -2205,7 +2059,7 @@ client.on('call:tracksRemoved', function (params) {
 
 Stats have been retrieved for a Call or specific Track of a Call.
 
-See the [call.getStats][90] API for more information.
+See the [call.getStats][89] API for more information.
 
 #### Parameters
 
@@ -2213,7 +2067,7 @@ See the [call.getStats][90] API for more information.
 
     *   `params.callId` **[string][8]** The ID of the Call to retrieve stats for.
     *   `params.trackId` **[string][8]?** The ID of the Track to retrieve stats for.
-    *   `params.result` **[Map][91]?** The RTCStatsReport.
+    *   `params.result` **[Map][90]?** The RTCStatsReport.
     *   `params.error` **[api.BasicError][25]?** An error object, if the operation was not successful.
 
 #### Examples
@@ -2275,7 +2129,7 @@ client.on('call:trackReplaced', function (params) {
 
 The list of available and supported codecs by the browser have been retrieved.
 
-This event is emitted as a result of the [call.getAvailableCodecs][92] API. Please refer to the API for more
+This event is emitted as a result of the [call.getAvailableCodecs][91] API. Please refer to the API for more
 information.
 
 #### Parameters
@@ -2323,8 +2177,8 @@ See [call.mediaConnectionStates][33] for the list of possible values and descrip
 
 A media restart operation for a Call has been attempted.
 
-This event is emitted as a result of the [call.restartMedia][85] API being called.
-See the description for [call.restartMedia][85] for information about its
+This event is emitted as a result of the [call.restartMedia][84] API being called.
+See the description for [call.restartMedia][84] for information about its
 usage.
 
 The [call:mediaConnectionChange][65] event
@@ -2365,7 +2219,7 @@ the SDK and one or more backend servers.
 
 Information about a websocket connection.
 
-Can be retrieved using the [connection.getSocketState][93] API.
+Can be retrieved using the [connection.getSocketState][92] API.
 
 Type: [Object][7]
 
@@ -2392,7 +2246,7 @@ Type: [Object][7]
 
 Get the state of the websocket.
 
-Returns **[connection.WSConnectionObject][94]** Details about the current websocket connection, including state and configuration.
+Returns **[connection.WSConnectionObject][93]** Details about the current websocket connection, including state and configuration.
 
 ### enableConnectivityChecking
 
@@ -2418,7 +2272,7 @@ to autoreconnect (see `connectivity.autoReconnect` configuration property), then
 API will not attempt to reconnect the websocket automatically.
 
 The normal websocket and lifecycle events will be emitted during this operation,
-notably the [ws:change][95] event.
+notably the [ws:change][94] event.
 
 ### ws:change
 
@@ -2433,7 +2287,7 @@ behaviour. The SDK will generate logs, at different levels for different
 types of information, which are routed to a
 "[Log Handler][4]" for consumption. An application
 can provide their own Log Handler (see
-[config.logs][96]) to customize how the logs are
+[config.logs][95]) to customize how the logs are
 handled, or allow the default Log Handler to print the logs to the
 console.
 
@@ -2493,7 +2347,7 @@ logged. It contains both the logged information and meta-info about when
 and who logged it.
 
 A [LogHandler][4] provided to the SDK (see
-[config.logs][96]) will need to handle LogEntry
+[config.logs][95]) will need to handle LogEntry
 objects.
 
 Type: [Object][7]
@@ -2543,7 +2397,7 @@ default, the SDK will log information to the console, but a LogHandler can
 be configured to change this behaviour.
 
 A LogHandler can be provided to the SDK as part of its configuration (see
-[config.logs][96]). The SDK will then provide this
+[config.logs][95]). The SDK will then provide this
 function with the logged information.
 
 Type: [Function][15]
@@ -2583,7 +2437,7 @@ const client = create(configs)
 ## media
 
 The 'media' namespace provides an interface for interacting with Media that the
-SDK has access to. Media is used in conjunction with the [Calls][97]
+SDK has access to. Media is used in conjunction with the [Calls][96]
 feature to manipulate and render the Tracks sent and received from a Call.
 
 Media and Track objects are not created directly, but are created as part of
@@ -2594,13 +2448,13 @@ or a remote user's machine.
 The Media feature also keeps track of media devices that the user's machine
 can access. Any media device (eg. USB headset) connected to the machine
 can be used as a source for media. Available devices can be found using
-the [media.getDevices][98] API.
+the [media.getDevices][97] API.
 
 ### getDevices
 
 Retrieves the available media devices for use.
 
-The [devices:change][99] event will be
+The [devices:change][98] event will be
 emitted when the available media devices have changed.
 
 Returns **[Object][7]** The lists of camera, microphone, and speaker devices.
@@ -2613,7 +2467,7 @@ Retrieves an available Media object with a specific Media ID.
 
 *   `mediaId` **[string][8]** The ID of the Media to retrieve.
 
-Returns **[call.MediaObject][100]** A Media object.
+Returns **[call.MediaObject][99]** A Media object.
 
 ### getTrackById
 
@@ -2648,18 +2502,18 @@ convenient for them, rather than during call setup. If the user saves
 their decision, they will not be prompted again when the SDK accesses
 those devices for a call.
 
-For device information, the [media.getDevices][98] API will retrieve
+For device information, the [media.getDevices][97] API will retrieve
 the list of media devices available for the SDK to use. If this list
 is empty, or is missing information, it is likely that the browser
 does not have permission to access the device's information. We
-recommend using the [media.initializeDevices][101] API in this
+recommend using the [media.initializeDevices][100] API in this
 scenario if you would like to allow the end-user to select which
 device(s) they would like to use when they make a call, rather than
 using the system default.
 
-The SDK will emit a [devices:change][99]
+The SDK will emit a [devices:change][98]
 event when the operation is successful or a
-[devices:error][102] event if an error is
+[devices:error][101] event if an error is
 encountered.
 
 #### Parameters
@@ -2796,7 +2650,7 @@ call is muted, the result will only be noticeable locally.
 This mute operation acts on those specified Tracks directly.
 It does not act on the active Call as a whole.
 
-The SDK will emit a [media:muted][103] event
+The SDK will emit a [media:muted][102] event
 when a Track has been muted.
 
 #### Parameters
@@ -2811,7 +2665,7 @@ Media will resume its normal rendering for the Tracks.
 Like the 'muteTracks' API, this unmute operation acts on those specified Tracks directly.
 Therefore it does not act on active Call as a whole.
 
-The SDK will emit a [media:unmuted][104] event
+The SDK will emit a [media:unmuted][103] event
 when a Track has been unmuted.
 
 #### Parameters
@@ -2823,7 +2677,7 @@ when a Track has been unmuted.
 The media devices available for use have changed.
 
 Information about the available media devices can be retrieved using the
-[media.getDevices][98] API.
+[media.getDevices][97] API.
 
 #### Examples
 
@@ -2842,13 +2696,13 @@ An error occurred while trying to access media devices.
 The most common causes of this error are when the browser does not have
 permission from the end-user to access the devices, or when the browser
 cannot find a media device that fulfills the
-[MediaConstraint(s)][105] that was provided.
+[MediaConstraint(s)][104] that was provided.
 
 #### Parameters
 
 *   `params` **[Object][7]** 
 
-    *   `params.error` **[Error][106]** The Basic error object.
+    *   `params.error` **[Error][105]** The Basic error object.
 
 ### media:muted
 
@@ -2866,7 +2720,7 @@ A Track can be muted using the [media.muteTracks][67] API.
 
 The specified Tracks have been unmuted.
 
-A Track can be unmuted using the [media.unmuteTracks][107]
+A Track can be unmuted using the [media.unmuteTracks][106]
 API.
 
 #### Parameters
@@ -2882,7 +2736,7 @@ The specified Track has had its media source muted.
 The Track is still active, but is not receiving media any longer. An audio
 track will be silent and a video track will be a black frame. It is
 possible for the track to start receiving media again (see the
-[media:sourceUnmuted][108] event).
+[media:sourceUnmuted][107] event).
 
 This event is generated outside the control of the SDK. This will predominantly
 happen for a remote track during network issues, where media will lose frames
@@ -2900,7 +2754,7 @@ end-user stops allowing the SDK to access the media device, for example.
 The specified Track has started receiving media from its source once again.
 
 The Track returns to the state before it was muted (see the
-[media:sourceMuted][109] event), and will
+[media:sourceMuted][108] event), and will
 be able to display video or play audio once again.
 
 This event is generated outside the control of the SDK, when the cause of the
@@ -2967,7 +2821,7 @@ Provides an external notification to the system for processing.
 ### registerApplePush
 
 Registers with Apple push notification service. Once registration is successful, the application will be able to receive
-standard and/or voip push notifications. It can then send these notifications to the SDK with [api.notifications.process][110]
+standard and/or voip push notifications. It can then send these notifications to the SDK with [api.notifications.process][109]
 in order for the SDK to process them.
 
 #### Parameters
@@ -2992,7 +2846,7 @@ Promise will reject with error object otherwise.
 ### registerAndroidPush
 
 Registers with Google push notification service. Once registration is successful, the application will be able to receive
-standard and/or voip push notifications. It can then send these notifications to the SDK with [api.notifications.process][110]
+standard and/or voip push notifications. It can then send these notifications to the SDK with [api.notifications.process][109]
 in order for the SDK to process them.
 
 #### Parameters
@@ -3068,7 +2922,7 @@ The 'request' namespace (within the 'api' type) is used to make network requests
 ### fetch
 
 Send a request to the underlying REST service with the appropriate configuration and authentication.
-This is a wrapper on top of the browser's [fetch API][111]
+This is a wrapper on top of the browser's [fetch API][110]
 and behaves very similarly but using SDK configuration for the base URL and authentication as well
 as SDK logging.
 
@@ -3076,7 +2930,7 @@ as SDK logging.
 
 *   `resource` **[string][8]** The full path of the resource to fetch from the underlying service. This should include any REST version
     or user information. This path will be appended to the base URL according to SDK configuration.
-*   `init` **RequestInit** An object containing any custom settings that you want to apply to the request. See [fetch API][111]
+*   `init` **RequestInit** An object containing any custom settings that you want to apply to the request. See [fetch API][110]
     for a full description and defaults.
 
 #### Examples
@@ -3096,7 +2950,7 @@ const requestOptions = {
 const response = await client.request.fetch('/rest/version/1/user/xyz@test.com/externalnotification', requestOptions)
 ```
 
-Returns **[Promise][72]<[Response][112]>** A promise for a [Response][113] object.
+Returns **[Promise][72]<[Response][111]>** A promise for a [Response][112] object.
 
 ## sdpHandlers
 
@@ -3107,7 +2961,7 @@ environments and/or scenarios.
 Note that SDP handlers are exposed on the entry point of the SDK. They can be added during
 initialization of the SDK using the [config.call.sdpHandlers][40] configuration
 parameter. They can also be set after the SDK's creation by using the
-[call.setSdpHandlers][114] function.
+[call.setSdpHandlers][113] function.
 
 ### Examples
 
@@ -3148,7 +3002,7 @@ length (usually to 4KB) and will reject calls that have SDP size above this amou
 While creating an SDP handler would allow a user to perform this type of manipulation, it is a non-trivial task that requires in-depth knowledge of WebRTC SDP.
 
 To facilitate this common task, the createCodecRemover function creates a codec removal handler that can be used for this purpose. Applications can use this codec
-removal handler in combination with the [call.getAvailableCodecs][92] function in order to build logic to determine the best codecs to use
+removal handler in combination with the [call.getAvailableCodecs][91] function in order to build logic to determine the best codecs to use
 for their application.
 
 #### Parameters
@@ -3192,8 +3046,8 @@ fully functional.
 
 The services an application can subscribe to are based on the features
 included in the SDK. The list of available services can be retrieved
-using the [services.getSubscriptions][115] API. These values can be used
-with the [services.subscribe][116] API.
+using the [services.getSubscriptions][114] API. These values can be used
+with the [services.subscribe][115] API.
 
 The channel used for subscriptions is the method for receiving the service
 updates. The recommended channel is `websocket`, where the SDK is able to
@@ -3204,7 +3058,7 @@ websocket cannot be used, will be available in the future.
 
 The ServiceDescriptor type defines the format for specifying how to subscribe for a certain service.
 This is the service configuration object that needs to be passed (as part of an array of configuration objects) when calling
-the [services.subscribe][116] function.
+the [services.subscribe][115] function.
 Only some plugins (`call`, `messaging` and `presence`) support such configuration object that needs to be passed
 to the subscribe function.
 
@@ -3231,7 +3085,7 @@ client.services.subscribe([
 ### SmsInboundServiceParams
 
 The SmsInboundServiceParams type defines the additional information when subscribing to SMS inbound service.
-This is the configuration object that needs to be passed as the value for the [ServiceDescriptor.params][117] property.
+This is the configuration object that needs to be passed as the value for the [ServiceDescriptor.params][116] property.
 
 Type: [Object][7]
 
@@ -3253,19 +3107,19 @@ client.services.subscribe([
 
 Subscribes to platform notifications for an SDK service.
 
-For push notifications on link, please see [notifications.registerPush][118]
+For push notifications on link, please see [notifications.registerPush][117]
 
 The SDK currently only supports the `websocket` channel as a subscription
 type.
 
-When calling this API, SDK emits a [subscription:change][119] event, each time there is a change in subscriptions.
+When calling this API, SDK emits a [subscription:change][118] event, each time there is a change in subscriptions.
 
 Upon getting such event, existing subscriptions can be retrieved using the
-[services.getSubscriptions][115] API.
+[services.getSubscriptions][114] API.
 
 #### Parameters
 
-*   `services` **[Array][19]<([string][8] | [services.ServiceDescriptor][120])>** A list of service configurations.
+*   `services` **[Array][19]<([string][8] | [services.ServiceDescriptor][119])>** A list of service configurations.
 *   `options` **[Object][7]?** The options object for non-credential options.
 
     *   `options.type` **[string][8]** The method of how to receive service updates. (optional, default `'websocket'`)
@@ -3284,10 +3138,10 @@ Returns **[undefined][83]**
 
 Cancels existing subscriptions for platform notifications.
 
-When calling this API, SDK emits a [subscription:change][119] event, each time there is a change in subscriptions.
+When calling this API, SDK emits a [subscription:change][118] event, each time there is a change in subscriptions.
 
 Upon getting such event, existing subscriptions can be retrieved using the
-[services.getSubscriptions][115] API. The `subscribed` values are the
+[services.getSubscriptions][114] API. The `subscribed` values are the
 services that can be unsubscribed from.
 
 #### Parameters
@@ -3312,7 +3166,7 @@ The data returned by this API is a snapshot of the SDK's current local subscript
 The data does indicate whether there was an ongoing subscription at the time this API was called.
 If a subscription is in fact in progress, the user should not take decisions based on this snapshot, as the subscription is not yet complete.
 
-To be notified when any subscription(s) did change/complete, listen for [subscription:change][119] events.
+To be notified when any subscription(s) did change/complete, listen for [subscription:change][118] events.
 
 The `available` values are the SDK's services that an application can
 subscribe to receive notifications about. A feature generally
@@ -3320,7 +3174,7 @@ requires a subscription to its service in order to be fully functional.
 
 The `subscribed` values are the SDK's services that the application has
 an active subscription for. Services are subscribed to using the
-[services.subscribe][116] API.
+[services.subscribe][115] API.
 
 #### Examples
 
@@ -3348,7 +3202,7 @@ Returns **[Object][7]** Lists of subscribed and available services.
 Subscription information has changed.
 
 The updated subscription information can be retrieved using the
-[services.getSubscriptions][115] API.
+[services.getSubscriptions][114] API.
 
 #### Parameters
 
@@ -3367,7 +3221,7 @@ The updated subscription information can be retrieved using the
 An error occurred during a subscription operation.
 
 The subscription information can be retrieved using the
-[services.getSubscriptions][115] API.
+[services.getSubscriptions][114] API.
 
 Below are some common errors related to service subscriptions.
 
@@ -3582,76 +3436,74 @@ session expires.
 
 [83]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/undefined
 
-[84]: #mediarendertracks
+[84]: #callrestartmedia
 
-[85]: #callrestartmedia
+[85]: https://developer.mozilla.org/en-US/docs/Web/API/RTCPeerConnection/iceConnectionState
 
-[86]: https://developer.mozilla.org/en-US/docs/Web/API/RTCPeerConnection/iceConnectionState
+[86]: #callgetreport
 
-[87]: #callgetreport
+[87]: #mediagettrackbyid
 
-[88]: #mediagettrackbyid
+[88]: #callhold
 
-[89]: #callhold
+[89]: #callgetstats
 
-[90]: #callgetstats
+[90]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Map
 
-[91]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Map
+[91]: #callgetavailablecodecs
 
-[92]: #callgetavailablecodecs
+[92]: #connectiongetsocketstate
 
-[93]: #connectiongetsocketstate
+[93]: #connectionwsconnectionobject
 
-[94]: #connectionwsconnectionobject
+[94]: #connectioneventwschange
 
-[95]: #connectioneventwschange
+[95]: #configconfiglogs
 
-[96]: #configconfiglogs
+[96]: #call
 
-[97]: #call
+[97]: #mediagetdevices
 
-[98]: #mediagetdevices
+[98]: #mediaeventdeviceschange
 
-[99]: #mediaeventdeviceschange
+[99]: #callmediaobject
 
-[100]: #callmediaobject
+[100]: #mediainitializedevices
 
-[101]: #mediainitializedevices
+[101]: #mediaeventdeviceserror
 
-[102]: #mediaeventdeviceserror
+[102]: #mediaeventmediamuted
 
-[103]: #mediaeventmediamuted
+[103]: #mediaeventmediaunmuted
 
-[104]: #mediaeventmediaunmuted
+[104]: #callmediaconstraint
 
-[105]: #callmediaconstraint
+[105]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Error
 
-[106]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Error
+[106]: #mediaunmutetracks
 
-[107]: #mediaunmutetracks
+[107]: #mediaeventmediasourceunmuted
 
-[108]: #mediaeventmediasourceunmuted
+[108]: #mediaeventmediasourcemuted
 
-[109]: #mediaeventmediasourcemuted
+[109]: api.notifications.process
 
-[110]: api.notifications.process
+[110]: https://developer.mozilla.org/en-US/docs/Web/API/fetch
 
-[111]: https://developer.mozilla.org/en-US/docs/Web/API/fetch
+[111]: https://developer.mozilla.org/docs/Web/Guide/HTML/HTML5
 
-[112]: https://developer.mozilla.org/docs/Web/Guide/HTML/HTML5
+[112]: https://developer.mozilla.org/en-US/docs/Web/API/Response
 
-[113]: https://developer.mozilla.org/en-US/docs/Web/API/Response
+[113]: #callsetsdphandlers
 
-[114]: #callsetsdphandlers
+[114]: #servicesgetsubscriptions
 
-[115]: #servicesgetsubscriptions
+[115]: #servicessubscribe
 
-[116]: #servicessubscribe
+[116]: #servicesservicedescriptor
 
-[117]: #servicesservicedescriptor
+[117]: notifications.registerPush
 
-[118]: notifications.registerPush
+[118]: #serviceseventsubscriptionchange
 
-[119]: #serviceseventsubscriptionchange
-
-[120]: #servicesservicedescriptor
+[119]: #servicesservicedescriptor

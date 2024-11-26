@@ -24,6 +24,11 @@ Ribbon WebRTC SDK change log.
 - Removed the `client.getConnection` Authentication API. `KJS-2335`
   - The Subscription APIs, under `client.services` should be used to retrieve information about the user's connection to the backend.
   - If this API was used to retrieved the latest authentication error, the `auth:error` event should be used for that purpose.
+- Removed the `platform` parameter from the `ws:change` event.
+  - This parameter had become a constant and was no longer providing useful feedback.
+- Removed Call documentation for APIs deprecated long ago (v4). `KJS-2450`
+  - This API documentation was instructions for migrating from the deprecated APIs to the new APIs that covered that functionality. This information is no longer needed in our API documentation.
+  - The APIs include: `changeInputDevices`, `changeSpeaker`, `startScreenshare`, and `stopScreenshare`.
 
 ### Fixed
 
