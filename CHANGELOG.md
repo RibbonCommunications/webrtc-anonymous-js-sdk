@@ -7,11 +7,11 @@ Ribbon WebRTC SDK change log.
 - This project adheres to [Semantic Versioning](http://semver.org/).
 - This change log follows [keepachangelog.com](http://keepachangelog.com/) recommendations.
 
-## 7.0.0 - beta
+## 7.0.0 - 2024-11-29
 
 ### Added
 
-- Added a new status to the Call operation tracking: `RESOLVING`. `KJS-2304
+- Added a new status to the Call operation tracking: `RESOLVING`. `KJS-2304`
   - Previously, the `PENDING` status included both operation signalling and resolving the operation after receiving the remote response.
   - With the v7.0 changes, the `PENDING` status only represents operation signalling, and the `RESOLVING` status represents handling the remote response.
   - A new `call:operation` event will be emitted for call negotiation operations (eg. hold, add media) with the transition of `RESUME` to mark the change from `PENDING` to `RESOLVING` status.
