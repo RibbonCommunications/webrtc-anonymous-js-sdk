@@ -7,6 +7,110 @@ Ribbon WebRTC SDK change log.
 - This project adheres to [Semantic Versioning](http://semver.org/).
 - This change log follows [keepachangelog.com](http://keepachangelog.com/) recommendations.
 
+## 7.0.0 - 2024-11-29
+
+### Added
+
+- Added a new status to the Call operation tracking: `RESOLVING`. `KJS-2304`
+  - Previously, the `PENDING` status included both operation signalling and resolving the operation after receiving the remote response.
+  - With the v7.0 changes, the `PENDING` status only represents operation signalling, and the `RESOLVING` status represents handling the remote response.
+  - A new `call:operation` event will be emitted for call negotiation operations (eg. hold, add media) with the transition of `RESUME` to mark the change from `PENDING` to `RESOLVING` status.
+  - For more information, please see the Migration section below.
+
+### Removed
+
+- Removed the `client.getServices` Authentication API. `KJS-2240`
+  - The Subscription APIs, under `client.services`, should be used for retrieving information about the services.
+- Removed the `client.getConnection` Authentication API. `KJS-2335`
+  - The Subscription APIs, under `client.services` should be used to retrieve information about the user's connection to the backend.
+  - If this API was used to retrieved the latest authentication error, the `auth:error` event should be used for that purpose.
+- Removed the `platform` parameter from the `ws:change` event.
+  - This parameter had become a constant and was no longer providing useful feedback.
+- Removed Call documentation for APIs deprecated long ago (v4). `KJS-2450`
+  - This API documentation was instructions for migrating from the deprecated APIs to the new APIs that covered that functionality. This information is no longer needed in our API documentation.
+  - The APIs include: `changeInputDevices`, `changeSpeaker`, `startScreenshare`, and `stopScreenshare`.
+
+### Fixed
+
+- Fixed an issue where if a call join request fails, the peer connection that was created locally for the new joined call doesn't get cleaned up. `KJS-2373`
+
+### Changed
+
+- Code optimization has been turned on for the SDK which will minify the code. `KJS-2035`
+- Changed the Connectivity configuration `connectivity.websocketOAuthMode` default from 'query' to 'none'. `KJS-2025`
+  - This configuration is now opt-in instead of opt-out.
+- Changed the event emitted when the anonymous user encounters an issue from `auth:change` to `subscription:change`. `KJS-2287`
+  - This event for Gateway subscription issues is now consistent between the WebRTC Anonymous SDK and WebRTC SDK.
+  - This event is emitted when the anonymous user loses their connection to the Gateway unexpectedly, for example when the websocket disconnects or the connection is closed by the Gateway.
+- Changed the branding used in the metadata returned by `call.getStats` api, to use the WebRTC Anonymous JS SDK's most recent namings.
+
+### Migration
+
+#### Anonymous Subscription Events
+
+Applications, that use Anonymous user accounts, will now have to listen to `subscription:change` event (instead of listening to `auth:change` event) as a way to determine when there is a change in their subscription status. The event payload stays the same, only the event type (that application listens to) needs to change in application's logic.
+
+```javascript
+// Example event listener for when an anonymous user is now informed that his/her subscription status has changed.
+// After v7.0 changes.
+client.on('subscription:change', function (params) {
+  // Access the params.reason and call the application logic depending on the reason encountered, just like you did prior to v7.0 changes.
+})
+```
+
+#### Call Operation Tracking
+
+Previously, there were only three scenarios where the `call:operation` event was emitted. The v7.0 changes add a fourth scenario when the event can be emitted during operation progression.
+
+If an application was listening for the `call:operation` event to track operation progression, then the event listener should be updated to take into account the v7.0 changes. Below is a snippet that shows how the event behaved pre- and post- v7.0.
+
+```javascript
+// Listener for tracking operation progression events.
+client.on('call:operation', params => {
+  // Relevant event parameters for the code change.
+  const { transition, previous } = params
+
+  // Relevant call property for code change is `operation.status`.
+  const call = client.call.getById(params.callId)
+  const operation = call.currentOperations.find(op => op.id === params.operationId)
+
+  switch (transition) {
+    case 'START': // The operation is starting.
+    // previous.status === 'NOT_STARTED'
+    // operation.status === 'ONGOING'
+    case 'UPDATE': // The operation is now waiting on a remote response.
+    // previous.status === 'ONGOING'
+    // operation.status === 'PENDING'
+
+    // New scenario with v7.0 changes.
+    case 'RESUME': // The operation has received a remote response.
+    // previous.status === 'PENDING'
+    // operation.status === 'RESOLVING'
+
+    case 'FINISH': // The operation has finished.
+    // Values pre-v7.0
+    // previous.status === 'PENDING' if the operation had an 'UPDATE'
+    // previous.status === 'ONGOING' if the operation was local-only
+    // operation === undefined
+
+    // Values post-v7.0
+    // previous.status === 'RESOLVING' if the operation had an 'UPDATE'
+    // previous.status === 'ONGOING' if the operation was local-only
+    // operation === undefined
+  }
+})
+```
+
+#### Authentication API Removal
+
+The`client.getConnection` and `client.getServices` APIs have been removed in v7.0. Their functionality had been moved under the Subscription APIs, `client.services`, in the previous v6.0.0 release. The data that they return was no longer being updated with a user subscription, hence provide no useful functionality to an application. If these APIs are in use by your application, their usage should be revised.
+
+### Other Changes
+
+This release also includes changes to a few other parts of the SDK. These changes should not be noticeable to an application, but are worth mentioning for awareness. A number of features of the SDK have had their codebase renewed to better support the direction of the SDK going forward. This will translate to a better developer experience in the future.
+
+The following features have been updated internally: Connectivity. They do not require any application changes as part of the release, as the changes are backwards-compatible. As always, if you encounter an issue with a release change, please report the issue to us.
+
 ## 6.16.1 - 2024-11-18
 
 ### Fixed

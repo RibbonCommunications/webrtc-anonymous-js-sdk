@@ -1215,22 +1215,22 @@
           ],
           "loc": {
             "start": {
-              "line": 44,
+              "line": 29,
               "column": 2
             },
             "end": {
-              "line": 58,
+              "line": 43,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 59,
+                "line": 44,
                 "column": 2
               },
               "end": {
-                "line": 66,
+                "line": 51,
                 "column": 3
               }
             },
@@ -2360,22 +2360,8 @@
             },
             {
               "title": "param",
-              "description": "Maximum pings sent (without receiving a response) before reporting an error.",
-              "lineNumber": 18,
-              "type": {
-                "type": "OptionalType",
-                "expression": {
-                  "type": "NameExpression",
-                  "name": "Number"
-                }
-              },
-              "name": "connectivity.maxMissedPings",
-              "default": "3"
-            },
-            {
-              "title": "param",
               "description": "Flag to determine whether the SDK should check connectivity.",
-              "lineNumber": 19,
+              "lineNumber": 18,
               "type": {
                 "type": "OptionalType",
                 "expression": {
@@ -2388,8 +2374,8 @@
             },
             {
               "title": "param",
-              "description": "query will send the bearer access token to authenticate the websocket and none will not send it.",
-              "lineNumber": 20,
+              "description": "When set to 'query', the OAuth bearer access token will be appended as a query string parameter to the websocket address.",
+              "lineNumber": 19,
               "type": {
                 "type": "OptionalType",
                 "expression": {
@@ -2398,31 +2384,31 @@
                 }
               },
               "name": "connectivity.webSocketOAuthMode",
-              "default": "query"
+              "default": "none"
             }
           ],
           "loc": {
             "start": {
-              "line": 36,
+              "line": 10,
               "column": 0
             },
             "end": {
-              "line": 57,
+              "line": 30,
               "column": 3
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 58,
+                "line": 31,
                 "column": 0
               },
               "end": {
-                "line": 62,
+                "line": 41,
                 "column": 1
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/connectivity/link/index.js"
+            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/connectivity/plugin/configs.js"
           },
           "augments": [],
           "examples": [],
@@ -2597,32 +2583,8 @@
                 },
                 {
                   "title": "param",
-                  "name": "connectivity.maxMissedPings",
-                  "lineNumber": 18,
-                  "description": {
-                    "type": "root",
-                    "children": [
-                      {
-                        "type": "paragraph",
-                        "children": [
-                          {
-                            "type": "text",
-                            "value": "Maximum pings sent (without receiving a response) before reporting an error."
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  "type": {
-                    "type": "NameExpression",
-                    "name": "Number"
-                  },
-                  "default": "3"
-                },
-                {
-                  "title": "param",
                   "name": "connectivity.checkConnectivity",
-                  "lineNumber": 19,
+                  "lineNumber": 18,
                   "description": {
                     "type": "root",
                     "children": [
@@ -2646,7 +2608,7 @@
                 {
                   "title": "param",
                   "name": "connectivity.webSocketOAuthMode",
-                  "lineNumber": 20,
+                  "lineNumber": 19,
                   "description": {
                     "type": "root",
                     "children": [
@@ -2655,7 +2617,7 @@
                         "children": [
                           {
                             "type": "text",
-                            "value": "query will send the bearer access token to authenticate the websocket and none will not send it."
+                            "value": "When set to 'query', the OAuth bearer access token will be appended as a query string parameter to the websocket address."
                           }
                         ]
                       }
@@ -2665,7 +2627,7 @@
                     "type": "NameExpression",
                     "name": "string"
                   },
-                  "default": "query"
+                  "default": "none"
                 }
               ]
             }
@@ -3658,22 +3620,22 @@
           ],
           "loc": {
             "start": {
-              "line": 251,
+              "line": 209,
               "column": 4
             },
             "end": {
-              "line": 257,
+              "line": 215,
               "column": 7
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 258,
+                "line": 216,
                 "column": 4
               },
               "end": {
-                "line": 260,
+                "line": 218,
                 "column": 5
               }
             },
@@ -3753,22 +3715,22 @@
           ],
           "loc": {
             "start": {
-              "line": 263,
+              "line": 221,
               "column": 4
             },
             "end": {
-              "line": 289,
+              "line": 247,
               "column": 7
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 290,
+                "line": 248,
                 "column": 4
               },
               "end": {
-                "line": 316,
+                "line": 271,
                 "column": 5
               }
             },
@@ -5072,441 +5034,6 @@
                 "children": [
                   {
                     "type": "text",
-                    "value": "If you're authenticating with tokens that expire and have not provided a refresh token to the "
-                  },
-                  {
-                    "type": "inlineCode",
-                    "value": "connect"
-                  },
-                  {
-                    "type": "text",
-                    "value": " function, you can update your access token with "
-                  },
-                  {
-                    "type": "inlineCode",
-                    "value": "updateToken"
-                  },
-                  {
-                    "type": "text",
-                    "value": " before it expires to stay connected."
-                  }
-                ]
-              }
-            ]
-          },
-          "tags": [
-            {
-              "title": "public",
-              "description": null,
-              "lineNumber": 3,
-              "type": null
-            },
-            {
-              "title": "memberof",
-              "description": "api",
-              "lineNumber": 4
-            },
-            {
-              "title": "requires",
-              "description": null,
-              "lineNumber": 5,
-              "name": "accessTokenAuth"
-            },
-            {
-              "title": "requires",
-              "description": null,
-              "lineNumber": 6,
-              "name": "accessTokenAuthCIM"
-            },
-            {
-              "title": "method",
-              "description": null,
-              "lineNumber": 7,
-              "name": "updateToken"
-            },
-            {
-              "title": "param",
-              "description": "The credentials object.",
-              "lineNumber": 8,
-              "type": {
-                "type": "NameExpression",
-                "name": "Object"
-              },
-              "name": "credentials"
-            },
-            {
-              "title": "param",
-              "description": "The username without the application's domain.",
-              "lineNumber": 9,
-              "type": {
-                "type": "NameExpression",
-                "name": "string"
-              },
-              "name": "credentials.username"
-            },
-            {
-              "title": "param",
-              "description": "An access token for the user with the provided user Id.",
-              "lineNumber": 10,
-              "type": {
-                "type": "NameExpression",
-                "name": "string"
-              },
-              "name": "credentials.accessToken"
-            }
-          ],
-          "loc": {
-            "start": {
-              "line": 17,
-              "column": 4
-            },
-            "end": {
-              "line": 28,
-              "column": 7
-            }
-          },
-          "context": {
-            "loc": {
-              "start": {
-                "line": 61,
-                "column": 4
-              },
-              "end": {
-                "line": 68,
-                "column": 5
-              }
-            },
-            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/auth/interface/api.js"
-          },
-          "augments": [],
-          "examples": [],
-          "implements": [],
-          "params": [
-            {
-              "title": "param",
-              "name": "credentials",
-              "lineNumber": 8,
-              "description": {
-                "type": "root",
-                "children": [
-                  {
-                    "type": "paragraph",
-                    "children": [
-                      {
-                        "type": "text",
-                        "value": "The credentials object."
-                      }
-                    ]
-                  }
-                ]
-              },
-              "type": {
-                "type": "NameExpression",
-                "name": "Object"
-              },
-              "properties": [
-                {
-                  "title": "param",
-                  "name": "credentials.username",
-                  "lineNumber": 9,
-                  "description": {
-                    "type": "root",
-                    "children": [
-                      {
-                        "type": "paragraph",
-                        "children": [
-                          {
-                            "type": "text",
-                            "value": "The username without the application's domain."
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  "type": {
-                    "type": "NameExpression",
-                    "name": "string"
-                  }
-                },
-                {
-                  "title": "param",
-                  "name": "credentials.accessToken",
-                  "lineNumber": 10,
-                  "description": {
-                    "type": "root",
-                    "children": [
-                      {
-                        "type": "paragraph",
-                        "children": [
-                          {
-                            "type": "text",
-                            "value": "An access token for the user with the provided user Id."
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  "type": {
-                    "type": "NameExpression",
-                    "name": "string"
-                  }
-                }
-              ]
-            }
-          ],
-          "properties": [],
-          "returns": [],
-          "sees": [],
-          "throws": [],
-          "todos": [],
-          "yields": [],
-          "access": "public",
-          "memberof": "api",
-          "kind": "function",
-          "name": "updateToken",
-          "members": {
-            "global": [],
-            "inner": [],
-            "instance": [],
-            "events": [],
-            "static": []
-          },
-          "path": [
-            {
-              "name": "api",
-              "kind": "module"
-            },
-            {
-              "name": "updateToken",
-              "kind": "function"
-            }
-          ],
-          "namespace": "apiupdateToken"
-        },
-        {
-          "description": {
-            "type": "root",
-            "children": [
-              {
-                "type": "paragraph",
-                "children": [
-                  {
-                    "type": "text",
-                    "value": "If you're authenticating with tokens that expire, you can update your access token with "
-                  },
-                  {
-                    "type": "inlineCode",
-                    "value": "updateToken"
-                  },
-                  {
-                    "type": "text",
-                    "value": " before it expires to stay connected."
-                  }
-                ]
-              }
-            ]
-          },
-          "tags": [
-            {
-              "title": "public",
-              "description": null,
-              "lineNumber": 3,
-              "type": null
-            },
-            {
-              "title": "memberof",
-              "description": "api",
-              "lineNumber": 4
-            },
-            {
-              "title": "requires",
-              "description": null,
-              "lineNumber": 5,
-              "name": "bearerAccessTokenAuth"
-            },
-            {
-              "title": "method",
-              "description": null,
-              "lineNumber": 6,
-              "name": "updateToken"
-            },
-            {
-              "title": "param",
-              "description": "The credentials object.",
-              "lineNumber": 7,
-              "type": {
-                "type": "NameExpression",
-                "name": "Object"
-              },
-              "name": "credentials"
-            },
-            {
-              "title": "param",
-              "description": "The username without the application's domain.",
-              "lineNumber": 8,
-              "type": {
-                "type": "NameExpression",
-                "name": "string"
-              },
-              "name": "credentials.username"
-            },
-            {
-              "title": "param",
-              "description": "A bearerAccessToken provided by an outside service.",
-              "lineNumber": 9,
-              "type": {
-                "type": "NameExpression",
-                "name": "string"
-              },
-              "name": "credentials.bearerAccessToken"
-            },
-            {
-              "title": "example",
-              "description": "client.updateToken({\n  username: 'alfred@example.com',\n  bearerAccessToken: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...'\n});",
-              "lineNumber": 10
-            }
-          ],
-          "loc": {
-            "start": {
-              "line": 45,
-              "column": 4
-            },
-            "end": {
-              "line": 60,
-              "column": 7
-            }
-          },
-          "context": {
-            "loc": {
-              "start": {
-                "line": 61,
-                "column": 4
-              },
-              "end": {
-                "line": 68,
-                "column": 5
-              }
-            },
-            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/auth/interface/api.js"
-          },
-          "augments": [],
-          "examples": [
-            {
-              "description": "client.updateToken({\n  username: 'alfred@example.com',\n  bearerAccessToken: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...'\n});"
-            }
-          ],
-          "implements": [],
-          "params": [
-            {
-              "title": "param",
-              "name": "credentials",
-              "lineNumber": 7,
-              "description": {
-                "type": "root",
-                "children": [
-                  {
-                    "type": "paragraph",
-                    "children": [
-                      {
-                        "type": "text",
-                        "value": "The credentials object."
-                      }
-                    ]
-                  }
-                ]
-              },
-              "type": {
-                "type": "NameExpression",
-                "name": "Object"
-              },
-              "properties": [
-                {
-                  "title": "param",
-                  "name": "credentials.username",
-                  "lineNumber": 8,
-                  "description": {
-                    "type": "root",
-                    "children": [
-                      {
-                        "type": "paragraph",
-                        "children": [
-                          {
-                            "type": "text",
-                            "value": "The username without the application's domain."
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  "type": {
-                    "type": "NameExpression",
-                    "name": "string"
-                  }
-                },
-                {
-                  "title": "param",
-                  "name": "credentials.bearerAccessToken",
-                  "lineNumber": 9,
-                  "description": {
-                    "type": "root",
-                    "children": [
-                      {
-                        "type": "paragraph",
-                        "children": [
-                          {
-                            "type": "text",
-                            "value": "A bearerAccessToken provided by an outside service."
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  "type": {
-                    "type": "NameExpression",
-                    "name": "string"
-                  }
-                }
-              ]
-            }
-          ],
-          "properties": [],
-          "returns": [],
-          "sees": [],
-          "throws": [],
-          "todos": [],
-          "yields": [],
-          "access": "public",
-          "memberof": "api",
-          "kind": "function",
-          "name": "updateToken",
-          "members": {
-            "global": [],
-            "inner": [],
-            "instance": [],
-            "events": [],
-            "static": []
-          },
-          "path": [
-            {
-              "name": "api",
-              "kind": "module"
-            },
-            {
-              "name": "updateToken",
-              "kind": "function"
-            }
-          ],
-          "namespace": "apiupdateToken"
-        },
-        {
-          "description": {
-            "type": "root",
-            "children": [
-              {
-                "type": "paragraph",
-                "children": [
-                  {
-                    "type": "text",
                     "value": "Retrieves information about the current user."
                   }
                 ]
@@ -5561,22 +5088,22 @@
           ],
           "loc": {
             "start": {
-              "line": 70,
+              "line": 17,
               "column": 4
             },
             "end": {
-              "line": 80,
+              "line": 27,
               "column": 7
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 81,
+                "line": 28,
                 "column": 4
               },
               "end": {
-                "line": 84,
+                "line": 31,
                 "column": 5
               }
             },
@@ -5794,22 +5321,22 @@
           ],
           "loc": {
             "start": {
-              "line": 149,
+              "line": 45,
               "column": 4
             },
             "end": {
-              "line": 170,
+              "line": 66,
               "column": 7
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 233,
+                "line": 113,
                 "column": 4
               },
               "end": {
-                "line": 250,
+                "line": 128,
                 "column": 5
               }
             },
@@ -6075,22 +5602,22 @@
           ],
           "loc": {
             "start": {
-              "line": 171,
+              "line": 67,
               "column": 4
             },
             "end": {
-              "line": 198,
+              "line": 94,
               "column": 7
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 233,
+                "line": 113,
                 "column": 4
               },
               "end": {
-                "line": 250,
+                "line": 128,
                 "column": 5
               }
             },
@@ -6214,7 +5741,7 @@
                 "children": [
                   {
                     "type": "text",
-                    "value": "Provides a bearerAccessToken to any backend services that the SDK instance deals with.\nThe bearerAccessToken provided establishes what can be accessed by the SDK."
+                    "value": "Provides a bearerAccessToken to any backend services that the SDK instance deals with.\nThe bearerAccessToken provided establishes what can be accessed by the SDK. The bearerAccessToken\ncan be set again after subscription as long as the subscribed username is passed with the updated bearerAccessToken."
                   }
                 ]
               }
@@ -6224,30 +5751,30 @@
             {
               "title": "public",
               "description": null,
-              "lineNumber": 4,
+              "lineNumber": 5,
               "type": null
             },
             {
               "title": "memberof",
               "description": "api",
-              "lineNumber": 5
+              "lineNumber": 6
             },
             {
               "title": "requires",
               "description": null,
-              "lineNumber": 6,
+              "lineNumber": 7,
               "name": "bearerAccessTokenAuth"
             },
             {
               "title": "method",
               "description": null,
-              "lineNumber": 7,
+              "lineNumber": 8,
               "name": "setCredentials"
             },
             {
               "title": "param",
               "description": "The credentials object.",
-              "lineNumber": 8,
+              "lineNumber": 9,
               "type": {
                 "type": "NameExpression",
                 "name": "Object"
@@ -6257,7 +5784,7 @@
             {
               "title": "param",
               "description": "The username without the application's domain.",
-              "lineNumber": 9,
+              "lineNumber": 10,
               "type": {
                 "type": "NameExpression",
                 "name": "string"
@@ -6267,7 +5794,7 @@
             {
               "title": "param",
               "description": "A bearerAccessToken retrieved using the authentication APIs of the platform.",
-              "lineNumber": 10,
+              "lineNumber": 11,
               "type": {
                 "type": "NameExpression",
                 "name": "string"
@@ -6277,27 +5804,27 @@
             {
               "title": "example",
               "description": "client.setCredentials({\n  username: 'alfred@example.com',\n  bearerAccessToken: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...'\n});",
-              "lineNumber": 11
+              "lineNumber": 12
             }
           ],
           "loc": {
             "start": {
-              "line": 199,
+              "line": 95,
               "column": 4
             },
             "end": {
-              "line": 215,
+              "line": 112,
               "column": 7
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 233,
+                "line": 113,
                 "column": 4
               },
               "end": {
-                "line": 250,
+                "line": 128,
                 "column": 5
               }
             },
@@ -6314,7 +5841,7 @@
             {
               "title": "param",
               "name": "credentials",
-              "lineNumber": 8,
+              "lineNumber": 9,
               "description": {
                 "type": "root",
                 "children": [
@@ -6337,7 +5864,7 @@
                 {
                   "title": "param",
                   "name": "credentials.username",
-                  "lineNumber": 9,
+                  "lineNumber": 10,
                   "description": {
                     "type": "root",
                     "children": [
@@ -6360,7 +5887,7 @@
                 {
                   "title": "param",
                   "name": "credentials.bearerAccessToken",
-                  "lineNumber": 10,
+                  "lineNumber": 11,
                   "description": {
                     "type": "root",
                     "children": [
@@ -6370,213 +5897,6 @@
                           {
                             "type": "text",
                             "value": "A bearerAccessToken retrieved using the authentication APIs of the platform."
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  "type": {
-                    "type": "NameExpression",
-                    "name": "string"
-                  }
-                }
-              ]
-            }
-          ],
-          "properties": [],
-          "returns": [],
-          "sees": [],
-          "throws": [],
-          "todos": [],
-          "yields": [],
-          "access": "public",
-          "memberof": "api",
-          "kind": "function",
-          "name": "setCredentials",
-          "members": {
-            "global": [],
-            "inner": [],
-            "instance": [],
-            "events": [],
-            "static": []
-          },
-          "path": [
-            {
-              "name": "api",
-              "kind": "module"
-            },
-            {
-              "name": "setCredentials",
-              "kind": "function"
-            }
-          ],
-          "namespace": "apisetCredentials"
-        },
-        {
-          "description": {
-            "type": "root",
-            "children": [
-              {
-                "type": "paragraph",
-                "children": [
-                  {
-                    "type": "text",
-                    "value": "Provides an access token to any backend services that the SDK instance deals with.\nThe access token provided establishes what can be accessed by the SDK."
-                  }
-                ]
-              }
-            ]
-          },
-          "tags": [
-            {
-              "title": "public",
-              "description": null,
-              "lineNumber": 4,
-              "type": null
-            },
-            {
-              "title": "memberof",
-              "description": "api",
-              "lineNumber": 5
-            },
-            {
-              "title": "requires",
-              "description": null,
-              "lineNumber": 6,
-              "name": "accessTokenAuthCIM"
-            },
-            {
-              "title": "method",
-              "description": null,
-              "lineNumber": 7,
-              "name": "setCredentials"
-            },
-            {
-              "title": "param",
-              "description": "The credentials object.",
-              "lineNumber": 8,
-              "type": {
-                "type": "NameExpression",
-                "name": "Object"
-              },
-              "name": "credentials"
-            },
-            {
-              "title": "param",
-              "description": "The username without the application's domain.",
-              "lineNumber": 9,
-              "type": {
-                "type": "NameExpression",
-                "name": "string"
-              },
-              "name": "credentials.username"
-            },
-            {
-              "title": "param",
-              "description": "An accessToken retrieved using the authentication APIs of the platform. Used for CIM authentication.",
-              "lineNumber": 10,
-              "type": {
-                "type": "NameExpression",
-                "name": "string"
-              },
-              "name": "credentials.accessToken"
-            },
-            {
-              "title": "example",
-              "description": "client.setCredentials({\n  username: 'alfred@example.com',\n  accessToken: 'ATgtBl8QAoJaeeJU!zhARKBYaN2BUxFQsc8F...'\n});",
-              "lineNumber": 11
-            }
-          ],
-          "loc": {
-            "start": {
-              "line": 216,
-              "column": 4
-            },
-            "end": {
-              "line": 232,
-              "column": 7
-            }
-          },
-          "context": {
-            "loc": {
-              "start": {
-                "line": 233,
-                "column": 4
-              },
-              "end": {
-                "line": 250,
-                "column": 5
-              }
-            },
-            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/auth/interface/api.js"
-          },
-          "augments": [],
-          "examples": [
-            {
-              "description": "client.setCredentials({\n  username: 'alfred@example.com',\n  accessToken: 'ATgtBl8QAoJaeeJU!zhARKBYaN2BUxFQsc8F...'\n});"
-            }
-          ],
-          "implements": [],
-          "params": [
-            {
-              "title": "param",
-              "name": "credentials",
-              "lineNumber": 8,
-              "description": {
-                "type": "root",
-                "children": [
-                  {
-                    "type": "paragraph",
-                    "children": [
-                      {
-                        "type": "text",
-                        "value": "The credentials object."
-                      }
-                    ]
-                  }
-                ]
-              },
-              "type": {
-                "type": "NameExpression",
-                "name": "Object"
-              },
-              "properties": [
-                {
-                  "title": "param",
-                  "name": "credentials.username",
-                  "lineNumber": 9,
-                  "description": {
-                    "type": "root",
-                    "children": [
-                      {
-                        "type": "paragraph",
-                        "children": [
-                          {
-                            "type": "text",
-                            "value": "The username without the application's domain."
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  "type": {
-                    "type": "NameExpression",
-                    "name": "string"
-                  }
-                },
-                {
-                  "title": "param",
-                  "name": "credentials.accessToken",
-                  "lineNumber": 10,
-                  "description": {
-                    "type": "root",
-                    "children": [
-                      {
-                        "type": "paragraph",
-                        "children": [
-                          {
-                            "type": "text",
-                            "value": "An accessToken retrieved using the authentication APIs of the platform. Used for CIM authentication."
                           }
                         ]
                       }
@@ -18461,22 +17781,22 @@
           ],
           "loc": {
             "start": {
-              "line": 478,
+              "line": 439,
               "column": 2
             },
             "end": {
-              "line": 501,
+              "line": 462,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 502,
+                "line": 463,
                 "column": 2
               },
               "end": {
-                "line": 534,
+                "line": 495,
                 "column": 3
               }
             },
@@ -20719,431 +20039,6 @@
                 "children": [
                   {
                     "type": "text",
-                    "value": "Adds local screenshare to an ongoing Call, to start sending to the remote\nparticipant."
-                  }
-                ]
-              },
-              {
-                "type": "paragraph",
-                "children": [
-                  {
-                    "type": "text",
-                    "value": "The latest SDK release (v4.X+) has not yet implemented this API in the\nsame way that it was available in previous releases (v3.X). In place\nof this API, the SDK has a more general API that can be used for this\nsame behaviour."
-                  }
-                ]
-              },
-              {
-                "type": "paragraph",
-                "children": [
-                  {
-                    "type": "text",
-                    "value": "The "
-                  },
-                  {
-                    "type": "link",
-                    "url": "#calladdmedia",
-                    "title": null,
-                    "jsdoc": true,
-                    "children": [
-                      {
-                        "type": "text",
-                        "value": "call.addMedia"
-                      }
-                    ]
-                  },
-                  {
-                    "type": "text",
-                    "value": " API can be used to perform the same behaviour\nas "
-                  },
-                  {
-                    "type": "inlineCode",
-                    "value": "startScreenshare"
-                  },
-                  {
-                    "type": "text",
-                    "value": ". "
-                  },
-                  {
-                    "type": "link",
-                    "url": "#calladdmedia",
-                    "title": null,
-                    "jsdoc": true,
-                    "children": [
-                      {
-                        "type": "text",
-                        "value": "call.addMedia"
-                      }
-                    ]
-                  },
-                  {
-                    "type": "text",
-                    "value": " is a general-purpose API\nfor adding media to a call, which covers the same functionality as\n"
-                  },
-                  {
-                    "type": "inlineCode",
-                    "value": "startScreenshare"
-                  },
-                  {
-                    "type": "text",
-                    "value": ". Selecting only screen options when using\n"
-                  },
-                  {
-                    "type": "link",
-                    "url": "#calladdmedia",
-                    "title": null,
-                    "jsdoc": true,
-                    "children": [
-                      {
-                        "type": "text",
-                        "value": "call.addMedia"
-                      }
-                    ]
-                  },
-                  {
-                    "type": "text",
-                    "value": " will perform the same behaviour as using\n"
-                  },
-                  {
-                    "type": "inlineCode",
-                    "value": "startScreenshare"
-                  },
-                  {
-                    "type": "text",
-                    "value": "."
-                  }
-                ]
-              }
-            ]
-          },
-          "tags": [
-            {
-              "title": "public",
-              "description": null,
-              "lineNumber": 16,
-              "type": null
-            },
-            {
-              "title": "static",
-              "description": null,
-              "lineNumber": 17
-            },
-            {
-              "title": "method",
-              "description": null,
-              "lineNumber": 18,
-              "name": "startScreenshare"
-            },
-            {
-              "title": "memberof",
-              "description": "call",
-              "lineNumber": 19
-            },
-            {
-              "title": "requires",
-              "description": null,
-              "lineNumber": 20,
-              "name": "call"
-            },
-            {
-              "title": "requires",
-              "description": null,
-              "lineNumber": 21,
-              "name": "callMe"
-            },
-            {
-              "title": "example",
-              "description": "// Select media options for adding only screenshare.\nconst media = {\n   audio: false,\n   video: false,\n   screen: true,\n   screenOptions: { ... }\n}\n\n// Add the selected media to the call.\nclient.call.addMedia(callId, media)",
-              "lineNumber": 22
-            }
-          ],
-          "loc": {
-            "start": {
-              "line": 378,
-              "column": 2
-            },
-            "end": {
-              "line": 411,
-              "column": 5
-            }
-          },
-          "context": {
-            "loc": {
-              "start": {
-                "line": 523,
-                "column": 2
-              },
-              "end": {
-                "line": 562,
-                "column": 3
-              }
-            },
-            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/call/interface/api/midcall.js"
-          },
-          "augments": [],
-          "examples": [
-            {
-              "description": "// Select media options for adding only screenshare.\nconst media = {\n   audio: false,\n   video: false,\n   screen: true,\n   screenOptions: { ... }\n}\n\n// Add the selected media to the call.\nclient.call.addMedia(callId, media)"
-            }
-          ],
-          "implements": [],
-          "params": [],
-          "properties": [],
-          "returns": [],
-          "sees": [],
-          "throws": [],
-          "todos": [],
-          "yields": [],
-          "access": "public",
-          "scope": "static",
-          "kind": "function",
-          "name": "startScreenshare",
-          "memberof": "call",
-          "members": {
-            "global": [],
-            "inner": [],
-            "instance": [],
-            "events": [],
-            "static": []
-          },
-          "path": [
-            {
-              "name": "call",
-              "kind": "namespace"
-            },
-            {
-              "name": "startScreenshare",
-              "kind": "function",
-              "scope": "static"
-            }
-          ],
-          "namespace": "call.startScreenshare"
-        },
-        {
-          "description": {
-            "type": "root",
-            "children": [
-              {
-                "type": "paragraph",
-                "children": [
-                  {
-                    "type": "text",
-                    "value": "Removes local screenshare from an ongoing Call, stopping it from being\nsent to the remote participant."
-                  }
-                ]
-              },
-              {
-                "type": "paragraph",
-                "children": [
-                  {
-                    "type": "text",
-                    "value": "The latest SDK release (v4.X+) has not yet implemented this API in the\nsame way that it was available in previous releases (v3.X). In place\nof this API, the SDK has a more general API that can be used for this\nsame behaviour."
-                  }
-                ]
-              },
-              {
-                "type": "paragraph",
-                "children": [
-                  {
-                    "type": "text",
-                    "value": "The "
-                  },
-                  {
-                    "type": "link",
-                    "url": "#callremovemedia",
-                    "title": null,
-                    "jsdoc": true,
-                    "children": [
-                      {
-                        "type": "text",
-                        "value": "call.removeMedia"
-                      }
-                    ]
-                  },
-                  {
-                    "type": "text",
-                    "value": " API can be used to perform the same\nbehaviour as "
-                  },
-                  {
-                    "type": "inlineCode",
-                    "value": "stopScreenshare"
-                  },
-                  {
-                    "type": "text",
-                    "value": ". "
-                  },
-                  {
-                    "type": "link",
-                    "url": "#callremovemedia",
-                    "title": null,
-                    "jsdoc": true,
-                    "children": [
-                      {
-                        "type": "text",
-                        "value": "call.removeMedia"
-                      }
-                    ]
-                  },
-                  {
-                    "type": "text",
-                    "value": " is a\ngeneral-purpose API for removing media from a call, which covers the\nsame functionality as "
-                  },
-                  {
-                    "type": "inlineCode",
-                    "value": "stopScreenshare"
-                  },
-                  {
-                    "type": "text",
-                    "value": ". Specifying only the screen\ntrack when using "
-                  },
-                  {
-                    "type": "link",
-                    "url": "#callremovemedia",
-                    "title": null,
-                    "jsdoc": true,
-                    "children": [
-                      {
-                        "type": "text",
-                        "value": "call.removeMedia"
-                      }
-                    ]
-                  },
-                  {
-                    "type": "text",
-                    "value": " will perform the same\nbehaviour as using "
-                  },
-                  {
-                    "type": "inlineCode",
-                    "value": "stopScreenshare"
-                  },
-                  {
-                    "type": "text",
-                    "value": "."
-                  }
-                ]
-              },
-              {
-                "type": "paragraph",
-                "children": [
-                  {
-                    "type": "text",
-                    "value": "There is a caveat that if a Call has multiple video tracks (for example,\nboth a video and a screen track), the SDK itself cannot yet\ndifferentiate one from the other. The application will need to know\nwhich track was the screen track in this scenario."
-                  }
-                ]
-              }
-            ]
-          },
-          "tags": [
-            {
-              "title": "public",
-              "description": null,
-              "lineNumber": 20,
-              "type": null
-            },
-            {
-              "title": "static",
-              "description": null,
-              "lineNumber": 21
-            },
-            {
-              "title": "method",
-              "description": null,
-              "lineNumber": 22,
-              "name": "stopScreenshare"
-            },
-            {
-              "title": "memberof",
-              "description": "call",
-              "lineNumber": 23
-            },
-            {
-              "title": "requires",
-              "description": null,
-              "lineNumber": 24,
-              "name": "call"
-            },
-            {
-              "title": "requires",
-              "description": null,
-              "lineNumber": 25,
-              "name": "callMe"
-            },
-            {
-              "title": "example",
-              "description": "const call = client.call.getById(callId)\n// Get the ID of any/all video tracks on the call.\nconst videoTracks = call.localTracks.filter(trackId => {\n   const track = call.media.getTrackById(trackId)\n   // Both video and screen tracks have kind of 'video'.\n   return track.kind === 'video'\n})\n\n// Pick out the screen track.\nconst screenTrack = videoTracks[0]\n\n// Remove screen from the call.\nclient.call.removeMedia(callId, [ screenTrack ])",
-              "lineNumber": 26
-            }
-          ],
-          "loc": {
-            "start": {
-              "line": 413,
-              "column": 2
-            },
-            "end": {
-              "line": 453,
-              "column": 5
-            }
-          },
-          "context": {
-            "loc": {
-              "start": {
-                "line": 523,
-                "column": 2
-              },
-              "end": {
-                "line": 562,
-                "column": 3
-              }
-            },
-            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/call/interface/api/midcall.js"
-          },
-          "augments": [],
-          "examples": [
-            {
-              "description": "const call = client.call.getById(callId)\n// Get the ID of any/all video tracks on the call.\nconst videoTracks = call.localTracks.filter(trackId => {\n   const track = call.media.getTrackById(trackId)\n   // Both video and screen tracks have kind of 'video'.\n   return track.kind === 'video'\n})\n\n// Pick out the screen track.\nconst screenTrack = videoTracks[0]\n\n// Remove screen from the call.\nclient.call.removeMedia(callId, [ screenTrack ])"
-            }
-          ],
-          "implements": [],
-          "params": [],
-          "properties": [],
-          "returns": [],
-          "sees": [],
-          "throws": [],
-          "todos": [],
-          "yields": [],
-          "access": "public",
-          "scope": "static",
-          "kind": "function",
-          "name": "stopScreenshare",
-          "memberof": "call",
-          "members": {
-            "global": [],
-            "inner": [],
-            "instance": [],
-            "events": [],
-            "static": []
-          },
-          "path": [
-            {
-              "name": "call",
-              "kind": "namespace"
-            },
-            {
-              "name": "stopScreenshare",
-              "kind": "function",
-              "scope": "static"
-            }
-          ],
-          "namespace": "call.stopScreenshare"
-        },
-        {
-          "description": {
-            "type": "root",
-            "children": [
-              {
-                "type": "paragraph",
-                "children": [
-                  {
-                    "type": "text",
                     "value": "Replace a call's track with a new track of the same media type."
                   }
                 ]
@@ -21388,22 +20283,22 @@
           ],
           "loc": {
             "start": {
-              "line": 455,
+              "line": 378,
               "column": 2
             },
             "end": {
-              "line": 522,
+              "line": 445,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 523,
+                "line": 446,
                 "column": 2
               },
               "end": {
-                "line": 562,
+                "line": 485,
                 "column": 3
               }
             },
@@ -22046,22 +20941,22 @@
           ],
           "loc": {
             "start": {
-              "line": 564,
+              "line": 487,
               "column": 2
             },
             "end": {
-              "line": 608,
+              "line": 531,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 609,
+                "line": 532,
                 "column": 2
               },
               "end": {
-                "line": 629,
+                "line": 552,
                 "column": 3
               }
             },
@@ -22394,22 +21289,22 @@
           ],
           "loc": {
             "start": {
-              "line": 665,
+              "line": 588,
               "column": 2
             },
             "end": {
-              "line": 728,
+              "line": 651,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 729,
+                "line": 652,
                 "column": 2
               },
               "end": {
-                "line": 769,
+                "line": 692,
                 "column": 3
               }
             },
@@ -24722,342 +23617,6 @@
             }
           ],
           "namespace": "call.setSdpHandlers"
-        },
-        {
-          "description": {
-            "type": "root",
-            "children": [
-              {
-                "type": "paragraph",
-                "children": [
-                  {
-                    "type": "text",
-                    "value": "Changes the camera and/or microphone used for a Call's media input."
-                  }
-                ]
-              },
-              {
-                "type": "paragraph",
-                "children": [
-                  {
-                    "type": "text",
-                    "value": "The latest SDK release (v4.X+) has not yet implemented this API in the\nsame way that it was available in previous releases (v3.X). In place\nof this API, the SDK has a more general API that can be used for this\nsame behaviour."
-                  }
-                ]
-              },
-              {
-                "type": "paragraph",
-                "children": [
-                  {
-                    "type": "text",
-                    "value": "The same behaviour as the "
-                  },
-                  {
-                    "type": "inlineCode",
-                    "value": "changeInputDevices"
-                  },
-                  {
-                    "type": "text",
-                    "value": " API can be implemented\nusing the general-purpose "
-                  },
-                  {
-                    "type": "link",
-                    "url": "#callreplacetrack",
-                    "title": null,
-                    "jsdoc": true,
-                    "children": [
-                      {
-                        "type": "text",
-                        "value": "call.replaceTrack"
-                      }
-                    ]
-                  },
-                  {
-                    "type": "text",
-                    "value": " API. This API can\nbe used to replace an existing media track with a new track of the\nsame type, allowing an application to change certain aspects of the\nmedia, such as input device."
-                  }
-                ]
-              }
-            ]
-          },
-          "tags": [
-            {
-              "title": "public",
-              "description": null,
-              "lineNumber": 13,
-              "type": null
-            },
-            {
-              "title": "static",
-              "description": null,
-              "lineNumber": 14
-            },
-            {
-              "title": "method",
-              "description": null,
-              "lineNumber": 15,
-              "name": "changeInputDevices"
-            },
-            {
-              "title": "memberof",
-              "description": "call",
-              "lineNumber": 16
-            },
-            {
-              "title": "requires",
-              "description": null,
-              "lineNumber": 17,
-              "name": "call"
-            },
-            {
-              "title": "requires",
-              "description": null,
-              "lineNumber": 18,
-              "name": "callMe"
-            },
-            {
-              "title": "example",
-              "description": "const call = client.call.getById(callId)\n// Get the ID of the Call's video track.\nconst videoTrack = call.localTracks.find(trackId => {\n   const track = client.media.getTrackById(trackId)\n   return track.kind === 'video'\n})\n\n// Select the new video options.\nconst media = {\n   video: true,\n   videoOptions: {\n       deviceId: 'cameraId'\n   }\n}\n\n// Change the call's camera by replacing the video track.\nclient.call.replaceTrack(callId, videoTrack, media)",
-              "lineNumber": 19
-            }
-          ],
-          "loc": {
-            "start": {
-              "line": 442,
-              "column": 2
-            },
-            "end": {
-              "line": 479,
-              "column": 5
-            }
-          },
-          "context": {
-            "loc": {
-              "start": {
-                "line": 520,
-                "column": 2
-              },
-              "end": {
-                "line": 531,
-                "column": 3
-              }
-            },
-            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/call/interface/api/misc.js"
-          },
-          "augments": [],
-          "examples": [
-            {
-              "description": "const call = client.call.getById(callId)\n// Get the ID of the Call's video track.\nconst videoTrack = call.localTracks.find(trackId => {\n   const track = client.media.getTrackById(trackId)\n   return track.kind === 'video'\n})\n\n// Select the new video options.\nconst media = {\n   video: true,\n   videoOptions: {\n       deviceId: 'cameraId'\n   }\n}\n\n// Change the call's camera by replacing the video track.\nclient.call.replaceTrack(callId, videoTrack, media)"
-            }
-          ],
-          "implements": [],
-          "params": [],
-          "properties": [],
-          "returns": [],
-          "sees": [],
-          "throws": [],
-          "todos": [],
-          "yields": [],
-          "access": "public",
-          "scope": "static",
-          "kind": "function",
-          "name": "changeInputDevices",
-          "memberof": "call",
-          "members": {
-            "global": [],
-            "inner": [],
-            "instance": [],
-            "events": [],
-            "static": []
-          },
-          "path": [
-            {
-              "name": "call",
-              "kind": "namespace"
-            },
-            {
-              "name": "changeInputDevices",
-              "kind": "function",
-              "scope": "static"
-            }
-          ],
-          "namespace": "call.changeInputDevices"
-        },
-        {
-          "description": {
-            "type": "root",
-            "children": [
-              {
-                "type": "paragraph",
-                "children": [
-                  {
-                    "type": "text",
-                    "value": "Changes the speaker used for a Call's audio output. Supported on\nbrowser's that support HTMLMediaElement.setSinkId()."
-                  }
-                ]
-              },
-              {
-                "type": "paragraph",
-                "children": [
-                  {
-                    "type": "text",
-                    "value": "The latest SDK release (v4.X+) has not yet implemented this API in the\nsame way that it was available in previous releases (v3.X). In place\nof this API, the SDK has a more general API that can be used for this\nsame behaviour."
-                  }
-                ]
-              },
-              {
-                "type": "paragraph",
-                "children": [
-                  {
-                    "type": "text",
-                    "value": "The same behaviour as the "
-                  },
-                  {
-                    "type": "inlineCode",
-                    "value": "changeSpeaker"
-                  },
-                  {
-                    "type": "text",
-                    "value": " API can be implemented by\nre-rendering the Call's audio track.  A speaker can be selected when\nrendering an audio track, so changing a speaker can be simulated\nby unrendering the track with "
-                  },
-                  {
-                    "type": "link",
-                    "url": "#mediaremovetracks",
-                    "title": null,
-                    "jsdoc": true,
-                    "children": [
-                      {
-                        "type": "text",
-                        "value": "media.removeTracks"
-                      }
-                    ]
-                  },
-                  {
-                    "type": "text",
-                    "value": ", then\nre-rendering it with a new speaker with "
-                  },
-                  {
-                    "type": "link",
-                    "url": "#mediarendertracks",
-                    "title": null,
-                    "jsdoc": true,
-                    "children": [
-                      {
-                        "type": "text",
-                        "value": "media.renderTracks"
-                      }
-                    ]
-                  },
-                  {
-                    "type": "text",
-                    "value": "."
-                  }
-                ]
-              }
-            ]
-          },
-          "tags": [
-            {
-              "title": "public",
-              "description": null,
-              "lineNumber": 14,
-              "type": null
-            },
-            {
-              "title": "static",
-              "description": null,
-              "lineNumber": 15
-            },
-            {
-              "title": "method",
-              "description": null,
-              "lineNumber": 16,
-              "name": "changeSpeaker"
-            },
-            {
-              "title": "memberof",
-              "description": "call",
-              "lineNumber": 17
-            },
-            {
-              "title": "requires",
-              "description": null,
-              "lineNumber": 18,
-              "name": "call"
-            },
-            {
-              "title": "requires",
-              "description": null,
-              "lineNumber": 19,
-              "name": "callMe"
-            },
-            {
-              "title": "example",
-              "description": "const call = client.call.getById(callId)\n// Get the ID of the Call's audio track.\nconst audioTrack = call.localTracks.find(trackId => {\n   const track = client.media.getTrackById(trackId)\n   return track.kind === 'audio'\n})\n\n// Where the audio track was previously rendered.\nconst audioContainer = ...\n\n// Unrender the audio track we want to change speaker for.\nclient.media.removeTrack([ audioTrack ], audioContainer)\n// Re-render the audio track with a new speaker.\nclient.media.renderTrack([ audioTrack ], audioContainer, {\n   speakerId: 'speakerId'\n})",
-              "lineNumber": 20
-            }
-          ],
-          "loc": {
-            "start": {
-              "line": 481,
-              "column": 2
-            },
-            "end": {
-              "line": 518,
-              "column": 5
-            }
-          },
-          "context": {
-            "loc": {
-              "start": {
-                "line": 520,
-                "column": 2
-              },
-              "end": {
-                "line": 531,
-                "column": 3
-              }
-            },
-            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/call/interface/api/misc.js"
-          },
-          "augments": [],
-          "examples": [
-            {
-              "description": "const call = client.call.getById(callId)\n// Get the ID of the Call's audio track.\nconst audioTrack = call.localTracks.find(trackId => {\n   const track = client.media.getTrackById(trackId)\n   return track.kind === 'audio'\n})\n\n// Where the audio track was previously rendered.\nconst audioContainer = ...\n\n// Unrender the audio track we want to change speaker for.\nclient.media.removeTrack([ audioTrack ], audioContainer)\n// Re-render the audio track with a new speaker.\nclient.media.renderTrack([ audioTrack ], audioContainer, {\n   speakerId: 'speakerId'\n})"
-            }
-          ],
-          "implements": [],
-          "params": [],
-          "properties": [],
-          "returns": [],
-          "sees": [],
-          "throws": [],
-          "todos": [],
-          "yields": [],
-          "access": "public",
-          "scope": "static",
-          "kind": "function",
-          "name": "changeSpeaker",
-          "memberof": "call",
-          "members": {
-            "global": [],
-            "inner": [],
-            "instance": [],
-            "events": [],
-            "static": []
-          },
-          "path": [
-            {
-              "name": "call",
-              "kind": "namespace"
-            },
-            {
-              "name": "changeSpeaker",
-              "kind": "function",
-              "scope": "static"
-            }
-          ],
-          "namespace": "call.changeSpeaker"
         },
         {
           "description": {
@@ -28945,23 +27504,23 @@
     ],
     "loc": {
       "start": {
-        "line": 4,
+        "line": 5,
         "column": 0
       },
       "end": {
-        "line": 10,
+        "line": 11,
         "column": 3
       }
     },
     "context": {
       "loc": {
         "start": {
-          "line": 44,
+          "line": 39,
           "column": 0
         },
         "end": {
-          "line": 44,
-          "column": 70
+          "line": 115,
+          "column": 1
         }
       },
       "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/connectivity/interface/api.js"
@@ -29024,26 +27583,6 @@
               "title": "event",
               "description": "ws:change",
               "lineNumber": 7
-            },
-            {
-              "title": "param",
-              "description": null,
-              "lineNumber": 8,
-              "type": {
-                "type": "NameExpression",
-                "name": "Object"
-              },
-              "name": "params"
-            },
-            {
-              "title": "param",
-              "description": "The platform",
-              "lineNumber": 9,
-              "type": {
-                "type": "NameExpression",
-                "name": "string"
-              },
-              "name": "params.platform"
             }
           ],
           "loc": {
@@ -29052,18 +27591,18 @@
               "column": 0
             },
             "end": {
-              "line": 11,
+              "line": 9,
               "column": 3
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 12,
+                "line": 10,
                 "column": 0
               },
               "end": {
-                "line": 12,
+                "line": 10,
                 "column": 36
               }
             },
@@ -29072,42 +27611,7 @@
           "augments": [],
           "examples": [],
           "implements": [],
-          "params": [
-            {
-              "title": "param",
-              "name": "params",
-              "lineNumber": 8,
-              "type": {
-                "type": "NameExpression",
-                "name": "Object"
-              },
-              "properties": [
-                {
-                  "title": "param",
-                  "name": "params.platform",
-                  "lineNumber": 9,
-                  "description": {
-                    "type": "root",
-                    "children": [
-                      {
-                        "type": "paragraph",
-                        "children": [
-                          {
-                            "type": "text",
-                            "value": "The platform"
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  "type": {
-                    "type": "NameExpression",
-                    "name": "string"
-                  }
-                }
-              ]
-            }
-          ],
+          "params": [],
           "properties": [],
           "returns": [],
           "sees": [],
@@ -29228,54 +27732,8 @@
             },
             {
               "title": "property",
-              "description": "Information about how the websocket is being used.",
-              "lineNumber": 11,
-              "type": {
-                "type": "NameExpression",
-                "name": "Object"
-              },
-              "name": "method"
-            },
-            {
-              "title": "property",
-              "description": "How the websocket is staying connected.",
-              "lineNumber": 12,
-              "type": {
-                "type": "OptionalType",
-                "expression": {
-                  "type": "NameExpression",
-                  "name": "string"
-                }
-              },
-              "name": "method.type"
-            },
-            {
-              "title": "property",
-              "description": "Who is responsible for keeping the connection alive.",
-              "lineNumber": 13,
-              "type": {
-                "type": "OptionalType",
-                "expression": {
-                  "type": "NameExpression",
-                  "name": "string"
-                }
-              },
-              "name": "method.responsibleParty"
-            },
-            {
-              "title": "property",
-              "description": "The SDK platform being used.",
-              "lineNumber": 14,
-              "type": {
-                "type": "NameExpression",
-                "name": "string"
-              },
-              "name": "platform"
-            },
-            {
-              "title": "property",
               "description": "How often the client will ping the server to test for websocket connectivity.",
-              "lineNumber": 15,
+              "lineNumber": 11,
               "type": {
                 "type": "NameExpression",
                 "name": "number"
@@ -29285,7 +27743,7 @@
             {
               "title": "property",
               "description": "How many times the SDK will try to reconnect a disconnected websocket.",
-              "lineNumber": 16,
+              "lineNumber": 12,
               "type": {
                 "type": "NameExpression",
                 "name": "number"
@@ -29295,7 +27753,7 @@
             {
               "title": "property",
               "description": "How long the SDK will wait before retrying websocket reconnection.",
-              "lineNumber": 17,
+              "lineNumber": 13,
               "type": {
                 "type": "NameExpression",
                 "name": "number"
@@ -29305,7 +27763,7 @@
             {
               "title": "property",
               "description": "Reconnect delay multiplier for subsequent attempts. The reconnect delay time will be multiplied by this after each failed reconnect attempt to increase the delay between attempts. eg. 5000ms then 10000ms then 20000ms delay if value is 2.",
-              "lineNumber": 18,
+              "lineNumber": 14,
               "type": {
                 "type": "NameExpression",
                 "name": "number"
@@ -29315,7 +27773,7 @@
             {
               "title": "property",
               "description": "Maximum time delay between reconnect attempts (milliseconds). Used in conjunction with `reconnectTimeMultiplier` to prevent overly long delays between reconnection attempts.",
-              "lineNumber": 19,
+              "lineNumber": 15,
               "type": {
                 "type": "NameExpression",
                 "name": "number"
@@ -29325,7 +27783,7 @@
             {
               "title": "property",
               "description": "Indicates if the SDK should automatically try reconnecting a disconnected websocket.",
-              "lineNumber": 20,
+              "lineNumber": 16,
               "type": {
                 "type": "NameExpression",
                 "name": "boolean"
@@ -29334,18 +27792,8 @@
             },
             {
               "title": "property",
-              "description": "How many missed pings before the SDK stops trying to reconnect a disconnected websocket.",
-              "lineNumber": 21,
-              "type": {
-                "type": "NameExpression",
-                "name": "number"
-              },
-              "name": "maxMissedPings"
-            },
-            {
-              "title": "property",
               "description": "The mode used for authenticating with the server.",
-              "lineNumber": 22,
+              "lineNumber": 17,
               "type": {
                 "type": "NameExpression",
                 "name": "string"
@@ -29355,7 +27803,7 @@
             {
               "title": "property",
               "description": "Information required to connect a websocket to the server.",
-              "lineNumber": 23,
+              "lineNumber": 18,
               "type": {
                 "type": "NameExpression",
                 "name": "Object"
@@ -29365,7 +27813,7 @@
             {
               "title": "property",
               "description": "The protocol to use to connect a websocket.",
-              "lineNumber": 24,
+              "lineNumber": 19,
               "type": {
                 "type": "OptionalType",
                 "expression": {
@@ -29378,7 +27826,7 @@
             {
               "title": "property",
               "description": "The domain name or IP address of the server to connect to.",
-              "lineNumber": 25,
+              "lineNumber": 20,
               "type": {
                 "type": "OptionalType",
                 "expression": {
@@ -29391,7 +27839,7 @@
             {
               "title": "property",
               "description": "The port of the server to connect to.",
-              "lineNumber": 26,
+              "lineNumber": 21,
               "type": {
                 "type": "OptionalType",
                 "expression": {
@@ -29404,7 +27852,7 @@
             {
               "title": "property",
               "description": "The URL path to use to request a websocket connection.",
-              "lineNumber": 27,
+              "lineNumber": 22,
               "type": {
                 "type": "OptionalType",
                 "expression": {
@@ -29417,7 +27865,7 @@
             {
               "title": "property",
               "description": "Any additional params that might be required by the server to establish the websocket connection.",
-              "lineNumber": 28,
+              "lineNumber": 23,
               "type": {
                 "type": "OptionalType",
                 "expression": {
@@ -29426,37 +27874,27 @@
                 }
               },
               "name": "wsInfo.params"
-            },
-            {
-              "title": "property",
-              "description": "The date and time that the last known contact with the server was.",
-              "lineNumber": 29,
-              "type": {
-                "type": "NameExpression",
-                "name": "number"
-              },
-              "name": "lastContact"
             }
           ],
           "loc": {
             "start": {
-              "line": 12,
+              "line": 13,
               "column": 0
             },
             "end": {
-              "line": 42,
+              "line": 37,
               "column": 3
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 44,
+                "line": 39,
                 "column": 0
               },
               "end": {
-                "line": 44,
-                "column": 70
+                "line": 115,
+                "column": 1
               }
             },
             "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/connectivity/interface/api.js"
@@ -29514,108 +27952,8 @@
             },
             {
               "title": "property",
-              "name": "method",
-              "lineNumber": 11,
-              "description": {
-                "type": "root",
-                "children": [
-                  {
-                    "type": "paragraph",
-                    "children": [
-                      {
-                        "type": "text",
-                        "value": "Information about how the websocket is being used."
-                      }
-                    ]
-                  }
-                ]
-              },
-              "type": {
-                "type": "NameExpression",
-                "name": "Object"
-              },
-              "properties": [
-                {
-                  "title": "property",
-                  "name": "method.type",
-                  "lineNumber": 12,
-                  "description": {
-                    "type": "root",
-                    "children": [
-                      {
-                        "type": "paragraph",
-                        "children": [
-                          {
-                            "type": "text",
-                            "value": "How the websocket is staying connected."
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  "type": {
-                    "type": "OptionalType",
-                    "expression": {
-                      "type": "NameExpression",
-                      "name": "string"
-                    }
-                  }
-                },
-                {
-                  "title": "property",
-                  "name": "method.responsibleParty",
-                  "lineNumber": 13,
-                  "description": {
-                    "type": "root",
-                    "children": [
-                      {
-                        "type": "paragraph",
-                        "children": [
-                          {
-                            "type": "text",
-                            "value": "Who is responsible for keeping the connection alive."
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  "type": {
-                    "type": "OptionalType",
-                    "expression": {
-                      "type": "NameExpression",
-                      "name": "string"
-                    }
-                  }
-                }
-              ]
-            },
-            {
-              "title": "property",
-              "name": "platform",
-              "lineNumber": 14,
-              "description": {
-                "type": "root",
-                "children": [
-                  {
-                    "type": "paragraph",
-                    "children": [
-                      {
-                        "type": "text",
-                        "value": "The SDK platform being used."
-                      }
-                    ]
-                  }
-                ]
-              },
-              "type": {
-                "type": "NameExpression",
-                "name": "string"
-              }
-            },
-            {
-              "title": "property",
               "name": "pingInterval",
-              "lineNumber": 15,
+              "lineNumber": 11,
               "description": {
                 "type": "root",
                 "children": [
@@ -29638,7 +27976,7 @@
             {
               "title": "property",
               "name": "reconnectLimit",
-              "lineNumber": 16,
+              "lineNumber": 12,
               "description": {
                 "type": "root",
                 "children": [
@@ -29661,7 +27999,7 @@
             {
               "title": "property",
               "name": "reconnectDelay",
-              "lineNumber": 17,
+              "lineNumber": 13,
               "description": {
                 "type": "root",
                 "children": [
@@ -29684,7 +28022,7 @@
             {
               "title": "property",
               "name": "reconnectTimeMultiplier",
-              "lineNumber": 18,
+              "lineNumber": 14,
               "description": {
                 "type": "root",
                 "children": [
@@ -29707,7 +28045,7 @@
             {
               "title": "property",
               "name": "reconnectTimeLimit",
-              "lineNumber": 19,
+              "lineNumber": 15,
               "description": {
                 "type": "root",
                 "children": [
@@ -29738,7 +28076,7 @@
             {
               "title": "property",
               "name": "autoReconnect",
-              "lineNumber": 20,
+              "lineNumber": 16,
               "description": {
                 "type": "root",
                 "children": [
@@ -29760,31 +28098,8 @@
             },
             {
               "title": "property",
-              "name": "maxMissedPings",
-              "lineNumber": 21,
-              "description": {
-                "type": "root",
-                "children": [
-                  {
-                    "type": "paragraph",
-                    "children": [
-                      {
-                        "type": "text",
-                        "value": "How many missed pings before the SDK stops trying to reconnect a disconnected websocket."
-                      }
-                    ]
-                  }
-                ]
-              },
-              "type": {
-                "type": "NameExpression",
-                "name": "number"
-              }
-            },
-            {
-              "title": "property",
               "name": "webSocketOAuthMode",
-              "lineNumber": 22,
+              "lineNumber": 17,
               "description": {
                 "type": "root",
                 "children": [
@@ -29807,7 +28122,7 @@
             {
               "title": "property",
               "name": "wsInfo",
-              "lineNumber": 23,
+              "lineNumber": 18,
               "description": {
                 "type": "root",
                 "children": [
@@ -29830,7 +28145,7 @@
                 {
                   "title": "property",
                   "name": "wsInfo.protocol",
-                  "lineNumber": 24,
+                  "lineNumber": 19,
                   "description": {
                     "type": "root",
                     "children": [
@@ -29856,7 +28171,7 @@
                 {
                   "title": "property",
                   "name": "wsInfo.server",
-                  "lineNumber": 25,
+                  "lineNumber": 20,
                   "description": {
                     "type": "root",
                     "children": [
@@ -29882,7 +28197,7 @@
                 {
                   "title": "property",
                   "name": "wsInfo.port",
-                  "lineNumber": 26,
+                  "lineNumber": 21,
                   "description": {
                     "type": "root",
                     "children": [
@@ -29908,7 +28223,7 @@
                 {
                   "title": "property",
                   "name": "wsInfo.url",
-                  "lineNumber": 27,
+                  "lineNumber": 22,
                   "description": {
                     "type": "root",
                     "children": [
@@ -29934,7 +28249,7 @@
                 {
                   "title": "property",
                   "name": "wsInfo.params",
-                  "lineNumber": 28,
+                  "lineNumber": 23,
                   "description": {
                     "type": "root",
                     "children": [
@@ -29958,29 +28273,6 @@
                   }
                 }
               ]
-            },
-            {
-              "title": "property",
-              "name": "lastContact",
-              "lineNumber": 29,
-              "description": {
-                "type": "root",
-                "children": [
-                  {
-                    "type": "paragraph",
-                    "children": [
-                      {
-                        "type": "text",
-                        "value": "The date and time that the last known contact with the server was."
-                      }
-                    ]
-                  }
-                ]
-              },
-              "type": {
-                "type": "NameExpression",
-                "name": "number"
-              }
             }
           ],
           "returns": [],
@@ -30056,23 +28348,9 @@
               "name": "getSocketState"
             },
             {
-              "title": "param",
-              "description": "Backend platform for which to request the websocket's state.",
-              "lineNumber": 6,
-              "type": {
-                "type": "OptionalType",
-                "expression": {
-                  "type": "NameExpression",
-                  "name": "string"
-                }
-              },
-              "name": "platform",
-              "default": "'link'"
-            },
-            {
               "title": "return",
               "description": "Details about the current websocket connection, including state and configuration.",
-              "lineNumber": 7,
+              "lineNumber": 6,
               "type": {
                 "type": "NameExpression",
                 "name": "connection.WSConnectionObject"
@@ -30081,22 +28359,22 @@
           ],
           "loc": {
             "start": {
-              "line": 56,
+              "line": 44,
               "column": 4
             },
             "end": {
-              "line": 64,
+              "line": 51,
               "column": 7
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 65,
+                "line": 52,
                 "column": 4
               },
               "end": {
-                "line": 68,
+                "line": 55,
                 "column": 5
               }
             },
@@ -30105,32 +28383,7 @@
           "augments": [],
           "examples": [],
           "implements": [],
-          "params": [
-            {
-              "title": "param",
-              "name": "platform",
-              "lineNumber": 6,
-              "description": {
-                "type": "root",
-                "children": [
-                  {
-                    "type": "paragraph",
-                    "children": [
-                      {
-                        "type": "text",
-                        "value": "Backend platform for which to request the websocket's state."
-                      }
-                    ]
-                  }
-                ]
-              },
-              "type": {
-                "type": "NameExpression",
-                "name": "string"
-              },
-              "default": "'link'"
-            }
-          ],
+          "params": [],
           "properties": [],
           "returns": [
             {
@@ -30196,6 +28449,23 @@
                     "value": "Enables or disables connectivity checking."
                   }
                 ]
+              },
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "type": "text",
+                    "value": "This API will change the "
+                  },
+                  {
+                    "type": "inlineCode",
+                    "value": "connectivity.checkConnectivity"
+                  },
+                  {
+                    "type": "text",
+                    "value": " configuration set during SDK initialization. If there\nwas a connected websocket while it is changed, the change will take affect immediately."
+                  }
+                ]
               }
             ]
           },
@@ -30203,24 +28473,24 @@
             {
               "title": "public",
               "description": null,
-              "lineNumber": 2,
+              "lineNumber": 5,
               "type": null
             },
             {
               "title": "memberof",
               "description": "connection",
-              "lineNumber": 3
+              "lineNumber": 6
             },
             {
               "title": "method",
               "description": null,
-              "lineNumber": 4,
+              "lineNumber": 7,
               "name": "enableConnectivityChecking"
             },
             {
               "title": "param",
-              "description": "Enable connectivity checking.",
-              "lineNumber": 5,
+              "description": "Whether the websocket should be pinging to check for connectivity issues or not.",
+              "lineNumber": 8,
               "type": {
                 "type": "NameExpression",
                 "name": "boolean"
@@ -30230,22 +28500,22 @@
           ],
           "loc": {
             "start": {
-              "line": 70,
+              "line": 57,
               "column": 4
             },
             "end": {
-              "line": 76,
+              "line": 66,
               "column": 7
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 77,
+                "line": 67,
                 "column": 4
               },
               "end": {
-                "line": 80,
+                "line": 72,
                 "column": 5
               }
             },
@@ -30258,7 +28528,7 @@
             {
               "title": "param",
               "name": "enable",
-              "lineNumber": 5,
+              "lineNumber": 8,
               "description": {
                 "type": "root",
                 "children": [
@@ -30267,7 +28537,7 @@
                     "children": [
                       {
                         "type": "text",
-                        "value": "Enable connectivity checking."
+                        "value": "Whether the websocket should be pinging to check for connectivity issues or not."
                       }
                     ]
                   }
@@ -30317,7 +28587,7 @@
                 "children": [
                   {
                     "type": "text",
-                    "value": "Triggers a reset in the connection to the WebSocket being used for notifications.\nThis can be used in scenarios where a network issue (undetectable by the SDK)\nis detected by an application."
+                    "value": "Resets the connected websocket by manually disconnecting then reconnecting."
                   }
                 ]
               },
@@ -30326,7 +28596,49 @@
                 "children": [
                   {
                     "type": "text",
-                    "value": "If there is no WebSocket currently connected, this function has no effect.\nCalling this function will trigger all the normal WebSocket and connectivity lifecycle\nevents as well as trigger re-connection processing that follows the configuration of the SDK.\nCalling this function always has the potential of causing some events being lost by the\nSDK and preventing proper operation."
+                    "value": "This API will simulate the SDK receiving a websocket disconnect from the browser,\nwhich will trigger its recovery functionality. This API can be used if the application\nis aware of a network issue before the SDK is notified by the browser."
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "type": "text",
+                    "value": "If there is no websocket connected, this API has no effect. If the SDK is not configured\nto autoreconnect (see "
+                  },
+                  {
+                    "type": "inlineCode",
+                    "value": "connectivity.autoReconnect"
+                  },
+                  {
+                    "type": "text",
+                    "value": " configuration property), then this\nAPI will not attempt to reconnect the websocket automatically."
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "type": "text",
+                    "value": "The normal websocket and lifecycle events will be emitted during this operation,\nnotably the "
+                  },
+                  {
+                    "type": "link",
+                    "url": "#connectioneventwschange",
+                    "title": null,
+                    "jsdoc": true,
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "ws:change"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "text",
+                    "value": " event."
                   }
                 ]
               }
@@ -30336,39 +28648,39 @@
             {
               "title": "public",
               "description": null,
-              "lineNumber": 10,
+              "lineNumber": 13,
               "type": null
             },
             {
               "title": "memberof",
               "description": "connection",
-              "lineNumber": 11
+              "lineNumber": 14
             },
             {
               "title": "method",
               "description": null,
-              "lineNumber": 12,
+              "lineNumber": 15,
               "name": "resetConnection"
             }
           ],
           "loc": {
             "start": {
-              "line": 82,
+              "line": 74,
               "column": 4
             },
             "end": {
-              "line": 95,
+              "line": 90,
               "column": 7
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 96,
+                "line": 91,
                 "column": 4
               },
               "end": {
-                "line": 109,
+                "line": 112,
                 "column": 5
               }
             },
@@ -37489,7 +35801,7 @@
           "column": 4
         },
         "end": {
-          "line": 63,
+          "line": 61,
           "column": 5
         }
       },
@@ -37623,7 +35935,7 @@
                 "column": 4
               },
               "end": {
-                "line": 63,
+                "line": 61,
                 "column": 5
               }
             },
@@ -39926,15 +38238,6 @@
                 "children": [
                   {
                     "type": "text",
-                    "value": "Extra configuration can be provided as an additional object parameter.\nThe \"forceLogOut\" flag has been deprecated, as no longer being supported by backend.\nIt will be removed in the next major release."
-                  }
-                ]
-              },
-              {
-                "type": "paragraph",
-                "children": [
-                  {
-                    "type": "text",
                     "value": "For push notifications on link, please see "
                   },
                   {
@@ -40024,35 +38327,35 @@
             {
               "title": "public",
               "description": null,
-              "lineNumber": 17,
+              "lineNumber": 13,
               "type": null
             },
             {
               "title": "static",
               "description": null,
-              "lineNumber": 18
+              "lineNumber": 14
             },
             {
               "title": "memberof",
               "description": "services",
-              "lineNumber": 19
+              "lineNumber": 15
             },
             {
               "title": "requires",
               "description": null,
-              "lineNumber": 20,
+              "lineNumber": 16,
               "name": "subscription"
             },
             {
               "title": "method",
               "description": null,
-              "lineNumber": 21,
+              "lineNumber": 17,
               "name": "subscribe"
             },
             {
               "title": "param",
               "description": "A list of service configurations.",
-              "lineNumber": 22,
+              "lineNumber": 18,
               "type": {
                 "type": "TypeApplication",
                 "expression": {
@@ -40080,7 +38383,7 @@
             {
               "title": "param",
               "description": "The options object for non-credential options.",
-              "lineNumber": 23,
+              "lineNumber": 19,
               "type": {
                 "type": "OptionalType",
                 "expression": {
@@ -40092,21 +38395,8 @@
             },
             {
               "title": "param",
-              "description": "Deprecated: Force the oldest connection to log out if too many simultaneous connections. Link only.",
-              "lineNumber": 24,
-              "type": {
-                "type": "OptionalType",
-                "expression": {
-                  "type": "NameExpression",
-                  "name": "boolean"
-                }
-              },
-              "name": "options.forceLogOut"
-            },
-            {
-              "title": "param",
               "description": "The method of how to receive service updates.",
-              "lineNumber": 25,
+              "lineNumber": 20,
               "type": {
                 "type": "OptionalType",
                 "expression": {
@@ -40120,7 +38410,7 @@
             {
               "title": "param",
               "description": "Unique ID for the client. This is used by the platform to identify an instance of the application used by the specific device.",
-              "lineNumber": 26,
+              "lineNumber": 21,
               "type": {
                 "type": "OptionalType",
                 "expression": {
@@ -40133,15 +38423,15 @@
             {
               "title": "return",
               "description": null,
-              "lineNumber": 27,
+              "lineNumber": 22,
               "type": {
                 "type": "UndefinedLiteral"
               }
             },
             {
               "title": "example",
-              "description": "// Subscribe for chat and SMS services.\nclient.services.subscribe(['call', 'IM'], {forceLogOut: true, clientCorrelator: 'abc123'})",
-              "lineNumber": 28
+              "description": "// Subscribe for chat and SMS services.\nclient.services.subscribe(['call', 'IM'], {clientCorrelator: 'abc123'})",
+              "lineNumber": 23
             }
           ],
           "loc": {
@@ -40150,18 +38440,18 @@
               "column": 4
             },
             "end": {
-              "line": 124,
+              "line": 119,
               "column": 7
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 125,
+                "line": 120,
                 "column": 4
               },
               "end": {
-                "line": 167,
+                "line": 158,
                 "column": 5
               }
             },
@@ -40170,7 +38460,7 @@
           "augments": [],
           "examples": [
             {
-              "description": "// Subscribe for chat and SMS services.\nclient.services.subscribe(['call', 'IM'], {forceLogOut: true, clientCorrelator: 'abc123'})"
+              "description": "// Subscribe for chat and SMS services.\nclient.services.subscribe(['call', 'IM'], {clientCorrelator: 'abc123'})"
             }
           ],
           "implements": [],
@@ -40178,7 +38468,7 @@
             {
               "title": "param",
               "name": "services",
-              "lineNumber": 22,
+              "lineNumber": 18,
               "description": {
                 "type": "root",
                 "children": [
@@ -40219,7 +38509,7 @@
             {
               "title": "param",
               "name": "options",
-              "lineNumber": 23,
+              "lineNumber": 19,
               "description": {
                 "type": "root",
                 "children": [
@@ -40244,34 +38534,8 @@
               "properties": [
                 {
                   "title": "param",
-                  "name": "options.forceLogOut",
-                  "lineNumber": 24,
-                  "description": {
-                    "type": "root",
-                    "children": [
-                      {
-                        "type": "paragraph",
-                        "children": [
-                          {
-                            "type": "text",
-                            "value": "Deprecated: Force the oldest connection to log out if too many simultaneous connections. Link only."
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  "type": {
-                    "type": "OptionalType",
-                    "expression": {
-                      "type": "NameExpression",
-                      "name": "boolean"
-                    }
-                  }
-                },
-                {
-                  "title": "param",
                   "name": "options.type",
-                  "lineNumber": 25,
+                  "lineNumber": 20,
                   "description": {
                     "type": "root",
                     "children": [
@@ -40295,7 +38559,7 @@
                 {
                   "title": "param",
                   "name": "options.clientCorrelator",
-                  "lineNumber": 26,
+                  "lineNumber": 21,
                   "description": {
                     "type": "root",
                     "children": [
@@ -40500,22 +38764,22 @@
           ],
           "loc": {
             "start": {
-              "line": 169,
+              "line": 160,
               "column": 4
             },
             "end": {
-              "line": 190,
+              "line": 181,
               "column": 7
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 191,
+                "line": 182,
                 "column": 4
               },
               "end": {
-                "line": 214,
+                "line": 205,
                 "column": 5
               }
             },
@@ -40747,22 +39011,22 @@
           ],
           "loc": {
             "start": {
-              "line": 216,
+              "line": 207,
               "column": 4
             },
             "end": {
-              "line": 253,
+              "line": 244,
               "column": 7
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 254,
+                "line": 245,
                 "column": 4
               },
               "end": {
-                "line": 261,
+                "line": 252,
                 "column": 5
               }
             },
