@@ -7,6 +7,14 @@ Ribbon WebRTC SDK change log.
 - This project adheres to [Semantic Versioning](http://semver.org/).
 - This change log follows [keepachangelog.com](http://keepachangelog.com/) recommendations.
 
+## 6.16.1 - 2024-11-18
+
+### Fixed
+
+- The make, answer, addMedia and replaceTrack APIs were throwing an error if parameter validation failed. This has been fixed to include the error in the event that is emitted instead of throwing.
+  - This issue was introduced in the v6.12.0. `KJS-2422`
+- Fixed a Call issue where destroying the SDK before ending calls would lead to unhandled exceptions being thrown. `KJS-2416`
+
 ## 6.16.0 - 2024-10-28
 
 ### Fixed
