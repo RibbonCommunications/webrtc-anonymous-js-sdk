@@ -9,6 +9,10 @@ Ribbon WebRTC SDK change log.
 
 ## 7.1.0 - beta
 
+### Fixed
+
+- Fixed an issue where we were always using the original full expiry time when trying to update a subscription after failing to update on the server. `KJS-2499`
+
 ## 7.0.0 - 2024-11-29
 
 ### Added
