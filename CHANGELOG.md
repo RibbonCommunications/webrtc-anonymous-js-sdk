@@ -12,6 +12,8 @@ Ribbon WebRTC SDK change log.
 ### Fixed
 
 - Fixed an issue where we were always using the original full expiry time when trying to update a subscription after failing to update on the server. `KJS-2499`
+- Fixed a Call issue where the call destination was being normalized even for an anonymous call. `KJS-2495`
+  - This issue was introduced in v7.0.0.
 
 ## 7.0.0 - 2024-11-29
 
