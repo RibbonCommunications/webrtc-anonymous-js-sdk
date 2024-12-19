@@ -1660,20 +1660,6 @@
               },
               "name": "call.mediaConnectionRetryDelay",
               "default": "3000"
-            },
-            {
-              "title": "param",
-              "description": "Specifies whether or not SIP address normalization will be applied.",
-              "lineNumber": 36,
-              "type": {
-                "type": "OptionalType",
-                "expression": {
-                  "type": "NameExpression",
-                  "name": "boolean"
-                }
-              },
-              "name": "call.normalizeDestination",
-              "default": "true"
             }
           ],
           "loc": {
@@ -1682,18 +1668,18 @@
               "column": 0
             },
             "end": {
-              "line": 58,
+              "line": 57,
               "column": 3
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 72,
+                "line": 71,
                 "column": 0
               },
               "end": {
-                "line": 136,
+                "line": 140,
                 "column": 1
               }
             },
@@ -2140,30 +2126,6 @@
                     "name": "number"
                   },
                   "default": "3000"
-                },
-                {
-                  "title": "param",
-                  "name": "call.normalizeDestination",
-                  "lineNumber": 36,
-                  "description": {
-                    "type": "root",
-                    "children": [
-                      {
-                        "type": "paragraph",
-                        "children": [
-                          {
-                            "type": "text",
-                            "value": "Specifies whether or not SIP address normalization will be applied."
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  "type": {
-                    "type": "NameExpression",
-                    "name": "boolean"
-                  },
-                  "default": "true"
                 }
               ]
             }
@@ -17781,22 +17743,22 @@
           ],
           "loc": {
             "start": {
-              "line": 439,
+              "line": 446,
               "column": 2
             },
             "end": {
-              "line": 462,
+              "line": 469,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 463,
+                "line": 470,
                 "column": 2
               },
               "end": {
-                "line": 495,
+                "line": 502,
                 "column": 3
               }
             },
