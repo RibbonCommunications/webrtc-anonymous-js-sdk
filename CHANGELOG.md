@@ -7,6 +7,12 @@ Ribbon WebRTC SDK change log.
 - This project adheres to [Semantic Versioning](http://semver.org/).
 - This change log follows [keepachangelog.com](http://keepachangelog.com/) recommendations.
 
+## 7.2.0 - 2025-01-31
+
+### Fixed
+
+- Fixed an issue that prevented graceful call failure in case of server error. `KJS-2500`
+
 ## 7.1.1 - 2024-12-19
 
 ### Fixed
