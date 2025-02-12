@@ -13,6 +13,7 @@ Ribbon WebRTC SDK change log.
 
 - Fixed a Call issue where the `call.mediaRestart` API would not emit the `call:mediaRestart` event during certain error scenarios. `KJS-2530`
 - Fixed a Call issue where improper call events were emitted when a hold operation encounters REST and rollback errors. `KJS-2508`
+- Fixed a Call issue where a race-condition caused by network latency could cause a negotiation operation to incorrectly fail. `KJS-2615`
 
 ### Other Changes
 
