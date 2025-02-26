@@ -7,6 +7,22 @@ Ribbon WebRTC SDK change log.
 - This project adheres to [Semantic Versioning](http://semver.org/).
 - This change log follows [keepachangelog.com](http://keepachangelog.com/) recommendations.
 
+## 7.3.0 - 2025-02-26
+
+### Fixed
+
+- Fixed a Call issue where the `call.mediaRestart` API would not emit the `call:mediaRestart` event during certain error scenarios. `KJS-2530`
+- Fixed a Call issue where improper call events were emitted when a hold operation encounters REST and rollback errors. `KJS-2508`
+- Fixed a Call issue where a race-condition caused by network latency could cause a negotiation operation to incorrectly fail. `KJS-2615`
+
+### Other Changes
+
+This release also includes changes to a few other parts of the SDK. These changes should not be noticeable to an application following the call APIs' documentation, but are worth mentioning for awareness. A number of call APIs have been updated internally to enable better feedback to the application, which will translate to a better developer experience in the future.
+
+The following call APIs have been updated internally: `hold`, `unhold`, `addMedia`, `removeMedia`, `restartMedia`, `addVideo`, `stopVideo`, `directTransfer`, `consultativeTransfer`, `join`, and `answer` for slow-start calls. In short, APIs that require input from both endpoints of the call are affected. Though not documented, call APIs have been returning promises since v6.0.0 (while being backwards-compatible if they were not handled; ie. never rejecting). The changes in v7.3.0 fix when the promise resolves to be after the _full_ operation is complete rather than solely the local portion. This change is only noticeable if your application was previously handling the promise resolve via a `.then` or `await`. `KJS-1856`
+
+As always, if you encounter an issue with a release change, please report the issue to us.
+
 ## 7.2.0 - 2025-01-31
 
 ### Fixed

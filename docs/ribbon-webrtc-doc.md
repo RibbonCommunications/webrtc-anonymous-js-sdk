@@ -2817,82 +2817,6 @@ Provides an external notification to the system for processing.
 *   `channel` **[string][8]** The channel that the notification came from.
     If no channel provided, then by default it will be a PUSH notification. (optional, default `'PUSH'`)
 
-### registerApplePush
-
-Registers with Apple push notification service. Once registration is successful, the application will be able to receive
-standard and/or voip push notifications. It can then send these notifications to the SDK with [api.notifications.process][109]
-in order for the SDK to process them.
-
-#### Parameters
-
-*   `params` **[Object][7]** 
-
-    *   `params.services` **[Array][19]<[string][8]>** Array of services for which we wish to receive notifications.
-    *   `params.voipDeviceToken` **[string][8]** The voip device token used for voip push on iOS.
-        This token is required if registering for call service notifications on iOS.
-    *   `params.standardDeviceToken` **[string][8]** The standardDevice token used for standard push on iOS .
-        This token is required when registering for non-call service notifications.
-    *   `params.bundleId` **[string][8]** The bundleId to identify the application receiving the push notification.
-    *   `params.clientCorrelator` **[string][8]** Unique identifier for a client device.
-    *   `params.realm` **[string][8]** The realm used by the push registration service to identify and
-        establish a connection with the service gateway.
-    *   `params.isProduction` **[boolean][11]** If true, push notification will be sent to production.
-        If false, push notification will be sent to sandbox.
-
-Returns **[Promise][72]** When successful,  the information of the registration.
-Promise will reject with error object otherwise.
-
-### registerAndroidPush
-
-Registers with Google push notification service. Once registration is successful, the application will be able to receive
-standard and/or voip push notifications. It can then send these notifications to the SDK with [api.notifications.process][109]
-in order for the SDK to process them.
-
-#### Parameters
-
-*   `params` **[Object][7]** 
-
-    *   `params.services` **[Array][19]<[string][8]>** Array of services to register for.
-    *   `params.deviceToken` **[string][8]** The device token used for standard push on Android. This token is required
-        when registering for all related services notifications.
-    *   `params.bundleId` **[string][8]** The bundleId to identify the application receiving the push notification.
-    *   `params.clientCorrelator` **[string][8]** Unique identifier for a client device.
-    *   `params.realm` **[string][8]** The realm used by the push registration service to identify
-        and establish a connection with the service gateway.
-
-Returns **[Promise][72]** When successful,  the information of the registration.
-Promise will reject with error object otherwise.
-
-### unregisterApplePush
-
-Unregister Apple push notifications.
-
-#### Parameters
-
-*   `registrationInfo` **[string][8]** The data returned from the push registration
-
-Returns **[Promise][72]** When successful, the promise will resolve with undefined.
-Promise will reject with error object otherwise.
-
-### unregisterAndroidPush
-
-Unregister Android push notifications.
-
-#### Parameters
-
-*   `registrationInfo` **[string][8]** The data returned from the push registration
-
-Returns **[Promise][72]** When successful, the promise will resolve with undefined.
-Promise will reject with error object otherwise.
-
-### enableWebsocket
-
-Enables, or disables, the processing of websocket notifications.
-
-#### Parameters
-
-*   `enable` **[boolean][11]** Whether the websocket channel should be enabled.
-
 ### notifications:change
 
 Push notifications registration state has changed.
@@ -2921,7 +2845,7 @@ The 'request' namespace (within the 'api' type) is used to make network requests
 ### fetch
 
 Send a request to the underlying REST service with the appropriate configuration and authentication.
-This is a wrapper on top of the browser's [fetch API][110]
+This is a wrapper on top of the browser's [fetch API][109]
 and behaves very similarly but using SDK configuration for the base URL and authentication as well
 as SDK logging.
 
@@ -2929,7 +2853,7 @@ as SDK logging.
 
 *   `resource` **[string][8]** The full path of the resource to fetch from the underlying service. This should include any REST version
     or user information. This path will be appended to the base URL according to SDK configuration.
-*   `init` **RequestInit** An object containing any custom settings that you want to apply to the request. See [fetch API][110]
+*   `init` **RequestInit** An object containing any custom settings that you want to apply to the request. See [fetch API][109]
     for a full description and defaults.
 
 #### Examples
@@ -2949,7 +2873,7 @@ const requestOptions = {
 const response = await client.request.fetch('/rest/version/1/user/xyz@test.com/externalnotification', requestOptions)
 ```
 
-Returns **[Promise][72]<[Response][111]>** A promise for a [Response][112] object.
+Returns **[Promise][72]<[Response][110]>** A promise for a [Response][111] object.
 
 ## sdpHandlers
 
@@ -2960,7 +2884,7 @@ environments and/or scenarios.
 Note that SDP handlers are exposed on the entry point of the SDK. They can be added during
 initialization of the SDK using the [config.call.sdpHandlers][40] configuration
 parameter. They can also be set after the SDK's creation by using the
-[call.setSdpHandlers][113] function.
+[call.setSdpHandlers][112] function.
 
 ### Examples
 
@@ -3045,8 +2969,8 @@ fully functional.
 
 The services an application can subscribe to are based on the features
 included in the SDK. The list of available services can be retrieved
-using the [services.getSubscriptions][114] API. These values can be used
-with the [services.subscribe][115] API.
+using the [services.getSubscriptions][113] API. These values can be used
+with the [services.subscribe][114] API.
 
 The channel used for subscriptions is the method for receiving the service
 updates. The recommended channel is `websocket`, where the SDK is able to
@@ -3057,7 +2981,7 @@ websocket cannot be used, will be available in the future.
 
 The ServiceDescriptor type defines the format for specifying how to subscribe for a certain service.
 This is the service configuration object that needs to be passed (as part of an array of configuration objects) when calling
-the [services.subscribe][115] function.
+the [services.subscribe][114] function.
 Only some plugins (`call`, `messaging` and `presence`) support such configuration object that needs to be passed
 to the subscribe function.
 
@@ -3084,7 +3008,7 @@ client.services.subscribe([
 ### SmsInboundServiceParams
 
 The SmsInboundServiceParams type defines the additional information when subscribing to SMS inbound service.
-This is the configuration object that needs to be passed as the value for the [ServiceDescriptor.params][116] property.
+This is the configuration object that needs to be passed as the value for the [ServiceDescriptor.params][115] property.
 
 Type: [Object][7]
 
@@ -3106,19 +3030,19 @@ client.services.subscribe([
 
 Subscribes to platform notifications for an SDK service.
 
-For push notifications on link, please see [notifications.registerPush][117]
+For push notifications on WebRTC Gateway, please see [notifications.registerPush][116]
 
 The SDK currently only supports the `websocket` channel as a subscription
 type.
 
-When calling this API, SDK emits a [subscription:change][118] event, each time there is a change in subscriptions.
+When calling this API, SDK emits a [subscription:change][117] event, each time there is a change in subscriptions.
 
 Upon getting such event, existing subscriptions can be retrieved using the
-[services.getSubscriptions][114] API.
+[services.getSubscriptions][113] API.
 
 #### Parameters
 
-*   `services` **[Array][19]<([string][8] | [services.ServiceDescriptor][119])>** A list of service configurations.
+*   `services` **[Array][19]<([string][8] | [services.ServiceDescriptor][118])>** A list of service configurations.
 *   `options` **[Object][7]?** The options object for non-credential options.
 
     *   `options.type` **[string][8]** The method of how to receive service updates. (optional, default `'websocket'`)
@@ -3137,10 +3061,10 @@ Returns **[undefined][83]**
 
 Cancels existing subscriptions for platform notifications.
 
-When calling this API, SDK emits a [subscription:change][118] event, each time there is a change in subscriptions.
+When calling this API, SDK emits a [subscription:change][117] event, each time there is a change in subscriptions.
 
 Upon getting such event, existing subscriptions can be retrieved using the
-[services.getSubscriptions][114] API. The `subscribed` values are the
+[services.getSubscriptions][113] API. The `subscribed` values are the
 services that can be unsubscribed from.
 
 #### Parameters
@@ -3165,7 +3089,7 @@ The data returned by this API is a snapshot of the SDK's current local subscript
 The data does indicate whether there was an ongoing subscription at the time this API was called.
 If a subscription is in fact in progress, the user should not take decisions based on this snapshot, as the subscription is not yet complete.
 
-To be notified when any subscription(s) did change/complete, listen for [subscription:change][118] events.
+To be notified when any subscription(s) did change/complete, listen for [subscription:change][117] events.
 
 The `available` values are the SDK's services that an application can
 subscribe to receive notifications about. A feature generally
@@ -3173,7 +3097,7 @@ requires a subscription to its service in order to be fully functional.
 
 The `subscribed` values are the SDK's services that the application has
 an active subscription for. Services are subscribed to using the
-[services.subscribe][115] API.
+[services.subscribe][114] API.
 
 #### Examples
 
@@ -3201,7 +3125,7 @@ Returns **[Object][7]** Lists of subscribed and available services.
 Subscription information has changed.
 
 The updated subscription information can be retrieved using the
-[services.getSubscriptions][114] API.
+[services.getSubscriptions][113] API.
 
 #### Parameters
 
@@ -3220,7 +3144,7 @@ The updated subscription information can be retrieved using the
 An error occurred during a subscription operation.
 
 The subscription information can be retrieved using the
-[services.getSubscriptions][114] API.
+[services.getSubscriptions][113] API.
 
 Below are some common errors related to service subscriptions.
 
@@ -3485,24 +3409,22 @@ session expires.
 
 [108]: #mediaeventmediasourcemuted
 
-[109]: api.notifications.process
+[109]: https://developer.mozilla.org/en-US/docs/Web/API/fetch
 
-[110]: https://developer.mozilla.org/en-US/docs/Web/API/fetch
+[110]: https://developer.mozilla.org/docs/Web/Guide/HTML/HTML5
 
-[111]: https://developer.mozilla.org/docs/Web/Guide/HTML/HTML5
+[111]: https://developer.mozilla.org/en-US/docs/Web/API/Response
 
-[112]: https://developer.mozilla.org/en-US/docs/Web/API/Response
+[112]: #callsetsdphandlers
 
-[113]: #callsetsdphandlers
+[113]: #servicesgetsubscriptions
 
-[114]: #servicesgetsubscriptions
+[114]: #servicessubscribe
 
-[115]: #servicessubscribe
+[115]: #servicesservicedescriptor
 
-[116]: #servicesservicedescriptor
+[116]: notifications.registerPush
 
-[117]: notifications.registerPush
+[117]: #serviceseventsubscriptionchange
 
-[118]: #serviceseventsubscriptionchange
-
-[119]: #servicesservicedescriptor
+[118]: #servicesservicedescriptor

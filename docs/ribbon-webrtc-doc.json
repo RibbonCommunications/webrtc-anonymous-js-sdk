@@ -73,7 +73,7 @@
           "column": 58
         }
       },
-      "file": "/var/jenkins_home/workspace/Kandy.js_master/builds/core/index.js"
+      "file": "/home/jenkins/workspace/jobs_webrtcjs_master/builds/core/index.js"
     },
     "augments": [],
     "examples": [
@@ -220,7 +220,7 @@
           "column": 58
         }
       },
-      "file": "/var/jenkins_home/workspace/Kandy.js_master/builds/core/index.js"
+      "file": "/home/jenkins/workspace/jobs_webrtcjs_master/builds/core/index.js"
     },
     "augments": [],
     "examples": [],
@@ -519,7 +519,7 @@
                 "column": 1
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/logs/config.js"
+            "file": "/home/jenkins/workspace/jobs_webrtcjs_master/packages/kandy/src/logs/config.js"
           },
           "augments": [],
           "examples": [],
@@ -945,7 +945,7 @@
                 "column": 3
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/auth/link/index.js"
+            "file": "/home/jenkins/workspace/jobs_webrtcjs_master/packages/kandy/src/auth/link/index.js"
           },
           "augments": [],
           "examples": [],
@@ -1234,7 +1234,7 @@
                 "column": 3
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/subscription/link/index.js"
+            "file": "/home/jenkins/workspace/jobs_webrtcjs_master/packages/kandy/src/subscription/link/index.js"
           },
           "augments": [],
           "examples": [],
@@ -1683,7 +1683,7 @@
                 "column": 1
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/call/anonymous/index.js"
+            "file": "/home/jenkins/workspace/jobs_webrtcjs_master/packages/kandy/src/call/anonymous/index.js"
           },
           "augments": [],
           "examples": [],
@@ -2370,7 +2370,7 @@
                 "column": 1
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/connectivity/plugin/configs.js"
+            "file": "/home/jenkins/workspace/jobs_webrtcjs_master/packages/kandy/src/connectivity/plugin/configs.js"
           },
           "augments": [],
           "examples": [],
@@ -2786,7 +2786,7 @@
                 "column": 3
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/notifications/link/index.js"
+            "file": "/home/jenkins/workspace/jobs_webrtcjs_master/packages/kandy/src/notifications/link/index.js"
           },
           "augments": [],
           "examples": [],
@@ -3090,7 +3090,7 @@
           "column": 58
         }
       },
-      "file": "/var/jenkins_home/workspace/Kandy.js_master/builds/core/index.js"
+      "file": "/home/jenkins/workspace/jobs_webrtcjs_master/builds/core/index.js"
     },
     "augments": [],
     "examples": [],
@@ -3187,7 +3187,7 @@
                 "column": 40
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/auth/interface/eventTypes.js"
+            "file": "/home/jenkins/workspace/jobs_webrtcjs_master/packages/kandy/src/auth/interface/eventTypes.js"
           },
           "augments": [],
           "examples": [],
@@ -3313,7 +3313,7 @@
                 "column": 38
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/auth/interface/eventTypes.js"
+            "file": "/home/jenkins/workspace/jobs_webrtcjs_master/packages/kandy/src/auth/interface/eventTypes.js"
           },
           "augments": [],
           "examples": [],
@@ -3474,7 +3474,7 @@
                 "column": 44
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/request/interface/eventTypes.js"
+            "file": "/home/jenkins/workspace/jobs_webrtcjs_master/packages/kandy/src/request/interface/eventTypes.js"
           },
           "augments": [],
           "examples": [],
@@ -3601,7 +3601,7 @@
                 "column": 5
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/factory.js"
+            "file": "/home/jenkins/workspace/jobs_webrtcjs_master/packages/kandy/src/factory.js"
           },
           "augments": [],
           "examples": [],
@@ -3696,7 +3696,7 @@
                 "column": 5
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/factory.js"
+            "file": "/home/jenkins/workspace/jobs_webrtcjs_master/packages/kandy/src/factory.js"
           },
           "augments": [],
           "examples": [
@@ -3810,7 +3810,7 @@
                 "column": 5
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/config/interface/api.js"
+            "file": "/home/jenkins/workspace/jobs_webrtcjs_master/packages/kandy/src/config/interface/api.js"
           },
           "augments": [],
           "examples": [],
@@ -4008,7 +4008,7 @@
                 "column": 5
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/config/interface/api.js"
+            "file": "/home/jenkins/workspace/jobs_webrtcjs_master/packages/kandy/src/config/interface/api.js"
           },
           "augments": [],
           "examples": [
@@ -4169,7 +4169,7 @@
                 "column": 5
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/events/interface/api.js"
+            "file": "/home/jenkins/workspace/jobs_webrtcjs_master/packages/kandy/src/events/interface/api.js"
           },
           "augments": [],
           "examples": [
@@ -4330,7 +4330,7 @@
                 "column": 5
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/events/interface/api.js"
+            "file": "/home/jenkins/workspace/jobs_webrtcjs_master/packages/kandy/src/events/interface/api.js"
           },
           "augments": [],
           "examples": [],
@@ -4477,7 +4477,7 @@
                 "column": 5
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/events/interface/api.js"
+            "file": "/home/jenkins/workspace/jobs_webrtcjs_master/packages/kandy/src/events/interface/api.js"
           },
           "augments": [],
           "examples": [],
@@ -4601,7 +4601,7 @@
                 "column": 5
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/events/interface/api.js"
+            "file": "/home/jenkins/workspace/jobs_webrtcjs_master/packages/kandy/src/events/interface/api.js"
           },
           "augments": [],
           "examples": [],
@@ -4738,7 +4738,7 @@
                 "column": 3
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/webrtc/interface/api/index.js"
+            "file": "/home/jenkins/workspace/jobs_webrtcjs_master/packages/kandy/src/webrtc/interface/api/index.js"
           },
           "augments": [],
           "examples": [
@@ -4899,7 +4899,7 @@
                 "column": 16
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/errors/index.js"
+            "file": "/home/jenkins/workspace/jobs_webrtcjs_master/packages/kandy/src/errors/index.js"
           },
           "augments": [],
           "examples": [],
@@ -5069,7 +5069,7 @@
                 "column": 5
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/auth/interface/api.js"
+            "file": "/home/jenkins/workspace/jobs_webrtcjs_master/packages/kandy/src/auth/interface/api.js"
           },
           "augments": [],
           "examples": [],
@@ -5302,7 +5302,7 @@
                 "column": 5
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/auth/interface/api.js"
+            "file": "/home/jenkins/workspace/jobs_webrtcjs_master/packages/kandy/src/auth/interface/api.js"
           },
           "augments": [],
           "examples": [
@@ -5583,7 +5583,7 @@
                 "column": 5
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/auth/interface/api.js"
+            "file": "/home/jenkins/workspace/jobs_webrtcjs_master/packages/kandy/src/auth/interface/api.js"
           },
           "augments": [],
           "examples": [
@@ -5790,7 +5790,7 @@
                 "column": 5
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/auth/interface/api.js"
+            "file": "/home/jenkins/workspace/jobs_webrtcjs_master/packages/kandy/src/auth/interface/api.js"
           },
           "augments": [],
           "examples": [
@@ -5971,7 +5971,7 @@
           "column": 1
         }
       },
-      "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/call/interface/api/index.js"
+      "file": "/home/jenkins/workspace/jobs_webrtcjs_master/packages/kandy/src/call/interface/api/index.js"
     },
     "augments": [],
     "examples": [],
@@ -6196,7 +6196,7 @@
                 "column": 46
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/call/interface/eventTypes.js"
+            "file": "/home/jenkins/workspace/jobs_webrtcjs_master/packages/kandy/src/call/interface/eventTypes.js"
           },
           "augments": [],
           "examples": [
@@ -6580,7 +6580,7 @@
                 "column": 40
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/call/interface/eventTypes.js"
+            "file": "/home/jenkins/workspace/jobs_webrtcjs_master/packages/kandy/src/call/interface/eventTypes.js"
           },
           "augments": [],
           "examples": [],
@@ -6818,7 +6818,7 @@
                 "column": 43
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/call/interface/eventTypes.js"
+            "file": "/home/jenkins/workspace/jobs_webrtcjs_master/packages/kandy/src/call/interface/eventTypes.js"
           },
           "augments": [],
           "examples": [
@@ -7120,7 +7120,7 @@
                 "column": 51
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/call/interface/eventTypes.js"
+            "file": "/home/jenkins/workspace/jobs_webrtcjs_master/packages/kandy/src/call/interface/eventTypes.js"
           },
           "augments": [],
           "examples": [
@@ -7504,7 +7504,7 @@
                 "column": 47
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/call/interface/eventTypes.js"
+            "file": "/home/jenkins/workspace/jobs_webrtcjs_master/packages/kandy/src/call/interface/eventTypes.js"
           },
           "augments": [],
           "examples": [],
@@ -7737,7 +7737,7 @@
                 "column": 53
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/call/interface/eventTypes.js"
+            "file": "/home/jenkins/workspace/jobs_webrtcjs_master/packages/kandy/src/call/interface/eventTypes.js"
           },
           "augments": [],
           "examples": [],
@@ -8035,7 +8035,7 @@
                 "column": 51
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/call/interface/eventTypes.js"
+            "file": "/home/jenkins/workspace/jobs_webrtcjs_master/packages/kandy/src/call/interface/eventTypes.js"
           },
           "augments": [],
           "examples": [
@@ -8314,7 +8314,7 @@
                 "column": 55
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/call/interface/eventTypes.js"
+            "file": "/home/jenkins/workspace/jobs_webrtcjs_master/packages/kandy/src/call/interface/eventTypes.js"
           },
           "augments": [],
           "examples": [
@@ -8563,7 +8563,7 @@
                 "column": 50
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/call/interface/eventTypes.js"
+            "file": "/home/jenkins/workspace/jobs_webrtcjs_master/packages/kandy/src/call/interface/eventTypes.js"
           },
           "augments": [],
           "examples": [
@@ -8890,7 +8890,7 @@
                 "column": 55
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/call/interface/eventTypes.js"
+            "file": "/home/jenkins/workspace/jobs_webrtcjs_master/packages/kandy/src/call/interface/eventTypes.js"
           },
           "augments": [],
           "examples": [
@@ -9165,7 +9165,7 @@
                 "column": 54
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/call/interface/eventTypes.js"
+            "file": "/home/jenkins/workspace/jobs_webrtcjs_master/packages/kandy/src/call/interface/eventTypes.js"
           },
           "augments": [],
           "examples": [
@@ -9423,7 +9423,7 @@
                 "column": 67
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/call/interface/eventTypes.js"
+            "file": "/home/jenkins/workspace/jobs_webrtcjs_master/packages/kandy/src/call/interface/eventTypes.js"
           },
           "augments": [],
           "examples": [],
@@ -9704,7 +9704,7 @@
                 "column": 48
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/call/interface/eventTypes.js"
+            "file": "/home/jenkins/workspace/jobs_webrtcjs_master/packages/kandy/src/call/interface/eventTypes.js"
           },
           "augments": [],
           "examples": [
@@ -10236,7 +10236,7 @@
                 "column": 3
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/call/interface/api/anonymous.js"
+            "file": "/home/jenkins/workspace/jobs_webrtcjs_master/packages/kandy/src/call/interface/api/anonymous.js"
           },
           "augments": [],
           "examples": [
@@ -11378,7 +11378,7 @@
                 "column": 1
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/call/interface/api/index.js"
+            "file": "/home/jenkins/workspace/jobs_webrtcjs_master/packages/kandy/src/call/interface/api/index.js"
           },
           "augments": [],
           "examples": [],
@@ -12125,7 +12125,7 @@
                 "column": 1
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/call/interface/api/index.js"
+            "file": "/home/jenkins/workspace/jobs_webrtcjs_master/packages/kandy/src/call/interface/api/index.js"
           },
           "augments": [],
           "examples": [
@@ -12302,7 +12302,7 @@
                 "column": 1
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/call/interface/api/index.js"
+            "file": "/home/jenkins/workspace/jobs_webrtcjs_master/packages/kandy/src/call/interface/api/index.js"
           },
           "augments": [],
           "examples": [
@@ -12489,7 +12489,7 @@
                 "column": 1
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/call/interface/api/index.js"
+            "file": "/home/jenkins/workspace/jobs_webrtcjs_master/packages/kandy/src/call/interface/api/index.js"
           },
           "augments": [],
           "examples": [
@@ -12744,7 +12744,7 @@
                 "column": 1
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/call/interface/api/index.js"
+            "file": "/home/jenkins/workspace/jobs_webrtcjs_master/packages/kandy/src/call/interface/api/index.js"
           },
           "augments": [],
           "examples": [
@@ -12952,7 +12952,7 @@
                 "column": 1
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/call/interface/api/index.js"
+            "file": "/home/jenkins/workspace/jobs_webrtcjs_master/packages/kandy/src/call/interface/api/index.js"
           },
           "augments": [],
           "examples": [],
@@ -13148,7 +13148,7 @@
                 "column": 1
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/call/interface/api/index.js"
+            "file": "/home/jenkins/workspace/jobs_webrtcjs_master/packages/kandy/src/call/interface/api/index.js"
           },
           "augments": [],
           "examples": [
@@ -13387,7 +13387,7 @@
                 "column": 1
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/call/interface/api/index.js"
+            "file": "/home/jenkins/workspace/jobs_webrtcjs_master/packages/kandy/src/call/interface/api/index.js"
           },
           "augments": [],
           "examples": [],
@@ -13710,7 +13710,7 @@
                 "column": 1
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/call/interface/api/index.js"
+            "file": "/home/jenkins/workspace/jobs_webrtcjs_master/packages/kandy/src/call/interface/api/index.js"
           },
           "augments": [],
           "examples": [],
@@ -14042,7 +14042,7 @@
                 "column": 1
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/call/interface/api/index.js"
+            "file": "/home/jenkins/workspace/jobs_webrtcjs_master/packages/kandy/src/call/interface/api/index.js"
           },
           "augments": [],
           "examples": [],
@@ -14362,7 +14362,7 @@
                 "column": 1
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/call/interface/api/index.js"
+            "file": "/home/jenkins/workspace/jobs_webrtcjs_master/packages/kandy/src/call/interface/api/index.js"
           },
           "augments": [],
           "examples": [],
@@ -15095,7 +15095,7 @@
                 "column": 1
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/call/interface/api/index.js"
+            "file": "/home/jenkins/workspace/jobs_webrtcjs_master/packages/kandy/src/call/interface/api/index.js"
           },
           "augments": [],
           "examples": [
@@ -15370,7 +15370,7 @@
                 "column": 1
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/call/interface/api/index.js"
+            "file": "/home/jenkins/workspace/jobs_webrtcjs_master/packages/kandy/src/call/interface/api/index.js"
           },
           "augments": [],
           "examples": [],
@@ -15616,7 +15616,7 @@
                 "column": 1
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/call/interface/api/index.js"
+            "file": "/home/jenkins/workspace/jobs_webrtcjs_master/packages/kandy/src/call/interface/api/index.js"
           },
           "augments": [],
           "examples": [],
@@ -15853,7 +15853,7 @@
                 "column": 1
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/call/interface/api/index.js"
+            "file": "/home/jenkins/workspace/jobs_webrtcjs_master/packages/kandy/src/call/interface/api/index.js"
           },
           "augments": [],
           "examples": [],
@@ -16099,7 +16099,7 @@
                 "column": 1
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/call/interface/api/index.js"
+            "file": "/home/jenkins/workspace/jobs_webrtcjs_master/packages/kandy/src/call/interface/api/index.js"
           },
           "augments": [],
           "examples": [],
@@ -16423,7 +16423,7 @@
                 "column": 1
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/call/interface/api/index.js"
+            "file": "/home/jenkins/workspace/jobs_webrtcjs_master/packages/kandy/src/call/interface/api/index.js"
           },
           "augments": [],
           "examples": [],
@@ -16825,7 +16825,7 @@
                 "column": 1
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/call/interface/api/index.js"
+            "file": "/home/jenkins/workspace/jobs_webrtcjs_master/packages/kandy/src/call/interface/api/index.js"
           },
           "augments": [],
           "examples": [],
@@ -17067,7 +17067,7 @@
                 "column": 1
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/call/interface/api/index.js"
+            "file": "/home/jenkins/workspace/jobs_webrtcjs_master/packages/kandy/src/call/interface/api/index.js"
           },
           "augments": [],
           "examples": [],
@@ -17497,7 +17497,7 @@
                 "column": 1
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/call/interface/api/index.js"
+            "file": "/home/jenkins/workspace/jobs_webrtcjs_master/packages/kandy/src/call/interface/api/index.js"
           },
           "augments": [],
           "examples": [
@@ -17762,7 +17762,7 @@
                 "column": 3
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/call/interface/api/establish.js"
+            "file": "/home/jenkins/workspace/jobs_webrtcjs_master/packages/kandy/src/call/interface/api/establish.js"
           },
           "augments": [],
           "examples": [],
@@ -18005,7 +18005,7 @@
                 "column": 3
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/call/interface/api/midcall.js"
+            "file": "/home/jenkins/workspace/jobs_webrtcjs_master/packages/kandy/src/call/interface/api/midcall.js"
           },
           "augments": [],
           "examples": [],
@@ -18223,7 +18223,7 @@
                 "column": 3
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/call/interface/api/midcall.js"
+            "file": "/home/jenkins/workspace/jobs_webrtcjs_master/packages/kandy/src/call/interface/api/midcall.js"
           },
           "augments": [],
           "examples": [],
@@ -18620,7 +18620,7 @@
                 "column": 3
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/call/interface/api/midcall.js"
+            "file": "/home/jenkins/workspace/jobs_webrtcjs_master/packages/kandy/src/call/interface/api/midcall.js"
           },
           "augments": [],
           "examples": [],
@@ -19286,7 +19286,7 @@
                 "column": 3
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/call/interface/api/midcall.js"
+            "file": "/home/jenkins/workspace/jobs_webrtcjs_master/packages/kandy/src/call/interface/api/midcall.js"
           },
           "augments": [],
           "examples": [],
@@ -19621,7 +19621,7 @@
                 "column": 3
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/call/interface/api/midcall.js"
+            "file": "/home/jenkins/workspace/jobs_webrtcjs_master/packages/kandy/src/call/interface/api/midcall.js"
           },
           "augments": [],
           "examples": [],
@@ -19931,7 +19931,7 @@
                 "column": 3
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/call/interface/api/midcall.js"
+            "file": "/home/jenkins/workspace/jobs_webrtcjs_master/packages/kandy/src/call/interface/api/midcall.js"
           },
           "augments": [],
           "examples": [],
@@ -20264,7 +20264,7 @@
                 "column": 3
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/call/interface/api/midcall.js"
+            "file": "/home/jenkins/workspace/jobs_webrtcjs_master/packages/kandy/src/call/interface/api/midcall.js"
           },
           "augments": [],
           "examples": [
@@ -20922,7 +20922,7 @@
                 "column": 3
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/call/interface/api/midcall.js"
+            "file": "/home/jenkins/workspace/jobs_webrtcjs_master/packages/kandy/src/call/interface/api/midcall.js"
           },
           "augments": [],
           "examples": [],
@@ -21270,7 +21270,7 @@
                 "column": 3
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/call/interface/api/midcall.js"
+            "file": "/home/jenkins/workspace/jobs_webrtcjs_master/packages/kandy/src/call/interface/api/midcall.js"
           },
           "augments": [],
           "examples": [
@@ -21475,7 +21475,7 @@
                 "column": 3
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/call/interface/api/misc.js"
+            "file": "/home/jenkins/workspace/jobs_webrtcjs_master/packages/kandy/src/call/interface/api/misc.js"
           },
           "augments": [],
           "examples": [
@@ -21643,7 +21643,7 @@
                 "column": 3
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/call/interface/api/misc.js"
+            "file": "/home/jenkins/workspace/jobs_webrtcjs_master/packages/kandy/src/call/interface/api/misc.js"
           },
           "augments": [],
           "examples": [],
@@ -21951,7 +21951,7 @@
                 "column": 3
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/call/interface/api/misc.js"
+            "file": "/home/jenkins/workspace/jobs_webrtcjs_master/packages/kandy/src/call/interface/api/misc.js"
           },
           "augments": [],
           "examples": [],
@@ -22208,7 +22208,7 @@
                 "column": 3
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/call/interface/api/misc.js"
+            "file": "/home/jenkins/workspace/jobs_webrtcjs_master/packages/kandy/src/call/interface/api/misc.js"
           },
           "augments": [],
           "examples": [],
@@ -22441,7 +22441,7 @@
                 "column": 3
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/call/interface/api/misc.js"
+            "file": "/home/jenkins/workspace/jobs_webrtcjs_master/packages/kandy/src/call/interface/api/misc.js"
           },
           "augments": [],
           "examples": [],
@@ -22774,7 +22774,7 @@
                 "column": 3
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/call/interface/api/misc.js"
+            "file": "/home/jenkins/workspace/jobs_webrtcjs_master/packages/kandy/src/call/interface/api/misc.js"
           },
           "augments": [],
           "examples": [
@@ -23028,7 +23028,7 @@
                 "column": 3
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/call/interface/api/misc.js"
+            "file": "/home/jenkins/workspace/jobs_webrtcjs_master/packages/kandy/src/call/interface/api/misc.js"
           },
           "augments": [],
           "examples": [
@@ -23283,7 +23283,7 @@
                 "column": 3
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/call/interface/api/misc.js"
+            "file": "/home/jenkins/workspace/jobs_webrtcjs_master/packages/kandy/src/call/interface/api/misc.js"
           },
           "augments": [],
           "examples": [],
@@ -23499,7 +23499,7 @@
                 "column": 3
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/call/interface/api/misc.js"
+            "file": "/home/jenkins/workspace/jobs_webrtcjs_master/packages/kandy/src/call/interface/api/misc.js"
           },
           "augments": [],
           "examples": [],
@@ -23831,7 +23831,7 @@
                 "column": 28
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/call/interface/api/constants.js"
+            "file": "/home/jenkins/workspace/jobs_webrtcjs_master/packages/kandy/src/call/interface/api/constants.js"
           },
           "augments": [],
           "examples": [
@@ -24391,7 +24391,7 @@
                 "column": 60
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/call/interface/api/constants.js"
+            "file": "/home/jenkins/workspace/jobs_webrtcjs_master/packages/kandy/src/call/interface/api/constants.js"
           },
           "augments": [],
           "examples": [
@@ -25186,7 +25186,7 @@
                 "column": 1
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/call/callstack/reporter/constants.js"
+            "file": "/home/jenkins/workspace/jobs_webrtcjs_master/packages/kandy/src/call/callstack/reporter/constants.js"
           },
           "augments": [],
           "examples": [
@@ -26537,7 +26537,7 @@
                 "column": 1
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/call/callstack/reporter/constants.js"
+            "file": "/home/jenkins/workspace/jobs_webrtcjs_master/packages/kandy/src/call/callstack/reporter/constants.js"
           },
           "augments": [],
           "examples": [
@@ -27485,7 +27485,7 @@
           "column": 1
         }
       },
-      "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/connectivity/interface/api.js"
+      "file": "/home/jenkins/workspace/jobs_webrtcjs_master/packages/kandy/src/connectivity/interface/api.js"
     },
     "augments": [],
     "examples": [],
@@ -27568,7 +27568,7 @@
                 "column": 36
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/connectivity/interface/eventTypes.js"
+            "file": "/home/jenkins/workspace/jobs_webrtcjs_master/packages/kandy/src/connectivity/interface/eventTypes.js"
           },
           "augments": [],
           "examples": [],
@@ -27859,7 +27859,7 @@
                 "column": 1
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/connectivity/interface/api.js"
+            "file": "/home/jenkins/workspace/jobs_webrtcjs_master/packages/kandy/src/connectivity/interface/api.js"
           },
           "augments": [],
           "examples": [],
@@ -28340,7 +28340,7 @@
                 "column": 5
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/connectivity/interface/api.js"
+            "file": "/home/jenkins/workspace/jobs_webrtcjs_master/packages/kandy/src/connectivity/interface/api.js"
           },
           "augments": [],
           "examples": [],
@@ -28481,7 +28481,7 @@
                 "column": 5
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/connectivity/interface/api.js"
+            "file": "/home/jenkins/workspace/jobs_webrtcjs_master/packages/kandy/src/connectivity/interface/api.js"
           },
           "augments": [],
           "examples": [],
@@ -28646,7 +28646,7 @@
                 "column": 5
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/connectivity/interface/api.js"
+            "file": "/home/jenkins/workspace/jobs_webrtcjs_master/packages/kandy/src/connectivity/interface/api.js"
           },
           "augments": [],
           "examples": [],
@@ -28813,7 +28813,7 @@
           "column": 1
         }
       },
-      "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/logs/interface/api.js"
+      "file": "/home/jenkins/workspace/jobs_webrtcjs_master/packages/kandy/src/logs/interface/api.js"
     },
     "augments": [],
     "examples": [],
@@ -29017,7 +29017,7 @@
                 "column": 5
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/logs/interface/api.js"
+            "file": "/home/jenkins/workspace/jobs_webrtcjs_master/packages/kandy/src/logs/interface/api.js"
           },
           "augments": [],
           "examples": [],
@@ -29382,7 +29382,7 @@
                 "column": 0
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/logs/docs.js"
+            "file": "/home/jenkins/workspace/jobs_webrtcjs_master/packages/kandy/src/logs/docs.js"
           },
           "augments": [],
           "examples": [
@@ -29753,7 +29753,7 @@
                 "column": 0
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/logs/docs.js"
+            "file": "/home/jenkins/workspace/jobs_webrtcjs_master/packages/kandy/src/logs/docs.js"
           },
           "augments": [],
           "examples": [
@@ -29933,7 +29933,7 @@
           "column": 1
         }
       },
-      "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/call/interface/api/index.js"
+      "file": "/home/jenkins/workspace/jobs_webrtcjs_master/packages/kandy/src/call/interface/api/index.js"
     },
     "augments": [],
     "examples": [],
@@ -30042,7 +30042,7 @@
                 "column": 47
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/webrtc/interface/eventTypes.js"
+            "file": "/home/jenkins/workspace/jobs_webrtcjs_master/packages/kandy/src/webrtc/interface/eventTypes.js"
           },
           "augments": [],
           "examples": [
@@ -30187,7 +30187,7 @@
                 "column": 55
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/webrtc/interface/eventTypes.js"
+            "file": "/home/jenkins/workspace/jobs_webrtcjs_master/packages/kandy/src/webrtc/interface/eventTypes.js"
           },
           "augments": [],
           "examples": [],
@@ -30367,7 +30367,7 @@
                 "column": 41
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/webrtc/interface/eventTypes.js"
+            "file": "/home/jenkins/workspace/jobs_webrtcjs_master/packages/kandy/src/webrtc/interface/eventTypes.js"
           },
           "augments": [],
           "examples": [],
@@ -30554,7 +30554,7 @@
                 "column": 45
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/webrtc/interface/eventTypes.js"
+            "file": "/home/jenkins/workspace/jobs_webrtcjs_master/packages/kandy/src/webrtc/interface/eventTypes.js"
           },
           "augments": [],
           "examples": [],
@@ -30746,7 +30746,7 @@
                 "column": 53
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/webrtc/interface/eventTypes.js"
+            "file": "/home/jenkins/workspace/jobs_webrtcjs_master/packages/kandy/src/webrtc/interface/eventTypes.js"
           },
           "augments": [],
           "examples": [],
@@ -30931,7 +30931,7 @@
                 "column": 57
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/webrtc/interface/eventTypes.js"
+            "file": "/home/jenkins/workspace/jobs_webrtcjs_master/packages/kandy/src/webrtc/interface/eventTypes.js"
           },
           "augments": [],
           "examples": [],
@@ -31114,7 +31114,7 @@
                 "column": 51
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/webrtc/interface/eventTypes.js"
+            "file": "/home/jenkins/workspace/jobs_webrtcjs_master/packages/kandy/src/webrtc/interface/eventTypes.js"
           },
           "augments": [],
           "examples": [],
@@ -31383,7 +31383,7 @@
                 "column": 45
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/webrtc/interface/eventTypes.js"
+            "file": "/home/jenkins/workspace/jobs_webrtcjs_master/packages/kandy/src/webrtc/interface/eventTypes.js"
           },
           "augments": [],
           "examples": [],
@@ -31574,7 +31574,7 @@
                 "column": 5
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/webrtc/interface/api/media.js"
+            "file": "/home/jenkins/workspace/jobs_webrtcjs_master/packages/kandy/src/webrtc/interface/api/media.js"
           },
           "augments": [],
           "examples": [],
@@ -31712,7 +31712,7 @@
                 "column": 5
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/webrtc/interface/api/media.js"
+            "file": "/home/jenkins/workspace/jobs_webrtcjs_master/packages/kandy/src/webrtc/interface/api/media.js"
           },
           "augments": [],
           "examples": [],
@@ -31874,7 +31874,7 @@
                 "column": 5
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/webrtc/interface/api/media.js"
+            "file": "/home/jenkins/workspace/jobs_webrtcjs_master/packages/kandy/src/webrtc/interface/api/media.js"
           },
           "augments": [],
           "examples": [],
@@ -32172,7 +32172,7 @@
                 "column": 5
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/webrtc/interface/api/media.js"
+            "file": "/home/jenkins/workspace/jobs_webrtcjs_master/packages/kandy/src/webrtc/interface/api/media.js"
           },
           "augments": [],
           "examples": [
@@ -32426,7 +32426,7 @@
                 "column": 5
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/webrtc/interface/api/media.js"
+            "file": "/home/jenkins/workspace/jobs_webrtcjs_master/packages/kandy/src/webrtc/interface/api/media.js"
           },
           "augments": [],
           "examples": [
@@ -32724,11 +32724,11 @@
                 "column": 4
               },
               "end": {
-                "line": 185,
+                "line": 187,
                 "column": 5
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/webrtc/interface/api/media.js"
+            "file": "/home/jenkins/workspace/jobs_webrtcjs_master/packages/kandy/src/webrtc/interface/api/media.js"
           },
           "augments": [],
           "examples": [
@@ -32886,26 +32886,26 @@
           ],
           "loc": {
             "start": {
-              "line": 187,
+              "line": 189,
               "column": 4
             },
             "end": {
-              "line": 198,
+              "line": 200,
               "column": 7
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 199,
+                "line": 201,
                 "column": 4
               },
               "end": {
-                "line": 203,
+                "line": 205,
                 "column": 5
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/webrtc/interface/api/media.js"
+            "file": "/home/jenkins/workspace/jobs_webrtcjs_master/packages/kandy/src/webrtc/interface/api/media.js"
           },
           "augments": [],
           "examples": [],
@@ -33157,26 +33157,26 @@
           ],
           "loc": {
             "start": {
-              "line": 205,
+              "line": 207,
               "column": 4
             },
             "end": {
-              "line": 231,
+              "line": 233,
               "column": 7
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 232,
+                "line": 234,
                 "column": 4
               },
               "end": {
-                "line": 243,
+                "line": 245,
                 "column": 5
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/webrtc/interface/api/media.js"
+            "file": "/home/jenkins/workspace/jobs_webrtcjs_master/packages/kandy/src/webrtc/interface/api/media.js"
           },
           "augments": [],
           "examples": [
@@ -33406,26 +33406,26 @@
           ],
           "loc": {
             "start": {
-              "line": 245,
+              "line": 247,
               "column": 4
             },
             "end": {
-              "line": 258,
+              "line": 260,
               "column": 7
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 259,
+                "line": 261,
                 "column": 4
               },
               "end": {
-                "line": 262,
+                "line": 264,
                 "column": 5
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/webrtc/interface/api/media.js"
+            "file": "/home/jenkins/workspace/jobs_webrtcjs_master/packages/kandy/src/webrtc/interface/api/media.js"
           },
           "augments": [],
           "examples": [],
@@ -33630,26 +33630,26 @@
           ],
           "loc": {
             "start": {
-              "line": 264,
+              "line": 266,
               "column": 4
             },
             "end": {
-              "line": 286,
+              "line": 288,
               "column": 7
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 287,
+                "line": 289,
                 "column": 4
               },
               "end": {
-                "line": 304,
+                "line": 306,
                 "column": 5
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/webrtc/interface/api/media.js"
+            "file": "/home/jenkins/workspace/jobs_webrtcjs_master/packages/kandy/src/webrtc/interface/api/media.js"
           },
           "augments": [],
           "examples": [],
@@ -33813,26 +33813,26 @@
           ],
           "loc": {
             "start": {
-              "line": 306,
+              "line": 308,
               "column": 4
             },
             "end": {
-              "line": 320,
+              "line": 322,
               "column": 7
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 321,
+                "line": 323,
                 "column": 4
               },
               "end": {
-                "line": 338,
+                "line": 340,
                 "column": 5
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/webrtc/interface/api/media.js"
+            "file": "/home/jenkins/workspace/jobs_webrtcjs_master/packages/kandy/src/webrtc/interface/api/media.js"
           },
           "augments": [],
           "examples": [],
@@ -33969,7 +33969,7 @@
           "column": 36
         }
       },
-      "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/notifications/interface/api.js"
+      "file": "/home/jenkins/workspace/jobs_webrtcjs_master/packages/kandy/src/notifications/interface/api.js"
     },
     "augments": [],
     "examples": [],
@@ -34069,7 +34069,7 @@
                 "column": 49
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/notifications/interface/eventTypes.js"
+            "file": "/home/jenkins/workspace/jobs_webrtcjs_master/packages/kandy/src/notifications/interface/eventTypes.js"
           },
           "augments": [],
           "examples": [],
@@ -34229,7 +34229,7 @@
                 "column": 47
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/notifications/interface/eventTypes.js"
+            "file": "/home/jenkins/workspace/jobs_webrtcjs_master/packages/kandy/src/notifications/interface/eventTypes.js"
           },
           "augments": [],
           "examples": [],
@@ -34409,7 +34409,7 @@
                 "column": 5
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/notifications/interface/api.js"
+            "file": "/home/jenkins/workspace/jobs_webrtcjs_master/packages/kandy/src/notifications/interface/api.js"
           },
           "augments": [],
           "examples": [],
@@ -34491,1220 +34491,6 @@
             }
           ],
           "namespace": "notificationprocess"
-        },
-        {
-          "description": {
-            "type": "root",
-            "children": [
-              {
-                "type": "paragraph",
-                "children": [
-                  {
-                    "type": "text",
-                    "value": "Registers with Apple push notification service. Once registration is successful, the application will be able to receive\nstandard and/or voip push notifications. It can then send these notifications to the SDK with "
-                  },
-                  {
-                    "type": "link",
-                    "url": "api.notifications.process",
-                    "title": null,
-                    "jsdoc": true,
-                    "children": [
-                      {
-                        "type": "text",
-                        "value": "api.notifications.process"
-                      }
-                    ]
-                  },
-                  {
-                    "type": "text",
-                    "value": "\nin order for the SDK to process them."
-                  }
-                ]
-              }
-            ]
-          },
-          "tags": [
-            {
-              "title": "public",
-              "description": null,
-              "lineNumber": 5,
-              "type": null
-            },
-            {
-              "title": "requires",
-              "description": null,
-              "lineNumber": 6,
-              "name": "push"
-            },
-            {
-              "title": "memberof",
-              "description": "notification",
-              "lineNumber": 7
-            },
-            {
-              "title": "method",
-              "description": null,
-              "lineNumber": 8,
-              "name": "registerApplePush"
-            },
-            {
-              "title": "param",
-              "description": null,
-              "lineNumber": 9,
-              "type": {
-                "type": "NameExpression",
-                "name": "Object"
-              },
-              "name": "params"
-            },
-            {
-              "title": "param",
-              "description": "Array of services for which we wish to receive notifications.",
-              "lineNumber": 10,
-              "type": {
-                "type": "TypeApplication",
-                "expression": {
-                  "type": "NameExpression",
-                  "name": "Array"
-                },
-                "applications": [
-                  {
-                    "type": "NameExpression",
-                    "name": "string"
-                  }
-                ]
-              },
-              "name": "params.services"
-            },
-            {
-              "title": "param",
-              "description": "The voip device token used for voip push on iOS.\n                                         This token is required if registering for call service notifications on iOS.",
-              "lineNumber": 11,
-              "type": {
-                "type": "NameExpression",
-                "name": "string"
-              },
-              "name": "params.voipDeviceToken"
-            },
-            {
-              "title": "param",
-              "description": "The standardDevice token used for standard push on iOS .\n                                             This token is required when registering for non-call service notifications.",
-              "lineNumber": 13,
-              "type": {
-                "type": "NameExpression",
-                "name": "string"
-              },
-              "name": "params.standardDeviceToken"
-            },
-            {
-              "title": "param",
-              "description": "The bundleId to identify the application receiving the push notification.",
-              "lineNumber": 15,
-              "type": {
-                "type": "NameExpression",
-                "name": "string"
-              },
-              "name": "params.bundleId"
-            },
-            {
-              "title": "param",
-              "description": "Unique identifier for a client device.",
-              "lineNumber": 16,
-              "type": {
-                "type": "NameExpression",
-                "name": "string"
-              },
-              "name": "params.clientCorrelator"
-            },
-            {
-              "title": "param",
-              "description": "The realm used by the push registration service to identify and\n                               establish a connection with the service gateway.",
-              "lineNumber": 17,
-              "type": {
-                "type": "NameExpression",
-                "name": "string"
-              },
-              "name": "params.realm"
-            },
-            {
-              "title": "param",
-              "description": "If true, push notification will be sent to production.\n                                       If false, push notification will be sent to sandbox.",
-              "lineNumber": 19,
-              "type": {
-                "type": "NameExpression",
-                "name": "boolean"
-              },
-              "name": "params.isProduction"
-            },
-            {
-              "title": "return",
-              "description": "When successful,  the information of the registration.\n                  Promise will reject with error object otherwise.",
-              "lineNumber": 21,
-              "type": {
-                "type": "NameExpression",
-                "name": "Promise"
-              }
-            }
-          ],
-          "loc": {
-            "start": {
-              "line": 44,
-              "column": 4
-            },
-            "end": {
-              "line": 67,
-              "column": 7
-            }
-          },
-          "context": {
-            "loc": {
-              "start": {
-                "line": 68,
-                "column": 4
-              },
-              "end": {
-                "line": 101,
-                "column": 5
-              }
-            },
-            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/notifications/interface/api.js"
-          },
-          "augments": [],
-          "examples": [],
-          "implements": [],
-          "params": [
-            {
-              "title": "param",
-              "name": "params",
-              "lineNumber": 9,
-              "type": {
-                "type": "NameExpression",
-                "name": "Object"
-              },
-              "properties": [
-                {
-                  "title": "param",
-                  "name": "params.services",
-                  "lineNumber": 10,
-                  "description": {
-                    "type": "root",
-                    "children": [
-                      {
-                        "type": "paragraph",
-                        "children": [
-                          {
-                            "type": "text",
-                            "value": "Array of services for which we wish to receive notifications."
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  "type": {
-                    "type": "TypeApplication",
-                    "expression": {
-                      "type": "NameExpression",
-                      "name": "Array"
-                    },
-                    "applications": [
-                      {
-                        "type": "NameExpression",
-                        "name": "string"
-                      }
-                    ]
-                  }
-                },
-                {
-                  "title": "param",
-                  "name": "params.voipDeviceToken",
-                  "lineNumber": 11,
-                  "description": {
-                    "type": "root",
-                    "children": [
-                      {
-                        "type": "paragraph",
-                        "children": [
-                          {
-                            "type": "text",
-                            "value": "The voip device token used for voip push on iOS.\nThis token is required if registering for call service notifications on iOS."
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  "type": {
-                    "type": "NameExpression",
-                    "name": "string"
-                  }
-                },
-                {
-                  "title": "param",
-                  "name": "params.standardDeviceToken",
-                  "lineNumber": 13,
-                  "description": {
-                    "type": "root",
-                    "children": [
-                      {
-                        "type": "paragraph",
-                        "children": [
-                          {
-                            "type": "text",
-                            "value": "The standardDevice token used for standard push on iOS .\nThis token is required when registering for non-call service notifications."
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  "type": {
-                    "type": "NameExpression",
-                    "name": "string"
-                  }
-                },
-                {
-                  "title": "param",
-                  "name": "params.bundleId",
-                  "lineNumber": 15,
-                  "description": {
-                    "type": "root",
-                    "children": [
-                      {
-                        "type": "paragraph",
-                        "children": [
-                          {
-                            "type": "text",
-                            "value": "The bundleId to identify the application receiving the push notification."
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  "type": {
-                    "type": "NameExpression",
-                    "name": "string"
-                  }
-                },
-                {
-                  "title": "param",
-                  "name": "params.clientCorrelator",
-                  "lineNumber": 16,
-                  "description": {
-                    "type": "root",
-                    "children": [
-                      {
-                        "type": "paragraph",
-                        "children": [
-                          {
-                            "type": "text",
-                            "value": "Unique identifier for a client device."
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  "type": {
-                    "type": "NameExpression",
-                    "name": "string"
-                  }
-                },
-                {
-                  "title": "param",
-                  "name": "params.realm",
-                  "lineNumber": 17,
-                  "description": {
-                    "type": "root",
-                    "children": [
-                      {
-                        "type": "paragraph",
-                        "children": [
-                          {
-                            "type": "text",
-                            "value": "The realm used by the push registration service to identify and\nestablish a connection with the service gateway."
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  "type": {
-                    "type": "NameExpression",
-                    "name": "string"
-                  }
-                },
-                {
-                  "title": "param",
-                  "name": "params.isProduction",
-                  "lineNumber": 19,
-                  "description": {
-                    "type": "root",
-                    "children": [
-                      {
-                        "type": "paragraph",
-                        "children": [
-                          {
-                            "type": "text",
-                            "value": "If true, push notification will be sent to production.\nIf false, push notification will be sent to sandbox."
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  "type": {
-                    "type": "NameExpression",
-                    "name": "boolean"
-                  }
-                }
-              ]
-            }
-          ],
-          "properties": [],
-          "returns": [
-            {
-              "description": {
-                "type": "root",
-                "children": [
-                  {
-                    "type": "paragraph",
-                    "children": [
-                      {
-                        "type": "text",
-                        "value": "When successful,  the information of the registration.\nPromise will reject with error object otherwise."
-                      }
-                    ]
-                  }
-                ]
-              },
-              "title": "returns",
-              "type": {
-                "type": "NameExpression",
-                "name": "Promise"
-              }
-            }
-          ],
-          "sees": [],
-          "throws": [],
-          "todos": [],
-          "yields": [],
-          "access": "public",
-          "memberof": "notification",
-          "kind": "function",
-          "name": "registerApplePush",
-          "members": {
-            "global": [],
-            "inner": [],
-            "instance": [],
-            "events": [],
-            "static": []
-          },
-          "path": [
-            {
-              "name": "notification",
-              "kind": "namespace"
-            },
-            {
-              "name": "registerApplePush",
-              "kind": "function"
-            }
-          ],
-          "namespace": "notificationregisterApplePush"
-        },
-        {
-          "description": {
-            "type": "root",
-            "children": [
-              {
-                "type": "paragraph",
-                "children": [
-                  {
-                    "type": "text",
-                    "value": "Registers with Google push notification service. Once registration is successful, the application will be able to receive\nstandard and/or voip push notifications. It can then send these notifications to the SDK with "
-                  },
-                  {
-                    "type": "link",
-                    "url": "api.notifications.process",
-                    "title": null,
-                    "jsdoc": true,
-                    "children": [
-                      {
-                        "type": "text",
-                        "value": "api.notifications.process"
-                      }
-                    ]
-                  },
-                  {
-                    "type": "text",
-                    "value": "\nin order for the SDK to process them."
-                  }
-                ]
-              }
-            ]
-          },
-          "tags": [
-            {
-              "title": "public",
-              "description": null,
-              "lineNumber": 5,
-              "type": null
-            },
-            {
-              "title": "requires",
-              "description": null,
-              "lineNumber": 6,
-              "name": "push"
-            },
-            {
-              "title": "memberof",
-              "description": "notification",
-              "lineNumber": 7
-            },
-            {
-              "title": "method",
-              "description": null,
-              "lineNumber": 8,
-              "name": "registerAndroidPush"
-            },
-            {
-              "title": "param",
-              "description": null,
-              "lineNumber": 9,
-              "type": {
-                "type": "NameExpression",
-                "name": "Object"
-              },
-              "name": "params"
-            },
-            {
-              "title": "param",
-              "description": "Array of services to register for.",
-              "lineNumber": 10,
-              "type": {
-                "type": "TypeApplication",
-                "expression": {
-                  "type": "NameExpression",
-                  "name": "Array"
-                },
-                "applications": [
-                  {
-                    "type": "NameExpression",
-                    "name": "string"
-                  }
-                ]
-              },
-              "name": "params.services"
-            },
-            {
-              "title": "param",
-              "description": "The device token used for standard push on Android. This token is required\n                                     when registering for all related services notifications.",
-              "lineNumber": 11,
-              "type": {
-                "type": "NameExpression",
-                "name": "string"
-              },
-              "name": "params.deviceToken"
-            },
-            {
-              "title": "param",
-              "description": "The bundleId to identify the application receiving the push notification.",
-              "lineNumber": 13,
-              "type": {
-                "type": "NameExpression",
-                "name": "string"
-              },
-              "name": "params.bundleId"
-            },
-            {
-              "title": "param",
-              "description": "Unique identifier for a client device.",
-              "lineNumber": 14,
-              "type": {
-                "type": "NameExpression",
-                "name": "string"
-              },
-              "name": "params.clientCorrelator"
-            },
-            {
-              "title": "param",
-              "description": "The realm used by the push registration service to identify\n                               and establish a connection with the service gateway.",
-              "lineNumber": 15,
-              "type": {
-                "type": "NameExpression",
-                "name": "string"
-              },
-              "name": "params.realm"
-            },
-            {
-              "title": "return",
-              "description": "When successful,  the information of the registration.\n                  Promise will reject with error object otherwise.",
-              "lineNumber": 17,
-              "type": {
-                "type": "NameExpression",
-                "name": "Promise"
-              }
-            }
-          ],
-          "loc": {
-            "start": {
-              "line": 103,
-              "column": 4
-            },
-            "end": {
-              "line": 122,
-              "column": 7
-            }
-          },
-          "context": {
-            "loc": {
-              "start": {
-                "line": 123,
-                "column": 4
-              },
-              "end": {
-                "line": 144,
-                "column": 5
-              }
-            },
-            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/notifications/interface/api.js"
-          },
-          "augments": [],
-          "examples": [],
-          "implements": [],
-          "params": [
-            {
-              "title": "param",
-              "name": "params",
-              "lineNumber": 9,
-              "type": {
-                "type": "NameExpression",
-                "name": "Object"
-              },
-              "properties": [
-                {
-                  "title": "param",
-                  "name": "params.services",
-                  "lineNumber": 10,
-                  "description": {
-                    "type": "root",
-                    "children": [
-                      {
-                        "type": "paragraph",
-                        "children": [
-                          {
-                            "type": "text",
-                            "value": "Array of services to register for."
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  "type": {
-                    "type": "TypeApplication",
-                    "expression": {
-                      "type": "NameExpression",
-                      "name": "Array"
-                    },
-                    "applications": [
-                      {
-                        "type": "NameExpression",
-                        "name": "string"
-                      }
-                    ]
-                  }
-                },
-                {
-                  "title": "param",
-                  "name": "params.deviceToken",
-                  "lineNumber": 11,
-                  "description": {
-                    "type": "root",
-                    "children": [
-                      {
-                        "type": "paragraph",
-                        "children": [
-                          {
-                            "type": "text",
-                            "value": "The device token used for standard push on Android. This token is required\nwhen registering for all related services notifications."
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  "type": {
-                    "type": "NameExpression",
-                    "name": "string"
-                  }
-                },
-                {
-                  "title": "param",
-                  "name": "params.bundleId",
-                  "lineNumber": 13,
-                  "description": {
-                    "type": "root",
-                    "children": [
-                      {
-                        "type": "paragraph",
-                        "children": [
-                          {
-                            "type": "text",
-                            "value": "The bundleId to identify the application receiving the push notification."
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  "type": {
-                    "type": "NameExpression",
-                    "name": "string"
-                  }
-                },
-                {
-                  "title": "param",
-                  "name": "params.clientCorrelator",
-                  "lineNumber": 14,
-                  "description": {
-                    "type": "root",
-                    "children": [
-                      {
-                        "type": "paragraph",
-                        "children": [
-                          {
-                            "type": "text",
-                            "value": "Unique identifier for a client device."
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  "type": {
-                    "type": "NameExpression",
-                    "name": "string"
-                  }
-                },
-                {
-                  "title": "param",
-                  "name": "params.realm",
-                  "lineNumber": 15,
-                  "description": {
-                    "type": "root",
-                    "children": [
-                      {
-                        "type": "paragraph",
-                        "children": [
-                          {
-                            "type": "text",
-                            "value": "The realm used by the push registration service to identify\nand establish a connection with the service gateway."
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  "type": {
-                    "type": "NameExpression",
-                    "name": "string"
-                  }
-                }
-              ]
-            }
-          ],
-          "properties": [],
-          "returns": [
-            {
-              "description": {
-                "type": "root",
-                "children": [
-                  {
-                    "type": "paragraph",
-                    "children": [
-                      {
-                        "type": "text",
-                        "value": "When successful,  the information of the registration.\nPromise will reject with error object otherwise."
-                      }
-                    ]
-                  }
-                ]
-              },
-              "title": "returns",
-              "type": {
-                "type": "NameExpression",
-                "name": "Promise"
-              }
-            }
-          ],
-          "sees": [],
-          "throws": [],
-          "todos": [],
-          "yields": [],
-          "access": "public",
-          "memberof": "notification",
-          "kind": "function",
-          "name": "registerAndroidPush",
-          "members": {
-            "global": [],
-            "inner": [],
-            "instance": [],
-            "events": [],
-            "static": []
-          },
-          "path": [
-            {
-              "name": "notification",
-              "kind": "namespace"
-            },
-            {
-              "name": "registerAndroidPush",
-              "kind": "function"
-            }
-          ],
-          "namespace": "notificationregisterAndroidPush"
-        },
-        {
-          "description": {
-            "type": "root",
-            "children": [
-              {
-                "type": "paragraph",
-                "children": [
-                  {
-                    "type": "text",
-                    "value": "Unregister Apple push notifications."
-                  }
-                ]
-              }
-            ]
-          },
-          "tags": [
-            {
-              "title": "public",
-              "description": null,
-              "lineNumber": 3,
-              "type": null
-            },
-            {
-              "title": "requires",
-              "description": null,
-              "lineNumber": 4,
-              "name": "push"
-            },
-            {
-              "title": "memberof",
-              "description": "notification",
-              "lineNumber": 5
-            },
-            {
-              "title": "method",
-              "description": null,
-              "lineNumber": 6,
-              "name": "unregisterApplePush"
-            },
-            {
-              "title": "param",
-              "description": "The data returned from the push registration",
-              "lineNumber": 7,
-              "type": {
-                "type": "NameExpression",
-                "name": "string"
-              },
-              "name": "registrationInfo"
-            },
-            {
-              "title": "return",
-              "description": "When successful, the promise will resolve with undefined.\n                  Promise will reject with error object otherwise.",
-              "lineNumber": 8,
-              "type": {
-                "type": "NameExpression",
-                "name": "Promise"
-              }
-            }
-          ],
-          "loc": {
-            "start": {
-              "line": 146,
-              "column": 4
-            },
-            "end": {
-              "line": 156,
-              "column": 7
-            }
-          },
-          "context": {
-            "loc": {
-              "start": {
-                "line": 157,
-                "column": 4
-              },
-              "end": {
-                "line": 163,
-                "column": 5
-              }
-            },
-            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/notifications/interface/api.js"
-          },
-          "augments": [],
-          "examples": [],
-          "implements": [],
-          "params": [
-            {
-              "title": "param",
-              "name": "registrationInfo",
-              "lineNumber": 7,
-              "description": {
-                "type": "root",
-                "children": [
-                  {
-                    "type": "paragraph",
-                    "children": [
-                      {
-                        "type": "text",
-                        "value": "The data returned from the push registration"
-                      }
-                    ]
-                  }
-                ]
-              },
-              "type": {
-                "type": "NameExpression",
-                "name": "string"
-              }
-            }
-          ],
-          "properties": [],
-          "returns": [
-            {
-              "description": {
-                "type": "root",
-                "children": [
-                  {
-                    "type": "paragraph",
-                    "children": [
-                      {
-                        "type": "text",
-                        "value": "When successful, the promise will resolve with undefined.\nPromise will reject with error object otherwise."
-                      }
-                    ]
-                  }
-                ]
-              },
-              "title": "returns",
-              "type": {
-                "type": "NameExpression",
-                "name": "Promise"
-              }
-            }
-          ],
-          "sees": [],
-          "throws": [],
-          "todos": [],
-          "yields": [],
-          "access": "public",
-          "memberof": "notification",
-          "kind": "function",
-          "name": "unregisterApplePush",
-          "members": {
-            "global": [],
-            "inner": [],
-            "instance": [],
-            "events": [],
-            "static": []
-          },
-          "path": [
-            {
-              "name": "notification",
-              "kind": "namespace"
-            },
-            {
-              "name": "unregisterApplePush",
-              "kind": "function"
-            }
-          ],
-          "namespace": "notificationunregisterApplePush"
-        },
-        {
-          "description": {
-            "type": "root",
-            "children": [
-              {
-                "type": "paragraph",
-                "children": [
-                  {
-                    "type": "text",
-                    "value": "Unregister Android push notifications."
-                  }
-                ]
-              }
-            ]
-          },
-          "tags": [
-            {
-              "title": "public",
-              "description": null,
-              "lineNumber": 3,
-              "type": null
-            },
-            {
-              "title": "requires",
-              "description": null,
-              "lineNumber": 4,
-              "name": "push"
-            },
-            {
-              "title": "memberof",
-              "description": "notification",
-              "lineNumber": 5
-            },
-            {
-              "title": "method",
-              "description": null,
-              "lineNumber": 6,
-              "name": "unregisterAndroidPush"
-            },
-            {
-              "title": "param",
-              "description": "The data returned from the push registration",
-              "lineNumber": 7,
-              "type": {
-                "type": "NameExpression",
-                "name": "string"
-              },
-              "name": "registrationInfo"
-            },
-            {
-              "title": "return",
-              "description": "When successful, the promise will resolve with undefined.\n                  Promise will reject with error object otherwise.",
-              "lineNumber": 8,
-              "type": {
-                "type": "NameExpression",
-                "name": "Promise"
-              }
-            }
-          ],
-          "loc": {
-            "start": {
-              "line": 165,
-              "column": 4
-            },
-            "end": {
-              "line": 175,
-              "column": 7
-            }
-          },
-          "context": {
-            "loc": {
-              "start": {
-                "line": 176,
-                "column": 4
-              },
-              "end": {
-                "line": 182,
-                "column": 5
-              }
-            },
-            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/notifications/interface/api.js"
-          },
-          "augments": [],
-          "examples": [],
-          "implements": [],
-          "params": [
-            {
-              "title": "param",
-              "name": "registrationInfo",
-              "lineNumber": 7,
-              "description": {
-                "type": "root",
-                "children": [
-                  {
-                    "type": "paragraph",
-                    "children": [
-                      {
-                        "type": "text",
-                        "value": "The data returned from the push registration"
-                      }
-                    ]
-                  }
-                ]
-              },
-              "type": {
-                "type": "NameExpression",
-                "name": "string"
-              }
-            }
-          ],
-          "properties": [],
-          "returns": [
-            {
-              "description": {
-                "type": "root",
-                "children": [
-                  {
-                    "type": "paragraph",
-                    "children": [
-                      {
-                        "type": "text",
-                        "value": "When successful, the promise will resolve with undefined.\nPromise will reject with error object otherwise."
-                      }
-                    ]
-                  }
-                ]
-              },
-              "title": "returns",
-              "type": {
-                "type": "NameExpression",
-                "name": "Promise"
-              }
-            }
-          ],
-          "sees": [],
-          "throws": [],
-          "todos": [],
-          "yields": [],
-          "access": "public",
-          "memberof": "notification",
-          "kind": "function",
-          "name": "unregisterAndroidPush",
-          "members": {
-            "global": [],
-            "inner": [],
-            "instance": [],
-            "events": [],
-            "static": []
-          },
-          "path": [
-            {
-              "name": "notification",
-              "kind": "namespace"
-            },
-            {
-              "name": "unregisterAndroidPush",
-              "kind": "function"
-            }
-          ],
-          "namespace": "notificationunregisterAndroidPush"
-        },
-        {
-          "description": {
-            "type": "root",
-            "children": [
-              {
-                "type": "paragraph",
-                "children": [
-                  {
-                    "type": "text",
-                    "value": "Enables, or disables, the processing of websocket notifications."
-                  }
-                ]
-              }
-            ]
-          },
-          "tags": [
-            {
-              "title": "public",
-              "description": null,
-              "lineNumber": 3,
-              "type": null
-            },
-            {
-              "title": "requires",
-              "description": null,
-              "lineNumber": 4,
-              "name": "push"
-            },
-            {
-              "title": "memberof",
-              "description": "notification",
-              "lineNumber": 5
-            },
-            {
-              "title": "method",
-              "description": null,
-              "lineNumber": 6,
-              "name": "enableWebsocket"
-            },
-            {
-              "title": "param",
-              "description": "Whether the websocket channel should be enabled.",
-              "lineNumber": 7,
-              "type": {
-                "type": "NameExpression",
-                "name": "boolean"
-              },
-              "name": "enable"
-            }
-          ],
-          "loc": {
-            "start": {
-              "line": 184,
-              "column": 4
-            },
-            "end": {
-              "line": 192,
-              "column": 7
-            }
-          },
-          "context": {
-            "loc": {
-              "start": {
-                "line": 193,
-                "column": 4
-              },
-              "end": {
-                "line": 213,
-                "column": 5
-              }
-            },
-            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/notifications/interface/api.js"
-          },
-          "augments": [],
-          "examples": [],
-          "implements": [],
-          "params": [
-            {
-              "title": "param",
-              "name": "enable",
-              "lineNumber": 7,
-              "description": {
-                "type": "root",
-                "children": [
-                  {
-                    "type": "paragraph",
-                    "children": [
-                      {
-                        "type": "text",
-                        "value": "Whether the websocket channel should be enabled."
-                      }
-                    ]
-                  }
-                ]
-              },
-              "type": {
-                "type": "NameExpression",
-                "name": "boolean"
-              }
-            }
-          ],
-          "properties": [],
-          "returns": [],
-          "sees": [],
-          "throws": [],
-          "todos": [],
-          "yields": [],
-          "access": "public",
-          "memberof": "notification",
-          "kind": "function",
-          "name": "enableWebsocket",
-          "members": {
-            "global": [],
-            "inner": [],
-            "instance": [],
-            "events": [],
-            "static": []
-          },
-          "path": [
-            {
-              "name": "notification",
-              "kind": "namespace"
-            },
-            {
-              "name": "enableWebsocket",
-              "kind": "function"
-            }
-          ],
-          "namespace": "notificationenableWebsocket"
         }
       ]
     },
@@ -35767,7 +34553,7 @@
           "column": 5
         }
       },
-      "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/request/interface/api.js"
+      "file": "/home/jenkins/workspace/jobs_webrtcjs_master/packages/kandy/src/request/interface/api.js"
     },
     "augments": [],
     "examples": [],
@@ -35901,7 +34687,7 @@
                 "column": 5
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/request/interface/api.js"
+            "file": "/home/jenkins/workspace/jobs_webrtcjs_master/packages/kandy/src/request/interface/api.js"
           },
           "augments": [],
           "examples": [
@@ -36176,7 +34962,7 @@
           "column": 58
         }
       },
-      "file": "/var/jenkins_home/workspace/Kandy.js_master/builds/core/index.js"
+      "file": "/home/jenkins/workspace/jobs_webrtcjs_master/builds/core/index.js"
     },
     "augments": [],
     "examples": [
@@ -36297,7 +35083,7 @@
                 "column": 58
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_master/builds/core/index.js"
+            "file": "/home/jenkins/workspace/jobs_webrtcjs_master/builds/core/index.js"
           },
           "augments": [],
           "examples": [],
@@ -36543,7 +35329,7 @@
                 "column": 58
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_master/builds/core/index.js"
+            "file": "/home/jenkins/workspace/jobs_webrtcjs_master/builds/core/index.js"
           },
           "augments": [],
           "examples": [
@@ -36774,7 +35560,7 @@
           "column": 42
         }
       },
-      "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/subscription/interface/api.js"
+      "file": "/home/jenkins/workspace/jobs_webrtcjs_master/packages/kandy/src/subscription/interface/api.js"
     },
     "augments": [],
     "examples": [],
@@ -36896,7 +35682,7 @@
                 "column": 47
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/subscription/interface/eventTypes.js"
+            "file": "/home/jenkins/workspace/jobs_webrtcjs_master/packages/kandy/src/subscription/interface/eventTypes.js"
           },
           "augments": [],
           "examples": [],
@@ -37462,7 +36248,7 @@
                 "column": 45
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/subscription/interface/eventTypes.js"
+            "file": "/home/jenkins/workspace/jobs_webrtcjs_master/packages/kandy/src/subscription/interface/eventTypes.js"
           },
           "augments": [],
           "examples": [],
@@ -37638,7 +36424,7 @@
                 "column": 45
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/subscription/interface/eventTypes.js"
+            "file": "/home/jenkins/workspace/jobs_webrtcjs_master/packages/kandy/src/subscription/interface/eventTypes.js"
           },
           "augments": [],
           "examples": [],
@@ -37891,7 +36677,7 @@
                 "column": 42
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/subscription/interface/api.js"
+            "file": "/home/jenkins/workspace/jobs_webrtcjs_master/packages/kandy/src/subscription/interface/api.js"
           },
           "augments": [],
           "examples": [
@@ -38113,7 +36899,7 @@
                 "column": 42
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/subscription/interface/api.js"
+            "file": "/home/jenkins/workspace/jobs_webrtcjs_master/packages/kandy/src/subscription/interface/api.js"
           },
           "augments": [],
           "examples": [
@@ -38200,7 +36986,7 @@
                 "children": [
                   {
                     "type": "text",
-                    "value": "For push notifications on link, please see "
+                    "value": "For push notifications on WebRTC Gateway, please see "
                   },
                   {
                     "type": "link",
@@ -38417,7 +37203,7 @@
                 "column": 5
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/subscription/interface/api.js"
+            "file": "/home/jenkins/workspace/jobs_webrtcjs_master/packages/kandy/src/subscription/interface/api.js"
           },
           "augments": [],
           "examples": [
@@ -38745,7 +37531,7 @@
                 "column": 5
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/subscription/interface/api.js"
+            "file": "/home/jenkins/workspace/jobs_webrtcjs_master/packages/kandy/src/subscription/interface/api.js"
           },
           "augments": [],
           "examples": [
@@ -38992,7 +37778,7 @@
                 "column": 5
               }
             },
-            "file": "/var/jenkins_home/workspace/Kandy.js_master/packages/kandy/src/subscription/interface/api.js"
+            "file": "/home/jenkins/workspace/jobs_webrtcjs_master/packages/kandy/src/subscription/interface/api.js"
           },
           "augments": [],
           "examples": [
