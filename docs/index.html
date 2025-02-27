@@ -3,7 +3,7 @@
 <html>
 <head>
   <meta charset='utf-8' />
-  <title>webrtc-anonymous-js-sdk 7.3.0 | Documentation</title>
+  <title>webrtc-anonymous-js-sdk 7.4.0 | Documentation</title>
   <meta name='viewport' content='width=device-width,initial-scale=1'>
   <link href='assets/bass.css' type='text/css' rel='stylesheet' />
   <link href='assets/style.css' type='text/css' rel='stylesheet' />
@@ -15,7 +15,7 @@
       <div id='split-left' class='overflow-auto fs0 height-viewport-100'>
         <div class='py1 px2'>
           <h3 class='mb0 no-anchor'>webrtc-anonymous-js-sdk</h3>
-          <div class='mb1'><code>7.3.0</code></div>
+          <div class='mb1'><code>7.4.0</code></div>
           <input
             placeholder='Filter'
             id='filter-input'
@@ -42,18 +42,6 @@
                           </a></li>
                           
                           <li><a
-                            href='#configconfigsubscription'
-                            class='regular pre-open'>
-                            #config.subscription
-                          </a></li>
-                          
-                          <li><a
-                            href='#configconfigcall'
-                            class='regular pre-open'>
-                            #config.call
-                          </a></li>
-                          
-                          <li><a
                             href='#configconfigconnectivity'
                             class='regular pre-open'>
                             #config.connectivity
@@ -63,6 +51,18 @@
                             href='#configconfignotifications'
                             class='regular pre-open'>
                             #config.notifications
+                          </a></li>
+                          
+                          <li><a
+                            href='#configconfigsubscription'
+                            class='regular pre-open'>
+                            #config.subscription
+                          </a></li>
+                          
+                          <li><a
+                            href='#configconfigcall'
+                            class='regular pre-open'>
+                            #config.call
                           </a></li>
                           
                         </ul>
@@ -134,12 +134,6 @@
                             </a></li>
                           
                             <li><a
-                              href='#apigetbrowserdetails'
-                              class='regular pre-open'>
-                              <span style="color:green">ⓕ</span> .getBrowserDetails
-                            </a></li>
-                          
-                            <li><a
                               href='#apigetuserinfo'
                               class='regular pre-open'>
                               <span style="color:green">ⓕ</span> .getUserInfo
@@ -161,6 +155,12 @@
                               href='#apisetcredentials'
                               class='regular pre-open'>
                               <span style="color:green">ⓕ</span> .setCredentials
+                            </a></li>
+                          
+                            <li><a
+                              href='#apigetbrowserdetails'
+                              class='regular pre-open'>
+                              <span style="color:green">ⓕ</span> .getBrowserDetails
                             </a></li>
                           
                           </ul>
@@ -1350,6 +1350,318 @@ to be exposed in the logs, potentially displaying sensitive information.
       </div>
     </div>
   
+    <div class='border-bottom' id='configconfigconnectivity'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="py1 contain">
+            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
+            <span class='code strong strong truncate'>config.connectivity</span>
+        </div>
+      </div>
+      <div class="clearfix display-none toggle-target">
+        <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+
+  <p>Configuration options for the Connectivity feature.
+The SDK can only use keepalive as the connectivity check.</p>
+<p>Keep Alive: The client sends "keepalive" messages (to the server) on the websocket at regular intervals. This lets the server know that the client is still connected, and that it should "keep the connection alive".</p>
+<p>For more information on keepalive see here: <a href="https://en.wikipedia.org/wiki/Keepalive">https://en.wikipedia.org/wiki/Keepalive</a></p>
+
+
+  <div class='pre p1 fill-light mt0'>config.connectivity</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>connectivity</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    Connectivity configs.
+
+          </div>
+          
+          <table class='mt1 mb2 fixed-table h5 col-12'>
+            <colgroup>
+              <col width='30%' />
+              <col width='70%' />
+            </colgroup>
+            <thead>
+              <tr class='bold fill-light'>
+                <th>Name</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody class='mt1'>
+              
+                <tr>
+  <td class='break-word'><span class='code bold'>connectivity.pingInterval</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></code>
+  
+    (default <code>30000</code>)
+  </td>
+  <td class='break-word'><span>Time in between websocket ping attempts (milliseconds).
+</span></td>
+</tr>
+
+
+              
+                <tr>
+  <td class='break-word'><span class='code bold'>connectivity.reconnectLimit</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></code>
+  
+    (default <code>5</code>)
+  </td>
+  <td class='break-word'><span>Number of failed reconnect attempts before reporting an error. Can be set to 0 to not limit reconnection attempts.
+</span></td>
+</tr>
+
+
+              
+                <tr>
+  <td class='break-word'><span class='code bold'>connectivity.reconnectDelay</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></code>
+  
+    (default <code>5000</code>)
+  </td>
+  <td class='break-word'><span>Base time between websocket reconnect attempts (milliseconds).
+</span></td>
+</tr>
+
+
+              
+                <tr>
+  <td class='break-word'><span class='code bold'>connectivity.reconnectTimeMultiplier</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></code>
+  
+    (default <code>1</code>)
+  </td>
+  <td class='break-word'><span>Reconnect delay multiplier for subsequent attempts. The reconnect delay time will be multiplied by this after each failed reconnect attempt to increase the delay between attempts. eg. 5000ms then 10000ms then 20000ms delay if value is 2.
+</span></td>
+</tr>
+
+
+              
+                <tr>
+  <td class='break-word'><span class='code bold'>connectivity.reconnectTimeLimit</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></code>
+  
+    (default <code>640000</code>)
+  </td>
+  <td class='break-word'><span>Maximum time delay between reconnect attempts (milliseconds). Used in conjunction with the reconnect time multiplier to prevent overly long delays between reconnection attempts.
+</span></td>
+</tr>
+
+
+              
+                <tr>
+  <td class='break-word'><span class='code bold'>connectivity.autoReconnect</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></code>
+  
+    (default <code>true</code>)
+  </td>
+  <td class='break-word'><span>Flag to determine whether the SDK will attempt to automatically reconnect after connectivity disruptions.
+</span></td>
+</tr>
+
+
+              
+                <tr>
+  <td class='break-word'><span class='code bold'>connectivity.checkConnectivity</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></code>
+  
+    (default <code>true</code>)
+  </td>
+  <td class='break-word'><span>Flag to determine whether the SDK should check connectivity.
+</span></td>
+</tr>
+
+
+              
+                <tr>
+  <td class='break-word'><span class='code bold'>connectivity.webSocketOAuthMode</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>
+  
+    (default <code>none</code>)
+  </td>
+  <td class='break-word'><span>When set to 'query', the OAuth bearer access token will be appended as a query string parameter to the websocket address.
+</span></td>
+</tr>
+
+
+              
+            </tbody>
+          </table>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
+    <div class='border-bottom' id='configconfignotifications'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="py1 contain">
+            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
+            <span class='code strong strong truncate'>config.notifications</span>
+        </div>
+      </div>
+      <div class="clearfix display-none toggle-target">
+        <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+
+  <p>Configuration options for the notification feature.</p>
+
+
+  <div class='pre p1 fill-light mt0'>config.notifications</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>notifications</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    The notifications configuration object.
+
+          </div>
+          
+          <table class='mt1 mb2 fixed-table h5 col-12'>
+            <colgroup>
+              <col width='30%' />
+              <col width='70%' />
+            </colgroup>
+            <thead>
+              <tr class='bold fill-light'>
+                <th>Name</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody class='mt1'>
+              
+                <tr>
+  <td class='break-word'><span class='code bold'>notifications.idCacheLength</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></code>
+  
+    (default <code>100</code>)
+  </td>
+  <td class='break-word'><span>Default amount of event ids to remember for de-duplication purposes.
+</span></td>
+</tr>
+
+
+              
+                <tr>
+  <td class='break-word'><span class='code bold'>notifications.incomingCallNotificationMode</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>
+  
+    (default <code>&#39;any-channel&#39;</code>)
+  </td>
+  <td class='break-word'><span>Communication channel mode used for incoming call notifications. Supported values are 'any-channel' or 'push-channel-only'.
+</span></td>
+</tr>
+
+
+              
+                <tr>
+  <td class='break-word'><span class='code bold'>notifications.pushRegistration</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>?</code>
+  </td>
+  <td class='break-word'><span>Object describing the server to use for push services.
+</span></td>
+</tr>
+
+  
+    <tr>
+  <td class='break-word'><span class='code bold'>notifications.pushRegistration.server</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>?</code>
+  </td>
+  <td class='break-word'><span>Hostname for the push registration server.
+</span></td>
+</tr>
+
+
+  
+    <tr>
+  <td class='break-word'><span class='code bold'>notifications.pushRegistration.port</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>?</code>
+  </td>
+  <td class='break-word'><span>Port for the push registration server.
+</span></td>
+</tr>
+
+
+  
+    <tr>
+  <td class='break-word'><span class='code bold'>notifications.pushRegistration.protocol</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>?</code>
+  </td>
+  <td class='break-word'><span>Protocol for the push registration server.
+</span></td>
+</tr>
+
+
+  
+    <tr>
+  <td class='break-word'><span class='code bold'>notifications.pushRegistration.version</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>?</code>
+  </td>
+  <td class='break-word'><span>Version for the push registration server.
+</span></td>
+</tr>
+
+
+  
+
+
+              
+            </tbody>
+          </table>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
     <div class='border-bottom' id='configconfigsubscription'>
       <div class="clearfix small pointer toggle-sibling">
         <div class="py1 contain">
@@ -1704,318 +2016,6 @@ must initiate the feedback being sent. See the
   <td class='break-word'><span>Delay, in milliseconds for the passive side of a call to wait before trying a media reconnection.
 </span></td>
 </tr>
-
-
-              
-            </tbody>
-          </table>
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-</section>
-
-      </div>
-    </div>
-  
-    <div class='border-bottom' id='configconfigconnectivity'>
-      <div class="clearfix small pointer toggle-sibling">
-        <div class="py1 contain">
-            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>config.connectivity</span>
-        </div>
-      </div>
-      <div class="clearfix display-none toggle-target">
-        <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-
-  <p>Configuration options for the Connectivity feature.
-The SDK can only use keepalive as the connectivity check.</p>
-<p>Keep Alive: The client sends "keepalive" messages (to the server) on the websocket at regular intervals. This lets the server know that the client is still connected, and that it should "keep the connection alive".</p>
-<p>For more information on keepalive see here: <a href="https://en.wikipedia.org/wiki/Keepalive">https://en.wikipedia.org/wiki/Keepalive</a></p>
-
-
-  <div class='pre p1 fill-light mt0'>config.connectivity</div>
-  
-  
-
-  
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>connectivity</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
-	    Connectivity configs.
-
-          </div>
-          
-          <table class='mt1 mb2 fixed-table h5 col-12'>
-            <colgroup>
-              <col width='30%' />
-              <col width='70%' />
-            </colgroup>
-            <thead>
-              <tr class='bold fill-light'>
-                <th>Name</th>
-                <th>Description</th>
-              </tr>
-            </thead>
-            <tbody class='mt1'>
-              
-                <tr>
-  <td class='break-word'><span class='code bold'>connectivity.pingInterval</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></code>
-  
-    (default <code>30000</code>)
-  </td>
-  <td class='break-word'><span>Time in between websocket ping attempts (milliseconds).
-</span></td>
-</tr>
-
-
-              
-                <tr>
-  <td class='break-word'><span class='code bold'>connectivity.reconnectLimit</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></code>
-  
-    (default <code>5</code>)
-  </td>
-  <td class='break-word'><span>Number of failed reconnect attempts before reporting an error. Can be set to 0 to not limit reconnection attempts.
-</span></td>
-</tr>
-
-
-              
-                <tr>
-  <td class='break-word'><span class='code bold'>connectivity.reconnectDelay</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></code>
-  
-    (default <code>5000</code>)
-  </td>
-  <td class='break-word'><span>Base time between websocket reconnect attempts (milliseconds).
-</span></td>
-</tr>
-
-
-              
-                <tr>
-  <td class='break-word'><span class='code bold'>connectivity.reconnectTimeMultiplier</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></code>
-  
-    (default <code>1</code>)
-  </td>
-  <td class='break-word'><span>Reconnect delay multiplier for subsequent attempts. The reconnect delay time will be multiplied by this after each failed reconnect attempt to increase the delay between attempts. eg. 5000ms then 10000ms then 20000ms delay if value is 2.
-</span></td>
-</tr>
-
-
-              
-                <tr>
-  <td class='break-word'><span class='code bold'>connectivity.reconnectTimeLimit</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></code>
-  
-    (default <code>640000</code>)
-  </td>
-  <td class='break-word'><span>Maximum time delay between reconnect attempts (milliseconds). Used in conjunction with the reconnect time multiplier to prevent overly long delays between reconnection attempts.
-</span></td>
-</tr>
-
-
-              
-                <tr>
-  <td class='break-word'><span class='code bold'>connectivity.autoReconnect</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></code>
-  
-    (default <code>true</code>)
-  </td>
-  <td class='break-word'><span>Flag to determine whether the SDK will attempt to automatically reconnect after connectivity disruptions.
-</span></td>
-</tr>
-
-
-              
-                <tr>
-  <td class='break-word'><span class='code bold'>connectivity.checkConnectivity</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></code>
-  
-    (default <code>true</code>)
-  </td>
-  <td class='break-word'><span>Flag to determine whether the SDK should check connectivity.
-</span></td>
-</tr>
-
-
-              
-                <tr>
-  <td class='break-word'><span class='code bold'>connectivity.webSocketOAuthMode</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>
-  
-    (default <code>none</code>)
-  </td>
-  <td class='break-word'><span>When set to 'query', the OAuth bearer access token will be appended as a query string parameter to the websocket address.
-</span></td>
-</tr>
-
-
-              
-            </tbody>
-          </table>
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-</section>
-
-      </div>
-    </div>
-  
-    <div class='border-bottom' id='configconfignotifications'>
-      <div class="clearfix small pointer toggle-sibling">
-        <div class="py1 contain">
-            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>config.notifications</span>
-        </div>
-      </div>
-      <div class="clearfix display-none toggle-target">
-        <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-
-  <p>Configuration options for the notification feature.</p>
-
-
-  <div class='pre p1 fill-light mt0'>config.notifications</div>
-  
-  
-
-  
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>notifications</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
-	    The notifications configuration object.
-
-          </div>
-          
-          <table class='mt1 mb2 fixed-table h5 col-12'>
-            <colgroup>
-              <col width='30%' />
-              <col width='70%' />
-            </colgroup>
-            <thead>
-              <tr class='bold fill-light'>
-                <th>Name</th>
-                <th>Description</th>
-              </tr>
-            </thead>
-            <tbody class='mt1'>
-              
-                <tr>
-  <td class='break-word'><span class='code bold'>notifications.idCacheLength</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></code>
-  
-    (default <code>100</code>)
-  </td>
-  <td class='break-word'><span>Default amount of event ids to remember for de-duplication purposes.
-</span></td>
-</tr>
-
-
-              
-                <tr>
-  <td class='break-word'><span class='code bold'>notifications.incomingCallNotificationMode</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>
-  
-    (default <code>&#39;any-channel&#39;</code>)
-  </td>
-  <td class='break-word'><span>Communication channel mode used for incoming call notifications. Supported values are 'any-channel' or 'push-channel-only'.
-</span></td>
-</tr>
-
-
-              
-                <tr>
-  <td class='break-word'><span class='code bold'>notifications.pushRegistration</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>?</code>
-  </td>
-  <td class='break-word'><span>Object describing the server to use for push services.
-</span></td>
-</tr>
-
-  
-    <tr>
-  <td class='break-word'><span class='code bold'>notifications.pushRegistration.server</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>?</code>
-  </td>
-  <td class='break-word'><span>Hostname for the push registration server.
-</span></td>
-</tr>
-
-
-  
-    <tr>
-  <td class='break-word'><span class='code bold'>notifications.pushRegistration.port</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>?</code>
-  </td>
-  <td class='break-word'><span>Port for the push registration server.
-</span></td>
-</tr>
-
-
-  
-    <tr>
-  <td class='break-word'><span class='code bold'>notifications.pushRegistration.protocol</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>?</code>
-  </td>
-  <td class='break-word'><span>Protocol for the push registration server.
-</span></td>
-</tr>
-
-
-  
-    <tr>
-  <td class='break-word'><span class='code bold'>notifications.pushRegistration.version</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>?</code>
-  </td>
-  <td class='break-word'><span>Version for the push registration server.
-</span></td>
-</tr>
-
-
-  
 
 
               
@@ -2720,76 +2720,6 @@ client.on(<span class="hljs-string">&#x27;dummy:event&#x27;</span>, <span class=
       </div>
     </div>
   
-    <div class='border-bottom' id='apigetbrowserdetails'>
-      <div class="clearfix small pointer toggle-sibling">
-        <div class="py1 contain">
-            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>getBrowserDetails()</span>
-        </div>
-      </div>
-      <div class="clearfix display-none toggle-target">
-        <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-
-  <p>Retrieve information about the browser being used.</p>
-<p>Browser information being defined indicates that the browser supports
-basic webRTC scenarios.</p>
-
-
-  <div class='pre p1 fill-light mt0'>getBrowserDetails(): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></div>
-  
-  
-
-  
-  
-  
-  
-  
-  
-
-  
-
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Returns</div>
-    
-      <div>
-        <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></code>:
-          Object containing 
-<code>browser</code>
- and 
-<code>version</code>
- information.
-
-        
-      </div>
-    
-  
-
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Example</div>
-    
-      
-      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">const</span> details = client.getBrowserDetails()
-
-log(<span class="hljs-string">`Browser in use: <span class="hljs-subst">${details.browser}</span>, version <span class="hljs-subst">${details.version}</span>.`</span>)</pre>
-    
-  
-
-  
-
-  
-
-  
-</section>
-
-      </div>
-    </div>
-  
     <div class='border-bottom' id='apigetuserinfo'>
       <div class="clearfix small pointer toggle-sibling">
         <div class="py1 contain">
@@ -3186,6 +3116,76 @@ can be set again after subscription as long as the subscribed username is passed
   <span class="hljs-attr">username</span>: <span class="hljs-string">&#x27;alfred@example.com&#x27;</span>,
   <span class="hljs-attr">bearerAccessToken</span>: <span class="hljs-string">&#x27;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...&#x27;</span>
 });</pre>
+    
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
+    <div class='border-bottom' id='apigetbrowserdetails'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="py1 contain">
+            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
+            <span class='code strong strong truncate'>getBrowserDetails()</span>
+        </div>
+      </div>
+      <div class="clearfix display-none toggle-target">
+        <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+
+  <p>Retrieve information about the browser being used.</p>
+<p>Browser information being defined indicates that the browser supports
+basic webRTC scenarios.</p>
+
+
+  <div class='pre p1 fill-light mt0'>getBrowserDetails(): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Returns</div>
+    
+      <div>
+        <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></code>:
+          Object containing 
+<code>browser</code>
+ and 
+<code>version</code>
+ information.
+
+        
+      </div>
+    
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">const</span> details = client.getBrowserDetails()
+
+log(<span class="hljs-string">`Browser in use: <span class="hljs-subst">${details.browser}</span>, version <span class="hljs-subst">${details.version}</span>.`</span>)</pre>
     
   
 
@@ -6947,40 +6947,6 @@ added to the Call.</p>
 
   
 
-  
-    <div class='py1 quiet mt1 prose-big'>Throws</div>
-    <ul>
-      
-        <li>BasicError: Throws an error if mediaConstraints.medias is not an array.
-</li>
-      
-        <li>BasicError: Throws an error if mediaConstraints.medias Objects are missing 
-<code>media</code>
- and 
-<code>type</code>
- properties.
-</li>
-      
-        <li>BasicError: Throws an error if mediaConstraints contains duplicate media kinds.
-</li>
-      
-        <li>BasicError: Throws an error if any tracks in mediaConstraints.medias are not detached.
-</li>
-      
-        <li>BasicError: Throws an error if any tracks in mediaConstraints.medias are not local.
-</li>
-      
-        <li>BasicError: Throws an error if any tracks in mediaConstraints.medias are already in use by a session.
-</li>
-      
-        <li>BasicError: Throws an error if mediaConstraints.medias contains any type other than Object containing 
-<code>media</code>
- and 
-<code>type</code>
- properties.
-</li>
-      
-    </ul>
   
 
   
@@ -13337,7 +13303,7 @@ client.media.initializeDevices({ <span class="hljs-attr">audio</span>: <span cla
   <p>Get local media Tracks.</p>
 
 
-  <div class='pre p1 fill-light mt0'>getLocalMedia(): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a></div>
+  <div class='pre p1 fill-light mt0'>getLocalMedia(): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></div>
   
   
 
@@ -13356,8 +13322,8 @@ client.media.initializeDevices({ <span class="hljs-attr">audio</span>: <span cla
     <div class='py1 quiet mt1 prose-big'>Returns</div>
     
       <div>
-        <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a></code>:
-          Resolves with an array of objects containing both a media type and a media object.
+        <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></code>:
+          An array of objects containing both a media type and a media object.
 
         
       </div>
@@ -13372,7 +13338,7 @@ client.media.initializeDevices({ <span class="hljs-attr">audio</span>: <span cla
       
       <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">await</span> client.media.createLocalMedia({ <span class="hljs-attr">video</span>: <span class="hljs-literal">true</span> })
 <span class="hljs-comment">// Get all detached tracks</span>
-<span class="hljs-keyword">const</span> medias = <span class="hljs-keyword">await</span> client.media.getLocalMedia()</pre>
+<span class="hljs-keyword">const</span> medias = client.media.getLocalMedia()</pre>
     
   
 
@@ -13390,7 +13356,7 @@ client.media.initializeDevices({ <span class="hljs-attr">audio</span>: <span cla
       <div class="clearfix small pointer toggle-sibling">
         <div class="py1 contain">
             <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>disposeLocalMedia(trackId)</span>
+            <span class='code strong strong truncate'>disposeLocalMedia(localMedia)</span>
         </div>
       </div>
       <div class="clearfix display-none toggle-target">
@@ -13401,7 +13367,7 @@ client.media.initializeDevices({ <span class="hljs-attr">audio</span>: <span cla
   <p>Dispose local media Tracks.</p>
 
 
-  <div class='pre p1 fill-light mt0'>disposeLocalMedia(trackId: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&#x3C;<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</a>></div>
+  <div class='pre p1 fill-light mt0'>disposeLocalMedia(localMedia: (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a> | <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&#x3C;<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</a>></div>
   
   
 
@@ -13418,8 +13384,8 @@ client.media.initializeDevices({ <span class="hljs-attr">audio</span>: <span cla
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>trackId</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
-	    An id to a track to be cleaned up.
+            <span class='code bold'>localMedia</span> <code class='quiet'>((<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a> | <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>))</code>
+	    An object representing the local media to dispose or a string representing a trackId.
 
           </div>
           

@@ -83,61 +83,6 @@ Configuration options for the Authentication feature.
         *   `authentication.server.protocol` **[string][8]** Protocol to be used for requests. (optional, default `'https'`)
         *   `authentication.server.port` **[number][12]** Port to be used for requests. (optional, default `443`)
 
-### config.subscription
-
-Configuration options for the Subscription feature.
-
-#### Parameters
-
-*   `subscription` **[Object][7]** Subscription config.
-
-    *   `subscription.expires` **[number][12]** The amount of time (in seconds) for which to keep subscription up and alive. Cannot be less than minimum threshold of 60 seconds. (optional, default `3600`)
-    *   `subscription.serviceUnavailableMaxRetries` **[number][12]** The maximum number of times this client will retry in order to subscribe for a
-        given service, while getting 'Service Unavailable' from backend. (optional, default `3`)
-    *   `subscription.websocket` **[Object][7]** 
-
-        *   `subscription.websocket.server` **[string][8]** Hostname of the server to be used for websocket notifications.
-        *   `subscription.websocket.protocol` **[string][8]** Protocol to be used for websocket notifications. (optional, default `wss`)
-        *   `subscription.websocket.port` **[Number][12]** Port to be used for websocket notifications. (optional, default `443`)
-
-### config.call
-
-Configuration options for the call feature.
-
-#### Parameters
-
-*   `call` **[Object][7]** The call configuration object.
-
-    *   `call.defaultPeerConfig` **[call.RTCPeerConnectionConfig][13]?** A key-value dictionary that corresponds
-        to the available RTCPeerConfiguration which is normally passed when creating an RTCPeerConnection.
-        See [RTCPeerConnection's configuration parameters][14] for more information.
-        This is the recommended way of setting ICE servers and other RTCPeerConnection-related configuration.
-    *   `call.iceCollectionIdealTimeout` **[number][12]** The amount of time to wait for an ideal candidate in milliseconds.
-        The default is 1000ms. An ideal list of candidates is a complete list of candidates considering the RTCPeerConnection configuration.
-        Note that this values will not be considered if a custom function is passed through the `iceCollectionCheckFunction`, and
-        any timeouts must be handled by the custom function. (optional, default `1000`)
-    *   `call.iceCollectionMaxTimeout` **[number][12]** The maximum amount of time to wait for ICE collection in milliseconds.
-        The default is 3000ms. After this time has been reached, the call will proceed with the currently gathered candidates.
-        Note that this values will not be considered if a custom function is passed through the `iceCollectionCheckFunction`, and
-        any timeouts must be handled by the custom function. (optional, default `3000`)
-    *   `call.iceCollectionCheckFunction` **[Function][15]?** Override the default IceCollectionCheckFunction to manually decide when
-        to proceed with operations, error out, or wait for the appropriate states and candidates. The function will receive an object containing
-        the ice collection info. See [IceCollectionInfo][16] for more details. The function must return
-        a results object with details on how to proceed with the ICE collection check or operatiaon. See [IceCollectionResult][17]
-        object for details on the format of the return object. See [IceCollectionCheckFunction][18] for
-        more information on the form of the function, as well as information about the default IceCollectionCheckFunction that is used if nothing is provided.
-    *   `call.serverTurnCredentials` **[boolean][11]** Whether server-provided TURN credentials should be used. (optional, default `true`)
-    *   `call.sdpHandlers` **[Array][19]<[call.SdpHandlerFunction][20]>?** List of SDP handler functions to modify SDP. Advanced usage.
-    *   `call.earlyMedia` **[boolean][11]** Whether early media should be supported for calls. Not supported on Firefox. (optional, default `false`)
-    *   `call.resyncOnConnect` **[boolean][11]** Whether the SDK should re-sync all call states after connecting (requires WebRTC Gateway 4.7.1+). (optional, default `false`)
-    *   `call.mediaBrokerOnly` **[boolean][11]** Whether all Calls will be anchored on the MediaBroker instead of being peer-to-peer. Set to true if the backend is configured for broker only mode. (optional, default `false`)
-    *   `call.removeBundling` **[boolean][11]** Whether to remove a=group attributes to stop media bundling from incoming and outgoing SDP messages. (optional, default `false`)
-    *   `call.ringingFeedbackMode` **[string][8]** The mode for sending ringing feedback to the Caller ('auto', 'manual').
-        By default, feedback will be automatically sent when a call has been received. In 'manual' mode, the application
-        must initiate the feedback being sent. See the `call.sendRingingFeedback` API for more info. (optional, default `'auto'`)
-    *   `call.callAuditTimer` **[number][12]** Time interval, in milliseconds between call audits. (optional, default `25000`)
-    *   `call.mediaConnectionRetryDelay` **[number][12]** Delay, in milliseconds for the passive side of a call to wait before trying a media reconnection. (optional, default `3000`)
-
 ### config.connectivity
 
 Configuration options for the Connectivity feature.
@@ -145,7 +90,7 @@ The SDK can only use keepalive as the connectivity check.
 
 Keep Alive: The client sends "keepalive" messages (to the server) on the websocket at regular intervals. This lets the server know that the client is still connected, and that it should "keep the connection alive".
 
-For more information on keepalive see here: [https://en.wikipedia.org/wiki/Keepalive][21]
+For more information on keepalive see here: [https://en.wikipedia.org/wiki/Keepalive][13]
 
 #### Parameters
 
@@ -176,6 +121,61 @@ Configuration options for the notification feature.
         *   `notifications.pushRegistration.port` **[string][8]?** Port for the push registration server.
         *   `notifications.pushRegistration.protocol` **[string][8]?** Protocol for the push registration server.
         *   `notifications.pushRegistration.version` **[string][8]?** Version for the push registration server.
+
+### config.subscription
+
+Configuration options for the Subscription feature.
+
+#### Parameters
+
+*   `subscription` **[Object][7]** Subscription config.
+
+    *   `subscription.expires` **[number][12]** The amount of time (in seconds) for which to keep subscription up and alive. Cannot be less than minimum threshold of 60 seconds. (optional, default `3600`)
+    *   `subscription.serviceUnavailableMaxRetries` **[number][12]** The maximum number of times this client will retry in order to subscribe for a
+        given service, while getting 'Service Unavailable' from backend. (optional, default `3`)
+    *   `subscription.websocket` **[Object][7]** 
+
+        *   `subscription.websocket.server` **[string][8]** Hostname of the server to be used for websocket notifications.
+        *   `subscription.websocket.protocol` **[string][8]** Protocol to be used for websocket notifications. (optional, default `wss`)
+        *   `subscription.websocket.port` **[Number][12]** Port to be used for websocket notifications. (optional, default `443`)
+
+### config.call
+
+Configuration options for the call feature.
+
+#### Parameters
+
+*   `call` **[Object][7]** The call configuration object.
+
+    *   `call.defaultPeerConfig` **[call.RTCPeerConnectionConfig][14]?** A key-value dictionary that corresponds
+        to the available RTCPeerConfiguration which is normally passed when creating an RTCPeerConnection.
+        See [RTCPeerConnection's configuration parameters][15] for more information.
+        This is the recommended way of setting ICE servers and other RTCPeerConnection-related configuration.
+    *   `call.iceCollectionIdealTimeout` **[number][12]** The amount of time to wait for an ideal candidate in milliseconds.
+        The default is 1000ms. An ideal list of candidates is a complete list of candidates considering the RTCPeerConnection configuration.
+        Note that this values will not be considered if a custom function is passed through the `iceCollectionCheckFunction`, and
+        any timeouts must be handled by the custom function. (optional, default `1000`)
+    *   `call.iceCollectionMaxTimeout` **[number][12]** The maximum amount of time to wait for ICE collection in milliseconds.
+        The default is 3000ms. After this time has been reached, the call will proceed with the currently gathered candidates.
+        Note that this values will not be considered if a custom function is passed through the `iceCollectionCheckFunction`, and
+        any timeouts must be handled by the custom function. (optional, default `3000`)
+    *   `call.iceCollectionCheckFunction` **[Function][16]?** Override the default IceCollectionCheckFunction to manually decide when
+        to proceed with operations, error out, or wait for the appropriate states and candidates. The function will receive an object containing
+        the ice collection info. See [IceCollectionInfo][17] for more details. The function must return
+        a results object with details on how to proceed with the ICE collection check or operatiaon. See [IceCollectionResult][18]
+        object for details on the format of the return object. See [IceCollectionCheckFunction][19] for
+        more information on the form of the function, as well as information about the default IceCollectionCheckFunction that is used if nothing is provided.
+    *   `call.serverTurnCredentials` **[boolean][11]** Whether server-provided TURN credentials should be used. (optional, default `true`)
+    *   `call.sdpHandlers` **[Array][20]<[call.SdpHandlerFunction][21]>?** List of SDP handler functions to modify SDP. Advanced usage.
+    *   `call.earlyMedia` **[boolean][11]** Whether early media should be supported for calls. Not supported on Firefox. (optional, default `false`)
+    *   `call.resyncOnConnect` **[boolean][11]** Whether the SDK should re-sync all call states after connecting (requires WebRTC Gateway 4.7.1+). (optional, default `false`)
+    *   `call.mediaBrokerOnly` **[boolean][11]** Whether all Calls will be anchored on the MediaBroker instead of being peer-to-peer. Set to true if the backend is configured for broker only mode. (optional, default `false`)
+    *   `call.removeBundling` **[boolean][11]** Whether to remove a=group attributes to stop media bundling from incoming and outgoing SDP messages. (optional, default `false`)
+    *   `call.ringingFeedbackMode` **[string][8]** The mode for sending ringing feedback to the Caller ('auto', 'manual').
+        By default, feedback will be automatically sent when a call has been received. In 'manual' mode, the application
+        must initiate the feedback being sent. See the `call.sendRingingFeedback` API for more info. (optional, default `'auto'`)
+    *   `call.callAuditTimer` **[number][12]** Time interval, in milliseconds between call audits. (optional, default `25000`)
+    *   `call.mediaConnectionRetryDelay` **[number][12]** Delay, in milliseconds for the passive side of a call to wait before trying a media reconnection. (optional, default `3000`)
 
 ## api
 
@@ -265,7 +265,7 @@ Add an event listener for the specified event type. The event is emitted by the 
 #### Parameters
 
 *   `type` **[string][8]** The event type for which to add the listener.
-*   `listener` **[Function][15]** The listener for the event type. The parameters of the listener depend on the event type.
+*   `listener` **[Function][16]** The listener for the event type. The parameters of the listener depend on the event type.
 
 #### Examples
 
@@ -283,7 +283,7 @@ Removes an event listener for the specified event type. The event is emitted by 
 #### Parameters
 
 *   `type` **[string][8]** The event type for which to remote the listener.
-*   `listener` **[Function][15]** The listener to remove.
+*   `listener` **[Function][16]** The listener to remove.
 
 ### subscribe
 
@@ -291,7 +291,7 @@ Adds a global event listener to SDK instance.
 
 #### Parameters
 
-*   `listener` **[Function][15]** The event listener to add. The parameters are (type, ...args), where args depend on the event type.
+*   `listener` **[Function][16]** The event listener to add. The parameters are (type, ...args), where args depend on the event type.
 
 ### unsubscribe
 
@@ -299,35 +299,7 @@ Removes a global event listener from SDK instance.
 
 #### Parameters
 
-*   `listener` **[Function][15]** The event listener to remove.
-
-### getBrowserDetails
-
-Retrieve information about the browser being used.
-
-Browser information being defined indicates that the browser supports
-basic webRTC scenarios.
-
-#### Examples
-
-```javascript
-const details = client.getBrowserDetails()
-
-log(`Browser in use: ${details.browser}, version ${details.version}.`)
-```
-
-Returns **[Object][7]** Object containing `browser` and `version` information.
-
-### BasicError
-
-The Basic Error object. Provides information about an error that occurred in the SDK.
-
-Type: [Object][7]
-
-#### Properties
-
-*   `code` **[string][8]** The code of the error. If no code is known, this will be 'NO_CODE'.
-*   `message` **[string][8]** A human-readable message to describe the error. If no message is known, this will be 'An error occurred'.
+*   `listener` **[Function][16]** The event listener to remove.
 
 ### getUserInfo
 
@@ -421,6 +393,34 @@ client.setCredentials({
 });
 ```
 
+### getBrowserDetails
+
+Retrieve information about the browser being used.
+
+Browser information being defined indicates that the browser supports
+basic webRTC scenarios.
+
+#### Examples
+
+```javascript
+const details = client.getBrowserDetails()
+
+log(`Browser in use: ${details.browser}, version ${details.version}.`)
+```
+
+Returns **[Object][7]** Object containing `browser` and `version` information.
+
+### BasicError
+
+The Basic Error object. Provides information about an error that occurred in the SDK.
+
+Type: [Object][7]
+
+#### Properties
+
+*   `code` **[string][8]** The code of the error. If no code is known, this will be 'NO_CODE'.
+*   `message` **[string][8]** A human-readable message to describe the error. If no message is known, this will be 'An error occurred'.
+
 ### auth:change
 
 The authentication credentials have been set. You can check the set user details with the `getUserInfo` API.
@@ -492,7 +492,7 @@ Starts an outgoing call as an anonymous user.
         *   `callOptions.videoOptions.height` **[call.MediaConstraint][27]?** The height of the video.
         *   `callOptions.videoOptions.width` **[call.MediaConstraint][27]?** The width of the video.
         *   `callOptions.videoOptions.frameRate` **[call.MediaConstraint][27]?** The frame rate of the video.
-    *   `callOptions.medias` **[Array][19]?** List of medias containing tracks to be attached to this call.
+    *   `callOptions.medias` **[Array][20]?** List of medias containing tracks to be attached to this call.
     *   `callOptions.screen` **[Boolean][11]** Whether the call should have screenshare on start. (optional, default `false`)
     *   `callOptions.screenOptions` **[Object][7]?** Options for configuring the call's screenShare.
 
@@ -500,7 +500,7 @@ Starts an outgoing call as an anonymous user.
         *   `callOptions.screenOptions.width` **[call.MediaConstraint][27]?** The width of the screenShare.
         *   `callOptions.screenOptions.frameRate` **[call.MediaConstraint][27]?** The frame rate of the screenShare.
     *   `callOptions.displayName` **[string][8]?** Custom display name to be provided to the destination. Only used with token-less anonymous calls. Not supported in all environments and may use default display name.
-    *   `callOptions.customParameters` **[Array][19]<[call.CustomParameter][29]>?** Custom SIP header parameters for the SIP backend.
+    *   `callOptions.customParameters` **[Array][20]<[call.CustomParameter][29]>?** Custom SIP header parameters for the SIP backend.
 
 #### Examples
 
@@ -558,18 +558,18 @@ Type: [Object][7]
 *   `mediaConnectionState` **[string][8]** The current status of the call's media connection. See [call.mediaConnectionStates][33] for possible states.
 *   `localHold` **[boolean][11]** Indicates whether this call is currently being held locally.
 *   `remoteHold` **[boolean][11]** Indicates whether this call is currently being held remotely.
-*   `localTracks` **[Array][19]<[string][8]>** A list of Track IDs that the call is sending to the remote participant.
-*   `remoteTracks` **[Array][19]<[string][8]>** A list of Track IDs that the call is receiving from the remote participant.
+*   `localTracks` **[Array][20]<[string][8]>** A list of Track IDs that the call is sending to the remote participant.
+*   `remoteTracks` **[Array][20]<[string][8]>** A list of Track IDs that the call is receiving from the remote participant.
 *   `mediaOffered` **[call.MediaOffered][34]?** Information about what media was offered by the person who made the call.
 *   `remoteParticipant` **[Object][7]** Information about the other call participant.
 
     *   `remoteParticipant.displayNumber` **[string][8]?** The User ID of the remote participant in the form "username@domain".
     *   `remoteParticipant.displayName` **[string][8]?** The display name of the remote participant.
 *   `bandwidth` **[call.BandwidthControls][28]** The bandwidth limitations set for the call.
-*   `customParameters` **[Array][19]<[call.CustomParameter][29]>** The locally set Custom Parameters for the call.
+*   `customParameters` **[Array][20]<[call.CustomParameter][29]>** The locally set Custom Parameters for the call.
 *   `startTime` **[number][12]** The start time of the call in milliseconds since the epoch.
 *   `endTime` **[number][12]?** The end time of the call in milliseconds since the epoch.
-*   `currentOperations` **[Array][19]<[Object][7]>** The list of operations curently on-going for the call.
+*   `currentOperations` **[Array][20]<[Object][7]>** The list of operations curently on-going for the call.
 
 ### MediaConstraint
 
@@ -740,13 +740,13 @@ Type: [Object][7]
 ### RTCPeerConnectionConfig
 
 Configuration options for an RTCPeerConnection.
-It represents an RTCPeerConfiguration dictionary, whose parameters are documented [here][14].
+It represents an RTCPeerConfiguration dictionary, whose parameters are documented [here][15].
 
 Type: [Object][7]
 
 #### Parameters
 
-*   `iceServers` **[Array][19]\<RTCIceServer>?** The list of ICE servers to be used for calls.
+*   `iceServers` **[Array][20]\<RTCIceServer>?** The list of ICE servers to be used for calls.
     The full set of properties defined for an RTCIceServer, are mentioned
     [here][36].
 *   `sdpSemantics` **[string][8]** The sdpSemantics to use (`'unified-plan'` or `'plan-b'`).
@@ -756,7 +756,7 @@ Type: [Object][7]
 *   `iceTransportPolicy` **[string][8]?** The current ICE transport policy; if the policy isn't specified,
     'all' is assumed by default. Possible values are: 'all', 'public', 'relay'.
 *   `bundlePolicy` **[string][8]?** For further description on this and other properties,
-    see [RTCPeerConnection's configuration parameters][14].
+    see [RTCPeerConnection's configuration parameters][15].
 
 ### IceServer
 
@@ -764,7 +764,7 @@ Type: [Object][7]
 
 #### Properties
 
-*   `urls` **([Array][19]<[string][8]> | [string][8])** Either an array of URLs for reaching out several ICE servers or a single URL for reaching one ICE server. See [RTCIceServers.urls documentation][37] to learn more about the actual url format.
+*   `urls` **([Array][20]<[string][8]> | [string][8])** Either an array of URLs for reaching out several ICE servers or a single URL for reaching one ICE server. See [RTCIceServers.urls documentation][37] to learn more about the actual url format.
     Starting with Chromium 110, TURN(S) urls must only contain a transport
     parameter in the query section and STUN urls must not specify any query section.
 *   `credential` **[string][8]?** The credential needed by the ICE server.
@@ -772,7 +772,7 @@ Type: [Object][7]
 
 ### IceCollectionInfo
 
-This object is provided to the [IceCollectionCheckFunction][18], and contains the
+This object is provided to the [IceCollectionCheckFunction][19], and contains the
 necessary information about the call (i.e., call ID, current call operation), and information about the ongoing ICE collection,
 such as the list of all ICE candidates collected so far and the ICE gathering state.
 
@@ -785,8 +785,8 @@ Type: [Object][7]
 *   `reason` **[string][8]** The reason the check function was called. Three possible values:
     'NewCandidate' - A new ICE candidate was collected. Note: there may be multiple new ICE candidates collected.
     'IceGatheringStateChanged' - The ICE gathering state changed.
-    'Scheduled' - A scheduled call (for first invocation, and subsequent invocations based on `wait` value returned by [IceCollectionCheckFunction][18].)
-*   `iceCandidates` **[Array][19]\<RTCIceCandidate>** An array of all ICE candidates collected so far.
+    'Scheduled' - A scheduled call (for first invocation, and subsequent invocations based on `wait` value returned by [IceCollectionCheckFunction][19].)
+*   `iceCandidates` **[Array][20]\<RTCIceCandidate>** An array of all ICE candidates collected so far.
 *   `iceCollectionDuration` **[number][12]** The time elapsed since the start of the ICE collection process.
 *   `iceGatheringState` **[string][8]** The current ICE gathering state.
     See [RTCPeerConnection.iceGatheringState][38].
@@ -798,12 +798,12 @@ Type: [Object][7]
 The form of the ICE collection check function, the arguments that it receives, and the outputs expected.
 
 This function is provided the necessary details of the current WebRTC session and ICE collection
-([IceCollectionInfo][16]), which it can use to dictate how to proceed with a call.
+([IceCollectionInfo][17]), which it can use to dictate how to proceed with a call.
 The function can be invoked for three different reasons:
 a new ICE candidate was collected, the ICE gathering state changed, or a scheduled call based on the `wait` time set after
 an initial invocation of the function.
 
-The function must then return an appropriate result object in the format of [IceCollectionCheckResult][17]
+The function must then return an appropriate result object in the format of [IceCollectionCheckResult][18]
 which will dictate how the call will proceed. An incorrect return object, or result `type`, will cause the call to end with an error.
 
 \[Default]
@@ -825,7 +825,7 @@ The default IceCollectionCheckFunction uses the following algorithm to determine
 The ideal and max timeouts can be configured with the `idealIceCollectionTimeout` and `maxIceCollectionTimeout` properties of
 the call config.
 
-Type: [Function][15]
+Type: [Function][16]
 
 #### Parameters
 
@@ -894,7 +894,7 @@ Type: [Object][7]
 
 The form of an SDP handler function and the expected arguments that it receives.
 
-Type: [Function][15]
+Type: [Function][16]
 
 #### Parameters
 
@@ -916,7 +916,7 @@ Type: [Object][7]
 *   `id` **[string][8]** The ID of the Media object.
 *   `local` **[boolean][11]** Indicator on whether this media is local or remote.
 *   `detached` **[boolean][11]** Indicator on whether this media contains detached tracks.
-*   `tracks` **[Array][19]<[call.TrackObject][43]>** A list of Track objects that are contained in this Media object.
+*   `tracks` **[Array][20]<[call.TrackObject][43]>** A list of Track objects that are contained in this Media object.
 
 ### TrackObject
 
@@ -927,7 +927,7 @@ Type: [Object][7]
 
 #### Properties
 
-*   `containers` **[Array][19]<[string][8]>** The list of CSS selectors that were used to render this Track.
+*   `containers` **[Array][20]<[string][8]>** The list of CSS selectors that were used to render this Track.
 *   `disabled` **[boolean][11]** Indicator of whether this Track is disabled or not. If disabled, it cannot be re-enabled.
 *   `isLocal` **[boolean][11]** Indicator of whether this Track is a locally created one or is a remote one.
 *   `id` **[string][8]** The ID of the Track.
@@ -949,9 +949,9 @@ Type: [Object][7]
 
 #### Properties
 
-*   `camera` **[Array][19]<[call.DeviceInfo][44]>** A list of camera device information.
-*   `microphone` **[Array][19]<[call.DeviceInfo][44]>** A list of microphone device information.
-*   `speaker` **[Array][19]<[call.DeviceInfo][44]>** A list of speaker device information.
+*   `camera` **[Array][20]<[call.DeviceInfo][44]>** A list of camera device information.
+*   `microphone` **[Array][20]<[call.DeviceInfo][44]>** A list of microphone device information.
+*   `speaker` **[Array][20]<[call.DeviceInfo][44]>** A list of speaker device information.
 
 ### DeviceInfo
 
@@ -1095,7 +1095,7 @@ added to the Call.
     *   `media.audio` **[boolean][11]** Whether to add audio to the call. (optional, default `false`)
     *   `media.video` **[boolean][11]** Whether to add video to the call. (optional, default `false`)
     *   `media.screen` **[boolean][11]** Whether to add the screenshare to the call. (Note: Screensharing is not supported on iOS Safari.) (optional, default `false`)
-    *   `media.medias` **[Array][19]?** List of medias containing tracks to be attached to this call.
+    *   `media.medias` **[Array][20]?** List of medias containing tracks to be attached to this call.
     *   `media.audioOptions` **[call.AudioOptions][56]?** Options for configuring the call's audio.
     *   `media.videoOptions` **[call.VideoOptions][57]?** Options for configuring the call's video.
     *   `media.screenOptions` **[call.ScreenOptions][58]?** Options for configuring the call's screenShare.
@@ -1103,16 +1103,6 @@ added to the Call.
 
     *   `options.bandwidth` **[call.BandwidthControls][28]?** Options for configuring media's bandwidth.
     *   `options.dscpControls` **[call.DSCPControls][59]?** Options for configuring DSCP markings on the media traffic
-
-<!---->
-
-*   Throws **BasicError** Throws an error if mediaConstraints.medias is not an array.
-*   Throws **BasicError** Throws an error if mediaConstraints.medias Objects are missing `media` and `type` properties.
-*   Throws **BasicError** Throws an error if mediaConstraints contains duplicate media kinds.
-*   Throws **BasicError** Throws an error if any tracks in mediaConstraints.medias are not detached.
-*   Throws **BasicError** Throws an error if any tracks in mediaConstraints.medias are not local.
-*   Throws **BasicError** Throws an error if any tracks in mediaConstraints.medias are already in use by a session.
-*   Throws **BasicError** Throws an error if mediaConstraints.medias contains any type other than Object containing `media` and `type` properties.
 
 ### removeMedia
 
@@ -1128,7 +1118,7 @@ has been removed.
 #### Parameters
 
 *   `callId` **[string][8]** The ID of the call to remove media from.
-*   `tracks` **[Array][19]** A list of track IDs to remove.
+*   `tracks` **[Array][20]** A list of track IDs to remove.
 *   `options` **[Object][7]?**  (optional, default `{}`)
 
     *   `options.bandwidth` **[call.BandwidthControls][28]?** Options for configuring media's bandwidth.
@@ -1212,7 +1202,7 @@ seamlessly for the remote application, which will not receive an event.
     *   `media.videoOptions` **[call.VideoOptions][57]?** Options for configuring the video track.
     *   `media.screen` **[boolean][11]** Whether to create a screen share track. (optional, default `false`)
     *   `media.screenOptions` **[call.ScreenOptions][58]?** Options for configuring the call's screenShare.
-    *   `media.medias` **[Array][19]?** List of medias containing tracks to be attached to this call.
+    *   `media.medias` **[Array][20]?** List of medias containing tracks to be attached to this call.
 
 #### Examples
 
@@ -1374,7 +1364,7 @@ let currentCalls = calls.filter(call => {
 })
 ```
 
-Returns **[Array][19]<[call.CallObject][73]>** Call objects.
+Returns **[Array][20]<[call.CallObject][73]>** Call objects.
 
 ### getById
 
@@ -1406,7 +1396,7 @@ Subsequent call operations will no longer send custom parameters.
 #### Parameters
 
 *   `callId` **[string][8]** The ID of the call.
-*   `customParameters` **[Array][19]<[call.CustomParameter][29]>** The custom parameters to set.
+*   `customParameters` **[Array][20]<[call.CustomParameter][29]>** The custom parameters to set.
 
 ### sendCustomParameters
 
@@ -1569,7 +1559,7 @@ unexpected behaviour in future call operations for that call.
 
 #### Parameters
 
-*   `sdpHandlers` **[Array][19]<[call.SdpHandlerFunction][20]>** The list of SDP handler functions to modify SDP.
+*   `sdpHandlers` **[Array][20]<[call.SdpHandlerFunction][21]>** The list of SDP handler functions to modify SDP.
 
 Returns **[undefined][83]** 
 
@@ -1960,7 +1950,7 @@ New media has been added to the call.
 
     *   `params.callId` **[string][8]** The ID of the call.
     *   `params.local` **[boolean][11]** Whether the new media is local or not.
-    *   `params.tracks` **[Array][19]** The list of new Tracks.
+    *   `params.tracks` **[Array][20]** The list of new Tracks.
     *   `params.mediaId` **[string][8]** The ID of the Media object the Tracks belong to.
 
 ### call:removedMedia
@@ -1973,7 +1963,7 @@ Media has been removed from the call.
 
     *   `params.callId` **[string][8]** The ID of the call.
     *   `params.local` **[boolean][11]** Whether the removed Media was local or not.
-    *   `params.tracks` **[Array][19]** The list of removed Tracks.
+    *   `params.tracks` **[Array][20]** The list of removed Tracks.
 
 ### call:tracksAdded
 
@@ -2000,7 +1990,7 @@ Information about a Track can be retrieved using the [media.getTrackById][87] AP
 *   `params` **[Object][7]** 
 
     *   `params.callId` **[string][8]** The ID of the Call the tracks were added to.
-    *   `params.trackIds` **[Array][19]<[string][8]>** List of track IDs that have been added to the Call.
+    *   `params.trackIds` **[Array][20]<[string][8]>** List of track IDs that have been added to the Call.
 
 #### Examples
 
@@ -2038,7 +2028,7 @@ Information about a Track can be retrieved using the [media.getTrackById][87] AP
 *   `params` **[Object][7]** 
 
     *   `params.callId` **[string][8]** The ID of the Call the tracks were removed from.
-    *   `params.trackIds` **[Array][19]<[string][8]>** List of track IDs that have been removed from the Call.
+    *   `params.trackIds` **[Array][20]<[string][8]>** List of track IDs that have been removed from the Call.
 
 #### Examples
 
@@ -2136,7 +2126,7 @@ information.
 *   `params` **[Object][7]** 
 
     *   `params.kind` **[string][8]** The kind of media the codecs are for.
-    *   `params.codecs` **[Array][19]<[Object][7]>** The list of codecs.
+    *   `params.codecs` **[Array][20]<[Object][7]>** The list of codecs.
 
 #### Examples
 
@@ -2363,7 +2353,7 @@ Type: [Object][7]
     *   `target.id` **[string][8]?** A unique identifier for the target.
     *   `target.name` **[string][8]** A combination of the target type and ID. If no
         id was provided, this will be the same as the type.
-*   `messages` **[Array][19]** The logged information, given to the Logger
+*   `messages` **[Array][20]** The logged information, given to the Logger
     method as parameters.
 *   `timer` **[Object][7]?** Timing data, if the log method was a timer method.
 
@@ -2399,7 +2389,7 @@ A LogHandler can be provided to the SDK as part of its configuration (see
 [config.logs][95]). The SDK will then provide this
 function with the logged information.
 
-Type: [Function][15]
+Type: [Function][16]
 
 #### Parameters
 
@@ -2566,10 +2556,10 @@ Get local media Tracks.
 ```javascript
 await client.media.createLocalMedia({ video: true })
 // Get all detached tracks
-const medias = await client.media.getLocalMedia()
+const medias = client.media.getLocalMedia()
 ```
 
-Returns **[Promise][72]** Resolves with an array of objects containing both a media type and a media object.
+Returns **[Array][20]** An array of objects containing both a media type and a media object.
 
 ### disposeLocalMedia
 
@@ -2577,7 +2567,7 @@ Dispose local media Tracks.
 
 #### Parameters
 
-*   `trackId` **[string][8]** An id to a track to be cleaned up.
+*   `localMedia` **([Object][7] | [string][8])** An object representing the local media to dispose or a string representing a trackId.
 
 <!---->
 
@@ -2596,7 +2586,7 @@ corresponds to the HTMLElement to act as the container.
 
 #### Parameters
 
-*   `trackIds` **[Array][19]<[string][8]>** List of Track IDs to be rendered.
+*   `trackIds` **[Array][20]<[string][8]>** List of Track IDs to be rendered.
 *   `cssSelector` **[string][8]** A CSS selector string that uniquely
     identifies an element. Ensure that special characters are properly
     escaped.
@@ -2628,7 +2618,7 @@ corresponds to the HTMLElement to act as the container.
 
 #### Parameters
 
-*   `trackIds` **[Array][19]<[string][8]>** List of Track IDs to stop being rendered.
+*   `trackIds` **[Array][20]<[string][8]>** List of Track IDs to stop being rendered.
 *   `cssSelector` **[string][8]** A CSS selector string that uniquely
     identifies an element. Ensure that special characters are properly
     escaped.
@@ -2654,7 +2644,7 @@ when a Track has been muted.
 
 #### Parameters
 
-*   `trackIds` **[Array][19]<[string][8]>** List of Track IDs.
+*   `trackIds` **[Array][20]<[string][8]>** List of Track IDs.
 
 ### unmuteTracks
 
@@ -2669,7 +2659,7 @@ when a Track has been unmuted.
 
 #### Parameters
 
-*   `trackIds` **[Array][19]<[string][8]>** List of Track IDs.
+*   `trackIds` **[Array][20]<[string][8]>** List of Track IDs.
 
 ### devices:change
 
@@ -2713,7 +2703,7 @@ A Track can be muted using the [media.muteTracks][67] API.
 
 *   `params` **[Object][7]** 
 
-    *   `params.tracks` **[Array][19]<[string][8]>** The list of Tracks that were muted.
+    *   `params.tracks` **[Array][20]<[string][8]>** The list of Tracks that were muted.
 
 ### media:unmuted
 
@@ -2726,7 +2716,7 @@ API.
 
 *   `params` **[Object][7]** 
 
-    *   `params.tracks` **[Array][19]<[string][8]>** The list of Tracks that were unmuted.
+    *   `params.tracks` **[Array][20]<[string][8]>** The list of Tracks that were unmuted.
 
 ### media:sourceMuted
 
@@ -2773,7 +2763,7 @@ The specified Track has been rendered into an element.
 
 *   `params` **[Object][7]** 
 
-    *   `params.trackIds` **[Array][19]<[string][8]>** The list of track id's that were rendered.
+    *   `params.trackIds` **[Array][20]<[string][8]>** The list of track id's that were rendered.
     *   `params.selector` **[string][8]** The css selector used to identify the element the track is rendered into.
     *   `params.error` **[api.BasicError][25]?** An error object, if the operation was not successful.
 
@@ -2912,7 +2902,7 @@ Type: [Object][7]
 #### Properties
 
 *   `name` **[string][8]** The name of the codec.
-*   `fmtpParams` **[Array][19]<[string][8]>** An array of strings to match against the "a=fmtp" format parameters for the corresponding codec.
+*   `fmtpParams` **[Array][20]<[string][8]>** An array of strings to match against the "a=fmtp" format parameters for the corresponding codec.
     All of the elements in the array must be contained in the "a=fmtp" attribute in order to be a match.
 
 ### createCodecRemover
@@ -2930,7 +2920,7 @@ for their application.
 
 #### Parameters
 
-*   `codecs` **([Array][19]\<CodecSelector> | [Array][19]<[string][8]>)** A list of codec selectors to remove from the SDP. If passing a list of strings, they will be converted into
+*   `codecs` **([Array][20]\<CodecSelector> | [Array][20]<[string][8]>)** A list of codec selectors to remove from the SDP. If passing a list of strings, they will be converted into
     codec selectors that correspond to those names without any extra FMTP parameters.
 
 #### Examples
@@ -2957,7 +2947,7 @@ const client = create({
 })
 ```
 
-Returns **[call.SdpHandlerFunction][20]** The resulting SDP handler that will remove the codec.
+Returns **[call.SdpHandlerFunction][21]** The resulting SDP handler that will remove the codec.
 
 ## services
 
@@ -3042,7 +3032,7 @@ Upon getting such event, existing subscriptions can be retrieved using the
 
 #### Parameters
 
-*   `services` **[Array][19]<([string][8] | [services.ServiceDescriptor][118])>** A list of service configurations.
+*   `services` **[Array][20]<([string][8] | [services.ServiceDescriptor][118])>** A list of service configurations.
 *   `options` **[Object][7]?** The options object for non-credential options.
 
     *   `options.type` **[string][8]** The method of how to receive service updates. (optional, default `'websocket'`)
@@ -3069,7 +3059,7 @@ services that can be unsubscribed from.
 
 #### Parameters
 
-*   `services` **[Array][19]<[string][8]>** A list of subscribed service names.
+*   `services` **[Array][20]<[string][8]>** A list of subscribed service names.
 *   `type` **[string][8]** The method of how the service updates
     are being received. (optional, default `'websocket'`)
 
@@ -3217,23 +3207,23 @@ session expires.
 
 [12]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number
 
-[13]: #callrtcpeerconnectionconfig
+[13]: https://en.wikipedia.org/wiki/Keepalive
 
-[14]: https://developer.mozilla.org/en-US/docs/Web/API/RTCPeerConnection/RTCPeerConnection#parameters
+[14]: #callrtcpeerconnectionconfig
 
-[15]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function
+[15]: https://developer.mozilla.org/en-US/docs/Web/API/RTCPeerConnection/RTCPeerConnection#parameters
 
-[16]: #callicecollectioninfo
+[16]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function
 
-[17]: #callicecollectioncheckresult
+[17]: #callicecollectioninfo
 
-[18]: #callicecollectioncheckfunction
+[18]: #callicecollectioncheckresult
 
-[19]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
+[19]: #callicecollectioncheckfunction
 
-[20]: #callsdphandlerfunction
+[20]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
 
-[21]: https://en.wikipedia.org/wiki/Keepalive
+[21]: #callsdphandlerfunction
 
 [22]: #apigetconfig
 

@@ -1097,6 +1097,874 @@
                 "children": [
                   {
                     "type": "text",
+                    "value": "Configuration options for the Connectivity feature.\nThe SDK can only use keepalive as the connectivity check."
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "type": "text",
+                    "value": "Keep Alive: The client sends \"keepalive\" messages (to the server) on the websocket at regular intervals. This lets the server know that the client is still connected, and that it should \"keep the connection alive\"."
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "type": "text",
+                    "value": "For more information on keepalive see here: "
+                  },
+                  {
+                    "type": "link",
+                    "title": null,
+                    "url": "https://en.wikipedia.org/wiki/Keepalive",
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "https://en.wikipedia.org/wiki/Keepalive"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          "tags": [
+            {
+              "title": "public",
+              "description": null,
+              "lineNumber": 7,
+              "type": null
+            },
+            {
+              "title": "name",
+              "description": null,
+              "lineNumber": 8,
+              "name": "config.connectivity"
+            },
+            {
+              "title": "memberof",
+              "description": "config",
+              "lineNumber": 9
+            },
+            {
+              "title": "instance",
+              "description": null,
+              "lineNumber": 10
+            },
+            {
+              "title": "param",
+              "description": "Connectivity configs.",
+              "lineNumber": 11,
+              "type": {
+                "type": "NameExpression",
+                "name": "Object"
+              },
+              "name": "connectivity"
+            },
+            {
+              "title": "param",
+              "description": "Time in between websocket ping attempts (milliseconds).",
+              "lineNumber": 12,
+              "type": {
+                "type": "OptionalType",
+                "expression": {
+                  "type": "NameExpression",
+                  "name": "Number"
+                }
+              },
+              "name": "connectivity.pingInterval",
+              "default": "30000"
+            },
+            {
+              "title": "param",
+              "description": "Number of failed reconnect attempts before reporting an error. Can be set to 0 to not limit reconnection attempts.",
+              "lineNumber": 13,
+              "type": {
+                "type": "OptionalType",
+                "expression": {
+                  "type": "NameExpression",
+                  "name": "Number"
+                }
+              },
+              "name": "connectivity.reconnectLimit",
+              "default": "5"
+            },
+            {
+              "title": "param",
+              "description": "Base time between websocket reconnect attempts (milliseconds).",
+              "lineNumber": 14,
+              "type": {
+                "type": "OptionalType",
+                "expression": {
+                  "type": "NameExpression",
+                  "name": "Number"
+                }
+              },
+              "name": "connectivity.reconnectDelay",
+              "default": "5000"
+            },
+            {
+              "title": "param",
+              "description": "Reconnect delay multiplier for subsequent attempts. The reconnect delay time will be multiplied by this after each failed reconnect attempt to increase the delay between attempts. eg. 5000ms then 10000ms then 20000ms delay if value is 2.",
+              "lineNumber": 15,
+              "type": {
+                "type": "OptionalType",
+                "expression": {
+                  "type": "NameExpression",
+                  "name": "Number"
+                }
+              },
+              "name": "connectivity.reconnectTimeMultiplier",
+              "default": "1"
+            },
+            {
+              "title": "param",
+              "description": "Maximum time delay between reconnect attempts (milliseconds). Used in conjunction with the reconnect time multiplier to prevent overly long delays between reconnection attempts.",
+              "lineNumber": 16,
+              "type": {
+                "type": "OptionalType",
+                "expression": {
+                  "type": "NameExpression",
+                  "name": "Number"
+                }
+              },
+              "name": "connectivity.reconnectTimeLimit",
+              "default": "640000"
+            },
+            {
+              "title": "param",
+              "description": "Flag to determine whether the SDK will attempt to automatically reconnect after connectivity disruptions.",
+              "lineNumber": 17,
+              "type": {
+                "type": "OptionalType",
+                "expression": {
+                  "type": "NameExpression",
+                  "name": "Boolean"
+                }
+              },
+              "name": "connectivity.autoReconnect",
+              "default": "true"
+            },
+            {
+              "title": "param",
+              "description": "Flag to determine whether the SDK should check connectivity.",
+              "lineNumber": 18,
+              "type": {
+                "type": "OptionalType",
+                "expression": {
+                  "type": "NameExpression",
+                  "name": "Boolean"
+                }
+              },
+              "name": "connectivity.checkConnectivity",
+              "default": "true"
+            },
+            {
+              "title": "param",
+              "description": "When set to 'query', the OAuth bearer access token will be appended as a query string parameter to the websocket address.",
+              "lineNumber": 19,
+              "type": {
+                "type": "OptionalType",
+                "expression": {
+                  "type": "NameExpression",
+                  "name": "string"
+                }
+              },
+              "name": "connectivity.webSocketOAuthMode",
+              "default": "none"
+            }
+          ],
+          "loc": {
+            "start": {
+              "line": 10,
+              "column": 0
+            },
+            "end": {
+              "line": 30,
+              "column": 3
+            }
+          },
+          "context": {
+            "loc": {
+              "start": {
+                "line": 31,
+                "column": 0
+              },
+              "end": {
+                "line": 41,
+                "column": 1
+              }
+            },
+            "file": "/home/jenkins/workspace/jobs_webrtcjs_beta/packages/kandy/src/connectivity/plugin/configs.js"
+          },
+          "augments": [],
+          "examples": [],
+          "implements": [],
+          "params": [
+            {
+              "title": "param",
+              "name": "connectivity",
+              "lineNumber": 11,
+              "description": {
+                "type": "root",
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "Connectivity configs."
+                      }
+                    ]
+                  }
+                ]
+              },
+              "type": {
+                "type": "NameExpression",
+                "name": "Object"
+              },
+              "properties": [
+                {
+                  "title": "param",
+                  "name": "connectivity.pingInterval",
+                  "lineNumber": 12,
+                  "description": {
+                    "type": "root",
+                    "children": [
+                      {
+                        "type": "paragraph",
+                        "children": [
+                          {
+                            "type": "text",
+                            "value": "Time in between websocket ping attempts (milliseconds)."
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "type": {
+                    "type": "NameExpression",
+                    "name": "Number"
+                  },
+                  "default": "30000"
+                },
+                {
+                  "title": "param",
+                  "name": "connectivity.reconnectLimit",
+                  "lineNumber": 13,
+                  "description": {
+                    "type": "root",
+                    "children": [
+                      {
+                        "type": "paragraph",
+                        "children": [
+                          {
+                            "type": "text",
+                            "value": "Number of failed reconnect attempts before reporting an error. Can be set to 0 to not limit reconnection attempts."
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "type": {
+                    "type": "NameExpression",
+                    "name": "Number"
+                  },
+                  "default": "5"
+                },
+                {
+                  "title": "param",
+                  "name": "connectivity.reconnectDelay",
+                  "lineNumber": 14,
+                  "description": {
+                    "type": "root",
+                    "children": [
+                      {
+                        "type": "paragraph",
+                        "children": [
+                          {
+                            "type": "text",
+                            "value": "Base time between websocket reconnect attempts (milliseconds)."
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "type": {
+                    "type": "NameExpression",
+                    "name": "Number"
+                  },
+                  "default": "5000"
+                },
+                {
+                  "title": "param",
+                  "name": "connectivity.reconnectTimeMultiplier",
+                  "lineNumber": 15,
+                  "description": {
+                    "type": "root",
+                    "children": [
+                      {
+                        "type": "paragraph",
+                        "children": [
+                          {
+                            "type": "text",
+                            "value": "Reconnect delay multiplier for subsequent attempts. The reconnect delay time will be multiplied by this after each failed reconnect attempt to increase the delay between attempts. eg. 5000ms then 10000ms then 20000ms delay if value is 2."
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "type": {
+                    "type": "NameExpression",
+                    "name": "Number"
+                  },
+                  "default": "1"
+                },
+                {
+                  "title": "param",
+                  "name": "connectivity.reconnectTimeLimit",
+                  "lineNumber": 16,
+                  "description": {
+                    "type": "root",
+                    "children": [
+                      {
+                        "type": "paragraph",
+                        "children": [
+                          {
+                            "type": "text",
+                            "value": "Maximum time delay between reconnect attempts (milliseconds). Used in conjunction with the reconnect time multiplier to prevent overly long delays between reconnection attempts."
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "type": {
+                    "type": "NameExpression",
+                    "name": "Number"
+                  },
+                  "default": "640000"
+                },
+                {
+                  "title": "param",
+                  "name": "connectivity.autoReconnect",
+                  "lineNumber": 17,
+                  "description": {
+                    "type": "root",
+                    "children": [
+                      {
+                        "type": "paragraph",
+                        "children": [
+                          {
+                            "type": "text",
+                            "value": "Flag to determine whether the SDK will attempt to automatically reconnect after connectivity disruptions."
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "type": {
+                    "type": "NameExpression",
+                    "name": "Boolean"
+                  },
+                  "default": "true"
+                },
+                {
+                  "title": "param",
+                  "name": "connectivity.checkConnectivity",
+                  "lineNumber": 18,
+                  "description": {
+                    "type": "root",
+                    "children": [
+                      {
+                        "type": "paragraph",
+                        "children": [
+                          {
+                            "type": "text",
+                            "value": "Flag to determine whether the SDK should check connectivity."
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "type": {
+                    "type": "NameExpression",
+                    "name": "Boolean"
+                  },
+                  "default": "true"
+                },
+                {
+                  "title": "param",
+                  "name": "connectivity.webSocketOAuthMode",
+                  "lineNumber": 19,
+                  "description": {
+                    "type": "root",
+                    "children": [
+                      {
+                        "type": "paragraph",
+                        "children": [
+                          {
+                            "type": "text",
+                            "value": "When set to 'query', the OAuth bearer access token will be appended as a query string parameter to the websocket address."
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "type": {
+                    "type": "NameExpression",
+                    "name": "string"
+                  },
+                  "default": "none"
+                }
+              ]
+            }
+          ],
+          "properties": [],
+          "returns": [],
+          "sees": [],
+          "throws": [],
+          "todos": [],
+          "yields": [],
+          "access": "public",
+          "name": "config.connectivity",
+          "memberof": "config",
+          "scope": "instance",
+          "members": {
+            "global": [],
+            "inner": [],
+            "instance": [],
+            "events": [],
+            "static": []
+          },
+          "path": [
+            {
+              "name": "config",
+              "kind": "module"
+            },
+            {
+              "name": "config.connectivity",
+              "scope": "instance"
+            }
+          ],
+          "namespace": "config#config.connectivity"
+        },
+        {
+          "description": {
+            "type": "root",
+            "children": [
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "type": "text",
+                    "value": "Configuration options for the notification feature."
+                  }
+                ]
+              }
+            ]
+          },
+          "tags": [
+            {
+              "title": "public",
+              "description": null,
+              "lineNumber": 2,
+              "type": null
+            },
+            {
+              "title": "name",
+              "description": null,
+              "lineNumber": 3,
+              "name": "config.notifications"
+            },
+            {
+              "title": "memberof",
+              "description": "config",
+              "lineNumber": 4
+            },
+            {
+              "title": "instance",
+              "description": null,
+              "lineNumber": 5
+            },
+            {
+              "title": "param",
+              "description": "The notifications configuration object.",
+              "lineNumber": 6,
+              "type": {
+                "type": "NameExpression",
+                "name": "Object"
+              },
+              "name": "notifications"
+            },
+            {
+              "title": "param",
+              "description": "Default amount of event ids to remember for de-duplication purposes.",
+              "lineNumber": 7,
+              "type": {
+                "type": "OptionalType",
+                "expression": {
+                  "type": "NameExpression",
+                  "name": "number"
+                }
+              },
+              "name": "notifications.idCacheLength",
+              "default": "100"
+            },
+            {
+              "title": "param",
+              "description": "Communication channel mode used for incoming call notifications. Supported values are 'any-channel' or 'push-channel-only'.",
+              "lineNumber": 8,
+              "type": {
+                "type": "OptionalType",
+                "expression": {
+                  "type": "NameExpression",
+                  "name": "string"
+                }
+              },
+              "name": "notifications.incomingCallNotificationMode",
+              "default": "'any-channel'"
+            },
+            {
+              "title": "param",
+              "description": "Object describing the server to use for push services.",
+              "lineNumber": 9,
+              "type": {
+                "type": "OptionalType",
+                "expression": {
+                  "type": "NameExpression",
+                  "name": "Object"
+                }
+              },
+              "name": "notifications.pushRegistration"
+            },
+            {
+              "title": "param",
+              "description": "Hostname for the push registration server.",
+              "lineNumber": 10,
+              "type": {
+                "type": "OptionalType",
+                "expression": {
+                  "type": "NameExpression",
+                  "name": "string"
+                }
+              },
+              "name": "notifications.pushRegistration.server"
+            },
+            {
+              "title": "param",
+              "description": "Port for the push registration server.",
+              "lineNumber": 11,
+              "type": {
+                "type": "OptionalType",
+                "expression": {
+                  "type": "NameExpression",
+                  "name": "string"
+                }
+              },
+              "name": "notifications.pushRegistration.port"
+            },
+            {
+              "title": "param",
+              "description": "Protocol for the push registration server.",
+              "lineNumber": 12,
+              "type": {
+                "type": "OptionalType",
+                "expression": {
+                  "type": "NameExpression",
+                  "name": "string"
+                }
+              },
+              "name": "notifications.pushRegistration.protocol"
+            },
+            {
+              "title": "param",
+              "description": "Version for the push registration server.",
+              "lineNumber": 13,
+              "type": {
+                "type": "OptionalType",
+                "expression": {
+                  "type": "NameExpression",
+                  "name": "string"
+                }
+              },
+              "name": "notifications.pushRegistration.version"
+            }
+          ],
+          "loc": {
+            "start": {
+              "line": 25,
+              "column": 2
+            },
+            "end": {
+              "line": 39,
+              "column": 5
+            }
+          },
+          "context": {
+            "loc": {
+              "start": {
+                "line": 41,
+                "column": 2
+              },
+              "end": {
+                "line": 44,
+                "column": 3
+              }
+            },
+            "file": "/home/jenkins/workspace/jobs_webrtcjs_beta/packages/kandy/src/notifications/link/index.js"
+          },
+          "augments": [],
+          "examples": [],
+          "implements": [],
+          "params": [
+            {
+              "title": "param",
+              "name": "notifications",
+              "lineNumber": 6,
+              "description": {
+                "type": "root",
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "The notifications configuration object."
+                      }
+                    ]
+                  }
+                ]
+              },
+              "type": {
+                "type": "NameExpression",
+                "name": "Object"
+              },
+              "properties": [
+                {
+                  "title": "param",
+                  "name": "notifications.idCacheLength",
+                  "lineNumber": 7,
+                  "description": {
+                    "type": "root",
+                    "children": [
+                      {
+                        "type": "paragraph",
+                        "children": [
+                          {
+                            "type": "text",
+                            "value": "Default amount of event ids to remember for de-duplication purposes."
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "type": {
+                    "type": "NameExpression",
+                    "name": "number"
+                  },
+                  "default": "100"
+                },
+                {
+                  "title": "param",
+                  "name": "notifications.incomingCallNotificationMode",
+                  "lineNumber": 8,
+                  "description": {
+                    "type": "root",
+                    "children": [
+                      {
+                        "type": "paragraph",
+                        "children": [
+                          {
+                            "type": "text",
+                            "value": "Communication channel mode used for incoming call notifications. Supported values are 'any-channel' or 'push-channel-only'."
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "type": {
+                    "type": "NameExpression",
+                    "name": "string"
+                  },
+                  "default": "'any-channel'"
+                },
+                {
+                  "title": "param",
+                  "name": "notifications.pushRegistration",
+                  "lineNumber": 9,
+                  "description": {
+                    "type": "root",
+                    "children": [
+                      {
+                        "type": "paragraph",
+                        "children": [
+                          {
+                            "type": "text",
+                            "value": "Object describing the server to use for push services."
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "type": {
+                    "type": "OptionalType",
+                    "expression": {
+                      "type": "NameExpression",
+                      "name": "Object"
+                    }
+                  },
+                  "properties": [
+                    {
+                      "title": "param",
+                      "name": "notifications.pushRegistration.server",
+                      "lineNumber": 10,
+                      "description": {
+                        "type": "root",
+                        "children": [
+                          {
+                            "type": "paragraph",
+                            "children": [
+                              {
+                                "type": "text",
+                                "value": "Hostname for the push registration server."
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      "type": {
+                        "type": "OptionalType",
+                        "expression": {
+                          "type": "NameExpression",
+                          "name": "string"
+                        }
+                      }
+                    },
+                    {
+                      "title": "param",
+                      "name": "notifications.pushRegistration.port",
+                      "lineNumber": 11,
+                      "description": {
+                        "type": "root",
+                        "children": [
+                          {
+                            "type": "paragraph",
+                            "children": [
+                              {
+                                "type": "text",
+                                "value": "Port for the push registration server."
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      "type": {
+                        "type": "OptionalType",
+                        "expression": {
+                          "type": "NameExpression",
+                          "name": "string"
+                        }
+                      }
+                    },
+                    {
+                      "title": "param",
+                      "name": "notifications.pushRegistration.protocol",
+                      "lineNumber": 12,
+                      "description": {
+                        "type": "root",
+                        "children": [
+                          {
+                            "type": "paragraph",
+                            "children": [
+                              {
+                                "type": "text",
+                                "value": "Protocol for the push registration server."
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      "type": {
+                        "type": "OptionalType",
+                        "expression": {
+                          "type": "NameExpression",
+                          "name": "string"
+                        }
+                      }
+                    },
+                    {
+                      "title": "param",
+                      "name": "notifications.pushRegistration.version",
+                      "lineNumber": 13,
+                      "description": {
+                        "type": "root",
+                        "children": [
+                          {
+                            "type": "paragraph",
+                            "children": [
+                              {
+                                "type": "text",
+                                "value": "Version for the push registration server."
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      "type": {
+                        "type": "OptionalType",
+                        "expression": {
+                          "type": "NameExpression",
+                          "name": "string"
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "properties": [],
+          "returns": [],
+          "sees": [],
+          "throws": [],
+          "todos": [],
+          "yields": [],
+          "access": "public",
+          "name": "config.notifications",
+          "memberof": "config",
+          "scope": "instance",
+          "members": {
+            "global": [],
+            "inner": [],
+            "instance": [],
+            "events": [],
+            "static": []
+          },
+          "path": [
+            {
+              "name": "config",
+              "kind": "module"
+            },
+            {
+              "name": "config.notifications",
+              "scope": "instance"
+            }
+          ],
+          "namespace": "config#config.notifications"
+        },
+        {
+          "description": {
+            "type": "root",
+            "children": [
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "type": "text",
                     "value": "Configuration options for the Subscription feature."
                   }
                 ]
@@ -2158,874 +3026,6 @@
             }
           ],
           "namespace": "config#config.call"
-        },
-        {
-          "description": {
-            "type": "root",
-            "children": [
-              {
-                "type": "paragraph",
-                "children": [
-                  {
-                    "type": "text",
-                    "value": "Configuration options for the Connectivity feature.\nThe SDK can only use keepalive as the connectivity check."
-                  }
-                ]
-              },
-              {
-                "type": "paragraph",
-                "children": [
-                  {
-                    "type": "text",
-                    "value": "Keep Alive: The client sends \"keepalive\" messages (to the server) on the websocket at regular intervals. This lets the server know that the client is still connected, and that it should \"keep the connection alive\"."
-                  }
-                ]
-              },
-              {
-                "type": "paragraph",
-                "children": [
-                  {
-                    "type": "text",
-                    "value": "For more information on keepalive see here: "
-                  },
-                  {
-                    "type": "link",
-                    "title": null,
-                    "url": "https://en.wikipedia.org/wiki/Keepalive",
-                    "children": [
-                      {
-                        "type": "text",
-                        "value": "https://en.wikipedia.org/wiki/Keepalive"
-                      }
-                    ]
-                  }
-                ]
-              }
-            ]
-          },
-          "tags": [
-            {
-              "title": "public",
-              "description": null,
-              "lineNumber": 7,
-              "type": null
-            },
-            {
-              "title": "name",
-              "description": null,
-              "lineNumber": 8,
-              "name": "config.connectivity"
-            },
-            {
-              "title": "memberof",
-              "description": "config",
-              "lineNumber": 9
-            },
-            {
-              "title": "instance",
-              "description": null,
-              "lineNumber": 10
-            },
-            {
-              "title": "param",
-              "description": "Connectivity configs.",
-              "lineNumber": 11,
-              "type": {
-                "type": "NameExpression",
-                "name": "Object"
-              },
-              "name": "connectivity"
-            },
-            {
-              "title": "param",
-              "description": "Time in between websocket ping attempts (milliseconds).",
-              "lineNumber": 12,
-              "type": {
-                "type": "OptionalType",
-                "expression": {
-                  "type": "NameExpression",
-                  "name": "Number"
-                }
-              },
-              "name": "connectivity.pingInterval",
-              "default": "30000"
-            },
-            {
-              "title": "param",
-              "description": "Number of failed reconnect attempts before reporting an error. Can be set to 0 to not limit reconnection attempts.",
-              "lineNumber": 13,
-              "type": {
-                "type": "OptionalType",
-                "expression": {
-                  "type": "NameExpression",
-                  "name": "Number"
-                }
-              },
-              "name": "connectivity.reconnectLimit",
-              "default": "5"
-            },
-            {
-              "title": "param",
-              "description": "Base time between websocket reconnect attempts (milliseconds).",
-              "lineNumber": 14,
-              "type": {
-                "type": "OptionalType",
-                "expression": {
-                  "type": "NameExpression",
-                  "name": "Number"
-                }
-              },
-              "name": "connectivity.reconnectDelay",
-              "default": "5000"
-            },
-            {
-              "title": "param",
-              "description": "Reconnect delay multiplier for subsequent attempts. The reconnect delay time will be multiplied by this after each failed reconnect attempt to increase the delay between attempts. eg. 5000ms then 10000ms then 20000ms delay if value is 2.",
-              "lineNumber": 15,
-              "type": {
-                "type": "OptionalType",
-                "expression": {
-                  "type": "NameExpression",
-                  "name": "Number"
-                }
-              },
-              "name": "connectivity.reconnectTimeMultiplier",
-              "default": "1"
-            },
-            {
-              "title": "param",
-              "description": "Maximum time delay between reconnect attempts (milliseconds). Used in conjunction with the reconnect time multiplier to prevent overly long delays between reconnection attempts.",
-              "lineNumber": 16,
-              "type": {
-                "type": "OptionalType",
-                "expression": {
-                  "type": "NameExpression",
-                  "name": "Number"
-                }
-              },
-              "name": "connectivity.reconnectTimeLimit",
-              "default": "640000"
-            },
-            {
-              "title": "param",
-              "description": "Flag to determine whether the SDK will attempt to automatically reconnect after connectivity disruptions.",
-              "lineNumber": 17,
-              "type": {
-                "type": "OptionalType",
-                "expression": {
-                  "type": "NameExpression",
-                  "name": "Boolean"
-                }
-              },
-              "name": "connectivity.autoReconnect",
-              "default": "true"
-            },
-            {
-              "title": "param",
-              "description": "Flag to determine whether the SDK should check connectivity.",
-              "lineNumber": 18,
-              "type": {
-                "type": "OptionalType",
-                "expression": {
-                  "type": "NameExpression",
-                  "name": "Boolean"
-                }
-              },
-              "name": "connectivity.checkConnectivity",
-              "default": "true"
-            },
-            {
-              "title": "param",
-              "description": "When set to 'query', the OAuth bearer access token will be appended as a query string parameter to the websocket address.",
-              "lineNumber": 19,
-              "type": {
-                "type": "OptionalType",
-                "expression": {
-                  "type": "NameExpression",
-                  "name": "string"
-                }
-              },
-              "name": "connectivity.webSocketOAuthMode",
-              "default": "none"
-            }
-          ],
-          "loc": {
-            "start": {
-              "line": 10,
-              "column": 0
-            },
-            "end": {
-              "line": 30,
-              "column": 3
-            }
-          },
-          "context": {
-            "loc": {
-              "start": {
-                "line": 31,
-                "column": 0
-              },
-              "end": {
-                "line": 41,
-                "column": 1
-              }
-            },
-            "file": "/home/jenkins/workspace/jobs_webrtcjs_beta/packages/kandy/src/connectivity/plugin/configs.js"
-          },
-          "augments": [],
-          "examples": [],
-          "implements": [],
-          "params": [
-            {
-              "title": "param",
-              "name": "connectivity",
-              "lineNumber": 11,
-              "description": {
-                "type": "root",
-                "children": [
-                  {
-                    "type": "paragraph",
-                    "children": [
-                      {
-                        "type": "text",
-                        "value": "Connectivity configs."
-                      }
-                    ]
-                  }
-                ]
-              },
-              "type": {
-                "type": "NameExpression",
-                "name": "Object"
-              },
-              "properties": [
-                {
-                  "title": "param",
-                  "name": "connectivity.pingInterval",
-                  "lineNumber": 12,
-                  "description": {
-                    "type": "root",
-                    "children": [
-                      {
-                        "type": "paragraph",
-                        "children": [
-                          {
-                            "type": "text",
-                            "value": "Time in between websocket ping attempts (milliseconds)."
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  "type": {
-                    "type": "NameExpression",
-                    "name": "Number"
-                  },
-                  "default": "30000"
-                },
-                {
-                  "title": "param",
-                  "name": "connectivity.reconnectLimit",
-                  "lineNumber": 13,
-                  "description": {
-                    "type": "root",
-                    "children": [
-                      {
-                        "type": "paragraph",
-                        "children": [
-                          {
-                            "type": "text",
-                            "value": "Number of failed reconnect attempts before reporting an error. Can be set to 0 to not limit reconnection attempts."
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  "type": {
-                    "type": "NameExpression",
-                    "name": "Number"
-                  },
-                  "default": "5"
-                },
-                {
-                  "title": "param",
-                  "name": "connectivity.reconnectDelay",
-                  "lineNumber": 14,
-                  "description": {
-                    "type": "root",
-                    "children": [
-                      {
-                        "type": "paragraph",
-                        "children": [
-                          {
-                            "type": "text",
-                            "value": "Base time between websocket reconnect attempts (milliseconds)."
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  "type": {
-                    "type": "NameExpression",
-                    "name": "Number"
-                  },
-                  "default": "5000"
-                },
-                {
-                  "title": "param",
-                  "name": "connectivity.reconnectTimeMultiplier",
-                  "lineNumber": 15,
-                  "description": {
-                    "type": "root",
-                    "children": [
-                      {
-                        "type": "paragraph",
-                        "children": [
-                          {
-                            "type": "text",
-                            "value": "Reconnect delay multiplier for subsequent attempts. The reconnect delay time will be multiplied by this after each failed reconnect attempt to increase the delay between attempts. eg. 5000ms then 10000ms then 20000ms delay if value is 2."
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  "type": {
-                    "type": "NameExpression",
-                    "name": "Number"
-                  },
-                  "default": "1"
-                },
-                {
-                  "title": "param",
-                  "name": "connectivity.reconnectTimeLimit",
-                  "lineNumber": 16,
-                  "description": {
-                    "type": "root",
-                    "children": [
-                      {
-                        "type": "paragraph",
-                        "children": [
-                          {
-                            "type": "text",
-                            "value": "Maximum time delay between reconnect attempts (milliseconds). Used in conjunction with the reconnect time multiplier to prevent overly long delays between reconnection attempts."
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  "type": {
-                    "type": "NameExpression",
-                    "name": "Number"
-                  },
-                  "default": "640000"
-                },
-                {
-                  "title": "param",
-                  "name": "connectivity.autoReconnect",
-                  "lineNumber": 17,
-                  "description": {
-                    "type": "root",
-                    "children": [
-                      {
-                        "type": "paragraph",
-                        "children": [
-                          {
-                            "type": "text",
-                            "value": "Flag to determine whether the SDK will attempt to automatically reconnect after connectivity disruptions."
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  "type": {
-                    "type": "NameExpression",
-                    "name": "Boolean"
-                  },
-                  "default": "true"
-                },
-                {
-                  "title": "param",
-                  "name": "connectivity.checkConnectivity",
-                  "lineNumber": 18,
-                  "description": {
-                    "type": "root",
-                    "children": [
-                      {
-                        "type": "paragraph",
-                        "children": [
-                          {
-                            "type": "text",
-                            "value": "Flag to determine whether the SDK should check connectivity."
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  "type": {
-                    "type": "NameExpression",
-                    "name": "Boolean"
-                  },
-                  "default": "true"
-                },
-                {
-                  "title": "param",
-                  "name": "connectivity.webSocketOAuthMode",
-                  "lineNumber": 19,
-                  "description": {
-                    "type": "root",
-                    "children": [
-                      {
-                        "type": "paragraph",
-                        "children": [
-                          {
-                            "type": "text",
-                            "value": "When set to 'query', the OAuth bearer access token will be appended as a query string parameter to the websocket address."
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  "type": {
-                    "type": "NameExpression",
-                    "name": "string"
-                  },
-                  "default": "none"
-                }
-              ]
-            }
-          ],
-          "properties": [],
-          "returns": [],
-          "sees": [],
-          "throws": [],
-          "todos": [],
-          "yields": [],
-          "access": "public",
-          "name": "config.connectivity",
-          "memberof": "config",
-          "scope": "instance",
-          "members": {
-            "global": [],
-            "inner": [],
-            "instance": [],
-            "events": [],
-            "static": []
-          },
-          "path": [
-            {
-              "name": "config",
-              "kind": "module"
-            },
-            {
-              "name": "config.connectivity",
-              "scope": "instance"
-            }
-          ],
-          "namespace": "config#config.connectivity"
-        },
-        {
-          "description": {
-            "type": "root",
-            "children": [
-              {
-                "type": "paragraph",
-                "children": [
-                  {
-                    "type": "text",
-                    "value": "Configuration options for the notification feature."
-                  }
-                ]
-              }
-            ]
-          },
-          "tags": [
-            {
-              "title": "public",
-              "description": null,
-              "lineNumber": 2,
-              "type": null
-            },
-            {
-              "title": "name",
-              "description": null,
-              "lineNumber": 3,
-              "name": "config.notifications"
-            },
-            {
-              "title": "memberof",
-              "description": "config",
-              "lineNumber": 4
-            },
-            {
-              "title": "instance",
-              "description": null,
-              "lineNumber": 5
-            },
-            {
-              "title": "param",
-              "description": "The notifications configuration object.",
-              "lineNumber": 6,
-              "type": {
-                "type": "NameExpression",
-                "name": "Object"
-              },
-              "name": "notifications"
-            },
-            {
-              "title": "param",
-              "description": "Default amount of event ids to remember for de-duplication purposes.",
-              "lineNumber": 7,
-              "type": {
-                "type": "OptionalType",
-                "expression": {
-                  "type": "NameExpression",
-                  "name": "number"
-                }
-              },
-              "name": "notifications.idCacheLength",
-              "default": "100"
-            },
-            {
-              "title": "param",
-              "description": "Communication channel mode used for incoming call notifications. Supported values are 'any-channel' or 'push-channel-only'.",
-              "lineNumber": 8,
-              "type": {
-                "type": "OptionalType",
-                "expression": {
-                  "type": "NameExpression",
-                  "name": "string"
-                }
-              },
-              "name": "notifications.incomingCallNotificationMode",
-              "default": "'any-channel'"
-            },
-            {
-              "title": "param",
-              "description": "Object describing the server to use for push services.",
-              "lineNumber": 9,
-              "type": {
-                "type": "OptionalType",
-                "expression": {
-                  "type": "NameExpression",
-                  "name": "Object"
-                }
-              },
-              "name": "notifications.pushRegistration"
-            },
-            {
-              "title": "param",
-              "description": "Hostname for the push registration server.",
-              "lineNumber": 10,
-              "type": {
-                "type": "OptionalType",
-                "expression": {
-                  "type": "NameExpression",
-                  "name": "string"
-                }
-              },
-              "name": "notifications.pushRegistration.server"
-            },
-            {
-              "title": "param",
-              "description": "Port for the push registration server.",
-              "lineNumber": 11,
-              "type": {
-                "type": "OptionalType",
-                "expression": {
-                  "type": "NameExpression",
-                  "name": "string"
-                }
-              },
-              "name": "notifications.pushRegistration.port"
-            },
-            {
-              "title": "param",
-              "description": "Protocol for the push registration server.",
-              "lineNumber": 12,
-              "type": {
-                "type": "OptionalType",
-                "expression": {
-                  "type": "NameExpression",
-                  "name": "string"
-                }
-              },
-              "name": "notifications.pushRegistration.protocol"
-            },
-            {
-              "title": "param",
-              "description": "Version for the push registration server.",
-              "lineNumber": 13,
-              "type": {
-                "type": "OptionalType",
-                "expression": {
-                  "type": "NameExpression",
-                  "name": "string"
-                }
-              },
-              "name": "notifications.pushRegistration.version"
-            }
-          ],
-          "loc": {
-            "start": {
-              "line": 25,
-              "column": 2
-            },
-            "end": {
-              "line": 39,
-              "column": 5
-            }
-          },
-          "context": {
-            "loc": {
-              "start": {
-                "line": 41,
-                "column": 2
-              },
-              "end": {
-                "line": 44,
-                "column": 3
-              }
-            },
-            "file": "/home/jenkins/workspace/jobs_webrtcjs_beta/packages/kandy/src/notifications/link/index.js"
-          },
-          "augments": [],
-          "examples": [],
-          "implements": [],
-          "params": [
-            {
-              "title": "param",
-              "name": "notifications",
-              "lineNumber": 6,
-              "description": {
-                "type": "root",
-                "children": [
-                  {
-                    "type": "paragraph",
-                    "children": [
-                      {
-                        "type": "text",
-                        "value": "The notifications configuration object."
-                      }
-                    ]
-                  }
-                ]
-              },
-              "type": {
-                "type": "NameExpression",
-                "name": "Object"
-              },
-              "properties": [
-                {
-                  "title": "param",
-                  "name": "notifications.idCacheLength",
-                  "lineNumber": 7,
-                  "description": {
-                    "type": "root",
-                    "children": [
-                      {
-                        "type": "paragraph",
-                        "children": [
-                          {
-                            "type": "text",
-                            "value": "Default amount of event ids to remember for de-duplication purposes."
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  "type": {
-                    "type": "NameExpression",
-                    "name": "number"
-                  },
-                  "default": "100"
-                },
-                {
-                  "title": "param",
-                  "name": "notifications.incomingCallNotificationMode",
-                  "lineNumber": 8,
-                  "description": {
-                    "type": "root",
-                    "children": [
-                      {
-                        "type": "paragraph",
-                        "children": [
-                          {
-                            "type": "text",
-                            "value": "Communication channel mode used for incoming call notifications. Supported values are 'any-channel' or 'push-channel-only'."
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  "type": {
-                    "type": "NameExpression",
-                    "name": "string"
-                  },
-                  "default": "'any-channel'"
-                },
-                {
-                  "title": "param",
-                  "name": "notifications.pushRegistration",
-                  "lineNumber": 9,
-                  "description": {
-                    "type": "root",
-                    "children": [
-                      {
-                        "type": "paragraph",
-                        "children": [
-                          {
-                            "type": "text",
-                            "value": "Object describing the server to use for push services."
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  "type": {
-                    "type": "OptionalType",
-                    "expression": {
-                      "type": "NameExpression",
-                      "name": "Object"
-                    }
-                  },
-                  "properties": [
-                    {
-                      "title": "param",
-                      "name": "notifications.pushRegistration.server",
-                      "lineNumber": 10,
-                      "description": {
-                        "type": "root",
-                        "children": [
-                          {
-                            "type": "paragraph",
-                            "children": [
-                              {
-                                "type": "text",
-                                "value": "Hostname for the push registration server."
-                              }
-                            ]
-                          }
-                        ]
-                      },
-                      "type": {
-                        "type": "OptionalType",
-                        "expression": {
-                          "type": "NameExpression",
-                          "name": "string"
-                        }
-                      }
-                    },
-                    {
-                      "title": "param",
-                      "name": "notifications.pushRegistration.port",
-                      "lineNumber": 11,
-                      "description": {
-                        "type": "root",
-                        "children": [
-                          {
-                            "type": "paragraph",
-                            "children": [
-                              {
-                                "type": "text",
-                                "value": "Port for the push registration server."
-                              }
-                            ]
-                          }
-                        ]
-                      },
-                      "type": {
-                        "type": "OptionalType",
-                        "expression": {
-                          "type": "NameExpression",
-                          "name": "string"
-                        }
-                      }
-                    },
-                    {
-                      "title": "param",
-                      "name": "notifications.pushRegistration.protocol",
-                      "lineNumber": 12,
-                      "description": {
-                        "type": "root",
-                        "children": [
-                          {
-                            "type": "paragraph",
-                            "children": [
-                              {
-                                "type": "text",
-                                "value": "Protocol for the push registration server."
-                              }
-                            ]
-                          }
-                        ]
-                      },
-                      "type": {
-                        "type": "OptionalType",
-                        "expression": {
-                          "type": "NameExpression",
-                          "name": "string"
-                        }
-                      }
-                    },
-                    {
-                      "title": "param",
-                      "name": "notifications.pushRegistration.version",
-                      "lineNumber": 13,
-                      "description": {
-                        "type": "root",
-                        "children": [
-                          {
-                            "type": "paragraph",
-                            "children": [
-                              {
-                                "type": "text",
-                                "value": "Version for the push registration server."
-                              }
-                            ]
-                          }
-                        ]
-                      },
-                      "type": {
-                        "type": "OptionalType",
-                        "expression": {
-                          "type": "NameExpression",
-                          "name": "string"
-                        }
-                      }
-                    }
-                  ]
-                }
-              ]
-            }
-          ],
-          "properties": [],
-          "returns": [],
-          "sees": [],
-          "throws": [],
-          "todos": [],
-          "yields": [],
-          "access": "public",
-          "name": "config.notifications",
-          "memberof": "config",
-          "scope": "instance",
-          "members": {
-            "global": [],
-            "inner": [],
-            "instance": [],
-            "events": [],
-            "static": []
-          },
-          "path": [
-            {
-              "name": "config",
-              "kind": "module"
-            },
-            {
-              "name": "config.notifications",
-              "scope": "instance"
-            }
-          ],
-          "namespace": "config#config.notifications"
         }
       ],
       "events": [],
@@ -3582,22 +3582,22 @@
           ],
           "loc": {
             "start": {
-              "line": 200,
+              "line": 185,
               "column": 4
             },
             "end": {
-              "line": 206,
+              "line": 191,
               "column": 7
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 207,
+                "line": 192,
                 "column": 4
               },
               "end": {
-                "line": 209,
+                "line": 194,
                 "column": 5
               }
             },
@@ -3677,22 +3677,22 @@
           ],
           "loc": {
             "start": {
-              "line": 212,
+              "line": 197,
               "column": 4
             },
             "end": {
-              "line": 238,
+              "line": 223,
               "column": 7
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 239,
+                "line": 224,
                 "column": 4
               },
               "end": {
-                "line": 262,
+                "line": 247,
                 "column": 5
               }
             },
@@ -4669,333 +4669,6 @@
                 "children": [
                   {
                     "type": "text",
-                    "value": "Retrieve information about the browser being used."
-                  }
-                ]
-              },
-              {
-                "type": "paragraph",
-                "children": [
-                  {
-                    "type": "text",
-                    "value": "Browser information being defined indicates that the browser supports\nbasic webRTC scenarios."
-                  }
-                ]
-              }
-            ]
-          },
-          "tags": [
-            {
-              "title": "public",
-              "description": null,
-              "lineNumber": 5,
-              "type": null
-            },
-            {
-              "title": "memberof",
-              "description": "api",
-              "lineNumber": 6
-            },
-            {
-              "title": "method",
-              "description": null,
-              "lineNumber": 7,
-              "name": "getBrowserDetails"
-            },
-            {
-              "title": "return",
-              "description": "Object containing `browser` and `version` information.",
-              "lineNumber": 8,
-              "type": {
-                "type": "NameExpression",
-                "name": "Object"
-              }
-            },
-            {
-              "title": "example",
-              "description": "const details = client.getBrowserDetails()\n\nlog(`Browser in use: ${details.browser}, version ${details.version}.`)",
-              "lineNumber": 9
-            }
-          ],
-          "loc": {
-            "start": {
-              "line": 21,
-              "column": 2
-            },
-            "end": {
-              "line": 34,
-              "column": 5
-            }
-          },
-          "context": {
-            "loc": {
-              "start": {
-                "line": 35,
-                "column": 2
-              },
-              "end": {
-                "line": 38,
-                "column": 3
-              }
-            },
-            "file": "/home/jenkins/workspace/jobs_webrtcjs_beta/packages/kandy/src/webrtc/interface/api/index.js"
-          },
-          "augments": [],
-          "examples": [
-            {
-              "description": "const details = client.getBrowserDetails()\n\nlog(`Browser in use: ${details.browser}, version ${details.version}.`)"
-            }
-          ],
-          "implements": [],
-          "params": [],
-          "properties": [],
-          "returns": [
-            {
-              "description": {
-                "type": "root",
-                "children": [
-                  {
-                    "type": "paragraph",
-                    "children": [
-                      {
-                        "type": "text",
-                        "value": "Object containing "
-                      },
-                      {
-                        "type": "inlineCode",
-                        "value": "browser"
-                      },
-                      {
-                        "type": "text",
-                        "value": " and "
-                      },
-                      {
-                        "type": "inlineCode",
-                        "value": "version"
-                      },
-                      {
-                        "type": "text",
-                        "value": " information."
-                      }
-                    ]
-                  }
-                ]
-              },
-              "title": "returns",
-              "type": {
-                "type": "NameExpression",
-                "name": "Object"
-              }
-            }
-          ],
-          "sees": [],
-          "throws": [],
-          "todos": [],
-          "yields": [],
-          "access": "public",
-          "memberof": "api",
-          "kind": "function",
-          "name": "getBrowserDetails",
-          "members": {
-            "global": [],
-            "inner": [],
-            "instance": [],
-            "events": [],
-            "static": []
-          },
-          "path": [
-            {
-              "name": "api",
-              "kind": "module"
-            },
-            {
-              "name": "getBrowserDetails",
-              "kind": "function"
-            }
-          ],
-          "namespace": "apigetBrowserDetails"
-        },
-        {
-          "description": {
-            "type": "root",
-            "children": [
-              {
-                "type": "paragraph",
-                "children": [
-                  {
-                    "type": "text",
-                    "value": "The Basic Error object. Provides information about an error that occurred in the SDK."
-                  }
-                ]
-              }
-            ]
-          },
-          "tags": [
-            {
-              "title": "public",
-              "description": null,
-              "lineNumber": 2,
-              "type": null
-            },
-            {
-              "title": "static",
-              "description": null,
-              "lineNumber": 3
-            },
-            {
-              "title": "typedef",
-              "description": null,
-              "lineNumber": 4,
-              "type": {
-                "type": "NameExpression",
-                "name": "Object"
-              },
-              "name": "BasicError"
-            },
-            {
-              "title": "memberof",
-              "description": "api",
-              "lineNumber": 5
-            },
-            {
-              "title": "property",
-              "description": "The code of the error. If no code is known, this will be 'NO_CODE'.",
-              "lineNumber": 6,
-              "type": {
-                "type": "NameExpression",
-                "name": "string"
-              },
-              "name": "code"
-            },
-            {
-              "title": "property",
-              "description": "A human-readable message to describe the error. If no message is known, this will be 'An error occurred'.",
-              "lineNumber": 7,
-              "type": {
-                "type": "NameExpression",
-                "name": "string"
-              },
-              "name": "message"
-            }
-          ],
-          "loc": {
-            "start": {
-              "line": 3,
-              "column": 0
-            },
-            "end": {
-              "line": 11,
-              "column": 3
-            }
-          },
-          "context": {
-            "loc": {
-              "start": {
-                "line": 13,
-                "column": 0
-              },
-              "end": {
-                "line": 28,
-                "column": 16
-              }
-            },
-            "file": "/home/jenkins/workspace/jobs_webrtcjs_beta/packages/kandy/src/errors/index.js"
-          },
-          "augments": [],
-          "examples": [],
-          "implements": [],
-          "params": [],
-          "properties": [
-            {
-              "title": "property",
-              "name": "code",
-              "lineNumber": 6,
-              "description": {
-                "type": "root",
-                "children": [
-                  {
-                    "type": "paragraph",
-                    "children": [
-                      {
-                        "type": "text",
-                        "value": "The code of the error. If no code is known, this will be 'NO_CODE'."
-                      }
-                    ]
-                  }
-                ]
-              },
-              "type": {
-                "type": "NameExpression",
-                "name": "string"
-              }
-            },
-            {
-              "title": "property",
-              "name": "message",
-              "lineNumber": 7,
-              "description": {
-                "type": "root",
-                "children": [
-                  {
-                    "type": "paragraph",
-                    "children": [
-                      {
-                        "type": "text",
-                        "value": "A human-readable message to describe the error. If no message is known, this will be 'An error occurred'."
-                      }
-                    ]
-                  }
-                ]
-              },
-              "type": {
-                "type": "NameExpression",
-                "name": "string"
-              }
-            }
-          ],
-          "returns": [],
-          "sees": [],
-          "throws": [],
-          "todos": [],
-          "yields": [],
-          "access": "public",
-          "scope": "static",
-          "kind": "typedef",
-          "name": "BasicError",
-          "type": {
-            "type": "NameExpression",
-            "name": "Object"
-          },
-          "memberof": "api",
-          "members": {
-            "global": [],
-            "inner": [],
-            "instance": [],
-            "events": [],
-            "static": []
-          },
-          "path": [
-            {
-              "name": "api",
-              "kind": "module"
-            },
-            {
-              "name": "BasicError",
-              "kind": "typedef",
-              "scope": "static"
-            }
-          ],
-          "namespace": "api.BasicError"
-        },
-        {
-          "description": {
-            "type": "root",
-            "children": [
-              {
-                "type": "paragraph",
-                "children": [
-                  {
-                    "type": "text",
                     "value": "Retrieves information about the current user."
                   }
                 ]
@@ -5900,6 +5573,333 @@
             }
           ],
           "namespace": "apisetCredentials"
+        },
+        {
+          "description": {
+            "type": "root",
+            "children": [
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "type": "text",
+                    "value": "Retrieve information about the browser being used."
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "type": "text",
+                    "value": "Browser information being defined indicates that the browser supports\nbasic webRTC scenarios."
+                  }
+                ]
+              }
+            ]
+          },
+          "tags": [
+            {
+              "title": "public",
+              "description": null,
+              "lineNumber": 5,
+              "type": null
+            },
+            {
+              "title": "memberof",
+              "description": "api",
+              "lineNumber": 6
+            },
+            {
+              "title": "method",
+              "description": null,
+              "lineNumber": 7,
+              "name": "getBrowserDetails"
+            },
+            {
+              "title": "return",
+              "description": "Object containing `browser` and `version` information.",
+              "lineNumber": 8,
+              "type": {
+                "type": "NameExpression",
+                "name": "Object"
+              }
+            },
+            {
+              "title": "example",
+              "description": "const details = client.getBrowserDetails()\n\nlog(`Browser in use: ${details.browser}, version ${details.version}.`)",
+              "lineNumber": 9
+            }
+          ],
+          "loc": {
+            "start": {
+              "line": 21,
+              "column": 2
+            },
+            "end": {
+              "line": 34,
+              "column": 5
+            }
+          },
+          "context": {
+            "loc": {
+              "start": {
+                "line": 35,
+                "column": 2
+              },
+              "end": {
+                "line": 38,
+                "column": 3
+              }
+            },
+            "file": "/home/jenkins/workspace/jobs_webrtcjs_beta/packages/kandy/src/webrtc/interface/api/index.js"
+          },
+          "augments": [],
+          "examples": [
+            {
+              "description": "const details = client.getBrowserDetails()\n\nlog(`Browser in use: ${details.browser}, version ${details.version}.`)"
+            }
+          ],
+          "implements": [],
+          "params": [],
+          "properties": [],
+          "returns": [
+            {
+              "description": {
+                "type": "root",
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "Object containing "
+                      },
+                      {
+                        "type": "inlineCode",
+                        "value": "browser"
+                      },
+                      {
+                        "type": "text",
+                        "value": " and "
+                      },
+                      {
+                        "type": "inlineCode",
+                        "value": "version"
+                      },
+                      {
+                        "type": "text",
+                        "value": " information."
+                      }
+                    ]
+                  }
+                ]
+              },
+              "title": "returns",
+              "type": {
+                "type": "NameExpression",
+                "name": "Object"
+              }
+            }
+          ],
+          "sees": [],
+          "throws": [],
+          "todos": [],
+          "yields": [],
+          "access": "public",
+          "memberof": "api",
+          "kind": "function",
+          "name": "getBrowserDetails",
+          "members": {
+            "global": [],
+            "inner": [],
+            "instance": [],
+            "events": [],
+            "static": []
+          },
+          "path": [
+            {
+              "name": "api",
+              "kind": "module"
+            },
+            {
+              "name": "getBrowserDetails",
+              "kind": "function"
+            }
+          ],
+          "namespace": "apigetBrowserDetails"
+        },
+        {
+          "description": {
+            "type": "root",
+            "children": [
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "type": "text",
+                    "value": "The Basic Error object. Provides information about an error that occurred in the SDK."
+                  }
+                ]
+              }
+            ]
+          },
+          "tags": [
+            {
+              "title": "public",
+              "description": null,
+              "lineNumber": 2,
+              "type": null
+            },
+            {
+              "title": "static",
+              "description": null,
+              "lineNumber": 3
+            },
+            {
+              "title": "typedef",
+              "description": null,
+              "lineNumber": 4,
+              "type": {
+                "type": "NameExpression",
+                "name": "Object"
+              },
+              "name": "BasicError"
+            },
+            {
+              "title": "memberof",
+              "description": "api",
+              "lineNumber": 5
+            },
+            {
+              "title": "property",
+              "description": "The code of the error. If no code is known, this will be 'NO_CODE'.",
+              "lineNumber": 6,
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              },
+              "name": "code"
+            },
+            {
+              "title": "property",
+              "description": "A human-readable message to describe the error. If no message is known, this will be 'An error occurred'.",
+              "lineNumber": 7,
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              },
+              "name": "message"
+            }
+          ],
+          "loc": {
+            "start": {
+              "line": 3,
+              "column": 0
+            },
+            "end": {
+              "line": 11,
+              "column": 3
+            }
+          },
+          "context": {
+            "loc": {
+              "start": {
+                "line": 13,
+                "column": 0
+              },
+              "end": {
+                "line": 28,
+                "column": 16
+              }
+            },
+            "file": "/home/jenkins/workspace/jobs_webrtcjs_beta/packages/kandy/src/errors/index.js"
+          },
+          "augments": [],
+          "examples": [],
+          "implements": [],
+          "params": [],
+          "properties": [
+            {
+              "title": "property",
+              "name": "code",
+              "lineNumber": 6,
+              "description": {
+                "type": "root",
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "The code of the error. If no code is known, this will be 'NO_CODE'."
+                      }
+                    ]
+                  }
+                ]
+              },
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              }
+            },
+            {
+              "title": "property",
+              "name": "message",
+              "lineNumber": 7,
+              "description": {
+                "type": "root",
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "A human-readable message to describe the error. If no message is known, this will be 'An error occurred'."
+                      }
+                    ]
+                  }
+                ]
+              },
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              }
+            }
+          ],
+          "returns": [],
+          "sees": [],
+          "throws": [],
+          "todos": [],
+          "yields": [],
+          "access": "public",
+          "scope": "static",
+          "kind": "typedef",
+          "name": "BasicError",
+          "type": {
+            "type": "NameExpression",
+            "name": "Object"
+          },
+          "memberof": "api",
+          "members": {
+            "global": [],
+            "inner": [],
+            "instance": [],
+            "events": [],
+            "static": []
+          },
+          "path": [
+            {
+              "name": "api",
+              "kind": "module"
+            },
+            {
+              "name": "BasicError",
+              "kind": "typedef",
+              "scope": "static"
+            }
+          ],
+          "namespace": "api.BasicError"
         }
       ]
     },
@@ -17743,22 +17743,22 @@
           ],
           "loc": {
             "start": {
-              "line": 446,
+              "line": 439,
               "column": 2
             },
             "end": {
-              "line": 469,
+              "line": 462,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 470,
+                "line": 463,
                 "column": 2
               },
               "end": {
-                "line": 502,
+                "line": 495,
                 "column": 3
               }
             },
@@ -18534,69 +18534,6 @@
                 }
               },
               "name": "options.dscpControls"
-            },
-            {
-              "title": "throws",
-              "description": "Throws an error if mediaConstraints.medias is not an array.",
-              "lineNumber": 28,
-              "type": {
-                "type": "NameExpression",
-                "name": "BasicError"
-              }
-            },
-            {
-              "title": "throws",
-              "description": "Throws an error if mediaConstraints.medias Objects are missing `media` and `type` properties.",
-              "lineNumber": 29,
-              "type": {
-                "type": "NameExpression",
-                "name": "BasicError"
-              }
-            },
-            {
-              "title": "throws",
-              "description": "Throws an error if mediaConstraints contains duplicate media kinds.",
-              "lineNumber": 30,
-              "type": {
-                "type": "NameExpression",
-                "name": "BasicError"
-              }
-            },
-            {
-              "title": "throws",
-              "description": "Throws an error if any tracks in mediaConstraints.medias are not detached.",
-              "lineNumber": 31,
-              "type": {
-                "type": "NameExpression",
-                "name": "BasicError"
-              }
-            },
-            {
-              "title": "throws",
-              "description": "Throws an error if any tracks in mediaConstraints.medias are not local.",
-              "lineNumber": 32,
-              "type": {
-                "type": "NameExpression",
-                "name": "BasicError"
-              }
-            },
-            {
-              "title": "throws",
-              "description": "Throws an error if any tracks in mediaConstraints.medias are already in use by a session.",
-              "lineNumber": 33,
-              "type": {
-                "type": "NameExpression",
-                "name": "BasicError"
-              }
-            },
-            {
-              "title": "throws",
-              "description": "Throws an error if mediaConstraints.medias contains any type other than Object containing `media` and `type` properties.",
-              "lineNumber": 34,
-              "type": {
-                "type": "NameExpression",
-                "name": "BasicError"
-              }
             }
           ],
           "loc": {
@@ -18605,18 +18542,18 @@
               "column": 2
             },
             "end": {
-              "line": 174,
+              "line": 167,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 175,
+                "line": 168,
                 "column": 2
               },
               "end": {
-                "line": 213,
+                "line": 206,
                 "column": 3
               }
             },
@@ -18922,180 +18859,7 @@
           "properties": [],
           "returns": [],
           "sees": [],
-          "throws": [
-            {
-              "description": {
-                "type": "root",
-                "children": [
-                  {
-                    "type": "paragraph",
-                    "children": [
-                      {
-                        "type": "text",
-                        "value": "Throws an error if mediaConstraints.medias is not an array."
-                      }
-                    ]
-                  }
-                ]
-              },
-              "type": {
-                "type": "NameExpression",
-                "name": "BasicError"
-              }
-            },
-            {
-              "description": {
-                "type": "root",
-                "children": [
-                  {
-                    "type": "paragraph",
-                    "children": [
-                      {
-                        "type": "text",
-                        "value": "Throws an error if mediaConstraints.medias Objects are missing "
-                      },
-                      {
-                        "type": "inlineCode",
-                        "value": "media"
-                      },
-                      {
-                        "type": "text",
-                        "value": " and "
-                      },
-                      {
-                        "type": "inlineCode",
-                        "value": "type"
-                      },
-                      {
-                        "type": "text",
-                        "value": " properties."
-                      }
-                    ]
-                  }
-                ]
-              },
-              "type": {
-                "type": "NameExpression",
-                "name": "BasicError"
-              }
-            },
-            {
-              "description": {
-                "type": "root",
-                "children": [
-                  {
-                    "type": "paragraph",
-                    "children": [
-                      {
-                        "type": "text",
-                        "value": "Throws an error if mediaConstraints contains duplicate media kinds."
-                      }
-                    ]
-                  }
-                ]
-              },
-              "type": {
-                "type": "NameExpression",
-                "name": "BasicError"
-              }
-            },
-            {
-              "description": {
-                "type": "root",
-                "children": [
-                  {
-                    "type": "paragraph",
-                    "children": [
-                      {
-                        "type": "text",
-                        "value": "Throws an error if any tracks in mediaConstraints.medias are not detached."
-                      }
-                    ]
-                  }
-                ]
-              },
-              "type": {
-                "type": "NameExpression",
-                "name": "BasicError"
-              }
-            },
-            {
-              "description": {
-                "type": "root",
-                "children": [
-                  {
-                    "type": "paragraph",
-                    "children": [
-                      {
-                        "type": "text",
-                        "value": "Throws an error if any tracks in mediaConstraints.medias are not local."
-                      }
-                    ]
-                  }
-                ]
-              },
-              "type": {
-                "type": "NameExpression",
-                "name": "BasicError"
-              }
-            },
-            {
-              "description": {
-                "type": "root",
-                "children": [
-                  {
-                    "type": "paragraph",
-                    "children": [
-                      {
-                        "type": "text",
-                        "value": "Throws an error if any tracks in mediaConstraints.medias are already in use by a session."
-                      }
-                    ]
-                  }
-                ]
-              },
-              "type": {
-                "type": "NameExpression",
-                "name": "BasicError"
-              }
-            },
-            {
-              "description": {
-                "type": "root",
-                "children": [
-                  {
-                    "type": "paragraph",
-                    "children": [
-                      {
-                        "type": "text",
-                        "value": "Throws an error if mediaConstraints.medias contains any type other than Object containing "
-                      },
-                      {
-                        "type": "inlineCode",
-                        "value": "media"
-                      },
-                      {
-                        "type": "text",
-                        "value": " and "
-                      },
-                      {
-                        "type": "inlineCode",
-                        "value": "type"
-                      },
-                      {
-                        "type": "text",
-                        "value": " properties."
-                      }
-                    ]
-                  }
-                ]
-              },
-              "type": {
-                "type": "NameExpression",
-                "name": "BasicError"
-              }
-            }
-          ],
+          "throws": [],
           "todos": [],
           "yields": [],
           "access": "public",
@@ -19267,22 +19031,22 @@
           ],
           "loc": {
             "start": {
-              "line": 215,
+              "line": 208,
               "column": 2
             },
             "end": {
-              "line": 234,
+              "line": 227,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 235,
+                "line": 228,
                 "column": 2
               },
               "end": {
-                "line": 261,
+                "line": 254,
                 "column": 3
               }
             },
@@ -19602,22 +19366,22 @@
           ],
           "loc": {
             "start": {
-              "line": 263,
+              "line": 256,
               "column": 2
             },
             "end": {
-              "line": 289,
+              "line": 282,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 290,
+                "line": 283,
                 "column": 2
               },
               "end": {
-                "line": 323,
+                "line": 316,
                 "column": 3
               }
             },
@@ -19912,22 +19676,22 @@
           ],
           "loc": {
             "start": {
-              "line": 325,
+              "line": 318,
               "column": 2
             },
             "end": {
-              "line": 347,
+              "line": 340,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 348,
+                "line": 341,
                 "column": 2
               },
               "end": {
-                "line": 376,
+                "line": 369,
                 "column": 3
               }
             },
@@ -20245,22 +20009,22 @@
           ],
           "loc": {
             "start": {
-              "line": 378,
+              "line": 371,
               "column": 2
             },
             "end": {
-              "line": 445,
+              "line": 438,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 446,
+                "line": 439,
                 "column": 2
               },
               "end": {
-                "line": 485,
+                "line": 478,
                 "column": 3
               }
             },
@@ -20903,22 +20667,22 @@
           ],
           "loc": {
             "start": {
-              "line": 487,
+              "line": 480,
               "column": 2
             },
             "end": {
-              "line": 531,
+              "line": 524,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 532,
+                "line": 525,
                 "column": 2
               },
               "end": {
-                "line": 552,
+                "line": 545,
                 "column": 3
               }
             },
@@ -21251,22 +21015,22 @@
           ],
           "loc": {
             "start": {
-              "line": 588,
+              "line": 581,
               "column": 2
             },
             "end": {
-              "line": 651,
+              "line": 644,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 652,
+                "line": 645,
                 "column": 2
               },
               "end": {
-                "line": 692,
+                "line": 685,
                 "column": 3
               }
             },
@@ -32694,16 +32458,16 @@
             },
             {
               "title": "returns",
-              "description": "Resolves with an array of objects containing both a media type and a media object.",
+              "description": "An array of objects containing both a media type and a media object.",
               "lineNumber": 6,
               "type": {
                 "type": "NameExpression",
-                "name": "Promise"
+                "name": "Array"
               }
             },
             {
               "title": "example",
-              "description": "await client.media.createLocalMedia({ video: true })\n// Get all detached tracks\nconst medias = await client.media.getLocalMedia()",
+              "description": "await client.media.createLocalMedia({ video: true })\n// Get all detached tracks\nconst medias = client.media.getLocalMedia()",
               "lineNumber": 7
             }
           ],
@@ -32733,7 +32497,7 @@
           "augments": [],
           "examples": [
             {
-              "description": "await client.media.createLocalMedia({ video: true })\n// Get all detached tracks\nconst medias = await client.media.getLocalMedia()"
+              "description": "await client.media.createLocalMedia({ video: true })\n// Get all detached tracks\nconst medias = client.media.getLocalMedia()"
             }
           ],
           "implements": [],
@@ -32749,7 +32513,7 @@
                     "children": [
                       {
                         "type": "text",
-                        "value": "Resolves with an array of objects containing both a media type and a media object."
+                        "value": "An array of objects containing both a media type and a media object."
                       }
                     ]
                   }
@@ -32758,7 +32522,7 @@
               "title": "returns",
               "type": {
                 "type": "NameExpression",
-                "name": "Promise"
+                "name": "Array"
               }
             }
           ],
@@ -32831,13 +32595,22 @@
             },
             {
               "title": "param",
-              "description": "An id to a track to be cleaned up.",
+              "description": "An object representing the local media to dispose or a string representing a trackId.",
               "lineNumber": 6,
               "type": {
-                "type": "NameExpression",
-                "name": "string"
+                "type": "UnionType",
+                "elements": [
+                  {
+                    "type": "NameExpression",
+                    "name": "Object"
+                  },
+                  {
+                    "type": "NameExpression",
+                    "name": "string"
+                  }
+                ]
               },
-              "name": "trackId"
+              "name": "localMedia"
             },
             {
               "title": "returns",
@@ -32901,7 +32674,7 @@
                 "column": 4
               },
               "end": {
-                "line": 205,
+                "line": 215,
                 "column": 5
               }
             },
@@ -32913,7 +32686,7 @@
           "params": [
             {
               "title": "param",
-              "name": "trackId",
+              "name": "localMedia",
               "lineNumber": 6,
               "description": {
                 "type": "root",
@@ -32923,15 +32696,24 @@
                     "children": [
                       {
                         "type": "text",
-                        "value": "An id to a track to be cleaned up."
+                        "value": "An object representing the local media to dispose or a string representing a trackId."
                       }
                     ]
                   }
                 ]
               },
               "type": {
-                "type": "NameExpression",
-                "name": "string"
+                "type": "UnionType",
+                "elements": [
+                  {
+                    "type": "NameExpression",
+                    "name": "Object"
+                  },
+                  {
+                    "type": "NameExpression",
+                    "name": "string"
+                  }
+                ]
               }
             }
           ],
@@ -33157,22 +32939,22 @@
           ],
           "loc": {
             "start": {
-              "line": 207,
+              "line": 217,
               "column": 4
             },
             "end": {
-              "line": 233,
+              "line": 243,
               "column": 7
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 234,
+                "line": 244,
                 "column": 4
               },
               "end": {
-                "line": 245,
+                "line": 255,
                 "column": 5
               }
             },
@@ -33406,22 +33188,22 @@
           ],
           "loc": {
             "start": {
-              "line": 247,
+              "line": 257,
               "column": 4
             },
             "end": {
-              "line": 260,
+              "line": 270,
               "column": 7
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 261,
+                "line": 271,
                 "column": 4
               },
               "end": {
-                "line": 264,
+                "line": 274,
                 "column": 5
               }
             },
@@ -33630,22 +33412,22 @@
           ],
           "loc": {
             "start": {
-              "line": 266,
+              "line": 276,
               "column": 4
             },
             "end": {
-              "line": 288,
+              "line": 298,
               "column": 7
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 289,
+                "line": 299,
                 "column": 4
               },
               "end": {
-                "line": 306,
+                "line": 316,
                 "column": 5
               }
             },
@@ -33813,22 +33595,22 @@
           ],
           "loc": {
             "start": {
-              "line": 308,
+              "line": 318,
               "column": 4
             },
             "end": {
-              "line": 322,
+              "line": 332,
               "column": 7
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 323,
+                "line": 333,
                 "column": 4
               },
               "end": {
-                "line": 340,
+                "line": 350,
                 "column": 5
               }
             },

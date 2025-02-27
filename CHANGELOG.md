@@ -7,6 +7,14 @@ Ribbon WebRTC SDK change log.
 - This project adheres to [Semantic Versioning](http://semver.org/).
 - This change log follows [keepachangelog.com](http://keepachangelog.com/) recommendations.
 
+## 7.4.0 - beta
+
+### Changed
+
+- Changed the media.getLocalMedia API to no longer be asynchronous. `KJS-2496`.
+  - It now returns the media objects directly instead of a promise that resolves with them.
+- Changed the argument list passed to the `disposeLocalMedia` API. It now takes the same media object type that is returned by `createLocalMedia` and `getLocalMedia` APIs. `KJS-2523`
+
 ## 7.3.0 - 2025-02-26
 
 ### Fixed
