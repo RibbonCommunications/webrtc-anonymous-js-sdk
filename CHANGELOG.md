@@ -9,6 +9,10 @@ Ribbon WebRTC SDK change log.
 
 ## 7.4.0 - beta
 
+### Fixed
+
+- Fixed a Call issue where the `call.resync` API would trigger the Call resyncing operation twice, even though the API was called once. `KJS-2696`
+
 ### Added
 
 - A timeout is added to all REST requests made to the Gateway. `KJS-2703`
