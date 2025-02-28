@@ -9,9 +9,15 @@ Ribbon WebRTC SDK change log.
 
 ## 7.4.0 - beta
 
+### Added
+
+- A timeout is added to all REST requests made to the Gateway. `KJS-2703`
+  - The default timeout value is 30 seconds.
+  - The value is configurable via the `restTimeout` parameter under the new `request` section of configuration documentation.
+
 ### Changed
 
-- Changed the media.getLocalMedia API to no longer be asynchronous. `KJS-2496`.
+- Changed the media.getLocalMedia API to no longer be asynchronous. `KJS-2496`
   - It now returns the media objects directly instead of a promise that resolves with them.
 - Changed the argument list passed to the `disposeLocalMedia` API. It now takes the same media object type that is returned by `createLocalMedia` and `getLocalMedia` APIs. `KJS-2523`
 

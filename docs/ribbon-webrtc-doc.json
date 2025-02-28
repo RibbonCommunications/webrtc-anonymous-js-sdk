@@ -1965,6 +1965,189 @@
                 "children": [
                   {
                     "type": "text",
+                    "value": "Configurable options for the Request plugin."
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "type": "text",
+                    "value": "The SDK uses the Request plugin to make REST requests to the Gateway."
+                  }
+                ]
+              }
+            ]
+          },
+          "tags": [
+            {
+              "title": "public",
+              "description": null,
+              "lineNumber": 5,
+              "type": null
+            },
+            {
+              "title": "static",
+              "description": null,
+              "lineNumber": 6
+            },
+            {
+              "title": "name",
+              "description": null,
+              "lineNumber": 7,
+              "name": "config.request"
+            },
+            {
+              "title": "memberof",
+              "description": "config",
+              "lineNumber": 8
+            },
+            {
+              "title": "instance",
+              "description": null,
+              "lineNumber": 9
+            },
+            {
+              "title": "param",
+              "description": "Request configuration",
+              "lineNumber": 10,
+              "type": {
+                "type": "NameExpression",
+                "name": "Object"
+              },
+              "name": "request"
+            },
+            {
+              "title": "param",
+              "description": "The timeout for REST requests, in milliseconds. After this time, the request will be considered failed.",
+              "lineNumber": 11,
+              "type": {
+                "type": "OptionalType",
+                "expression": {
+                  "type": "NameExpression",
+                  "name": "Number"
+                }
+              },
+              "name": "request.restTimeout",
+              "default": "30000"
+            }
+          ],
+          "loc": {
+            "start": {
+              "line": 4,
+              "column": 0
+            },
+            "end": {
+              "line": 16,
+              "column": 3
+            }
+          },
+          "context": {
+            "loc": {
+              "start": {
+                "line": 30,
+                "column": 0
+              },
+              "end": {
+                "line": 34,
+                "column": 1
+              }
+            },
+            "file": "/home/jenkins/workspace/jobs_webrtcjs_beta/packages/kandy/src/request/configs.js"
+          },
+          "augments": [],
+          "examples": [],
+          "implements": [],
+          "params": [
+            {
+              "title": "param",
+              "name": "request",
+              "lineNumber": 10,
+              "description": {
+                "type": "root",
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "Request configuration"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "type": {
+                "type": "NameExpression",
+                "name": "Object"
+              },
+              "properties": [
+                {
+                  "title": "param",
+                  "name": "request.restTimeout",
+                  "lineNumber": 11,
+                  "description": {
+                    "type": "root",
+                    "children": [
+                      {
+                        "type": "paragraph",
+                        "children": [
+                          {
+                            "type": "text",
+                            "value": "The timeout for REST requests, in milliseconds. After this time, the request will be considered failed."
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "type": {
+                    "type": "NameExpression",
+                    "name": "Number"
+                  },
+                  "default": "30000"
+                }
+              ]
+            }
+          ],
+          "properties": [],
+          "returns": [],
+          "sees": [],
+          "throws": [],
+          "todos": [],
+          "yields": [],
+          "access": "public",
+          "scope": "instance",
+          "name": "config.request",
+          "memberof": "config",
+          "members": {
+            "global": [],
+            "inner": [],
+            "instance": [],
+            "events": [],
+            "static": []
+          },
+          "path": [
+            {
+              "name": "config",
+              "kind": "module"
+            },
+            {
+              "name": "config.request",
+              "scope": "instance"
+            }
+          ],
+          "namespace": "config#config.request"
+        },
+        {
+          "description": {
+            "type": "root",
+            "children": [
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "type": "text",
                     "value": "Configuration options for the Subscription feature."
                   }
                 ]
@@ -34316,22 +34499,22 @@
     ],
     "loc": {
       "start": {
-        "line": 18,
+        "line": 22,
         "column": 4
       },
       "end": {
-        "line": 23,
+        "line": 27,
         "column": 7
       }
     },
     "context": {
       "loc": {
         "start": {
-          "line": 53,
+          "line": 57,
           "column": 4
         },
         "end": {
-          "line": 61,
+          "line": 64,
           "column": 5
         }
       },
@@ -34450,22 +34633,22 @@
           ],
           "loc": {
             "start": {
-              "line": 25,
+              "line": 29,
               "column": 4
             },
             "end": {
-              "line": 52,
+              "line": 56,
               "column": 7
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 53,
+                "line": 57,
                 "column": 4
               },
               "end": {
-                "line": 61,
+                "line": 64,
                 "column": 5
               }
             },
