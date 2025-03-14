@@ -7,6 +7,14 @@ Ribbon WebRTC SDK change log.
 - This project adheres to [Semantic Versioning](http://semver.org/).
 - This change log follows [keepachangelog.com](http://keepachangelog.com/) recommendations.
 
+## 6.16.3 - 2025-03-14
+
+### Added
+
+- A timeout is added to all REST requests made to the Gateway. `KJS-2705`
+  - The default timeout value is 30 seconds.
+  - The value is configurable via the `restTimeout` parameter under the new `request` section of configuration documentation.
+
 ## 6.16.1 - 2024-11-18
 
 ### Fixed

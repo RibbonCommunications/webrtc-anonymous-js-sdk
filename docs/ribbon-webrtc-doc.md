@@ -179,6 +179,18 @@ Configuration options for the notification feature.
         *   `notifications.pushRegistration.protocol` **[string][8]?** Protocol for the push registration server.
         *   `notifications.pushRegistration.version` **[string][8]?** Version for the push registration server.
 
+### config.request
+
+Configurable options for the Request plugin.
+
+The SDK uses the Request plugin to make REST requests to the Gateway.
+
+#### Parameters
+
+*   `request` **[Object][7]** Request configuration
+
+    *   `request.restTimeout` **[Number][12]** The timeout for REST requests, in milliseconds. After this time, the request will be considered failed. (optional, default `30000`)
+
 ## api
 
 The 'api' is the type returned by the create function.

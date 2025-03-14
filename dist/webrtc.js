@@ -12,7 +12,7 @@
  *
  * WebRTC.js
  * webrtc.anonymous.js
- * Version: 6.16.1
+ * Version: 6.16.3
  */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
@@ -100,8 +100,8 @@ __webpack_require__.d(__webpack_exports__, {
 
 // EXTERNAL MODULE: ../../node_modules/@redux-saga/symbols/dist/redux-saga-symbols.esm.js
 var redux_saga_symbols_esm = __webpack_require__(3068);
-// EXTERNAL MODULE: ../../node_modules/@babel/runtime/helpers/esm/extends.js
-var esm_extends = __webpack_require__(89575);
+// EXTERNAL MODULE: ../../node_modules/@redux-saga/core/node_modules/@babel/runtime/helpers/esm/extends.js
+var esm_extends = __webpack_require__(74070);
 // EXTERNAL MODULE: ../../node_modules/@redux-saga/is/dist/redux-saga-is.esm.js
 var redux_saga_is_esm = __webpack_require__(54860);
 ;// CONCATENATED MODULE: ../../node_modules/@redux-saga/delay-p/dist/redux-saga-delay-p.esm.js
@@ -2348,7 +2348,7 @@ module.exports = root;
 
 /***/ }),
 
-/***/ 75668:
+/***/ 6693:
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -2366,7 +2366,7 @@ exports.getVersion = getVersion;
  * for the @@ tag below with actual version value.
  */
 function getVersion() {
-  return '6.16.1';
+  return '6.16.3';
 }
 
 /***/ }),
@@ -11140,7 +11140,7 @@ Object.defineProperty(exports, "__esModule", ({
 exports["default"] = getStatsOperation;
 var _selectors = __webpack_require__(40481);
 var _kandyWebrtc = __webpack_require__(37654);
-var _version = __webpack_require__(75668);
+var _version = __webpack_require__(6693);
 var _sdkId = _interopRequireDefault(__webpack_require__(20855));
 function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
 // Call plugin.
@@ -23846,7 +23846,7 @@ __webpack_require__(91883);
 __webpack_require__(70286);
 var _logs = __webpack_require__(69932);
 var _utils = __webpack_require__(1011);
-var _version = __webpack_require__(75668);
+var _version = __webpack_require__(6693);
 var _defaults = __webpack_require__(24679);
 var _validation = __webpack_require__(52932);
 // Other plugins.
@@ -33491,7 +33491,7 @@ exports.openWebsocket = openWebsocket;
 exports.wsEmitter = wsEmitter;
 __webpack_require__(97107);
 var _actions = __webpack_require__(47183);
-var _reduxSaga = __webpack_require__(71028);
+var _reduxSaga = __webpack_require__(49829);
 var _effects = __webpack_require__(89979);
 var _utils = __webpack_require__(1011);
 var _actions2 = __webpack_require__(50130);
@@ -35309,11 +35309,11 @@ var _map2 = _interopRequireDefault(__webpack_require__(5968));
 var _cloneDeep2 = _interopRequireDefault(__webpack_require__(89321));
 var _redux = __webpack_require__(14848);
 var _reduxDevtoolsExtension = __webpack_require__(88185);
-var _reduxSaga = _interopRequireDefault(__webpack_require__(71028));
+var _reduxSaga = _interopRequireDefault(__webpack_require__(49829));
 var _effects = __webpack_require__(89979);
 var _bottlejs = _interopRequireDefault(__webpack_require__(8997));
 var _utils = __webpack_require__(1011);
-var _version = __webpack_require__(75668);
+var _version = __webpack_require__(6693);
 var _intervalFactory = _interopRequireDefault(__webpack_require__(73181));
 var _validation = __webpack_require__(52932);
 function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
@@ -38559,7 +38559,23 @@ var _validation = __webpack_require__(52932);
 // Parse and/or Validate
 
 /**
- * Configurable properties 'published' by this "Request" plugin.
+ * Configurable options for the Request plugin.
+ *
+ * The SDK uses the Request plugin to make REST requests to the Gateway.
+ *
+ * @public
+ * @static
+ * @name config.request
+ * @memberof config
+ * @instance
+ * @param {Object} request Request configuration
+ * @param {Number} [request.restTimeout=30000] The timeout for REST requests, in milliseconds. After this time, the request will be considered failed.
+ */
+
+/**
+ *  NOTE: The following config properties are intentionally not included to the public API documentation
+ *  because they are not currently sent to or used by the WebRTC Gateway, as far as we're aware.
+ *
  * NOTE: Do NOT expose the config properties (related to this plugin) to the public API documentation.
  *
  * @property {boolean} [injectAgentVersionHeader=true] Option to automatically inject an agent version header to every REST request.
@@ -38569,11 +38585,14 @@ var _validation = __webpack_require__(52932);
  *           This additional suffix value is only used when injectAgentVersionHeader property is enabled.
  */
 const defaultOptions = exports.defaultOptions = {
+  customAgentVersionHeaderSuffix: '',
   injectAgentVersionHeader: true,
-  customAgentVersionHeaderSuffix: ''
+  restTimeout: 30000 // milliseconds
 };
 const v8nValidation = _validation.validation.schema({
-  injectAgentVersionHeader: _validation.validation.boolean()
+  customAgentVersionHeaderSuffix: _validation.validation.string(),
+  injectAgentVersionHeader: _validation.validation.boolean(),
+  restTimeout: _validation.validation.number()
 });
 const parseOptions = exports.parseOptions = (0, _validation.parse)('request', v8nValidation);
 
@@ -38899,6 +38918,7 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports.customAgentVersionHeaderSuffix = customAgentVersionHeaderSuffix;
+exports.getRESTTimeout = getRESTTimeout;
 exports.injectAgentVersionHeader = injectAgentVersionHeader;
 /**
  * Retrieves the flag which specifies wether or not this SDK should use a custom header as part of any requests being sent to server.
@@ -38921,6 +38941,15 @@ function customAgentVersionHeaderSuffix(state) {
   return state.config.requests.customAgentVersionHeaderSuffix;
 }
 
+/**
+ * Retrieves the timeout value for REST requests set in the configuration.
+ * @param {Object} state  The current Redux state object.
+ * @return {number} The timeout value in milliseconds.
+ */
+function getRESTTimeout(state) {
+  return state.config.requests.restTimeout;
+}
+
 /***/ }),
 
 /***/ 18439:
@@ -38935,11 +38964,15 @@ Object.defineProperty(exports, "__esModule", ({
 exports["default"] = makeRequest;
 __webpack_require__(97107);
 __webpack_require__(62234);
+__webpack_require__(57182);
 var _logs = __webpack_require__(69932);
 var _utils = __webpack_require__(1011);
+var _selectors = __webpack_require__(45590);
 // Other plugins.
 
 // Utils.
+
+// Selectors.
 
 /**
  * The possible response data types that can be handled.
@@ -38972,7 +39005,7 @@ const responseTypes = Object.freeze({
  * @param {Blob|BufferSource|FormData|UrlSearchParams|string} [options.body] The request body
  * @return {Promise} A promise that resolves with a custom response object.
  */
-async function makeRequest(options, requestId) {
+async function makeRequest(options, requestId, context) {
   const log = _logs.logManager.getLogger('REQUEST', requestId);
 
   /*
@@ -38997,6 +39030,11 @@ async function makeRequest(options, requestId) {
   // Cut it short if it's too long, since this should be human-readable.
   endUrl = endUrl.length > 15 ? endUrl.substring(0, 15) + '...' : endUrl;
   log.info(`Making ${fetchOptions.method} ${endUrl} request.`);
+
+  // Add a timeout to the fetch operation.
+  if (!fetchOptions.signal) {
+    fetchOptions.signal = AbortSignal.timeout((0, _selectors.getRESTTimeout)(context.getState()));
+  }
   let response;
   /*
    * Make the request. Scenarios to check for:
@@ -39008,7 +39046,8 @@ async function makeRequest(options, requestId) {
    */
   try {
     response = await fetch(url + (0, _utils.toQueryString)(queryParams), fetchOptions);
-  } catch (err) {
+  } catch (e) {
+    const err = formatFetchError(e);
     // Scenario 1: Fetch failed.
     log.info(`Failed to make request, caused by ${err.message}`);
     return makeResponse({
@@ -39256,6 +39295,38 @@ function makeResponse() {
   };
 }
 
+/**
+ * Format the error returned by fetch to be more descriptive.
+ *
+ * @param {Error} error The original error thrown by fetch
+ * @returns {Error} Either the original error or a new DOMException error with a more descriptive message
+ */
+function formatFetchError(error) {
+  /**
+   * In general we do not want to change the contents of fetch errors. Those that follow should be considered very special cases.
+   *
+   * In the case that the fetch times out, the error returned by AbortSignal.timeout() will differ depending on the browser version.
+   * See details in https://developer.mozilla.org/en-US/docs/Web/API/AbortSignal/timeout_static#browser_compatibility
+   *
+   * In Chrome versions >=103 and <124, error.name will be "AbortError" and error.message = "The user aborted a request."
+   *  This isn't great as it indicates that the user aborted the request, which is not the case.
+   *
+   * In Chrome versions >=124, the error will be a DOMException, error.name will be "TimeoutError" and error.message = "signal timed out".
+   *  While this is better, it could still be more descriptive.
+   *
+   * Modify both of these cases to return a consistent error message that clearly indicates that the request timed out.
+   */
+
+  const {
+    name,
+    message
+  } = error;
+  if (name === 'AbortError' && message === 'The user aborted a request.' || name === 'TimeoutError' && message === 'signal timed out') {
+    return new DOMException('Request timed out', 'TimeoutError');
+  }
+  return error;
+}
+
 /***/ }),
 
 /***/ 87937:
@@ -39315,7 +39386,7 @@ function createRequestHelper(container) {
     log.debug(`Making REST request ${action.meta.requestId}.`, logOptions);
 
     // Make the request based on the action
-    const result = await (0, _makeRequest.default)(action.payload, action.meta.requestId);
+    const result = await (0, _makeRequest.default)(action.payload, action.meta.requestId, context);
     log.debug(`Received REST response ${action.meta.requestId}.`, result);
 
     // Perform the authorization check side-effect by calling the 'authorization' function for Link platform.
@@ -39421,7 +39492,7 @@ var _cloneDeep2 = _interopRequireDefault(__webpack_require__(89321));
 var _selectors = __webpack_require__(45590);
 var _selectors2 = __webpack_require__(87075);
 var _logs = __webpack_require__(69932);
-var _version = __webpack_require__(75668);
+var _version = __webpack_require__(6693);
 var _utils = __webpack_require__(1011);
 var _effects = __webpack_require__(89979);
 function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
@@ -74198,7 +74269,7 @@ exports.devToolsEnhancer =
 
 /***/ }),
 
-/***/ 71028:
+/***/ 49829:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -74223,9 +74294,9 @@ __webpack_require__.d(__webpack_exports__, {
 
 // EXTERNAL MODULE: ../../node_modules/@redux-saga/symbols/dist/redux-saga-symbols.esm.js
 var redux_saga_symbols_esm = __webpack_require__(3068);
-// EXTERNAL MODULE: ../../node_modules/@babel/runtime/helpers/esm/extends.js
-var esm_extends = __webpack_require__(89575);
-;// CONCATENATED MODULE: ../../node_modules/@babel/runtime/helpers/esm/objectWithoutPropertiesLoose.js
+// EXTERNAL MODULE: ../../node_modules/@redux-saga/core/node_modules/@babel/runtime/helpers/esm/extends.js
+var esm_extends = __webpack_require__(74070);
+;// CONCATENATED MODULE: ../../node_modules/@redux-saga/core/node_modules/@babel/runtime/helpers/esm/objectWithoutPropertiesLoose.js
 function _objectWithoutPropertiesLoose(r, e) {
   if (null == r) return {};
   var t = {};
@@ -76179,39 +76250,41 @@ function _typeof(o) {
     return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o;
   }, _typeof(o);
 }
-
 ;// CONCATENATED MODULE: ../../node_modules/@babel/runtime/helpers/esm/toPrimitive.js
 
-function toPrimitive(t, r) {
-  if ("object" != _typeof(t) || !t) return t;
-  var e = t[Symbol.toPrimitive];
-  if (void 0 !== e) {
-    var i = e.call(t, r || "default");
-    if ("object" != _typeof(i)) return i;
+function _toPrimitive(input, hint) {
+  if (_typeof(input) !== "object" || input === null) return input;
+  var prim = input[Symbol.toPrimitive];
+  if (prim !== undefined) {
+    var res = prim.call(input, hint || "default");
+    if (_typeof(res) !== "object") return res;
     throw new TypeError("@@toPrimitive must return a primitive value.");
   }
-  return ("string" === r ? String : Number)(t);
+  return (hint === "string" ? String : Number)(input);
 }
-
 ;// CONCATENATED MODULE: ../../node_modules/@babel/runtime/helpers/esm/toPropertyKey.js
 
 
-function toPropertyKey(t) {
-  var i = toPrimitive(t, "string");
-  return "symbol" == _typeof(i) ? i : i + "";
+function _toPropertyKey(arg) {
+  var key = _toPrimitive(arg, "string");
+  return _typeof(key) === "symbol" ? key : String(key);
 }
-
 ;// CONCATENATED MODULE: ../../node_modules/@babel/runtime/helpers/esm/defineProperty.js
 
-function _defineProperty(e, r, t) {
-  return (r = toPropertyKey(r)) in e ? Object.defineProperty(e, r, {
-    value: t,
-    enumerable: !0,
-    configurable: !0,
-    writable: !0
-  }) : e[r] = t, e;
+function _defineProperty(obj, key, value) {
+  key = _toPropertyKey(key);
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+  return obj;
 }
-
 ;// CONCATENATED MODULE: ../../node_modules/@babel/runtime/helpers/esm/objectSpread2.js
 
 function ownKeys(e, r) {
@@ -76235,7 +76308,6 @@ function _objectSpread2(e) {
   }
   return e;
 }
-
 ;// CONCATENATED MODULE: ../../node_modules/redux/es/redux.js
 
 
@@ -77743,7 +77815,7 @@ module.exports = str => encodeURIComponent(str).replace(/[!'()*]/g, x => `%${x.c
 
 /***/ }),
 
-/***/ 6862:
+/***/ 35243:
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -78184,7 +78256,7 @@ var _v4 = _interopRequireDefault(__webpack_require__(93423));
 
 var _nil = _interopRequireDefault(__webpack_require__(35911));
 
-var _version = _interopRequireDefault(__webpack_require__(6862));
+var _version = _interopRequireDefault(__webpack_require__(35243));
 
 var _validate = _interopRequireDefault(__webpack_require__(4564));
 
@@ -86120,7 +86192,7 @@ module.exports = function (key, value) {
 
 var globalThis = __webpack_require__(79117);
 var fails = __webpack_require__(5234);
-var V8 = __webpack_require__(2054);
+var V8 = __webpack_require__(74631);
 var ENVIRONMENT = __webpack_require__(11078);
 
 var structuredClone = globalThis.structuredClone;
@@ -86143,7 +86215,7 @@ module.exports = !!structuredClone && !fails(function () {
 "use strict";
 
 /* eslint-disable es/no-symbol -- required for testing */
-var V8_VERSION = __webpack_require__(2054);
+var V8_VERSION = __webpack_require__(74631);
 var fails = __webpack_require__(5234);
 var globalThis = __webpack_require__(79117);
 
@@ -87128,10 +87200,10 @@ var fails = __webpack_require__(5234);
 var aCallable = __webpack_require__(44977);
 var internalSort = __webpack_require__(9295);
 var ArrayBufferViewCore = __webpack_require__(47223);
-var FF = __webpack_require__(28504);
+var FF = __webpack_require__(72165);
 var IE_OR_EDGE = __webpack_require__(84598);
-var V8 = __webpack_require__(2054);
-var WEBKIT = __webpack_require__(1122);
+var V8 = __webpack_require__(74631);
+var WEBKIT = __webpack_require__(74735);
 
 var aTypedArray = ArrayBufferViewCore.aTypedArray;
 var exportTypedArrayMethod = ArrayBufferViewCore.exportTypedArrayMethod;
@@ -87479,7 +87551,7 @@ if (DESCRIPTORS && !('size' in URLSearchParamsPrototype)) {
 
 /***/ }),
 
-/***/ 28504:
+/***/ 72165:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -87493,7 +87565,7 @@ module.exports = !!firefox && +firefox[1];
 
 /***/ }),
 
-/***/ 2054:
+/***/ 74631:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -87529,7 +87601,7 @@ module.exports = version;
 
 /***/ }),
 
-/***/ 1122:
+/***/ 74735:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -87543,7 +87615,7 @@ module.exports = !!webkit && +webkit[1];
 
 /***/ }),
 
-/***/ 89575:
+/***/ 74070:
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
