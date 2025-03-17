@@ -2348,7 +2348,7 @@ module.exports = root;
 
 /***/ }),
 
-/***/ 6693:
+/***/ 62831:
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -11140,7 +11140,7 @@ Object.defineProperty(exports, "__esModule", ({
 exports["default"] = getStatsOperation;
 var _selectors = __webpack_require__(40481);
 var _kandyWebrtc = __webpack_require__(37654);
-var _version = __webpack_require__(6693);
+var _version = __webpack_require__(62831);
 var _sdkId = _interopRequireDefault(__webpack_require__(20855));
 function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
 // Call plugin.
@@ -23846,7 +23846,7 @@ __webpack_require__(91883);
 __webpack_require__(70286);
 var _logs = __webpack_require__(69932);
 var _utils = __webpack_require__(1011);
-var _version = __webpack_require__(6693);
+var _version = __webpack_require__(62831);
 var _defaults = __webpack_require__(24679);
 var _validation = __webpack_require__(52932);
 // Other plugins.
@@ -35313,7 +35313,7 @@ var _reduxSaga = _interopRequireDefault(__webpack_require__(49829));
 var _effects = __webpack_require__(89979);
 var _bottlejs = _interopRequireDefault(__webpack_require__(8997));
 var _utils = __webpack_require__(1011);
-var _version = __webpack_require__(6693);
+var _version = __webpack_require__(62831);
 var _intervalFactory = _interopRequireDefault(__webpack_require__(73181));
 var _validation = __webpack_require__(52932);
 function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
@@ -39492,7 +39492,7 @@ var _cloneDeep2 = _interopRequireDefault(__webpack_require__(89321));
 var _selectors = __webpack_require__(45590);
 var _selectors2 = __webpack_require__(87075);
 var _logs = __webpack_require__(69932);
-var _version = __webpack_require__(6693);
+var _version = __webpack_require__(62831);
 var _utils = __webpack_require__(1011);
 var _effects = __webpack_require__(89979);
 function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
@@ -77815,7 +77815,7 @@ module.exports = str => encodeURIComponent(str).replace(/[!'()*]/g, x => `%${x.c
 
 /***/ }),
 
-/***/ 35243:
+/***/ 22261:
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -78256,7 +78256,7 @@ var _v4 = _interopRequireDefault(__webpack_require__(93423));
 
 var _nil = _interopRequireDefault(__webpack_require__(35911));
 
-var _version = _interopRequireDefault(__webpack_require__(35243));
+var _version = _interopRequireDefault(__webpack_require__(22261));
 
 var _validate = _interopRequireDefault(__webpack_require__(4564));
 
@@ -86192,7 +86192,7 @@ module.exports = function (key, value) {
 
 var globalThis = __webpack_require__(79117);
 var fails = __webpack_require__(5234);
-var V8 = __webpack_require__(74631);
+var V8 = __webpack_require__(61613);
 var ENVIRONMENT = __webpack_require__(11078);
 
 var structuredClone = globalThis.structuredClone;
@@ -86215,7 +86215,7 @@ module.exports = !!structuredClone && !fails(function () {
 "use strict";
 
 /* eslint-disable es/no-symbol -- required for testing */
-var V8_VERSION = __webpack_require__(74631);
+var V8_VERSION = __webpack_require__(61613);
 var fails = __webpack_require__(5234);
 var globalThis = __webpack_require__(79117);
 
@@ -87200,10 +87200,10 @@ var fails = __webpack_require__(5234);
 var aCallable = __webpack_require__(44977);
 var internalSort = __webpack_require__(9295);
 var ArrayBufferViewCore = __webpack_require__(47223);
-var FF = __webpack_require__(72165);
+var FF = __webpack_require__(70655);
 var IE_OR_EDGE = __webpack_require__(84598);
-var V8 = __webpack_require__(74631);
-var WEBKIT = __webpack_require__(74735);
+var V8 = __webpack_require__(61613);
+var WEBKIT = __webpack_require__(61325);
 
 var aTypedArray = ArrayBufferViewCore.aTypedArray;
 var exportTypedArrayMethod = ArrayBufferViewCore.exportTypedArrayMethod;
@@ -87551,7 +87551,7 @@ if (DESCRIPTORS && !('size' in URLSearchParamsPrototype)) {
 
 /***/ }),
 
-/***/ 72165:
+/***/ 70655:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -87565,7 +87565,7 @@ module.exports = !!firefox && +firefox[1];
 
 /***/ }),
 
-/***/ 74631:
+/***/ 61613:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -87601,7 +87601,7 @@ module.exports = version;
 
 /***/ }),
 
-/***/ 74735:
+/***/ 61325:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
