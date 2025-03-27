@@ -7,6 +7,25 @@ Ribbon WebRTC SDK change log.
 - This project adheres to [Semantic Versioning](http://semver.org/).
 - This change log follows [keepachangelog.com](http://keepachangelog.com/) recommendations.
 
+## 7.4.0 - 2025-03-27
+
+### Added
+
+- A timeout is added to all REST requests made to the Gateway. `KJS-2703`
+  - The default timeout value is 30 seconds.
+  - The value is configurable via the `restTimeout` parameter under the new `request` section of configuration documentation.
+
+### Fixed
+
+- Fixed a Call issue where the `call.resync` API would trigger the Call resyncing operation twice, even though the API was called once. `KJS-2696`
+- Fixed a Call issue where the audio or video track on the remote side will freeze if you try to add local media to the call after it has already been added previously (same track id). If you try to add the same track more than once, there will be an error on the `call:newMedia` event indicating that you can't add the same media more than once to a call. `KJS-2656`
+
+### Changed
+
+- Changed the media.getLocalMedia API to no longer be asynchronous. `KJS-2496`
+  - It now returns the media objects directly instead of a promise that resolves with them.
+- Changed the argument list passed to the `disposeLocalMedia` API. It now takes the same media object type that is returned by `createLocalMedia` and `getLocalMedia` APIs. `KJS-2523`
+
 ## 7.3.0 - 2025-02-26
 
 ### Fixed
