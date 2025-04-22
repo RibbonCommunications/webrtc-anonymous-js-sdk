@@ -9,6 +9,10 @@ Ribbon WebRTC SDK change log.
 
 ## 7.5.0 - beta
 
+### Fixed
+
+- Addressed browser support gap introduced by previous REST timeout solution. `KJS-2772`
+
 ## 7.4.0 - 2025-03-27
 
 ### Added
