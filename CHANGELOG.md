@@ -7,6 +7,14 @@ Ribbon WebRTC SDK change log.
 - This project adheres to [Semantic Versioning](http://semver.org/).
 - This change log follows [keepachangelog.com](http://keepachangelog.com/) recommendations.
 
+## 7.5.0 - 2025-04-24
+
+### Fixed
+
+- Addressed browser support gap introduced by previous REST timeout solution. `KJS-2772`
+- Fixed Call issues where a call's report would be missing events if their respective operation failed due to media validation. `KJS-2827`, `KJS-2828`
+  - Fixed operations are: `addMedia` and `replaceTrack`.
+
 ## 7.4.0 - 2025-03-27
 
 ### Added
