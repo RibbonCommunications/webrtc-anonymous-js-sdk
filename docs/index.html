@@ -611,6 +611,17 @@
                   </li>
                 <li><span style="color:magenta">ⓝ</span><a href='#media' class=" toggle-sibling"> api.media <span class='icon'>▸</span> </a><div class='toggle-target display-none'>
                           <ul class='list-reset py1-ul pl1'>
+                          <li class='h5'><span>Types</span></li>
+                          
+                            <li><a
+                              href='#mediadetachedmedia'
+                              class='regular pre-open'>
+                              <span style="color:blue">ⓣ</span> DetachedMedia
+                            </a></li>
+                          
+                          </ul>
+                        
+                          <ul class='list-reset py1-ul pl1'>
                           <li class='h5'><span>Functions</span></li>
                           
                             <li><a
@@ -5092,13 +5103,13 @@ Media is a collection of Track objects.</p>
         <div class='space-bottom0'>
           <span class='code bold'>tracks</span> 
           <code class='quiet'>
-            (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&#x3C;<a href="#calltrackobject">call.TrackObject</a>>)
+            (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&#x3C;<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>>)
           </code>
 
           
 
           
-             : A list of Track objects that are contained in this Media object.
+             : A list of track IDs representing the Track objects contained in this Media object.
 
           
           
@@ -5938,9 +5949,9 @@ Otherwise, in most cases, the value can be any display name that the anonymous u
 
               
                 <tr>
-  <td class='break-word'><span class='code bold'>callOptions.medias</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>?</code>
+  <td class='break-word'><span class='code bold'>callOptions.medias</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&#x3C;<a href="#mediadetachedmedia">media.DetachedMedia</a>>?</code>
   </td>
-  <td class='break-word'><span>List of medias containing tracks to be attached to this call.
+  <td class='break-word'><span>List of detached medias containing tracks to be attached to this call.
 </span></td>
 </tr>
 
@@ -6396,9 +6407,9 @@ added to the Call.</p>
 
               
                 <tr>
-  <td class='break-word'><span class='code bold'>media.medias</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>?</code>
+  <td class='break-word'><span class='code bold'>media.medias</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&#x3C;<a href="#mediadetachedmedia">media.DetachedMedia</a>>?</code>
   </td>
-  <td class='break-word'><span>List of medias containing tracks to be attached to this call.
+  <td class='break-word'><span>List of detached medias containing tracks to be attached to this call.
 </span></td>
 </tr>
 
@@ -6941,9 +6952,10 @@ seamlessly for the remote application, which will not receive an event.</p>
 
               
                 <tr>
-  <td class='break-word'><span class='code bold'>media.medias</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>?</code>
+  <td class='break-word'><span class='code bold'>media.medias</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&#x3C;<a href="#mediadetachedmedia">media.DetachedMedia</a>>?</code>
   </td>
-  <td class='break-word'><span>List of medias containing tracks to be attached to this call.
+  <td class='break-word'><span>The detached media containing the track to be attached to this
+call. Though this parameter is an array for consistency with other APIs, it should only contain one entry.
 </span></td>
 </tr>
 
@@ -12355,6 +12367,122 @@ the <a href="#mediagetdevices">media.getDevices</a> API.</p>
   
 
   
+      <div class='py1 quiet mt1 prose-big'>Types</div>
+      <div class="clearfix">
+  
+    <div class='border-bottom' id='mediadetachedmedia'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="py1 contain">
+            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
+            <span class='code strong strong truncate'>DetachedMedia</span>
+        </div>
+      </div>
+      <div class="clearfix display-none toggle-target">
+        <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+
+  <p>Detached Media is a special type of <a href="#callmediaobject">call.MediaObject</a> that is created outside the scope of a call. A DetachedMedia
+object is a <a href="#callmediaobject">call.MediaObject</a> that is wrapped with the contained <a href="#calltrackobject">call.TrackObject</a>'s media type for convenience.</p>
+<p>The APIs for managing detached media are available in the <a href="#media">media</a> namespace. They are
+<a href="#mediacreatelocalmedia">media.createLocalMedia</a>, <a href="#mediagetlocalmedia">media.getLocalMedia</a>, and <a href="#mediadisposelocalmedia">media.disposeLocalMedia</a>. Unlike media that is created
+as part of a call, the application is responsible for the lifecycle for a detached media object.</p>
+<p>Accessing local media before a call is made can be used to implement a "media preview" feature, allowing an end-user to
+check their media devices before joining a call.</p>
+<p>Detached Media can also be used as part of a call, rather than new media being created as part of the call operations. This can be
+done as an optimization, to avoid the overhead of creating new media objects during the call setup process. The same Detached
+Media objects can be used for multiple calls, as well.</p>
+
+
+  <div class='pre p1 fill-light mt0'>DetachedMedia</div>
+  
+    <p>
+      Type:
+      <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>
+    </p>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Properties</div>
+    <div>
+      
+        <div class='space-bottom0'>
+          <span class='code bold'>media</span> 
+          <code class='quiet'>
+            (<a href="#callmediaobject">call.MediaObject</a>)
+          </code>
+
+          
+
+          
+             : The media object.
+
+          
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <span class='code bold'>type</span> 
+          <code class='quiet'>
+            (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)
+          </code>
+
+          
+
+          
+             : The type of the media object ('audio', 'video', or 'screen').
+
+          
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'><span class="hljs-comment">// Create new detached media objects.</span>
+<span class="hljs-keyword">const</span> medias = <span class="hljs-keyword">await</span> client.media.createLocalMedia({ <span class="hljs-attr">audio</span>: <span class="hljs-literal">true</span>, <span class="hljs-attr">video</span>: <span class="hljs-literal">true</span> })
+<span class="hljs-comment">// medias === [ { type: &#x27;audio&#x27;, media: &lt;call.MediaObject&gt; }, { type: &#x27;video&#x27;, media: &lt;call.MediaObject&gt; } ]</span>
+<span class="hljs-comment">// where medias[x].type === client.media.getTrackById(medias[x].media.tracks[0].id).type)</span>
+
+<span class="hljs-comment">// Render the local video as a preview.</span>
+client.media.renderTracks([ medias[<span class="hljs-number">1</span>].media.tracks[<span class="hljs-number">0</span>].id ], <span class="hljs-string">&#x27;#localVideoPreview&#x27;</span>)
+
+<span class="hljs-comment">// Use the Detached Media in a call, instead of creating new media for it.</span>
+<span class="hljs-keyword">const</span> call = client.call.make(<span class="hljs-string">&#x27;destination&#x27;</span>, { <span class="hljs-attr">audio</span>: <span class="hljs-literal">false</span>, <span class="hljs-attr">video</span>: <span class="hljs-literal">false</span>, <span class="hljs-attr">medias</span>: medias })</pre>
+    
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
+</div>
+
+    
 
     
       <div class='py1 quiet mt1 prose-big'>Functions</div>
@@ -12708,7 +12836,7 @@ client.media.initializeDevices({ <span class="hljs-attr">audio</span>: <span cla
   <p>Create local media Tracks.</p>
 
 
-  <div class='pre p1 fill-light mt0'>createLocalMedia(mediaConstraints: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a></div>
+  <div class='pre p1 fill-light mt0'>createLocalMedia(mediaConstraints: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&#x3C;<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&#x3C;<a href="#mediadetachedmedia">media.DetachedMedia</a>>></div>
   
   
 
@@ -12784,7 +12912,7 @@ client.media.initializeDevices({ <span class="hljs-attr">audio</span>: <span cla
     <div class='py1 quiet mt1 prose-big'>Returns</div>
     
       <div>
-        <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a></code>:
+        <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&#x3C;<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&#x3C;<a href="#mediadetachedmedia">media.DetachedMedia</a>>></code>:
           Resolves with an array of objects containing both a media type and a media object.
 
         
@@ -12842,7 +12970,7 @@ client.media.initializeDevices({ <span class="hljs-attr">audio</span>: <span cla
   <p>Get local media Tracks.</p>
 
 
-  <div class='pre p1 fill-light mt0'>getLocalMedia(): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></div>
+  <div class='pre p1 fill-light mt0'>getLocalMedia(): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&#x3C;<a href="#mediadetachedmedia">media.DetachedMedia</a>></div>
   
   
 
@@ -12861,8 +12989,8 @@ client.media.initializeDevices({ <span class="hljs-attr">audio</span>: <span cla
     <div class='py1 quiet mt1 prose-big'>Returns</div>
     
       <div>
-        <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></code>:
-          An array of objects containing both a media type and a media object.
+        <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&#x3C;<a href="#mediadetachedmedia">media.DetachedMedia</a>></code>:
+          An array of detached media objects.
 
         
       </div>
@@ -12906,7 +13034,7 @@ client.media.initializeDevices({ <span class="hljs-attr">audio</span>: <span cla
   <p>Dispose local media Tracks.</p>
 
 
-  <div class='pre p1 fill-light mt0'>disposeLocalMedia(localMedia: (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a> | <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&#x3C;<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</a>></div>
+  <div class='pre p1 fill-light mt0'>disposeLocalMedia(localMedia: (<a href="#mediadetachedmedia">media.DetachedMedia</a> | <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&#x3C;<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</a>></div>
   
   
 
@@ -12923,7 +13051,7 @@ client.media.initializeDevices({ <span class="hljs-attr">audio</span>: <span cla
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>localMedia</span> <code class='quiet'>((<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a> | <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>))</code>
+            <span class='code bold'>localMedia</span> <code class='quiet'>((<a href="#mediadetachedmedia">media.DetachedMedia</a> | <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>))</code>
 	    An object representing the local media to dispose or a string representing a trackId.
 
           </div>
