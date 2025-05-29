@@ -9376,13 +9376,22 @@
             },
             {
               "title": "param",
-              "description": "List of medias containing tracks to be attached to this call.",
+              "description": "List of detached medias containing tracks to be attached to this call.",
               "lineNumber": 57,
               "type": {
                 "type": "OptionalType",
                 "expression": {
-                  "type": "NameExpression",
-                  "name": "Array"
+                  "type": "TypeApplication",
+                  "expression": {
+                    "type": "NameExpression",
+                    "name": "Array"
+                  },
+                  "applications": [
+                    {
+                      "type": "NameExpression",
+                      "name": "media.DetachedMedia"
+                    }
+                  ]
                 }
               },
               "name": "callOptions.medias"
@@ -9525,7 +9534,7 @@
                 "column": 2
               },
               "end": {
-                "line": 260,
+                "line": 250,
                 "column": 3
               }
             },
@@ -10050,7 +10059,7 @@
                         "children": [
                           {
                             "type": "text",
-                            "value": "List of medias containing tracks to be attached to this call."
+                            "value": "List of detached medias containing tracks to be attached to this call."
                           }
                         ]
                       }
@@ -10059,8 +10068,17 @@
                   "type": {
                     "type": "OptionalType",
                     "expression": {
-                      "type": "NameExpression",
-                      "name": "Array"
+                      "type": "TypeApplication",
+                      "expression": {
+                        "type": "NameExpression",
+                        "name": "Array"
+                      },
+                      "applications": [
+                        {
+                          "type": "NameExpression",
+                          "name": "media.DetachedMedia"
+                        }
+                      ]
                     }
                   }
                 },
@@ -15353,7 +15371,7 @@
             },
             {
               "title": "property",
-              "description": "A list of Track objects that are contained in this Media object.",
+              "description": "A list of track IDs representing the Track objects contained in this Media object.",
               "lineNumber": 11,
               "type": {
                 "type": "TypeApplication",
@@ -15364,7 +15382,7 @@
                 "applications": [
                   {
                     "type": "NameExpression",
-                    "name": "call.TrackObject"
+                    "name": "string"
                   }
                 ]
               },
@@ -15480,7 +15498,7 @@
                     "children": [
                       {
                         "type": "text",
-                        "value": "A list of Track objects that are contained in this Media object."
+                        "value": "A list of track IDs representing the Track objects contained in this Media object."
                       }
                     ]
                   }
@@ -15495,7 +15513,7 @@
                 "applications": [
                   {
                     "type": "NameExpression",
-                    "name": "call.TrackObject"
+                    "name": "string"
                   }
                 ]
               }
@@ -17036,22 +17054,22 @@
           ],
           "loc": {
             "start": {
-              "line": 426,
+              "line": 427,
               "column": 2
             },
             "end": {
-              "line": 449,
+              "line": 450,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 450,
+                "line": 451,
                 "column": 2
               },
               "end": {
-                "line": 482,
+                "line": 483,
                 "column": 3
               }
             },
@@ -17739,13 +17757,22 @@
             },
             {
               "title": "param",
-              "description": "List of medias containing tracks to be attached to this call.",
+              "description": "List of detached medias containing tracks to be attached to this call.",
               "lineNumber": 21,
               "type": {
                 "type": "OptionalType",
                 "expression": {
-                  "type": "NameExpression",
-                  "name": "Array"
+                  "type": "TypeApplication",
+                  "expression": {
+                    "type": "NameExpression",
+                    "name": "Array"
+                  },
+                  "applications": [
+                    {
+                      "type": "NameExpression",
+                      "name": "media.DetachedMedia"
+                    }
+                  ]
                 }
               },
               "name": "media.medias"
@@ -17987,7 +18014,7 @@
                         "children": [
                           {
                             "type": "text",
-                            "value": "List of medias containing tracks to be attached to this call."
+                            "value": "List of detached medias containing tracks to be attached to this call."
                           }
                         ]
                       }
@@ -17996,8 +18023,17 @@
                   "type": {
                     "type": "OptionalType",
                     "expression": {
-                      "type": "NameExpression",
-                      "name": "Array"
+                      "type": "TypeApplication",
+                      "expression": {
+                        "type": "NameExpression",
+                        "name": "Array"
+                      },
+                      "applications": [
+                        {
+                          "type": "NameExpression",
+                          "name": "media.DetachedMedia"
+                        }
+                      ]
                     }
                   }
                 },
@@ -19136,35 +19172,35 @@
             {
               "title": "public",
               "description": null,
-              "lineNumber": 21,
+              "lineNumber": 20,
               "type": null
             },
             {
               "title": "static",
               "description": null,
-              "lineNumber": 22
+              "lineNumber": 21
             },
             {
               "title": "memberof",
               "description": "call",
-              "lineNumber": 23
+              "lineNumber": 22
             },
             {
               "title": "requires",
               "description": null,
-              "lineNumber": 24,
+              "lineNumber": 23,
               "name": "call"
             },
             {
               "title": "requires",
               "description": null,
-              "lineNumber": 25,
+              "lineNumber": 24,
               "name": "callMe"
             },
             {
               "title": "param",
               "description": "The ID of the call to replace the track of.",
-              "lineNumber": 26,
+              "lineNumber": 25,
               "type": {
                 "type": "NameExpression",
                 "name": "string"
@@ -19174,7 +19210,7 @@
             {
               "title": "param",
               "description": "The ID of the track to replace.",
-              "lineNumber": 27,
+              "lineNumber": 26,
               "type": {
                 "type": "NameExpression",
                 "name": "string"
@@ -19184,7 +19220,7 @@
             {
               "title": "param",
               "description": "The media options.",
-              "lineNumber": 28,
+              "lineNumber": 27,
               "type": {
                 "type": "OptionalType",
                 "expression": {
@@ -19198,7 +19234,7 @@
             {
               "title": "param",
               "description": "Whether to create an audio track.",
-              "lineNumber": 29,
+              "lineNumber": 28,
               "type": {
                 "type": "OptionalType",
                 "expression": {
@@ -19212,7 +19248,7 @@
             {
               "title": "param",
               "description": "Options for configuring the audio track.",
-              "lineNumber": 30,
+              "lineNumber": 29,
               "type": {
                 "type": "OptionalType",
                 "expression": {
@@ -19225,7 +19261,7 @@
             {
               "title": "param",
               "description": "Whether to create a video track.",
-              "lineNumber": 31,
+              "lineNumber": 30,
               "type": {
                 "type": "OptionalType",
                 "expression": {
@@ -19239,7 +19275,7 @@
             {
               "title": "param",
               "description": "Options for configuring the video track.",
-              "lineNumber": 32,
+              "lineNumber": 31,
               "type": {
                 "type": "OptionalType",
                 "expression": {
@@ -19252,7 +19288,7 @@
             {
               "title": "param",
               "description": "Whether to create a screen share track.",
-              "lineNumber": 33,
+              "lineNumber": 32,
               "type": {
                 "type": "OptionalType",
                 "expression": {
@@ -19266,7 +19302,7 @@
             {
               "title": "param",
               "description": "Options for configuring the call's screenShare.",
-              "lineNumber": 34,
+              "lineNumber": 33,
               "type": {
                 "type": "OptionalType",
                 "expression": {
@@ -19278,13 +19314,22 @@
             },
             {
               "title": "param",
-              "description": "List of medias containing tracks to be attached to this call.",
-              "lineNumber": 35,
+              "description": "The detached media containing the track to be attached to this\n   call. Though this parameter is an array for consistency with other APIs, it should only contain one entry.",
+              "lineNumber": 34,
               "type": {
                 "type": "OptionalType",
                 "expression": {
-                  "type": "NameExpression",
-                  "name": "Array"
+                  "type": "TypeApplication",
+                  "expression": {
+                    "type": "NameExpression",
+                    "name": "Array"
+                  },
+                  "applications": [
+                    {
+                      "type": "NameExpression",
+                      "name": "media.DetachedMedia"
+                    }
+                  ]
                 }
               },
               "name": "media.medias"
@@ -19292,12 +19337,12 @@
             {
               "title": "example",
               "description": "const callId = ...\n// Get the video track used by the call.\nconst videoTrack = ...\n\n// Replace the specified video track of the call with a new\n//    video track.\nclient.call.replaceTrack(callId, videoTrack.id, {\n  // The track should be replaced with a video track using\n  //    a specific device. This effectively changes the input\n  //    device for an ongoing call.\n  video: true,\n  videoOptions: {\n    deviceId: cameraId\n  }\n})",
-              "lineNumber": 36
+              "lineNumber": 37
             },
             {
               "title": "example",
               "description": "const callId = ...\n// Get the video track used by the call.\nconst videoTrack = ...\n\n// Can also replace the specified video track of the call with a new\n// screen sharing track because screen sharing is delivered as a video stream to remote peer.\n// User will then be prompted to pick a specific screen to share and thus the device id will be selected.\nclient.call.replaceTrack(callId, videoTrack.id, {\n  // The track should be replaced with a screen sharing track.\n  // Note that 'screenOptions' property is not mandatory, as API will use default values\n  // for properties like: width, height, frameRate.\n  screen: true\n})",
-              "lineNumber": 53
+              "lineNumber": 54
             }
           ],
           "loc": {
@@ -19306,18 +19351,18 @@
               "column": 2
             },
             "end": {
-              "line": 428,
+              "line": 429,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 429,
+                "line": 430,
                 "column": 2
               },
               "end": {
-                "line": 458,
+                "line": 459,
                 "column": 3
               }
             },
@@ -19337,7 +19382,7 @@
             {
               "title": "param",
               "name": "callId",
-              "lineNumber": 26,
+              "lineNumber": 25,
               "description": {
                 "type": "root",
                 "children": [
@@ -19360,7 +19405,7 @@
             {
               "title": "param",
               "name": "trackId",
-              "lineNumber": 27,
+              "lineNumber": 26,
               "description": {
                 "type": "root",
                 "children": [
@@ -19383,7 +19428,7 @@
             {
               "title": "param",
               "name": "media",
-              "lineNumber": 28,
+              "lineNumber": 27,
               "description": {
                 "type": "root",
                 "children": [
@@ -19407,7 +19452,7 @@
                 {
                   "title": "param",
                   "name": "media.audio",
-                  "lineNumber": 29,
+                  "lineNumber": 28,
                   "description": {
                     "type": "root",
                     "children": [
@@ -19431,7 +19476,7 @@
                 {
                   "title": "param",
                   "name": "media.audioOptions",
-                  "lineNumber": 30,
+                  "lineNumber": 29,
                   "description": {
                     "type": "root",
                     "children": [
@@ -19457,7 +19502,7 @@
                 {
                   "title": "param",
                   "name": "media.video",
-                  "lineNumber": 31,
+                  "lineNumber": 30,
                   "description": {
                     "type": "root",
                     "children": [
@@ -19481,7 +19526,7 @@
                 {
                   "title": "param",
                   "name": "media.videoOptions",
-                  "lineNumber": 32,
+                  "lineNumber": 31,
                   "description": {
                     "type": "root",
                     "children": [
@@ -19507,7 +19552,7 @@
                 {
                   "title": "param",
                   "name": "media.screen",
-                  "lineNumber": 33,
+                  "lineNumber": 32,
                   "description": {
                     "type": "root",
                     "children": [
@@ -19531,7 +19576,7 @@
                 {
                   "title": "param",
                   "name": "media.screenOptions",
-                  "lineNumber": 34,
+                  "lineNumber": 33,
                   "description": {
                     "type": "root",
                     "children": [
@@ -19557,7 +19602,7 @@
                 {
                   "title": "param",
                   "name": "media.medias",
-                  "lineNumber": 35,
+                  "lineNumber": 34,
                   "description": {
                     "type": "root",
                     "children": [
@@ -19566,7 +19611,7 @@
                         "children": [
                           {
                             "type": "text",
-                            "value": "List of medias containing tracks to be attached to this call."
+                            "value": "The detached media containing the track to be attached to this\ncall. Though this parameter is an array for consistency with other APIs, it should only contain one entry."
                           }
                         ]
                       }
@@ -19575,8 +19620,17 @@
                   "type": {
                     "type": "OptionalType",
                     "expression": {
-                      "type": "NameExpression",
-                      "name": "Array"
+                      "type": "TypeApplication",
+                      "expression": {
+                        "type": "NameExpression",
+                        "name": "Array"
+                      },
+                      "applications": [
+                        {
+                          "type": "NameExpression",
+                          "name": "media.DetachedMedia"
+                        }
+                      ]
                     }
                   }
                 }
@@ -19960,22 +20014,22 @@
           ],
           "loc": {
             "start": {
-              "line": 460,
+              "line": 461,
               "column": 2
             },
             "end": {
-              "line": 504,
+              "line": 505,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 505,
+                "line": 506,
                 "column": 2
               },
               "end": {
-                "line": 525,
+                "line": 526,
                 "column": 3
               }
             },
@@ -20308,22 +20362,22 @@
           ],
           "loc": {
             "start": {
-              "line": 561,
+              "line": 562,
               "column": 2
             },
             "end": {
-              "line": 624,
+              "line": 625,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 625,
+                "line": 626,
                 "column": 2
               },
               "end": {
-                "line": 665,
+                "line": 666,
                 "column": 3
               }
             },
@@ -24239,7 +24293,7 @@
                 "column": 0
               },
               "end": {
-                "line": 109,
+                "line": 111,
                 "column": 1
               }
             },
@@ -25575,22 +25629,22 @@
           ],
           "loc": {
             "start": {
-              "line": 126,
+              "line": 128,
               "column": 0
             },
             "end": {
-              "line": 175,
+              "line": 177,
               "column": 3
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 176,
+                "line": 178,
                 "column": 0
               },
               "end": {
-                "line": 206,
+                "line": 208,
                 "column": 1
               }
             },
@@ -30546,6 +30600,326 @@
                 "children": [
                   {
                     "type": "text",
+                    "value": "Detached Media is a special type of "
+                  },
+                  {
+                    "type": "link",
+                    "url": "#callmediaobject",
+                    "title": null,
+                    "jsdoc": true,
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "call.MediaObject"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "text",
+                    "value": " that is created outside the scope of a call. A DetachedMedia\nobject is a "
+                  },
+                  {
+                    "type": "link",
+                    "url": "#callmediaobject",
+                    "title": null,
+                    "jsdoc": true,
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "call.MediaObject"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "text",
+                    "value": " that is wrapped with the contained "
+                  },
+                  {
+                    "type": "link",
+                    "url": "#calltrackobject",
+                    "title": null,
+                    "jsdoc": true,
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "call.TrackObject"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "text",
+                    "value": "'s media type for convenience."
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "type": "text",
+                    "value": "The APIs for managing detached media are available in the "
+                  },
+                  {
+                    "type": "link",
+                    "url": "#media",
+                    "title": null,
+                    "jsdoc": true,
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "media"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "text",
+                    "value": " namespace. They are\n"
+                  },
+                  {
+                    "type": "link",
+                    "url": "#mediacreatelocalmedia",
+                    "title": null,
+                    "jsdoc": true,
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "media.createLocalMedia"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "text",
+                    "value": ", "
+                  },
+                  {
+                    "type": "link",
+                    "url": "#mediagetlocalmedia",
+                    "title": null,
+                    "jsdoc": true,
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "media.getLocalMedia"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "text",
+                    "value": ", and "
+                  },
+                  {
+                    "type": "link",
+                    "url": "#mediadisposelocalmedia",
+                    "title": null,
+                    "jsdoc": true,
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "media.disposeLocalMedia"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "text",
+                    "value": ". Unlike media that is created\nas part of a call, the application is responsible for the lifecycle for a detached media object."
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "type": "text",
+                    "value": "Accessing local media before a call is made can be used to implement a \"media preview\" feature, allowing an end-user to\ncheck their media devices before joining a call."
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "type": "text",
+                    "value": "Detached Media can also be used as part of a call, rather than new media being created as part of the call operations. This can be\ndone as an optimization, to avoid the overhead of creating new media objects during the call setup process. The same Detached\nMedia objects can be used for multiple calls, as well."
+                  }
+                ]
+              }
+            ]
+          },
+          "tags": [
+            {
+              "title": "public",
+              "description": null,
+              "lineNumber": 15,
+              "type": null
+            },
+            {
+              "title": "static",
+              "description": null,
+              "lineNumber": 16
+            },
+            {
+              "title": "typedef",
+              "description": null,
+              "lineNumber": 17,
+              "type": {
+                "type": "NameExpression",
+                "name": "Object"
+              },
+              "name": "DetachedMedia"
+            },
+            {
+              "title": "memberof",
+              "description": "media",
+              "lineNumber": 18
+            },
+            {
+              "title": "property",
+              "description": "The media object.",
+              "lineNumber": 19,
+              "type": {
+                "type": "NameExpression",
+                "name": "call.MediaObject"
+              },
+              "name": "media"
+            },
+            {
+              "title": "property",
+              "description": "The type of the media object ('audio', 'video', or 'screen').",
+              "lineNumber": 20,
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              },
+              "name": "type"
+            },
+            {
+              "title": "example",
+              "description": "// Create new detached media objects.\nconst medias = await client.media.createLocalMedia({ audio: true, video: true })\n// medias === [ { type: 'audio', media: <call.MediaObject> }, { type: 'video', media: <call.MediaObject> } ]\n// where medias[x].type === client.media.getTrackById(medias[x].media.tracks[0].id).type)\n\n// Render the local video as a preview.\nclient.media.renderTracks([ medias[1].media.tracks[0].id ], '#localVideoPreview')\n\n// Use the Detached Media in a call, instead of creating new media for it.\nconst call = client.call.make('destination', { audio: false, video: false, medias: medias })",
+              "lineNumber": 21
+            }
+          ],
+          "loc": {
+            "start": {
+              "line": 20,
+              "column": 4
+            },
+            "end": {
+              "line": 52,
+              "column": 7
+            }
+          },
+          "context": {
+            "loc": {
+              "start": {
+                "line": 66,
+                "column": 4
+              },
+              "end": {
+                "line": 69,
+                "column": 5
+              }
+            },
+            "file": "/home/jenkins/workspace/jobs_webrtcjs_master/packages/kandy/src/webrtc/interface/api/media.js"
+          },
+          "augments": [],
+          "examples": [
+            {
+              "description": "// Create new detached media objects.\nconst medias = await client.media.createLocalMedia({ audio: true, video: true })\n// medias === [ { type: 'audio', media: <call.MediaObject> }, { type: 'video', media: <call.MediaObject> } ]\n// where medias[x].type === client.media.getTrackById(medias[x].media.tracks[0].id).type)\n\n// Render the local video as a preview.\nclient.media.renderTracks([ medias[1].media.tracks[0].id ], '#localVideoPreview')\n\n// Use the Detached Media in a call, instead of creating new media for it.\nconst call = client.call.make('destination', { audio: false, video: false, medias: medias })"
+            }
+          ],
+          "implements": [],
+          "params": [],
+          "properties": [
+            {
+              "title": "property",
+              "name": "media",
+              "lineNumber": 19,
+              "description": {
+                "type": "root",
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "The media object."
+                      }
+                    ]
+                  }
+                ]
+              },
+              "type": {
+                "type": "NameExpression",
+                "name": "call.MediaObject"
+              }
+            },
+            {
+              "title": "property",
+              "name": "type",
+              "lineNumber": 20,
+              "description": {
+                "type": "root",
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "The type of the media object ('audio', 'video', or 'screen')."
+                      }
+                    ]
+                  }
+                ]
+              },
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              }
+            }
+          ],
+          "returns": [],
+          "sees": [],
+          "throws": [],
+          "todos": [],
+          "yields": [],
+          "access": "public",
+          "scope": "static",
+          "kind": "typedef",
+          "name": "DetachedMedia",
+          "type": {
+            "type": "NameExpression",
+            "name": "Object"
+          },
+          "memberof": "media",
+          "members": {
+            "global": [],
+            "inner": [],
+            "instance": [],
+            "events": [],
+            "static": []
+          },
+          "path": [
+            {
+              "name": "media",
+              "kind": "namespace"
+            },
+            {
+              "name": "DetachedMedia",
+              "kind": "typedef",
+              "scope": "static"
+            }
+          ],
+          "namespace": "media.DetachedMedia"
+        },
+        {
+          "description": {
+            "type": "root",
+            "children": [
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "type": "text",
                     "value": "Retrieves the available media devices for use."
                   }
                 ]
@@ -30612,22 +30986,22 @@
           ],
           "loc": {
             "start": {
-              "line": 20,
+              "line": 54,
               "column": 4
             },
             "end": {
-              "line": 31,
+              "line": 65,
               "column": 7
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 32,
+                "line": 66,
                 "column": 4
               },
               "end": {
-                "line": 35,
+                "line": 69,
                 "column": 5
               }
             },
@@ -30750,22 +31124,22 @@
           ],
           "loc": {
             "start": {
-              "line": 37,
+              "line": 71,
               "column": 4
             },
             "end": {
-              "line": 45,
+              "line": 79,
               "column": 7
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 46,
+                "line": 80,
                 "column": 4
               },
               "end": {
-                "line": 49,
+                "line": 83,
                 "column": 5
               }
             },
@@ -30912,22 +31286,22 @@
           ],
           "loc": {
             "start": {
-              "line": 51,
+              "line": 85,
               "column": 4
             },
             "end": {
-              "line": 59,
+              "line": 93,
               "column": 7
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 60,
+                "line": 94,
                 "column": 4
               },
               "end": {
-                "line": 63,
+                "line": 97,
                 "column": 5
               }
             },
@@ -31210,22 +31584,22 @@
           ],
           "loc": {
             "start": {
-              "line": 65,
+              "line": 99,
               "column": 4
             },
             "end": {
-              "line": 113,
+              "line": 147,
               "column": 7
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 114,
+                "line": 148,
                 "column": 4
               },
               "end": {
-                "line": 129,
+                "line": 163,
                 "column": 5
               }
             },
@@ -31425,8 +31799,26 @@
               "description": "Resolves with an array of objects containing both a media type and a media object.",
               "lineNumber": 10,
               "type": {
-                "type": "NameExpression",
-                "name": "Promise"
+                "type": "TypeApplication",
+                "expression": {
+                  "type": "NameExpression",
+                  "name": "Promise"
+                },
+                "applications": [
+                  {
+                    "type": "TypeApplication",
+                    "expression": {
+                      "type": "NameExpression",
+                      "name": "Array"
+                    },
+                    "applications": [
+                      {
+                        "type": "NameExpression",
+                        "name": "media.DetachedMedia"
+                      }
+                    ]
+                  }
+                ]
               }
             },
             {
@@ -31464,22 +31856,22 @@
           ],
           "loc": {
             "start": {
-              "line": 131,
+              "line": 165,
               "column": 4
             },
             "end": {
-              "line": 148,
+              "line": 182,
               "column": 7
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 149,
+                "line": 183,
                 "column": 4
               },
               "end": {
-                "line": 160,
+                "line": 194,
                 "column": 5
               }
             },
@@ -31616,8 +32008,26 @@
               },
               "title": "returns",
               "type": {
-                "type": "NameExpression",
-                "name": "Promise"
+                "type": "TypeApplication",
+                "expression": {
+                  "type": "NameExpression",
+                  "name": "Promise"
+                },
+                "applications": [
+                  {
+                    "type": "TypeApplication",
+                    "expression": {
+                      "type": "NameExpression",
+                      "name": "Array"
+                    },
+                    "applications": [
+                      {
+                        "type": "NameExpression",
+                        "name": "media.DetachedMedia"
+                      }
+                    ]
+                  }
+                ]
               }
             }
           ],
@@ -31751,11 +32161,20 @@
             },
             {
               "title": "returns",
-              "description": "An array of objects containing both a media type and a media object.",
+              "description": "An array of detached media objects.",
               "lineNumber": 6,
               "type": {
-                "type": "NameExpression",
-                "name": "Array"
+                "type": "TypeApplication",
+                "expression": {
+                  "type": "NameExpression",
+                  "name": "Array"
+                },
+                "applications": [
+                  {
+                    "type": "NameExpression",
+                    "name": "media.DetachedMedia"
+                  }
+                ]
               }
             },
             {
@@ -31766,22 +32185,22 @@
           ],
           "loc": {
             "start": {
-              "line": 162,
+              "line": 196,
               "column": 4
             },
             "end": {
-              "line": 173,
+              "line": 207,
               "column": 7
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 174,
+                "line": 208,
                 "column": 4
               },
               "end": {
-                "line": 187,
+                "line": 221,
                 "column": 5
               }
             },
@@ -31806,7 +32225,7 @@
                     "children": [
                       {
                         "type": "text",
-                        "value": "An array of objects containing both a media type and a media object."
+                        "value": "An array of detached media objects."
                       }
                     ]
                   }
@@ -31814,8 +32233,17 @@
               },
               "title": "returns",
               "type": {
-                "type": "NameExpression",
-                "name": "Array"
+                "type": "TypeApplication",
+                "expression": {
+                  "type": "NameExpression",
+                  "name": "Array"
+                },
+                "applications": [
+                  {
+                    "type": "NameExpression",
+                    "name": "media.DetachedMedia"
+                  }
+                ]
               }
             }
           ],
@@ -31895,7 +32323,7 @@
                 "elements": [
                   {
                     "type": "NameExpression",
-                    "name": "Object"
+                    "name": "media.DetachedMedia"
                   },
                   {
                     "type": "NameExpression",
@@ -31952,22 +32380,22 @@
           ],
           "loc": {
             "start": {
-              "line": 189,
+              "line": 223,
               "column": 4
             },
             "end": {
-              "line": 200,
+              "line": 234,
               "column": 7
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 201,
+                "line": 235,
                 "column": 4
               },
               "end": {
-                "line": 215,
+                "line": 249,
                 "column": 5
               }
             },
@@ -32000,7 +32428,7 @@
                 "elements": [
                   {
                     "type": "NameExpression",
-                    "name": "Object"
+                    "name": "media.DetachedMedia"
                   },
                   {
                     "type": "NameExpression",
@@ -32232,22 +32660,22 @@
           ],
           "loc": {
             "start": {
-              "line": 217,
+              "line": 251,
               "column": 4
             },
             "end": {
-              "line": 243,
+              "line": 277,
               "column": 7
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 244,
+                "line": 278,
                 "column": 4
               },
               "end": {
-                "line": 255,
+                "line": 289,
                 "column": 5
               }
             },
@@ -32481,22 +32909,22 @@
           ],
           "loc": {
             "start": {
-              "line": 257,
+              "line": 291,
               "column": 4
             },
             "end": {
-              "line": 270,
+              "line": 304,
               "column": 7
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 271,
+                "line": 305,
                 "column": 4
               },
               "end": {
-                "line": 274,
+                "line": 308,
                 "column": 5
               }
             },
@@ -32705,22 +33133,22 @@
           ],
           "loc": {
             "start": {
-              "line": 276,
+              "line": 310,
               "column": 4
             },
             "end": {
-              "line": 298,
+              "line": 332,
               "column": 7
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 299,
+                "line": 333,
                 "column": 4
               },
               "end": {
-                "line": 316,
+                "line": 350,
                 "column": 5
               }
             },
@@ -32888,22 +33316,22 @@
           ],
           "loc": {
             "start": {
-              "line": 318,
+              "line": 352,
               "column": 4
             },
             "end": {
-              "line": 332,
+              "line": 366,
               "column": 7
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 333,
+                "line": 367,
                 "column": 4
               },
               "end": {
-                "line": 350,
+                "line": 384,
                 "column": 5
               }
             },
