@@ -15,6 +15,7 @@ Ribbon WebRTC SDK change log.
   - The `call.makeAnonymous` API will now always emit a `call:stateChange` event with an error when media validation fails.
 - Fixed a Call issue where, if a call operation missed receiving the remote response due to network issues, the operation would never finish. `KJS-2693`
   - The operation will now timeout in error after a period longer than the configurable `config.request.restTimeout` value.
+- Fixed a Call issue where removing a "detached" media track from a call using the `call.removeMedia` or `call.stopVideo` APIs would also stop the track itself.
 
 ## 7.5.0 - 2025-04-24
 
