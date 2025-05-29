@@ -13,6 +13,8 @@ Ribbon WebRTC SDK change log.
 
 - Fixed a Call issue where the `call.makeAnonymous` API would not provide proper feedback if it failed due to media validation issues. `KJS-2821`
   - The `call.makeAnonymous` API will now always emit a `call:stateChange` event with an error when media validation fails.
+- Fixed a Call issue where, if a call operation missed receiving the remote response due to network issues, the operation would never finish. `KJS-2693`
+  - The operation will now timeout in error after a period longer than the configurable `config.request.restTimeout` value.
 
 ## 7.5.0 - 2025-04-24
 
