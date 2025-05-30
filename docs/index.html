@@ -3,7 +3,7 @@
 <html>
 <head>
   <meta charset='utf-8' />
-  <title>webrtc-anonymous-js-sdk 7.6.0 | Documentation</title>
+  <title>webrtc-anonymous-js-sdk 7.7.0 | Documentation</title>
   <meta name='viewport' content='width=device-width,initial-scale=1'>
   <link href='assets/bass.css' type='text/css' rel='stylesheet' />
   <link href='assets/style.css' type='text/css' rel='stylesheet' />
@@ -15,7 +15,7 @@
       <div id='split-left' class='overflow-auto fs0 height-viewport-100'>
         <div class='py1 px2'>
           <h3 class='mb0 no-anchor'>webrtc-anonymous-js-sdk</h3>
-          <div class='mb1'><code>7.6.0</code></div>
+          <div class='mb1'><code>7.7.0</code></div>
           <input
             placeholder='Filter'
             id='filter-input'
@@ -1765,7 +1765,7 @@ The SDK can only use keepalive as the connectivity check.</p>
   
     (default <code>3600</code>)
   </td>
-  <td class='break-word'><span>The amount of time (in seconds) for which to keep subscription up and alive. Cannot be less than minimum threshold of 60 seconds.
+  <td class='break-word'><span>The lifetime (in seconds) of a subscription. The SDK will automatically refresh the subscription before it expires. Cannot be less than minimum threshold of 60 seconds.
 </span></td>
 </tr>
 

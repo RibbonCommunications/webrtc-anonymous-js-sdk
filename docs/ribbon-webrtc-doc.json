@@ -2189,7 +2189,7 @@
             },
             {
               "title": "param",
-              "description": "The amount of time (in seconds) for which to keep subscription up and alive. Cannot be less than minimum threshold of 60 seconds.",
+              "description": "The lifetime (in seconds) of a subscription. The SDK will automatically refresh the subscription before it expires. Cannot be less than minimum threshold of 60 seconds.",
               "lineNumber": 7,
               "type": {
                 "type": "OptionalType",
@@ -2326,7 +2326,7 @@
                         "children": [
                           {
                             "type": "text",
-                            "value": "The amount of time (in seconds) for which to keep subscription up and alive. Cannot be less than minimum threshold of 60 seconds."
+                            "value": "The lifetime (in seconds) of a subscription. The SDK will automatically refresh the subscription before it expires. Cannot be less than minimum threshold of 60 seconds."
                           }
                         ]
                       }
