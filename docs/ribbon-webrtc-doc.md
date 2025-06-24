@@ -330,17 +330,6 @@ log(`Browser in use: ${details.browser}, version ${details.version}.`)
 
 Returns **[Object][7]** Object containing `browser` and `version` information.
 
-### getUserInfo
-
-Retrieves information about the current user.
-
-Returns **[Object][7]** user The user data.
-
-Returns **[string][8]** user.username The username of the current user. Note that this username can take different encoded forms.
-It's not meant to be displayed to a user.
-
-Returns **[string][8]** user.token The current access token.
-
 ### BasicError
 
 The Basic Error object. Provides information about an error that occurred in the SDK.
@@ -351,6 +340,17 @@ Type: [Object][7]
 
 *   `code` **[string][8]** The code of the error. If no code is known, this will be 'NO_CODE'.
 *   `message` **[string][8]** A human-readable message to describe the error. If no message is known, this will be 'An error occurred'.
+
+### getUserInfo
+
+Retrieves information about the current user.
+
+Returns **[Object][7]** user The user data.
+
+Returns **[string][8]** user.username The username of the current user. Note that this username can take different encoded forms.
+It's not meant to be displayed to a user.
+
+Returns **[string][8]** user.token The current access token.
 
 ### request:error
 
