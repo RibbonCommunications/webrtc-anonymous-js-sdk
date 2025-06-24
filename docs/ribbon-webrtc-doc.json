@@ -4732,178 +4732,6 @@
                 "children": [
                   {
                     "type": "text",
-                    "value": "The Basic Error object. Provides information about an error that occurred in the SDK."
-                  }
-                ]
-              }
-            ]
-          },
-          "tags": [
-            {
-              "title": "public",
-              "description": null,
-              "lineNumber": 2,
-              "type": null
-            },
-            {
-              "title": "static",
-              "description": null,
-              "lineNumber": 3
-            },
-            {
-              "title": "typedef",
-              "description": null,
-              "lineNumber": 4,
-              "type": {
-                "type": "NameExpression",
-                "name": "Object"
-              },
-              "name": "BasicError"
-            },
-            {
-              "title": "memberof",
-              "description": "api",
-              "lineNumber": 5
-            },
-            {
-              "title": "property",
-              "description": "The code of the error. If no code is known, this will be 'NO_CODE'.",
-              "lineNumber": 6,
-              "type": {
-                "type": "NameExpression",
-                "name": "string"
-              },
-              "name": "code"
-            },
-            {
-              "title": "property",
-              "description": "A human-readable message to describe the error. If no message is known, this will be 'An error occurred'.",
-              "lineNumber": 7,
-              "type": {
-                "type": "NameExpression",
-                "name": "string"
-              },
-              "name": "message"
-            }
-          ],
-          "loc": {
-            "start": {
-              "line": 3,
-              "column": 0
-            },
-            "end": {
-              "line": 11,
-              "column": 3
-            }
-          },
-          "context": {
-            "loc": {
-              "start": {
-                "line": 13,
-                "column": 0
-              },
-              "end": {
-                "line": 28,
-                "column": 16
-              }
-            },
-            "file": "/home/jenkins/workspace/jobs_webrtcjs_beta/packages/kandy/src/errors/index.js"
-          },
-          "augments": [],
-          "examples": [],
-          "implements": [],
-          "params": [],
-          "properties": [
-            {
-              "title": "property",
-              "name": "code",
-              "lineNumber": 6,
-              "description": {
-                "type": "root",
-                "children": [
-                  {
-                    "type": "paragraph",
-                    "children": [
-                      {
-                        "type": "text",
-                        "value": "The code of the error. If no code is known, this will be 'NO_CODE'."
-                      }
-                    ]
-                  }
-                ]
-              },
-              "type": {
-                "type": "NameExpression",
-                "name": "string"
-              }
-            },
-            {
-              "title": "property",
-              "name": "message",
-              "lineNumber": 7,
-              "description": {
-                "type": "root",
-                "children": [
-                  {
-                    "type": "paragraph",
-                    "children": [
-                      {
-                        "type": "text",
-                        "value": "A human-readable message to describe the error. If no message is known, this will be 'An error occurred'."
-                      }
-                    ]
-                  }
-                ]
-              },
-              "type": {
-                "type": "NameExpression",
-                "name": "string"
-              }
-            }
-          ],
-          "returns": [],
-          "sees": [],
-          "throws": [],
-          "todos": [],
-          "yields": [],
-          "access": "public",
-          "scope": "static",
-          "kind": "typedef",
-          "name": "BasicError",
-          "type": {
-            "type": "NameExpression",
-            "name": "Object"
-          },
-          "memberof": "api",
-          "members": {
-            "global": [],
-            "inner": [],
-            "instance": [],
-            "events": [],
-            "static": []
-          },
-          "path": [
-            {
-              "name": "api",
-              "kind": "module"
-            },
-            {
-              "name": "BasicError",
-              "kind": "typedef",
-              "scope": "static"
-            }
-          ],
-          "namespace": "api.BasicError"
-        },
-        {
-          "description": {
-            "type": "root",
-            "children": [
-              {
-                "type": "paragraph",
-                "children": [
-                  {
-                    "type": "text",
                     "value": "Retrieves information about the current user."
                   }
                 ]
@@ -5075,6 +4903,178 @@
             }
           ],
           "namespace": "apigetUserInfo"
+        },
+        {
+          "description": {
+            "type": "root",
+            "children": [
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "type": "text",
+                    "value": "The Basic Error object. Provides information about an error that occurred in the SDK."
+                  }
+                ]
+              }
+            ]
+          },
+          "tags": [
+            {
+              "title": "public",
+              "description": null,
+              "lineNumber": 2,
+              "type": null
+            },
+            {
+              "title": "static",
+              "description": null,
+              "lineNumber": 3
+            },
+            {
+              "title": "typedef",
+              "description": null,
+              "lineNumber": 4,
+              "type": {
+                "type": "NameExpression",
+                "name": "Object"
+              },
+              "name": "BasicError"
+            },
+            {
+              "title": "memberof",
+              "description": "api",
+              "lineNumber": 5
+            },
+            {
+              "title": "property",
+              "description": "The code of the error. If no code is known, this will be 'NO_CODE'.",
+              "lineNumber": 6,
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              },
+              "name": "code"
+            },
+            {
+              "title": "property",
+              "description": "A human-readable message to describe the error. If no message is known, this will be 'An error occurred'.",
+              "lineNumber": 7,
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              },
+              "name": "message"
+            }
+          ],
+          "loc": {
+            "start": {
+              "line": 3,
+              "column": 0
+            },
+            "end": {
+              "line": 11,
+              "column": 3
+            }
+          },
+          "context": {
+            "loc": {
+              "start": {
+                "line": 13,
+                "column": 0
+              },
+              "end": {
+                "line": 28,
+                "column": 16
+              }
+            },
+            "file": "/home/jenkins/workspace/jobs_webrtcjs_beta/packages/kandy/src/errors/index.js"
+          },
+          "augments": [],
+          "examples": [],
+          "implements": [],
+          "params": [],
+          "properties": [
+            {
+              "title": "property",
+              "name": "code",
+              "lineNumber": 6,
+              "description": {
+                "type": "root",
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "The code of the error. If no code is known, this will be 'NO_CODE'."
+                      }
+                    ]
+                  }
+                ]
+              },
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              }
+            },
+            {
+              "title": "property",
+              "name": "message",
+              "lineNumber": 7,
+              "description": {
+                "type": "root",
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "A human-readable message to describe the error. If no message is known, this will be 'An error occurred'."
+                      }
+                    ]
+                  }
+                ]
+              },
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              }
+            }
+          ],
+          "returns": [],
+          "sees": [],
+          "throws": [],
+          "todos": [],
+          "yields": [],
+          "access": "public",
+          "scope": "static",
+          "kind": "typedef",
+          "name": "BasicError",
+          "type": {
+            "type": "NameExpression",
+            "name": "Object"
+          },
+          "memberof": "api",
+          "members": {
+            "global": [],
+            "inner": [],
+            "instance": [],
+            "events": [],
+            "static": []
+          },
+          "path": [
+            {
+              "name": "api",
+              "kind": "module"
+            },
+            {
+              "name": "BasicError",
+              "kind": "typedef",
+              "scope": "static"
+            }
+          ],
+          "namespace": "api.BasicError"
         }
       ]
     },
