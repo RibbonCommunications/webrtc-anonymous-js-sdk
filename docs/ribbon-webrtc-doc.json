@@ -2189,7 +2189,7 @@
             },
             {
               "title": "param",
-              "description": "The amount of time (in seconds) for which to keep subscription up and alive. Cannot be less than minimum threshold of 60 seconds.",
+              "description": "The lifetime (in seconds) of a subscription. The SDK will automatically refresh the subscription before it expires. Cannot be less than minimum threshold of 60 seconds.",
               "lineNumber": 7,
               "type": {
                 "type": "OptionalType",
@@ -2326,7 +2326,7 @@
                         "children": [
                           {
                             "type": "text",
-                            "value": "The amount of time (in seconds) for which to keep subscription up and alive. Cannot be less than minimum threshold of 60 seconds."
+                            "value": "The lifetime (in seconds) of a subscription. The SDK will automatically refresh the subscription before it expires. Cannot be less than minimum threshold of 60 seconds."
                           }
                         ]
                       }
@@ -3600,7 +3600,7 @@
                 "column": 4
               },
               "end": {
-                "line": 257,
+                "line": 260,
                 "column": 5
               }
             },
@@ -5138,11 +5138,11 @@
     "context": {
       "loc": {
         "start": {
-          "line": 523,
+          "line": 545,
           "column": 0
         },
         "end": {
-          "line": 533,
+          "line": 555,
           "column": 1
         }
       },
@@ -10681,11 +10681,11 @@
           "context": {
             "loc": {
               "start": {
-                "line": 523,
+                "line": 545,
                 "column": 0
               },
               "end": {
-                "line": 533,
+                "line": 555,
                 "column": 1
               }
             },
@@ -11428,11 +11428,11 @@
           "context": {
             "loc": {
               "start": {
-                "line": 523,
+                "line": 545,
                 "column": 0
               },
               "end": {
-                "line": 533,
+                "line": 555,
                 "column": 1
               }
             },
@@ -11605,11 +11605,11 @@
           "context": {
             "loc": {
               "start": {
-                "line": 523,
+                "line": 545,
                 "column": 0
               },
               "end": {
-                "line": 533,
+                "line": 555,
                 "column": 1
               }
             },
@@ -11792,11 +11792,11 @@
           "context": {
             "loc": {
               "start": {
-                "line": 523,
+                "line": 545,
                 "column": 0
               },
               "end": {
-                "line": 533,
+                "line": 555,
                 "column": 1
               }
             },
@@ -12047,11 +12047,11 @@
           "context": {
             "loc": {
               "start": {
-                "line": 523,
+                "line": 545,
                 "column": 0
               },
               "end": {
-                "line": 533,
+                "line": 555,
                 "column": 1
               }
             },
@@ -12255,11 +12255,11 @@
           "context": {
             "loc": {
               "start": {
-                "line": 523,
+                "line": 545,
                 "column": 0
               },
               "end": {
-                "line": 533,
+                "line": 555,
                 "column": 1
               }
             },
@@ -12451,11 +12451,11 @@
           "context": {
             "loc": {
               "start": {
-                "line": 523,
+                "line": 545,
                 "column": 0
               },
               "end": {
-                "line": 533,
+                "line": 555,
                 "column": 1
               }
             },
@@ -12690,11 +12690,11 @@
           "context": {
             "loc": {
               "start": {
-                "line": 523,
+                "line": 545,
                 "column": 0
               },
               "end": {
-                "line": 533,
+                "line": 555,
                 "column": 1
               }
             },
@@ -13013,11 +13013,11 @@
           "context": {
             "loc": {
               "start": {
-                "line": 523,
+                "line": 545,
                 "column": 0
               },
               "end": {
-                "line": 533,
+                "line": 555,
                 "column": 1
               }
             },
@@ -13345,11 +13345,11 @@
           "context": {
             "loc": {
               "start": {
-                "line": 523,
+                "line": 545,
                 "column": 0
               },
               "end": {
-                "line": 533,
+                "line": 555,
                 "column": 1
               }
             },
@@ -13665,11 +13665,11 @@
           "context": {
             "loc": {
               "start": {
-                "line": 523,
+                "line": 545,
                 "column": 0
               },
               "end": {
-                "line": 533,
+                "line": 555,
                 "column": 1
               }
             },
@@ -14398,11 +14398,11 @@
           "context": {
             "loc": {
               "start": {
-                "line": 523,
+                "line": 545,
                 "column": 0
               },
               "end": {
-                "line": 533,
+                "line": 555,
                 "column": 1
               }
             },
@@ -14673,11 +14673,11 @@
           "context": {
             "loc": {
               "start": {
-                "line": 523,
+                "line": 545,
                 "column": 0
               },
               "end": {
-                "line": 533,
+                "line": 555,
                 "column": 1
               }
             },
@@ -14919,11 +14919,11 @@
           "context": {
             "loc": {
               "start": {
-                "line": 523,
+                "line": 545,
                 "column": 0
               },
               "end": {
-                "line": 533,
+                "line": 555,
                 "column": 1
               }
             },
@@ -15156,11 +15156,11 @@
           "context": {
             "loc": {
               "start": {
-                "line": 523,
+                "line": 545,
                 "column": 0
               },
               "end": {
-                "line": 533,
+                "line": 555,
                 "column": 1
               }
             },
@@ -15402,11 +15402,11 @@
           "context": {
             "loc": {
               "start": {
-                "line": 523,
+                "line": 545,
                 "column": 0
               },
               "end": {
-                "line": 533,
+                "line": 555,
                 "column": 1
               }
             },
@@ -15726,11 +15726,11 @@
           "context": {
             "loc": {
               "start": {
-                "line": 523,
+                "line": 545,
                 "column": 0
               },
               "end": {
-                "line": 533,
+                "line": 555,
                 "column": 1
               }
             },
@@ -16128,11 +16128,11 @@
           "context": {
             "loc": {
               "start": {
-                "line": 523,
+                "line": 545,
                 "column": 0
               },
               "end": {
-                "line": 533,
+                "line": 555,
                 "column": 1
               }
             },
@@ -16370,11 +16370,11 @@
           "context": {
             "loc": {
               "start": {
-                "line": 523,
+                "line": 545,
                 "column": 0
               },
               "end": {
-                "line": 533,
+                "line": 555,
                 "column": 1
               }
             },
@@ -16538,7 +16538,7 @@
                 "children": [
                   {
                     "type": "text",
-                    "value": "These parameters must be configured on the server prior to making a request, otherwise the request will fail when trying to include the parameters."
+                    "value": "Any SIP header can be used as a custom parameter, such as X-Headers or proprietary headers. However, if the defined\nheader name conflicts with another SIP header name in the SIP message, the existing SIP header will be removed\nand the application's custom SIP header will be added to the message."
                   }
                 ]
               },
@@ -16547,7 +16547,16 @@
                 "children": [
                   {
                     "type": "text",
-                    "value": "These parameters can be specified with the "
+                    "value": "These parameters must be configured on the WebRTC Gateway prior to making a REST request, otherwise the request will\nfail when trying to include the parameters. The WebRTC Gateway does not impose limitations on the length of a\nheader. See the Gateway documentation for more information."
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "type": "text",
+                    "value": "These parameters can be provided in the "
                   },
                   {
                     "type": "link",
@@ -16579,7 +16588,7 @@
                   },
                   {
                     "type": "text",
-                    "value": " APIs.\nThey can also be set after a Call is established using the "
+                    "value": " APIs, to be included during call\nestablishment. They can also be set on the call after it is established using the "
                   },
                   {
                     "type": "link",
@@ -16595,7 +16604,7 @@
                   },
                   {
                     "type": "text",
-                    "value": " API, and sent using the "
+                    "value": "\nAPI, then sent using the "
                   },
                   {
                     "type": "link",
@@ -16620,7 +16629,7 @@
                 "children": [
                   {
                     "type": "text",
-                    "value": "Custom headers may be received anytime throughout the duration a call. A remote endpoint may send custom headers when starting a call,\nanswering a call, or during call updates such as hold/unhold and addition/removal of media in the call.\nWhen these custom headers are received, the SDK will emit a "
+                    "value": "Custom parameters may be received anytime throughout the duration a call. A remote endpoint may send custom headers\nwhen starting a call, answering a call, or during call updates such as hold/unhold and addition/removal of media\nin the call. When these custom headers are received, the SDK will emit a\n"
                   },
                   {
                     "type": "link",
@@ -16636,7 +16645,7 @@
                   },
                   {
                     "type": "text",
-                    "value": " event\nwhich will contain the custom parameters that were received."
+                    "value": " event which will contain the custom parameters that\nwere received."
                   }
                 ]
               },
@@ -16645,7 +16654,7 @@
                 "children": [
                   {
                     "type": "text",
-                    "value": "A Call's custom parameters are stored on the Call's "
+                    "value": "Custom parameters set on a call are stored on its "
                   },
                   {
                     "type": "link",
@@ -16661,7 +16670,7 @@
                   },
                   {
                     "type": "text",
-                    "value": ",\nwhich can be retrieved using the "
+                    "value": ", which can be retrieved using\n"
                   },
                   {
                     "type": "link",
@@ -16677,7 +16686,7 @@
                   },
                   {
                     "type": "text",
-                    "value": " or\n"
+                    "value": " or "
                   },
                   {
                     "type": "link",
@@ -16693,7 +16702,23 @@
                   },
                   {
                     "type": "text",
-                    "value": " APIs. These are the parameters that will be sent to the remote\nendpoint of the Call. Parameters received from a Call are not stored as\npart of the CallObject and are only provided via the "
+                    "value": " APIs. These are the parameters that will be sent to the remote\nendpoint of the call. Parameters received from a call are not stored as part of the\n"
+                  },
+                  {
+                    "type": "link",
+                    "url": "#callcallobject",
+                    "title": null,
+                    "jsdoc": true,
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "CallObject"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "text",
+                    "value": ", and are only provided via the\n"
                   },
                   {
                     "type": "link",
@@ -16719,25 +16744,25 @@
             {
               "title": "public",
               "description": null,
-              "lineNumber": 19,
+              "lineNumber": 27,
               "type": null
             },
             {
               "title": "static",
               "description": null,
-              "lineNumber": 20
+              "lineNumber": 28
             },
             {
               "title": "module",
               "description": null,
-              "lineNumber": 21,
+              "lineNumber": 29,
               "type": null,
               "name": "CustomParameter"
             },
             {
               "title": "typedef",
               "description": null,
-              "lineNumber": 22,
+              "lineNumber": 30,
               "type": {
                 "type": "NameExpression",
                 "name": "Object"
@@ -16747,24 +16772,24 @@
             {
               "title": "memberof",
               "description": "call",
-              "lineNumber": 23
+              "lineNumber": 31
             },
             {
               "title": "requires",
               "description": null,
-              "lineNumber": 24,
+              "lineNumber": 32,
               "name": "link_call"
             },
             {
               "title": "requires",
               "description": null,
-              "lineNumber": 25,
+              "lineNumber": 33,
               "name": "callMe"
             },
             {
               "title": "property",
-              "description": "The name of the custom parameter",
-              "lineNumber": 26,
+              "description": "The name of the SIP header.",
+              "lineNumber": 34,
               "type": {
                 "type": "NameExpression",
                 "name": "string"
@@ -16773,8 +16798,8 @@
             },
             {
               "title": "property",
-              "description": "The value of the custom parameter",
-              "lineNumber": 27,
+              "description": "The value of the SIP header.",
+              "lineNumber": 35,
               "type": {
                 "type": "NameExpression",
                 "name": "string"
@@ -16783,8 +16808,8 @@
             },
             {
               "title": "example",
-              "description": "// Specify custom parameters when making a call.\nclient.call.make(destination, mediaConstraints,\n {\n   customParameters: [\n     {\n       name: 'X-GPS',\n       value: '42.686032,23.344565'\n     }\n   ]\n }\n)",
-              "lineNumber": 28
+              "description": "// Specify custom SIP headers to be sent when making a call.\nclient.call.make(destination, mediaConstraints,\n {\n   customParameters: [\n     {\n       name: 'X-GPS',\n       value: '51.759028,-1.213278'\n     },\n     {\n       name: 'X-Caller-ID',\n       value: 'Coombs,Ernie'\n     },\n     {\n       name: 'User-to-User',\n       value: '48656c6c6f2c20576f726c6421;encoding=hex'\n     }\n   ]\n }\n)\n\n// Receive custom parameters from the remote endpoint of a call.\nclient.on('call:customParameters', params => {\n  const { callId, customParameters } = params\n  log(`Received custom parameters from call ${callId}:`, customParameters)\n})",
+              "lineNumber": 36
             }
           ],
           "loc": {
@@ -16793,18 +16818,18 @@
               "column": 0
             },
             "end": {
-              "line": 473,
+              "line": 495,
               "column": 3
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 523,
+                "line": 545,
                 "column": 0
               },
               "end": {
-                "line": 533,
+                "line": 555,
                 "column": 1
               }
             },
@@ -16813,7 +16838,7 @@
           "augments": [],
           "examples": [
             {
-              "description": "// Specify custom parameters when making a call.\nclient.call.make(destination, mediaConstraints,\n {\n   customParameters: [\n     {\n       name: 'X-GPS',\n       value: '42.686032,23.344565'\n     }\n   ]\n }\n)"
+              "description": "// Specify custom SIP headers to be sent when making a call.\nclient.call.make(destination, mediaConstraints,\n {\n   customParameters: [\n     {\n       name: 'X-GPS',\n       value: '51.759028,-1.213278'\n     },\n     {\n       name: 'X-Caller-ID',\n       value: 'Coombs,Ernie'\n     },\n     {\n       name: 'User-to-User',\n       value: '48656c6c6f2c20576f726c6421;encoding=hex'\n     }\n   ]\n }\n)\n\n// Receive custom parameters from the remote endpoint of a call.\nclient.on('call:customParameters', params => {\n  const { callId, customParameters } = params\n  log(`Received custom parameters from call ${callId}:`, customParameters)\n})"
             }
           ],
           "implements": [],
@@ -16822,7 +16847,7 @@
             {
               "title": "property",
               "name": "name",
-              "lineNumber": 26,
+              "lineNumber": 34,
               "description": {
                 "type": "root",
                 "children": [
@@ -16831,7 +16856,7 @@
                     "children": [
                       {
                         "type": "text",
-                        "value": "The name of the custom parameter"
+                        "value": "The name of the SIP header."
                       }
                     ]
                   }
@@ -16845,7 +16870,7 @@
             {
               "title": "property",
               "name": "value",
-              "lineNumber": 27,
+              "lineNumber": 35,
               "description": {
                 "type": "root",
                 "children": [
@@ -16854,7 +16879,7 @@
                     "children": [
                       {
                         "type": "text",
-                        "value": "The value of the custom parameter"
+                        "value": "The value of the SIP header."
                       }
                     ]
                   }
@@ -20862,7 +20887,7 @@
                   },
                   {
                     "type": "text",
-                    "value": " of a Call, to be provided to the remote endpoint."
+                    "value": " of a call, to be provided to the remote endpoint."
                   }
                 ]
               },
@@ -20871,7 +20896,23 @@
                 "children": [
                   {
                     "type": "text",
-                    "value": "The specified parameters will be saved as part of the call's information throughout the duration of the call.\nAll subsequent call operations will include these custom parameters.\nTherefore, invalid parameters, or parameters not previously configured on the server, will cause subsequent call operations to fail."
+                    "value": "The provided parameters will be saved as part of the call data, to be used throughout the duration of the call.\nAll subsequent call operations will include these custom parameters. Therefore, invalid parameters, or\nparameters not previously configured on the server, will cause subsequent call operations to fail. See\n"
+                  },
+                  {
+                    "type": "link",
+                    "url": "#callcustomparameter",
+                    "title": null,
+                    "jsdoc": true,
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "Custom Parameters"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "text",
+                    "value": " for more information on constraints."
                   }
                 ]
               },
@@ -20880,7 +20921,7 @@
                 "children": [
                   {
                     "type": "text",
-                    "value": "A Call's custom parameters are a property of the Call's "
+                    "value": "A Call's custom parameters are stored on the "
                   },
                   {
                     "type": "link",
@@ -20896,7 +20937,7 @@
                   },
                   {
                     "type": "text",
-                    "value": ",\nwhich can be retrieved using the "
+                    "value": ", which can be retrieved using\nthe "
                   },
                   {
                     "type": "link",
@@ -20912,7 +20953,7 @@
                   },
                   {
                     "type": "text",
-                    "value": " or\n"
+                    "value": " or "
                   },
                   {
                     "type": "link",
@@ -20937,7 +20978,7 @@
                 "children": [
                   {
                     "type": "text",
-                    "value": "The custom parameters set on a call can be sent directly with the "
+                    "value": "The "
                   },
                   {
                     "type": "link",
@@ -20953,7 +20994,7 @@
                   },
                   {
                     "type": "text",
-                    "value": " API."
+                    "value": " API can be used to send the custom parameters as a stand-alone REST request,\nrather than as part of a call operation."
                   }
                 ]
               },
@@ -20962,7 +21003,7 @@
                 "children": [
                   {
                     "type": "text",
-                    "value": "Custom parameters can be removed from a call's information by setting them as undefined (e.g., "
+                    "value": "Custom parameters can be removed from a call's information by setting them as undefined (e.g.,\n"
                   },
                   {
                     "type": "inlineCode",
@@ -20970,7 +21011,7 @@
                   },
                   {
                     "type": "text",
-                    "value": ").\nSubsequent call operations will no longer send custom parameters."
+                    "value": "). Subsequent call operations will then no longer send the custom parameters."
                   }
                 ]
               }
@@ -20980,41 +21021,41 @@
             {
               "title": "public",
               "description": null,
-              "lineNumber": 15,
+              "lineNumber": 16,
               "type": null
             },
             {
               "title": "static",
               "description": null,
-              "lineNumber": 16
+              "lineNumber": 17
             },
             {
               "title": "memberof",
               "description": "call",
-              "lineNumber": 17
-            },
-            {
-              "title": "requires",
-              "description": null,
-              "lineNumber": 18,
-              "name": "link_call"
+              "lineNumber": 18
             },
             {
               "title": "requires",
               "description": null,
               "lineNumber": 19,
+              "name": "link_call"
+            },
+            {
+              "title": "requires",
+              "description": null,
+              "lineNumber": 20,
               "name": "callMe"
             },
             {
               "title": "method",
               "description": null,
-              "lineNumber": 20,
+              "lineNumber": 21,
               "name": "setCustomParameters"
             },
             {
               "title": "param",
               "description": "The ID of the call.",
-              "lineNumber": 21,
+              "lineNumber": 22,
               "type": {
                 "type": "NameExpression",
                 "name": "string"
@@ -21024,21 +21065,42 @@
             {
               "title": "param",
               "description": "The custom parameters to set.",
-              "lineNumber": 22,
+              "lineNumber": 23,
               "type": {
-                "type": "TypeApplication",
-                "expression": {
-                  "type": "NameExpression",
-                  "name": "Array"
-                },
-                "applications": [
+                "type": "UnionType",
+                "elements": [
                   {
-                    "type": "NameExpression",
-                    "name": "call.CustomParameter"
+                    "type": "TypeApplication",
+                    "expression": {
+                      "type": "NameExpression",
+                      "name": "Array"
+                    },
+                    "applications": [
+                      {
+                        "type": "NameExpression",
+                        "name": "call.CustomParameter"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "UndefinedLiteral"
                   }
                 ]
               },
               "name": "customParameters"
+            },
+            {
+              "title": "return",
+              "description": null,
+              "lineNumber": 24,
+              "type": {
+                "type": "UndefinedLiteral"
+              }
+            },
+            {
+              "title": "example",
+              "description": "// Set custom parameters on a call.\nclient.call.setCustomParameters(callId, [\n   {\n     name: 'Custom-Header',\n     value: 'Custom Value'\n   }\n])",
+              "lineNumber": 25
             }
           ],
           "loc": {
@@ -21047,31 +21109,35 @@
               "column": 2
             },
             "end": {
-              "line": 132,
+              "line": 142,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 153,
+                "line": 163,
                 "column": 2
               },
               "end": {
-                "line": 156,
+                "line": 166,
                 "column": 3
               }
             },
             "file": "/home/jenkins/workspace/jobs_webrtcjs_master/packages/kandy/src/call/interface/api/misc.js"
           },
           "augments": [],
-          "examples": [],
+          "examples": [
+            {
+              "description": "// Set custom parameters on a call.\nclient.call.setCustomParameters(callId, [\n   {\n     name: 'Custom-Header',\n     value: 'Custom Value'\n   }\n])"
+            }
+          ],
           "implements": [],
           "params": [
             {
               "title": "param",
               "name": "callId",
-              "lineNumber": 21,
+              "lineNumber": 22,
               "description": {
                 "type": "root",
                 "children": [
@@ -21094,7 +21160,7 @@
             {
               "title": "param",
               "name": "customParameters",
-              "lineNumber": 22,
+              "lineNumber": 23,
               "description": {
                 "type": "root",
                 "children": [
@@ -21110,22 +21176,41 @@
                 ]
               },
               "type": {
-                "type": "TypeApplication",
-                "expression": {
-                  "type": "NameExpression",
-                  "name": "Array"
-                },
-                "applications": [
+                "type": "UnionType",
+                "elements": [
                   {
-                    "type": "NameExpression",
-                    "name": "call.CustomParameter"
+                    "type": "TypeApplication",
+                    "expression": {
+                      "type": "NameExpression",
+                      "name": "Array"
+                    },
+                    "applications": [
+                      {
+                        "type": "NameExpression",
+                        "name": "call.CustomParameter"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "UndefinedLiteral"
                   }
                 ]
               }
             }
           ],
           "properties": [],
-          "returns": [],
+          "returns": [
+            {
+              "description": {
+                "type": "root",
+                "children": []
+              },
+              "title": "returns",
+              "type": {
+                "type": "UndefinedLiteral"
+              }
+            }
+          ],
           "sees": [],
           "throws": [],
           "todos": [],
@@ -21164,7 +21249,7 @@
                 "children": [
                   {
                     "type": "text",
-                    "value": "Send the custom parameters on an ongoing call to the server. The server may either consume the headers or relay them\nto another endpoint, depending on how the server is configured."
+                    "value": "Send the custom parameters stored as part of an ongoing call to the Gateway. The server may either consume the\nheaders or relay them to another endpoint, depending on configuration."
                   }
                 ]
               },
@@ -21173,64 +21258,7 @@
                 "children": [
                   {
                     "type": "text",
-                    "value": "A Call's custom parameters are a property of the Call's "
-                  },
-                  {
-                    "type": "link",
-                    "url": "#callcallobject",
-                    "title": null,
-                    "jsdoc": true,
-                    "children": [
-                      {
-                        "type": "text",
-                        "value": "CallObject"
-                      }
-                    ]
-                  },
-                  {
-                    "type": "text",
-                    "value": ",\nwhich can be retrieved using the "
-                  },
-                  {
-                    "type": "link",
-                    "url": "#callgetbyid",
-                    "title": null,
-                    "jsdoc": true,
-                    "children": [
-                      {
-                        "type": "text",
-                        "value": "call.getById"
-                      }
-                    ]
-                  },
-                  {
-                    "type": "text",
-                    "value": " or\n"
-                  },
-                  {
-                    "type": "link",
-                    "url": "#callgetall",
-                    "title": null,
-                    "jsdoc": true,
-                    "children": [
-                      {
-                        "type": "text",
-                        "value": "call.getAll"
-                      }
-                    ]
-                  },
-                  {
-                    "type": "text",
-                    "value": " APIs."
-                  }
-                ]
-              },
-              {
-                "type": "paragraph",
-                "children": [
-                  {
-                    "type": "text",
-                    "value": "Before sending custom parameters, they need to be first set on the existing Call.\nTo set, change or remove the custom parameters on a call, use the "
+                    "value": "Custom parameters are set on a call using the "
                   },
                   {
                     "type": "link",
@@ -21249,6 +21277,63 @@
                     "value": " API."
                   }
                 ]
+              },
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "type": "text",
+                    "value": "A Call's custom parameters are stored on the "
+                  },
+                  {
+                    "type": "link",
+                    "url": "#callcallobject",
+                    "title": null,
+                    "jsdoc": true,
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "CallObject"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "text",
+                    "value": ", which can be retrieved using\nthe "
+                  },
+                  {
+                    "type": "link",
+                    "url": "#callgetbyid",
+                    "title": null,
+                    "jsdoc": true,
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "call.getById"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "text",
+                    "value": " or "
+                  },
+                  {
+                    "type": "link",
+                    "url": "#callgetall",
+                    "title": null,
+                    "jsdoc": true,
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "call.getAll"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "text",
+                    "value": " APIs."
+                  }
+                ]
               }
             ]
           },
@@ -21256,41 +21341,41 @@
             {
               "title": "public",
               "description": null,
-              "lineNumber": 10,
+              "lineNumber": 8,
               "type": null
             },
             {
               "title": "static",
               "description": null,
-              "lineNumber": 11
+              "lineNumber": 9
             },
             {
               "title": "memberof",
               "description": "call",
-              "lineNumber": 12
+              "lineNumber": 10
             },
             {
               "title": "requires",
               "description": null,
-              "lineNumber": 13,
+              "lineNumber": 11,
               "name": "link_call"
             },
             {
               "title": "requires",
               "description": null,
-              "lineNumber": 14,
+              "lineNumber": 12,
               "name": "callMe"
             },
             {
               "title": "method",
               "description": null,
-              "lineNumber": 15,
+              "lineNumber": 13,
               "name": "sendCustomParameters"
             },
             {
               "title": "param",
               "description": "The ID of the call being acted on.",
-              "lineNumber": 16,
+              "lineNumber": 14,
               "type": {
                 "type": "NameExpression",
                 "name": "string"
@@ -21300,22 +21385,22 @@
           ],
           "loc": {
             "start": {
-              "line": 158,
+              "line": 168,
               "column": 2
             },
             "end": {
-              "line": 175,
+              "line": 183,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 176,
+                "line": 184,
                 "column": 2
               },
               "end": {
-                "line": 188,
+                "line": 196,
                 "column": 3
               }
             },
@@ -21328,7 +21413,7 @@
             {
               "title": "param",
               "name": "callId",
-              "lineNumber": 16,
+              "lineNumber": 14,
               "description": {
                 "type": "root",
                 "children": [
@@ -21533,22 +21618,22 @@
           ],
           "loc": {
             "start": {
-              "line": 190,
+              "line": 198,
               "column": 2
             },
             "end": {
-              "line": 217,
+              "line": 225,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 218,
+                "line": 226,
                 "column": 2
               },
               "end": {
-                "line": 238,
+                "line": 246,
                 "column": 3
               }
             },
@@ -21866,22 +21951,22 @@
           ],
           "loc": {
             "start": {
-              "line": 240,
+              "line": 248,
               "column": 2
             },
             "end": {
-              "line": 288,
+              "line": 296,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 289,
+                "line": 297,
                 "column": 2
               },
               "end": {
-                "line": 321,
+                "line": 329,
                 "column": 3
               }
             },
@@ -22120,22 +22205,22 @@
           ],
           "loc": {
             "start": {
-              "line": 323,
+              "line": 331,
               "column": 2
             },
             "end": {
-              "line": 353,
+              "line": 361,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 354,
+                "line": 362,
                 "column": 2
               },
               "end": {
-                "line": 385,
+                "line": 393,
                 "column": 3
               }
             },
@@ -22375,22 +22460,22 @@
           ],
           "loc": {
             "start": {
-              "line": 387,
+              "line": 395,
               "column": 2
             },
             "end": {
-              "line": 409,
+              "line": 417,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 410,
+                "line": 418,
                 "column": 2
               },
               "end": {
-                "line": 415,
+                "line": 423,
                 "column": 3
               }
             },
@@ -22591,22 +22676,22 @@
           ],
           "loc": {
             "start": {
-              "line": 417,
+              "line": 425,
               "column": 2
             },
             "end": {
-              "line": 435,
+              "line": 443,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 436,
+                "line": 444,
                 "column": 2
               },
               "end": {
-                "line": 440,
+                "line": 448,
                 "column": 3
               }
             },
@@ -29036,11 +29121,11 @@
     "context": {
       "loc": {
         "start": {
-          "line": 523,
+          "line": 545,
           "column": 0
         },
         "end": {
-          "line": 533,
+          "line": 555,
           "column": 1
         }
       },

@@ -3,7 +3,7 @@
 <html>
 <head>
   <meta charset='utf-8' />
-  <title>webrtc-anonymous-js-sdk 7.6.0 | Documentation</title>
+  <title>webrtc-anonymous-js-sdk 7.7.0 | Documentation</title>
   <meta name='viewport' content='width=device-width,initial-scale=1'>
   <link href='assets/bass.css' type='text/css' rel='stylesheet' />
   <link href='assets/style.css' type='text/css' rel='stylesheet' />
@@ -15,7 +15,7 @@
       <div id='split-left' class='overflow-auto fs0 height-viewport-100'>
         <div class='py1 px2'>
           <h3 class='mb0 no-anchor'>webrtc-anonymous-js-sdk</h3>
-          <div class='mb1'><code>7.6.0</code></div>
+          <div class='mb1'><code>7.7.0</code></div>
           <input
             placeholder='Filter'
             id='filter-input'
@@ -1765,7 +1765,7 @@ The SDK can only use keepalive as the connectivity check.</p>
   
     (default <code>3600</code>)
   </td>
-  <td class='break-word'><span>The amount of time (in seconds) for which to keep subscription up and alive. Cannot be less than minimum threshold of 60 seconds.
+  <td class='break-word'><span>The lifetime (in seconds) of a subscription. The SDK will automatically refresh the subscription before it expires. Cannot be less than minimum threshold of 60 seconds.
 </span></td>
 </tr>
 
@@ -5757,18 +5757,25 @@ or the browser temporarily disabling the SDK's access to a local Track's source.
   
 
   <p>Custom SIP headers can be used to convey additional information to a SIP endpoint.</p>
-<p>These parameters must be configured on the server prior to making a request, otherwise the request will fail when trying to include the parameters.</p>
-<p>These parameters can be specified with the <a href="call.make">call.make</a> and <a href="call.answer">call.answer</a> APIs.
-They can also be set after a Call is established using the <a href="#callsetcustomparameters">call.setCustomParameters</a> API, and sent using the <a href="#callsendcustomparameters">call.sendCustomParameters</a> API.</p>
-<p>Custom headers may be received anytime throughout the duration a call. A remote endpoint may send custom headers when starting a call,
-answering a call, or during call updates such as hold/unhold and addition/removal of media in the call.
-When these custom headers are received, the SDK will emit a <a>call:customParameters</a> event
-which will contain the custom parameters that were received.</p>
-<p>A Call's custom parameters are stored on the Call's <a href="#callcallobject">CallObject</a>,
-which can be retrieved using the <a href="#callgetbyid">call.getById</a> or
-<a href="#callgetall">call.getAll</a> APIs. These are the parameters that will be sent to the remote
-endpoint of the Call. Parameters received from a Call are not stored as
-part of the CallObject and are only provided via the <a>call:customParameters</a> event.</p>
+<p>Any SIP header can be used as a custom parameter, such as X-Headers or proprietary headers. However, if the defined
+header name conflicts with another SIP header name in the SIP message, the existing SIP header will be removed
+and the application's custom SIP header will be added to the message.</p>
+<p>These parameters must be configured on the WebRTC Gateway prior to making a REST request, otherwise the request will
+fail when trying to include the parameters. The WebRTC Gateway does not impose limitations on the length of a
+header. See the Gateway documentation for more information.</p>
+<p>These parameters can be provided in the <a href="call.make">call.make</a> and <a href="call.answer">call.answer</a> APIs, to be included during call
+establishment. They can also be set on the call after it is established using the <a href="#callsetcustomparameters">call.setCustomParameters</a>
+API, then sent using the <a href="#callsendcustomparameters">call.sendCustomParameters</a> API.</p>
+<p>Custom parameters may be received anytime throughout the duration a call. A remote endpoint may send custom headers
+when starting a call, answering a call, or during call updates such as hold/unhold and addition/removal of media
+in the call. When these custom headers are received, the SDK will emit a
+<a>call:customParameters</a> event which will contain the custom parameters that
+were received.</p>
+<p>Custom parameters set on a call are stored on its <a href="#callcallobject">CallObject</a>, which can be retrieved using
+<a href="#callgetbyid">call.getById</a> or <a href="#callgetall">call.getAll</a> APIs. These are the parameters that will be sent to the remote
+endpoint of the call. Parameters received from a call are not stored as part of the
+<a href="#callcallobject">CallObject</a>, and are only provided via the
+<a>call:customParameters</a> event.</p>
 
 
   <div class='pre p1 fill-light mt0'>CustomParameter</div>
@@ -5802,7 +5809,7 @@ part of the CallObject and are only provided via the <a>call:customParameters</a
           
 
           
-             : The name of the custom parameter
+             : The name of the SIP header.
 
           
           
@@ -5817,7 +5824,7 @@ part of the CallObject and are only provided via the <a>call:customParameters</a
           
 
           
-             : The value of the custom parameter
+             : The value of the SIP header.
 
           
           
@@ -5834,17 +5841,31 @@ part of the CallObject and are only provided via the <a>call:customParameters</a
     <div class='py1 quiet mt1 prose-big'>Example</div>
     
       
-      <pre class='p1 overflow-auto round fill-light'><span class="hljs-comment">// Specify custom parameters when making a call.</span>
+      <pre class='p1 overflow-auto round fill-light'><span class="hljs-comment">// Specify custom SIP headers to be sent when making a call.</span>
 client.call.make(destination, mediaConstraints,
  {
    <span class="hljs-attr">customParameters</span>: [
      {
        <span class="hljs-attr">name</span>: <span class="hljs-string">&#x27;X-GPS&#x27;</span>,
-       <span class="hljs-attr">value</span>: <span class="hljs-string">&#x27;42.686032,23.344565&#x27;</span>
+       <span class="hljs-attr">value</span>: <span class="hljs-string">&#x27;51.759028,-1.213278&#x27;</span>
+     },
+     {
+       <span class="hljs-attr">name</span>: <span class="hljs-string">&#x27;X-Caller-ID&#x27;</span>,
+       <span class="hljs-attr">value</span>: <span class="hljs-string">&#x27;Coombs,Ernie&#x27;</span>
+     },
+     {
+       <span class="hljs-attr">name</span>: <span class="hljs-string">&#x27;User-to-User&#x27;</span>,
+       <span class="hljs-attr">value</span>: <span class="hljs-string">&#x27;48656c6c6f2c20576f726c6421;encoding=hex&#x27;</span>
      }
    ]
  }
-)</pre>
+)
+
+<span class="hljs-comment">// Receive custom parameters from the remote endpoint of a call.</span>
+client.on(<span class="hljs-string">&#x27;call:customParameters&#x27;</span>, <span class="hljs-function"><span class="hljs-params">params</span> =&gt;</span> {
+  <span class="hljs-keyword">const</span> { callId, customParameters } = params
+  log(<span class="hljs-string">`Received custom parameters from call <span class="hljs-subst">${callId}</span>:`</span>, customParameters)
+})</pre>
     
   
 
@@ -7691,19 +7712,20 @@ client.call.playAudioFile(callId, filePath)
 
   
 
-  <p>Set the <a href="#callcustomparameter">Custom Parameters</a> of a Call, to be provided to the remote endpoint.</p>
-<p>The specified parameters will be saved as part of the call's information throughout the duration of the call.
-All subsequent call operations will include these custom parameters.
-Therefore, invalid parameters, or parameters not previously configured on the server, will cause subsequent call operations to fail.</p>
-<p>A Call's custom parameters are a property of the Call's <a href="#callcallobject">CallObject</a>,
-which can be retrieved using the <a href="#callgetbyid">call.getById</a> or
-<a href="#callgetall">call.getAll</a> APIs.</p>
-<p>The custom parameters set on a call can be sent directly with the <a href="#callsendcustomparameters">call.sendCustomParameters</a> API.</p>
-<p>Custom parameters can be removed from a call's information by setting them as undefined (e.g., <code>call.setCustomParameters(callId)</code>).
-Subsequent call operations will no longer send custom parameters.</p>
+  <p>Set the <a href="#callcustomparameter">Custom Parameters</a> of a call, to be provided to the remote endpoint.</p>
+<p>The provided parameters will be saved as part of the call data, to be used throughout the duration of the call.
+All subsequent call operations will include these custom parameters. Therefore, invalid parameters, or
+parameters not previously configured on the server, will cause subsequent call operations to fail. See
+<a href="#callcustomparameter">Custom Parameters</a> for more information on constraints.</p>
+<p>A Call's custom parameters are stored on the <a href="#callcallobject">CallObject</a>, which can be retrieved using
+the <a href="#callgetbyid">call.getById</a> or <a href="#callgetall">call.getAll</a> APIs.</p>
+<p>The <a href="#callsendcustomparameters">call.sendCustomParameters</a> API can be used to send the custom parameters as a stand-alone REST request,
+rather than as part of a call operation.</p>
+<p>Custom parameters can be removed from a call's information by setting them as undefined (e.g.,
+<code>call.setCustomParameters(callId)</code>). Subsequent call operations will then no longer send the custom parameters.</p>
 
 
-  <div class='pre p1 fill-light mt0'>setCustomParameters(callId: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>, customParameters: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&#x3C;<a href="#callcustomparameter">call.CustomParameter</a>>)</div>
+  <div class='pre p1 fill-light mt0'>setCustomParameters(callId: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>, customParameters: (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&#x3C;<a href="#callcustomparameter">call.CustomParameter</a>> | <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</a>)): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</a></div>
   
   
 
@@ -7742,7 +7764,7 @@ Subsequent call operations will no longer send custom parameters.</p>
 
             
               <tr>
-  <td class='break-word'><span class='code bold'>customParameters</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&#x3C;<a href="#callcustomparameter">call.CustomParameter</a>></code>
+  <td class='break-word'><span class='code bold'>customParameters</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&#x3C;<a href="#callcustomparameter">call.CustomParameter</a>> | <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</a>)</code>
   </td>
   <td class='break-word'><span>The custom parameters to set.
 </span></td>
@@ -7760,9 +7782,30 @@ Subsequent call operations will no longer send custom parameters.</p>
   
 
   
+    <div class='py1 quiet mt1 prose-big'>Returns</div>
+    
+      <div>
+        <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</a></code>:
+          
+        
+      </div>
+    
+  
 
   
 
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'><span class="hljs-comment">// Set custom parameters on a call.</span>
+client.call.setCustomParameters(callId, [
+   {
+     <span class="hljs-attr">name</span>: <span class="hljs-string">&#x27;Custom-Header&#x27;</span>,
+     <span class="hljs-attr">value</span>: <span class="hljs-string">&#x27;Custom Value&#x27;</span>
+   }
+])</pre>
+    
   
 
   
@@ -7787,13 +7830,11 @@ Subsequent call operations will no longer send custom parameters.</p>
 
   
 
-  <p>Send the custom parameters on an ongoing call to the server. The server may either consume the headers or relay them
-to another endpoint, depending on how the server is configured.</p>
-<p>A Call's custom parameters are a property of the Call's <a href="#callcallobject">CallObject</a>,
-which can be retrieved using the <a href="#callgetbyid">call.getById</a> or
-<a href="#callgetall">call.getAll</a> APIs.</p>
-<p>Before sending custom parameters, they need to be first set on the existing Call.
-To set, change or remove the custom parameters on a call, use the <a href="#callsetcustomparameters">call.setCustomParameters</a> API.</p>
+  <p>Send the custom parameters stored as part of an ongoing call to the Gateway. The server may either consume the
+headers or relay them to another endpoint, depending on configuration.</p>
+<p>Custom parameters are set on a call using the <a href="#callsetcustomparameters">call.setCustomParameters</a> API.</p>
+<p>A Call's custom parameters are stored on the <a href="#callcallobject">CallObject</a>, which can be retrieved using
+the <a href="#callgetbyid">call.getById</a> or <a href="#callgetall">call.getAll</a> APIs.</p>
 
 
   <div class='pre p1 fill-light mt0'>sendCustomParameters(callId: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</div>
