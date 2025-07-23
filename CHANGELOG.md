@@ -7,6 +7,8 @@ Ribbon WebRTC SDK change log.
 - This project adheres to [Semantic Versioning](http://semver.org/).
 - This change log follows [keepachangelog.com](http://keepachangelog.com/) recommendations.
 
+## 7.8.0 - 2025-07-24
+
 ## 7.7.0 - 2025-06-26
 
 ## 7.6.0 - 2025-05-29
