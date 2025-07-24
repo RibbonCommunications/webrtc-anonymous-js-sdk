@@ -2484,60 +2484,6 @@ Retrieve an available Track object with a specific Track ID.
 
 Returns **[call.TrackObject][92]** A Track object.
 
-### initializeDevices
-
-Requests permission to access media devices on the end-user's machine.
-
-This API will trigger the browser to ask the end-user for permission to
-access their camera and/or microphone. These permissions are
-needed for the SDK to read information about the devices (the label,
-for example) and for using the devices for a call.
-
-If the browser does not yet have permission, it will prompt the end-user
-with a small pop-up window, giving the user a chance to allow/deny the
-permissions. The behaviour of this pop-up window differs slightly
-based on the browser; it may automatically save the user's decision
-(such as in Chrome and Safari) or it may require the user to choose
-whether their decision should be saved (such as in Firefox).
-
-This API is not required for proper usage of media and/or calls, but
-helps to prepare a user before a call is made or received. It allows
-an application to prompt the user for device permissions when it is
-convenient for them, rather than during call setup. If the user saves
-their decision, they will not be prompted again when the SDK accesses
-those devices for a call.
-
-For device information, the [media.getDevices][99] API will retrieve
-the list of media devices available for the SDK to use. If this list
-is empty, or is missing information, it is likely that the browser
-does not have permission to access the device's information. We
-recommend using the [media.initializeDevices][108] API in this
-scenario if you would like to allow the end-user to select which
-device(s) they would like to use when they make a call, rather than
-using the system default.
-
-The SDK will emit a [devices:change][107]
-event when the operation is successful or a
-[devices:error][109] event if an error is
-encountered.
-
-#### Parameters
-
-*   `constraints` **[Object][7]?** 
-
-    *   `constraints.audio` **[boolean][11]** Whether to ask for audio device permissions. (optional, default `true`)
-    *   `constraints.video` **[boolean][11]** Whether to ask for video device permissions. (optional, default `true`)
-
-#### Examples
-
-```javascript
-// The SDK will ask for both audio and video permissions by default.
-client.media.initializeDevices()
-
-// The SDK will only ask for audio permissions.
-client.media.initializeDevices({ audio: true, video: false })
-```
-
 ### createLocalMedia
 
 Create local media Tracks.
@@ -2593,6 +2539,60 @@ Dispose local media Tracks.
 
 Returns **[Promise][73]<[undefined][76]>** 
 
+### initializeDevices
+
+Requests permission to access media devices on the end-user's machine.
+
+This API will trigger the browser to ask the end-user for permission to
+access their camera and/or microphone. These permissions are
+needed for the SDK to read information about the devices (the label,
+for example) and for using the devices for a call.
+
+If the browser does not yet have permission, it will prompt the end-user
+with a small pop-up window, giving the user a chance to allow/deny the
+permissions. The behaviour of this pop-up window differs slightly
+based on the browser; it may automatically save the user's decision
+(such as in Chrome and Safari) or it may require the user to choose
+whether their decision should be saved (such as in Firefox).
+
+This API is not required for proper usage of media and/or calls, but
+helps to prepare a user before a call is made or received. It allows
+an application to prompt the user for device permissions when it is
+convenient for them, rather than during call setup. If the user saves
+their decision, they will not be prompted again when the SDK accesses
+those devices for a call.
+
+For device information, the [media.getDevices][99] API will retrieve
+the list of media devices available for the SDK to use. If this list
+is empty, or is missing information, it is likely that the browser
+does not have permission to access the device's information. We
+recommend using the [media.initializeDevices][108] API in this
+scenario if you would like to allow the end-user to select which
+device(s) they would like to use when they make a call, rather than
+using the system default.
+
+The SDK will emit a [devices:change][107]
+event when the operation is successful or a
+[devices:error][109] event if an error is
+encountered.
+
+#### Parameters
+
+*   `constraints` **[Object][7]?** 
+
+    *   `constraints.audio` **[boolean][11]** Whether to ask for audio device permissions. (optional, default `true`)
+    *   `constraints.video` **[boolean][11]** Whether to ask for video device permissions. (optional, default `true`)
+
+#### Examples
+
+```javascript
+// The SDK will ask for both audio and video permissions by default.
+client.media.initializeDevices()
+
+// The SDK will only ask for audio permissions.
+client.media.initializeDevices({ audio: true, video: false })
+```
+
 ### renderTracks
 
 Render Media Tracks in a container.
@@ -2624,20 +2624,6 @@ client.on('call:tracksAdded', function (params) {
    }
 })
 ```
-
-### removeTracks
-
-Remove Media Tracks from a container.
-
-The container is specified by providing a CSS selector string that
-corresponds to the HTMLElement to act as the container.
-
-#### Parameters
-
-*   `trackIds` **[Array][20]<[string][8]>** List of Track IDs to stop being rendered.
-*   `cssSelector` **[string][8]** A CSS selector string that uniquely
-    identifies an element. Ensure that special characters are properly
-    escaped.
 
 ### muteTracks
 
@@ -2676,6 +2662,20 @@ when a Track has been unmuted.
 #### Parameters
 
 *   `trackIds` **[Array][20]<[string][8]>** List of Track IDs.
+
+### removeTracks
+
+Remove Media Tracks from a container.
+
+The container is specified by providing a CSS selector string that
+corresponds to the HTMLElement to act as the container.
+
+#### Parameters
+
+*   `trackIds` **[Array][20]<[string][8]>** List of Track IDs to stop being rendered.
+*   `cssSelector` **[string][8]** A CSS selector string that uniquely
+    identifies an element. Ensure that special characters are properly
+    escaped.
 
 ### devices:change
 
