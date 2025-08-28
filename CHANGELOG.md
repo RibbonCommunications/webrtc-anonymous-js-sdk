@@ -7,6 +7,13 @@ Ribbon WebRTC SDK change log.
 - This project adheres to [Semantic Versioning](http://semver.org/).
 - This change log follows [keepachangelog.com](http://keepachangelog.com/) recommendations.
 
+## 7.9.0 - 2025-08-28
+
+### Fixed
+
+- Fixed a Call issue where media could be lost after a remote unhold operation when music-on-hold was previously being received. `KJS-3016`
+- Fixed a Call issue where a join operation would fail for the remote users in some scenarios, causing their calls to end unexpectedly. `KJS-2988`
+
 ## 7.8.0 - 2025-07-24
 
 ## 7.7.0 - 2025-06-26

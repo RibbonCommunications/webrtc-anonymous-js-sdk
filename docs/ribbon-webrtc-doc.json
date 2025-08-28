@@ -17079,22 +17079,22 @@
           ],
           "loc": {
             "start": {
-              "line": 427,
+              "line": 480,
               "column": 2
             },
             "end": {
-              "line": 450,
+              "line": 503,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 451,
+                "line": 504,
                 "column": 2
               },
               "end": {
-                "line": 483,
+                "line": 536,
                 "column": 3
               }
             },
@@ -31482,325 +31482,6 @@
                 "children": [
                   {
                     "type": "text",
-                    "value": "Requests permission to access media devices on the end-user's machine."
-                  }
-                ]
-              },
-              {
-                "type": "paragraph",
-                "children": [
-                  {
-                    "type": "text",
-                    "value": "This API will trigger the browser to ask the end-user for permission to\naccess their camera and/or microphone. These permissions are\nneeded for the SDK to read information about the devices (the label,\nfor example) and for using the devices for a call."
-                  }
-                ]
-              },
-              {
-                "type": "paragraph",
-                "children": [
-                  {
-                    "type": "text",
-                    "value": "If the browser does not yet have permission, it will prompt the end-user\nwith a small pop-up window, giving the user a chance to allow/deny the\npermissions. The behaviour of this pop-up window differs slightly\nbased on the browser; it may automatically save the user's decision\n(such as in Chrome and Safari) or it may require the user to choose\nwhether their decision should be saved (such as in Firefox)."
-                  }
-                ]
-              },
-              {
-                "type": "paragraph",
-                "children": [
-                  {
-                    "type": "text",
-                    "value": "This API is not required for proper usage of media and/or calls, but\nhelps to prepare a user before a call is made or received. It allows\nan application to prompt the user for device permissions when it is\nconvenient for them, rather than during call setup. If the user saves\ntheir decision, they will not be prompted again when the SDK accesses\nthose devices for a call."
-                  }
-                ]
-              },
-              {
-                "type": "paragraph",
-                "children": [
-                  {
-                    "type": "text",
-                    "value": "For device information, the "
-                  },
-                  {
-                    "type": "link",
-                    "url": "#mediagetdevices",
-                    "title": null,
-                    "jsdoc": true,
-                    "children": [
-                      {
-                        "type": "text",
-                        "value": "media.getDevices"
-                      }
-                    ]
-                  },
-                  {
-                    "type": "text",
-                    "value": " API will retrieve\nthe list of media devices available for the SDK to use. If this list\nis empty, or is missing information, it is likely that the browser\ndoes not have permission to access the device's information. We\nrecommend using the "
-                  },
-                  {
-                    "type": "link",
-                    "url": "#mediainitializedevices",
-                    "title": null,
-                    "jsdoc": true,
-                    "children": [
-                      {
-                        "type": "text",
-                        "value": "media.initializeDevices"
-                      }
-                    ]
-                  },
-                  {
-                    "type": "text",
-                    "value": " API in this\nscenario if you would like to allow the end-user to select which\ndevice(s) they would like to use when they make a call, rather than\nusing the system default."
-                  }
-                ]
-              },
-              {
-                "type": "paragraph",
-                "children": [
-                  {
-                    "type": "text",
-                    "value": "The SDK will emit a "
-                  },
-                  {
-                    "type": "link",
-                    "url": "#mediaeventdeviceschange",
-                    "title": null,
-                    "jsdoc": true,
-                    "children": [
-                      {
-                        "type": "text",
-                        "value": "devices:change"
-                      }
-                    ]
-                  },
-                  {
-                    "type": "text",
-                    "value": "\nevent when the operation is successful or a\n"
-                  },
-                  {
-                    "type": "link",
-                    "url": "#mediaeventdeviceserror",
-                    "title": null,
-                    "jsdoc": true,
-                    "children": [
-                      {
-                        "type": "text",
-                        "value": "devices:error"
-                      }
-                    ]
-                  },
-                  {
-                    "type": "text",
-                    "value": " event if an error is\nencountered."
-                  }
-                ]
-              }
-            ]
-          },
-          "tags": [
-            {
-              "title": "public",
-              "description": null,
-              "lineNumber": 35,
-              "type": null
-            },
-            {
-              "title": "static",
-              "description": null,
-              "lineNumber": 36
-            },
-            {
-              "title": "memberof",
-              "description": "media",
-              "lineNumber": 37
-            },
-            {
-              "title": "method",
-              "description": null,
-              "lineNumber": 38,
-              "name": "initializeDevices"
-            },
-            {
-              "title": "param",
-              "description": null,
-              "lineNumber": 39,
-              "type": {
-                "type": "OptionalType",
-                "expression": {
-                  "type": "NameExpression",
-                  "name": "Object"
-                }
-              },
-              "name": "constraints"
-            },
-            {
-              "title": "param",
-              "description": "Whether to ask for audio device permissions.",
-              "lineNumber": 40,
-              "type": {
-                "type": "OptionalType",
-                "expression": {
-                  "type": "NameExpression",
-                  "name": "boolean"
-                }
-              },
-              "name": "constraints.audio",
-              "default": "true"
-            },
-            {
-              "title": "param",
-              "description": "Whether to ask for video device permissions.",
-              "lineNumber": 41,
-              "type": {
-                "type": "OptionalType",
-                "expression": {
-                  "type": "NameExpression",
-                  "name": "boolean"
-                }
-              },
-              "name": "constraints.video",
-              "default": "true"
-            },
-            {
-              "title": "example",
-              "description": "// The SDK will ask for both audio and video permissions by default.\nclient.media.initializeDevices()\n\n// The SDK will only ask for audio permissions.\nclient.media.initializeDevices({ audio: true, video: false })",
-              "lineNumber": 42
-            }
-          ],
-          "loc": {
-            "start": {
-              "line": 99,
-              "column": 4
-            },
-            "end": {
-              "line": 147,
-              "column": 7
-            }
-          },
-          "context": {
-            "loc": {
-              "start": {
-                "line": 148,
-                "column": 4
-              },
-              "end": {
-                "line": 163,
-                "column": 5
-              }
-            },
-            "file": "/home/jenkins/workspace/jobs_webrtcjs_master/packages/kandy/src/webrtc/interface/api/media.js"
-          },
-          "augments": [],
-          "examples": [
-            {
-              "description": "// The SDK will ask for both audio and video permissions by default.\nclient.media.initializeDevices()\n\n// The SDK will only ask for audio permissions.\nclient.media.initializeDevices({ audio: true, video: false })"
-            }
-          ],
-          "implements": [],
-          "params": [
-            {
-              "title": "param",
-              "name": "constraints",
-              "lineNumber": 39,
-              "type": {
-                "type": "OptionalType",
-                "expression": {
-                  "type": "NameExpression",
-                  "name": "Object"
-                }
-              },
-              "properties": [
-                {
-                  "title": "param",
-                  "name": "constraints.audio",
-                  "lineNumber": 40,
-                  "description": {
-                    "type": "root",
-                    "children": [
-                      {
-                        "type": "paragraph",
-                        "children": [
-                          {
-                            "type": "text",
-                            "value": "Whether to ask for audio device permissions."
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  "type": {
-                    "type": "NameExpression",
-                    "name": "boolean"
-                  },
-                  "default": "true"
-                },
-                {
-                  "title": "param",
-                  "name": "constraints.video",
-                  "lineNumber": 41,
-                  "description": {
-                    "type": "root",
-                    "children": [
-                      {
-                        "type": "paragraph",
-                        "children": [
-                          {
-                            "type": "text",
-                            "value": "Whether to ask for video device permissions."
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  "type": {
-                    "type": "NameExpression",
-                    "name": "boolean"
-                  },
-                  "default": "true"
-                }
-              ]
-            }
-          ],
-          "properties": [],
-          "returns": [],
-          "sees": [],
-          "throws": [],
-          "todos": [],
-          "yields": [],
-          "access": "public",
-          "scope": "static",
-          "memberof": "media",
-          "kind": "function",
-          "name": "initializeDevices",
-          "members": {
-            "global": [],
-            "inner": [],
-            "instance": [],
-            "events": [],
-            "static": []
-          },
-          "path": [
-            {
-              "name": "media",
-              "kind": "namespace"
-            },
-            {
-              "name": "initializeDevices",
-              "kind": "function",
-              "scope": "static"
-            }
-          ],
-          "namespace": "media.initializeDevices"
-        },
-        {
-          "description": {
-            "type": "root",
-            "children": [
-              {
-                "type": "paragraph",
-                "children": [
-                  {
-                    "type": "text",
                     "value": "Create local media Tracks."
                   }
                 ]
@@ -31941,22 +31622,22 @@
           ],
           "loc": {
             "start": {
-              "line": 165,
+              "line": 99,
               "column": 4
             },
             "end": {
-              "line": 182,
+              "line": 116,
               "column": 7
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 183,
+                "line": 117,
                 "column": 4
               },
               "end": {
-                "line": 194,
+                "line": 128,
                 "column": 5
               }
             },
@@ -32270,22 +31951,22 @@
           ],
           "loc": {
             "start": {
-              "line": 196,
+              "line": 130,
               "column": 4
             },
             "end": {
-              "line": 207,
+              "line": 141,
               "column": 7
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 208,
+                "line": 142,
                 "column": 4
               },
               "end": {
-                "line": 221,
+                "line": 155,
                 "column": 5
               }
             },
@@ -32465,22 +32146,22 @@
           ],
           "loc": {
             "start": {
-              "line": 223,
+              "line": 157,
               "column": 4
             },
             "end": {
-              "line": 234,
+              "line": 168,
               "column": 7
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 235,
+                "line": 169,
                 "column": 4
               },
               "end": {
-                "line": 249,
+                "line": 183,
                 "column": 5
               }
             },
@@ -32644,6 +32325,325 @@
                 "children": [
                   {
                     "type": "text",
+                    "value": "Requests permission to access media devices on the end-user's machine."
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "type": "text",
+                    "value": "This API will trigger the browser to ask the end-user for permission to\naccess their camera and/or microphone. These permissions are\nneeded for the SDK to read information about the devices (the label,\nfor example) and for using the devices for a call."
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "type": "text",
+                    "value": "If the browser does not yet have permission, it will prompt the end-user\nwith a small pop-up window, giving the user a chance to allow/deny the\npermissions. The behaviour of this pop-up window differs slightly\nbased on the browser; it may automatically save the user's decision\n(such as in Chrome and Safari) or it may require the user to choose\nwhether their decision should be saved (such as in Firefox)."
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "type": "text",
+                    "value": "This API is not required for proper usage of media and/or calls, but\nhelps to prepare a user before a call is made or received. It allows\nan application to prompt the user for device permissions when it is\nconvenient for them, rather than during call setup. If the user saves\ntheir decision, they will not be prompted again when the SDK accesses\nthose devices for a call."
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "type": "text",
+                    "value": "For device information, the "
+                  },
+                  {
+                    "type": "link",
+                    "url": "#mediagetdevices",
+                    "title": null,
+                    "jsdoc": true,
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "media.getDevices"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "text",
+                    "value": " API will retrieve\nthe list of media devices available for the SDK to use. If this list\nis empty, or is missing information, it is likely that the browser\ndoes not have permission to access the device's information. We\nrecommend using the "
+                  },
+                  {
+                    "type": "link",
+                    "url": "#mediainitializedevices",
+                    "title": null,
+                    "jsdoc": true,
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "media.initializeDevices"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "text",
+                    "value": " API in this\nscenario if you would like to allow the end-user to select which\ndevice(s) they would like to use when they make a call, rather than\nusing the system default."
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "type": "text",
+                    "value": "The SDK will emit a "
+                  },
+                  {
+                    "type": "link",
+                    "url": "#mediaeventdeviceschange",
+                    "title": null,
+                    "jsdoc": true,
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "devices:change"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "text",
+                    "value": "\nevent when the operation is successful or a\n"
+                  },
+                  {
+                    "type": "link",
+                    "url": "#mediaeventdeviceserror",
+                    "title": null,
+                    "jsdoc": true,
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "devices:error"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "text",
+                    "value": " event if an error is\nencountered."
+                  }
+                ]
+              }
+            ]
+          },
+          "tags": [
+            {
+              "title": "public",
+              "description": null,
+              "lineNumber": 35,
+              "type": null
+            },
+            {
+              "title": "static",
+              "description": null,
+              "lineNumber": 36
+            },
+            {
+              "title": "memberof",
+              "description": "media",
+              "lineNumber": 37
+            },
+            {
+              "title": "method",
+              "description": null,
+              "lineNumber": 38,
+              "name": "initializeDevices"
+            },
+            {
+              "title": "param",
+              "description": null,
+              "lineNumber": 39,
+              "type": {
+                "type": "OptionalType",
+                "expression": {
+                  "type": "NameExpression",
+                  "name": "Object"
+                }
+              },
+              "name": "constraints"
+            },
+            {
+              "title": "param",
+              "description": "Whether to ask for audio device permissions.",
+              "lineNumber": 40,
+              "type": {
+                "type": "OptionalType",
+                "expression": {
+                  "type": "NameExpression",
+                  "name": "boolean"
+                }
+              },
+              "name": "constraints.audio",
+              "default": "true"
+            },
+            {
+              "title": "param",
+              "description": "Whether to ask for video device permissions.",
+              "lineNumber": 41,
+              "type": {
+                "type": "OptionalType",
+                "expression": {
+                  "type": "NameExpression",
+                  "name": "boolean"
+                }
+              },
+              "name": "constraints.video",
+              "default": "true"
+            },
+            {
+              "title": "example",
+              "description": "// The SDK will ask for both audio and video permissions by default.\nclient.media.initializeDevices()\n\n// The SDK will only ask for audio permissions.\nclient.media.initializeDevices({ audio: true, video: false })",
+              "lineNumber": 42
+            }
+          ],
+          "loc": {
+            "start": {
+              "line": 186,
+              "column": 2
+            },
+            "end": {
+              "line": 234,
+              "column": 5
+            }
+          },
+          "context": {
+            "loc": {
+              "start": {
+                "line": 235,
+                "column": 2
+              },
+              "end": {
+                "line": 246,
+                "column": 3
+              }
+            },
+            "file": "/home/jenkins/workspace/jobs_webrtcjs_master/packages/kandy/src/webrtc/interface/api/media.js"
+          },
+          "augments": [],
+          "examples": [
+            {
+              "description": "// The SDK will ask for both audio and video permissions by default.\nclient.media.initializeDevices()\n\n// The SDK will only ask for audio permissions.\nclient.media.initializeDevices({ audio: true, video: false })"
+            }
+          ],
+          "implements": [],
+          "params": [
+            {
+              "title": "param",
+              "name": "constraints",
+              "lineNumber": 39,
+              "type": {
+                "type": "OptionalType",
+                "expression": {
+                  "type": "NameExpression",
+                  "name": "Object"
+                }
+              },
+              "properties": [
+                {
+                  "title": "param",
+                  "name": "constraints.audio",
+                  "lineNumber": 40,
+                  "description": {
+                    "type": "root",
+                    "children": [
+                      {
+                        "type": "paragraph",
+                        "children": [
+                          {
+                            "type": "text",
+                            "value": "Whether to ask for audio device permissions."
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "type": {
+                    "type": "NameExpression",
+                    "name": "boolean"
+                  },
+                  "default": "true"
+                },
+                {
+                  "title": "param",
+                  "name": "constraints.video",
+                  "lineNumber": 41,
+                  "description": {
+                    "type": "root",
+                    "children": [
+                      {
+                        "type": "paragraph",
+                        "children": [
+                          {
+                            "type": "text",
+                            "value": "Whether to ask for video device permissions."
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "type": {
+                    "type": "NameExpression",
+                    "name": "boolean"
+                  },
+                  "default": "true"
+                }
+              ]
+            }
+          ],
+          "properties": [],
+          "returns": [],
+          "sees": [],
+          "throws": [],
+          "todos": [],
+          "yields": [],
+          "access": "public",
+          "scope": "static",
+          "memberof": "media",
+          "kind": "function",
+          "name": "initializeDevices",
+          "members": {
+            "global": [],
+            "inner": [],
+            "instance": [],
+            "events": [],
+            "static": []
+          },
+          "path": [
+            {
+              "name": "media",
+              "kind": "namespace"
+            },
+            {
+              "name": "initializeDevices",
+              "kind": "function",
+              "scope": "static"
+            }
+          ],
+          "namespace": "media.initializeDevices"
+        },
+        {
+          "description": {
+            "type": "root",
+            "children": [
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "type": "text",
                     "value": "Render Media Tracks in a container."
                   }
                 ]
@@ -32745,23 +32745,23 @@
           ],
           "loc": {
             "start": {
-              "line": 251,
-              "column": 4
+              "line": 317,
+              "column": 2
             },
             "end": {
-              "line": 277,
-              "column": 7
+              "line": 343,
+              "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 278,
-                "column": 4
+                "line": 344,
+                "column": 2
               },
               "end": {
-                "line": 289,
-                "column": 5
+                "line": 355,
+                "column": 3
               }
             },
             "file": "/home/jenkins/workspace/jobs_webrtcjs_master/packages/kandy/src/webrtc/interface/api/media.js"
@@ -32924,197 +32924,6 @@
                 "children": [
                   {
                     "type": "text",
-                    "value": "Remove Media Tracks from a container."
-                  }
-                ]
-              },
-              {
-                "type": "paragraph",
-                "children": [
-                  {
-                    "type": "text",
-                    "value": "The container is specified by providing a CSS selector string that\ncorresponds to the HTMLElement to act as the container."
-                  }
-                ]
-              }
-            ]
-          },
-          "tags": [
-            {
-              "title": "public",
-              "description": null,
-              "lineNumber": 5,
-              "type": null
-            },
-            {
-              "title": "static",
-              "description": null,
-              "lineNumber": 6
-            },
-            {
-              "title": "memberof",
-              "description": "media",
-              "lineNumber": 7
-            },
-            {
-              "title": "method",
-              "description": null,
-              "lineNumber": 8,
-              "name": "removeTracks"
-            },
-            {
-              "title": "param",
-              "description": "List of Track IDs to stop being rendered.",
-              "lineNumber": 9,
-              "type": {
-                "type": "TypeApplication",
-                "expression": {
-                  "type": "NameExpression",
-                  "name": "Array"
-                },
-                "applications": [
-                  {
-                    "type": "NameExpression",
-                    "name": "string"
-                  }
-                ]
-              },
-              "name": "trackIds"
-            },
-            {
-              "title": "param",
-              "description": "A CSS selector string that uniquely\n   identifies an element. Ensure that special characters are properly\n   escaped.",
-              "lineNumber": 10,
-              "type": {
-                "type": "NameExpression",
-                "name": "string"
-              },
-              "name": "cssSelector"
-            }
-          ],
-          "loc": {
-            "start": {
-              "line": 291,
-              "column": 4
-            },
-            "end": {
-              "line": 304,
-              "column": 7
-            }
-          },
-          "context": {
-            "loc": {
-              "start": {
-                "line": 305,
-                "column": 4
-              },
-              "end": {
-                "line": 308,
-                "column": 5
-              }
-            },
-            "file": "/home/jenkins/workspace/jobs_webrtcjs_master/packages/kandy/src/webrtc/interface/api/media.js"
-          },
-          "augments": [],
-          "examples": [],
-          "implements": [],
-          "params": [
-            {
-              "title": "param",
-              "name": "trackIds",
-              "lineNumber": 9,
-              "description": {
-                "type": "root",
-                "children": [
-                  {
-                    "type": "paragraph",
-                    "children": [
-                      {
-                        "type": "text",
-                        "value": "List of Track IDs to stop being rendered."
-                      }
-                    ]
-                  }
-                ]
-              },
-              "type": {
-                "type": "TypeApplication",
-                "expression": {
-                  "type": "NameExpression",
-                  "name": "Array"
-                },
-                "applications": [
-                  {
-                    "type": "NameExpression",
-                    "name": "string"
-                  }
-                ]
-              }
-            },
-            {
-              "title": "param",
-              "name": "cssSelector",
-              "lineNumber": 10,
-              "description": {
-                "type": "root",
-                "children": [
-                  {
-                    "type": "paragraph",
-                    "children": [
-                      {
-                        "type": "text",
-                        "value": "A CSS selector string that uniquely\nidentifies an element. Ensure that special characters are properly\nescaped."
-                      }
-                    ]
-                  }
-                ]
-              },
-              "type": {
-                "type": "NameExpression",
-                "name": "string"
-              }
-            }
-          ],
-          "properties": [],
-          "returns": [],
-          "sees": [],
-          "throws": [],
-          "todos": [],
-          "yields": [],
-          "access": "public",
-          "scope": "static",
-          "memberof": "media",
-          "kind": "function",
-          "name": "removeTracks",
-          "members": {
-            "global": [],
-            "inner": [],
-            "instance": [],
-            "events": [],
-            "static": []
-          },
-          "path": [
-            {
-              "name": "media",
-              "kind": "namespace"
-            },
-            {
-              "name": "removeTracks",
-              "kind": "function",
-              "scope": "static"
-            }
-          ],
-          "namespace": "media.removeTracks"
-        },
-        {
-          "description": {
-            "type": "root",
-            "children": [
-              {
-                "type": "paragraph",
-                "children": [
-                  {
-                    "type": "text",
                     "value": "Mutes the specified Tracks."
                   }
                 ]
@@ -33218,23 +33027,23 @@
           ],
           "loc": {
             "start": {
-              "line": 310,
-              "column": 4
+              "line": 405,
+              "column": 2
             },
             "end": {
-              "line": 332,
-              "column": 7
+              "line": 427,
+              "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 333,
-                "column": 4
+                "line": 428,
+                "column": 2
               },
               "end": {
-                "line": 350,
-                "column": 5
+                "line": 445,
+                "column": 3
               }
             },
             "file": "/home/jenkins/workspace/jobs_webrtcjs_master/packages/kandy/src/webrtc/interface/api/media.js"
@@ -33401,23 +33210,23 @@
           ],
           "loc": {
             "start": {
-              "line": 352,
-              "column": 4
+              "line": 490,
+              "column": 2
             },
             "end": {
-              "line": 366,
-              "column": 7
+              "line": 504,
+              "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 367,
-                "column": 4
+                "line": 505,
+                "column": 2
               },
               "end": {
-                "line": 384,
-                "column": 5
+                "line": 522,
+                "column": 3
               }
             },
             "file": "/home/jenkins/workspace/jobs_webrtcjs_master/packages/kandy/src/webrtc/interface/api/media.js"
@@ -33489,6 +33298,197 @@
             }
           ],
           "namespace": "media.unmuteTracks"
+        },
+        {
+          "description": {
+            "type": "root",
+            "children": [
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "type": "text",
+                    "value": "Remove Media Tracks from a container."
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "type": "text",
+                    "value": "The container is specified by providing a CSS selector string that\ncorresponds to the HTMLElement to act as the container."
+                  }
+                ]
+              }
+            ]
+          },
+          "tags": [
+            {
+              "title": "public",
+              "description": null,
+              "lineNumber": 5,
+              "type": null
+            },
+            {
+              "title": "static",
+              "description": null,
+              "lineNumber": 6
+            },
+            {
+              "title": "memberof",
+              "description": "media",
+              "lineNumber": 7
+            },
+            {
+              "title": "method",
+              "description": null,
+              "lineNumber": 8,
+              "name": "removeTracks"
+            },
+            {
+              "title": "param",
+              "description": "List of Track IDs to stop being rendered.",
+              "lineNumber": 9,
+              "type": {
+                "type": "TypeApplication",
+                "expression": {
+                  "type": "NameExpression",
+                  "name": "Array"
+                },
+                "applications": [
+                  {
+                    "type": "NameExpression",
+                    "name": "string"
+                  }
+                ]
+              },
+              "name": "trackIds"
+            },
+            {
+              "title": "param",
+              "description": "A CSS selector string that uniquely\n   identifies an element. Ensure that special characters are properly\n   escaped.",
+              "lineNumber": 10,
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              },
+              "name": "cssSelector"
+            }
+          ],
+          "loc": {
+            "start": {
+              "line": 558,
+              "column": 2
+            },
+            "end": {
+              "line": 571,
+              "column": 5
+            }
+          },
+          "context": {
+            "loc": {
+              "start": {
+                "line": 572,
+                "column": 2
+              },
+              "end": {
+                "line": 575,
+                "column": 3
+              }
+            },
+            "file": "/home/jenkins/workspace/jobs_webrtcjs_master/packages/kandy/src/webrtc/interface/api/media.js"
+          },
+          "augments": [],
+          "examples": [],
+          "implements": [],
+          "params": [
+            {
+              "title": "param",
+              "name": "trackIds",
+              "lineNumber": 9,
+              "description": {
+                "type": "root",
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "List of Track IDs to stop being rendered."
+                      }
+                    ]
+                  }
+                ]
+              },
+              "type": {
+                "type": "TypeApplication",
+                "expression": {
+                  "type": "NameExpression",
+                  "name": "Array"
+                },
+                "applications": [
+                  {
+                    "type": "NameExpression",
+                    "name": "string"
+                  }
+                ]
+              }
+            },
+            {
+              "title": "param",
+              "name": "cssSelector",
+              "lineNumber": 10,
+              "description": {
+                "type": "root",
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "A CSS selector string that uniquely\nidentifies an element. Ensure that special characters are properly\nescaped."
+                      }
+                    ]
+                  }
+                ]
+              },
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              }
+            }
+          ],
+          "properties": [],
+          "returns": [],
+          "sees": [],
+          "throws": [],
+          "todos": [],
+          "yields": [],
+          "access": "public",
+          "scope": "static",
+          "memberof": "media",
+          "kind": "function",
+          "name": "removeTracks",
+          "members": {
+            "global": [],
+            "inner": [],
+            "instance": [],
+            "events": [],
+            "static": []
+          },
+          "path": [
+            {
+              "name": "media",
+              "kind": "namespace"
+            },
+            {
+              "name": "removeTracks",
+              "kind": "function",
+              "scope": "static"
+            }
+          ],
+          "namespace": "media.removeTracks"
         }
       ]
     },
