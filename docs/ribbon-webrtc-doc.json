@@ -3956,22 +3956,22 @@
     ],
     "loc": {
       "start": {
-        "line": 824,
+        "line": 826,
         "column": 2
       },
       "end": {
-        "line": 847,
+        "line": 849,
         "column": 5
       }
     },
     "context": {
       "loc": {
         "start": {
-          "line": 848,
+          "line": 850,
           "column": 2
         },
         "end": {
-          "line": 874,
+          "line": 876,
           "column": 3
         }
       },
@@ -7997,26 +7997,37 @@
         "lineNumber": 10
       },
       {
-        "title": "memberof",
-        "description": "call",
+        "title": "async",
+        "description": null,
         "lineNumber": 11
       },
       {
-        "title": "requires",
-        "description": null,
-        "lineNumber": 12,
-        "name": "call"
+        "title": "memberof",
+        "description": "call",
+        "lineNumber": 12
       },
       {
         "title": "requires",
         "description": null,
         "lineNumber": 13,
+        "name": "call"
+      },
+      {
+        "title": "requires",
+        "description": null,
+        "lineNumber": 14,
         "name": "callMe"
+      },
+      {
+        "title": "method",
+        "description": null,
+        "lineNumber": 15,
+        "name": "getAvailableCodecs"
       },
       {
         "title": "param",
         "description": "The kind of media, i.e., 'audio' or 'video', to get the list of available codecs of.",
-        "lineNumber": 14,
+        "lineNumber": 16,
         "type": {
           "type": "NameExpression",
           "name": "string"
@@ -8024,38 +8035,56 @@
         "name": "kind"
       },
       {
-        "title": "return",
-        "description": "A promise that will resolve with an object containing the available codecs, along with the `kind` parameter, that was supplied in the first place.\n        If there was an error, it will return undefined.",
-        "lineNumber": 15,
+        "title": "throws",
+        "description": "Rejects with a BasicError if the operation fails.",
+        "lineNumber": 17,
         "type": {
           "type": "NameExpression",
-          "name": "Promise"
+          "name": "BasicError"
+        }
+      },
+      {
+        "title": "return",
+        "description": "A promise that will resolve with an array of available codecs.\n        If there was an error, it will return undefined.",
+        "lineNumber": 18,
+        "type": {
+          "type": "TypeApplication",
+          "expression": {
+            "type": "NameExpression",
+            "name": "Promise"
+          },
+          "applications": [
+            {
+              "type": "NameExpression",
+              "name": "Array"
+            }
+          ]
         }
       },
       {
         "title": "example",
-        "description": "try {\n   // The API will return a promise that resolves with the codecs.\n   const result = await client.call.getAvailableCodecs('audio')\n   result.forEach(codec => {\n       // Inspect the codec supported by browser by looking at its properties.\n       ...\n   })\n} catch (err) {\n   // Handle the error.\n   const { code, message } = err\n   ...\n}",
-        "lineNumber": 17
+        "description": "try {\n   // The API will return a promise that resolves with the codecs.\n   const result = await client.call.getAvailableCodecs('audio')\n   // Iterate through the Array\n   result.forEach(codec => {\n       // Inspect the codec supported by browser by looking at its properties.\n       ...\n   })\n} catch (err) {\n   // Handle the error.\n   const { code, message } = err\n   ...\n}",
+        "lineNumber": 20
       }
     ],
     "loc": {
       "start": {
-        "line": 332,
+        "line": 453,
         "column": 2
       },
       "end": {
-        "line": 362,
+        "line": 487,
         "column": 5
       }
     },
     "context": {
       "loc": {
         "start": {
-          "line": 363,
+          "line": 488,
           "column": 2
         },
         "end": {
-          "line": 394,
+          "line": 515,
           "column": 3
         }
       },
@@ -8064,7 +8093,7 @@
     "augments": [],
     "examples": [
       {
-        "description": "try {\n   // The API will return a promise that resolves with the codecs.\n   const result = await client.call.getAvailableCodecs('audio')\n   result.forEach(codec => {\n       // Inspect the codec supported by browser by looking at its properties.\n       ...\n   })\n} catch (err) {\n   // Handle the error.\n   const { code, message } = err\n   ...\n}"
+        "description": "try {\n   // The API will return a promise that resolves with the codecs.\n   const result = await client.call.getAvailableCodecs('audio')\n   // Iterate through the Array\n   result.forEach(codec => {\n       // Inspect the codec supported by browser by looking at its properties.\n       ...\n   })\n} catch (err) {\n   // Handle the error.\n   const { code, message } = err\n   ...\n}"
       }
     ],
     "implements": [],
@@ -8072,7 +8101,7 @@
       {
         "title": "param",
         "name": "kind",
-        "lineNumber": 14,
+        "lineNumber": 16,
         "description": {
           "type": "root",
           "children": [
@@ -8104,15 +8133,7 @@
               "children": [
                 {
                   "type": "text",
-                  "value": "A promise that will resolve with an object containing the available codecs, along with the "
-                },
-                {
-                  "type": "inlineCode",
-                  "value": "kind"
-                },
-                {
-                  "type": "text",
-                  "value": " parameter, that was supplied in the first place.\nIf there was an error, it will return undefined."
+                  "value": "A promise that will resolve with an array of available codecs.\nIf there was an error, it will return undefined."
                 }
               ]
             }
@@ -8120,21 +8141,51 @@
         },
         "title": "returns",
         "type": {
-          "type": "NameExpression",
-          "name": "Promise"
+          "type": "TypeApplication",
+          "expression": {
+            "type": "NameExpression",
+            "name": "Promise"
+          },
+          "applications": [
+            {
+              "type": "NameExpression",
+              "name": "Array"
+            }
+          ]
         }
       }
     ],
     "sees": [],
-    "throws": [],
+    "throws": [
+      {
+        "description": {
+          "type": "root",
+          "children": [
+            {
+              "type": "paragraph",
+              "children": [
+                {
+                  "type": "text",
+                  "value": "Rejects with a BasicError if the operation fails."
+                }
+              ]
+            }
+          ]
+        },
+        "type": {
+          "type": "NameExpression",
+          "name": "BasicError"
+        }
+      }
+    ],
     "todos": [],
     "yields": [],
     "access": "public",
     "scope": "static",
-    "memberof": "call",
-    "name": "getAvailableCodecs",
-    "kind": "function",
     "async": true,
+    "memberof": "call",
+    "kind": "function",
+    "name": "getAvailableCodecs",
     "members": {
       "global": [],
       "inner": [],
@@ -8466,22 +8517,22 @@
     ],
     "loc": {
       "start": {
-        "line": 396,
+        "line": 517,
         "column": 2
       },
       "end": {
-        "line": 418,
+        "line": 539,
         "column": 5
       }
     },
     "context": {
       "loc": {
         "start": {
-          "line": 419,
+          "line": 540,
           "column": 2
         },
         "end": {
-          "line": 424,
+          "line": 545,
           "column": 3
         }
       },
@@ -8624,56 +8675,6 @@
               "value": "A Track ID can optionally be provided to get a report for a specific local\nTrack of the Call."
             }
           ]
-        },
-        {
-          "type": "paragraph",
-          "children": [
-            {
-              "type": "text",
-              "value": "This API will return a promise which, when resolved, will contain the report of the particular call.\nThe progress of the operation will be tracked via the\n"
-            },
-            {
-              "type": "link",
-              "url": "call.event:call:operation",
-              "title": null,
-              "jsdoc": true,
-              "children": [
-                {
-                  "type": "text",
-                  "value": "call:operation"
-                }
-              ]
-            },
-            {
-              "type": "text",
-              "value": " event."
-            }
-          ]
-        },
-        {
-          "type": "paragraph",
-          "children": [
-            {
-              "type": "text",
-              "value": "The SDK will emit a\n"
-            },
-            {
-              "type": "link",
-              "url": "call.event:call:statsReceived",
-              "title": null,
-              "jsdoc": true,
-              "children": [
-                {
-                  "type": "text",
-                  "value": "call:statsReceived"
-                }
-              ]
-            },
-            {
-              "type": "text",
-              "value": " event, after\nthe operation completes, that has the report."
-            }
-          ]
         }
       ]
     },
@@ -8681,35 +8682,46 @@
       {
         "title": "public",
         "description": null,
-        "lineNumber": 23,
+        "lineNumber": 15,
         "type": null
       },
       {
         "title": "static",
         "description": null,
-        "lineNumber": 24
+        "lineNumber": 16
+      },
+      {
+        "title": "async",
+        "description": null,
+        "lineNumber": 17
       },
       {
         "title": "memberof",
         "description": "call",
-        "lineNumber": 25
+        "lineNumber": 18
       },
       {
         "title": "requires",
         "description": null,
-        "lineNumber": 26,
+        "lineNumber": 19,
         "name": "call"
       },
       {
         "title": "requires",
         "description": null,
-        "lineNumber": 27,
+        "lineNumber": 20,
         "name": "callMe"
+      },
+      {
+        "title": "method",
+        "description": null,
+        "lineNumber": 21,
+        "name": "getStats"
       },
       {
         "title": "param",
         "description": "The ID of the Call to retrieve the report.",
-        "lineNumber": 28,
+        "lineNumber": 22,
         "type": {
           "type": "NameExpression",
           "name": "string"
@@ -8719,7 +8731,7 @@
       {
         "title": "param",
         "description": "ID of a local Track being used by the Call. If not\n   provided, RTCStatsReport is generated for the Call itself.",
-        "lineNumber": 29,
+        "lineNumber": 23,
         "type": {
           "type": "OptionalType",
           "expression": {
@@ -8730,38 +8742,56 @@
         "name": "trackId"
       },
       {
-        "title": "return",
-        "description": "A promise that will resolve with the stats report or an error if it fails.",
-        "lineNumber": 31,
+        "title": "throws",
+        "description": "Rejects with a BasicError if the operation fails.",
+        "lineNumber": 25,
         "type": {
           "type": "NameExpression",
-          "name": "Promise"
+          "name": "BasicError"
+        }
+      },
+      {
+        "title": "return",
+        "description": "A promise that will resolve with the stats report, if operation succeeds.",
+        "lineNumber": 26,
+        "type": {
+          "type": "TypeApplication",
+          "expression": {
+            "type": "NameExpression",
+            "name": "Promise"
+          },
+          "applications": [
+            {
+              "type": "NameExpression",
+              "name": "RTCStatsReport"
+            }
+          ]
         }
       },
       {
         "title": "example",
-        "description": "// Get a snapshot of the Call's stats.\n//   This may be done on a regular interval to collect data over time.\ntry {\n   // The API will return a promise that resolves with the stats.\n   const result = await client.call.getStats(callId)\n   result.forEach(stats => {\n       // Handle the data on its own or collate with previously gathered stats\n       //    for analysis.\n       ...\n   })\n} catch (err) {\n   // Handle the error.\n   const { code, message } = err\n   ...\n}",
-        "lineNumber": 32
+        "description": "// Get a snapshot of the Call's stats.\n//   This may be done on a regular interval to collect data over time.\ntry {\n   // The API will return a promise that resolves with the stats.\n   const result = await client.call.getStats(callId)\n   // Report is a Map-like object so we can iterate through its data.\n   result.forEach(stats => {\n       // Handle the data on its own or collate with previously gathered stats\n       //    for analysis.\n       ...\n   })\n} catch (err) {\n   // Handle the error.\n   const { code, message } = err\n   ...\n}",
+        "lineNumber": 27
       }
     ],
     "loc": {
       "start": {
-        "line": 249,
+        "line": 373,
         "column": 2
       },
       "end": {
-        "line": 297,
+        "line": 417,
         "column": 5
       }
     },
     "context": {
       "loc": {
         "start": {
-          "line": 298,
+          "line": 418,
           "column": 2
         },
         "end": {
-          "line": 330,
+          "line": 451,
           "column": 3
         }
       },
@@ -8770,7 +8800,7 @@
     "augments": [],
     "examples": [
       {
-        "description": "// Get a snapshot of the Call's stats.\n//   This may be done on a regular interval to collect data over time.\ntry {\n   // The API will return a promise that resolves with the stats.\n   const result = await client.call.getStats(callId)\n   result.forEach(stats => {\n       // Handle the data on its own or collate with previously gathered stats\n       //    for analysis.\n       ...\n   })\n} catch (err) {\n   // Handle the error.\n   const { code, message } = err\n   ...\n}"
+        "description": "// Get a snapshot of the Call's stats.\n//   This may be done on a regular interval to collect data over time.\ntry {\n   // The API will return a promise that resolves with the stats.\n   const result = await client.call.getStats(callId)\n   // Report is a Map-like object so we can iterate through its data.\n   result.forEach(stats => {\n       // Handle the data on its own or collate with previously gathered stats\n       //    for analysis.\n       ...\n   })\n} catch (err) {\n   // Handle the error.\n   const { code, message } = err\n   ...\n}"
       }
     ],
     "implements": [],
@@ -8778,7 +8808,7 @@
       {
         "title": "param",
         "name": "callId",
-        "lineNumber": 28,
+        "lineNumber": 22,
         "description": {
           "type": "root",
           "children": [
@@ -8801,7 +8831,7 @@
       {
         "title": "param",
         "name": "trackId",
-        "lineNumber": 29,
+        "lineNumber": 23,
         "description": {
           "type": "root",
           "children": [
@@ -8836,7 +8866,7 @@
               "children": [
                 {
                   "type": "text",
-                  "value": "A promise that will resolve with the stats report or an error if it fails."
+                  "value": "A promise that will resolve with the stats report, if operation succeeds."
                 }
               ]
             }
@@ -8844,21 +8874,51 @@
         },
         "title": "returns",
         "type": {
-          "type": "NameExpression",
-          "name": "Promise"
+          "type": "TypeApplication",
+          "expression": {
+            "type": "NameExpression",
+            "name": "Promise"
+          },
+          "applications": [
+            {
+              "type": "NameExpression",
+              "name": "RTCStatsReport"
+            }
+          ]
         }
       }
     ],
     "sees": [],
-    "throws": [],
+    "throws": [
+      {
+        "description": {
+          "type": "root",
+          "children": [
+            {
+              "type": "paragraph",
+              "children": [
+                {
+                  "type": "text",
+                  "value": "Rejects with a BasicError if the operation fails."
+                }
+              ]
+            }
+          ]
+        },
+        "type": {
+          "type": "NameExpression",
+          "name": "BasicError"
+        }
+      }
+    ],
     "todos": [],
     "yields": [],
     "access": "public",
     "scope": "static",
-    "memberof": "call",
-    "name": "getStats",
-    "kind": "function",
     "async": true,
+    "memberof": "call",
+    "kind": "function",
+    "name": "getStats",
     "members": {
       "global": [],
       "inner": [],
@@ -10017,7 +10077,7 @@
       },
       {
         "title": "property",
-        "description": "The amount of time it takes from when the local description is set to when all ICE candidates have been collected.",
+        "description": "The amount of time it takes from when the local description is set to when all ICE candidates have been collected.\n  This metric is affected by the {@link call.RTCPeerConnectionConfig iceCandidatePoolSize} configuration. Collecting candidates ahead of time for the call will result in a shorter value for this metric, potentially resulting in it not being recorded if collection is not needed during call establishment.",
         "lineNumber": 38,
         "type": {
           "type": "NameExpression",
@@ -10027,8 +10087,8 @@
       },
       {
         "title": "property",
-        "description": "The amount of time it takes from when the `ice collection` operation starts until each relay candidate has been recieved.",
-        "lineNumber": 39,
+        "description": "The amount of time it takes from when the `ice collection` operation starts until each relay candidate has been recieved.\n  This metric is affected by the {@link call.RTCPeerConnectionConfig iceCandidatePoolSize} configuration. Collecting candidates ahead of time for the call will result in a shorter value for this metric, potentially resulting in it not being recorded if collection is not needed during call establishment.",
+        "lineNumber": 40,
         "type": {
           "type": "NameExpression",
           "name": "string"
@@ -10038,7 +10098,7 @@
       {
         "title": "property",
         "description": "The amount of time it takes from when the `send custom parameters` operation starts until it has finished.",
-        "lineNumber": 40,
+        "lineNumber": 42,
         "type": {
           "type": "NameExpression",
           "name": "string"
@@ -10048,7 +10108,7 @@
       {
         "title": "property",
         "description": "The amount of time it takes from when the `forward call` operation starts until it has finished.",
-        "lineNumber": 41,
+        "lineNumber": 43,
         "type": {
           "type": "NameExpression",
           "name": "string"
@@ -10058,7 +10118,7 @@
       {
         "title": "property",
         "description": "The amount of time it takes from when the `direct transfer` operation starts until it has finished.",
-        "lineNumber": 42,
+        "lineNumber": 44,
         "type": {
           "type": "NameExpression",
           "name": "string"
@@ -10068,7 +10128,7 @@
       {
         "title": "property",
         "description": "The amount of time it takes from when the `consultative transfer` operation starts until it has finished.",
-        "lineNumber": 43,
+        "lineNumber": 45,
         "type": {
           "type": "NameExpression",
           "name": "string"
@@ -10078,7 +10138,7 @@
       {
         "title": "property",
         "description": "The amount of time it takes from when the `join call` operation starts until it has finished.",
-        "lineNumber": 44,
+        "lineNumber": 46,
         "type": {
           "type": "NameExpression",
           "name": "string"
@@ -10088,7 +10148,7 @@
       {
         "title": "example",
         "description": "const report = client.call.getReport(callId)\nconst callDuration = report.metrics.find(metric => metric.type === client.call.metrics.CALL_DURATION)\nlog(`Call duration was ${callDuration.data}ms.`)",
-        "lineNumber": 45
+        "lineNumber": 47
       }
     ],
     "loc": {
@@ -10097,18 +10157,18 @@
         "column": 0
       },
       "end": {
-        "line": 177,
+        "line": 179,
         "column": 3
       }
     },
     "context": {
       "loc": {
         "start": {
-          "line": 178,
+          "line": 180,
           "column": 0
         },
         "end": {
-          "line": 208,
+          "line": 210,
           "column": 1
         }
       },
@@ -10769,7 +10829,23 @@
               "children": [
                 {
                   "type": "text",
-                  "value": "The amount of time it takes from when the local description is set to when all ICE candidates have been collected."
+                  "value": "The amount of time it takes from when the local description is set to when all ICE candidates have been collected.\nThis metric is affected by the "
+                },
+                {
+                  "type": "link",
+                  "url": "call.RTCPeerConnectionConfig",
+                  "title": null,
+                  "jsdoc": true,
+                  "children": [
+                    {
+                      "type": "text",
+                      "value": "iceCandidatePoolSize"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "value": " configuration. Collecting candidates ahead of time for the call will result in a shorter value for this metric, potentially resulting in it not being recorded if collection is not needed during call establishment."
                 }
               ]
             }
@@ -10783,7 +10859,7 @@
       {
         "title": "property",
         "name": "TIME_TO_RELAY_CANDIDATES",
-        "lineNumber": 39,
+        "lineNumber": 40,
         "description": {
           "type": "root",
           "children": [
@@ -10800,7 +10876,23 @@
                 },
                 {
                   "type": "text",
-                  "value": " operation starts until each relay candidate has been recieved."
+                  "value": " operation starts until each relay candidate has been recieved.\nThis metric is affected by the "
+                },
+                {
+                  "type": "link",
+                  "url": "call.RTCPeerConnectionConfig",
+                  "title": null,
+                  "jsdoc": true,
+                  "children": [
+                    {
+                      "type": "text",
+                      "value": "iceCandidatePoolSize"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "value": " configuration. Collecting candidates ahead of time for the call will result in a shorter value for this metric, potentially resulting in it not being recorded if collection is not needed during call establishment."
                 }
               ]
             }
@@ -10814,7 +10906,7 @@
       {
         "title": "property",
         "name": "TIME_TO_SEND_CUSTOM_PARAMETERS",
-        "lineNumber": 40,
+        "lineNumber": 42,
         "description": {
           "type": "root",
           "children": [
@@ -10845,7 +10937,7 @@
       {
         "title": "property",
         "name": "TIME_TO_FORWARD",
-        "lineNumber": 41,
+        "lineNumber": 43,
         "description": {
           "type": "root",
           "children": [
@@ -10876,7 +10968,7 @@
       {
         "title": "property",
         "name": "TIME_TO_DIRECT_TRANSFER",
-        "lineNumber": 42,
+        "lineNumber": 44,
         "description": {
           "type": "root",
           "children": [
@@ -10907,7 +10999,7 @@
       {
         "title": "property",
         "name": "TIME_TO_CONSULTATIVE_TRANSFER",
-        "lineNumber": 43,
+        "lineNumber": 45,
         "description": {
           "type": "root",
           "children": [
@@ -10938,7 +11030,7 @@
       {
         "title": "property",
         "name": "TIME_TO_JOIN",
-        "lineNumber": 44,
+        "lineNumber": 46,
         "description": {
           "type": "root",
           "children": [
@@ -11263,22 +11355,22 @@
     ],
     "loc": {
       "start": {
-        "line": 1031,
+        "line": 1093,
         "column": 2
       },
       "end": {
-        "line": 1094,
+        "line": 1156,
         "column": 5
       }
     },
     "context": {
       "loc": {
         "start": {
-          "line": 1095,
+          "line": 1157,
           "column": 2
         },
         "end": {
-          "line": 1135,
+          "line": 1197,
           "column": 3
         }
       },
@@ -14082,7 +14174,7 @@
           "column": 2
         },
         "end": {
-          "line": 946,
+          "line": 941,
           "column": 3
         }
       },
@@ -14288,22 +14380,22 @@
     ],
     "loc": {
       "start": {
-        "line": 169,
+        "line": 219,
         "column": 2
       },
       "end": {
-        "line": 184,
+        "line": 234,
         "column": 5
       }
     },
     "context": {
       "loc": {
         "start": {
-          "line": 185,
+          "line": 235,
           "column": 2
         },
         "end": {
-          "line": 197,
+          "line": 241,
           "column": 3
         }
       },
@@ -14517,22 +14609,22 @@
     ],
     "loc": {
       "start": {
-        "line": 199,
+        "line": 277,
         "column": 2
       },
       "end": {
-        "line": 226,
+        "line": 304,
         "column": 5
       }
     },
     "context": {
       "loc": {
         "start": {
-          "line": 227,
+          "line": 305,
           "column": 2
         },
         "end": {
-          "line": 247,
+          "line": 313,
           "column": 3
         }
       },
@@ -14907,22 +14999,22 @@
     ],
     "loc": {
       "start": {
-        "line": 109,
+        "line": 159,
         "column": 2
       },
       "end": {
-        "line": 142,
+        "line": 192,
         "column": 5
       }
     },
     "context": {
       "loc": {
         "start": {
-          "line": 163,
+          "line": 213,
           "column": 2
         },
         "end": {
-          "line": 167,
+          "line": 217,
           "column": 3
         }
       },
@@ -15152,22 +15244,22 @@
     ],
     "loc": {
       "start": {
-        "line": 426,
+        "line": 547,
         "column": 2
       },
       "end": {
-        "line": 444,
+        "line": 565,
         "column": 5
       }
     },
     "context": {
       "loc": {
         "start": {
-          "line": 445,
+          "line": 566,
           "column": 2
         },
         "end": {
-          "line": 449,
+          "line": 570,
           "column": 3
         }
       },
