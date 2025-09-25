@@ -7,6 +7,22 @@ Ribbon WebRTC SDK change log.
 - This project adheres to [Semantic Versioning](http://semver.org/).
 - This change log follows [keepachangelog.com](http://keepachangelog.com/) recommendations.
 
+## 7.10.0 - 2025-09-25
+
+### Fixed
+
+- Improved error checking for REST requests, ensuring they have a clear error message if they were to fail due to misconfiguration.
+- Fixed a Call issue where events emitted during call initialization were incorrect. `KJS-3016`
+  - The `call:start` event now only indicates that the call is in state and Initiating. It no longer can represent an error.
+  - The `call:stateChange` event is now the only event used to represent errors during initialization, when the state changes from Initiating to Ended.
+  - These events for an anonymous call now match the events for a regular WebRTC call.
+
+### Removed
+
+- Removed the Call configuration: `config.call.mediaBrokerOnly`. `KJS-3018`
+  - Enabling this configuration provided a slight optimization to skip a media refresh in specific scenarios if media was always connected to the Media Broker. If enabled in scenarios that required the media refresh, this configuration would lead to issues where the call could lose media connection.
+  - Due to the difficulty of knowing whether it was safe to enable this configuration, it had been removed to ensure these issues are always avoided. The SDK's behaviour will now be as if the configuration were disabled.
+
 ## 7.9.0 - 2025-08-28
 
 ### Fixed
