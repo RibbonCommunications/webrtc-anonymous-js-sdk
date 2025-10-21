@@ -17,6 +17,11 @@ Ribbon WebRTC SDK change log.
   - When configured, the SDK will attempt to optimize call setup time by collecting ICE candidates at an earlier stage of call establishment.
   - Please see the API documentation for `call.RTCPeerConnectionConfig` for more information.
 
+### Fixed
+
+- Fixed a Media issue where the `media.initializeDevices` API would not fail with a `BasicError` on error. `KJS-2998`
+  - The API will now be consistent with other APIs its error feedback, using a `BasicError`.
+
 ## 7.10.0 - 2025-09-25
 
 ### Fixed

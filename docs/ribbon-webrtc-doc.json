@@ -31628,11 +31628,11 @@
             },
             {
               "title": "throws",
-              "description": "Rejects with a native Error if the operation fails.",
+              "description": "Rejects with a BasicError if the operation fails.",
               "lineNumber": 43,
               "type": {
                 "type": "NameExpression",
-                "name": "Error"
+                "name": "BasicError"
               }
             },
             {
@@ -31778,7 +31778,7 @@
                     "children": [
                       {
                         "type": "text",
-                        "value": "Rejects with a native Error if the operation fails."
+                        "value": "Rejects with a BasicError if the operation fails."
                       }
                     ]
                   }
@@ -31786,7 +31786,7 @@
               },
               "type": {
                 "type": "NameExpression",
-                "name": "Error"
+                "name": "BasicError"
               }
             }
           ],

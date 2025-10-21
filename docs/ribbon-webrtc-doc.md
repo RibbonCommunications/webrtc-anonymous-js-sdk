@@ -2645,7 +2645,7 @@ try {
 }
 ```
 
-*   Throws **[Error][88]** Rejects with a native Error if the operation fails.
+*   Throws **BasicError** Rejects with a BasicError if the operation fails.
 
 Returns **[Promise][24]<[undefined][28]>** A promise that resolves when the operation is successful.
 
@@ -2685,7 +2685,7 @@ client.on('call:tracksAdded', function (params) {
 
 Render Media Tracks in a container.
 
-This API is equivalent to the [media.renderTracks][89] API, but
+This API is equivalent to the [media.renderTracks][88] API, but
 provides feedback via a returned promise instead of emitting events.
 This API will not cause any events to be emitted during this operation.
 
@@ -2743,7 +2743,7 @@ call is muted, the result will only be noticeable locally.
 This mute operation acts on those specified Tracks directly.
 It does not act on the active Call as a whole.
 
-The SDK will emit a [media:muted][90] event
+The SDK will emit a [media:muted][89] event
 when a Track has been muted.
 
 #### Parameters
@@ -2798,7 +2798,7 @@ Media will resume its normal rendering for the Tracks.
 Like the 'muteTracks' API, this unmute operation acts on those specified Tracks directly.
 Therefore it does not act on active Call as a whole.
 
-The SDK will emit a [media:unmuted][91] event
+The SDK will emit a [media:unmuted][90] event
 when a Track has been unmuted.
 
 #### Parameters
@@ -2809,7 +2809,7 @@ when a Track has been unmuted.
 
 Unmutes the specified Tracks.
 
-This API is equivalent to the [media.unmuteTracks][92] API, but
+This API is equivalent to the [media.unmuteTracks][91] API, but
 provides feedback via a returned promise instead of emitting events.
 This API will not cause any events to be emitted during this operation.
 
@@ -2888,11 +2888,11 @@ Returns **[Promise][24]<[undefined][28]>** A promise that resolves when the oper
 
 ### DetachedMedia
 
-Detached Media is a special type of [call.MediaObject][93] that is created outside the scope of a call. A DetachedMedia
-object is a [call.MediaObject][93] that is wrapped with the contained [call.TrackObject][94]'s media type for convenience.
+Detached Media is a special type of [call.MediaObject][92] that is created outside the scope of a call. A DetachedMedia
+object is a [call.MediaObject][92] that is wrapped with the contained [call.TrackObject][93]'s media type for convenience.
 
-The APIs for managing detached media are available in the [media][95] namespace. They are
-[media.createLocalMedia][96], [media.getLocalMedia][97], and [media.disposeLocalMedia][98]. Unlike media that is created
+The APIs for managing detached media are available in the [media][94] namespace. They are
+[media.createLocalMedia][95], [media.getLocalMedia][96], and [media.disposeLocalMedia][97]. Unlike media that is created
 as part of a call, the application is responsible for the lifecycle for a detached media object.
 
 Accessing local media before a call is made can be used to implement a "media preview" feature, allowing an end-user to
@@ -2948,13 +2948,13 @@ An error occurred while trying to access media devices.
 The most common causes of this error are when the browser does not have
 permission from the end-user to access the devices, or when the browser
 cannot find a media device that fulfills the
-[MediaConstraint(s)][99] that was provided.
+[MediaConstraint(s)][98] that was provided.
 
 #### Parameters
 
 *   `params` **[Object][7]** 
 
-    *   `params.error` **[Error][88]** The Basic error object.
+    *   `params.error` **[Error][99]** The Basic error object.
 
 ### media:muted
 
@@ -2972,7 +2972,7 @@ A Track can be muted using the [media.muteTracks][58] API.
 
 The specified Tracks have been unmuted.
 
-A Track can be unmuted using the [media.unmuteTracks][92]
+A Track can be unmuted using the [media.unmuteTracks][91]
 API.
 
 #### Parameters
@@ -3420,29 +3420,29 @@ Returns **call.SdpHandlerFunction** The resulting SDP handler that will remove t
 
 [87]: #mediainitializedevicesasync
 
-[88]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Error
+[88]: #mediarendertracks
 
-[89]: #mediarendertracks
+[89]: #mediaeventmediamuted
 
-[90]: #mediaeventmediamuted
+[90]: #mediaeventmediaunmuted
 
-[91]: #mediaeventmediaunmuted
+[91]: #mediaunmutetracks
 
-[92]: #mediaunmutetracks
+[92]: call.MediaObject
 
-[93]: call.MediaObject
+[93]: call.TrackObject
 
-[94]: call.TrackObject
+[94]: #media
 
-[95]: #media
+[95]: #mediacreatelocalmedia
 
-[96]: #mediacreatelocalmedia
+[96]: #mediagetlocalmedia
 
-[97]: #mediagetlocalmedia
+[97]: #mediadisposelocalmedia
 
-[98]: #mediadisposelocalmedia
+[98]: call.MediaConstraint
 
-[99]: call.MediaConstraint
+[99]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Error
 
 [100]: #mediaeventmediasourceunmuted
 
