@@ -16,6 +16,9 @@ Ribbon WebRTC SDK change log.
 - Improved handling for the Call config `config.call.defaultPeerConfig.iceCandidatePoolSize`. `KJS-3084`
   - When configured, the SDK will attempt to optimize call setup time by collecting ICE candidates at an earlier stage of call establishment.
   - Please see the API documentation for `call.RTCPeerConnectionConfig` for more information.
+- Added new subscription change event reasons for solicited scenarios. `PENDING`, `SUBSCRIBED`, `UNSUBSCRIBED`. `KJS-3090`
+  - The `subscription:change` event will now always have a defined `reason` property.
+  - See the documentation for `services.changeReasons` for more information.
 
 ### Fixed
 
