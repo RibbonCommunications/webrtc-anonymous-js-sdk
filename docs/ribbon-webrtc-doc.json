@@ -33572,7 +33572,7 @@
                 "column": 2
               },
               "end": {
-                "line": 564,
+                "line": 573,
                 "column": 3
               }
             },
@@ -33678,7 +33678,7 @@
                 "children": [
                   {
                     "type": "text",
-                    "value": "Remove Media Tracks from a container."
+                    "value": "Remove Media Track from a container."
                   }
                 ]
               },
@@ -33687,7 +33687,7 @@
                 "children": [
                   {
                     "type": "text",
-                    "value": "This API is equivalent to the "
+                    "value": "This API is similar to the "
                   },
                   {
                     "type": "link",
@@ -33703,7 +33703,7 @@
                   },
                   {
                     "type": "text",
-                    "value": " API, but provides feedback\nvia a returned promise instead of emitting events. This API will not cause any events\nto be emitted during this operation."
+                    "value": " API, but provides feedback\nvia a returned promise instead of emitting events. This API will not cause any events\nto be emitted during this operation. It will also only take a single track ID as\nan argument."
                   }
                 ]
               },
@@ -33722,53 +33722,44 @@
             {
               "title": "public",
               "description": null,
-              "lineNumber": 9,
+              "lineNumber": 10,
               "type": null
             },
             {
               "title": "static",
               "description": null,
-              "lineNumber": 10
+              "lineNumber": 11
             },
             {
               "title": "async",
               "description": null,
-              "lineNumber": 11
+              "lineNumber": 12
             },
             {
               "title": "memberof",
               "description": "media",
-              "lineNumber": 12
+              "lineNumber": 13
             },
             {
               "title": "method",
               "description": null,
-              "lineNumber": 13,
-              "name": "removeTracksAsync"
+              "lineNumber": 14,
+              "name": "removeTrackAsync"
             },
             {
               "title": "param",
-              "description": "List of Track IDs to stop being rendered.",
-              "lineNumber": 14,
+              "description": "Track ID to stop being rendered.",
+              "lineNumber": 15,
               "type": {
-                "type": "TypeApplication",
-                "expression": {
-                  "type": "NameExpression",
-                  "name": "Array"
-                },
-                "applications": [
-                  {
-                    "type": "NameExpression",
-                    "name": "string"
-                  }
-                ]
+                "type": "NameExpression",
+                "name": "string"
               },
-              "name": "trackIds"
+              "name": "trackId"
             },
             {
               "title": "param",
               "description": "A CSS selector string that uniquely\n   identifies an element. Ensure that special characters are properly\n   escaped.",
-              "lineNumber": 15,
+              "lineNumber": 16,
               "type": {
                 "type": "NameExpression",
                 "name": "string"
@@ -33778,7 +33769,7 @@
             {
               "title": "return",
               "description": "A promise that resolves when the operation is successful.",
-              "lineNumber": 18,
+              "lineNumber": 19,
               "type": {
                 "type": "TypeApplication",
                 "expression": {
@@ -33795,7 +33786,7 @@
             {
               "title": "throws",
               "description": "Rejects with a BasicError if the operation fails.",
-              "lineNumber": 19,
+              "lineNumber": 20,
               "type": {
                 "type": "NameExpression",
                 "name": "BasicError"
@@ -33803,28 +33794,28 @@
             },
             {
               "title": "example",
-              "description": "try {\n  // Stop the track from being rendered.\n  await client.media.removeTracksAsync([ trackId ], selector)\n} catch (error) {\n  // Failed to remove the track.\n  const { code, message } = error\n  ...\n}",
-              "lineNumber": 20
+              "description": "try {\n  // Stop the track from being rendered.\n  await client.media.removeTrackAsync(trackId, selector)\n} catch (error) {\n  // Failed to remove the track.\n  const { code, message } = error\n  ...\n}",
+              "lineNumber": 21
             }
           ],
           "loc": {
             "start": {
-              "line": 566,
+              "line": 575,
               "column": 2
             },
             "end": {
-              "line": 595,
+              "line": 605,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 596,
+                "line": 606,
                 "column": 2
               },
               "end": {
-                "line": 600,
+                "line": 609,
                 "column": 3
               }
             },
@@ -33833,15 +33824,15 @@
           "augments": [],
           "examples": [
             {
-              "description": "try {\n  // Stop the track from being rendered.\n  await client.media.removeTracksAsync([ trackId ], selector)\n} catch (error) {\n  // Failed to remove the track.\n  const { code, message } = error\n  ...\n}"
+              "description": "try {\n  // Stop the track from being rendered.\n  await client.media.removeTrackAsync(trackId, selector)\n} catch (error) {\n  // Failed to remove the track.\n  const { code, message } = error\n  ...\n}"
             }
           ],
           "implements": [],
           "params": [
             {
               "title": "param",
-              "name": "trackIds",
-              "lineNumber": 14,
+              "name": "trackId",
+              "lineNumber": 15,
               "description": {
                 "type": "root",
                 "children": [
@@ -33850,30 +33841,21 @@
                     "children": [
                       {
                         "type": "text",
-                        "value": "List of Track IDs to stop being rendered."
+                        "value": "Track ID to stop being rendered."
                       }
                     ]
                   }
                 ]
               },
               "type": {
-                "type": "TypeApplication",
-                "expression": {
-                  "type": "NameExpression",
-                  "name": "Array"
-                },
-                "applications": [
-                  {
-                    "type": "NameExpression",
-                    "name": "string"
-                  }
-                ]
+                "type": "NameExpression",
+                "name": "string"
               }
             },
             {
               "title": "param",
               "name": "cssSelector",
-              "lineNumber": 15,
+              "lineNumber": 16,
               "description": {
                 "type": "root",
                 "children": [
@@ -33956,7 +33938,7 @@
           "async": true,
           "memberof": "media",
           "kind": "function",
-          "name": "removeTracksAsync",
+          "name": "removeTrackAsync",
           "members": {
             "global": [],
             "inner": [],
@@ -33970,12 +33952,12 @@
               "kind": "namespace"
             },
             {
-              "name": "removeTracksAsync",
+              "name": "removeTrackAsync",
               "kind": "function",
               "scope": "static"
             }
           ],
-          "namespace": "media.removeTracksAsync"
+          "namespace": "media.removeTrackAsync"
         },
         {
           "description": {

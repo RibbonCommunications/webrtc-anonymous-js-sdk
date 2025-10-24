@@ -2851,20 +2851,21 @@ corresponds to the HTMLElement to act as the container.
     identifies an element. Ensure that special characters are properly
     escaped.
 
-### removeTracksAsync
+### removeTrackAsync
 
-Remove Media Tracks from a container.
+Remove Media Track from a container.
 
-This API is equivalent to the [media.removeTracks][59] API, but provides feedback
+This API is similar to the [media.removeTracks][59] API, but provides feedback
 via a returned promise instead of emitting events. This API will not cause any events
-to be emitted during this operation.
+to be emitted during this operation. It will also only take a single track ID as
+an argument.
 
 The container is specified by providing a CSS selector string that
 corresponds to the HTMLElement to act as the container.
 
 #### Parameters
 
-*   `trackIds` **[Array][19]<[string][8]>** List of Track IDs to stop being rendered.
+*   `trackId` **[string][8]** Track ID to stop being rendered.
 *   `cssSelector` **[string][8]** A CSS selector string that uniquely
     identifies an element. Ensure that special characters are properly
     escaped.
@@ -2874,7 +2875,7 @@ corresponds to the HTMLElement to act as the container.
 ```javascript
 try {
   // Stop the track from being rendered.
-  await client.media.removeTracksAsync([ trackId ], selector)
+  await client.media.removeTrackAsync(trackId, selector)
 } catch (error) {
   // Failed to remove the track.
   const { code, message } = error
