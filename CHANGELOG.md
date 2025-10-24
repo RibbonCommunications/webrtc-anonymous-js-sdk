@@ -19,6 +19,7 @@ Ribbon WebRTC SDK change log.
 - Added new subscription change event reasons for solicited scenarios. `PENDING`, `SUBSCRIBED`, `UNSUBSCRIBED`. `KJS-3090`
   - The `subscription:change` event will now always have a defined `reason` property.
   - See the documentation for `services.changeReasons` for more information.
+- Added all async versions of the call APIs. `KJS-3163`
 
 ### Fixed
 
