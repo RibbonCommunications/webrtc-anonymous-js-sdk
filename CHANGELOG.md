@@ -11,6 +11,14 @@ Ribbon WebRTC SDK change log.
 
 ## 7.11.0 - beta
 
+### Async APIs
+
+This release includes the addition of a new style of APIs for the SDK: "Async APIs". These APIs duplicate the SDK's existing APIs, except that they provide an asynchronous promise for feedback instead of providing feedback through events. This allows more flexibility in handling the SDK's APIs by being able to handle the full API in a single asynchronous context rather than requiring an event-driven pattern to handle the feedback.
+
+The existing APIs have not been changed by this addition, and the two styles of APIs will exist alongside each other for some time. We encourage applications to migrate to the new style of APIs as they will provide a better experience.
+
+For more information, please see our two new tutorials for "Async APIs" and "Voice and Video Calls using Async APIs". Over time, all of our tutorials will be converted to showcase this new API style.
+
 ### Added
 
 - Improved handling for the Call config `config.call.defaultPeerConfig.iceCandidatePoolSize`. `KJS-3084`
