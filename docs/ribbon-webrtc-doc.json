@@ -29868,22 +29868,22 @@
           ],
           "loc": {
             "start": {
-              "line": 20,
+              "line": 21,
               "column": 4
             },
             "end": {
-              "line": 31,
+              "line": 32,
               "column": 7
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 32,
+                "line": 33,
                 "column": 4
               },
               "end": {
-                "line": 35,
+                "line": 36,
                 "column": 5
               }
             },
@@ -30006,22 +30006,22 @@
           ],
           "loc": {
             "start": {
-              "line": 37,
+              "line": 38,
               "column": 4
             },
             "end": {
-              "line": 45,
+              "line": 46,
               "column": 7
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 46,
+                "line": 47,
                 "column": 4
               },
               "end": {
-                "line": 49,
+                "line": 50,
                 "column": 5
               }
             },
@@ -30168,22 +30168,22 @@
           ],
           "loc": {
             "start": {
-              "line": 51,
+              "line": 52,
               "column": 4
             },
             "end": {
-              "line": 59,
+              "line": 60,
               "column": 7
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 60,
+                "line": 61,
                 "column": 4
               },
               "end": {
-                "line": 63,
+                "line": 64,
                 "column": 5
               }
             },
@@ -30419,22 +30419,22 @@
           ],
           "loc": {
             "start": {
-              "line": 65,
+              "line": 66,
               "column": 4
             },
             "end": {
-              "line": 82,
+              "line": 83,
               "column": 7
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 83,
+                "line": 84,
                 "column": 4
               },
               "end": {
-                "line": 94,
+                "line": 95,
                 "column": 5
               }
             },
@@ -30748,22 +30748,22 @@
           ],
           "loc": {
             "start": {
-              "line": 96,
+              "line": 97,
               "column": 4
             },
             "end": {
-              "line": 107,
+              "line": 108,
               "column": 7
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 108,
+                "line": 109,
                 "column": 4
               },
               "end": {
-                "line": 121,
+                "line": 122,
                 "column": 5
               }
             },
@@ -30943,22 +30943,22 @@
           ],
           "loc": {
             "start": {
-              "line": 123,
+              "line": 124,
               "column": 4
             },
             "end": {
-              "line": 134,
+              "line": 135,
               "column": 7
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 135,
+                "line": 136,
                 "column": 4
               },
               "end": {
-                "line": 149,
+                "line": 150,
                 "column": 5
               }
             },
@@ -31309,22 +31309,22 @@
           ],
           "loc": {
             "start": {
-              "line": 152,
+              "line": 153,
               "column": 2
             },
             "end": {
-              "line": 200,
+              "line": 201,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 201,
+                "line": 202,
                 "column": 2
               },
               "end": {
-                "line": 212,
+                "line": 213,
                 "column": 3
               }
             },
@@ -31643,22 +31643,22 @@
           ],
           "loc": {
             "start": {
-              "line": 214,
+              "line": 215,
               "column": 2
             },
             "end": {
-              "line": 276,
+              "line": 277,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 277,
+                "line": 278,
                 "column": 2
               },
               "end": {
-                "line": 288,
+                "line": 289,
                 "column": 3
               }
             },
@@ -31928,22 +31928,22 @@
           ],
           "loc": {
             "start": {
-              "line": 290,
+              "line": 291,
               "column": 2
             },
             "end": {
-              "line": 316,
+              "line": 317,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 317,
+                "line": 318,
                 "column": 2
               },
               "end": {
-                "line": 328,
+                "line": 329,
                 "column": 3
               }
             },
@@ -32264,22 +32264,22 @@
           ],
           "loc": {
             "start": {
-              "line": 330,
+              "line": 331,
               "column": 2
             },
             "end": {
-              "line": 369,
+              "line": 370,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 370,
+                "line": 371,
                 "column": 2
               },
               "end": {
-                "line": 378,
+                "line": 379,
                 "column": 3
               }
             },
@@ -32598,22 +32598,22 @@
           ],
           "loc": {
             "start": {
-              "line": 380,
+              "line": 381,
               "column": 2
             },
             "end": {
-              "line": 402,
+              "line": 403,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 403,
+                "line": 404,
                 "column": 2
               },
               "end": {
-                "line": 420,
+                "line": 426,
                 "column": 3
               }
             },
@@ -32696,7 +32696,7 @@
                 "children": [
                   {
                     "type": "text",
-                    "value": "Mutes the specified Tracks."
+                    "value": "Mutes the specified Track."
                   }
                 ]
               },
@@ -32705,7 +32705,7 @@
                 "children": [
                   {
                     "type": "text",
-                    "value": "This API is equivalent to the "
+                    "value": "This API is similar to the "
                   },
                   {
                     "type": "link",
@@ -32721,7 +32721,7 @@
                   },
                   {
                     "type": "text",
-                    "value": " API, but\nprovides feedback via a returned promise instead of emitting events.\nThis API will not cause any events to be emitted during this operation."
+                    "value": " API, but\nprovides feedback via a returned promise instead of emitting events.\nThis API will not cause any events to be emitted during this operation.\nIt will also only take a single track ID as an argument."
                   }
                 ]
               },
@@ -32730,7 +32730,7 @@
                 "children": [
                   {
                     "type": "text",
-                    "value": "This API prevents the media of the specified Tracks from being rendered. Audio\nTracks will become silent and video Tracks will be a black frame.\nThis does not stop media from being received by those Tracks. The media simply\ncannot be used by the application while the Track is muted."
+                    "value": "This API prevents the media of the specified Track from being rendered. Audio\nTracks will become silent and video Tracks will be a black frame.\nThis does not stop media from being received by those Tracks. The media simply\ncannot be used by the application while the Track is muted."
                   }
                 ]
               },
@@ -32748,7 +32748,7 @@
                 "children": [
                   {
                     "type": "text",
-                    "value": "This mute operation acts on those specified Tracks directly.\nIt does not act on the active Call as a whole."
+                    "value": "This mute operation acts on the specified Track directly. It does not act on an\nactive Call as a whole."
                   }
                 ]
               }
@@ -32758,53 +32758,44 @@
             {
               "title": "public",
               "description": null,
-              "lineNumber": 19,
+              "lineNumber": 20,
               "type": null
             },
             {
               "title": "static",
               "description": null,
-              "lineNumber": 20
+              "lineNumber": 21
             },
             {
               "title": "async",
               "description": null,
-              "lineNumber": 21
+              "lineNumber": 22
             },
             {
               "title": "memberof",
               "description": "media",
-              "lineNumber": 22
+              "lineNumber": 23
             },
             {
               "title": "method",
               "description": null,
-              "lineNumber": 23,
-              "name": "muteTracksAsync"
+              "lineNumber": 24,
+              "name": "muteTrackAsync"
             },
             {
               "title": "param",
-              "description": "List of Track IDs.",
-              "lineNumber": 24,
+              "description": "The ID of the track to mute.",
+              "lineNumber": 25,
               "type": {
-                "type": "TypeApplication",
-                "expression": {
-                  "type": "NameExpression",
-                  "name": "Array"
-                },
-                "applications": [
-                  {
-                    "type": "NameExpression",
-                    "name": "string"
-                  }
-                ]
+                "type": "NameExpression",
+                "name": "string"
               },
-              "name": "trackIds"
+              "name": "trackId"
             },
             {
               "title": "return",
               "description": "A promise that resolves with the list of muted track IDs.",
-              "lineNumber": 25,
+              "lineNumber": 26,
               "type": {
                 "type": "TypeApplication",
                 "expression": {
@@ -32813,17 +32804,7 @@
                 },
                 "applications": [
                   {
-                    "type": "TypeApplication",
-                    "expression": {
-                      "type": "NameExpression",
-                      "name": "Array"
-                    },
-                    "applications": [
-                      {
-                        "type": "NameExpression",
-                        "name": "string"
-                      }
-                    ]
+                    "type": "UndefinedLiteral"
                   }
                 ]
               }
@@ -32831,7 +32812,7 @@
             {
               "title": "throws",
               "description": "Rejects with a BasicError if the operation fails.",
-              "lineNumber": 26,
+              "lineNumber": 27,
               "type": {
                 "type": "NameExpression",
                 "name": "BasicError"
@@ -32839,28 +32820,28 @@
             },
             {
               "title": "example",
-              "description": "try {\n   const mutedIds = await client.media.muteTracksAsync([ trackId ])\n} catch (error) {\n   // Failed to mute tracks.\n   const { code, message } = error\n   ...\n}",
-              "lineNumber": 27
+              "description": "try {\n   await client.media.muteTrackAsync(trackId)\n} catch (error) {\n   // Failed to mute the track.\n   const { code, message } = error\n   ...\n}",
+              "lineNumber": 28
             }
           ],
           "loc": {
             "start": {
-              "line": 422,
+              "line": 428,
               "column": 2
             },
             "end": {
-              "line": 457,
+              "line": 464,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 458,
+                "line": 465,
                 "column": 2
               },
               "end": {
-                "line": 470,
+                "line": 476,
                 "column": 3
               }
             },
@@ -32869,15 +32850,15 @@
           "augments": [],
           "examples": [
             {
-              "description": "try {\n   const mutedIds = await client.media.muteTracksAsync([ trackId ])\n} catch (error) {\n   // Failed to mute tracks.\n   const { code, message } = error\n   ...\n}"
+              "description": "try {\n   await client.media.muteTrackAsync(trackId)\n} catch (error) {\n   // Failed to mute the track.\n   const { code, message } = error\n   ...\n}"
             }
           ],
           "implements": [],
           "params": [
             {
               "title": "param",
-              "name": "trackIds",
-              "lineNumber": 24,
+              "name": "trackId",
+              "lineNumber": 25,
               "description": {
                 "type": "root",
                 "children": [
@@ -32886,24 +32867,15 @@
                     "children": [
                       {
                         "type": "text",
-                        "value": "List of Track IDs."
+                        "value": "The ID of the track to mute."
                       }
                     ]
                   }
                 ]
               },
               "type": {
-                "type": "TypeApplication",
-                "expression": {
-                  "type": "NameExpression",
-                  "name": "Array"
-                },
-                "applications": [
-                  {
-                    "type": "NameExpression",
-                    "name": "string"
-                  }
-                ]
+                "type": "NameExpression",
+                "name": "string"
               }
             }
           ],
@@ -32933,17 +32905,7 @@
                 },
                 "applications": [
                   {
-                    "type": "TypeApplication",
-                    "expression": {
-                      "type": "NameExpression",
-                      "name": "Array"
-                    },
-                    "applications": [
-                      {
-                        "type": "NameExpression",
-                        "name": "string"
-                      }
-                    ]
+                    "type": "UndefinedLiteral"
                   }
                 ]
               }
@@ -32979,7 +32941,7 @@
           "async": true,
           "memberof": "media",
           "kind": "function",
-          "name": "muteTracksAsync",
+          "name": "muteTrackAsync",
           "members": {
             "global": [],
             "inner": [],
@@ -32993,12 +32955,12 @@
               "kind": "namespace"
             },
             {
-              "name": "muteTracksAsync",
+              "name": "muteTrackAsync",
               "kind": "function",
               "scope": "static"
             }
           ],
-          "namespace": "media.muteTracksAsync"
+          "namespace": "media.muteTrackAsync"
         },
         {
           "description": {
@@ -33094,22 +33056,22 @@
           ],
           "loc": {
             "start": {
-              "line": 472,
+              "line": 478,
               "column": 2
             },
             "end": {
-              "line": 486,
+              "line": 492,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 487,
+                "line": 493,
                 "column": 2
               },
               "end": {
-                "line": 504,
+                "line": 510,
                 "column": 3
               }
             },
@@ -33323,22 +33285,22 @@
           ],
           "loc": {
             "start": {
-              "line": 506,
+              "line": 512,
               "column": 2
             },
             "end": {
-              "line": 533,
+              "line": 539,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 534,
+                "line": 540,
                 "column": 2
               },
               "end": {
-                "line": 545,
+                "line": 551,
                 "column": 3
               }
             },
@@ -33557,22 +33519,22 @@
           ],
           "loc": {
             "start": {
-              "line": 547,
+              "line": 553,
               "column": 2
             },
             "end": {
-              "line": 560,
+              "line": 566,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 561,
+                "line": 567,
                 "column": 2
               },
               "end": {
-                "line": 573,
+                "line": 579,
                 "column": 3
               }
             },
@@ -33800,22 +33762,22 @@
           ],
           "loc": {
             "start": {
-              "line": 575,
+              "line": 581,
               "column": 2
             },
             "end": {
-              "line": 605,
+              "line": 611,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 606,
+                "line": 612,
                 "column": 2
               },
               "end": {
-                "line": 609,
+                "line": 615,
                 "column": 3
               }
             },

@@ -2750,15 +2750,16 @@ when a Track has been muted.
 
 *   `trackIds` **[Array][19]<[string][8]>** List of Track IDs.
 
-### muteTracksAsync
+### muteTrackAsync
 
-Mutes the specified Tracks.
+Mutes the specified Track.
 
-This API is equivalent to the [media.muteTracks][58] API, but
+This API is similar to the [media.muteTracks][58] API, but
 provides feedback via a returned promise instead of emitting events.
 This API will not cause any events to be emitted during this operation.
+It will also only take a single track ID as an argument.
 
-This API prevents the media of the specified Tracks from being rendered. Audio
+This API prevents the media of the specified Track from being rendered. Audio
 Tracks will become silent and video Tracks will be a black frame.
 This does not stop media from being received by those Tracks. The media simply
 cannot be used by the application while the Track is muted.
@@ -2767,20 +2768,20 @@ If a local Track being sent in a Call is muted, the Track will be
 noticeably muted for the remote user. If a remote Track received in a
 call is muted, the result will only be noticeable locally.
 
-This mute operation acts on those specified Tracks directly.
-It does not act on the active Call as a whole.
+This mute operation acts on the specified Track directly. It does not act on an
+active Call as a whole.
 
 #### Parameters
 
-*   `trackIds` **[Array][19]<[string][8]>** List of Track IDs.
+*   `trackId` **[string][8]** The ID of the track to mute.
 
 #### Examples
 
 ```javascript
 try {
-   const mutedIds = await client.media.muteTracksAsync([ trackId ])
+   await client.media.muteTrackAsync(trackId)
 } catch (error) {
-   // Failed to mute tracks.
+   // Failed to mute the track.
    const { code, message } = error
    ...
 }
@@ -2788,7 +2789,7 @@ try {
 
 *   Throws **BasicError** Rejects with a BasicError if the operation fails.
 
-Returns **[Promise][24]<[Array][19]<[string][8]>>** A promise that resolves with the list of muted track IDs.
+Returns **[Promise][24]<[undefined][28]>** A promise that resolves with the list of muted track IDs.
 
 ### unmuteTracks
 

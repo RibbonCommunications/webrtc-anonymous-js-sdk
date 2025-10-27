@@ -432,9 +432,9 @@
                             </a></li>
                           
                             <li><a
-                              href='#mediamutetracksasync'
+                              href='#mediamutetrackasync'
                               class='regular pre-open'>
-                              <span style="color:green">ⓕ</span> .muteTracksAsync
+                              <span style="color:green">ⓕ</span> .muteTrackAsync
                             </a></li>
                           
                             <li><a
@@ -13266,11 +13266,11 @@ when a Track has been muted.</p>
       </div>
     </div>
   
-    <div class='border-bottom' id='mediamutetracksasync'>
+    <div class='border-bottom' id='mediamutetrackasync'>
       <div class="clearfix small pointer toggle-sibling">
         <div class="py1 contain">
             <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>muteTracksAsync(trackIds)</span>
+            <span class='code strong strong truncate'>muteTrackAsync(trackId)</span>
         </div>
       </div>
       <div class="clearfix display-none toggle-target">
@@ -13278,22 +13278,23 @@ when a Track has been muted.</p>
 
   
 
-  <p>Mutes the specified Tracks.</p>
-<p>This API is equivalent to the <a href="#mediamutetracks">media.muteTracks</a> API, but
+  <p>Mutes the specified Track.</p>
+<p>This API is similar to the <a href="#mediamutetracks">media.muteTracks</a> API, but
 provides feedback via a returned promise instead of emitting events.
-This API will not cause any events to be emitted during this operation.</p>
-<p>This API prevents the media of the specified Tracks from being rendered. Audio
+This API will not cause any events to be emitted during this operation.
+It will also only take a single track ID as an argument.</p>
+<p>This API prevents the media of the specified Track from being rendered. Audio
 Tracks will become silent and video Tracks will be a black frame.
 This does not stop media from being received by those Tracks. The media simply
 cannot be used by the application while the Track is muted.</p>
 <p>If a local Track being sent in a Call is muted, the Track will be
 noticeably muted for the remote user. If a remote Track received in a
 call is muted, the result will only be noticeable locally.</p>
-<p>This mute operation acts on those specified Tracks directly.
-It does not act on the active Call as a whole.</p>
+<p>This mute operation acts on the specified Track directly. It does not act on an
+active Call as a whole.</p>
 
 
-  <div class='pre p1 fill-light mt0'>muteTracksAsync(trackIds: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&#x3C;<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>>): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&#x3C;<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&#x3C;<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>>></div>
+  <div class='pre p1 fill-light mt0'>muteTrackAsync(trackId: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&#x3C;<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</a>></div>
   
   
 
@@ -13323,9 +13324,9 @@ It does not act on the active Call as a whole.</p>
           <tbody class='mt1'>
             
               <tr>
-  <td class='break-word'><span class='code bold'>trackIds</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&#x3C;<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>></code>
+  <td class='break-word'><span class='code bold'>trackId</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>
   </td>
-  <td class='break-word'><span>List of Track IDs.
+  <td class='break-word'><span>The ID of the track to mute.
 </span></td>
 </tr>
 
@@ -13344,7 +13345,7 @@ It does not act on the active Call as a whole.</p>
     <div class='py1 quiet mt1 prose-big'>Returns</div>
     
       <div>
-        <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&#x3C;<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&#x3C;<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>>></code>:
+        <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&#x3C;<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</a>></code>:
           A promise that resolves with the list of muted track IDs.
 
         
@@ -13367,9 +13368,9 @@ It does not act on the active Call as a whole.</p>
     
       
       <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">try</span> {
-   <span class="hljs-keyword">const</span> mutedIds = <span class="hljs-keyword">await</span> client.media.muteTracksAsync([ trackId ])
+   <span class="hljs-keyword">await</span> client.media.muteTrackAsync(trackId)
 } <span class="hljs-keyword">catch</span> (error) {
-   <span class="hljs-comment">// Failed to mute tracks.</span>
+   <span class="hljs-comment">// Failed to mute the track.</span>
    <span class="hljs-keyword">const</span> { code, message } = error
    ...
 }</pre>
