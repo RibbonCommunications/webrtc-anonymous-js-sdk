@@ -29868,22 +29868,22 @@
           ],
           "loc": {
             "start": {
-              "line": 21,
+              "line": 25,
               "column": 4
             },
             "end": {
-              "line": 32,
+              "line": 36,
               "column": 7
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 33,
+                "line": 37,
                 "column": 4
               },
               "end": {
-                "line": 36,
+                "line": 40,
                 "column": 5
               }
             },
@@ -30006,22 +30006,22 @@
           ],
           "loc": {
             "start": {
-              "line": 38,
+              "line": 42,
               "column": 4
             },
             "end": {
-              "line": 46,
+              "line": 50,
               "column": 7
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 47,
+                "line": 51,
                 "column": 4
               },
               "end": {
-                "line": 50,
+                "line": 54,
                 "column": 5
               }
             },
@@ -30168,22 +30168,22 @@
           ],
           "loc": {
             "start": {
-              "line": 52,
+              "line": 56,
               "column": 4
             },
             "end": {
-              "line": 60,
+              "line": 64,
               "column": 7
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 61,
+                "line": 65,
                 "column": 4
               },
               "end": {
-                "line": 64,
+                "line": 68,
                 "column": 5
               }
             },
@@ -30419,22 +30419,22 @@
           ],
           "loc": {
             "start": {
-              "line": 66,
+              "line": 70,
               "column": 4
             },
             "end": {
-              "line": 83,
+              "line": 87,
               "column": 7
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 84,
+                "line": 88,
                 "column": 4
               },
               "end": {
-                "line": 95,
+                "line": 99,
                 "column": 5
               }
             },
@@ -30748,22 +30748,22 @@
           ],
           "loc": {
             "start": {
-              "line": 97,
+              "line": 101,
               "column": 4
             },
             "end": {
-              "line": 108,
+              "line": 112,
               "column": 7
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 109,
+                "line": 113,
                 "column": 4
               },
               "end": {
-                "line": 122,
+                "line": 126,
                 "column": 5
               }
             },
@@ -30943,22 +30943,22 @@
           ],
           "loc": {
             "start": {
-              "line": 124,
+              "line": 128,
               "column": 4
             },
             "end": {
-              "line": 135,
+              "line": 139,
               "column": 7
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 136,
+                "line": 140,
                 "column": 4
               },
               "end": {
-                "line": 150,
+                "line": 154,
                 "column": 5
               }
             },
@@ -31309,22 +31309,22 @@
           ],
           "loc": {
             "start": {
-              "line": 153,
+              "line": 157,
               "column": 2
             },
             "end": {
-              "line": 201,
+              "line": 205,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 202,
+                "line": 206,
                 "column": 2
               },
               "end": {
-                "line": 213,
+                "line": 217,
                 "column": 3
               }
             },
@@ -31643,22 +31643,22 @@
           ],
           "loc": {
             "start": {
-              "line": 215,
+              "line": 219,
               "column": 2
             },
             "end": {
-              "line": 277,
+              "line": 281,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 278,
+                "line": 282,
                 "column": 2
               },
               "end": {
-                "line": 289,
+                "line": 293,
                 "column": 3
               }
             },
@@ -31928,22 +31928,22 @@
           ],
           "loc": {
             "start": {
-              "line": 291,
+              "line": 295,
               "column": 2
             },
             "end": {
-              "line": 317,
+              "line": 321,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 318,
+                "line": 322,
                 "column": 2
               },
               "end": {
-                "line": 329,
+                "line": 376,
                 "column": 3
               }
             },
@@ -32107,7 +32107,7 @@
                 "children": [
                   {
                     "type": "text",
-                    "value": "Render Media Tracks in a container."
+                    "value": "Render Media Track in a container."
                   }
                 ]
               },
@@ -32116,17 +32116,17 @@
                 "children": [
                   {
                     "type": "text",
-                    "value": "This API is equivalent to the "
+                    "value": "This API is similar to the "
                   },
                   {
                     "type": "link",
-                    "url": "#mediarendertracks",
+                    "url": "media.renderTrack",
                     "title": null,
                     "jsdoc": true,
                     "children": [
                       {
                         "type": "text",
-                        "value": "media.renderTracks"
+                        "value": "media.renderTrack"
                       }
                     ]
                   },
@@ -32173,26 +32173,17 @@
               "title": "method",
               "description": null,
               "lineNumber": 13,
-              "name": "renderTracksAsync"
+              "name": "renderTrackAsync"
             },
             {
               "title": "param",
-              "description": "List of Track IDs to be rendered.",
+              "description": "Track ID to be rendered.",
               "lineNumber": 14,
               "type": {
-                "type": "TypeApplication",
-                "expression": {
-                  "type": "NameExpression",
-                  "name": "Array"
-                },
-                "applications": [
-                  {
-                    "type": "NameExpression",
-                    "name": "string"
-                  }
-                ]
+                "type": "NameExpression",
+                "name": "string"
               },
-              "name": "trackIds"
+              "name": "trackId"
             },
             {
               "title": "param",
@@ -32258,28 +32249,28 @@
             },
             {
               "title": "example",
-              "description": "// When a Call receives a new track, render it.\nclient.on('call:tracksAdded', function (params) {\n   params.trackIds.forEach(trackId => {\n     const track = client.media.getTrackById(trackId)\n     const container = track.isLocal ? localContainer : remoteContainer\n\n     try {\n       // Render the Call's new track when it first becomes available.\n       await client.media.renderTracksAsync([ trackId ], container)\n     } catch (error) {\n       // Failed to render the track.\n       const { code, message } = error\n       ...\n     }\n   }\n})",
+              "description": "// When a Call receives a new track, render it.\nclient.on('call:tracksAdded', function (params) {\n   params.trackIds.forEach(trackId => {\n     const track = client.media.getTrackById(trackId)\n     const container = track.isLocal ? localContainer : remoteContainer\n\n     try {\n       // Render the Call's new track when it first becomes available.\n       await client.media.renderTrackAsync(trackId, container)\n     } catch (error) {\n       // Failed to render the track.\n       const { code, message } = error\n       ...\n     }\n   }\n})",
               "lineNumber": 22
             }
           ],
           "loc": {
             "start": {
-              "line": 331,
+              "line": 378,
               "column": 2
             },
             "end": {
-              "line": 370,
+              "line": 417,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 371,
+                "line": 418,
                 "column": 2
               },
               "end": {
-                "line": 379,
+                "line": 461,
                 "column": 3
               }
             },
@@ -32288,14 +32279,14 @@
           "augments": [],
           "examples": [
             {
-              "description": "// When a Call receives a new track, render it.\nclient.on('call:tracksAdded', function (params) {\n   params.trackIds.forEach(trackId => {\n     const track = client.media.getTrackById(trackId)\n     const container = track.isLocal ? localContainer : remoteContainer\n\n     try {\n       // Render the Call's new track when it first becomes available.\n       await client.media.renderTracksAsync([ trackId ], container)\n     } catch (error) {\n       // Failed to render the track.\n       const { code, message } = error\n       ...\n     }\n   }\n})"
+              "description": "// When a Call receives a new track, render it.\nclient.on('call:tracksAdded', function (params) {\n   params.trackIds.forEach(trackId => {\n     const track = client.media.getTrackById(trackId)\n     const container = track.isLocal ? localContainer : remoteContainer\n\n     try {\n       // Render the Call's new track when it first becomes available.\n       await client.media.renderTrackAsync(trackId, container)\n     } catch (error) {\n       // Failed to render the track.\n       const { code, message } = error\n       ...\n     }\n   }\n})"
             }
           ],
           "implements": [],
           "params": [
             {
               "title": "param",
-              "name": "trackIds",
+              "name": "trackId",
               "lineNumber": 14,
               "description": {
                 "type": "root",
@@ -32305,24 +32296,15 @@
                     "children": [
                       {
                         "type": "text",
-                        "value": "List of Track IDs to be rendered."
+                        "value": "Track ID to be rendered."
                       }
                     ]
                   }
                 ]
               },
               "type": {
-                "type": "TypeApplication",
-                "expression": {
-                  "type": "NameExpression",
-                  "name": "Array"
-                },
-                "applications": [
-                  {
-                    "type": "NameExpression",
-                    "name": "string"
-                  }
-                ]
+                "type": "NameExpression",
+                "name": "string"
               }
             },
             {
@@ -32465,7 +32447,7 @@
           "async": true,
           "memberof": "media",
           "kind": "function",
-          "name": "renderTracksAsync",
+          "name": "renderTrackAsync",
           "members": {
             "global": [],
             "inner": [],
@@ -32479,12 +32461,12 @@
               "kind": "namespace"
             },
             {
-              "name": "renderTracksAsync",
+              "name": "renderTrackAsync",
               "kind": "function",
               "scope": "static"
             }
           ],
-          "namespace": "media.renderTracksAsync"
+          "namespace": "media.renderTrackAsync"
         },
         {
           "description": {
@@ -32598,22 +32580,22 @@
           ],
           "loc": {
             "start": {
-              "line": 381,
+              "line": 463,
               "column": 2
             },
             "end": {
-              "line": 403,
+              "line": 485,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 404,
+                "line": 486,
                 "column": 2
               },
               "end": {
-                "line": 426,
+                "line": 508,
                 "column": 3
               }
             },
@@ -32826,22 +32808,22 @@
           ],
           "loc": {
             "start": {
-              "line": 428,
+              "line": 510,
               "column": 2
             },
             "end": {
-              "line": 464,
+              "line": 546,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 465,
+                "line": 547,
                 "column": 2
               },
               "end": {
-                "line": 476,
+                "line": 558,
                 "column": 3
               }
             },
@@ -33056,22 +33038,22 @@
           ],
           "loc": {
             "start": {
-              "line": 478,
+              "line": 560,
               "column": 2
             },
             "end": {
-              "line": 492,
+              "line": 574,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 493,
+                "line": 575,
                 "column": 2
               },
               "end": {
-                "line": 510,
+                "line": 592,
                 "column": 3
               }
             },
@@ -33285,22 +33267,22 @@
           ],
           "loc": {
             "start": {
-              "line": 512,
+              "line": 594,
               "column": 2
             },
             "end": {
-              "line": 539,
+              "line": 621,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 540,
+                "line": 622,
                 "column": 2
               },
               "end": {
-                "line": 551,
+                "line": 633,
                 "column": 3
               }
             },
@@ -33519,22 +33501,22 @@
           ],
           "loc": {
             "start": {
-              "line": 553,
+              "line": 635,
               "column": 2
             },
             "end": {
-              "line": 566,
+              "line": 648,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 567,
+                "line": 649,
                 "column": 2
               },
               "end": {
-                "line": 579,
+                "line": 661,
                 "column": 3
               }
             },
@@ -33762,22 +33744,22 @@
           ],
           "loc": {
             "start": {
-              "line": 581,
+              "line": 663,
               "column": 2
             },
             "end": {
-              "line": 611,
+              "line": 693,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 612,
+                "line": 694,
                 "column": 2
               },
               "end": {
-                "line": 615,
+                "line": 697,
                 "column": 3
               }
             },

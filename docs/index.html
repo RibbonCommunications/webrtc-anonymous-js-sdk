@@ -420,9 +420,9 @@
                             </a></li>
                           
                             <li><a
-                              href='#mediarendertracksasync'
+                              href='#mediarendertrackasync'
                               class='regular pre-open'>
-                              <span style="color:green">ⓕ</span> .renderTracksAsync
+                              <span style="color:green">ⓕ</span> .renderTrackAsync
                             </a></li>
                           
                             <li><a
@@ -13024,11 +13024,11 @@ client.on(<span class="hljs-string">&#x27;call:tracksAdded&#x27;</span>, <span c
       </div>
     </div>
   
-    <div class='border-bottom' id='mediarendertracksasync'>
+    <div class='border-bottom' id='mediarendertrackasync'>
       <div class="clearfix small pointer toggle-sibling">
         <div class="py1 contain">
             <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>renderTracksAsync(trackIds, cssSelector, options?)</span>
+            <span class='code strong strong truncate'>renderTrackAsync(trackId, cssSelector, options?)</span>
         </div>
       </div>
       <div class="clearfix display-none toggle-target">
@@ -13036,15 +13036,15 @@ client.on(<span class="hljs-string">&#x27;call:tracksAdded&#x27;</span>, <span c
 
   
 
-  <p>Render Media Tracks in a container.</p>
-<p>This API is equivalent to the <a href="#mediarendertracks">media.renderTracks</a> API, but
+  <p>Render Media Track in a container.</p>
+<p>This API is similar to the <a href="media.renderTrack">media.renderTrack</a> API, but
 provides feedback via a returned promise instead of emitting events.
 This API will not cause any events to be emitted during this operation.</p>
 <p>The container is specified by providing a CSS selector string that
 corresponds to the HTMLElement to act as the container.</p>
 
 
-  <div class='pre p1 fill-light mt0'>renderTracksAsync(trackIds: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&#x3C;<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>>, cssSelector: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>, options: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>?): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&#x3C;<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</a>></div>
+  <div class='pre p1 fill-light mt0'>renderTrackAsync(trackId: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>, cssSelector: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>, options: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>?): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&#x3C;<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</a>></div>
   
   
 
@@ -13074,9 +13074,9 @@ corresponds to the HTMLElement to act as the container.</p>
           <tbody class='mt1'>
             
               <tr>
-  <td class='break-word'><span class='code bold'>trackIds</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&#x3C;<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>></code>
+  <td class='break-word'><span class='code bold'>trackId</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>
   </td>
-  <td class='break-word'><span>List of Track IDs to be rendered.
+  <td class='break-word'><span>Track ID to be rendered.
 </span></td>
 </tr>
 
@@ -13156,7 +13156,7 @@ client.on(<span class="hljs-string">&#x27;call:tracksAdded&#x27;</span>, <span c
 
      <span class="hljs-keyword">try</span> {
        <span class="hljs-comment">// Render the Call&#x27;s new track when it first becomes available.</span>
-       <span class="hljs-keyword">await</span> client.media.renderTracksAsync([ trackId ], container)
+       <span class="hljs-keyword">await</span> client.media.renderTrackAsync(trackId, container)
      } <span class="hljs-keyword">catch</span> (error) {
        <span class="hljs-comment">// Failed to render the track.</span>
        <span class="hljs-keyword">const</span> { code, message } = error

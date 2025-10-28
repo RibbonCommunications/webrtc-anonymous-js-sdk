@@ -2681,11 +2681,11 @@ client.on('call:tracksAdded', function (params) {
 })
 ```
 
-### renderTracksAsync
+### renderTrackAsync
 
-Render Media Tracks in a container.
+Render Media Track in a container.
 
-This API is equivalent to the [media.renderTracks][88] API, but
+This API is similar to the [media.renderTrack][88] API, but
 provides feedback via a returned promise instead of emitting events.
 This API will not cause any events to be emitted during this operation.
 
@@ -2694,7 +2694,7 @@ corresponds to the HTMLElement to act as the container.
 
 #### Parameters
 
-*   `trackIds` **[Array][19]<[string][8]>** List of Track IDs to be rendered.
+*   `trackId` **[string][8]** Track ID to be rendered.
 *   `cssSelector` **[string][8]** A CSS selector string that uniquely
     identifies an element. Ensure that special characters are properly
     escaped.
@@ -2713,7 +2713,7 @@ client.on('call:tracksAdded', function (params) {
 
      try {
        // Render the Call's new track when it first becomes available.
-       await client.media.renderTracksAsync([ trackId ], container)
+       await client.media.renderTrackAsync(trackId, container)
      } catch (error) {
        // Failed to render the track.
        const { code, message } = error
@@ -3422,7 +3422,7 @@ Returns **call.SdpHandlerFunction** The resulting SDP handler that will remove t
 
 [87]: #mediainitializedevicesasync
 
-[88]: #mediarendertracks
+[88]: media.renderTrack
 
 [89]: #mediaeventmediamuted
 
