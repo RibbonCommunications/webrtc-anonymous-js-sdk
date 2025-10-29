@@ -9,7 +9,7 @@ Ribbon WebRTC SDK change log.
 
 ## 7.12.0 - alpha
 
-## 7.11.0 - beta
+## 7.11.0 - 2025-10-29
 
 ### Async APIs
 
