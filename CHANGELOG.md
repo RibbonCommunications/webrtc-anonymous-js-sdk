@@ -7,6 +7,33 @@ Ribbon WebRTC SDK change log.
 - This project adheres to [Semantic Versioning](http://semver.org/).
 - This change log follows [keepachangelog.com](http://keepachangelog.com/) recommendations.
 
+## 7.12.0 - alpha
+
+## 7.11.0 - 2025-10-29
+
+### Async APIs
+
+This release includes the addition of a new style of APIs for the SDK: "Async APIs". These APIs duplicate the SDK's existing APIs, except that they provide an asynchronous promise for feedback instead of providing feedback through events. This allows more flexibility in handling the SDK's APIs by being able to handle the full API in a single asynchronous context rather than requiring an event-driven pattern to handle the feedback.
+
+The existing APIs have not been changed by this addition, and the two styles of APIs will exist alongside each other for some time. We encourage applications to migrate to the new style of APIs as they will provide a better experience.
+
+For more information, please see our two new tutorials for "Async APIs" and "Voice and Video Calls using Async APIs". Over time, all of our tutorials will be converted to showcase this new API style.
+
+### Added
+
+- Improved handling for the Call config `config.call.defaultPeerConfig.iceCandidatePoolSize`. `KJS-3084`
+  - When configured, the SDK will attempt to optimize call setup time by collecting ICE candidates at an earlier stage of call establishment.
+  - Please see the API documentation for `call.RTCPeerConnectionConfig` for more information.
+- Added new subscription change event reasons for solicited scenarios. `PENDING`, `SUBSCRIBED`, `UNSUBSCRIBED`. `KJS-3090`
+  - The `subscription:change` event will now always have a defined `reason` property.
+  - See the documentation for `services.changeReasons` for more information.
+- Added all async versions of the call APIs. `KJS-3163`
+
+### Fixed
+
+- Fixed a Media issue where the `media.initializeDevices` API would not fail with a `BasicError` on error. `KJS-2998`
+  - The API will now be consistent with other APIs its error feedback, using a `BasicError`.
+
 ## 7.10.0 - 2025-09-25
 
 ### Fixed
