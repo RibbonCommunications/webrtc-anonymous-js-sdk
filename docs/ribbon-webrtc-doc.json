@@ -33053,7 +33053,7 @@
                 "column": 2
               },
               "end": {
-                "line": 592,
+                "line": 597,
                 "column": 3
               }
             },
@@ -33136,7 +33136,7 @@
                 "children": [
                   {
                     "type": "text",
-                    "value": "Unmutes the specified Tracks."
+                    "value": "Unmutes the specified Track."
                   }
                 ]
               },
@@ -33145,7 +33145,7 @@
                 "children": [
                   {
                     "type": "text",
-                    "value": "This API is equivalent to the "
+                    "value": "This API is similar to the "
                   },
                   {
                     "type": "link",
@@ -33161,7 +33161,7 @@
                   },
                   {
                     "type": "text",
-                    "value": " API, but\nprovides feedback via a returned promise instead of emitting events.\nThis API will not cause any events to be emitted during this operation."
+                    "value": " API, but\nprovides feedback via a returned promise instead of emitting events.\nThis API will not cause any events to be emitted during this operation.\nIt will also only take a single track ID as an argument."
                   }
                 ]
               },
@@ -33170,7 +33170,7 @@
                 "children": [
                   {
                     "type": "text",
-                    "value": "Media will resume its normal rendering for the Tracks.\nLike the 'muteTracks' API, this unmute operation acts on those specified Tracks directly.\nTherefore it does not act on active Call as a whole."
+                    "value": "Media will resume its normal rendering for the Track.\nLike the 'muteTrack' API, this unmute operation acts on the specified Track directly.\nTherefore it does not act on active Call as a whole."
                   }
                 ]
               }
@@ -33180,53 +33180,44 @@
             {
               "title": "public",
               "description": null,
-              "lineNumber": 11,
+              "lineNumber": 12,
               "type": null
             },
             {
               "title": "static",
               "description": null,
-              "lineNumber": 12
+              "lineNumber": 13
             },
             {
               "title": "async",
               "description": null,
-              "lineNumber": 13
+              "lineNumber": 14
             },
             {
               "title": "memberof",
               "description": "media",
-              "lineNumber": 14
+              "lineNumber": 15
             },
             {
               "title": "method",
               "description": null,
-              "lineNumber": 15,
-              "name": "unmuteTracksAsync"
+              "lineNumber": 16,
+              "name": "unmuteTrackAsync"
             },
             {
               "title": "param",
-              "description": "List of Track IDs.",
-              "lineNumber": 16,
+              "description": "Track ID to unmute.",
+              "lineNumber": 17,
               "type": {
-                "type": "TypeApplication",
-                "expression": {
-                  "type": "NameExpression",
-                  "name": "Array"
-                },
-                "applications": [
-                  {
-                    "type": "NameExpression",
-                    "name": "string"
-                  }
-                ]
+                "type": "NameExpression",
+                "name": "string"
               },
-              "name": "trackIds"
+              "name": "trackId"
             },
             {
               "title": "return",
-              "description": "A promise that resolves with the list of unmuted track IDs.",
-              "lineNumber": 17,
+              "description": "A promise that resolves when the operation succeeds.",
+              "lineNumber": 18,
               "type": {
                 "type": "TypeApplication",
                 "expression": {
@@ -33235,17 +33226,7 @@
                 },
                 "applications": [
                   {
-                    "type": "TypeApplication",
-                    "expression": {
-                      "type": "NameExpression",
-                      "name": "Array"
-                    },
-                    "applications": [
-                      {
-                        "type": "NameExpression",
-                        "name": "string"
-                      }
-                    ]
+                    "type": "UndefinedLiteral"
                   }
                 ]
               }
@@ -33253,7 +33234,7 @@
             {
               "title": "throws",
               "description": "Rejects with a BasicError if the operation fails.",
-              "lineNumber": 18,
+              "lineNumber": 19,
               "type": {
                 "type": "NameExpression",
                 "name": "BasicError"
@@ -33261,28 +33242,28 @@
             },
             {
               "title": "example",
-              "description": "try {\n   const unmutedIds = await client.media.unmuteTracksAsync([ trackId ])\n} catch (error) {\n   // Failed to unmute tracks.\n   const { code, message } = error\n   ...\n}",
-              "lineNumber": 19
+              "description": "try {\n   const unmutedId = await client.media.unmuteTrackAsync(trackId)\n} catch (error) {\n   // Failed to unmute the track.\n   const { code, message } = error\n   ...\n}",
+              "lineNumber": 20
             }
           ],
           "loc": {
             "start": {
-              "line": 594,
+              "line": 599,
               "column": 2
             },
             "end": {
-              "line": 621,
+              "line": 627,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 622,
+                "line": 628,
                 "column": 2
               },
               "end": {
-                "line": 633,
+                "line": 639,
                 "column": 3
               }
             },
@@ -33291,15 +33272,15 @@
           "augments": [],
           "examples": [
             {
-              "description": "try {\n   const unmutedIds = await client.media.unmuteTracksAsync([ trackId ])\n} catch (error) {\n   // Failed to unmute tracks.\n   const { code, message } = error\n   ...\n}"
+              "description": "try {\n   const unmutedId = await client.media.unmuteTrackAsync(trackId)\n} catch (error) {\n   // Failed to unmute the track.\n   const { code, message } = error\n   ...\n}"
             }
           ],
           "implements": [],
           "params": [
             {
               "title": "param",
-              "name": "trackIds",
-              "lineNumber": 16,
+              "name": "trackId",
+              "lineNumber": 17,
               "description": {
                 "type": "root",
                 "children": [
@@ -33308,24 +33289,15 @@
                     "children": [
                       {
                         "type": "text",
-                        "value": "List of Track IDs."
+                        "value": "Track ID to unmute."
                       }
                     ]
                   }
                 ]
               },
               "type": {
-                "type": "TypeApplication",
-                "expression": {
-                  "type": "NameExpression",
-                  "name": "Array"
-                },
-                "applications": [
-                  {
-                    "type": "NameExpression",
-                    "name": "string"
-                  }
-                ]
+                "type": "NameExpression",
+                "name": "string"
               }
             }
           ],
@@ -33340,7 +33312,7 @@
                     "children": [
                       {
                         "type": "text",
-                        "value": "A promise that resolves with the list of unmuted track IDs."
+                        "value": "A promise that resolves when the operation succeeds."
                       }
                     ]
                   }
@@ -33355,17 +33327,7 @@
                 },
                 "applications": [
                   {
-                    "type": "TypeApplication",
-                    "expression": {
-                      "type": "NameExpression",
-                      "name": "Array"
-                    },
-                    "applications": [
-                      {
-                        "type": "NameExpression",
-                        "name": "string"
-                      }
-                    ]
+                    "type": "UndefinedLiteral"
                   }
                 ]
               }
@@ -33401,7 +33363,7 @@
           "async": true,
           "memberof": "media",
           "kind": "function",
-          "name": "unmuteTracksAsync",
+          "name": "unmuteTrackAsync",
           "members": {
             "global": [],
             "inner": [],
@@ -33415,12 +33377,12 @@
               "kind": "namespace"
             },
             {
-              "name": "unmuteTracksAsync",
+              "name": "unmuteTrackAsync",
               "kind": "function",
               "scope": "static"
             }
           ],
-          "namespace": "media.unmuteTracksAsync"
+          "namespace": "media.unmuteTrackAsync"
         },
         {
           "description": {
@@ -33501,22 +33463,22 @@
           ],
           "loc": {
             "start": {
-              "line": 635,
+              "line": 641,
               "column": 2
             },
             "end": {
-              "line": 648,
+              "line": 654,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 649,
+                "line": 655,
                 "column": 2
               },
               "end": {
-                "line": 661,
+                "line": 667,
                 "column": 3
               }
             },
@@ -33744,22 +33706,22 @@
           ],
           "loc": {
             "start": {
-              "line": 663,
+              "line": 669,
               "column": 2
             },
             "end": {
-              "line": 693,
+              "line": 699,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 694,
+                "line": 700,
                 "column": 2
               },
               "end": {
-                "line": 697,
+                "line": 703,
                 "column": 3
               }
             },

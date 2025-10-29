@@ -2806,29 +2806,30 @@ when a Track has been unmuted.
 
 *   `trackIds` **[Array][19]<[string][8]>** List of Track IDs.
 
-### unmuteTracksAsync
+### unmuteTrackAsync
 
-Unmutes the specified Tracks.
+Unmutes the specified Track.
 
-This API is equivalent to the [media.unmuteTracks][91] API, but
+This API is similar to the [media.unmuteTracks][91] API, but
 provides feedback via a returned promise instead of emitting events.
 This API will not cause any events to be emitted during this operation.
+It will also only take a single track ID as an argument.
 
-Media will resume its normal rendering for the Tracks.
-Like the 'muteTracks' API, this unmute operation acts on those specified Tracks directly.
+Media will resume its normal rendering for the Track.
+Like the 'muteTrack' API, this unmute operation acts on the specified Track directly.
 Therefore it does not act on active Call as a whole.
 
 #### Parameters
 
-*   `trackIds` **[Array][19]<[string][8]>** List of Track IDs.
+*   `trackId` **[string][8]** Track ID to unmute.
 
 #### Examples
 
 ```javascript
 try {
-   const unmutedIds = await client.media.unmuteTracksAsync([ trackId ])
+   const unmutedId = await client.media.unmuteTrackAsync(trackId)
 } catch (error) {
-   // Failed to unmute tracks.
+   // Failed to unmute the track.
    const { code, message } = error
    ...
 }
@@ -2836,7 +2837,7 @@ try {
 
 *   Throws **BasicError** Rejects with a BasicError if the operation fails.
 
-Returns **[Promise][24]<[Array][19]<[string][8]>>** A promise that resolves with the list of unmuted track IDs.
+Returns **[Promise][24]<[undefined][28]>** A promise that resolves when the operation succeeds.
 
 ### removeTracks
 
