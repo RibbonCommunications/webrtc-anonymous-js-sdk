@@ -9,6 +9,8 @@ Ribbon WebRTC SDK change log.
 
 ## 7.12.0 - beta
 
+- Added new whitelist SDP handler factory function `createCodecWhitelist` that can be used to remove any codecs from an SDP that are not in the whitelist provided. `KJS-3138`
+
 ## 7.11.0 - 2025-10-29
 
 ### Async APIs
