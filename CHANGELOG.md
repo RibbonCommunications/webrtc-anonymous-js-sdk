@@ -7,7 +7,9 @@ Ribbon WebRTC SDK change log.
 - This project adheres to [Semantic Versioning](http://semver.org/).
 - This change log follows [keepachangelog.com](http://keepachangelog.com/) recommendations.
 
-## 7.12.0 - alpha
+## 7.12.0 - 2025-11-27
+
+- Added new whitelist SDP handler factory function `createCodecWhitelist` that can be used to remove any codecs from an SDP that are not in the whitelist provided. `KJS-3138`
 
 ## 7.11.0 - 2025-10-29
 
